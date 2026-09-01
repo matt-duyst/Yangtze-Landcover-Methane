@@ -32,16 +32,40 @@ Anhui 140,194 km2, Zhejiang 101,337 km2, Jiangsu 100,091 km2 and Shanghai
 Zhejiang to about half a percent, but Jiangsu comes out about 2 percent low and
 Shanghai about 6 percent high.
 
-The Shanghai discrepancy is the one to watch. It is most likely a matter of
-boundary treatment rather than error, since Shanghai's extent depends on how
-reclaimed land along the estuary and the whole of Chongming Island are handled,
-and different sources draw those differently at different dates. The Jiangsu
-shortfall may have a related cause along the same coast. Neither has been run
-down. Before provincial areas are used as denominators, for an impervious
-fraction or a rice fraction or anything else normalised by land area, these
-boundaries should be cross-checked against a second source, because a 6 percent
-error in the denominator is larger than several of the differences this project
-is trying to measure.
+The Shanghai discrepancy is the one to watch, and it has now been cross-checked
+against GADM 4.1, which resolves the same municipality with 1,925 vertices
+across 112 parts where Natural Earth uses 213 across 4. If the excess were an
+artefact of a coarse outline, the higher-fidelity source should sit closer to
+the published figure. It does not. GADM gives Shanghai 6,883 km2, further above
+the published 6,341 than Natural Earth's 6,746.
+
+| province | Natural Earth km2 | GADM 4.1 km2 | published km2 | NE / published | GADM / published |
+|---|---|---|---|---|---|
+| Anhui | 140,194 | 140,306 | 140,100 | 1.0007 | 1.0015 |
+| Zhejiang | 101,337 | 102,775 | 101,800 | 0.9955 | 1.0096 |
+| Jiangsu | 100,091 | 101,698 | 102,600 | 0.9755 | 0.9912 |
+| Shanghai | 6,746 | 6,883 | 6,341 | 1.0639 | 1.0855 |
+
+Two independent boundary sets therefore agree that Shanghai is larger than the
+published figure, and the more detailed of the two agrees less. That points at
+what the published figure measures rather than at how well either polygon is
+drawn. The likely candidate, offered as a hypothesis and not as a finding, is
+that the published area excludes estuarine water and reclaimed ground that both
+polygon sets enclose. This has not been run down. Jiangsu behaves differently
+again: Natural Earth is about 2 percent low but GADM only about 1 percent low,
+so the two sources disagree with each other as well as with the published
+value.
+
+The practical caution stands but should be read more broadly than before.
+Before provincial areas are used as denominators, for an impervious fraction or
+a rice fraction or anything else normalised by land area, the question to settle
+is not only which polygon is used but what the denominator is meant to measure,
+because a 6 percent error in it is larger than several of the differences this
+project is trying to measure.
+
+GADM cannot be committed here. Its licence forbids redistribution without
+permission, so it served as a check and nothing derived from its geometry is
+stored in this repository.
 
 One further caution about reproducibility. The exact Natural Earth release
 bundled in the cartopy cache is not recorded anywhere in the shapefile, so the

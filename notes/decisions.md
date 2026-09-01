@@ -80,3 +80,51 @@ while still returning a plausible-looking number. Any code that drops to h5py
 for speed has to mask the fill itself. The sentinel TROPOMI Level 2 actually
 uses should be read from the granule's own `_FillValue` attribute rather than
 assumed.
+
+## Year-of-change products are version-dependent
+
+GAIA does not store urban extent per year. It stores, in a single band, the year
+each pixel first became impervious, and the extent for any year is recovered by
+thresholding that band. This makes the product unusually sensitive to
+reprocessing. A later release re-runs the change detection over the whole
+archive, so a pixel that one version dates to 2004 another may date to 1996.
+Nothing about the file signals that a transition has moved; the raster looks the
+same and decodes cleanly under either version.
+
+The versions in play here are not the same. The thesis used the 1985 to 2018
+release. The archive currently reachable on figshare is 1985 to 2021, and Star
+Cloud distributes a later version again, described on the figshare record as
+Version 2024. So a reproduction is comparing two different reconstructions of
+the same history, not two computations of the same data.
+
+The provincial totals show exactly the shape that implies. Summed across the
+four provinces, the current release agrees with the thesis to 0.8 percent for
+2018, but differs by a factor of 1.98 for 2000. The recent end, where least
+reprocessing separates the two versions, matches closely; the historical end,
+where the reconstruction has been redone, does not. A reproduction of the 2018
+extent is therefore meaningful. A reproduction of the 2000 or 2010 extent
+against a different version is not, and a disagreement there should not be read
+as an error in either computation.
+
+The same caution applies to GISA, which is also a year-of-change product and has
+its own release history, and it applies with an extra hazard because the two
+products encode the year in opposite directions.
+
+Both conventions are recorded here explicitly, because getting one backwards
+does not fail loudly. It inverts the urbanisation history, turning the oldest
+urban core into the newest expansion, and still produces a plausible-looking
+map.
+
+GAIA counts downward from the newest year. Its readme states that pixel values
+represent urban frequency over 0 and 2 to 38, with 0 non-urban, 2 newly expanded
+in 2021, and 38 existing in 1985 and before. So year equals 2023 minus value,
+and cumulative extent for a year is value greater than or equal to 2023 minus
+that year: 2000 is value >= 23, 2010 is value >= 13, 2018 is value >= 5. Source:
+ReadMe-GAIA.txt, distributed alongside the data at
+https://doi.org/10.6084/m9.figshare.27245775.v1.
+
+GISA counts upward from the oldest year. The Wuhan University distribution page
+states that values range 0 to 37, zero meaning non-impervious, and pairs the
+years 1972, 1978, 1985, 1986 and so on through 2019 with the values 1, 2, 3, 4
+and so on through 37. So 2000 is value >= 18, 2010 is value >= 28, and 2018 is
+value >= 36. Source: http://irsip.whu.edu.cn/resv2/dataweb.php.
