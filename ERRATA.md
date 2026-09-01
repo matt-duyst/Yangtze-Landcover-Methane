@@ -1,0 +1,299 @@
+# Errata
+
+Corrections to *Urban-Methane Transfers (2000 – 2018): A Convolutional Neural
+Network (CNN) Approach at Forecasting Historical XCH4 Emissions through Urban
+Boundaries and Paddied Rice Extents Along China's YRD* (Yale School of the
+Environment, MESc, April 28, 2023).
+
+The thesis was never published or submitted for publication. This document
+records defects found during a 2026 audit undertaken to prepare the work for
+publication. Every item below was verified against the thesis PDF, the
+committed notebook, or the repository's git history; the method of
+verification is stated for each. Items are grouped by whether they affect the
+written document, the implementation, or claims that later literature has
+superseded.
+
+No quantitative model result is retracted here, because the thesis reports
+none. Section 5.2 states that mean squared error was calculated but gives no
+value. The loss figures discussed below exist only in the notebook.
+
+---
+
+## 1. Figures
+
+### 1.1 Figure 4.7 does not show model predictions
+
+Figure 4.7(a) "XCH4 Predicted Boundaries (2000)" and Figure 4.7(b) "XCH4
+Predicted Boundaries (2010)" are the same image as Figure 4.5(a) "Raw XCH4
+emissions".
+
+All three placements resolve to a single PDF object (object 180), placed once
+on page 21 and twice on page 22. The decoded pixel arrays are byte-identical
+across all three (SHA-256 `aef18140…`), as are their soft masks
+(`97d90bf4…`). All three are 271 × 211, RGB, 8 bits per channel. All three
+carry the same title block, rendered in the image itself:
+
+> Raw TROPOMI XCH4 Concentrations (2018)
+
+Section 4.7 therefore contains no result. The study's stated novel
+contribution, described in Section 1.2 as the first encoder-decoder
+architecture to predict historical XCH4 from urban and paddy rice extents, is
+not evidenced anywhere in the document.
+
+Three further artifacts are consistent with no prediction image having been
+produced:
+
+- The notebook cell that would generate the 2000 and 2010 predictions failed
+  at runtime with `NameError: name 'data_2010' is not defined`, downstream of
+  `OSError: [Errno 107] Transport endpoint is not connected` (a dropped
+  Google Drive mount). The failure is preserved in the committed notebook's
+  stored output.
+- The repository README links to `/assets/XCH_4_Predicted_2000.png` and
+  `/assets/XCH_4_Predicted_2010.png`. These are the only two image links in
+  that file whose targets do not exist in the repository under any spelling.
+- No model checkpoint (`.pth`, `.pt`, `.ckpt`) has ever existed in the
+  repository's git history.
+
+None of these establishes *why* the raw observation was placed three times. A
+LaTeX include pointing at the wrong file produces this outcome, and so does
+inserting a placeholder intended to be replaced. The PDF records what was
+placed, not the intent behind it.
+
+*Verified by:* extraction of all embedded images from the thesis PDF, with
+per-image PDF object IDs and SHA-256 hashes of decoded pixel arrays.
+
+### 1.2 The Figure 4.7 caption contradicts the method
+
+The caption reads that the estimated boundaries are based on recorded urban
+and paddied rice extents "in the year 2018". The section heading (4.7) and
+Section 5.2 both state that the inputs were the recorded extents for 2000 and
+2010. The caption is wrong; the method described in the body is correct.
+
+---
+
+## 2. Numerical and arithmetic corrections
+
+### 2.1 Zhejiang urban expansion multiplier
+
+Section 5.1 states that Zhejiang experienced an urban expansion rate six times
+greater than its recorded 2000 extent. Table 1 gives Zhejiang at 1,752 km² in
+2000 and 6,731 km² in 2010, a factor of 3.84.
+
+The neighbouring claims in the same paragraph do reproduce from Table 1: Anhui
+doubles (2.04), Jiangsu triples (3.34), and the full-span Jiangsu figure of
+more than sixfold (3,008 to 19,430, a factor of 6.46) is correct.
+
+### 2.2 2010 YRD urban total
+
+Section 5.1 gives the 2010 YRD total as 24,830 km². The four provincial values
+in Table 1 sum to 24,831 (3,310 + 6,731 + 4,748 + 10,042). The derived change
+figures reported downstream (16,533; 24,895; 41,428 km²) are internally
+consistent with 24,830.
+
+### 2.3 Yangtze River extent
+
+Section 1.5 states that the Yangtze River "extends roughly 1.8 million km2".
+This is the drainage basin area, not the river's extent or length.
+
+### 2.4 Spatial resolution notation
+
+TROPOMI XCH4 spatial resolution is given throughout as "7km2 x 7km2". The
+correct notation is 7 km × 7 km (nadir resolution was refined to
+approximately 7 × 5.5 km in August 2019, after the study year).
+
+---
+
+## 3. Implementation defects
+
+These concern the committed notebook rather than the written thesis. They were
+found by static inspection; the notebook was not executed.
+
+### 3.1 The model's target was a rendered figure, not a methane field
+
+The training target is `XCH4_2018.jpg`, an 8-bit grayscale JPEG
+(PIL mode `L`, 5950 × 4016). It is a colour-ramp choropleth flattened to
+grayscale, not a concentration raster. Of its pixels, 81.5% hold the single
+value 255, corresponding to white page background.
+
+Two consequences follow. Grayscale conversion of a red-orange-yellow-green
+colour ramp is not monotonic in the underlying quantity, so mean squared error
+on these values does not correspond to error in parts per billion. And the
+source is JPEG, so lossy compression introduces spurious intermediate values
+at class boundaries in the dependent variable.
+
+The urban and rice inputs are likewise near-binary masks read from JPEG
+(urban: background 240, foreground 0; rice: background 255, foreground 0),
+each carrying a compression fringe of 0.2% to 0.9% of pixels at ±1.
+
+### 3.2 Augmentation was applied to inputs but not targets
+
+In the dataset class, the transform pipeline is applied to the stacked input
+tensor only; the target is returned untransformed. The training pipeline
+includes `RandomHorizontalFlip`, `RandomVerticalFlip`, and
+`RandomRotation(30)`. Each training pair is therefore geometrically
+misaligned between input and target.
+
+The validation pipeline applies only `ToTensor` and `Normalize`, so validation
+pairs remain aligned. This accounts for the otherwise anomalous ordering of
+the stored losses, in which validation loss (2889.67) sits below final
+training loss (4031.66).
+
+### 3.3 The backbone was randomly initialised and then frozen
+
+The model instantiates `models.resnet50()` with no weights argument, so the
+encoder is randomly initialised rather than pretrained, and then applies
+`requires_grad = False` to all parameters existing at that point, which is the
+backbone. Only the ASPP module and decoder train.
+
+Section 3.3, step 2, of the thesis states that backbone networks are usually
+pretrained on a large-scale classification dataset such as ImageNet. The
+implementation does not do this. Inputs are nonetheless normalised with
+ImageNet channel statistics, which is only meaningful with an
+ImageNet-pretrained encoder.
+
+### 3.4 Colour augmentation applied to thematic channels
+
+`ColorJitter` with saturation and hue adjustment is applied to a three-channel
+input whose channels are basemap, urban mask, and rice mask. Hue rotation
+mixes information between the urban and rice channels.
+
+### 3.5 Stored outputs cannot be attributed to the committed code
+
+Every code cell in the notebook has `execution_count: null` while 22 cells
+retain stored outputs. Nothing in the file establishes that any stored output
+was produced by the source beside it.
+
+This is demonstrable rather than merely possible: the dataset class returns a
+tensor via `torch.from_numpy`, and the training cell then applies
+`transforms.ToTensor()` to it. `ToTensor` raises `TypeError` on a tensor
+input. The stored output nonetheless shows ten epochs completing. These
+facts cannot all describe a single run.
+
+Accordingly, the loss values in the notebook should not be cited as results
+of the code as committed.
+
+### 3.6 Constant-predictor comparison
+
+For context on the magnitude of the stored losses, the constant-predictor
+baseline was computed on a reconstruction of the notebook's own crop sampling
+(5,000 training crops and 1,000 testing crops, drawn under the same
+province-inclusion and exclusion rules):
+
+| | training crops | testing crops |
+|---|---|---|
+| best pooled constant | 217.94 | 208.30 |
+| MSE of that constant | 3340.03 | 3198.57 |
+| per-crop own-mean MSE, averaged | 2236.31 | 2113.14 |
+
+Against these, the stored training loss of 4031.66 is worse than both
+baselines, and the stored validation loss of 2889.67 is worse than the
+per-crop baseline and 9.7% better than the pooled one.
+
+This is a comparison of numbers, not a verdict on the model, for the reason
+given in 3.5. It is recorded because the stored losses are otherwise easy to
+read as evidence of fit.
+
+---
+
+## 4. Method description inconsistent with implementation
+
+### 4.1 Section 3.3 describes a masked autoencoder
+
+Section 3.3 describes the network as randomly masking patches of the urban and
+rice inputs and reconstructing them, citing He et al. (2022) throughout,
+including that work's Transformer-block encoder and its loss computed on
+masked patches.
+
+The implementation performs supervised segmentation: DeepLabv3+ with a
+ResNet50 backbone, one output channel, no final activation, and `nn.MSELoss`
+against an XCH4 target. No masking occurs anywhere in the notebook. The
+implementation is the more defensible artifact; the description should be
+rewritten to match it.
+
+### 4.2 Scale invariance claim
+
+Section 3.3 states that the resolution difference between Landsat (30 m) and
+Sentinel-5P (approximately 7 km) can be ignored because CNNs are scale and
+translation invariant. Convolutional networks are approximately translation
+*equivariant*, and are not scale invariant. The resampling actually performed,
+and the limitation it imposes, should be stated instead.
+
+---
+
+## 5. Claims superseded by subsequent literature
+
+### 5.1 Availability of reference data
+
+Section 5.2 states that validation would require reference data that, to the
+author's knowledge, does not exist. Datasets published since 2023 provide
+independent reference for the paddy rice layer at the study's own resolution,
+including a 30 m paddy rice distribution dataset for China covering 1990 to
+2016 and a 500 m Asian monsoon rice product covering 2000 to 2021. Rice
+methane emission inventories at 0.1° monthly resolution, and regional TROPOMI
+flux inversions, have also since been published.
+
+### 5.2 Causal attribution of XCH4 to rice paddies
+
+Section 5.1 states that the largest driver of XCH4 hotspots appears to be
+paddy rice fields. A published Matters Arising responding to one of the
+thesis's two pillar references argues that local XCH4 variation is driven
+primarily by advected large-scale flux signals rather than local emission, and
+that spatial correlations between rice extent and XCH4 are confounded by
+cross-correlation with other sources sharing similar spatial structure. That
+exchange is not cited in the thesis. Causal language in Section 5.1 should be
+replaced with language describing spatial association.
+
+### 5.3 Urban methane attributed to natural gas vehicles
+
+Sections 1.1 and 1.5 attribute urban methane to natural gas vehicles, with a
+framing of retrofitted vehicles and faulty tailpipes. The cited source
+measured real-world emissions from heavy-duty natural gas vehicles and
+attributed them to engine and aftertreatment behaviour; it does not support
+the retrofitting framing. Separately, waste treatment (landfill, incineration,
+sewage) is reported in the literature as the dominant anthropogenic methane
+source at city scale in China. The thesis includes no waste layer and does not
+mention the sector. Impervious surface should be described as a proxy for the
+urban source bundle as a whole rather than for vehicle emissions.
+
+### 5.4 Global warming potential
+
+The 100-year global warming potential of methane is given as 25 to 30 times
+that of CO2, citing a 2011 source. Current syntheses give approximately 28 to
+36 over 100 years and 84 to 87 over 20 years. The horizon should be stated
+explicitly wherever the figure appears.
+
+---
+
+## 6. Reproducibility and citation
+
+### 6.1 Section 5.3 code links
+
+Section 5.3 lists two Google Earth Engine script links and one Google Colab
+notebook link as the study's open-source code availability statement. Their
+current resolvability has not been established. This repository is intended to
+supersede that statement.
+
+### 6.2 Spatial statistics are not reproducible as reported
+
+Section 5.1 reports a Global Moran's I of 0.46 and a z-score of 276.31 for
+XCH4 in 2018. The spatial weights definition, distance band or contiguity
+rule, and standardisation are not reported, so the statistic cannot be
+reproduced. The z-score also scales with the number of features, so a large
+value over a dense grid is arithmetically expected rather than informative,
+and positive spatial autocorrelation in a column-concentration field follows
+from atmospheric transport and from the retrieval's own spatial binning.
+
+### 6.3 Citation years
+
+Two in-text citations disagree with the reference list: the GAIA reference is
+cited in text as 2019 and listed as 2020, and the TROPOMI XCH4 reference is
+cited in text as 2023 and listed as 2022. Both reflect the online-versus-print
+gap; one convention should be applied throughout.
+
+### 6.4 Auxiliary data described but not used
+
+Section 1.3 describes four auxiliary datasets as compiled: Global Methane
+Initiative emissions, provincial population and natural gas statistics,
+provincial sown area of rice, and World Bank climatology. Only the sown area
+of rice appears in the Results. The others should be removed or their use
+described.
