@@ -53,7 +53,8 @@ demonstrate; they do not compute results.
 │   ├── manifest.json          # checksums + versions for every fetched input
 │   ├── raw/                   # gitignored, populated by fetch
 │   ├── interim/               # gitignored
-│   └── processed/             # small derived tables, committed
+│   ├── processed/             # small derived tables, committed
+│   └── reference/             # small committed inputs, not derived results
 ├── src/
 │   ├── fetch/                 # one module per source
 │   ├── landcover/             # urban zonal stats, rice reimplementation
@@ -71,6 +72,12 @@ demonstrate; they do not compute results.
     ├── Duyst_Thesis_Final.ipynb
     └── README.md              # what this is and why it is preserved
 ```
+
+`data/reference/` holds small inputs that are committed rather than fetched,
+and that are not derived from anything else in the repository. The provincial
+boundary file is the example: it is public domain, a few hundred kilobytes, and
+needed by almost every analysis, so fetching and verifying it would cost more
+than it saves.
 
 Two departures from the peatland layout, both upgrades:
 

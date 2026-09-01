@@ -1,0 +1,32 @@
+{
+  "glorice_phsc_ex": {
+    "product": "GloRice (I) gridded paddy rice annual distribution, physical area, Extensive variant",
+    "version": "v1.0 (figshare version 2)",
+    "citation": "Zhang et al. (2025), GloRice, a global rice database (v1.0): I. Gridded paddy rice annual distribution from 1961 to 2021, Scientific Data 12, doi:10.1038/s41597-025-04483-1",
+    "url": "https://doi.org/10.6084/m9.figshare.27965832.v2",
+    "retrieved": "2026-09-01",
+    "files": [
+      {
+        "path": "glorice/GloRice-phsc-Ex.zip",
+        "bytes": 148845107,
+        "sha256": null
+      }
+    ],
+    "notes": "Licence CC BY 4.0 on the figshare data record; the accompanying Scientific Data article is CC BY-NC-ND 4.0, which applies to the paper and not to the data. Contains exten_phsc_{year}.nc for 1961-2021, netCDF4, 5 arcmin, 2160x4320, EPSG:4326, variable 'area' in hectares per cell, NaN where no rice. The sha256 field is null because the archive was deleted after extraction under a download budget and no checksum was computed before deletion; the checksum MUST be recorded on re-fetch, and until then no manifest verification of this entry is possible. GloRice allocates national and subnational agricultural statistics to grid cells, so it is a comparison series and not an independent observation of rice extent; see data/processed/README.md."
+  },
+  "natural_earth_admin1_yrd": {
+    "product": "Natural Earth 10 m admin-1 states and provinces with lakes, subset to Anhui, Zhejiang, Jiangsu and Shanghai",
+    "version": "as bundled in the cartopy shapefile cache on this machine",
+    "citation": "Natural Earth, Admin 1 - States, Provinces (10 m, with lakes), public domain, https://www.naturalearthdata.com",
+    "url": "https://www.naturalearthdata.com/downloads/10m-cultural-vectors/10m-admin-1-states-provinces/",
+    "retrieved": "2026-09-01",
+    "files": [
+      {
+        "path": "data/reference/yrd_provinces.geojson",
+        "bytes": 239331,
+        "sha256": "01e5b114da17cdbe55aa03584e21e053f74e4f5155e06c00c35ce4c8d64ec978"
+      }
+    ],
+    "notes": "Public domain, no attribution required, no restriction on redistribution or derivative works. Extracted from ne_10m_admin_1_states_provinces_lakes in the local cartopy cache at ~/.local/share/cartopy/shapefiles/natural_earth/cultural/, reduced from 121 attribute fields to six (name, name_en, name_zh, adm1_code, iso_3166_2, type_en) and written as EPSG:4326 GeoJSON. Unlike every other manifest entry this file is committed rather than fetched, so it is the one entry that verifies on a fresh clone. The cartopy cache is not read at analysis time; this committed file is the boundary source. The exact Natural Earth release version is not recorded in the cache and could not be determined from the shapefile, so the version field describes provenance rather than a version number."
+  }
+}
