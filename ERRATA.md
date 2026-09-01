@@ -297,3 +297,30 @@ Initiative emissions, provincial population and natural gas statistics,
 provincial sown area of rice, and World Bank climatology. Only the sown area
 of rice appears in the Results. The others should be removed or their use
 described.
+
+### 6.5 No classification accuracy is reported
+
+The study reports no classification accuracy metric for either the
+GAIA-derived urban layer or the PPPM-derived paddied rice layer. No confusion
+matrix, kappa coefficient, overall accuracy or per-class accuracy appears in
+the thesis, in the notebook, or in any committed figure.
+
+Section 5.1 is titled "Accuracy Assessment: Remotely sensed estimations versus
+China's recorded estimations", but what it performs is not an accuracy
+assessment. It sets the study's own remotely sensed areas beside China's
+recorded agricultural statistics and compares the two totals. Both are
+independent estimates of the same quantity, and neither is reference data for
+the other, so agreement between them constrains nothing about how often a pixel
+was classified correctly. A classification accuracy assessment requires labelled
+reference samples the classifier did not see, and none were collected.
+
+`legacy/figures/Accuracy_Assessment.png` compounds the confusion. It is a
+rendered image of Table 1, listing urban extent, PPPM-derived paddied rice and
+recorded sown area of rice by province and year. It carries no accuracy metric
+of any kind, despite its filename.
+
+*Verified by:* full-text search of the thesis PDF for confusion matrix, kappa,
+overall accuracy, producer's and user's accuracy, precision, recall, F1 and
+IoU, returning no standalone occurrence of any; the same search across the
+notebook's source and stored outputs, returning none; and visual inspection of
+the rendered Accuracy_Assessment.png.
