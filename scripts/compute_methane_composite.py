@@ -52,6 +52,14 @@ from src.fetch import s5p  # noqa: E402
 from src.methane import grid as mg  # noqa: E402
 from src.methane.grid import Composite, GranuleContribution, GridSpec  # noqa: E402
 
+#: Band order in the exported GeoTIFF. One file rather than three because the
+#: three arrays share one grid and must be read together: a mean without its
+#: count is exactly the thing src/methane exists to prevent, and separate files
+#: invite reading one without the other.
+BANDS = ("methane_mixing_ratio_bias_corrected mean, ppb",
+         "methane_mixing_ratio mean, ppb",
+         "sounding count")
+
 #: Peak disk is one granule plus a checkpoint. The largest granule observed on
 #: this mirror is 66 MB; the allowance is generous and the assertion below is
 #: what actually enforces the bound.
@@ -162,6 +170,68 @@ def assert_disk_bound(directory: Path, allowance: int = PEAK_DISK_ALLOWANCE_BYTE
     return used
 
 
+def export(composite: Composite, stem: Path,
+           csv_path: Path | None = None) -> tuple[Path, Path]:
+    """Write the composite as a three-band GeoTIFF and a complete per-cell CSV.
+
+    Everything is float32, counts included, so one file can hold all three
+    bands; the largest count observed is 410, exact in float32. Unobserved
+    cells are NaN in both mean bands and 0 in the count band, so the two encode
+    the same fact and neither can be read without the other contradicting it.
+
+    The CSV carries every cell, not only the populated ones, so it describes
+    the grid rather than the subset that happened to be observed.
+    """
+    import csv as _csv
+    import rasterio
+    from rasterio.transform import from_origin
+
+    spec = composite.spec
+    counts = composite.counts
+    primary = composite.mean_of(mg.PRIMARY)
+    secondary = composite.mean_of(mg.SECONDARY)
+
+    tif = stem.with_suffix(".tif")
+    stem.parent.mkdir(parents=True, exist_ok=True)
+    transform = from_origin(spec.west, spec.north, spec.resolution, spec.resolution)
+    with rasterio.open(
+        tif, "w", driver="GTiff", height=spec.shape[0], width=spec.shape[1],
+        count=3, dtype="float32", crs="EPSG:4326", transform=transform,
+        nodata=float("nan"), compress="deflate",
+    ) as dst:
+        dst.write(primary.astype("float32"), 1)
+        dst.write(secondary.astype("float32"), 2)
+        dst.write(counts.astype("float32"), 3)
+        for i, description in enumerate(BANDS, start=1):
+            dst.set_band_description(i, description)
+        dst.update_tags(
+            qa_threshold=str(composite.qa_threshold),
+            granules_gridded=str(len(composite.contributions)),
+            granules_with_data=str(sum(
+                1 for c in composite.contributions if c.soundings_in_box)),
+            soundings=str(int(counts.sum())),
+            note="Unobserved cells are NaN in bands 1 and 2 and 0 in band 3.",
+        )
+
+    csv_path = Path(csv_path) if csv_path else stem.with_suffix(".csv")
+    csv_path.parent.mkdir(parents=True, exist_ok=True)
+    with open(csv_path, "w", newline="") as handle:
+        writer = _csv.writer(handle)
+        writer.writerow(["centre_lat", "centre_lon", "sounding_count",
+                         "ch4_bias_corrected_ppb", "ch4_raw_ppb"])
+        for row in range(spec.shape[0]):
+            lat = spec.north - (row + 0.5) * spec.resolution
+            for col in range(spec.shape[1]):
+                lon = spec.west + (col + 0.5) * spec.resolution
+                n = int(counts[row, col])
+                writer.writerow([
+                    f"{lat:.4f}", f"{lon:.4f}", n,
+                    "" if n == 0 else f"{primary[row, col]:.2f}",
+                    "" if n == 0 else f"{secondary[row, col]:.2f}",
+                ])
+    return tif, csv_path
+
+
 def build_argparser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     parser.add_argument("--config", default=str(REPO / "config" / "sources.yml"))
@@ -177,6 +247,11 @@ def build_argparser() -> argparse.ArgumentParser:
                         help="abort cleanly if free space falls below this")
     parser.add_argument("--max-granules", type=int, default=None)
     parser.add_argument("--max-hours", type=float, default=None)
+    parser.add_argument("--export-csv", default=None,
+                        help="path for the per-cell CSV; defaults to the export stem")
+    parser.add_argument("--export", default=None,
+                        help="write GeoTIFF and CSV from an existing checkpoint "
+                             "to this path stem, then exit without fetching")
     parser.add_argument("--run", action="store_true",
                         help="actually download and grid; without it, plan only")
     parser.add_argument("--timeout", type=float, default=s5p.DEFAULT_TIMEOUT)
@@ -197,6 +272,21 @@ def main(argv=None) -> int:
     spec = GridSpec(box["west"], box["south"], box["east"], box["north"],
                     config["grid_resolution_deg"])
     variables = (mg.PRIMARY, mg.SECONDARY)
+
+    if args.export:
+        if not checkpoint.exists():
+            raise SystemExit(f"no checkpoint at {checkpoint}; nothing to export")
+        accumulator = Accumulator.load(checkpoint)
+        composite = accumulator.composite()
+        coverage = mg.coverage_of(composite)
+        tif, csv_path = export(composite, Path(args.export),
+                               Path(args.export_csv) if args.export_csv else None)
+        print(f"  wrote {tif}  ({tif.stat().st_size:,} B)")
+        print(f"  wrote {csv_path}  ({csv_path.stat().st_size:,} B, "
+              f"{composite.spec.n_cells} rows plus a header)")
+        print(f"  coverage {coverage.covered_cells}/{coverage.n_cells} "
+              f"({100 * coverage.fraction:.2f}%), {int(composite.counts.sum()):,} soundings")
+        return 0
 
     print(f"stream      {stream}/{config['product_type']}")
     print(f"dates       {start} to {end}")

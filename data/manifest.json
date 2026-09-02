@@ -89,5 +89,31 @@
       }
     ],
     "notes": "Pixel values encode the year a pixel first became impervious, counting downward from the newest year: year equals 2023 minus value, 0 is non-urban, 2 is 2021 and 38 is 1985 and before. Value 1 is never used in the nine tiles retrieved. Nodata is -128 and is not documented in the product readme, which lists only 0 and 2 through 38. Tiles carry a 30 m merge buffer and therefore overlap, so pixels must be clipped to each tile's nominal five-degree extent before counting. The archive sha256 is null because the 2.3 GB zip was deleted after the nine study-box tiles were extracted and no checksum was computed first; it MUST be recorded on re-fetch. The archive is not internally addressable over its distribution route, so re-obtaining any single tile requires the full 2.3 GB fetch. The nine committed tile checksums below are of the extracted GeoTIFFs, not of members inside the archive, so they verify the local copies but not the archive itself."
+  },
+  "s5p_l2_ch4_2018": {
+    "product": "Sentinel-5P TROPOMI Level 2 methane, RPRO stream, L2__CH4___",
+    "version": "processor 020400, homogeneous across every 2018 granule used; the mirror also carries these orbits at other versions and only the highest per orbit was kept",
+    "citation": "Copernicus Sentinel-5P (processed by ESA), TROPOMI Level 2 Methane total column products. Version 02. European Space Agency. doi:10.5270/S5P-3p6lnwd",
+    "url": "https://meeo-s5p.s3.amazonaws.com/RPRO/L2__CH4___/",
+    "retrieved": "2026-09-02",
+    "licence": "Copernicus open and free data policy; the MEEO mirror redistributes the ESA products unchanged and states no separate licence",
+    "archive": {
+      "name": "578 individual granules, not an archive",
+      "bytes": 31022999664,
+      "sha256": null
+    },
+    "files": [
+      {
+        "path": "data/processed/methane_composite_2018.tif",
+        "bytes": 9028,
+        "sha256": "c230560741a5da2a648a95650aeff54bcde389b2bed273b5eaa79a57cf23ce75"
+      },
+      {
+        "path": "data/processed/methane_coverage_2018.csv",
+        "bytes": 36766,
+        "sha256": "0f77fcb56f0c2371beb98a6f58a508595c6e6ed8b95727da74fac566de1cd099"
+      }
+    ],
+    "notes": "NO CONTENT CHECKSUM IS AVAILABLE FOR THIS SOURCE and the archive sha256 is null for that reason rather than because one was not computed. Every S3 ETag the mirror returns is a multipart tag with a minus-N suffix, which is an MD5 of the concatenated part MD5s rather than of the object, and the part size the uploader used is not published, so the tag cannot be reproduced or checked. Verification is structural instead: each granule must open as netCDF4 and hold a PRODUCT group with the methane, qa_value, latitude and longitude variables. That is weaker than the MD5 verification the figshare and Science Data Bank entries carry, and re-fetching cannot be proven to return the same bytes. The two files listed here are the derived composite and its per-cell table, which ARE checksummed, so the outputs verify even though the inputs cannot. The 578 granules themselves are not retained: they total 28.9 GB and were streamed one at a time, gridded and deleted. Pixel values encode qa in stored uint8 units with scale_factor 0.01, and fill values must be read per variable from their own _FillValue attribute."
   }
 }

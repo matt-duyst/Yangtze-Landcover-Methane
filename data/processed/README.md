@@ -229,3 +229,116 @@ recomputes them; without it the script carries them forward unchanged and says
 so, so they are never mistaken for recomputed values. They are a boundary
 sensitivity check rather than a second estimate, and nothing else in the
 project depends on them.
+
+## methane_composite_2018.tif and methane_coverage_2018.csv
+
+Gridded TROPOMI methane over the study box for 2018, at 0.25 degrees, which is
+33 by 31 cells. The raster carries three bands in one file rather than three
+files, because the three arrays share one grid and have to be read together: a
+mean without its sounding count is the thing src/methane exists to prevent, and
+separate files invite reading one without the other. Band one is the
+bias-corrected mean in ppb, band two the raw mean, band three the sounding
+count. Everything is float32, counts included, since the largest count observed
+is 410 and is exact in float32. Unobserved cells are NaN in bands one and two
+and zero in band three, so the two encode the same fact and neither can be read
+without the other contradicting it. The CSV holds one row per cell for all
+1,023 cells, not only the populated ones, with centre latitude and longitude,
+sounding count and both means; an unobserved cell has a zero count and blank
+means.
+
+The route is the anonymous MEEO S3 mirror at meeo-s5p.s3.amazonaws.com, which
+serves the operational Sentinel-5P products over plain HTTPS with no
+credentials. Copernicus Data Space carries the same granules but requires
+authentication to download and so cannot run from a fresh clone. The mirror
+publishes no usable content checksum: every S3 ETag observed is a multipart tag
+with a minus-N suffix, which is an MD5 of the part MD5s rather than of the
+object, and the part size is not published. Verification is therefore
+structural, that the file opens as netCDF4 and holds a PRODUCT group with the
+expected variables, and that is weaker than the MD5 verification the figshare
+and Science Data Bank routes get. It catches a truncated body or an error page
+served with HTTP 200; it would not catch a silently corrupted granule.
+
+The stream is RPRO, the reprocessed one, which for 2018 is homogeneous at
+processor version 020400. OFFL was not used for this year because it holds only
+34 days of 2018 against RPRO's 246, and because its early-period granules sit
+at processor version 010202, a different version family; mixing the two would
+pool two reconstructions of the same record with no way afterwards to attribute
+a cell to a released version. The stream table for every year is in
+notes/decisions.md.
+
+Every orbit is published more than once. A listing of 2018 returns 6,390 keys
+for 3,437 distinct orbits, the same overpass at more than one processor
+version. Only the highest version of each orbit is kept. Gridding both would
+have counted the same soundings twice, inflating the per-cell counts and
+biasing the mean toward whichever overpasses happen to be duplicated.
+
+Candidate granules are chosen by orbital geometry rather than by footprint,
+because a filename encodes an orbit number and a UTC time window and carries no
+geographic extent at all. Sentinel-5P is sun-synchronous with a 13:30 local
+descending node, so UTC is local time minus longitude over fifteen, which puts
+the study box under the satellite at about 05:19 to 05:50 UTC. That window,
+widened by 55 minutes for swath width and neighbouring orbits, selects 578 of
+the 3,437 deduplicated granules. This is a superset and not an exact test:
+whether the swath actually reached the box is knowable only from the granule's
+own latitude and longitude arrays, after downloading it.
+
+The quality threshold is 0.75. The recommended value is 0.5, and in this region
+the two select identical soundings because qa_value is quantised to its top bin
+here, so 0.75 costs nothing and is the stricter statement. qa_value is stored
+as uint8 with a scale factor of 0.01, so the comparison is made in stored units
+against 75; comparing the float 0.75 against the raw array would keep every
+sounding. Fill values are read from each variable's own _FillValue attribute
+and never assumed, which matters because the same code must not depend on
+whether netCDF4, h5py or xarray opened the file.
+
+The yield for 2018 was 578 candidate granules, of which 222 carried any
+in-box sounding and 356 carried none. Those 222 gave 110,928 soundings, which
+covered 927 of the 1,023 cells, 90.62 percent, with a median of 75 soundings
+per covered cell and a maximum of 410. That is far more than an earlier
+36-granule sample suggested, for reasons recorded in notes/decisions.md.
+
+January through March are absent because the data does not exist. The public L2
+CH4 record begins on 2018-04-30, and listings for 15 January, 15 February, 15
+March and 15 April 2018 return a key count of zero in both RPRO and OFFL. 2018
+is therefore an eight-month year for this product, and the composite describes
+the days that exist rather than the calendar year.
+
+Yield is strongly seasonal and runs against granule availability. June, July
+and August give 4.6 to 5.0 percent of the year's soundings each despite
+carrying the most granules, because the monsoon clouds them. October alone
+gives 30.8 percent. Autumn and winter together carry 75.5 percent of the year's
+soundings from 44 percent of its granules. Any analysis that treats the
+composite as an annual mean is weighting autumn far above summer, and the
+per-cell counts are what make that visible.
+
+Both methane variables are provided because the choice between them is
+substantive. The bias correction adds 11.64 ppb on average, ranging from plus
+3.42 to plus 29.05, and it differs in all 927 covered cells. Its 25.6 ppb
+spread across cells is nearly twice the field's own standard deviation of 14.9
+ppb, so the correction is not a constant offset that cancels in a comparison.
+
+The 96 uncovered cells are a coherent systematic gap, not scatter. Just under
+half of them, 47 cells, form a single connected block spanning 26.95 to 28.95
+north and 118.05 to 121.30 east, the mountainous interior of southern Zhejiang,
+which is 95 percent land. Ocean is not the explanation for the gap in presence
+terms: the mean ocean fraction of uncovered cells, 0.151, is lower than that of
+covered cells, 0.204. Water shows up in the counts instead of in the coverage.
+Cells that are 25 to 99 percent sea, which is to say the coastline, have a
+median of 2 to 3 soundings and are uncovered 24 percent of the time, against a
+median of 108 and 9.8 percent for pure-land cells and 26.5 and 2.6 percent for
+open sea. A single retained granule gives consistent, weak support for the
+albedo mechanism: soundings falling in cells that the annual composite never
+covered have a median surface_albedo_SWIR of 0.0161 against 0.0673 for
+soundings in covered cells, a factor of 4.2, though on only twelve soundings in
+the uncovered group. Those cells should be reported as missing and excluded
+from any model that consumes this field. They should not be interpolated: the
+gap is where the instrument systematically fails, so an interpolated value
+there would be an extrapolation from brighter, flatter terrain into darker,
+steeper terrain, and it would carry no warning that it had been invented.
+
+Regenerating this costs a 28.9 GB download and about 64 minutes at the observed
+7.8 MB/s. The command is scripts/compute_methane_composite.py with --run, a
+granule cap and a date range; it streams one granule at a time, gridding and
+deleting each before fetching the next, so peak disk is one granule rather than
+the 28.9 GB the year would otherwise need. Exporting the raster and the table
+from an existing checkpoint costs nothing and is the --export flag.
