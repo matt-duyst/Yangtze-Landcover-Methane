@@ -21,6 +21,25 @@ back as NaN in the mean grid and 0 in the count grid, and the two must be read
 together. Over this study area most cells are empty in any single granule: the
 median covered cell at 0.25 degree received 6 soundings pooled over 36
 granules, and 44 percent of cells received none at all.
+
+**Covariates never gate a sounding, and each carries its own count.** The
+support-data fields are produced on different subsets of the swath from the
+methane retrieval: only 3.4 percent of in-box soundings carry a valid
+``surface_albedo_SWIR``, because albedo is written only where the retrieval got
+far enough. If a covariate joined the validity mask, adding albedo would throw
+away 96.6 percent of the methane record, and the answer to "does land cover
+explain methane" would silently become an answer about a different 3 percent of
+the field. So the methane variables gate and the covariates do not: a covariate
+is read on the soundings methane already selected, masked by its own
+``_FillValue``, and accumulated into sums and counts of its own.
+
+That is also how the structural guarantee survives the change. A mean is still
+unreachable without the count it rests on, but now for every variable rather
+than only for methane: :meth:`Composite.mean_of` looks up that variable's own
+count through :meth:`Composite.count_of` and returns NaN wherever it is zero,
+and :meth:`Composite.grids` hands back the pair. There is no path to a
+covariate mean that does not go through its matching denominator, and a
+covariate's denominator is never methane's.
 """
 
 from __future__ import annotations
@@ -94,6 +113,38 @@ class GridSpec:
 
 
 @dataclass(frozen=True)
+class CovariateSpec:
+    """One support-data variable and the group it lives in.
+
+    The path is configuration rather than a constant because these fields are
+    spread over three different subgroups of PRODUCT: winds and surface
+    geometry under SUPPORT_DATA/INPUT_DATA, albedo under
+    SUPPORT_DATA/DETAILED_RESULTS, and viewing angles under
+    SUPPORT_DATA/GEOLOCATIONS. Assuming one location would find some of them
+    and silently miss the rest.
+    """
+
+    name: str
+    group: str = "PRODUCT"
+
+    @property
+    def path(self) -> tuple[str, ...]:
+        return tuple(part for part in self.group.split("/") if part)
+
+
+def open_group(dataset, path: Sequence[str]):
+    """Walk a netCDF group path, or raise saying where it stopped."""
+    node = dataset
+    for part in path:
+        groups = getattr(node, "groups", {})
+        if part not in groups:
+            raise MissingVariable(
+                f"no group {part!r} under {'/'.join(path[:path.index(part)]) or '/'}")
+        node = groups[part]
+    return node
+
+
+@dataclass(frozen=True)
 class Soundings:
     """Valid soundings from one granule, already filtered."""
 
@@ -103,6 +154,11 @@ class Soundings:
     longitude: np.ndarray
     values: Mapping[str, np.ndarray]
     qa_stored: np.ndarray
+    #: Covariate values on the soundings methane already selected. Each is
+    #: paired with a validity mask of the same length rather than being
+    #: pre-filtered, because dropping a sounding here would drop its methane.
+    covariates: Mapping[str, np.ndarray] = field(default_factory=dict)
+    covariate_valid: Mapping[str, np.ndarray] = field(default_factory=dict)
 
     def __len__(self) -> int:
         return int(self.latitude.size)
@@ -117,6 +173,12 @@ class GranuleContribution:
     soundings_read: int
     soundings_valid: int
     soundings_in_box: int
+    #: In-box soundings carrying a valid value, per covariate. Far below
+    #: ``soundings_in_box`` for albedo, which is the point of recording it.
+    covariates_valid: Mapping[str, int] = field(default_factory=dict)
+    #: Covariates the granule does not contain at all. A granule missing one is
+    #: still gridded for everything else rather than being discarded.
+    covariates_missing: tuple[str, ...] = ()
 
     @property
     def year(self) -> int | None:
@@ -130,6 +192,8 @@ class GranuleContribution:
             "soundings_read": self.soundings_read,
             "soundings_valid": self.soundings_valid,
             "soundings_in_box": self.soundings_in_box,
+            "covariates_valid": dict(self.covariates_valid),
+            "covariates_missing": list(self.covariates_missing),
         }
 
 
@@ -177,23 +241,65 @@ class Composite:
     counts: np.ndarray
     sums: Mapping[str, np.ndarray]
     contributions: Sequence[GranuleContribution] = field(default_factory=tuple)
+    #: Covariate sums and the counts each rests on. Separate from ``counts``
+    #: because a covariate is valid on a different, usually much smaller, set of
+    #: soundings than methane, and dividing one by the other would be wrong by
+    #: whatever that difference is.
+    covariate_sums: Mapping[str, np.ndarray] = field(default_factory=dict)
+    covariate_counts: Mapping[str, np.ndarray] = field(default_factory=dict)
 
     @property
     def variables(self) -> list[str]:
         return sorted(self.sums)
 
+    @property
+    def covariates(self) -> list[str]:
+        return sorted(self.covariate_sums)
+
+    @property
+    def all_variables(self) -> list[str]:
+        return sorted([*self.sums, *self.covariate_sums])
+
+    def count_of(self, variable: str) -> np.ndarray:
+        """The denominator this variable's mean must be divided by.
+
+        Methane variables share the sounding count. Every covariate has its
+        own, because it was valid on its own subset of those soundings.
+        """
+        if variable in self.sums:
+            return self.counts
+        if variable in self.covariate_counts:
+            return self.covariate_counts[variable]
+        raise KeyError(
+            f"{variable!r} not in this composite; have {self.all_variables}")
+
     def mean_of(self, variable: str) -> np.ndarray:
-        """Mean value per cell, NaN where no sounding fell."""
-        if variable not in self.sums:
-            raise KeyError(f"{variable!r} not in this composite; have {self.variables}")
+        """Mean value per cell, NaN where nothing valid fell.
+
+        Always divided by :meth:`count_of` for the same variable, so a
+        covariate observed on 3 percent of soundings is averaged over the cells
+        and soundings that actually carried it and is NaN elsewhere.
+        """
+        if variable in self.sums:
+            numerator = self.sums[variable]
+        elif variable in self.covariate_sums:
+            numerator = self.covariate_sums[variable]
+        else:
+            raise KeyError(
+                f"{variable!r} not in this composite; have {self.all_variables}")
+        denominator = self.count_of(variable)
         out = np.full(self.spec.shape, np.nan, dtype="float64")
-        covered = self.counts > 0
-        out[covered] = self.sums[variable][covered] / self.counts[covered]
+        covered = denominator > 0
+        out[covered] = numerator[covered] / denominator[covered]
         return out
 
     def grids(self, variable: str) -> tuple[np.ndarray, np.ndarray]:
-        """``(mean, count)``. The pair is the unit of use, not the mean alone."""
-        return self.mean_of(variable), self.counts.copy()
+        """``(mean, count)``. The pair is the unit of use, not the mean alone.
+
+        The count returned is this variable's own, never methane's, so the pair
+        is self-consistent for a covariate as well as for methane.
+        """
+        return self.mean_of(variable), self.count_of(variable).copy()
 
     @property
     def total_soundings(self) -> int:
@@ -239,12 +345,26 @@ def stored_threshold(threshold: float, scale_factor: float | None,
     return (threshold - (add_offset or 0.0)) / scale_factor
 
 
+def _scaled(raw, fill, scale, offset):
+    """Physical values and a validity mask, from one variable's own attributes."""
+    value = raw.astype("float64")
+    if scale:
+        value = value * scale
+    if offset:
+        value = value + offset
+    valid = np.isfinite(value)
+    if fill is not None:
+        valid &= raw != fill
+    return value, valid
+
+
 def read_soundings(
     path: str | Path,
     spec: GridSpec,
     *,
     qa_threshold: float = 0.75,
     variables: Sequence[str] = (PRIMARY, SECONDARY),
+    covariates: Sequence[CovariateSpec] = (),
     group_name: str = "PRODUCT",
 ) -> tuple[Soundings, GranuleContribution]:
     """Read one granule and return the soundings that survive filtering.
@@ -253,6 +373,12 @@ def read_soundings(
     variable's own ``_FillValue``; drop soundings whose ``qa_value`` is the qa
     fill; drop those below the quality threshold, compared in stored units; and
     finally restrict to the grid's bounding box.
+
+    ``covariates`` take no part in that. They are read afterwards, on the
+    soundings already selected, each masked by its own ``_FillValue`` and its
+    own attributes. A covariate that is absent from the granule is recorded in
+    the contribution and skipped; it does not fail the granule, because one
+    missing support field is not a reason to discard a swath of methane.
     """
     import netCDF4
 
@@ -269,15 +395,8 @@ def read_soundings(
         read_values = {}
         good = np.ones(lat.shape, dtype=bool)
         for name in variables:
-            raw, fill, scale, offset = _read_variable(group, name)
-            value = raw.astype("float64")
-            if scale:
-                value = value * scale
-            if offset:
-                value = value + offset
-            if fill is not None:
-                good &= raw != fill
-            good &= np.isfinite(value)
+            value, valid = _scaled(*_read_variable(group, name))
+            good &= valid
             read_values[name] = value
 
         total = int(lat.size)
@@ -296,6 +415,23 @@ def read_soundings(
         row, col, inside = spec.cell_of(lat, lon)
         keep = good & inside
 
+        # Covariates are read on `keep` and never fold into it.
+        covariate_values, covariate_masks = {}, {}
+        missing: list[str] = []
+        for covariate in covariates:
+            try:
+                source = open_group(dataset, covariate.path)
+                raw, fill, scale, offset = _read_variable(source, covariate.name)
+            except MissingVariable:
+                missing.append(covariate.name)
+                continue
+            if raw.size != lat.size:
+                missing.append(covariate.name)
+                continue
+            value, ok = _scaled(raw, fill, scale, offset)
+            covariate_values[covariate.name] = value[keep]
+            covariate_masks[covariate.name] = ok[keep]
+
         acquired = _acquired_from(dataset, path)
         soundings = Soundings(
             granule=path.name,
@@ -304,10 +440,14 @@ def read_soundings(
             longitude=np.asarray(lon)[keep].astype("float64"),
             values={k: v[keep] for k, v in read_values.items()},
             qa_stored=np.asarray(qa_raw)[keep],
+            covariates=covariate_values,
+            covariate_valid=covariate_masks,
         )
     contribution = GranuleContribution(
         granule=path.name, acquired=acquired, soundings_read=total,
         soundings_valid=valid, soundings_in_box=len(soundings),
+        covariates_valid={k: int(m.sum()) for k, m in covariate_masks.items()},
+        covariates_missing=tuple(missing),
     )
     return soundings, contribution
 
@@ -330,25 +470,52 @@ def _acquired_from(dataset, path: Path) -> datetime | None:
     return None
 
 
+def accumulate_covariates(soundings: Soundings, row, col, sums, counts) -> None:
+    """Add a granule's covariates into pre-sized sums and counts of their own.
+
+    Shared by :func:`grid_granules` and the streaming accumulator so the two
+    cannot drift apart. A covariate is added only where its own mask is true and
+    its count is incremented on exactly those soundings, so the sum and its
+    denominator are built from the same set by construction rather than by two
+    pieces of code agreeing. A covariate with no pre-sized grid is ignored: the
+    caller decides what it is accumulating, not the granule.
+    """
+    for name, values in soundings.covariates.items():
+        if name not in sums:
+            continue
+        mask = soundings.covariate_valid[name]
+        if not mask.any():
+            continue
+        np.add.at(sums[name], (row[mask], col[mask]), values[mask])
+        np.add.at(counts[name], (row[mask], col[mask]), 1)
+
+
 def grid_granules(
     paths: Iterable[str | Path],
     spec: GridSpec,
     *,
     qa_threshold: float = 0.75,
     variables: Sequence[str] = (PRIMARY, SECONDARY),
+    covariates: Sequence[CovariateSpec] = (),
 ) -> Composite:
     """Bin every granule onto the grid, averaging where cells receive several.
 
     Returns a :class:`Composite`, which carries the counts alongside the sums
-    and records what each granule contributed.
+    and records what each granule contributed. Covariates accumulate into their
+    own sums and counts and never touch the methane ones.
     """
     counts = np.zeros(spec.shape, dtype="int64")
     sums = {name: np.zeros(spec.shape, dtype="float64") for name in variables}
+    covariate_sums = {c.name: np.zeros(spec.shape, dtype="float64")
+                      for c in covariates}
+    covariate_counts = {c.name: np.zeros(spec.shape, dtype="int64")
+                        for c in covariates}
     contributions: list[GranuleContribution] = []
 
     for path in paths:
         soundings, contribution = read_soundings(
-            path, spec, qa_threshold=qa_threshold, variables=variables)
+            path, spec, qa_threshold=qa_threshold, variables=variables,
+            covariates=covariates)
         contributions.append(contribution)
         if not len(soundings):
             continue
@@ -356,9 +523,12 @@ def grid_granules(
         np.add.at(counts, (row, col), 1)
         for name in variables:
             np.add.at(sums[name], (row, col), soundings.values[name])
+        accumulate_covariates(soundings, row, col, covariate_sums, covariate_counts)
 
     return Composite(spec=spec, qa_threshold=qa_threshold, counts=counts,
-                     sums=sums, contributions=tuple(contributions))
+                     sums=sums, contributions=tuple(contributions),
+                     covariate_sums=covariate_sums,
+                     covariate_counts=covariate_counts)
 
 
 def coverage_of(composite: Composite) -> Coverage:
