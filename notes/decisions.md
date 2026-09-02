@@ -215,7 +215,7 @@ snapshot for Shanghai, where the 2017 to 2018 net of minus 288,392 is an order
 of magnitude above the later noise. It sits at the boundary for Jiangsu, whose
 transition from 2017 is pinned while its transition to 2019 is not.
 
-## Anhui's rice rasters are clipped in seven of nine years
+## Anhui's rice rasters are clipped, and the clipped region is unclassified
 
 Anhui's raster does not contain the province in seven of the nine years. The
 2017 to 2020 rasters omit 13.675 percent of the polygon, cutting 1.2966 degrees
@@ -225,31 +225,80 @@ northern one, still losing 1.0553 degrees off the top. Only 2024 and 2025
 contain the province, and then with a residual 2.9 km2 sliver on the western
 edge that is negligible.
 
-The rice counts are nevertheless comparable across all nine years, which is not
-obvious and had to be checked rather than assumed. Every one of the 963 million
-pixels added by the box growth is class 0. That was verified directly: the
-northern strip holds 772,361,075 pixels and the western strip 190,261,806, and
-in both the only value present is 0. The 2024 rice count is 274,422,562 whether
-computed over the full raster or restricted to either of the earlier boxes, so
-the 2023 to 2024 rise of 4,058,040 pixels is entirely real change on common
-ground and none of it is the box moving.
+The rice counts are comparable across all nine years, which is not obvious and
+had to be checked rather than assumed. Every one of the 963 million pixels added
+by the box growth is class 0. That was verified directly: the northern strip
+holds 772,361,075 pixels and the western strip 190,261,806, and in both the only
+value present is 0. The 2024 rice count is 274,422,562 whether computed over the
+full raster or restricted to either of the earlier boxes, so the 2023 to 2024
+rise of 4,058,040 pixels is entirely real change on common ground and none of it
+is the box moving.
 
-One ambiguity cannot be resolved from these files. Because they carry no nodata,
-an all-zero strip is indistinguishable from an unclassified strip. Northern
-Anhui either grows no rice or was never classified, and both possibilities
-produce byte-identical output. This does not affect year-to-year comparison,
-since the region contributes zero in every year that covers it and is absent
-from every year that does not. It does affect any claim that these files
-represent all of Anhui's rice. Northern Anhui is part of the Huaibei plain, a
-major agricultural region, so rice-free is a strong claim about a large area and
-should not be assumed without independent evidence.
+The question of whether that region is rice-free or simply unclassified was open
+and is now settled: it is unclassified. Five annual products, produced across
+three different raster extents, all terminate their classification at latitude
+33.3462 to within 22 metres. The northernmost class-1 pixel in the 2024 raster
+sits at 33.346144 against a 2017 to 2020 raster edge of 33.3462, a difference of
+6.1 metres on a 10 metre grid. The 2021 to 2023 rasters extend 27 km north of
+that line and classify nothing there; the 2024 and 2025 rasters extend 143 km
+north of it and classify nothing there either. The classifications otherwise
+differ from one another year to year, so this is not one output copied forward.
+A boundary reproduced to sub-pixel precision across five separately produced
+files is a processing boundary, and no agricultural explanation accounts for it.
+
+The same cutoff exists on the western edge. The westernmost class-1 pixel in the
+2024 raster is at longitude 115.268428 against the 2017 to 2020 western edge of
+115.2682, an offset of 21.4 metres, with every longitudinal band from 114.87 to
+115.26 holding hundreds of thousands of in-polygon pixels and no rice at all.
+The classification footprint in every year is therefore the 2017 to 2020 box
+exactly, on both edges, whatever canvas the file is written on. That footprint
+covers 120,754 km2 of the province and omits 19,440 km2, of which 18,459 km2 is
+north of 33.3462 and 981 km2 west of 115.2682.
+
+How this was nearly missed is worth recording, because the same mistake is
+available in any profile. At 0.1 degree resolution the latitudinal band profile
+supports the rice-free reading: class-1 density declines smoothly from 34.2
+percent at 32.4 degrees to 3.4 percent at 33.2, which reads as an ordinary
+agricultural gradient running out. Only refining to 0.001 degrees shows the
+decline continuing to 0.0014 percent in the band containing the old edge and
+then hitting exactly zero immediately after it. Check the resolution of a
+profile before concluding anything from its shape.
+
+The magnitude of the omission is small, which matters more for use than the
+binary answer. GloRice puts about 320 km2 of rice in the region, 1.44 percent of
+Anhui's rice on 13.2 percent of its land, at roughly a tenth of the southern
+density. Extrapolating instead at the density of the covered part gives 3,645
+km2, which would put Anhui's 2018 total at 26,239 km2 against a provincial sown
+area statistic of 25,450, so uniform density is ruled out arithmetically. On the
+region where both products look, they agree to 2.7 percent: 22,594.7 km2 from
+this product against 22,007.6 from GloRice for 2018.
+
+GloRice bounds that estimate without establishing it. It allocates official
+statistics to grid cells through an allocation model, so its distribution within
+a province is modelled rather than observed, and its northern share being
+constant at 1.44 percent across all five years is itself the signature of a
+fixed allocation weight rather than five annual observations.
+
+The earlier judgement that the count is sound is therefore amended. Anhui's
+totals cover the province south of 33.3462 and east of 115.2682, not Anhui, with
+a known omission on the order of 1.4 percent of the province's rice. The
+nine-year series nevertheless remains internally comparable, because the same
+region is excluded from every year that covers it and absent from every year
+that does not, so year-to-year differences are unaffected.
+
+That distinction decides usability, and it is worth stating against the other
+two provinces explicitly. Anhui's defect is a fixed, quantified, spatially
+bounded omission with a known sign: the totals are low by a small amount, always
+in the same places, in every year. Shanghai's and Jiangsu's defect is a pinned
+total, which destroys the information content of the series itself. Anhui
+retains a usable nine-year series and those two do not.
 
 A separate constraint follows from the extent, independent of the count
 question. Anhui 2017 to 2023 must not be used for any area-normalised statistic.
-The raster covers only 86.3 percent of the province in 2017 to 2020 and 91.9
+The raster covers only 86.1 percent of the province in 2017 to 2020 and 91.9
 percent in 2021 to 2023, while a polygon denominator covers 100 percent, so a
 rice fraction or a rice density for those seven years is wrong even though the
-underlying count is sound.
+underlying count behaves as described above.
 
 ## Rice fractions must be computed against the raster-polygon intersection
 

@@ -9,10 +9,10 @@
       {
         "path": "glorice/GloRice-phsc-Ex.zip",
         "bytes": 148845107,
-        "sha256": null
+        "sha256": "da2bbc1f93834f58acce166369cb8ad4f3faa12b7e2c828701c2d34aae8350c5"
       }
     ],
-    "notes": "Licence CC BY 4.0 on the figshare data record; the accompanying Scientific Data article is CC BY-NC-ND 4.0, which applies to the paper and not to the data. Contains exten_phsc_{year}.nc for 1961-2021, netCDF4, 5 arcmin, 2160x4320, EPSG:4326, variable 'area' in hectares per cell, NaN where no rice. The sha256 field is null because the archive was deleted after extraction under a download budget and no checksum was computed before deletion; the checksum MUST be recorded on re-fetch, and until then no manifest verification of this entry is possible. GloRice allocates national and subnational agricultural statistics to grid cells, so it is a comparison series and not an independent observation of rice extent; see data/processed/README.md."
+    "notes": "Licence CC BY 4.0 on the figshare data record; the accompanying Scientific Data article is CC BY-NC-ND 4.0, which applies to the paper and not to the data. Contains exten_phsc_{year}.nc for 1961-2021, netCDF4, 5 arcmin, 2160x4320, EPSG:4326, variable 'area' in hectares per cell, NaN where no rice. The sha256 was verified on a second fetch on 2026-09-02: the archive was re-downloaded after the first copy had been deleted, and both the byte count and the checksum are recorded from that second retrieval. GloRice allocates national and subnational agricultural statistics to grid cells, so it is a comparison series and not an independent observation of rice extent; see data/processed/README.md."
   },
   "natural_earth_admin1_yrd": {
     "product": "Natural Earth 10 m admin-1 states and provinces with lakes, subset to Anhui, Zhejiang, Jiangsu and Shanghai",
