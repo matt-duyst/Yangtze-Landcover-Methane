@@ -187,3 +187,191 @@ def zonal_area(
         )
         for name in zones
     ]
+
+
+def zonal_value_sum(
+    values: np.ndarray,
+    transform,
+    zones: Mapping[str, BaseGeometry],
+    *,
+    unit_scale: float = 1.0,
+    label: str = "sum",
+    area_crs: str = CHINA_ALBERS,
+) -> list[ZonalResult]:
+    """Area-weighted sum of cell values within each zone.
+
+    For products whose cell values are already areas rather than class codes.
+    GloRice stores hectares of rice per 5-arcmin cell, so a provincial total is
+    the sum of those values apportioned by the share of each cell inside the
+    province, not a count of cells and not an area computed from the grid.
+
+    ``unit_scale`` converts the summed values to square kilometres: hectares
+    are 0.01 km2 each. ``values`` may contain NaN, which is treated as zero,
+    because GloRice writes NaN where there is no rice rather than declaring a
+    fill value.
+
+    Returns the same :class:`ZonalResult` type as :func:`zonal_area`, so a
+    coverage fraction accompanies every figure here too. ``pixel_count`` is the
+    number of cells contributing a non-zero value, which for a fractional
+    weighting is a diagnostic rather than an area.
+    """
+    from src.landcover.geometry import fractional_weights
+
+    values = np.asarray(values, dtype="float64")
+    height, width = values.shape
+    left, top = transform.c, transform.f
+    right = left + width * abs(transform.a)
+    bottom = top - height * abs(transform.e)
+    bounds = (left, bottom, right, top)
+
+    finite = np.nan_to_num(values, nan=0.0, posinf=0.0, neginf=0.0)
+
+    results = []
+    for name, geometry in zones.items():
+        cover = coverage_for(name, geometry, bounds, crs=area_crs)
+        rows, cols, share = fractional_weights(geometry, transform, (height, width),
+                                               crs=area_crs)
+        if rows.size == 0:
+            total, count = 0.0, 0
+        else:
+            picked = finite[rows, cols]
+            total = float((picked * share).sum())
+            count = int((picked != 0).sum())
+        results.append(
+            ZonalResult(
+                zone=name,
+                selection=label,
+                area_km2=total * unit_scale,
+                pixel_count=count,
+                zone_area_km2=cover.zone_area_km2,
+                covered_area_km2=cover.covered_area_km2,
+            )
+        )
+    return results
+
+
+@dataclass(frozen=True)
+class ZonalHistogram:
+    """Ground area of every distinct pixel value within one zone.
+
+    A year-of-change product encodes a whole time series in one band, so a
+    37-year series would otherwise mean 37 passes over the same raster. One
+    histogram answers every threshold: cumulative extent for a year is the sum
+    of the entries at or above that year's cutoff.
+
+    ``area_km2_by_value`` and ``count_by_value`` are keyed by the raw pixel
+    value. Coverage travels with the histogram for the same reason it travels
+    with :class:`ZonalResult`.
+    """
+
+    zone: str
+    area_km2_by_value: dict[int, float]
+    count_by_value: dict[int, int]
+    zone_area_km2: float
+    covered_area_km2: float
+
+    @property
+    def coverage(self) -> float:
+        if self.zone_area_km2 <= 0:
+            return 0.0
+        return self.covered_area_km2 / self.zone_area_km2
+
+    def area_where(self, selector: Selector) -> float:
+        """Area of the values this selector accepts."""
+        if not self.area_km2_by_value:
+            return 0.0
+        values = np.array(sorted(self.area_km2_by_value), dtype="int64")
+        chosen = selector(values)
+        return float(sum(self.area_km2_by_value[int(v)] for v in values[chosen]))
+
+    def result_for(self, selector: Selector) -> ZonalResult:
+        """The :class:`ZonalResult` a selector would have produced."""
+        values = np.array(sorted(self.area_km2_by_value), dtype="int64")
+        chosen = selector(values) if values.size else np.zeros(0, dtype=bool)
+        picked = values[chosen] if values.size else values
+        return ZonalResult(
+            zone=self.zone,
+            selection=selector.description,
+            area_km2=float(sum(self.area_km2_by_value[int(v)] for v in picked)),
+            pixel_count=int(sum(self.count_by_value[int(v)] for v in picked)),
+            zone_area_km2=self.zone_area_km2,
+            covered_area_km2=self.covered_area_km2,
+        )
+
+
+def zonal_histogram(
+    raster: str | Path,
+    zones: Mapping[str, BaseGeometry],
+    *,
+    clip_bounds: tuple[float, float, float, float] | None = None,
+    block_rows: int = DEFAULT_BLOCK_ROWS,
+    area_crs: str = CHINA_ALBERS,
+) -> dict[str, ZonalHistogram]:
+    """Area of every distinct pixel value within each zone, in one pass.
+
+    Same masking, clipping and equal-area weighting as :func:`zonal_area`; the
+    difference is only that nothing is selected here, so one read serves any
+    number of later selections.
+    """
+    raster = Path(raster)
+    with rasterio.open(raster) as source:
+        transform = source.transform
+        height, width = source.height, source.width
+        bounds = tuple(source.bounds)
+        if clip_bounds is not None:
+            bounds = (
+                max(bounds[0], clip_bounds[0]), max(bounds[1], clip_bounds[1]),
+                min(bounds[2], clip_bounds[2]), min(bounds[3], clip_bounds[3]),
+            )
+
+        coverages = {
+            name: coverage_for(name, geometry, bounds, crs=area_crs)
+            for name, geometry in zones.items()
+        }
+        row_areas = row_pixel_areas_m2(
+            transform.f, abs(transform.e), abs(transform.a), height)
+
+        centre_x = transform.c + (np.arange(width) + 0.5) * transform.a
+        centre_y = transform.f + (np.arange(height) + 0.5) * transform.e
+        if clip_bounds is not None:
+            keep_col = (centre_x >= clip_bounds[0]) & (centre_x < clip_bounds[2])
+            keep_row = (centre_y > clip_bounds[1]) & (centre_y <= clip_bounds[3])
+        else:
+            keep_col = np.ones(width, dtype=bool)
+            keep_row = np.ones(height, dtype=bool)
+
+        areas: dict[str, dict[int, float]] = {n: {} for n in zones}
+        counts: dict[str, dict[int, int]] = {n: {} for n in zones}
+        active = [n for n, c in coverages.items() if c.covered_area_km2 > 0]
+
+        for start in range(0, height, block_rows):
+            rows = min(block_rows, height - start)
+            if not keep_row[start:start + rows].any():
+                continue
+            window = Window(0, start, width, rows)
+            block = source.read(1, window=window)
+            window_transform = rasterio.windows.transform(window, transform)
+            in_clip = keep_row[start:start + rows, None] & keep_col[None, :]
+            row_area = np.broadcast_to(row_areas[start:start + rows, None], (rows, width))
+            for name in active:
+                mask = zone_mask(zones[name], (rows, width), window_transform) & in_clip
+                if not mask.any():
+                    continue
+                vals = block[mask]
+                ars = row_area[mask]
+                for value in np.unique(vals):
+                    key = int(value)
+                    hit = vals == value
+                    areas[name][key] = areas[name].get(key, 0.0) + float(ars[hit].sum())
+                    counts[name][key] = counts[name].get(key, 0) + int(hit.sum())
+
+    return {
+        name: ZonalHistogram(
+            zone=name,
+            area_km2_by_value={k: v / 1e6 for k, v in areas[name].items()},
+            count_by_value=dict(counts[name]),
+            zone_area_km2=coverages[name].zone_area_km2,
+            covered_area_km2=coverages[name].covered_area_km2,
+        )
+        for name in zones
+    }

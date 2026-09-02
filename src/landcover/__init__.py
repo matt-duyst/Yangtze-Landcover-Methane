@@ -26,6 +26,7 @@ from src.landcover.geometry import (  # noqa: F401
     CHINA_ALBERS,
     ZoneCoverage,
     coverage_for,
+    fractional_weights,
     load_zones,
     raster_bounds_geometry,
     row_pixel_areas_m2,
@@ -36,4 +37,10 @@ from src.landcover.selectors import (  # noqa: F401
     at_most,
     in_classes,
 )
-from src.landcover.zonal import ZonalResult, zonal_area  # noqa: F401
+from src.landcover.zonal import (  # noqa: F401
+    ZonalHistogram,
+    ZonalResult,
+    zonal_area,
+    zonal_histogram,
+    zonal_value_sum,
+)

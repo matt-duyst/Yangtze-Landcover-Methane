@@ -144,3 +144,61 @@ def zone_mask(geometry: BaseGeometry, shape, transform) -> np.ndarray:
         dtype="uint8",
         all_touched=False,
     ).astype(bool)
+
+
+def fractional_weights(
+    geometry: BaseGeometry,
+    transform,
+    shape,
+    *,
+    crs: str = CHINA_ALBERS,
+) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
+    """Fraction of each grid cell that lies inside ``geometry``.
+
+    Returns ``(rows, cols, fractions)`` for the cells with a non-zero share.
+
+    A centre-in-polygon mask is adequate at 10 or 30 m, where a boundary pixel
+    is a rounding error, and inadequate at 5 arcmin, where one cell is roughly
+    9 km across and a province boundary cuts through many of them. Products
+    whose values are already areas, such as GloRice's hectares per cell, must
+    be apportioned by the share of the cell inside the zone rather than counted
+    whole or dropped whole.
+
+    Shares are measured in an equal-area projection so that a cell straddling
+    the boundary contributes in proportion to ground area, not to degrees.
+    """
+    height, width = shape
+    left, top = transform.c, transform.f
+    pixel_w, pixel_h = abs(transform.a), abs(transform.e)
+
+    minx, miny, maxx, maxy = geometry.bounds
+    col0 = max(0, int(np.floor((minx - left) / pixel_w)))
+    col1 = min(width, int(np.ceil((maxx - left) / pixel_w)))
+    row0 = max(0, int(np.floor((top - maxy) / pixel_h)))
+    row1 = min(height, int(np.ceil((top - miny) / pixel_h)))
+    if col1 <= col0 or row1 <= row0:
+        empty = np.zeros(0, dtype="int64")
+        return empty, empty, np.zeros(0, dtype="float64")
+
+    cells, rows, cols = [], [], []
+    for row in range(row0, row1):
+        cell_top = top - row * pixel_h
+        cell_bottom = cell_top - pixel_h
+        for col in range(col0, col1):
+            cell_left = left + col * pixel_w
+            cells.append(box(cell_left, cell_bottom, cell_left + pixel_w, cell_top))
+            rows.append(row)
+            cols.append(col)
+
+    grid = gpd.GeoSeries(cells, crs="EPSG:4326").to_crs(crs)
+    zone = gpd.GeoSeries([geometry], crs="EPSG:4326").to_crs(crs).iloc[0]
+    whole = grid.area.values
+    inside = grid.intersection(zone).area.values
+    share = np.where(whole > 0, inside / whole, 0.0)
+
+    keep = share > 0
+    return (
+        np.asarray(rows)[keep],
+        np.asarray(cols)[keep],
+        share[keep],
+    )

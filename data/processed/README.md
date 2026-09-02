@@ -1,8 +1,15 @@
 # Processed data
 
 Small derived tables, committed. Every file here should be regenerable from
-committed inputs by committed code. The one file currently present is not, and
-that is stated plainly below rather than left to be discovered.
+committed inputs by committed code, and most rows now are: 148 of the 160 urban
+rows and 24 of the 32 rice rows regenerate, and the scripts that do it compare
+against the committed values and refuse to overwrite when anything disagrees.
+
+The rows that do not regenerate are named in each section below rather than
+left to be discovered. Twelve urban rows need GADM, whose licence forbids
+redistributing the boundary file, and eight rice rows need SPAM, for which no
+fetch module exists. Both sets are carried forward unchanged when a table is
+rewritten, and both scripts say so on every run.
 
 ## rice_area_by_province.csv
 
@@ -35,8 +42,10 @@ ground area rather than by degrees, which would over-weight the north of the
 study area. The projection is used only for the weights. It is never used to
 measure the rice area itself, since the source values are already areas. Cell
 values were then multiplied by their fractions, summed per province, and divided
-by one hundred to convert hectares to square kilometres. The derivation is in
-scripts/recon_rice_provincial_areas.py.
+by one hundred to convert hectares to square kilometres. That computation now
+lives in src/landcover/, reached through scripts/compute_rice_areas.py;
+scripts/recon_rice_provincial_areas.py is the superseded reconnaissance version
+and is kept only as a record of how the committed numbers were first produced.
 
 GloRice must not be read as an independent observation of rice extent. Its
 authors state that the annual maps were produced by allocating national and
@@ -63,15 +72,33 @@ half the thesis value in both years, 10,746 km2 against 19,651 for 2000 and
 the correct provincial trajectory is, a series with those properties cannot
 carry weight at this scale.
 
-These numbers are not yet reproducible from a fresh clone. There is no fetch
-layer, so nothing in the repository can obtain the source rasters, and the
-rasters themselves were deleted after extraction under a download budget. The
-GloRice archive is recorded in data/manifest.json with a null checksum, because
-none was computed before deletion; it must be recorded on re-fetch. SPAM is
-absent from the manifest because it is not used in analysis. Making this file
-reproducible is work that belongs with src/fetch/ and src/landcover/, and until
-that exists these values should be read as reconnaissance results with a visible
-derivation, not as pipeline output.
+The twenty-four GloRice rows now regenerate from committed inputs plus a
+fetch. Running scripts/compute_rice_areas.py with no arguments recomputes them
+from data/raw/glorice/ and data/reference/yrd_provinces.geojson and reports any
+row differing from the committed value by more than a tenth of a percent,
+writing nothing; --write regenerates the file and refuses if anything differs.
+The inputs come from src/fetch/figshare.py against the DOI and years recorded
+in config/sources.yml, which downloads the archive, verifies its MD5 against
+figshare's published digest, extracts only the seven years configured, and
+records the sha256 of each. As of this commit every one of the twenty-four
+matches to within a tenth of a percent.
+
+Two qualifications on that. First, config/sources.yml lists 2017 among the
+years to fetch and the committed table has no 2017 rows, so a regeneration
+produces four rows the committed file lacks; the script reports them as
+additions rather than differences and they are not written unless --write is
+passed. Second, GloRice is not a categorical raster, so the computation uses
+zonal_value_sum rather than zonal_area: cells hold hectares of rice, and at 5
+arcmin a cell is roughly 9 km across, so each is apportioned by the fraction
+lying inside the province rather than taken or dropped whole.
+
+The eight SPAM rows do not regenerate and cannot be made to. There is no SPAM
+fetch module, and the 2020 release sits behind a Dataverse guestbook form that
+cannot be scripted; the 2000 and 2010 releases used here are anonymously
+reachable, so this is a gap in the code rather than a hard barrier, but it is a
+gap. Those rows are carried forward unchanged whenever the table is rewritten,
+and the script says so each time it runs rather than letting them look
+recomputed.
 
 ## urban_area_by_province.csv
 
@@ -160,7 +187,29 @@ pixel share at 7.60 percent. That break coincides with the end of the original
 1985 to 2018 release period, and the 2017 to 2021 extension may not be
 comparable with the earlier years.
 
-These numbers are not yet reproducible from a fresh clone, for the same reason
-as the rice table: there is no fetch layer, and the GAIA archive is recorded in
-data/manifest.json with a null checksum because none was computed before the
-archive was deleted.
+The hundred and forty-eight Natural Earth rows now regenerate from committed
+inputs. Running scripts/compute_urban_areas.py with no arguments recomputes the
+whole 1985 to 2021 series from data/raw/gaia/ and
+data/reference/yrd_provinces.geojson, mosaicking the nine tiles with each
+tile's nominal five-degree extent as a clip so the merge buffers are not
+double-counted, and reports any row differing from the committed value by more
+than a tenth of a percent; --write regenerates the file and refuses if anything
+differs. As of this commit every one of the hundred and forty-eight matches to
+better than one part in ten million.
+
+Two things still stand between that and a fresh clone. The nine GAIA tiles are
+not committed and there is no entry point that fetches them: the record is on
+figshare and src/fetch/figshare.py could serve it, but no config entry or fetch
+script exists yet, and the 2.3 GB archive is not internally addressable, so
+obtaining any tile means downloading all of it. And the archive's sha256 in
+data/manifest.json is still null, because the archive was deleted before one
+was computed; the nine extracted tiles do carry checksums, so the local copies
+verify even though the archive they came from does not.
+
+The twelve GADM rows cannot be regenerated from committed inputs and never
+will be. GADM 4.1's licence forbids redistribution without permission, so the
+boundary file cannot be committed here. Supplying your own copy with --gadm
+recomputes them; without it the script carries them forward unchanged and says
+so, so they are never mistaken for recomputed values. They are a boundary
+sensitivity check rather than a second estimate, and nothing else in the
+project depends on them.
