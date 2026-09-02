@@ -345,3 +345,54 @@ completeness the depositor chose. It is not a citation and must not be used as
 one. Every citation in this repository is to be verified against Crossref or the
 publisher's own record before it is written, and the DOI is the thing to carry
 forward, since it survives the ambiguity that names do not.
+
+## Sentinel-5P stream coverage is not uniform across years
+
+The MEEO mirror carries the L2 CH4 product under both a reprocessed stream,
+RPRO, and an operational one, OFFL, and neither covers the whole study period.
+Listing both for every year from 2018 to 2024, restricted to orbits that could
+see the study box, took 40 minutes and gave this.
+
+| year | RPRO candidates | RPRO days | RPRO processors | OFFL candidates | OFFL days | OFFL processors |
+|---|---|---|---|---|---|---|
+| 2018 | 578 | 246 | 020400 | 75 | 34 | 010202 |
+| 2019 | 868 | 365 | 020400 | 871 | 365 | 010202, 010300, 010301, 010302 |
+| 2020 | 870 | 366 | 020400 | 870 | 366 | 010302, 010400 |
+| 2021 | 865 | 364 | 020400 | 867 | 365 | 010400, 020200, 020301 |
+| 2022 | 507 | 215 | 020400, 020600 | 867 | 365 | 020301, 020400 |
+| 2023 | 24 | 12 | 020600 | 875 | 365 | 020400, 020500, 020600 |
+| 2024 | 10 | 12 | 020600, 020800 | 864 | 366 | 020600, 020701, 020800 |
+
+Two patterns run in opposite directions. RPRO is homogeneous, a single
+processor version for each of 2018 to 2021, but its coverage collapses after
+2021: 215 days in 2022 and twelve days in each of 2023 and 2024. OFFL covers
+2019 to 2024 completely, every day of every year, but never at a single
+processor version; 2019 spans four.
+
+The practical assignment that follows is RPRO for 2018 through 2021 and OFFL
+for 2022 through 2024. No year needs both, and no year should get both.
+
+Mixing streams inside one composite is not safe and is the same hazard
+latest_per_orbit exists to avoid, one level up. That function keeps a single
+processor version per orbit because two versions of one overpass are two
+reconstructions of the same measurement rather than two measurements. RPRO and
+OFFL are two reconstructions of the whole record, on different processor
+version families entirely: RPRO sits at 020400 for the early years while OFFL
+is still at 010202 to 010400 for the same dates. Pooling them would average
+across algorithm versions with no way afterwards to tell which cell came from
+which, and the resulting field would not be attributable to any released
+version of the product. The same caution is already recorded here for GAIA
+under year-of-change products being version-dependent; this is that principle
+applied to a stream rather than a release.
+
+Mixing cannot be avoided entirely, and where it cannot the composite must say
+so. Every OFFL year spans several processor versions internally, so a 2022 to
+2024 composite is unavoidably mixed no matter what is done, and the per-granule
+provenance the gridding module carries is what makes that visible rather than
+hidden.
+
+One further limitation is worth stating because it bears directly on the thesis
+year. 2018 is not fully covered by either stream. RPRO holds 246 days of it and
+OFFL only 34, so even taking both there is no complete year of 2018 on this
+mirror, and any 2018 composite describes the days that exist rather than the
+year.
