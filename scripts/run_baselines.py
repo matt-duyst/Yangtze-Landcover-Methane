@@ -48,6 +48,20 @@ IMPERVIOUS = "impervious_fraction"
 RICE = "rice_fraction_single"
 RICE_BOTH = "rice_fraction_combined"
 
+#: Wind enters as components plus speed, never as a bearing. A bearing is
+#: circular, so 359 and 1 degrees are adjacent in the world and 358 apart in the
+#: arithmetic, and a linear coefficient on it means nothing. A linear model in
+#: (u, v) is a linear model in speed and direction jointly, in coordinates where
+#: that discontinuity does not exist. Speed is added because it is a nonlinear
+#: function of the pair and so carries something they do not.
+WIND = ("wind_u", "wind_v", "wind_speed")
+#: Position as a linear trend, the control every smooth covariate must clear.
+TREND = ("centre_lat", "centre_lon")
+ALBEDO = ("surface_albedo_SWIR",)
+#: Everything the granules carry, for the most generous linear model available.
+FULL = (*WIND, "surface_albedo_SWIR", "surface_albedo_NIR",
+        "solar_zenith_angle", "surface_altitude", "surface_pressure")
+
 FIELDS = ["model", "scheme", "weighting", "n", "dropped_missing",
           "in_sample_rmse_ppb", "in_sample_r2",
           "held_out_rmse_ppb", "held_out_r2", "detail"]
@@ -88,6 +102,39 @@ def models(table: Table):
         (LinearModel((RICE_BOTH,)), None),
         (LinearModel((IMPERVIOUS, RICE)), None),
         (LinearModel((IMPERVIOUS, RICE), interaction=True), None),
+        # A control, not a candidate. The methane field is smooth, so any smooth
+        # function of position reproduces some of it; a covariate that beats the
+        # spatial null but not this has only rediscovered where the cell is.
+        (LinearModel(TREND, label="OLS trend surface (lat, lon)"), None),
+    ] + covariate_models(table, rice_rows)
+
+
+def covariate_models(table, rice_rows):
+    """The meteorological models, when the covariate join has been done.
+
+    Empty when the table has no covariate columns, so the script still runs
+    against a grid alone and the earlier results stay reproducible.
+    """
+    if not all(name in table.columns for name in WIND):
+        return []
+    tag = " [rice sample]"
+    return [
+        (LinearModel(WIND, label="OLS wind (u, v, speed)"), None),
+        (LinearModel(ALBEDO, label="OLS albedo (SWIR)"), None),
+        (LinearModel((*WIND, IMPERVIOUS), label="OLS wind + impervious"), None),
+        # Repeated on the rice sample so the models below have a null and a
+        # wind-only comparison fitted on the same 532 cells.
+        (LinearModel(WIND, label=f"OLS wind (u, v, speed){tag}"), rice_rows),
+        (LinearModel(ALBEDO, label=f"OLS albedo (SWIR){tag}"), rice_rows),
+        (LinearModel((*WIND, IMPERVIOUS, RICE),
+                     label="OLS wind + both fractions"), None),
+        (LinearModel((*FULL, IMPERVIOUS, RICE),
+                     label="OLS full covariates + both fractions"), None),
+        (LinearModel((*WIND, *TREND), label="OLS wind + trend surface"), None),
+        # The control that matters most. Not a candidate model: it is a measure
+        # of when each cell was sampled, and it has no physical content at all.
+        (LinearModel(("sampling_season",),
+                     label="OLS sampling composition (when observed)"), None),
     ]
 
 
@@ -95,6 +142,9 @@ def main(argv=None) -> int:
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     parser.add_argument("--grid", default=str(REPO / "data" / "processed" /
                                               "analysis_grid_2018.csv"))
+    parser.add_argument("--covariates", default=None,
+                        help="composite covariate CSV to join onto the grid; "
+                             "without it only the land-cover models are run")
     parser.add_argument("--out", default=str(REPO / "data" / "processed" /
                                              "baseline_results_2018.csv"))
     parser.add_argument("--block", type=int, default=4,
@@ -104,7 +154,11 @@ def main(argv=None) -> int:
     parser.add_argument("--write", action="store_true")
     args = parser.parse_args(argv)
 
-    table = load_table(args.grid)
+    table = load_table(args.grid, covariates=args.covariates)
+    if args.covariates:
+        present = [n for n in (*WIND, *FULL) if n in table.columns]
+        print(f"  joined {len(set(present))} covariate columns from "
+              f"{Path(args.covariates).name}")
     print(f"  {table.n} cells; target ch4_bias_corrected_ppb, "
           f"weighted mean {np.average(table.y, weights=table.weight):.2f} ppb, "
           f"unweighted {table.y.mean():.2f} ppb, sd {table.y.std():.2f} ppb")

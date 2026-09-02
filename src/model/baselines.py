@@ -231,6 +231,25 @@ def join_covariates(columns: dict, records, lat, lon, resolution: float) -> list
         columns[f"{name}_count"] = counts
         added.append(name)
 
+    # Solar zenith angle at a fixed latitude is fixed by the date and time of the
+    # overpass, so once latitude is removed what is left is a measure of WHEN
+    # each cell was sampled. Over this composite latitude explains only 2.4
+    # percent of the variance in mean solar zenith angle, so almost all of it is
+    # sampling composition. That is available as a predictor in its own right,
+    # and it is the control that matters most: an annual mean built from
+    # different days in different cells can be predicted by anything that also
+    # tracks the calendar, with no physics involved.
+    if "solar_zenith_angle" in columns and "centre_lat" in columns:
+        sza, lat = columns["solar_zenith_angle"], columns["centre_lat"]
+        usable = np.isfinite(sza) & np.isfinite(lat)
+        residual = np.full(sza.shape, np.nan)
+        if usable.sum() > 2:
+            design = np.column_stack([np.ones(int(usable.sum())), lat[usable]])
+            coefficients, *_ = np.linalg.lstsq(design, sza[usable], rcond=None)
+            residual[usable] = sza[usable] - design @ coefficients
+        columns["sampling_season"] = residual
+        added.append("sampling_season")
+
     if all(name in columns for name in WIND_COMPONENTS):
         u, v = columns["eastward_wind"], columns["northward_wind"]
         columns["wind_u"] = u
@@ -277,6 +296,12 @@ def load_table(path: str | Path, *, target: str = TARGET,
                   "rice_fraction_combined", "impervious_coverage",
                   "rice_coverage")
     columns = {name: numeric(name) for name in predictors}
+    # Position, always available, so a trend surface can be fitted as a control.
+    # A smooth field can be reproduced by any smooth function of position, and a
+    # covariate that beats the spatial null but not a trend surface has only
+    # rediscovered where the cell is.
+    columns["centre_lat"] = lat
+    columns["centre_lon"] = lon
     if covariates is not None:
         joined = list(csv.DictReader(open(covariates, newline="")))
         if not joined:

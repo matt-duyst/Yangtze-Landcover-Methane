@@ -662,3 +662,63 @@ predictor of interest.
 The sample is not the limitation. The confounder test was expected to run on a
 few percent of cells; it runs on all 927, the same cells as every other result
 in the repository. Its conclusion carries the same weight as what it tests.
+
+## The annual composite is confounded by when each cell was sampled
+
+Adding meteorology to the baselines produced a large apparent improvement, and
+chasing it down turned up something that matters more than the improvement.
+
+Wind alone reaches held-out R squared 0.653 under spatial blocks unweighted
+against the spatial null's 0.346, the first thing in this repository to beat the
+smoothness bar on all 927 cells. That looked like transport, which is the
+physically sensible reading. It is not safe to read it that way.
+
+Solar zenith angle at a fixed latitude is fixed by the date and time of the
+overpass. Across these cells, latitude explains **2.4 percent** of the variance
+in mean solar zenith angle. The remaining 97.6 percent is composition: which
+days, in which seasons, contributed to each cell's annual mean. Cell means of
+solar zenith angle run from 12.69 to 56.67 degrees, close to the full seasonal
+range at this latitude, so some cells are effectively summer means and others
+are effectively winter means.
+
+That composition axis, which has no physical content whatever, correlates with
+everything:
+
+| against the sampling-composition axis | Pearson |
+|---------------------------------------|---------|
+| composite methane                      | +0.686  |
+| surface_albedo_SWIR                    | +0.859  |
+| northward_wind                         | -0.745  |
+| wind_speed                             | -0.737  |
+| eastward_wind                          | +0.603  |
+
+Entered as a predictor on its own it reaches held-out R squared 0.467 under
+spatial blocks unweighted, beating the spatial null. A single scalar encoding
+*when a cell was looked at* outperforms the smoothness model, and it is not a
+measurement of the atmosphere at all.
+
+So the honest reading of the wind result is that the covariates and the target
+share a common cause in the sampling calendar, and the composite cannot separate
+transport from season. It also reframes the albedo confounder result in the
+previous section: albedo correlates with the sampling axis at +0.859, so part of
+why albedo predicts methane is that both track the calendar.
+
+The trend surface rules out the simplest alternative rather than this one. A
+linear trend in latitude and longitude reaches 0.242 and a quadratic trend 0.358,
+both well below wind's 0.653, so wind is not merely a smooth function of
+position. It is a smooth function of position *and time*, and it is the time
+part that is unaccounted for.
+
+**What follows.** The 0.25 degree annual composite is not a sound object for
+this question, and no model fitted on it can be trusted to be about land cover,
+because per-cell means are taken over different and systematically different
+subsets of days. Fixing this is a change to the composite, not to the model: the
+candidates are compositing within season so that cells are compared over
+comparable periods, or carrying day-of-year as a covariate and controlling for
+it, or requiring a minimum sampling spread per cell and dropping those that fail
+it. All three cost coverage, which is why the choice is not obvious and is not
+being made here.
+
+This was found by adding a control that had no reason to work. It is recorded
+because the result it undermines is one this repository would otherwise have
+reported as its main positive finding.

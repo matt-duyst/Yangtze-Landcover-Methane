@@ -59,6 +59,16 @@ def test_sample_sizes_are_927_or_the_532_with_a_rice_fraction():
     grid = list(csv.DictReader(open(GRID, newline="")))
     with_rice = sum(1 for r in grid if r["rice_fraction_single"] != "")
     assert len(grid) == 927 and with_rice == 532
+    # A model's name no longer encodes its columns, so the requirement is read
+    # from the model definitions rather than guessed from the label.
+    module = load_script()
+    table = load_table(GRID, covariates=REPO / "data" / "processed" /
+                       "methane_covariates_2018.csv")
+    needs_rice = {model.name for model, _ in module.models(table)
+                  if any("rice" in name for name in model.requires)}
+    restricted = {model.name for model, subset in module.models(table)
+                  if subset is not None}
+
     for record in rows():
         n, dropped = int(record["n"]), int(record["dropped_missing"])
         assert n in (927, 532)
@@ -66,10 +76,11 @@ def test_sample_sizes_are_927_or_the_532_with_a_rice_fraction():
             assert dropped == 0
         elif dropped:
             # Asked for the whole grid and lost the cells with no rice.
-            assert dropped == 395 and "rice_fraction" in record["model"]
+            assert dropped == 395, record["model"]
+            assert record["model"] in needs_rice, record["model"]
         else:
             # Asked only for the rice sample, so nothing was dropped from it.
-            assert "[rice sample]" in record["model"]
+            assert record["model"] in restricted, record["model"]
 
 
 def test_a_model_naming_rice_never_runs_on_the_full_grid():
@@ -121,12 +132,21 @@ def test_held_out_error_is_never_better_than_in_sample_error():
 
 
 def test_every_linear_model_records_its_coefficients():
+    """Every fitted term is named and valued, whatever the model is called."""
+    module = load_script()
+    table = load_table(GRID, covariates=REPO / "data" / "processed" /
+                       "methane_covariates_2018.csv")
+    columns = {model.name: model.requires for model, _ in module.models(table)}
+
     for record in rows():
-        if record["model"].startswith("OLS"):
-            assert "intercept" in record["detail"]
-            terms = record["model"].split("OLS ", 1)[1].split(" [")[0]
-            for name in terms.replace(" + interaction", "").split(" + "):
-                assert name in record["detail"]
+        if not record["model"].startswith("OLS"):
+            continue
+        assert record["detail"].startswith("intercept ")
+        for name in columns.get(record["model"], ()):
+            assert name in record["detail"], f"{record['model']} omits {name}"
+        terms = record["detail"].split("; ")
+        assert len(terms) == len(columns.get(record["model"], ())) + 1 \
+            or "x" in record["detail"], "one term per column, plus the intercept"
 
 
 def test_no_tree_or_network_appears_in_the_baseline_table():
