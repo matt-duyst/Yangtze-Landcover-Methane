@@ -14,7 +14,10 @@ thesis does not cover. Thirty-two rows: twenty-four from GloRice spanning 2000,
 2010 and 2018 through 2021, and eight from SPAM covering 2000 and 2010.
 
 The products are GloRice (I) physical area, Extensive variant, figshare version
-2 of doi 10.6084/m9.figshare.27965832, and SPAM in two releases, the 2000 data
+2 of doi 10.6084/m9.figshare.27965832, published as Xie, H., Li, J., Li, T.,
+Lu, X., Hu, Q., and Qin, Z. (2025), GloRice, a global rice database (v1.0): I.
+Gridded paddy rice annual distribution from 1961 to 2021, Scientific Data 12,
+182, doi:10.1038/s41597-025-04483-1, and SPAM in two releases, the 2000 data
 at version 3.0.7 from Harvard Dataverse doi 10.7910/DVN/A50I2T and the 2010 data
 at version 2.0 from doi 10.7910/DVN/PRFF8V. In both products the layer used is
 physical area rather than harvested area, because harvested area counts a

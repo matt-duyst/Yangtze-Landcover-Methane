@@ -324,3 +324,24 @@ Masking is not a fixed correction that can be applied once and reused. Only 94.1
 to 95.5 percent of Shanghai's class-1 pixels fall inside the province polygon,
 and that fraction varies from year to year, so the mask has to be applied to
 each raster rather than absorbed into a per-province constant.
+
+## Repository author fields are not citations
+
+The GloRice entry in the manifest cited "Zhang et al. (2025)" for a paper whose
+first author is Xie. The correct citation is Xie, H., Li, J., Li, T., Lu, X.,
+Hu, Q., and Qin, Z. (2025), Scientific Data 12, article 182,
+doi:10.1038/s41597-025-04483-1, confirmed against Crossref.
+
+The mechanism is worth recording because it will recur. The figshare record for
+GloRice lists two authors, Zhangcai Qin and Hanzhi Xie, where the paper has six,
+and it lists them last author first. Reading a first author off that field
+therefore gets the wrong person twice over: the wrong end of the list, and a
+given name, Zhangcai, that reads as the surname Zhang to anyone scanning
+quickly. The GAIA record on the same platform lists a single author, Gong Peng,
+in the opposite name order again.
+
+A repository author field records who deposited the files, in whatever order and
+completeness the depositor chose. It is not a citation and must not be used as
+one. Every citation in this repository is to be verified against Crossref or the
+publisher's own record before it is written, and the DOI is the thing to carry
+forward, since it survives the ambiguity that names do not.
