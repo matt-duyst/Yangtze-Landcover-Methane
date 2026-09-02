@@ -412,3 +412,80 @@ def test_a_granule_that_adds_no_new_cells_still_gets_a_row(tmp_path, fixtures):
     assert len(added) == len(granules), "a row per granule, even a redundant one"
     assert all(a == 0 for a, _ in added), "nothing was newly covered"
     assert all(c == covered for _, c in added), "the cumulative holds flat"
+
+
+# --------------------------------------------------------------------------
+# the seasonal sufficient statistics
+# --------------------------------------------------------------------------
+
+def test_harmonic_statistics_survive_a_checkpoint_and_a_resume(tmp_path, fixtures):
+    """Streaming must equal one pass, or the whole approach is unsound."""
+    import numpy as np
+
+    source, made = fixtures
+    assert len(made) >= 2
+    work = tmp_path / "work"; work.mkdir()
+    checkpoint = tmp_path / "ck.npz"
+    granules = [FakeGranule(p) for p in made]
+
+    whole = cm.Accumulator(TOY, 0.75, (mg.PRIMARY, mg.SECONDARY))
+    run_loop(whole, granules, work, tmp_path / "other.npz")
+
+    first = cm.Accumulator(TOY, 0.75, (mg.PRIMARY, mg.SECONDARY))
+    run_loop(first, granules[:1], work, checkpoint)
+    resumed = cm.Accumulator.load(checkpoint)
+    run_loop(resumed, granules[1:], work, checkpoint)
+
+    assert np.array_equal(whole.harmonics.n, resumed.harmonics.n)
+    for name in ("sum_y", "sum_yy", "sum_d", "sum_dd", "sum_x", "sum_xx",
+                 "sum_yx"):
+        assert np.allclose(getattr(whole.harmonics, name),
+                           getattr(resumed.harmonics, name),
+                           rtol=0, atol=1e-9), name
+
+
+def test_the_harmonic_count_matches_the_sounding_count(tmp_path, fixtures):
+    source, made = fixtures
+    work = tmp_path / "work"; work.mkdir()
+    acc = cm.Accumulator(TOY, 0.75, (mg.PRIMARY, mg.SECONDARY))
+    run_loop(acc, [FakeGranule(p) for p in made], work, tmp_path / "ck.npz")
+    assert int(acc.harmonics.n.sum()) == int(acc.counts.sum())
+    assert acc.harmonics.n.tolist() == acc.counts.tolist(), \
+        "every gridded sounding contributes to the seasonal statistics"
+
+
+def test_adding_the_statistics_changes_no_methane_number(tmp_path, fixtures):
+    """The guarantee the re-run depends on, from the accumulator's side."""
+    import numpy as np
+
+    source, made = fixtures
+    work = tmp_path / "work"; work.mkdir()
+    granules = [FakeGranule(p) for p in made]
+
+    acc = cm.Accumulator(TOY, 0.75, (mg.PRIMARY, mg.SECONDARY))
+    run_loop(acc, granules, work, tmp_path / "a.npz")
+    composite = acc.composite()
+
+    # A composite built by the non-streaming path, which has no harmonics at all.
+    direct = mg.grid_granules([g.path for g in granules], TOY, qa_threshold=0.75)
+    assert composite.counts.tolist() == direct.counts.tolist()
+    for name in (mg.PRIMARY, mg.SECONDARY):
+        assert np.allclose(composite.sums[name], direct.sums[name],
+                           rtol=0, atol=0)
+
+
+def test_a_checkpoint_written_before_the_statistics_existed_still_loads(tmp_path):
+    import numpy as np
+
+    acc = cm.Accumulator(TOY, 0.75, (mg.PRIMARY, mg.SECONDARY))
+    acc.counts[0, 0] = 5
+    checkpoint = tmp_path / "old.npz"
+    acc.save(checkpoint)
+    with np.load(checkpoint, allow_pickle=False) as data:
+        payload = {k: data[k] for k in data.files if not k.startswith("hs::")}
+    with open(checkpoint, "wb") as handle:
+        np.savez_compressed(handle, **payload)
+
+    reloaded = cm.Accumulator.load(checkpoint)
+    assert int(reloaded.harmonics.n.sum()) == 0, "absent statistics stay absent"
+    assert int(reloaded.counts.sum()) == 5, "the grid itself is unaffected"

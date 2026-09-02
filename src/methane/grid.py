@@ -163,6 +163,25 @@ class Soundings:
     def __len__(self) -> int:
         return int(self.latitude.size)
 
+    @property
+    def day_of_year(self) -> np.ndarray:
+        """Fractional day of year for each sounding, from the granule time.
+
+        Constant within a granule. A granule covers about fifty minutes, so
+        every sounding in one shares a date to within an hour, and the seasonal
+        term moves by 2*pi/365 per day; the error this introduces in the
+        harmonic is under a tenth of a percent of its amplitude. Using the
+        per-sounding delta_time would be more exact and is not worth another
+        variable read. Returns an empty array for an empty granule and NaN when
+        the granule carries no time at all, so a granule with no date cannot
+        silently be treated as 1 January.
+        """
+        if self.acquired is None:
+            return np.full(len(self), np.nan)
+        start = datetime(self.acquired.year, 1, 1)
+        day = (self.acquired - start).total_seconds() / 86400.0 + 1.0
+        return np.full(len(self), day, dtype="float64")
+
 
 @dataclass(frozen=True)
 class GranuleContribution:

@@ -50,6 +50,7 @@ sys.path.insert(0, str(REPO))
 
 from src.fetch import s5p  # noqa: E402
 from src.methane import grid as mg  # noqa: E402
+from src.methane import seasonal as se  # noqa: E402
 from src.methane.grid import Composite, GranuleContribution, GridSpec  # noqa: E402
 
 #: Band order in the exported GeoTIFF. One file rather than three because the
@@ -106,7 +107,7 @@ class Accumulator:
     """
 
     def __init__(self, spec: GridSpec, qa_threshold: float, variables,
-                 covariates=()):
+                 covariates=(), harmonics: int = 2):
         self.spec = spec
         self.qa_threshold = qa_threshold
         self.variables = list(variables)
@@ -124,6 +125,10 @@ class Accumulator:
         #: One (newly covered, cumulative covered) pair per granule added, in
         #: the order they were added. See the class docstring.
         self.saturation: list[tuple[int, int]] = []
+        #: Sufficient statistics for the shared seasonal fit. Accumulated at the
+        #: sounding level so the cycle can be removed before the cell mean is
+        #: taken, in one pass and without holding a sounding twice.
+        self.harmonics = se.HarmonicStats(spec.shape, se.HarmonicBasis(harmonics))
 
     @property
     def covered(self) -> int:
@@ -141,6 +146,9 @@ class Accumulator:
                 np.add.at(self.sums[name], (row, col), soundings.values[name])
             mg.accumulate_covariates(soundings, row, col,
                                      self.covariate_sums, self.covariate_counts)
+            day = soundings.day_of_year
+            if np.isfinite(day).all():
+                self.harmonics.add(row, col, soundings.values[mg.PRIMARY], day)
         after = self.covered
         self.saturation.append((after - before, after))
 
@@ -170,6 +178,18 @@ class Accumulator:
             "saturation": np.array(self.saturation, dtype="int64").reshape(-1, 2),
             "covariates": np.array(json.dumps(
                 [{"name": c.name, "group": c.group} for c in self.covariates])),
+            # The seasonal sufficient statistics. Written as a block so a
+            # partial set cannot be restored: solving from a mismatched subset
+            # would give a plausible cycle from the wrong soundings.
+            "harmonics": np.array(self.harmonics.basis.harmonics),
+            "hs::n": self.harmonics.n,
+            "hs::sum_y": self.harmonics.sum_y,
+            "hs::sum_yy": self.harmonics.sum_yy,
+            "hs::sum_d": self.harmonics.sum_d,
+            "hs::sum_dd": self.harmonics.sum_dd,
+            "hs::sum_x": self.harmonics.sum_x,
+            "hs::sum_xx": self.harmonics.sum_xx,
+            "hs::sum_yx": self.harmonics.sum_yx,
         }
         for name in self.variables:
             payload[f"sum::{name}"] = self.sums[name]
@@ -208,6 +228,17 @@ class Accumulator:
             # fabricated one.
             saved = (data["saturation"].astype("int64")
                      if "saturation" in data.files else np.empty((0, 2), "int64"))
+            if "hs::n" in data.files:
+                acc.harmonics = se.HarmonicStats(
+                    spec.shape, se.HarmonicBasis(int(data["harmonics"])),
+                    n=data["hs::n"].astype("int64"),
+                    sum_y=data["hs::sum_y"].astype("float64"),
+                    sum_yy=data["hs::sum_yy"].astype("float64"),
+                    sum_d=data["hs::sum_d"].astype("float64"),
+                    sum_dd=data["hs::sum_dd"].astype("float64"),
+                    sum_x=data["hs::sum_x"].astype("float64"),
+                    sum_xx=data["hs::sum_xx"].astype("float64"),
+                    sum_yx=data["hs::sum_yx"].astype("float64"))
         acc.saturation = [(int(a), int(b)) for a, b in saved]
         for record in records:
             acquired = (dt.datetime.fromisoformat(record["acquired"])
