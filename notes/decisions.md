@@ -396,3 +396,60 @@ year. 2018 is not fully covered by either stream. RPRO holds 246 days of it and
 OFFL only 34, so even taking both there is no complete year of 2018 on this
 mirror, and any 2018 composite describes the days that exist rather than the
 year.
+
+## Coverage cannot be extrapolated from a small granule sample
+
+The reconnaissance estimate of TROPOMI coverage was badly low and the reason is
+worth recording, because the mistake is available to any sampling design and the
+obvious explanation for it turns out to be the wrong one.
+
+Reconnaissance sampled one granule on the fourteenth or fifteenth of alternate
+months, thirty-six granules across seven years, six of them in 2018. It reported
+56.11 percent of cells covered at 0.25 degrees and 1,004 valid in-box soundings
+for 2018. The full year gives 90.62 percent and 110,928 soundings from 578
+candidate granules.
+
+The natural explanation is that the sample landed in the wrong months. Yield is
+strongly seasonal here: June to August give 4.6 to 5.0 percent of the year's
+soundings each despite carrying the most granules, while October alone gives
+30.8 percent, and the 2018 sample missed October. That explanation does not
+survive contact with the numbers. The six sampled granules are 1.04 percent of
+the year's 578 and produced 0.91 percent of its soundings, a ratio of 0.87, and
+their mean of 167 soundings per granule sits 13 percent below the full year's
+192. Missing October cost the sample something, but sampling November and
+December, which together carry 31.6 percent, gave most of it back. The sample
+was close to proportional and it estimated per-granule yield roughly correctly.
+
+What it could not estimate is coverage, because coverage is not an average. It
+is the size of a union of sets, and a union saturates: each new granule adds
+only the cells no earlier granule reached, so the count rises steeply at first
+and then flattens. A small sample sits on the steep part of that curve and
+reports a number that says more about the sample size than about the data. Worse,
+fitting a saturating model to the small sample and extrapolating did not rescue
+it. A free-asymptote fit to sixteen productive granules put the ceiling at 50.4
+percent of cells at 0.1 degrees and was reported as an upper bound; the measured
+result at 0.25 degrees is 90.62 percent. Extrapolating a saturation curve from
+data that has barely begun to saturate estimates the curvature, not the ceiling.
+
+The general rule that follows is that any statistic which is a union, an extent,
+a count of distinct things reached, or anything else that saturates with sample
+size, must be measured at the sample size it will be used at. It cannot be
+estimated from a pilot and it cannot be extrapolated with a fitted asymptote. A
+mean can be estimated from a small sample; a coverage fraction cannot.
+
+The separate seasonal caution still stands on its own terms even though it was
+not the cause here. A stratified sample of a seasonally driven quantity must be
+stratified on the season, and a uniform sample across months will mislead in
+proportion to the seasonality. In this record autumn and winter carry 75.5
+percent of the year's soundings from 44 percent of its granules, so any
+per-granule statistic that is later weighted by soundings will be dominated by
+months a uniform sample under-represents.
+
+One decision rests on the understated figure and should be revisited rather than
+changed now. The 0.25 degree analysis grid was chosen partly because 56 percent
+coverage at that resolution looked like the most the data would support, against
+32.91 percent at 0.1 degrees. At 90.62 percent for a single year a finer grid may
+now be defensible, and the question is worth reopening with the measured
+saturation rather than the estimated one. Changing it would invalidate the
+committed composite and the coverage table, so it is a decision to take
+deliberately and not a correction to apply.
