@@ -99,18 +99,18 @@ def main(argv=None) -> int:
     print()
 
     grouped = s5p.by_year(granules)
-    print(f"  {'year':<6}{'granules':>10}{'volume':>16}{'on disk':>10}{'to fetch':>10}")
+    print(f"  {'year':<6}{'granules':>10}{'volume':>20}{'on disk':>10}{'to fetch':>10}")
     total = have = 0
     for year, items in grouped.items():
         present = sum(1 for g in items if (dest / g.name).exists())
         size = s5p.volume(items)
         total += size
         have += present
-        print(f"  {year:<6}{len(items):>10}{size:>13,} B{present:>10}"
+        print(f"  {year:<6}{len(items):>10}{size:>18,} B{present:>10}"
               f"{len(items) - present:>10}")
     missing = [g for g in granules if not (dest / g.name).exists()]
     missing_bytes = s5p.volume(missing)
-    print(f"  {'TOTAL':<6}{len(granules):>10}{total:>13,} B{have:>10}{len(missing):>10}")
+    print(f"  {'TOTAL':<6}{len(granules):>10}{total:>18,} B{have:>10}{len(missing):>10}")
     print()
     print(f"  total volume       {total:,} B ({human(total)})")
     print(f"  already on disk    {have} granules")
