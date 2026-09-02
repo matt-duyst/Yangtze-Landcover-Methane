@@ -1,0 +1,41 @@
+# Dataset sources: versions, routes, and the selection each analysis needs.
+#
+# Which provinces matter is a property of this study, not of the fetch layer,
+# so the province filter lives here and src/fetch/ reads it rather than
+# containing it.
+
+scidb_rice:
+  product: High-resolution distribution maps of single-season rice in China
+  doi: 10.57760/sciencedb.06963
+
+  # The 32-character id the DOI resolves to. Recorded so a fetch can skip the
+  # resolver hop; src/fetch/scidb.resolve_doi() re-derives it when needed.
+  dataset_id: b07f90ea5f0c4e359fa4119a0030f9da
+
+  # The record is currently at V8, published 2022-12-29 and last updated
+  # 2026-02-27. The version MUST be passed with its "V" prefix: Science Data
+  # Bank answers HTTP 200 with a valid but entirely empty Croissant document
+  # for a bare "8", so a missing prefix yields no files and no error.
+  version: V8
+
+  licence: CC BY 4.0
+  licence_url: https://creativecommons.org/licenses/by/4.0/
+  citation: >-
+    Shen, R., Pan, B., Peng, Q., Dong, J., Chen, X., Zhang, X., Ye, T.,
+    Huang, J., and Yuan, W.: High-resolution distribution maps of
+    single-season rice in China from 2017 to 2022, Earth System Science Data,
+    15, 3203-3222, 2023. doi:10.5194/essd-15-3203-2023
+
+  # Anonymous public Croissant export. No account, session or cookie. The
+  # authenticated API routes are not usable and are not listed here.
+  base_url: https://www.scidb.cn/api/gin-sdb-croissant/public/exportCroissant
+
+  destination: data/raw/scidb_rice
+
+  # Matched case-insensitively against each filename. Filenames take the form
+  # classified-<Province>-<year>-middle_rice-WGS84-v<version>.tif
+  provinces:
+    - Anhui
+    - Zhejiang
+    - Jiangsu
+    - Shanghai
