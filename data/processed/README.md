@@ -465,3 +465,62 @@ Cells are contiguous and so are not independent observations, the two fractions
 have different denominators, and the 96 excluded cells are a terrain-driven gap
 rather than a random sample. Nothing causal follows from them. What must be
 beaten before any of it means anything is in data/processed/baseline_results_2018.csv.
+
+## baseline_results_2018.csv
+
+What a model of this study's question has to beat, established before there is
+a model with an interest in where the bar sits. Forty-eight rows: twelve models,
+each under two held-out schemes at two weightings. Written by
+scripts/run_baselines.py, which reads only analysis_grid_2018.csv.
+
+Each row carries the model, the scheme, the weighting, the number of cells it
+ran on, how many it dropped for a missing predictor, in-sample RMSE and R
+squared, held-out RMSE and R squared, and a detail column holding the fitted
+coefficients for a linear model or the number of fallbacks for the spatial null.
+Errors are in ppb. The `dropped_missing` column counts rows removed from what
+the model was asked for, so it is 395 for a rice model offered the whole grid
+and 0 for one offered only the 532 cells that have a rice fraction, even though
+both end up running on 532. The `n` column is what to compare on.
+
+Sample sizes differ and the metrics are not comparable across them. Any model
+naming rice runs on the 532 cells that have a rice fraction; the constants, the
+spatial null and the impervious-only model could run on all 927. Every null is
+therefore run twice, once on each sample, and a model is only ever compared
+against a null fitted on the same rows. The 395 cells without rice are not a
+random slice: they are disproportionately coastal and outside the four
+provinces, so dropping them removes part of the field's spread rather than a
+sample of it.
+
+Evaluation is spatial and never random. Cells are contiguous and neighbouring
+cells are not independent, so a random split puts a cell's own neighbours in
+training and every model scores well by memorising the field. Leave-one-province
+-out holds out each of the four provinces and, as a fifth fold, the cells inside
+the bounding box but outside all four; it asks whether a relationship learned in
+three provinces transfers to a fourth, which is the claim a land-cover model
+implicitly makes. Spatial blocks hold out one-degree squares of the lattice,
+four cells on a side, assigned to five folds by a seeded permutation so no fold
+is entirely coastal or entirely inland. Held-out metrics pool every held-out
+prediction and score once rather than averaging fold metrics, which would weight
+a fold of 13 cells equally with a fold of 370.
+
+Two properties of the table look like errors and are not. The global and
+per-province constants have identical held-out numbers under
+leave-one-province-out, because the held-out province is by construction the
+group with no training data and the per-province constant falls back to the
+global mean for every held-out cell; that scheme cannot evaluate a per-province
+null. And R squared is frequently negative out of sample, because it is measured
+against the evaluation set's own weighted mean, so a model predicting the
+training mean scores below zero whenever the held-out region sits away from the
+overall mean. Below zero is informative rather than broken.
+
+Both weightings are reported and neither is chosen for the reader. A cell's
+value is the mean of between 1 and 410 soundings, so its variance is roughly
+sigma squared over n and the inverse-variance weight is the sounding count
+itself; on that argument the weighted numbers are the ones to fit on. But
+sounding count is not random over the study area, and the well-observed cells
+are systematically the flat bright ones the instrument retrieves from, so
+weighting also tilts every fit towards that terrain. The weighted errors are
+roughly half the unweighted ones throughout, which is the size of that effect
+and not an improvement in any model.
+
+    python scripts/run_baselines.py --write
