@@ -620,3 +620,45 @@ which is exactly where the retrieval is weakest. Treating negative values as
 invalid and dropping them would have removed 18 percent of cells non-randomly and
 precisely from the population the confounder test is about, so they are kept and
 this note records why a reader will find them.
+
+## Surface albedo accounts for the whole land-cover association
+
+This is the result the study turns on, and it is negative.
+
+Both legs of the confounding path are wide open. Albedo reaches methane:
+`surface_albedo_SWIR` against composite methane is Pearson +0.702 unweighted and
++0.599 weighted, `surface_albedo_NIR` +0.748 and +0.710, `solar_zenith_angle`
++0.697 and +0.707. Every one of those is a stronger association with the methane
+field than either land-cover fraction achieves. Albedo also reaches the land
+cover: SWIR albedo against impervious fraction is Pearson +0.475 with Spearman
++0.761 unweighted, and +0.319 with Spearman +0.609 weighted.
+
+With albedo partialled out of both sides, the land-cover association is gone.
+Methane against impervious fraction falls from Pearson +0.346 to +0.020
+(p = 0.55) unweighted and from +0.216 to +0.033 (p = 0.32) weighted: 5.7 and 15.3
+percent of its magnitude, and in neither case distinguishable from zero. Methane
+against rice fraction falls from +0.101 to -0.010 (p = 0.82) unweighted and stays
+negative and insignificant weighted. Both weightings agree, on all 927 cells and
+on the 532 with a rice fraction respectively.
+
+**What this does and does not establish.** It does not prove the land-cover
+signal is an artefact. Albedo and impervious fraction are physically related:
+cities are bright and dry, so a real urban methane signal would also show this
+pattern. Controlling for albedo therefore removes genuine land-cover variation
+along with any retrieval bias, and is an over-control to an unknown degree. What
+it establishes is that the two cannot be separated in this data. At Spearman
++0.761 between albedo and impervious fraction there is not enough independent
+variation to say which is doing the work, and a paper claiming an urban methane
+signal from this field would have no answer to a reviewer who proposed the
+retrieval instead.
+
+The direction of the albedo relationship is what makes the artefact reading
+plausible rather than merely available. Retrieved methane is *higher* over
+brighter surfaces, which is the sign a light-path bias predicts, and it holds
+across two independent albedo bands and the solar zenith angle. That is three
+retrieval-geometry variables all pointing the same way and all beating the
+predictor of interest.
+
+The sample is not the limitation. The confounder test was expected to run on a
+few percent of cells; it runs on all 927, the same cells as every other result
+in the repository. Its conclusion carries the same weight as what it tests.

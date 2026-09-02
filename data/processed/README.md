@@ -592,3 +592,34 @@ granules:
         --checkpoint data/interim/covariates_2018.npz \
         --verify-against data/processed/methane_composite_2018.tif \
         --export-covariates data/processed/methane_covariates_2018
+
+## albedo_confounder_2018.csv
+
+Whether the land-cover signal in the methane field is a retrieval artefact.
+Twenty-six rows: thirteen relationships under each of the two weightings.
+Written by scripts/test_albedo_confounder.py. Columns are the weighting, the
+relationship, what was controlled for if anything, the sample size, and Pearson
+and Spearman with their p-values.
+
+TROPOMI's methane retrieval needs light back from the surface, so it works
+better over bright ground; the literature reports a seasonal surface-albedo bias
+in TROPOMI methane over agricultural land; and rice paddies flood, which moves
+their albedo on the same seasonal cycle as their methane. Cities are bright and
+dry year round. So albedo is plausibly connected to both the land cover and the
+retrieved value, which is the shape of a confounder rather than a nuisance.
+
+Both legs are open and the conclusion is negative. Albedo is more strongly
+associated with the methane field than either land-cover fraction is, and once
+it is partialled out of both sides the land-cover association is not
+distinguishable from zero, under both weightings. notes/decisions.md carries the
+numbers and, more importantly, the limits: albedo and impervious fraction are
+collinear at Spearman +0.761, so controlling for one removes real variation in
+the other. The result is that the two cannot be separated in this data, not that
+the land-cover signal has been shown to be false.
+
+Partial correlation here is the residual method: both variables are regressed on
+the control and the residuals correlated, with the variables rank transformed
+first for the Spearman form. A row's controlled association is computed on
+exactly the cells its raw association used, and a test pins that.
+
+    python scripts/test_albedo_confounder.py --write

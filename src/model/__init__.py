@@ -29,6 +29,7 @@ from src.model.baselines import (  # noqa: F401
     Table,
     evaluate,
     leave_one_province_out,
+    join_covariates,
     load_table,
     r2,
     rmse,

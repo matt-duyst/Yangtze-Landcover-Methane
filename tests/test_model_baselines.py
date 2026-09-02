@@ -394,3 +394,98 @@ def test_an_unknown_scheme_is_refused():
     table = make_table(np.arange(5, dtype="float64"))
     with pytest.raises(bl.ModelError, match="unknown scheme"):
         evaluate(table, GlobalMean(), scheme="random", weighted=False)
+
+
+# --------------------------------------------------------------------------
+# joining the composite covariates
+# --------------------------------------------------------------------------
+
+def covariate_records(cells):
+    """Rows shaped like methane_covariates_2018.csv."""
+    out = []
+    for (lat, lon), values in cells.items():
+        record = {"centre_lat": f"{lat:.4f}", "centre_lon": f"{lon:.4f}",
+                  "sounding_count": "10"}
+        for name, (mean, count) in values.items():
+            record[f"{name}_mean"] = "" if mean is None else f"{mean:.6g}"
+            record[f"{name}_count"] = str(count)
+        out.append(record)
+    return out
+
+
+def test_covariates_join_on_the_cell_centre():
+    columns = {}
+    lat = np.array([31.125, 31.375])
+    lon = np.array([120.125, 120.375])
+    records = covariate_records({
+        (31.125, 120.125): {"eastward_wind": (3.0, 10),
+                            "northward_wind": (4.0, 10)},
+        (31.375, 120.375): {"eastward_wind": (-6.0, 5),
+                            "northward_wind": (8.0, 5)},
+    })
+    bl.join_covariates(columns, records, lat, lon, 0.25)
+    assert columns["eastward_wind"].tolist() == [3.0, -6.0]
+    assert columns["northward_wind_count"].tolist() == [10.0, 5.0]
+
+
+def test_wind_speed_is_the_magnitude_of_the_two_components():
+    columns = {}
+    lat, lon = np.array([31.125, 31.375]), np.array([120.125, 120.375])
+    records = covariate_records({
+        (31.125, 120.125): {"eastward_wind": (3.0, 10),
+                            "northward_wind": (4.0, 10)},
+        (31.375, 120.375): {"eastward_wind": (-6.0, 5),
+                            "northward_wind": (8.0, 5)},
+    })
+    added = bl.join_covariates(columns, records, lat, lon, 0.25)
+    assert columns["wind_speed"] == pytest.approx([5.0, 10.0])
+    assert columns["wind_u"].tolist() == columns["eastward_wind"].tolist()
+    assert set(bl.DERIVED_WIND) <= set(added)
+
+
+def test_wind_direction_is_not_added_as_a_scalar_bearing():
+    """A bearing is circular and cannot carry a linear coefficient."""
+    columns = {}
+    lat, lon = np.array([31.125]), np.array([120.125])
+    records = covariate_records({(31.125, 120.125): {
+        "eastward_wind": (1.0, 4), "northward_wind": (1.0, 4)}})
+    bl.join_covariates(columns, records, lat, lon, 0.25)
+    assert not any("direction" in name or "bearing" in name for name in columns)
+    assert {"wind_u", "wind_v", "wind_speed"} <= set(columns)
+
+
+def test_a_cell_with_no_covariate_row_gets_nan_not_zero():
+    columns = {}
+    lat = np.array([31.125, 99.0])
+    lon = np.array([120.125, 99.0])
+    records = covariate_records({(31.125, 120.125): {
+        "surface_albedo_SWIR": (0.12, 8)}})
+    bl.join_covariates(columns, records, lat, lon, 0.25)
+    assert columns["surface_albedo_SWIR"][0] == pytest.approx(0.12)
+    assert np.isnan(columns["surface_albedo_SWIR"][1]), \
+        "a cell nobody measured is not a cell with albedo zero"
+    assert columns["surface_albedo_SWIR_count"][1] == 0.0
+
+
+def test_a_blank_covariate_mean_is_nan_not_zero():
+    columns = {}
+    lat, lon = np.array([31.125]), np.array([120.125])
+    records = covariate_records({(31.125, 120.125): {
+        "surface_albedo_SWIR": (None, 0)}})
+    bl.join_covariates(columns, records, lat, lon, 0.25)
+    assert np.isnan(columns["surface_albedo_SWIR"][0])
+
+
+def test_a_model_on_a_joined_covariate_drops_the_unmeasured_cells():
+    columns = {}
+    lat = np.array([31.125, 31.375, 31.625])
+    lon = np.array([120.125, 120.375, 120.625])
+    records = covariate_records({
+        (31.125, 120.125): {"surface_albedo_SWIR": (0.10, 4)},
+        (31.375, 120.375): {"surface_albedo_SWIR": (0.20, 4)},
+    })
+    bl.join_covariates(columns, records, lat, lon, 0.25)
+    table = make_table(np.array([1900.0, 1910.0, 1920.0]),
+                       surface_albedo_SWIR=columns["surface_albedo_SWIR"])
+    model = LinearModel(("surface_albedo_SWIR",))
+    assert rows_for(table, model, table.all_rows).tolist() == [0, 1]

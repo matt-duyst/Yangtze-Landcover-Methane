@@ -185,8 +185,64 @@ def dominant_province(shares: Mapping[str, float]) -> str:
     return best
 
 
+#: Covariates carried through from the composite, and the derived wind terms.
+#:
+#: Wind speed is ``hypot(eastward, northward)``. Direction is deliberately NOT
+#: entered as a scalar bearing: a bearing is circular, so 359 and 1 degrees are
+#: adjacent in the world and 358 apart in the arithmetic, and a linear
+#: coefficient on it is meaningless. Direction enters through the components
+#: instead. A linear model in ``wind_u`` and ``wind_v`` is exactly a linear
+#: model in speed and direction jointly, expressed in coordinates where the
+#: discontinuity does not exist, and ``wind_speed`` is added alongside because
+#: it is a nonlinear function of the pair and so is not collinear with them.
+WIND_COMPONENTS = ("eastward_wind", "northward_wind")
+DERIVED_WIND = ("wind_u", "wind_v", "wind_speed")
+
+
+def join_covariates(columns: dict, records, lat, lon, resolution: float) -> list[str]:
+    """Add composite covariate means to a table's columns, matched by cell.
+
+    Matching is on the cell centre printed to four decimal places, which is how
+    both files write it, so the join is exact rather than a tolerance. A grid
+    cell with no covariate row gets NaN, never zero: a covariate nobody measured
+    is not a covariate of zero, and every model in this module drops or refuses
+    on a NaN rather than filling it.
+    """
+    def key(a, b):
+        return (f"{a:.4f}", f"{b:.4f}")
+
+    by_cell = {key(float(r["centre_lat"]), float(r["centre_lon"])): r
+               for r in records}
+    names = sorted({name[: -len("_mean")] for name in records[0]
+                    if name.endswith("_mean")})
+    added = []
+    for name in names:
+        values = np.full(lat.size, np.nan)
+        counts = np.zeros(lat.size)
+        for i in range(lat.size):
+            record = by_cell.get(key(lat[i], lon[i]))
+            if record is None:
+                continue
+            raw = record.get(f"{name}_mean", "")
+            if raw != "":
+                values[i] = float(raw)
+            counts[i] = float(record.get(f"{name}_count", 0) or 0)
+        columns[name] = values
+        columns[f"{name}_count"] = counts
+        added.append(name)
+
+    if all(name in columns for name in WIND_COMPONENTS):
+        u, v = columns["eastward_wind"], columns["northward_wind"]
+        columns["wind_u"] = u
+        columns["wind_v"] = v
+        columns["wind_speed"] = np.hypot(u, v)
+        added.extend(DERIVED_WIND)
+    return added
+
+
 def load_table(path: str | Path, *, target: str = TARGET,
-               resolution: float = 0.25) -> Table:
+               resolution: float = 0.25,
+               covariates: str | Path | None = None) -> Table:
     """Read analysis_grid_2018.csv into arrays.
 
     Lattice row and column are recovered from the cell centres rather than
@@ -220,13 +276,19 @@ def load_table(path: str | Path, *, target: str = TARGET,
     predictors = ("impervious_fraction", "rice_fraction_single",
                   "rice_fraction_combined", "impervious_coverage",
                   "rice_coverage")
+    columns = {name: numeric(name) for name in predictors}
+    if covariates is not None:
+        joined = list(csv.DictReader(open(covariates, newline="")))
+        if not joined:
+            raise ModelError(f"{covariates} holds no rows")
+        join_covariates(columns, joined, lat, lon, resolution)
     return Table(
         y=numeric(target),
         weight=numeric(WEIGHT),
         row=np.round(raw_row).astype("int64"),
         col=np.round(raw_col).astype("int64"),
         province=np.array(provinces, dtype=object),
-        columns={name: numeric(name) for name in predictors})
+        columns=columns)
 
 
 # --------------------------------------------------------------------------
