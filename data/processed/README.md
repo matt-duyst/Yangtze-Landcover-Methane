@@ -2,8 +2,17 @@
 
 Small derived tables, committed. Every file here should be regenerable from
 committed inputs by committed code, and most rows now are: 148 of the 160 urban
-rows and 24 of the 32 rice rows regenerate, and the scripts that do it compare
-against the committed values and refuse to overwrite when anything disagrees.
+rows and 28 of the 36 rice rows. Both tables regenerate from a clone with
+nothing fetched, in four commands:
+
+    python scripts/fetch_gaia.py --download
+    python scripts/compute_urban_areas.py --write
+    python scripts/fetch_glorice.py --download
+    python scripts/compute_rice_areas.py --write
+
+Each compute script compares against the committed values first, prints every
+row differing by more than a tenth of a percent, and refuses to write when any
+does. Run either without --write to compare and change nothing.
 
 The rows that do not regenerate are named in each section below rather than
 left to be discovered. Twelve urban rows need GADM, whose licence forbids
@@ -17,8 +26,10 @@ Rice physical area for the four study provinces, one row per product, year and
 province, with the 2023 thesis PPPM value alongside wherever the thesis covers
 that year. Columns are source, year, province, rice_area_km2 and
 thesis_pppm_km2. The thesis column is empty for 2019, 2020 and 2021, which the
-thesis does not cover. Thirty-two rows: twenty-four from GloRice spanning 2000,
-2010 and 2018 through 2021, and eight from SPAM covering 2000 and 2010.
+thesis does not cover. Thirty-six rows: twenty-eight from GloRice spanning
+2000, 2010 and 2017 through 2021, and eight from SPAM covering 2000 and 2010.
+The 2017 GloRice rows exist because 2017 is the first year of the NESDC rice
+product, so the two are comparable from the start of their overlap.
 
 The products are GloRice (I) physical area, Extensive variant, figshare version
 2 of doi 10.6084/m9.figshare.27965832, published as Xie, H., Li, J., Li, T.,
@@ -72,22 +83,19 @@ half the thesis value in both years, 10,746 km2 against 19,651 for 2000 and
 the correct provincial trajectory is, a series with those properties cannot
 carry weight at this scale.
 
-The twenty-four GloRice rows now regenerate from committed inputs plus a
-fetch. Running scripts/compute_rice_areas.py with no arguments recomputes them
-from data/raw/glorice/ and data/reference/yrd_provinces.geojson and reports any
-row differing from the committed value by more than a tenth of a percent,
-writing nothing; --write regenerates the file and refuses if anything differs.
-The inputs come from src/fetch/figshare.py against the DOI and years recorded
-in config/sources.yml, which downloads the archive, verifies its MD5 against
-figshare's published digest, extracts only the seven years configured, and
-records the sha256 of each. As of this commit every one of the twenty-four
-matches to within a tenth of a percent.
+All twenty-eight GloRice rows regenerate. scripts/fetch_glorice.py --download
+obtains the inputs, reading the DOI and the seven years from
+config/sources.yml, verifying the archive against the MD5 figshare publishes,
+extracting only those years and deleting the 148 MB archive afterwards.
+scripts/compute_rice_areas.py then recomputes the rows from data/raw/glorice/
+and data/reference/yrd_provinces.geojson, reporting any row differing from the
+committed value by more than a tenth of a percent and writing nothing; --write
+regenerates the file and refuses if anything differs. On the run that produced
+the current table all twenty-four rows that already existed matched to within a
+tenth of a percent and the four 2017 rows were added.
 
-Two qualifications on that. First, config/sources.yml lists 2017 among the
-years to fetch and the committed table has no 2017 rows, so a regeneration
-produces four rows the committed file lacks; the script reports them as
-additions rather than differences and they are not written unless --write is
-passed. Second, GloRice is not a categorical raster, so the computation uses
+One thing about the method is worth stating because it differs from the urban
+table. GloRice is not a categorical raster, so the computation uses
 zonal_value_sum rather than zonal_area: cells hold hectares of rice, and at 5
 arcmin a cell is roughly 9 km across, so each is apportioned by the fraction
 lying inside the province rather than taken or dropped whole.
@@ -197,14 +205,22 @@ than a tenth of a percent; --write regenerates the file and refuses if anything
 differs. As of this commit every one of the hundred and forty-eight matches to
 better than one part in ten million.
 
-Two things still stand between that and a fresh clone. The nine GAIA tiles are
-not committed and there is no entry point that fetches them: the record is on
-figshare and src/fetch/figshare.py could serve it, but no config entry or fetch
-script exists yet, and the 2.3 GB archive is not internally addressable, so
-obtaining any tile means downloading all of it. And the archive's sha256 in
-data/manifest.json is still null, because the archive was deleted before one
-was computed; the nine extracted tiles do carry checksums, so the local copies
-verify even though the archive they came from does not.
+The nine GAIA tiles are not committed and are fetched by
+scripts/fetch_gaia.py --download, which reads the DOI and the nine tile names
+from config/sources.yml, verifies the archive against the MD5 figshare
+publishes, extracts only those nine members, deletes the 2.3 GB archive, and
+records the archive's sha256 and each tile's in data/manifest.json. Extraction
+goes to a staging directory and the tiles are hashed there and checked against
+the digests already recorded before anything is moved into place, so a changed
+distribution is reported rather than silently replacing verified files. On the
+run that produced the current manifest all nine matched the digests from the
+earlier manual extraction exactly, and the archive's sha256, which had been
+null because the archive was deleted before one was computed, was filled in.
+
+One property of the route is unavoidable and worth knowing before running it:
+the archive is not internally addressable, so obtaining any single tile means
+downloading all 2,302,456,975 bytes of it. The nine tiles that come out total
+265 MB.
 
 The twelve GADM rows cannot be regenerated from committed inputs and never
 will be. GADM 4.1's licence forbids redistribution without permission, so the
