@@ -75,3 +75,57 @@ glorice:
     - 2019
     - 2020
     - 2021
+
+gaia:
+  product: GAIA annual global artificial impervious area, 30 m
+  doi: 10.6084/m9.figshare.27245775.v1
+
+  # The DOI encodes both; src/fetch/figshare.article_id_from_doi() re-derives
+  # them offline.
+  article_id: 27245775
+  version: 1
+
+  licence: CC BY 4.0
+  licence_url: https://creativecommons.org/licenses/by/4.0/
+  citation: >-
+    Gong, P., Li, X., Wang, J., Bai, Y., Chen, B., Hu, T., Liu, X., Xu, B.,
+    Yang, J., Zhang, W., and Zhou, Y. (2020), Annual maps of global artificial
+    impervious areas (GAIA) between 1985 and 2018, Remote Sensing of
+    Environment, 236, 111510, doi:10.1016/j.rse.2019.111510
+
+  api_base: https://api.figshare.com/v2
+  destination: data/raw/gaia
+
+  # The archive is 2,302,456,975 bytes and is NOT internally addressable over
+  # this route, so the whole 2.3 GB must be fetched to reach any tile. It is
+  # deleted after extraction; see scripts/fetch_gaia.py.
+  archive: GAIA_1985_2022.zip
+
+  # Facts a reader of this config needs, recorded here because they otherwise
+  # live only in notes/decisions.md:
+  #   - the archive is named GAIA_1985_2022.zip but the data stops at 2021;
+  #     the readme's own temporal line reads 1985 to 2021
+  #   - pixel values encode the year a pixel first became impervious, counting
+  #     DOWNWARD: year = 2023 - value, so 2 is 2021 and 38 is 1985 and before
+  #   - value 1 is never used, across the 3,105,244,301 pixels checked
+  #   - nodata is -128 and is undocumented in the product readme, which lists
+  #     only 0 and 2 through 38
+  #
+  # Tiles are listed as explicit filenames rather than as the longitude and
+  # latitude corners they encode. The corners are the 5-degree cells with
+  # upper-left corners at 110/115/120 east by 30/35/40 north, which is the
+  # readable form, but the fetch layer selects members by filename and
+  # reconstructing "GAIA_1985_2022_{lon}_{lat}.tif" in code would put the
+  # product's naming convention into the fetch module, which is what config is
+  # here to avoid. A filename that stops matching after a re-release fails
+  # loudly; a corner list would quietly build a name that no longer exists.
+  tiles:
+    - GAIA_1985_2022_110_30.tif
+    - GAIA_1985_2022_110_35.tif
+    - GAIA_1985_2022_110_40.tif
+    - GAIA_1985_2022_115_30.tif
+    - GAIA_1985_2022_115_35.tif
+    - GAIA_1985_2022_115_40.tif
+    - GAIA_1985_2022_120_30.tif
+    - GAIA_1985_2022_120_35.tif
+    - GAIA_1985_2022_120_40.tif
