@@ -158,3 +158,120 @@ background from genuine non-rice. Every provincial statistic from these rasters
 must be taken through data/reference/yrd_provinces.geojson, and the pixel counts
 recorded during characterisation are whole-file counts that must not be used as
 provincial totals.
+
+## NESDC rice totals are pinned for Shanghai and Jiangsu
+
+Shanghai's single-season rice count is stable to 0.03 percent across 2019 to
+2025, on a raster of 163,194,340 pixels. That stability is not stability of the
+rice itself. Between 2019 and 2025, 8,619,817 pixels changed class, and only
+4,800,822 pixels are rice in both years, which is 52.69 percent of 2019's rice
+and a Jaccard index of 0.3577. Just over half the land labelled rice at the
+start is still labelled rice at the end, while the total barely moves.
+
+The 2023 to 2024 pair is the clearest single case. Between those two years
+5,651,475 pixels gained the rice label and 5,651,551 lost it, a difference of 76
+out of more than five and a half million in each direction. Two independent
+classifications of a changing landscape do not balance to seventy-six pixels.
+
+Zhejiang is the control and it rules out the obvious alternative explanation.
+Zhejiang relocates just as heavily, between 78 and 117 percent of its rice
+changing class each year, but its net moves by millions of pixels. Heavy
+relocation is therefore a property of this product everywhere, and the feature
+that distinguishes Shanghai is the pinned total rather than the movement.
+
+Jiangsu shows the same signature from 2020 onward, and also across 2017 to 2018,
+where the net is plus 38,589 against a rice count of 265 million while 281.6
+million pixels changed class. Jiangsu's transitions across 2018 to 2020 move
+freely, so the pinning there is not continuous.
+
+This is not file duplication. All thirty-six files have distinct sha256 values,
+and all nine of Shanghai's decoded pixel arrays have distinct sha256 values, so
+no year is a copy of another at either the file or the pixel level.
+
+What the pixels cannot show is what the total is pinned to. They establish that
+the count is held fixed; they do not establish whether the target is a
+statistical sown-area figure, a prior year's output, or something else. The
+product's documentation does not ship on the FTP route, so there is nothing on
+that route to consult.
+
+One further measurement constrains the mechanism and is the sharpest number
+here. The rice area computed inside the Shanghai province polygon varies by
+1.450 percent across 2019 to 2025, while the whole-file count varies by 0.03
+percent, fifty times less. The pinning therefore operates on the whole-raster
+count and not on the within-province count, which means the target is defined on
+the classifier's own processing extent rather than on the province.
+
+The consequence is a hard constraint. For Shanghai 2019 to 2025 and Jiangsu 2020
+to 2025, the annual totals are not independent observations. They must not be
+used as a time series, must not be regressed against anything, and must not be
+compared year on year against the 2023 thesis PPPM estimates, because any such
+comparison would measure the pinning rather than the rice. The per-pixel maps
+remain usable for a single year, but the same cell changes label between years
+for reasons that are not observations, so no temporal feature can be built from
+them for those two provinces.
+
+As a caveat on the boundary of that rule, 2018 is a defensible single-year
+snapshot for Shanghai, where the 2017 to 2018 net of minus 288,392 is an order
+of magnitude above the later noise. It sits at the boundary for Jiangsu, whose
+transition from 2017 is pinned while its transition to 2019 is not.
+
+## Anhui's rice rasters are clipped in seven of nine years
+
+Anhui's raster does not contain the province in seven of the nine years. The
+2017 to 2020 rasters omit 13.675 percent of the polygon, cutting 1.2966 degrees
+off the north and 0.3923 off the west. The 2021 to 2023 rasters omit 8.138
+percent, having fixed almost all of the western cut but only a quarter of the
+northern one, still losing 1.0553 degrees off the top. Only 2024 and 2025
+contain the province, and then with a residual 2.9 km2 sliver on the western
+edge that is negligible.
+
+The rice counts are nevertheless comparable across all nine years, which is not
+obvious and had to be checked rather than assumed. Every one of the 963 million
+pixels added by the box growth is class 0. That was verified directly: the
+northern strip holds 772,361,075 pixels and the western strip 190,261,806, and
+in both the only value present is 0. The 2024 rice count is 274,422,562 whether
+computed over the full raster or restricted to either of the earlier boxes, so
+the 2023 to 2024 rise of 4,058,040 pixels is entirely real change on common
+ground and none of it is the box moving.
+
+One ambiguity cannot be resolved from these files. Because they carry no nodata,
+an all-zero strip is indistinguishable from an unclassified strip. Northern
+Anhui either grows no rice or was never classified, and both possibilities
+produce byte-identical output. This does not affect year-to-year comparison,
+since the region contributes zero in every year that covers it and is absent
+from every year that does not. It does affect any claim that these files
+represent all of Anhui's rice. Northern Anhui is part of the Huaibei plain, a
+major agricultural region, so rice-free is a strong claim about a large area and
+should not be assumed without independent evidence.
+
+A separate constraint follows from the extent, independent of the count
+question. Anhui 2017 to 2023 must not be used for any area-normalised statistic.
+The raster covers only 86.3 percent of the province in 2017 to 2020 and 91.9
+percent in 2021 to 2023, while a polygon denominator covers 100 percent, so a
+rice fraction or a rice density for those seven years is wrong even though the
+underlying count is sound.
+
+## Rice fractions must be computed against the raster-polygon intersection
+
+The denominator for any rice fraction from this product is the intersection of
+the province polygon with that year's raster extent, not the polygon area. Where
+the two differ, the coverage fraction must be recorded per province-year, so a
+reader can see which figures rest on partial coverage rather than having to
+rediscover it.
+
+This compounds with the missing nodata recorded above. Because these rasters are
+plain rectangles around each province rather than clipped to the polygon, and
+because 0 means both non-rice land and out-of-province background, a fraction
+computed against raster extent rather than against the polygon is wrong by
+roughly a factor of two for three of the four provinces.
+
+The measured figures are these. Shanghai's raster box encloses 13,914 km2 around
+a province of 6,746 km2, so 52 percent of the box is outside the province.
+Zhejiang is the same proportion, 209,840 km2 of box around 101,337 km2. Jiangsu
+is the worst at 60 percent, 252,380 km2 around 100,091 km2. Anhui is the
+tightest and still has 23 percent of its box outside the province.
+
+Masking is not a fixed correction that can be applied once and reused. Only 94.1
+to 95.5 percent of Shanghai's class-1 pixels fall inside the province polygon,
+and that fraction varies from year to year, so the mask has to be applied to
+each raster rather than absorbed into a per-province constant.
