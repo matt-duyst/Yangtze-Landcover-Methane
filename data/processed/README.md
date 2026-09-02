@@ -443,7 +443,11 @@ quantisation, since a 30 m grid does not divide a 0.25 degree cell evenly and a
 cell gains or loses up to about one pixel row. Rice coverage runs from 0.0000 to
 1.0002 with a median of 0.3354 and 570 rows below 0.99. Of the 927 cells, 69
 straddle more than one province, 544 are partly outside all four and 368 are
-entirely outside all four.
+entirely outside all four. A reader counting the file will find 370 rather than
+368 with every province share at zero, because the share columns are written to
+four decimal places and two cells hold a provincial sliver below 0.00005 of
+their area. The figure of 368 is what the intersection actually found; 370 is
+what the file can express.
 
 To regenerate every column except `rice_fraction_combined`, from a clone with
 nothing fetched:
