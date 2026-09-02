@@ -400,6 +400,140 @@ def export_covariates(composite: Composite, stem: Path) -> tuple[Path, Path]:
     return tif, csv_path
 
 
+def report_seasonal(stats, spread_threshold: float = 15.0):
+    """Fit the shared cycle at one and two harmonics and report both.
+
+    Both come from the same accumulated statistics, so the comparison is on
+    exactly the same soundings and the only difference is the model.
+    """
+    fits = {}
+    print("\n  seasonal fit, shared across all cells, fitted at the sounding level")
+    print(f"    {'model':<14}{'terms':<46}{'amplitude':>10}{'peak day':>10}"
+          f"{'range':>9}{'resid sd':>10}{'R2 within':>11}")
+    for harmonics in (1, stats.basis.harmonics):
+        if harmonics in fits:
+            continue
+        try:
+            fit = se.solve(stats.truncated(harmonics),
+                           spread_threshold=spread_threshold)
+        except se.NotEnoughSeasonalSpread as failure:
+            # A partial checkpoint can easily hold one date. Say so and carry
+            # on rather than failing the whole export.
+            print(f"    K={harmonics}: cannot be fitted. {failure}")
+            continue
+        fits[harmonics] = fit
+        terms = "; ".join(f"{k} {v:+.4f}" for k, v in fit.terms.items())
+        amplitude = " / ".join(f"{a:.3f}" for a in fit.amplitudes)
+        print(f"    K={harmonics:<12}{terms:<46}{amplitude:>10}"
+              f"{fit.peak_day:>10.1f}{fit.peak_to_trough:>9.3f}"
+              f"{fit.residual_sd:>10.4f}{fit.variance_explained:>11.4f}")
+    return fits
+
+
+def compare_harmonics(fits) -> None:
+    """Is the second harmonic warranted? Answer with an F test, not taste."""
+    if 1 not in fits or 2 not in fits:
+        return
+    one, two = fits[1], fits[2]
+    extra = one.residual_ss - two.residual_ss
+    f = (extra / 2.0) / (two.residual_ss / two.degrees_of_freedom)
+    from scipy import stats as sps
+    p = float(sps.f.sf(f, 2, two.degrees_of_freedom))
+    print(f"\n    second harmonic: residual sum of squares falls from "
+          f"{one.residual_ss:,.0f} to {two.residual_ss:,.0f}")
+    print(f"    F(2, {two.degrees_of_freedom:,}) = {f:,.1f}, p = {p:.3g}; "
+          f"residual sd {one.residual_sd:.4f} -> {two.residual_sd:.4f} ppb")
+    print(f"    peak day moves {one.peak_day:.1f} -> {two.peak_day:.1f}, "
+          f"seasonal range {one.peak_to_trough:.2f} -> {two.peak_to_trough:.2f} ppb")
+
+
+def report_sampling_dates(stats, spread_threshold: float = 15.0) -> None:
+    """The artefact, measured directly instead of through solar zenith angle."""
+    ok = stats.covered
+    mean, spread = stats.date_mean(), stats.date_spread()
+    print(f"\n  sampling dates over {int(ok.sum())} covered cells")
+    print(f"    mean day of year   min {mean[ok].min():7.2f}  "
+          f"median {np.median(mean[ok]):7.2f}  max {mean[ok].max():7.2f}  "
+          f"range {mean[ok].max() - mean[ok].min():7.2f} days")
+    print(f"    spread in days     min {spread[ok].min():7.2f}  "
+          f"median {np.median(spread[ok]):7.2f}  max {spread[ok].max():7.2f}")
+    for threshold in (1.0, 15.0, 30.0, 60.0):
+        below = int((spread[ok] < threshold).sum())
+        print(f"    cells with spread below {threshold:5.1f} days: {below:>4} "
+              f"({100 * below / int(ok.sum()):5.1f}%)")
+    print(f"    the flag uses {spread_threshold:.0f} days: roughly one month, "
+          f"below which a cell's offset is poorly separable from the cycle")
+
+
+def export_deseasonalised(fit, stats, spec, stem: Path) -> tuple[Path, Path]:
+    """Write the deseasonalised field and the diagnostics that qualify it.
+
+    A separate companion again, for the same reason as the covariates: this
+    field has a different meaning from the composite mean and must not sit in
+    the same file where a reader could take one for the other. Bands follow the
+    established pattern, each mean immediately before its own count, and the two
+    sampling-date bands are here rather than elsewhere because a deseasonalised
+    value cannot be read without knowing how separable it was.
+    """
+    import csv as _csv
+    import rasterio
+    from rasterio.transform import from_origin
+
+    mean_day, spread = stats.date_mean(), stats.date_spread()
+    layers = [
+        ("deseasonalised methane mean, ppb", fit.mu),
+        ("sounding count", fit.counts.astype("float64")),
+        ("mean day of year", mean_day),
+        ("day of year standard deviation", spread),
+        ("poorly identified flag", fit.poorly_identified.astype("float64")),
+    ]
+
+    tif = stem.with_suffix(".tif")
+    stem.parent.mkdir(parents=True, exist_ok=True)
+    transform = from_origin(spec.west, spec.north, spec.resolution, spec.resolution)
+    with rasterio.open(
+        tif, "w", driver="GTiff", height=spec.shape[0], width=spec.shape[1],
+        count=len(layers), dtype="float32", crs="EPSG:4326",
+        transform=transform, nodata=float("nan"), compress="deflate",
+    ) as dst:
+        for i, (description, array) in enumerate(layers, start=1):
+            dst.write(np.asarray(array, dtype="float32"), i)
+            dst.set_band_description(i, description)
+        dst.update_tags(
+            harmonics=str(fit.basis.harmonics),
+            coefficients=", ".join(f"{k} {v:+.6f}" for k, v in fit.terms.items()),
+            seasonal_amplitude_ppb=", ".join(f"{a:.4f}" for a in fit.amplitudes),
+            peak_day_of_year=f"{fit.peak_day:.2f}",
+            seasonal_range_ppb=f"{fit.peak_to_trough:.4f}",
+            residual_sd_ppb=f"{fit.residual_sd:.4f}",
+            note=("Band 1 is the per-cell offset with a region-wide seasonal "
+                  "cycle removed at the SOUNDING level. It is not the composite "
+                  "mean minus a cycle. Read bands 4 and 5 with it: a cell "
+                  "sampled over a narrow window has an offset barely separable "
+                  "from the cycle."),
+        )
+
+    csv_path = stem.with_suffix(".csv")
+    with open(csv_path, "w", newline="") as handle:
+        writer = _csv.writer(handle)
+        writer.writerow(["centre_lat", "centre_lon", "sounding_count",
+                         "ch4_deseasonalised_ppb", "mean_day_of_year",
+                         "day_of_year_sd", "poorly_identified"])
+        for row in range(spec.shape[0]):
+            lat = spec.north - (row + 0.5) * spec.resolution
+            for col in range(spec.shape[1]):
+                lon = spec.west + (col + 0.5) * spec.resolution
+                n = int(fit.counts[row, col])
+                writer.writerow([
+                    f"{lat:.4f}", f"{lon:.4f}", n,
+                    "" if n == 0 else f"{fit.mu[row, col]:.4f}",
+                    "" if n == 0 else f"{mean_day[row, col]:.3f}",
+                    "" if n == 0 else f"{spread[row, col]:.3f}",
+                    int(fit.poorly_identified[row, col]) if n else "",
+                ])
+    return tif, csv_path
+
+
 def verify_methane(composite: Composite, reference: Path) -> dict:
     """Compare a rebuilt composite's methane against a committed one.
 
@@ -484,6 +618,14 @@ def build_argparser() -> argparse.ArgumentParser:
     parser.add_argument("--verify-against", default=None,
                         help="committed composite to check the methane bands "
                              "against before writing anything")
+    parser.add_argument("--export-deseasonalised", default=None,
+                        help="path stem for the deseasonalised field")
+    parser.add_argument("--export-harmonics", type=int, default=None,
+                        help="which harmonic order to export; defaults to the "
+                             "highest accumulated")
+    parser.add_argument("--spread-threshold", type=float, default=15.0,
+                        help="days below which a cell's offset is flagged as "
+                             "poorly separable from the seasonal cycle")
     parser.add_argument("--no-covariates", action="store_true",
                         help="ignore the configured covariate list")
     parser.add_argument("--run", action="store_true",
@@ -510,7 +652,8 @@ def main(argv=None) -> int:
         mg.CovariateSpec(name=c["name"], group=c["group"])
         for c in config.get("covariates", []))
 
-    if args.export or args.export_covariates or args.verify_against:
+    if (args.export or args.export_covariates or args.verify_against
+            or args.export_deseasonalised):
         if not checkpoint.exists():
             raise SystemExit(f"no checkpoint at {checkpoint}; nothing to export")
         accumulator = Accumulator.load(checkpoint)
@@ -522,6 +665,12 @@ def main(argv=None) -> int:
               f"({100 * coverage.fraction:.2f}%)")
         if composite.covariates:
             report_covariate_coverage(composite)
+
+        fits = {}
+        if int(accumulator.harmonics.n.sum()) > 0:
+            report_sampling_dates(accumulator.harmonics, args.spread_threshold)
+            fits = report_seasonal(accumulator.harmonics, args.spread_threshold)
+            compare_harmonics(fits)
 
         # The check runs BEFORE anything is written. A composite that does not
         # reproduce the committed methane is not a composite of the same thing,
@@ -547,6 +696,23 @@ def main(argv=None) -> int:
             print(f"\n  wrote {tif}  ({tif.stat().st_size:,} B)")
             print(f"  wrote {csv_path}  ({csv_path.stat().st_size:,} B, "
                   f"{composite.spec.n_cells} rows plus a header)")
+        if args.export_deseasonalised:
+            if not fits:
+                raise SystemExit("this checkpoint holds no seasonal statistics")
+            order = args.export_harmonics or max(fits)
+            if order not in fits:
+                raise SystemExit(f"no fit at {order} harmonics; have {sorted(fits)}")
+            chosen = fits[order]
+            tif, csv_path = export_deseasonalised(
+                chosen, accumulator.harmonics, composite.spec,
+                Path(args.export_deseasonalised))
+            flagged = int(chosen.poorly_identified.sum())
+            print(f"\n  wrote {tif}  ({tif.stat().st_size:,} B, "
+                  f"{len(chosen.terms) and 5} bands)")
+            print(f"  wrote {csv_path}  ({csv_path.stat().st_size:,} B, "
+                  f"{composite.spec.n_cells} rows plus a header)")
+            print(f"  {flagged} cells flagged as poorly identified at "
+                  f"{args.spread_threshold:.0f} days")
         if args.export_covariates:
             tif, csv_path = export_covariates(composite,
                                               Path(args.export_covariates))

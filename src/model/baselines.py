@@ -259,9 +259,32 @@ def join_covariates(columns: dict, records, lat, lon, resolution: float) -> list
     return added
 
 
+def join_column(records, lat, lon, column: str) -> np.ndarray:
+    """One column from a companion table, matched to cells by centre.
+
+    Same exact four-decimal match as :func:`join_covariates`. A cell with no
+    row, or a blank value, comes back NaN so that a model either drops it or
+    refuses; nothing here fills anything in.
+    """
+    def key(a, b):
+        return (f"{a:.4f}", f"{b:.4f}")
+
+    by_cell = {key(float(r["centre_lat"]), float(r["centre_lon"])): r
+               for r in records}
+    if column not in records[0]:
+        raise ModelError(f"the companion table has no column {column!r}")
+    out = np.full(lat.size, np.nan)
+    for i in range(lat.size):
+        record = by_cell.get(key(lat[i], lon[i]))
+        if record is not None and record[column] != "":
+            out[i] = float(record[column])
+    return out
+
+
 def load_table(path: str | Path, *, target: str = TARGET,
                resolution: float = 0.25,
-               covariates: str | Path | None = None) -> Table:
+               covariates: str | Path | None = None,
+               target_from: str | Path | None = None) -> Table:
     """Read analysis_grid_2018.csv into arrays.
 
     Lattice row and column are recovered from the cell centres rather than
@@ -307,8 +330,21 @@ def load_table(path: str | Path, *, target: str = TARGET,
         if not joined:
             raise ModelError(f"{covariates} holds no rows")
         join_covariates(columns, joined, lat, lon, resolution)
+    if target_from is not None:
+        # The deseasonalised field lives in its own file, so the target is
+        # joined in rather than read from the grid. Cells the companion has no
+        # value for become NaN and are dropped by whatever uses them; the
+        # weights and predictors stay exactly as they were, so a comparison
+        # between the two targets is on the same cells and the same covariates.
+        companion = list(csv.DictReader(open(target_from, newline="")))
+        if not companion:
+            raise ModelError(f"{target_from} holds no rows")
+        y = join_column(companion, lat, lon, target)
+    else:
+        y = numeric(target)
+
     return Table(
-        y=numeric(target),
+        y=y,
         weight=numeric(WEIGHT),
         row=np.round(raw_row).astype("int64"),
         col=np.round(raw_col).astype("int64"),

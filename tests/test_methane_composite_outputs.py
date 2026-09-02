@@ -329,3 +329,98 @@ def test_the_committed_composite_verifies_against_itself():
     assert check["raw"] < 1e-3
     assert check["counts"] == 0.0, "counts are integers and must match exactly"
     assert check["covered_cells_new"] == check["covered_cells_reference"] == 927
+
+
+# --------------------------------------------------------------------------
+# the deseasonalised companion
+# --------------------------------------------------------------------------
+
+def seasonal_fixture(spec, *, per_cell=60, seed=0):
+    """A synthetic accumulator whose harmonic statistics are fittable."""
+    import numpy as np
+    from src.methane import seasonal as se
+
+    rng = np.random.default_rng(seed)
+    acc = cm.Accumulator(spec, 0.75, (mg.PRIMARY, mg.SECONDARY))
+    mu_true = rng.normal(1900.0, 10.0, spec.shape)
+    coefficients = np.array([9.0, -4.0, 1.0, 0.5])
+    for row in range(spec.shape[0]):
+        for col in range(spec.shape[1]):
+            day = rng.uniform(1.0, 365.0, per_cell)
+            y = mu_true[row, col] + se.HarmonicBasis(2).evaluate(day, coefficients)
+            acc.harmonics.add(np.full(per_cell, row), np.full(per_cell, col),
+                              y, day)
+            acc.counts[row, col] = per_cell
+            acc.sums[mg.PRIMARY][row, col] = y.sum()
+            acc.sums[mg.SECONDARY][row, col] = y.sum() - per_cell * 11.0
+    return acc, mu_true, coefficients
+
+
+def test_the_deseasonalised_export_pairs_the_field_with_its_diagnostics(tmp_path):
+    from src.methane import seasonal as se
+
+    spec = GridSpec(0.0, 0.0, 1.0, 1.0, 0.5)
+    acc, mu_true, _ = seasonal_fixture(spec)
+    fit = se.solve(acc.harmonics)
+    tif, csv_path = cm.export_deseasonalised(fit, acc.harmonics, spec,
+                                             tmp_path / "d")
+    with rasterio.open(tif) as src:
+        assert src.count == 5
+        assert list(src.descriptions) == [
+            "deseasonalised methane mean, ppb", "sounding count",
+            "mean day of year", "day of year standard deviation",
+            "poorly identified flag"]
+        mu, counts = src.read(1), src.read(2)
+        tags = src.tags()
+    assert np.allclose(mu, mu_true, atol=0.05)
+    assert (counts == 60).all()
+    assert "SOUNDING level" in tags["note"]
+    assert float(tags["peak_day_of_year"]) > 0
+
+
+def test_the_deseasonalised_csv_blanks_unobserved_cells(tmp_path):
+    from src.methane import seasonal as se
+
+    spec = GridSpec(0.0, 0.0, 1.0, 1.0, 0.5)
+    acc, _, _ = seasonal_fixture(spec)
+    acc.counts[1, 1] = 0                       # pretend one cell was never seen
+    acc.harmonics.n[1, 1] = 0
+    fit = se.solve(acc.harmonics)
+    _, csv_path = cm.export_deseasonalised(fit, acc.harmonics, spec,
+                                           tmp_path / "d")
+    rows = list(csv.DictReader(open(csv_path, newline="")))
+    assert len(rows) == spec.n_cells == 4
+    blank = [r for r in rows if int(r["sounding_count"]) == 0]
+    assert len(blank) == 1
+    for record in blank:
+        assert record["ch4_deseasonalised_ppb"] == ""
+        assert record["mean_day_of_year"] == ""
+        assert record["poorly_identified"] == ""
+
+
+def test_the_deseasonalised_field_is_not_the_composite_mean_minus_a_cycle(tmp_path):
+    """The distinction the whole approach rests on.
+
+    Two cells with the same true offset sampled in different seasons have
+    different composite means. Subtracting the cycle evaluated at each cell's
+    MEAN date does not bring them together in general, because the mean of a
+    nonlinear function is not the function of the mean. Fitting at the sounding
+    level does.
+    """
+    import numpy as np
+    from src.methane import seasonal as se
+
+    spec = GridSpec(0.0, 0.0, 1.0, 0.5, 0.5)
+    basis = se.HarmonicBasis(1)
+    coefficients = np.array([12.0, 0.0])
+    stats = se.HarmonicStats(spec.shape, basis)
+    for col, days in ((0, np.linspace(30.0, 120.0, 150)),
+                      (1, np.linspace(210.0, 300.0, 150))):
+        y = 1900.0 + basis.evaluate(days, coefficients)
+        stats.add(np.zeros(days.size, "int64"), np.full(days.size, col), y, days)
+
+    raw = stats.sum_y / stats.n
+    fit = se.solve(stats)
+    assert abs(raw[0, 0] - raw[0, 1]) > 10.0
+    assert fit.mu[0, 0] == pytest.approx(fit.mu[0, 1], abs=0.05)
+    assert fit.mu[0, 0] == pytest.approx(1900.0, abs=0.05)

@@ -489,3 +489,44 @@ def test_a_model_on_a_joined_covariate_drops_the_unmeasured_cells():
                        surface_albedo_SWIR=columns["surface_albedo_SWIR"])
     model = LinearModel(("surface_albedo_SWIR",))
     assert rows_for(table, model, table.all_rows).tolist() == [0, 1]
+
+
+# --------------------------------------------------------------------------
+# joining a different target
+# --------------------------------------------------------------------------
+
+def test_a_target_can_be_joined_from_a_companion_table():
+    records = [
+        {"centre_lat": "31.1250", "centre_lon": "120.1250",
+         "ch4_deseasonalised_ppb": "1901.5"},
+        {"centre_lat": "31.3750", "centre_lon": "120.3750",
+         "ch4_deseasonalised_ppb": "1895.25"},
+    ]
+    lat = np.array([31.125, 31.375])
+    lon = np.array([120.125, 120.375])
+    got = bl.join_column(records, lat, lon, "ch4_deseasonalised_ppb")
+    assert got.tolist() == [1901.5, 1895.25]
+
+
+def test_a_cell_absent_from_the_companion_gets_nan():
+    records = [{"centre_lat": "31.1250", "centre_lon": "120.1250",
+                "ch4_deseasonalised_ppb": "1901.5"}]
+    lat = np.array([31.125, 40.0])
+    lon = np.array([120.125, 40.0])
+    got = bl.join_column(records, lat, lon, "ch4_deseasonalised_ppb")
+    assert got[0] == pytest.approx(1901.5)
+    assert np.isnan(got[1]), "an unmatched cell is not a target of zero"
+
+
+def test_a_blank_target_value_is_nan_not_zero():
+    records = [{"centre_lat": "31.1250", "centre_lon": "120.1250",
+                "ch4_deseasonalised_ppb": ""}]
+    got = bl.join_column(records, np.array([31.125]), np.array([120.125]),
+                         "ch4_deseasonalised_ppb")
+    assert np.isnan(got[0])
+
+
+def test_asking_for_a_column_the_companion_lacks_is_refused():
+    records = [{"centre_lat": "31.1250", "centre_lon": "120.1250", "other": "1"}]
+    with pytest.raises(bl.ModelError, match="no column"):
+        bl.join_column(records, np.array([31.125]), np.array([120.125]), "missing")

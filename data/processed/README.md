@@ -652,3 +652,51 @@ does not, and that the sampling composition control beats it too. Read
 notes/decisions.md before using any of these numbers: the sampling control has
 no physics in it and reaches held-out R squared 0.467, which puts the whole
 annual composite in question rather than the models fitted on it.
+
+## methane_deseasonalised_2018.tif and methane_deseasonalised_2018.csv
+
+The per-cell methane offset with a region-wide seasonal cycle removed **at the
+sounding level**, plus the sampling-date diagnostics that say how much to trust
+each value. Five bands: the deseasonalised mean, the sounding count it rests on,
+the mean day of year, the standard deviation of day of year, and a flag for
+cells whose sampling dates span less than 15 days. Written by
+scripts/compute_methane_composite.py with --export-deseasonalised.
+
+This is not the composite mean minus a cycle. By the time a cell mean exists the
+information about which days contributed has been averaged away, and subtracting
+a cycle evaluated at the cell's mean date does not recover it, because the mean
+of a nonlinear function is not the function of the mean. The cycle is fitted to
+every sounding individually, as a fixed-effects model with one offset per cell
+and harmonic coefficients shared across the region, in a single streaming pass.
+src/methane/seasonal.py carries the derivation: profiling the offsets out
+reduces the problem to least squares on within-cell-centred variables, whose
+normal equations are assembled from per-cell sums that a streaming loop can
+accumulate. Twenty-three floats per cell, so the whole grid costs about 188 kB.
+
+A separate companion again, for the same reason as the covariates: this field
+has a different meaning from the composite mean and must not sit in a file where
+a reader could take one for the other. The methane composite is left untouched
+and reproduces exactly, which is what makes the comparison between the two
+fields meaningful.
+
+Read bands 4 and 5 with band 1. A cell's offset is separable from the seasonal
+term only to the extent that its soundings span different dates. Over this
+composite the sampling-date spread has a median of 54.76 days, but 34 cells were
+sampled on a single date and 66 span less than 15 days; those offsets are the
+cycle evaluated at one date and are not independent of it.
+
+**The composite covers eight months, not twelve.** There are no soundings at all
+before day 120, so January, February, March and most of April are absent, and
+the fitted cycle is an extrapolation over that gap. Within the sampled window it
+interpolates. The consequence is that the correction is sound for every cell in
+this file, because every cell's soundings fall inside the window, while the
+fitted amplitude is not a trustworthy estimate of the annual XCH4 seasonal cycle
+over this region and should not be quoted as one. notes/decisions.md carries the
+argument and the month-by-month sounding counts.
+
+    python scripts/compute_methane_composite.py --run --max-hours 3 \
+        --checkpoint data/interim/seasonal_2018.npz
+    python scripts/compute_methane_composite.py \
+        --checkpoint data/interim/seasonal_2018.npz \
+        --verify-against data/processed/methane_composite_2018.tif \
+        --export-deseasonalised data/processed/methane_deseasonalised_2018

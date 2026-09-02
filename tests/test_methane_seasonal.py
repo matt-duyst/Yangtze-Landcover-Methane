@@ -279,3 +279,42 @@ def test_an_unobserved_cell_has_no_date_statistics():
     assert np.isnan(stats.date_mean()[0, 1])
     assert np.isnan(stats.date_spread()[0, 1])
     assert stats.date_spread()[0, 0] == 0.0, "one sounding has zero spread"
+
+
+# --------------------------------------------------------------------------
+# fitting fewer harmonics from the same statistics
+# --------------------------------------------------------------------------
+
+def test_a_lower_order_fit_comes_from_the_same_accumulation():
+    """One pass must answer whether the second harmonic is worth having."""
+    rng = np.random.default_rng(10)
+    mu = rng.normal(1900.0, 10.0, SHAPE)
+    coefficients = np.array([8.0, -3.0, 2.5, 1.5])
+    stats = HarmonicStats(SHAPE, HarmonicBasis(2))
+    stats.add(*synthetic(mu, coefficients, per_cell=250, noise=0.4, seed=10,
+                         harmonics=2))
+
+    two = solve(stats)
+    one = solve(stats.truncated(1))
+    assert two.coefficients == pytest.approx(coefficients, abs=0.05)
+    assert one.coefficients == pytest.approx(coefficients[:2], abs=0.1)
+    assert one.basis.harmonics == 1 and two.basis.harmonics == 2
+    assert one.residual_sd > two.residual_sd, \
+        "dropping a real harmonic must cost residual variance"
+    assert one.n_soundings == two.n_soundings, "the same soundings, both times"
+
+
+def test_truncating_beyond_what_was_accumulated_is_refused():
+    stats = HarmonicStats(SHAPE, HarmonicBasis(1))
+    with pytest.raises(SeasonalError, match="cannot fit 2 harmonics"):
+        stats.truncated(2)
+
+
+def test_a_second_harmonic_that_is_not_there_is_fitted_near_zero():
+    rng = np.random.default_rng(11)
+    mu = rng.normal(1900.0, 10.0, SHAPE)
+    stats = HarmonicStats(SHAPE, HarmonicBasis(2))
+    stats.add(*synthetic(mu, np.array([7.0, -2.0, 0.0, 0.0]), per_cell=300,
+                         noise=0.5, seed=11, harmonics=2))
+    fit = solve(stats)
+    assert abs(fit.coefficients[2]) < 0.15 and abs(fit.coefficients[3]) < 0.15

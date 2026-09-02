@@ -142,6 +142,10 @@ def main(argv=None) -> int:
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     parser.add_argument("--grid", default=str(REPO / "data" / "processed" /
                                               "analysis_grid_2018.csv"))
+    parser.add_argument("--target", default="ch4_bias_corrected_ppb")
+    parser.add_argument("--target-from", default=None,
+                        help="companion table holding the target column, "
+                             "matched to cells by centre")
     parser.add_argument("--covariates", default=None,
                         help="composite covariate CSV to join onto the grid; "
                              "without it only the land-cover models are run")
@@ -154,12 +158,17 @@ def main(argv=None) -> int:
     parser.add_argument("--write", action="store_true")
     args = parser.parse_args(argv)
 
-    table = load_table(args.grid, covariates=args.covariates)
+    table = load_table(args.grid, target=args.target,
+                       target_from=args.target_from,
+                       covariates=args.covariates)
+    if args.target_from:
+        print(f"  target {args.target} joined from "
+              f"{Path(args.target_from).name}")
     if args.covariates:
         present = [n for n in (*WIND, *FULL) if n in table.columns]
         print(f"  joined {len(set(present))} covariate columns from "
               f"{Path(args.covariates).name}")
-    print(f"  {table.n} cells; target ch4_bias_corrected_ppb, "
+    print(f"  {table.n} cells; target {args.target}, "
           f"weighted mean {np.average(table.y, weights=table.weight):.2f} ppb, "
           f"unweighted {table.y.mean():.2f} ppb, sd {table.y.std():.2f} ppb")
     print(f"  soundings per cell: min {int(table.weight.min())}, "

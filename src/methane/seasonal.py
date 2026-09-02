@@ -231,6 +231,27 @@ class HarmonicStats:
         out[ok] = self.sum_d[ok] / self.n[ok]
         return out
 
+    def truncated(self, harmonics: int) -> "HarmonicStats":
+        """The same statistics restricted to the first ``harmonics`` harmonics.
+
+        The basis is ordered sin1, cos1, sin2, cos2, so a lower-order fit uses
+        the leading block of every accumulated array and needs no second pass.
+        One accumulation therefore answers the question of whether the second
+        harmonic is worth having, by fitting both and comparing them on exactly
+        the same soundings.
+        """
+        if harmonics > self.basis.harmonics:
+            raise SeasonalError(
+                f"cannot fit {harmonics} harmonics from statistics accumulated "
+                f"for {self.basis.harmonics}")
+        t = 2 * harmonics
+        return HarmonicStats(
+            self.shape, HarmonicBasis(harmonics, self.basis.period),
+            n=self.n, sum_y=self.sum_y, sum_yy=self.sum_yy,
+            sum_d=self.sum_d, sum_dd=self.sum_dd,
+            sum_x=self.sum_x[:t], sum_xx=self.sum_xx[:t, :t],
+            sum_yx=self.sum_yx[:t])
+
     def date_spread(self) -> np.ndarray:
         """Population standard deviation of day of year per cell.
 
