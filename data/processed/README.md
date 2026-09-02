@@ -524,3 +524,71 @@ roughly half the unweighted ones throughout, which is the size of that effect
 and not an improvement in any model.
 
     python scripts/run_baselines.py --write
+
+## methane_covariates_2018.tif and methane_covariates_2018.csv
+
+Seven Sentinel-5P support-data fields gridded on exactly the same 33 by 31
+lattice as the methane composite, from exactly the same 578 granules: the two
+wind components, the two surface albedos, solar zenith angle, surface altitude
+and surface pressure. Written by scripts/compute_methane_composite.py with
+--export-covariates.
+
+A companion file rather than extra bands on methane_composite_2018.tif, and the
+reason is the point of the whole covariate exercise. That file's third band is
+the sounding count, and a reader who found fifteen bands in it would reasonably
+divide any of them by that band. A covariate is valid on its own subset of
+soundings, so that division can be wrong by an arbitrary factor and still look
+sensible. Here each covariate's mean band is immediately followed by its own
+count band, fourteen bands in all, and the file contains no count belonging to
+anything else. Leaving the methane composite untouched also keeps the
+reproduction check below meaningful.
+
+The methane grids were verified cell by cell against the committed composite
+before anything here was written. Maximum absolute difference is 0 for
+bias-corrected methane, 0 for raw methane and 0 for the sounding counts, over
+all 1,023 cells, with 927 covered and 110,928 soundings on both sides. The
+re-run reproduces the committed composite exactly rather than approximately.
+
+Covariates do not gate a sounding. A sounding with no valid albedo still
+contributes its methane, and folding albedo into the validity mask would have
+been a one-word change that silently discarded most of the record. All seven
+turn out to be valid on 110,928 of 110,928 soundings and to cover all 927 cells,
+so in this composite every covariate count equals the sounding count. That is
+not a licence to divide by the wrong one: it is a fact about 2018 at qa 0.75,
+not a property of the product, and the count bands are there so a future year
+does not have to assume it.
+
+Reconnaissance had measured valid surface_albedo_SWIR on only 3.4 percent of
+in-box soundings, which is correct and does not apply after quality filtering:
+albedo is written where the retrieval got far enough, and qa_value >= 0.75
+selects those same soundings. notes/decisions.md carries the argument.
+
+Annual means over the 927 covered cells, for orientation:
+
+| field | min | median | max |
+|-------|-----|--------|-----|
+| eastward_wind, m/s | -5.6341 | 0.0305 | 3.6959 |
+| northward_wind, m/s | -5.4241 | -0.8553 | 10.4711 |
+| surface_albedo_SWIR | -0.0480 | 0.0773 | 0.1566 |
+| surface_albedo_NIR | -0.0072 | 0.2178 | 0.3051 |
+| solar_zenith_angle, degrees | 12.6857 | 42.3981 | 56.6597 |
+| surface_altitude, m | 0.0000 | 35.3966 | 1041.0800 |
+| surface_pressure, Pa | 89950.4 | 101161.0 | 102642.0 |
+
+Surface albedo is negative in 167 of the 927 cells. That is not a fill value
+leaking through; it is a fitted retrieval parameter rather than a measured
+reflectance, and over dark surfaces the fit can land below zero. Those cells are
+kept, because dropping them would remove 18 percent of the grid non-randomly and
+from exactly the dark surfaces the confounder test is about.
+
+An unmeasured covariate is blank in the CSV and NaN in the raster, never zero,
+and its count band is 0. Regenerating costs the same 28.9 GB download and 66
+minutes as the methane composite, since it is the same pass over the same
+granules:
+
+    python scripts/compute_methane_composite.py --run --max-hours 3 \
+        --checkpoint data/interim/covariates_2018.npz
+    python scripts/compute_methane_composite.py \
+        --checkpoint data/interim/covariates_2018.npz \
+        --verify-against data/processed/methane_composite_2018.tif \
+        --export-covariates data/processed/methane_covariates_2018

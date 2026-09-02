@@ -192,3 +192,140 @@ def test_the_bias_correction_is_positive_in_every_covered_cell():
     difference = primary[covered] - secondary[covered]
     assert (difference > 0).all()
     assert float(difference.mean()) == pytest.approx(11.64, abs=0.05)
+
+
+# --------------------------------------------------------------------------
+# the covariate companion file
+# --------------------------------------------------------------------------
+
+def make_covariate_composite(spec, cells, covariates):
+    """A composite whose covariate counts differ from its sounding counts."""
+    specs = tuple(mg.CovariateSpec(name=n, group="PRODUCT/SUPPORT_DATA/INPUT_DATA")
+                  for n in covariates)
+    acc = cm.Accumulator(spec, 0.75, (mg.PRIMARY, mg.SECONDARY), specs)
+    for (row, col), (n, primary, secondary) in cells.items():
+        acc.counts[row, col] = n
+        acc.sums[mg.PRIMARY][row, col] = primary * n
+        acc.sums[mg.SECONDARY][row, col] = secondary * n
+    for name, (row, col, count, total) in covariates.items():
+        acc.covariate_counts[name][row, col] = count
+        acc.covariate_sums[name][row, col] = total
+    return acc.composite()
+
+
+def test_covariate_export_pairs_every_mean_with_its_own_count(tmp_path):
+    spec = GridSpec(0.0, 0.0, 1.0, 1.0, 0.5)
+    composite = make_covariate_composite(
+        spec, {(0, 0): (10, 1900.0, 1880.0)},
+        {"eastward_wind": (0, 0, 10, 30.0), "surface_albedo_SWIR": (0, 0, 2, 0.4)})
+    tif, csv_path = cm.export_covariates(composite, tmp_path / "cov")
+    with rasterio.open(tif) as src:
+        assert src.count == 4, "two bands per covariate"
+        assert list(src.descriptions) == [
+            "eastward_wind mean", "eastward_wind count",
+            "surface_albedo_SWIR mean", "surface_albedo_SWIR count"]
+        wind_mean, wind_count = src.read(1), src.read(2)
+        albedo_mean, albedo_count = src.read(3), src.read(4)
+    assert wind_mean[0, 0] == pytest.approx(3.0)
+    assert wind_count[0, 0] == 10
+    assert albedo_mean[0, 0] == pytest.approx(0.2), \
+        "0.4 over its own count of 2, not over the sounding count of 10"
+    assert albedo_count[0, 0] == 2
+
+
+def test_the_covariate_file_never_carries_the_sounding_count_as_a_band(tmp_path):
+    """The mistake the companion file exists to prevent."""
+    spec = GridSpec(0.0, 0.0, 1.0, 1.0, 0.5)
+    composite = make_covariate_composite(
+        spec, {(0, 0): (10, 1900.0, 1880.0)},
+        {"surface_albedo_SWIR": (0, 0, 2, 0.4)})
+    tif, _ = cm.export_covariates(composite, tmp_path / "cov")
+    with rasterio.open(tif) as src:
+        assert "sounding count" not in list(src.descriptions)
+        assert "count" in src.tags()["note"] or "covariate" in src.tags()["note"]
+
+
+def test_the_covariate_csv_blanks_a_mean_with_no_count(tmp_path):
+    spec = GridSpec(0.0, 0.0, 1.0, 1.0, 0.5)
+    composite = make_covariate_composite(
+        spec, {(0, 0): (10, 1900.0, 1880.0)},
+        {"surface_albedo_SWIR": (0, 0, 2, 0.4)})
+    _, csv_path = cm.export_covariates(composite, tmp_path / "cov")
+    rows = list(csv.DictReader(open(csv_path, newline="")))
+    assert len(rows) == spec.n_cells == 4
+    populated = [r for r in rows if int(r["surface_albedo_SWIR_count"]) > 0]
+    assert len(populated) == 1
+    for record in rows:
+        if int(record["surface_albedo_SWIR_count"]) == 0:
+            assert record["surface_albedo_SWIR_mean"] == "", \
+                "an unmeasured covariate is blank, never zero"
+
+
+def test_exporting_covariates_from_a_composite_without_any_is_refused(tmp_path):
+    spec = GridSpec(0.0, 0.0, 1.0, 1.0, 0.5)
+    composite = make_composite(spec, {(0, 0): (4, 1900.0, 1880.0)})
+    with pytest.raises(SystemExit, match="no covariates"):
+        cm.export_covariates(composite, tmp_path / "cov")
+
+
+# --------------------------------------------------------------------------
+# the reproduction check
+# --------------------------------------------------------------------------
+
+def test_verify_reports_zero_difference_against_an_identical_composite(tmp_path):
+    spec = GridSpec(0.0, 0.0, 1.0, 1.0, 0.5)
+    composite = make_composite(spec, {(0, 0): (4, 1900.0, 1880.0),
+                                      (1, 1): (2, 1950.0, 1930.0)})
+    tif, _ = cm.export(composite, tmp_path / "c")
+    check = cm.verify_methane(composite, tif)
+    assert check["bias_corrected"] == 0.0
+    assert check["raw"] == 0.0
+    assert check["counts"] == 0.0
+    assert check["covered_cells_new"] == check["covered_cells_reference"] == 2
+
+
+def test_verify_catches_a_changed_value(tmp_path):
+    spec = GridSpec(0.0, 0.0, 1.0, 1.0, 0.5)
+    reference = make_composite(spec, {(0, 0): (4, 1900.0, 1880.0)})
+    tif, _ = cm.export(reference, tmp_path / "c")
+    moved = make_composite(spec, {(0, 0): (4, 1905.0, 1880.0)})
+    check = cm.verify_methane(moved, tif)
+    assert check["bias_corrected"] == pytest.approx(5.0, abs=0.01)
+    assert check["raw"] == 0.0
+
+
+def test_verify_treats_a_new_or_lost_cell_as_infinite_difference(tmp_path):
+    """A cell that gained or lost coverage is not a small numeric difference."""
+    spec = GridSpec(0.0, 0.0, 1.0, 1.0, 0.5)
+    reference = make_composite(spec, {(0, 0): (4, 1900.0, 1880.0)})
+    tif, _ = cm.export(reference, tmp_path / "c")
+    extra = make_composite(spec, {(0, 0): (4, 1900.0, 1880.0),
+                                  (1, 1): (1, 1910.0, 1890.0)})
+    check = cm.verify_methane(extra, tif)
+    assert check["bias_corrected"] == float("inf")
+    assert check["covered_cells_new"] == 2
+    assert check["covered_cells_reference"] == 1
+
+
+def test_the_committed_composite_verifies_against_itself():
+    """A sanity check on the checker, using a file every clone has.
+
+    The composite is reconstructed here by multiplying the stored float32 means
+    back up by their counts, which is lossy: a real accumulator holds float64
+    sums built from the soundings themselves, never a mean multiplied out. The
+    residue is that reconstruction and not the checker, so the tolerance is one
+    float32 ulp at 1900 ppb rather than zero. A genuine re-run accumulates in
+    the same order from the same values and is expected to give exactly zero.
+    """
+    import numpy as np
+    with rasterio.open(TIF) as src:
+        primary, secondary, counts = src.read(1), src.read(2), src.read(3)
+    composite = mg.Composite(
+        spec=STUDY, qa_threshold=0.75, counts=counts.astype("int64"),
+        sums={mg.PRIMARY: np.nan_to_num(primary) * counts,
+              mg.SECONDARY: np.nan_to_num(secondary) * counts})
+    check = cm.verify_methane(composite, TIF)
+    assert check["bias_corrected"] < 1e-3
+    assert check["raw"] < 1e-3
+    assert check["counts"] == 0.0, "counts are integers and must match exactly"
+    assert check["covered_cells_new"] == check["covered_cells_reference"] == 927

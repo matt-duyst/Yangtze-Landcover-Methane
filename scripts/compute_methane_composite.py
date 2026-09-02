@@ -105,12 +105,20 @@ class Accumulator:
     would cost a 28.9 GB download to change no published number.
     """
 
-    def __init__(self, spec: GridSpec, qa_threshold: float, variables):
+    def __init__(self, spec: GridSpec, qa_threshold: float, variables,
+                 covariates=()):
         self.spec = spec
         self.qa_threshold = qa_threshold
         self.variables = list(variables)
+        self.covariates = list(covariates)
         self.counts = np.zeros(spec.shape, dtype="int64")
         self.sums = {v: np.zeros(spec.shape, dtype="float64") for v in self.variables}
+        # Pre-sized so a covariate's sum and its count are created together and
+        # can never be added to independently.
+        self.covariate_sums = {c.name: np.zeros(spec.shape, dtype="float64")
+                               for c in self.covariates}
+        self.covariate_counts = {c.name: np.zeros(spec.shape, dtype="int64")
+                                 for c in self.covariates}
         self.contributions: list[GranuleContribution] = []
         self.done: set[str] = set()
         #: One (newly covered, cumulative covered) pair per granule added, in
@@ -131,14 +139,20 @@ class Accumulator:
             np.add.at(self.counts, (row, col), 1)
             for name in self.variables:
                 np.add.at(self.sums[name], (row, col), soundings.values[name])
+            mg.accumulate_covariates(soundings, row, col,
+                                     self.covariate_sums, self.covariate_counts)
         after = self.covered
         self.saturation.append((after - before, after))
 
     def composite(self) -> Composite:
-        return Composite(spec=self.spec, qa_threshold=self.qa_threshold,
-                         counts=self.counts.copy(),
-                         sums={k: v.copy() for k, v in self.sums.items()},
-                         contributions=tuple(self.contributions))
+        return Composite(
+            spec=self.spec, qa_threshold=self.qa_threshold,
+            counts=self.counts.copy(),
+            sums={k: v.copy() for k, v in self.sums.items()},
+            contributions=tuple(self.contributions),
+            covariate_sums={k: v.copy() for k, v in self.covariate_sums.items()},
+            covariate_counts={k: v.copy()
+                              for k, v in self.covariate_counts.items()})
 
     def save(self, path: Path) -> None:
         """Write atomically: a crash mid-write keeps the previous checkpoint."""
@@ -154,9 +168,16 @@ class Accumulator:
             "contributions": np.array(
                 json.dumps([c.as_dict() for c in self.contributions])),
             "saturation": np.array(self.saturation, dtype="int64").reshape(-1, 2),
+            "covariates": np.array(json.dumps(
+                [{"name": c.name, "group": c.group} for c in self.covariates])),
         }
         for name in self.variables:
             payload[f"sum::{name}"] = self.sums[name]
+        # A covariate's sum and its count are written and read as a pair. There
+        # is no code path that restores one without the other.
+        for name in self.covariate_sums:
+            payload[f"cvsum::{name}"] = self.covariate_sums[name]
+            payload[f"cvcount::{name}"] = self.covariate_counts[name]
         # Pass an open handle: np.savez_compressed appends '.npz' to a path
         # that does not already end in it, which would write the temp file
         # somewhere other than where the rename below looks for it.
@@ -169,10 +190,17 @@ class Accumulator:
         with np.load(path, allow_pickle=False) as data:
             spec = GridSpec(*[float(x) for x in data["spec"]])
             variables = [str(v) for v in data["variables"]]
-            acc = cls(spec, float(data["qa_threshold"]), variables)
+            covariates = [mg.CovariateSpec(**record)
+                          for record in json.loads(str(data["covariates"]))] \
+                if "covariates" in data.files else []
+            acc = cls(spec, float(data["qa_threshold"]), variables, covariates)
             acc.counts = data["counts"].astype("int64")
             for name in variables:
                 acc.sums[name] = data[f"sum::{name}"].astype("float64")
+            for covariate in covariates:
+                name = covariate.name
+                acc.covariate_sums[name] = data[f"cvsum::{name}"].astype("float64")
+                acc.covariate_counts[name] = data[f"cvcount::{name}"].astype("int64")
             records = json.loads(str(data["contributions"]))
             # Checkpoints written before saturation was recorded have no such
             # key. The curve cannot be reconstructed from a finished grid, so
@@ -188,7 +216,9 @@ class Accumulator:
                 granule=record["granule"], acquired=acquired,
                 soundings_read=record["soundings_read"],
                 soundings_valid=record["soundings_valid"],
-                soundings_in_box=record["soundings_in_box"]))
+                soundings_in_box=record["soundings_in_box"],
+                covariates_valid=record.get("covariates_valid", {}),
+                covariates_missing=tuple(record.get("covariates_missing", ()))))
             acc.done.add(record["granule"])
         return acc
 
@@ -270,6 +300,134 @@ def export(composite: Composite, stem: Path,
     return tif, csv_path
 
 
+def export_covariates(composite: Composite, stem: Path) -> tuple[Path, Path]:
+    """Write the covariate grids as a companion file, not as extra bands.
+
+    A companion rather than an extension of methane_composite_2018.tif, for a
+    reason that is the whole point of the covariate work: every covariate has
+    its own denominator. The methane file's third band is the sounding count,
+    and a reader who found fifteen bands in it would reasonably divide any of
+    them by that band. Albedo is valid on a few percent of those soundings, so
+    that division would be wrong by a factor of thirty and would look fine.
+    Here each covariate's mean is immediately followed by its own count, and
+    the file contains no count that belongs to anything else.
+
+    The committed methane composite is also left byte-for-byte alone, which
+    keeps the reproduction check meaningful and every test that reads it valid.
+    """
+    import csv as _csv
+    import rasterio
+    from rasterio.transform import from_origin
+
+    spec = composite.spec
+    names = composite.covariates
+    if not names:
+        raise SystemExit("no covariates in this composite; nothing to export")
+
+    tif = stem.with_suffix(".tif")
+    stem.parent.mkdir(parents=True, exist_ok=True)
+    transform = from_origin(spec.west, spec.north, spec.resolution, spec.resolution)
+    with rasterio.open(
+        tif, "w", driver="GTiff", height=spec.shape[0], width=spec.shape[1],
+        count=2 * len(names), dtype="float32", crs="EPSG:4326",
+        transform=transform, nodata=float("nan"), compress="deflate",
+    ) as dst:
+        for i, name in enumerate(names):
+            mean, count = composite.grids(name)
+            dst.write(mean.astype("float32"), 2 * i + 1)
+            dst.write(count.astype("float32"), 2 * i + 2)
+            dst.set_band_description(2 * i + 1, f"{name} mean")
+            dst.set_band_description(2 * i + 2, f"{name} count")
+        dst.update_tags(
+            qa_threshold=str(composite.qa_threshold),
+            covariates=",".join(names),
+            soundings=str(int(composite.counts.sum())),
+            note=("Each mean band is followed by ITS OWN count band. Do not "
+                  "divide these by the sounding count in the methane file: a "
+                  "covariate is valid on a different subset of soundings."),
+        )
+
+    csv_path = stem.with_suffix(".csv")
+    with open(csv_path, "w", newline="") as handle:
+        writer = _csv.writer(handle)
+        header = ["centre_lat", "centre_lon", "sounding_count"]
+        for name in names:
+            header += [f"{name}_mean", f"{name}_count"]
+        writer.writerow(header)
+        grids = {name: composite.grids(name) for name in names}
+        for row in range(spec.shape[0]):
+            lat = spec.north - (row + 0.5) * spec.resolution
+            for col in range(spec.shape[1]):
+                lon = spec.west + (col + 0.5) * spec.resolution
+                record = [f"{lat:.4f}", f"{lon:.4f}",
+                          int(composite.counts[row, col])]
+                for name in names:
+                    mean, count = grids[name]
+                    n = int(count[row, col])
+                    record += [("" if n == 0 else f"{mean[row, col]:.6g}"), n]
+                writer.writerow(record)
+    return tif, csv_path
+
+
+def verify_methane(composite: Composite, reference: Path) -> dict:
+    """Compare a rebuilt composite's methane against a committed one.
+
+    Comparison is in float32, the precision the reference is stored at, so an
+    exact reproduction gives exactly zero rather than a rounding residue that
+    has to be argued about.
+    """
+    import rasterio
+
+    with rasterio.open(reference) as src:
+        ref_primary, ref_secondary, ref_counts = src.read(1), src.read(2), src.read(3)
+
+    new_primary = composite.mean_of(mg.PRIMARY).astype("float32")
+    new_secondary = composite.mean_of(mg.SECONDARY).astype("float32")
+    new_counts = composite.counts.astype("float32")
+
+    def difference(a, b):
+        both_nan = np.isnan(a) & np.isnan(b)
+        if (np.isnan(a) != np.isnan(b)).any():
+            return float("inf")
+        delta = np.where(both_nan, 0.0, np.abs(np.nan_to_num(a) - np.nan_to_num(b)))
+        return float(delta.max())
+
+    return {
+        "bias_corrected": difference(new_primary, ref_primary),
+        "raw": difference(new_secondary, ref_secondary),
+        "counts": difference(new_counts, ref_counts),
+        "covered_cells_new": int((composite.counts > 0).sum()),
+        "covered_cells_reference": int((ref_counts > 0).sum()),
+        "soundings_new": int(composite.counts.sum()),
+        "soundings_reference": int(ref_counts.sum()),
+    }
+
+
+def report_covariate_coverage(composite: Composite) -> None:
+    """Per-covariate coverage, which is far below methane's for albedo."""
+    total_cells = composite.spec.n_cells
+    methane_cells = int((composite.counts > 0).sum())
+    soundings = int(composite.counts.sum())
+    print(f"\n  covariate coverage (methane: {methane_cells}/{total_cells} cells, "
+          f"{soundings:,} soundings)")
+    print(f"    {'covariate':<24}{'cells':>7}{'% cells':>9}"
+          f"{'soundings':>12}{'% of methane':>14}")
+    for name in composite.covariates:
+        count = composite.count_of(name)
+        cells = int((count > 0).sum())
+        total = int(count.sum())
+        print(f"    {name:<24}{cells:>7}{100 * cells / total_cells:>8.2f}%"
+              f"{total:>12,}{100 * total / soundings if soundings else 0:>13.2f}%")
+    missing: dict[str, int] = {}
+    for contribution in composite.contributions:
+        for name in contribution.covariates_missing:
+            missing[name] = missing.get(name, 0) + 1
+    if missing:
+        print(f"    granules missing a covariate entirely: {missing}")
+    else:
+        print("    every granule contained every requested covariate")
+
+
 def build_argparser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     parser.add_argument("--config", default=str(REPO / "config" / "sources.yml"))
@@ -290,6 +448,13 @@ def build_argparser() -> argparse.ArgumentParser:
     parser.add_argument("--export", default=None,
                         help="write GeoTIFF and CSV from an existing checkpoint "
                              "to this path stem, then exit without fetching")
+    parser.add_argument("--export-covariates", default=None,
+                        help="path stem for the covariate GeoTIFF and CSV")
+    parser.add_argument("--verify-against", default=None,
+                        help="committed composite to check the methane bands "
+                             "against before writing anything")
+    parser.add_argument("--no-covariates", action="store_true",
+                        help="ignore the configured covariate list")
     parser.add_argument("--run", action="store_true",
                         help="actually download and grid; without it, plan only")
     parser.add_argument("--timeout", type=float, default=s5p.DEFAULT_TIMEOUT)
@@ -310,20 +475,54 @@ def main(argv=None) -> int:
     spec = GridSpec(box["west"], box["south"], box["east"], box["north"],
                     config["grid_resolution_deg"])
     variables = (mg.PRIMARY, mg.SECONDARY)
+    covariates = () if args.no_covariates else tuple(
+        mg.CovariateSpec(name=c["name"], group=c["group"])
+        for c in config.get("covariates", []))
 
-    if args.export:
+    if args.export or args.export_covariates or args.verify_against:
         if not checkpoint.exists():
             raise SystemExit(f"no checkpoint at {checkpoint}; nothing to export")
         accumulator = Accumulator.load(checkpoint)
         composite = accumulator.composite()
         coverage = mg.coverage_of(composite)
-        tif, csv_path = export(composite, Path(args.export),
-                               Path(args.export_csv) if args.export_csv else None)
-        print(f"  wrote {tif}  ({tif.stat().st_size:,} B)")
-        print(f"  wrote {csv_path}  ({csv_path.stat().st_size:,} B, "
-              f"{composite.spec.n_cells} rows plus a header)")
+        print(f"  loaded {checkpoint.name}: {len(accumulator.done)} granules, "
+              f"{int(composite.counts.sum()):,} soundings")
         print(f"  coverage {coverage.covered_cells}/{coverage.n_cells} "
-              f"({100 * coverage.fraction:.2f}%), {int(composite.counts.sum()):,} soundings")
+              f"({100 * coverage.fraction:.2f}%)")
+        if composite.covariates:
+            report_covariate_coverage(composite)
+
+        # The check runs BEFORE anything is written. A composite that does not
+        # reproduce the committed methane is not a composite of the same thing,
+        # and its covariates would be joined to a field that had moved.
+        if args.verify_against:
+            check = verify_methane(composite, Path(args.verify_against))
+            print(f"\n  methane reproduction against {Path(args.verify_against).name}")
+            for key in ("bias_corrected", "raw", "counts"):
+                print(f"    max |difference| in {key:<16} {check[key]:.10g}")
+            print(f"    covered cells {check['covered_cells_new']} "
+                  f"vs {check['covered_cells_reference']}")
+            print(f"    soundings     {check['soundings_new']:,} "
+                  f"vs {check['soundings_reference']:,}")
+            if any(check[k] != 0.0 for k in ("bias_corrected", "raw", "counts")):
+                print("\n  STOPPING: the methane grids differ from the committed "
+                      "composite. Nothing written.")
+                return 3
+            print("    identical; the re-run reproduces the committed methane exactly")
+
+        if args.export:
+            tif, csv_path = export(composite, Path(args.export),
+                                   Path(args.export_csv) if args.export_csv else None)
+            print(f"\n  wrote {tif}  ({tif.stat().st_size:,} B)")
+            print(f"  wrote {csv_path}  ({csv_path.stat().st_size:,} B, "
+                  f"{composite.spec.n_cells} rows plus a header)")
+        if args.export_covariates:
+            tif, csv_path = export_covariates(composite,
+                                              Path(args.export_covariates))
+            print(f"\n  wrote {tif}  ({tif.stat().st_size:,} B, "
+                  f"{2 * len(composite.covariates)} bands)")
+            print(f"  wrote {csv_path}  ({csv_path.stat().st_size:,} B, "
+                  f"{composite.spec.n_cells} rows plus a header)")
         return 0
 
     print(f"stream      {stream}/{config['product_type']}")
@@ -352,8 +551,14 @@ def main(argv=None) -> int:
         print(f"  resuming from {checkpoint.name}: {len(accumulator.done)} granules "
               f"already gridded, {int(accumulator.counts.sum()):,} soundings")
     else:
-        accumulator = Accumulator(spec, float(config["qa_threshold"]), variables)
+        accumulator = Accumulator(spec, float(config["qa_threshold"]), variables,
+                                  covariates)
         print("  no checkpoint; starting from empty")
+    if covariates:
+        print(f"  gridding {len(covariates)} covariates alongside methane: "
+              f"{', '.join(c.name for c in covariates)}")
+        print("  covariates do not gate: a sounding with no albedo still "
+              "contributes its methane")
 
     remaining = [g for g in candidates if g.name not in accumulator.done]
     if args.max_granules is not None:
@@ -401,7 +606,7 @@ def main(argv=None) -> int:
             fetched_bytes += granule.size
             soundings, contribution = mg.read_soundings(
                 target, spec, qa_threshold=accumulator.qa_threshold,
-                variables=variables)
+                variables=variables, covariates=accumulator.covariates)
             accumulator.add(soundings, contribution)
             if contribution.soundings_in_box:
                 with_data += 1

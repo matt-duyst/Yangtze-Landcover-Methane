@@ -559,3 +559,64 @@ support against 32.91 percent at 0.1 degrees. Both figures come from the same
 understated sample and both are too low, so the comparison between them may
 survive even though neither number does. Reopening it needs a measured curve at
 each resolution, not another sample.
+
+## Covariates never gate a sounding, and each carries its own count
+
+The composite grids seven support-data fields alongside methane: the two wind
+components, the two surface albedos, solar zenith angle, surface altitude and
+surface pressure. The decision that shapes the code is that none of them takes
+part in deciding whether a sounding is used.
+
+The alternative is the obvious one and it is wrong. `read_soundings` already
+drops a sounding when any requested variable is at its fill value, so adding
+albedo to that list would have been a one-word change. Reconnaissance had
+measured that only 3.4 percent of in-box soundings carried a valid
+`surface_albedo_SWIR`, so that change would silently have reduced the composite
+to 3.4 percent of itself, and the study's question would have quietly become a
+question about a different and much smaller part of the field. Methane variables
+gate; covariates are read afterwards on the soundings methane already selected,
+each masked by its own `_FillValue`, and accumulated into sums and counts of
+their own.
+
+The structural guarantee is preserved by giving every variable its own
+denominator rather than by sharing methane's. `Composite.count_of` returns the
+count belonging to the variable asked for, `mean_of` divides by that and returns
+NaN where it is zero, and `grids` hands back the matching pair. There is no path
+to a covariate mean that does not go through its own count. The covariate grids
+are written to a companion file rather than as extra bands on
+`methane_composite_2018.tif` for the same reason: that file's third band is the
+sounding count, and a reader finding fifteen bands in it would reasonably divide
+any of them by that band.
+
+## The 3.4 percent albedo figure does not survive quality filtering
+
+The reconnaissance figure is correct and does not apply here. Measured over the
+full 2018 composite, all seven covariates are valid on 110,928 of 110,928
+soundings and cover all 927 cells: 100.00 percent, not 3.4 percent.
+
+The two figures are not in conflict because they count different things. The 3.4
+percent was over all in-box soundings, before the quality filter. Albedo is
+written only where the retrieval got far enough to fit it, and `qa_value >= 0.75`
+selects very nearly the same soundings for the same reason, so among
+quality-filtered soundings albedo is essentially always present. The two
+conditions are close to the same condition.
+
+This is load-bearing rather than incidental. The albedo confounder test was
+expected to run on a few percent of cells with correspondingly little power. It
+runs on all 927, which is the full sample every other result in the repository
+uses, so its conclusion carries the same weight as the results it is testing.
+
+## Surface albedo is a fitted parameter and can be negative
+
+167 of the 927 covered cells have a negative annual mean `surface_albedo_SWIR`,
+with a minimum of -0.0480 against a median of +0.0773. A reflectance cannot be
+negative and this is not a fill value leaking through: the fill was read from the
+variable's own attribute and excluded.
+
+`surface_albedo_SWIR` is a parameter fitted by the retrieval, not a measured
+reflectance, and over dark surfaces the fit can land slightly below zero. The
+affected cells are the dark ones, mostly water and the wetter coastal margin,
+which is exactly where the retrieval is weakest. Treating negative values as
+invalid and dropping them would have removed 18 percent of cells non-randomly and
+precisely from the population the confounder test is about, so they are kept and
+this note records why a reader will find them.
