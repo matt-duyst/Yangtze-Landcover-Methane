@@ -14,6 +14,9 @@ Each compute script compares against the committed values first, prints every
 row differing by more than a tenth of a percent, and refuses to write when any
 does. Run either without --write to compare and change nothing.
 
+analysis_grid_2018.csv is the exception and regenerates all but one of its
+columns; its section says which and why.
+
 The rows that do not regenerate are named in each section below rather than
 left to be discovered. Twelve urban rows need GADM, whose licence forbids
 redistributing the boundary file, and eight rice rows need SPAM, for which no
@@ -342,3 +345,55 @@ granule cap and a date range; it streams one granule at a time, gridding and
 deleting each before fetching the next, so peak disk is one granule rather than
 the 28.9 GB the year would otherwise need. Exporting the raster and the table
 from an existing checkpoint costs nothing and is the --export flag.
+
+## analysis_grid_2018.csv
+
+One row per covered methane cell for 2018: 927 rows, one per cell of the 33 by
+31 grid that received at least one sounding, and no row for the 96 that did not.
+Fifteen columns. `centre_lat` and `centre_lon` place the cell; `sounding_count`,
+`ch4_bias_corrected_ppb` and `ch4_raw_ppb` come straight from
+methane_composite_2018.tif; `impervious_fraction`, `rice_fraction_single` and
+`rice_fraction_combined` are the land-cover fractions; `impervious_coverage` and
+`rice_coverage` say how much of the cell each fraction rests on;
+`province_share_outside` and four `share_<province>` columns give the cell's
+area split between the four provinces and everything else.
+
+Built by scripts/build_analysis_grid.py. The 96 uncovered cells are absent
+rather than blank: `CellRow` refuses to construct with a zero sounding count, so
+they cannot be built and then filtered out. The gap is a coherent one over
+mountainous southern Zhejiang and the coastline, not scatter, and interpolating
+across it would extrapolate from bright flat terrain into dark steep terrain
+where the instrument is known to fail.
+
+**Read the two coverage columns before comparing the two fractions.** They have
+different denominators, deliberately, and notes/decisions.md gives the argument.
+Impervious fraction is a share of the whole cell: GAIA is global, its zero means
+non-urban everywhere including over sea, and it is not masked, so coverage
+exceeds 0.99 in all 927 rows. Rice fraction is a share of the provincial land in
+the cell: the rice rasters declare no nodata and their zero means both non-rice
+land and out-of-province background, so each is masked to the province it is
+named for, and coverage has a median of 0.335 and falls below 0.99 in 570 rows.
+
+A blank rice fraction means no rice raster reached that cell, which is not the
+same as no rice. There are 395 such rows. In 368 the cell lies outside all four
+provinces; in the other 27 it lies inside Anhui, whose 2018 raster stops at
+33.3462 north and 115.2682 east while the province does not. Eleven of those 27
+are wholly inside Anhui and still have no rice denominator at all.
+
+The rice columns come from the NESDC FTP rasters, which carry the double-season
+class the Science Data Bank export does not. That route needed a personal-use
+grant and is not scripted, so this file is not fully regenerable from a clone.
+The cost is one column: building from the SciDB rasters instead changes only
+`rice_fraction_combined`, in 190 of the 927 rows, and leaves every other column
+byte-identical, because the SciDB export is the same classification with the
+double-season class folded into the background. notes/decisions.md carries the
+pixel counts that establish this. To regenerate everything but that one column:
+
+    python scripts/fetch_rice.py --download
+    python scripts/fetch_gaia.py --download
+    python scripts/build_analysis_grid.py --rice-source scidb --write
+
+The correlations the script prints are descriptive and are not a model. Cells
+are contiguous and so are not independent observations, the two fractions have
+different denominators, and the 96 excluded cells are a terrain-driven gap
+rather than a random sample. Nothing causal follows from them.

@@ -453,3 +453,70 @@ now be defensible, and the question is worth reopening with the measured
 saturation rather than the estimated one. Changing it would invalidate the
 committed composite and the coverage table, so it is a decision to take
 deliberately and not a correction to apply.
+
+## The SciDB rice product is the FTP product with one class removed
+
+The rice rasters reached this repository by two routes. The Science Data Bank
+route is anonymous and scriptable and is what `scripts/fetch_rice.py` uses. The
+National Ecosystem Science Data Center FTP route required a personal-use grant,
+is deliberately not scripted, and carries a `-rice-` rather than a
+`-middle_rice-` name. The obvious reading is that these are two products and
+that choosing between them trades reproducibility against completeness.
+
+They are not two products. For 2018 the two routes deliver rasters with byte
+-identical transforms, shapes, CRS, nodata and dtypes in all four provinces, and
+their class histograms are related exactly:
+
+| province | FTP class 1 | SciDB class 1 | FTP class 2 | SciDB 0 minus FTP 0 |
+|----------|-------------|---------------|-------------|---------------------|
+| Anhui    | 245,179,405 | 245,179,405   | 22,133,916  | 22,133,916          |
+| Jiangsu  | 265,368,077 | 265,368,077   | 0           | 0                   |
+| Shanghai | 9,199,769   | 9,199,769     | 0           | 0                   |
+| Zhejiang | 48,697,595  | 48,697,595    | 9,185,464   | 9,185,464           |
+
+The single-season class is identical to the pixel, and the SciDB zero count is
+the FTP zero count plus the FTP class-2 count. The SciDB export is the same
+classification with the double-season class folded back into the background.
+Jiangsu and Shanghai have no double-season pixels at all in 2018, so for those
+two provinces the two files are the same file.
+
+The consequence is that the reproducibility problem is confined to one column.
+Building the analysis grid from each source and differencing the tables, the
+only column that differs is `rice_fraction_combined`, in 190 of 927 rows, by at
+most 0.164 and by 0.022 on average where it differs. Every other column,
+`rice_fraction_single` and `rice_coverage` included, is byte-identical. A reader
+with no FTP grant can regenerate all but one column of the committed table
+exactly, and that is worth more than either source alone would have given.
+
+This is why the committed table is built from the FTP rasters rather than the
+reproducible ones. The choice costs nothing in reproducibility that the SciDB
+build would have recovered, because the two agree everywhere the SciDB product
+has an opinion, and it gains the double-season column. The reverse choice would
+have discarded a real distinction to buy reproducibility that was already there.
+
+The equality is asserted for 2018 only. It was not checked for other years and
+should not be assumed for them.
+
+## The two land-cover fractions have different denominators on purpose
+
+Two recorded constraints conflict on the analysis grid and cannot both be
+followed. Fractions must be computed against the raster-polygon intersection
+rather than the cell, and rice rasters must be masked by province before any
+fraction is taken because their zero means both non-rice land and
+out-of-province background. Applied to GAIA the second rule is wrong: GAIA is a
+global product whose zero means non-urban everywhere, including over sea, and
+masking it to the four provinces would silently redefine impervious fraction as
+a share of provincial land rather than of the cell.
+
+The resolution is to mask rice and not to mask GAIA, and to publish a coverage
+column for each so the differing denominators are visible rather than inferred.
+Impervious coverage is above 0.99 in all 927 rows; rice coverage has a median of
+0.335 and is below 0.99 in 570. Comparing the two fractions within a cell
+compares a share of the whole cell against a share of the provincial land in it,
+and the coverage columns are what make that legible.
+
+The rice mask must further be the province each file is named for and not the
+union of the four. The distributed rasters are one per province and their
+bounding boxes overlap, so a union mask assesses the shared ground once per file.
+Built that way one cell reached an assessed area 2.94 times its own, and the
+median single-season fraction came out at 0.079 against a correct 0.129.
