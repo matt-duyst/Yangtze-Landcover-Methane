@@ -39,3 +39,39 @@ scidb_rice:
     - Zhejiang
     - Jiangsu
     - Shanghai
+
+glorice:
+  product: GloRice (I) gridded paddy rice annual distribution, physical area, Extensive
+  doi: 10.6084/m9.figshare.27965832.v2
+
+  # The DOI encodes both; recorded so a fetch can skip the resolver hop.
+  # src/fetch/figshare.article_id_from_doi() re-derives them offline.
+  article_id: 27965832
+  version: 2
+
+  licence: CC BY 4.0
+  licence_url: https://creativecommons.org/licenses/by/4.0/
+  # Verified against Crossref, not against the figshare author field, which
+  # lists two of six authors in reverse order. See notes/decisions.md.
+  citation: >-
+    Xie, H., Li, J., Li, T., Lu, X., Hu, Q., and Qin, Z. (2025), GloRice, a
+    global rice database (v1.0): I. Gridded paddy rice annual distribution
+    from 1961 to 2021, Scientific Data 12, 182,
+    doi:10.1038/s41597-025-04483-1
+
+  api_base: https://api.figshare.com/v2
+  destination: data/raw/glorice
+
+  # The archive holds one netCDF per year for 1961 to 2021. Only these are
+  # extracted: 2000 and 2010 are the thesis backcast years, 2017 to 2021 the
+  # window shared with the NESDC rice product. Which years matter is a study
+  # choice, so it lives here rather than in the fetch module.
+  archive: GloRice-phsc-Ex.zip
+  years:
+    - 2000
+    - 2010
+    - 2017
+    - 2018
+    - 2019
+    - 2020
+    - 2021
