@@ -348,52 +348,116 @@ from an existing checkpoint costs nothing and is the --export flag.
 
 ## analysis_grid_2018.csv
 
-One row per covered methane cell for 2018: 927 rows, one per cell of the 33 by
-31 grid that received at least one sounding, and no row for the 96 that did not.
-Fifteen columns. `centre_lat` and `centre_lon` place the cell; `sounding_count`,
-`ch4_bias_corrected_ppb` and `ch4_raw_ppb` come straight from
-methane_composite_2018.tif; `impervious_fraction`, `rice_fraction_single` and
-`rice_fraction_combined` are the land-cover fractions; `impervious_coverage` and
-`rice_coverage` say how much of the cell each fraction rests on;
-`province_share_outside` and four `share_<province>` columns give the cell's
-area split between the four provinces and everything else.
+One row is one covered methane cell of the 2018 composite at 0.25 degrees.
+There are 927 of them and fifteen columns. `centre_lat` and `centre_lon` place
+the cell; `sounding_count`, `ch4_bias_corrected_ppb` and `ch4_raw_ppb` come
+straight from methane_composite_2018.tif; `impervious_fraction`,
+`rice_fraction_single` and `rice_fraction_combined` are the land-cover
+fractions; `impervious_coverage` and `rice_coverage` say how much of the cell
+each fraction rests on; and `province_share_outside` together with four
+`share_<province>` columns gives the cell's area split between the four study
+provinces and everything else. Built by scripts/build_analysis_grid.py.
 
-Built by scripts/build_analysis_grid.py. The 96 uncovered cells are absent
-rather than blank: `CellRow` refuses to construct with a zero sounding count, so
-they cannot be built and then filtered out. The gap is a coherent one over
-mountainous southern Zhejiang and the coastline, not scatter, and interpolating
-across it would extrapolate from bright flat terrain into dark steep terrain
-where the instrument is known to fail.
+The lattice is slightly smaller than the box the configuration declares, and
+the difference matters at the eastern edge. The declared box runs from 114.8 to
+122.6 east, which is 31.2 columns at 0.25 degrees, and the grid rounds that to
+31. The easternmost cell therefore ends at 122.55 and the last 0.05 degrees of
+the declared box has no column at all. Land-cover pixels that fall in that strip
+are filtered out rather than clipped into column 30. Clipping is what
+`GridSpec.cell_of` does to soundings, but it is wrong for area: a pixel outside
+the lattice belongs to no cell, and folding it into the edge cell would inflate
+that cell's assessed area with ground the cell does not cover, which would then
+appear in the denominator of its fraction. The same rounding applies to the
+southern edge, where 33 rows reach 26.95 rather than the declared 27.0.
 
-**Read the two coverage columns before comparing the two fractions.** They have
-different denominators, deliberately, and notes/decisions.md gives the argument.
-Impervious fraction is a share of the whole cell: GAIA is global, its zero means
-non-urban everywhere including over sea, and it is not masked, so coverage
-exceeds 0.99 in all 927 rows. Rice fraction is a share of the provincial land in
-the cell: the rice rasters declare no nodata and their zero means both non-rice
-land and out-of-province background, so each is masked to the province it is
-named for, and coverage has a median of 0.335 and falls below 0.99 in 570 rows.
+The 96 cells that received no soundings are absent from the table rather than
+present and blank. That is enforced by construction: `CellRow` takes the
+sounding count as a required field and refuses to build a row when it is zero,
+so an uncovered cell cannot be created and then filtered out by a step someone
+later forgets. The gap is a coherent one over mountainous southern Zhejiang and
+along the coastline rather than scatter, and interpolating across it would
+extrapolate from bright flat terrain into dark steep terrain where the
+instrument is known to fail.
+
+The two fractions do not share a denominator, and the two coverage columns are
+what say so. Rice is masked by the province each raster is named for. Its zero
+is ambiguous: the rasters declare no nodata, so a zero pixel means both genuine
+non-rice land and out-of-province background, and an unmasked rice fraction is
+wrong by roughly a factor of two. The mask has to be the individual province
+rather than the union of the four, because the distributed rasters come one per
+province and their bounding boxes overlap. GAIA is left unmasked. It is a global
+product whose zero means non-urban everywhere, including over sea, so masking it
+to the four provinces would quietly change impervious fraction from a share of
+the cell into a share of the provincial land in the cell. The consequence is
+visible in the coverage columns: impervious coverage exceeds 0.99 in all 927
+rows, while rice coverage has a median of 0.335 and falls below 0.99 in 570.
+Comparing the two fractions within a cell compares a share of the whole cell
+against a share of the provincial land in it, and that has to be read with the
+coverage alongside.
+
+The union mask was tried first and was wrong in an instructive way, so it is
+recorded rather than quietly fixed. Masking all four rice rasters by the union
+of the four provinces let each file assess the ground it shared with its
+neighbours, so overlapping ground was counted once per file that saw it. One
+cell finished with an assessed area 2.94 times its own, which is arithmetically
+impossible and is what exposed the error, and the median single-season fraction
+came out at 0.079 against a correct 0.129. Both the numerator and the
+denominator were inflated, so the fraction was wrong without any single number
+looking obviously wrong except the coverage.
 
 A blank rice fraction means no rice raster reached that cell, which is not the
-same as no rice. There are 395 such rows. In 368 the cell lies outside all four
-provinces; in the other 27 it lies inside Anhui, whose 2018 raster stops at
-33.3462 north and 115.2682 east while the province does not. Eleven of those 27
-are wholly inside Anhui and still have no rice denominator at all.
+same as a cell with no rice. There are 395 such rows. In 368 of them the cell
+lies outside all four provinces entirely. The other 27 lie inside Anhui, and 11
+of those lie wholly inside it, because the 2018 Anhui raster stops at 33.3462
+north and 115.2682 east while the province does not. That reproduces the
+clipping finding recorded in notes/decisions.md from the opposite direction and
+without being looked for, and it shows both edges rather than only the northern
+one. Those cells are blank rather than zero for the same reason the 96
+uncovered cells are absent: nobody looked there, and an absence of observation
+is not an observation of absence.
 
-The rice columns come from the NESDC FTP rasters, which carry the double-season
-class the Science Data Bank export does not. That route needed a personal-use
-grant and is not scripted, so this file is not fully regenerable from a clone.
-The cost is one column: building from the SciDB rasters instead changes only
-`rice_fraction_combined`, in 190 of the 927 rows, and leaves every other column
-byte-identical, because the SciDB export is the same classification with the
-double-season class folded into the background. notes/decisions.md carries the
-pixel counts that establish this. To regenerate everything but that one column:
+The rice columns come from the National Ecosystem Science Data Center rasters
+obtained over FTP, which carry the double-season class the Science Data Bank
+export does not. That route needed a personal-use grant and is deliberately not
+scripted, so the file is not fully regenerable from a clone. The cost is one
+column rather than the table. For 2018 the two products are the same
+classification: identical transforms, shapes, CRS, nodata and dtypes, identical
+single-season pixel counts in all four provinces, and a Science Data Bank zero
+count equal to the FTP zero count plus the FTP double-season count exactly. The
+Science Data Bank export is the same classification with the double-season class
+folded back into the background. Building the grid from each source and
+differencing the tables, the only column that differs is
+`rice_fraction_combined`, in 190 of the 927 rows, by at most 0.164 and by 0.022
+on average where it differs. Every other column is byte-identical, so a reader
+with no grant regenerates all but one column exactly. notes/decisions.md carries
+the pixel counts that establish this, and the equality was checked for 2018 only.
+
+For the distributions as built: impervious fraction is present in all 927 rows
+with a minimum of 0.0000, a median of 0.0595, a maximum of 0.8192 and 136 exact
+zeros. Single-season rice fraction is present in 532 rows with a minimum of
+0.0000, a median of 0.1289, a maximum of 0.5480 and 18 exact zeros. Combined
+rice fraction is present in the same 532 rows with a median of 0.1363 and the
+same minimum and maximum. Impervious coverage runs from 0.9986 to 1.0007 with a
+median of 0.9996 and no row below 0.99; the excess above 1.0 is pixel-centre
+quantisation, since a 30 m grid does not divide a 0.25 degree cell evenly and a
+cell gains or loses up to about one pixel row. Rice coverage runs from 0.0000 to
+1.0002 with a median of 0.3354 and 570 rows below 0.99. Of the 927 cells, 69
+straddle more than one province, 544 are partly outside all four and 368 are
+entirely outside all four.
+
+To regenerate every column except `rice_fraction_combined`, from a clone with
+nothing fetched:
 
     python scripts/fetch_rice.py --download
     python scripts/fetch_gaia.py --download
     python scripts/build_analysis_grid.py --rice-source scidb --write
 
-The correlations the script prints are descriptive and are not a model. Cells
-are contiguous and so are not independent observations, the two fractions have
-different denominators, and the 96 excluded cells are a terrain-driven gap
-rather than a random sample. Nothing causal follows from them.
+Reproducing `rice_fraction_combined` as committed additionally requires the FTP
+rasters in data/raw/nesdc_rice/ and `--rice-source nesdc`, which is the form the
+committed file was built with.
+
+The correlations the build script prints are descriptive and are not a model.
+Cells are contiguous and so are not independent observations, the two fractions
+have different denominators, and the 96 excluded cells are a terrain-driven gap
+rather than a random sample. Nothing causal follows from them. What must be
+beaten before any of it means anything is in data/processed/baseline_results_2018.csv.
