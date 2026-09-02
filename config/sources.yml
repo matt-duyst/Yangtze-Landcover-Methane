@@ -129,3 +129,60 @@ gaia:
     - GAIA_1985_2022_120_30.tif
     - GAIA_1985_2022_120_35.tif
     - GAIA_1985_2022_120_40.tif
+
+s5p:
+  product: Sentinel-5P TROPOMI Level 2 methane
+  # The MEEO mirror serves the operational products over plain HTTPS with no
+  # credentials. Copernicus Data Space carries the same granules but requires
+  # authentication to download, so it cannot run from a fresh clone.
+  base_url: https://meeo-s5p.s3.amazonaws.com
+  stream: RPRO          # OFFL, NRTI, RPRO or COGT; RPRO is the reprocessed stream
+  product_type: L2__CH4___
+  destination: data/raw/s5p
+
+  # There is NO usable checksum on this route. Every S3 ETag observed is a
+  # multipart tag with a -N suffix, which is an MD5 of the part MD5s rather
+  # than of the object, and the part size is not published. Verification is
+  # therefore structural only: the file must open as netCDF4 and hold a
+  # PRODUCT group with the expected variables. That is weaker than the MD5
+  # verification the figshare and Science Data Bank routes get.
+
+  # Each orbit is published at more than one processor version; a day of
+  # L2__CH4___ holds 28 keys for 14 orbits. src/fetch/s5p.latest_per_orbit()
+  # keeps the highest version, otherwise the download doubles and a composite
+  # mixes two reconstructions of the same overpass.
+
+  bounding_box:         # west, south, east, north
+    west: 114.8
+    south: 27.0
+    east: 122.6
+    north: 35.2
+
+  # 0.25 degree gives 33 by 31 cells over that box. The resolution was chosen
+  # because coverage supports it: pooled over 36 sampled granules, 56.11
+  # percent of the 1,023 cells received at least one sounding at 0.25 degree
+  # against 32.91 percent of 6,396 cells at 0.1 degree.
+  grid_resolution_deg: 0.25
+
+  # Recommended threshold is 0.5. In this region qa_value is quantised to the
+  # top bin, so >= 0.5 and >= 0.75 select identical soundings, 5,347 each
+  # across the 36 granules sampled. 0.75 therefore costs nothing here and is
+  # the stricter statement. qa_value is stored uint8 with scale_factor 0.01,
+  # so 0.75 is a stored value of 75 and 0.5 is 50; compare in stored units.
+  qa_threshold: 0.75
+
+  # Fill values MUST be read from each variable's own _FillValue attribute and
+  # never assumed. For the methane variables it is 9.969209968386869e+36 and
+  # for qa_value it is 255, but those are properties of the file, not of the
+  # product.
+  variables:
+    primary: methane_mixing_ratio_bias_corrected
+    secondary: methane_mixing_ratio
+    quality: qa_value
+    latitude: latitude
+    longitude: longitude
+
+  # 2018 is the study year and cannot be served any other way: Earth Engine's
+  # L3 CH4 collection begins 2019-02-08.
+  start_date: 2018-01-01
+  end_date: 2018-12-31

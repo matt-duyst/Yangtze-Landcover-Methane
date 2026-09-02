@@ -130,6 +130,7 @@ def download_record(
     session: requests.Session | None = None,
     allowed_content_types: Sequence[str] = DEFAULT_ALLOWED_CONTENT_TYPES,
     chunk: int = _CHUNK,
+    post_check: Callable[[Path], None] | None = None,
 ) -> Path:
     """Download one record, verify it, and only then put it at ``destination``.
 
@@ -139,6 +140,13 @@ def download_record(
     only after the content type, the byte count and the digest all check out,
     so a failure never leaves a partial or unverified file where a later step
     would read it as real.
+
+    ``post_check`` runs on the finished ``.part`` before the rename and should
+    raise to reject it. It exists for sources that publish no usable digest:
+    the Sentinel-5P mirror serves multipart S3 ETags, which are MD5s of part
+    MD5s rather than of the object, so structural validation is the only check
+    available there. It is weaker than a digest and the caller is expected to
+    say so.
     """
     destination = Path(destination)
     if is_already_fetched(record, destination):
@@ -183,6 +191,9 @@ def download_record(
                     f"{record.stem}: {record.digest_algorithm} {got} does not match "
                     f"the published {record.digest.lower()}. Refusing to write the file."
                 )
+
+        if post_check is not None:
+            post_check(partial)
 
         partial.replace(destination)
     finally:
