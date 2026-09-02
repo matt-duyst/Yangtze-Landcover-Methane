@@ -301,3 +301,114 @@ def test_plan_mode_writes_nothing_and_downloads_nothing(tmp_path, monkeypatch, c
     assert not work.exists()
     assert not checkpoint.exists()
     assert "plan only" in capsys.readouterr().out
+
+
+# --------------------------------------------------------------------------
+# the saturation record
+# --------------------------------------------------------------------------
+
+def test_saturation_is_recorded_once_per_granule_and_ends_at_the_covered_count(
+        tmp_path, fixtures):
+    """The last cumulative must be the composite's own covered-cell count.
+
+    That is the property worth pinning: the record is derived from the same
+    counts grid the composite exports, so if the two ever disagree the record
+    is measuring something other than coverage.
+    """
+    source, made = fixtures
+    work = tmp_path / "work"; work.mkdir()
+    acc = cm.Accumulator(TOY, 0.75, (mg.PRIMARY, mg.SECONDARY))
+    run_loop(acc, [FakeGranule(p) for p in made], work, tmp_path / "ck.npz")
+
+    assert len(acc.saturation) == len(acc.contributions) == len(made)
+    composite = acc.composite()
+    covered = int((composite.counts > 0).sum())
+    assert covered > 0, "the fixtures must cover something for this to mean anything"
+    assert acc.saturation[-1][1] == covered
+    assert acc.covered == covered
+
+
+def test_the_cumulative_column_is_the_running_sum_of_the_added_column(
+        tmp_path, fixtures):
+    """A cell is newly covered exactly once, so the two columns must agree."""
+    source, made = fixtures
+    work = tmp_path / "work"; work.mkdir()
+    acc = cm.Accumulator(TOY, 0.75, (mg.PRIMARY, mg.SECONDARY))
+    run_loop(acc, [FakeGranule(p) for p in made], work, tmp_path / "ck.npz")
+
+    running = 0
+    previous = 0
+    for added, cumulative in acc.saturation:
+        assert added >= 0, "coverage is a union and cannot shrink"
+        assert cumulative >= previous
+        running += added
+        assert cumulative == running
+        previous = cumulative
+
+
+def test_the_saturation_record_survives_a_checkpoint(tmp_path, fixtures):
+    source, made = fixtures
+    work = tmp_path / "work"; work.mkdir()
+    checkpoint = tmp_path / "ck.npz"
+    acc = cm.Accumulator(TOY, 0.75, (mg.PRIMARY, mg.SECONDARY))
+    run_loop(acc, [FakeGranule(p) for p in made], work, checkpoint)
+
+    reloaded = cm.Accumulator.load(checkpoint)
+    assert reloaded.saturation == acc.saturation
+    assert reloaded.saturation[-1][1] == reloaded.covered
+
+
+def test_a_resumed_run_continues_the_record_rather_than_restarting_it(
+        tmp_path, fixtures):
+    """Resuming must not reset the cumulative column to the second half."""
+    source, made = fixtures
+    assert len(made) >= 2
+    work = tmp_path / "work"; work.mkdir()
+    checkpoint = tmp_path / "ck.npz"
+
+    first = cm.Accumulator(TOY, 0.75, (mg.PRIMARY, mg.SECONDARY))
+    run_loop(first, [FakeGranule(p) for p in made[:1]], work, checkpoint)
+    resumed = cm.Accumulator.load(checkpoint)
+    run_loop(resumed, [FakeGranule(p) for p in made[1:]], work, checkpoint)
+
+    assert len(resumed.saturation) == len(made)
+    assert resumed.saturation[0] == first.saturation[0]
+    assert resumed.saturation[-1][1] == resumed.covered
+    assert sum(a for a, _ in resumed.saturation) == resumed.covered
+
+
+def test_a_checkpoint_written_before_the_record_existed_still_loads(tmp_path):
+    """The 2018 checkpoint has no saturation key and must not be fabricated."""
+    import numpy as np
+
+    acc = cm.Accumulator(TOY, 0.75, (mg.PRIMARY, mg.SECONDARY))
+    acc.counts[0, 0] = 7
+    checkpoint = tmp_path / "old.npz"
+    acc.save(checkpoint)
+
+    with np.load(checkpoint, allow_pickle=False) as data:
+        payload = {k: data[k] for k in data.files if k != "saturation"}
+    with open(checkpoint, "wb") as handle:
+        np.savez_compressed(handle, **payload)
+
+    reloaded = cm.Accumulator.load(checkpoint)
+    assert reloaded.saturation == [], "an absent curve stays absent"
+    assert reloaded.covered == 1, "the grid itself is unaffected"
+
+
+def test_a_granule_that_adds_no_new_cells_still_gets_a_row(tmp_path, fixtures):
+    """Late granules add nothing new, and that is the measurement."""
+    source, made = fixtures
+    work = tmp_path / "work"; work.mkdir()
+    acc = cm.Accumulator(TOY, 0.75, (mg.PRIMARY, mg.SECONDARY))
+    granules = [FakeGranule(p) for p in made]
+    run_loop(acc, granules, work, tmp_path / "ck.npz")
+    before = len(acc.saturation)
+    covered = acc.covered
+
+    # Re-add the same granules: every cell they touch is already covered.
+    run_loop(acc, granules, work, tmp_path / "ck.npz")
+    added = acc.saturation[before:]
+    assert len(added) == len(granules), "a row per granule, even a redundant one"
+    assert all(a == 0 for a, _ in added), "nothing was newly covered"
+    assert all(c == covered for _, c in added), "the cumulative holds flat"

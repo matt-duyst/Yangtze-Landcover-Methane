@@ -520,3 +520,42 @@ union of the four. The distributed rasters are one per province and their
 bounding boxes overlap, so a union mask assesses the shared ground once per file.
 Built that way one cell reached an assessed area 2.94 times its own, and the
 median single-season fraction came out at 0.079 against a correct 0.129.
+
+## Coverage saturation is recorded per granule, going forward only
+
+The reconnaissance sample put 2018 coverage at 50.4 percent of cells. The
+measured year is 90.62 percent. The gap is not sampling noise and it is not a
+seasonal bias in which granules were sampled: the six reconnaissance granules
+were 1.04 percent of the year's granules and carried 0.91 percent of its
+soundings, a ratio of 0.87, so they were very slightly poorer than average in
+soundings and nowhere near poor enough to explain a factor of 1.8 in cells.
+
+The cause is that coverage is a union statistic and saturates. Each granule
+covers cells, and the union grows fast at first and then barely at all, because
+almost every cell a late granule touches has already been touched. A small
+sample therefore sits high on a curve that is still climbing steeply, and
+reading its value as an estimate of the endpoint understates the endpoint by
+however much of the climb remains. Any statistic of this shape has the same
+problem, and the sample size does not tell you where on the curve you are.
+
+What tells you is the curve itself, so the accumulator now records it: for each
+granule, the number of cells it covered that nothing had covered before, and the
+number covered in total afterwards. Two integers per granule. For the 2018 run
+that is 578 pairs, about 9 kB in the checkpoint, against a checkpoint already
+holding three float64 grids. There is no reason to economise on it.
+
+The record is written going forward only, and the committed 2018 composite has
+none. The curve depends on the order granules were added and cannot be
+reconstructed from a finished counts grid, which knows how many soundings each
+cell received but not which granule first reached it. Recovering it for 2018
+would mean re-running the year: a 28.9 GB download and about an hour, to produce
+a diagnostic and change no published number. The composite, the coverage table
+and the analysis grid all stay as they are. The next run of any year will carry
+the record, and that is when the shape becomes visible.
+
+The one decision this bears on is the grid resolution, which was chosen partly
+because 56 percent coverage at 0.25 degrees looked like the most the data would
+support against 32.91 percent at 0.1 degrees. Both figures come from the same
+understated sample and both are too low, so the comparison between them may
+survive even though neither number does. Reopening it needs a measured curve at
+each resolution, not another sample.

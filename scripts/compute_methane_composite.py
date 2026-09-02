@@ -79,10 +79,30 @@ def as_date(value) -> dt.date:
 
 
 class Accumulator:
-    """Sums, counts and provenance, checkpointed atomically.
+    """Sums, counts, provenance and the saturation curve, checkpointed atomically.
 
     Holds sums rather than means so partial results compose: two runs over
     disjoint granules can be added, and a mean can be taken at the end.
+
+    ``saturation`` records, for each granule as it is added, how many cells it
+    covered that nothing had covered before and how many cells were covered in
+    total afterwards. Two integers per granule, so the whole 2018 run is 578
+    pairs and costs about 9 kB in the checkpoint.
+
+    It exists because coverage is a union statistic and saturates, and a
+    reconnaissance sample cannot be extrapolated to a year without knowing the
+    shape of the curve. Six granules covering 1.04 percent of 2018 reached 50.4
+    percent of cells, which was read at the time as an estimate of what the year
+    would reach; the year reached 90.62 percent. The early granules each add
+    many new cells and the late ones add almost none, so a small sample lands
+    far up a curve that is still climbing and understates the ceiling badly. The
+    record is what would let a reader see that shape instead of inferring it,
+    and it is cheap enough that there is no reason not to keep it.
+
+    It is written going forward only. The curve is a property of the order
+    granules were added and cannot be recovered from a finished grid, so the
+    committed 2018 composite has no record and re-running the year to obtain one
+    would cost a 28.9 GB download to change no published number.
     """
 
     def __init__(self, spec: GridSpec, qa_threshold: float, variables):
@@ -93,16 +113,26 @@ class Accumulator:
         self.sums = {v: np.zeros(spec.shape, dtype="float64") for v in self.variables}
         self.contributions: list[GranuleContribution] = []
         self.done: set[str] = set()
+        #: One (newly covered, cumulative covered) pair per granule added, in
+        #: the order they were added. See the class docstring.
+        self.saturation: list[tuple[int, int]] = []
+
+    @property
+    def covered(self) -> int:
+        """Cells with at least one sounding so far."""
+        return int((self.counts > 0).sum())
 
     def add(self, soundings, contribution: GranuleContribution) -> None:
+        before = self.covered
         self.contributions.append(contribution)
         self.done.add(contribution.granule)
-        if not len(soundings):
-            return
-        row, col, _ = self.spec.cell_of(soundings.latitude, soundings.longitude)
-        np.add.at(self.counts, (row, col), 1)
-        for name in self.variables:
-            np.add.at(self.sums[name], (row, col), soundings.values[name])
+        if len(soundings):
+            row, col, _ = self.spec.cell_of(soundings.latitude, soundings.longitude)
+            np.add.at(self.counts, (row, col), 1)
+            for name in self.variables:
+                np.add.at(self.sums[name], (row, col), soundings.values[name])
+        after = self.covered
+        self.saturation.append((after - before, after))
 
     def composite(self) -> Composite:
         return Composite(spec=self.spec, qa_threshold=self.qa_threshold,
@@ -123,6 +153,7 @@ class Accumulator:
             "counts": self.counts,
             "contributions": np.array(
                 json.dumps([c.as_dict() for c in self.contributions])),
+            "saturation": np.array(self.saturation, dtype="int64").reshape(-1, 2),
         }
         for name in self.variables:
             payload[f"sum::{name}"] = self.sums[name]
@@ -143,6 +174,13 @@ class Accumulator:
             for name in variables:
                 acc.sums[name] = data[f"sum::{name}"].astype("float64")
             records = json.loads(str(data["contributions"]))
+            # Checkpoints written before saturation was recorded have no such
+            # key. The curve cannot be reconstructed from a finished grid, so
+            # an older checkpoint loads with an empty record rather than a
+            # fabricated one.
+            saved = (data["saturation"].astype("int64")
+                     if "saturation" in data.files else np.empty((0, 2), "int64"))
+        acc.saturation = [(int(a), int(b)) for a, b in saved]
         for record in records:
             acquired = (dt.datetime.fromisoformat(record["acquired"])
                         if record["acquired"] else None)
