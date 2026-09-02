@@ -722,3 +722,145 @@ being made here.
 This was found by adding a control that had no reason to work. It is recorded
 because the result it undermines is one this repository would otherwise have
 reported as its main positive finding.
+
+## The sampling-composition artefact, and why deseasonalising did not fix it
+
+### How it was found
+
+`solar_zenith_angle` was gridded as a minor covariate, added to the composite
+because it was cheap and might say something about retrieval quality. It was
+never expected to be the diagnostic. When the meteorological baselines came back
+with wind at held-out R squared 0.653 against the spatial null's 0.346, the
+obvious reading was transport, and the check that undermined it was almost an
+afterthought: solar zenith angle at a fixed latitude is fixed by the date and
+time of the overpass, so regressing it on latitude leaves a variable that
+measures nothing but *when* a cell was looked at.
+
+Latitude explains **2.4 percent** of the variance in mean solar zenith angle
+across these cells. The remaining 97.6 percent is calendar. That residual, which
+has no physical content whatever, correlates with composite methane at +0.686,
+with `surface_albedo_SWIR` at +0.859, with northward wind at -0.745 and with
+wind speed at -0.737, and entered as a lone predictor it reaches held-out R
+squared 0.467, beating the spatial null.
+
+The composite now carries the sampling dates directly, so the artefact no longer
+has to be measured through a proxy. Mean day of year per cell runs from 124.17
+to 352.18, a range of **228 days**. Some cells are effectively May means and
+others are effectively December means, and they are being compared as if they
+were the same quantity.
+
+### The magnitude
+
+| statistic | value |
+|-----------|-------|
+| range of per-cell mean day of year | 228.01 days |
+| median per-cell sampling spread | 54.76 days |
+| cells sampled on a single date | 34 (3.7%) |
+| cells with spread below 15 days | 66 (7.1%) |
+| cells with spread below 60 days | 528 (57.0%) |
+| fitted seasonal range over sampled days | 35.67 ppb |
+| standard deviation of the raw composite | 14.87 ppb |
+
+The seasonal swing is more than twice the spatial spread of the field being
+analysed. That is the whole problem in one comparison.
+
+### The four fixes, and why the harmonic one
+
+Compositing within season, carrying day-of-year as a covariate, and requiring a
+minimum sampling spread per cell all cost coverage, and coverage at 90.62
+percent was expensive to reach. The fourth costs none: remove a fitted seasonal
+cycle at the **sounding** level, before the cell mean is taken.
+
+It also looked free of the obvious objection. Subtracting a cycle from cell
+means cannot work, because by then the information about which days contributed
+has been averaged away and the mean of a nonlinear function is not the function
+of the mean. Fitting at the sounding level avoids that, and a fixed-effects
+model with per-cell offsets and shared harmonics reduces, once the offsets are
+profiled out, to least squares on within-cell-centred variables, whose normal
+equations are built from per-cell sums. That makes it a one-pass streaming
+computation costing 23 floats per cell. The derivation is in
+`src/methane/seasonal.py`.
+
+### What it changed: almost nothing
+
+The cycle is real and strongly identified. Two harmonics beat one at
+F(2, 109,997) = 4,128, p below floating-point resolution, and the fitted range
+over the sampled days is 35.67 ppb with a peak on day 245.8, early September.
+The correction was applied and the composite still reproduces the committed
+methane exactly.
+
+It did not remove the artefact.
+
+| relationship | raw | deseasonalised |
+|--------------|-----|----------------|
+| methane ~ mean day of year | +0.701 | +0.631 |
+| methane ~ solar zenith angle | +0.697 | +0.673 |
+| methane ~ surface_albedo_SWIR | +0.702 | +0.680 |
+| methane ~ northward wind | -0.785 | -0.761 |
+| methane ~ impervious fraction | +0.346 | +0.355 |
+
+Removing the cycle took out 20.6 percent of the between-cell variance and left
+every association essentially where it was. The sampling-composition model still
+reaches held-out R squared 0.426 on the corrected field and still beats the
+spatial null's 0.343. Fitting one harmonic instead of two fails identically, so
+the conclusion does not depend on the model order, even though the two orders
+disagree by up to 15.7 ppb about individual cells.
+
+### Why it did not work
+
+Three things were checked and two of them exonerate the model.
+
+The shared-cycle assumption holds: fitting the northern and southern halves of
+the grid separately gives amplitudes of 6.99 and 12.75 ppb against 5.75 and
+13.36, and peaks on day 244.9 against 249.1. The cycle really is regional.
+
+The sampling date is only partly geography: mean day of year regressed on
+latitude and longitude gives R squared 0.385, so a third of it is spatial
+structure that no deseasonalisation should remove, but two thirds is not.
+Controlling for position, the corrected field still tracks sampling date at
++0.488 against the raw field's +0.579.
+
+What is left is that **the smooth annual cycle is not the dominant part of the
+sampling effect**. The harmonic fit explains 26.7 percent of within-cell
+variance at the sounding level; the residual standard deviation is 16.60 ppb,
+which is close to the per-sounding retrieval precision and far larger than the
+seasonal term. A cell sampled on a handful of dates inherits the synoptic
+conditions of those particular overpasses, and cells sharing overpasses share
+those anomalies. That is a day-specific effect, not a seasonal one, and no
+function of day-of-year alone can reach it.
+
+### One premise that did not survive
+
+The composite covers **eight months, not twelve**. There are no soundings at all
+before day 120: January, February, March and most of April are empty, and 30.75
+percent of the year's soundings fall in October alone.
+
+| month | soundings | share |
+|-------|-----------|-------|
+| Jan-Mar | 0 | 0.00% |
+| Apr | 290 | 0.26% |
+| May | 10,778 | 9.72% |
+| Jun | 5,513 | 4.97% |
+| Jul | 5,079 | 4.58% |
+| Aug | 5,574 | 5.02% |
+| Sep | 14,585 | 13.15% |
+| Oct | 34,115 | 30.75% |
+| Nov | 17,286 | 15.58% |
+| Dec | 17,708 | 15.96% |
+
+The consequence is a distinction worth keeping. The *correction* is sound for
+every cell, because every cell's soundings fall inside the sampled window and
+the fit interpolates there. The *amplitude* is not a measurement of the annual
+XCH4 cycle over this region, because a third of that cycle is extrapolated from
+no data, and it should not be quoted as one. It is also why the two-harmonic fit
+has a second harmonic larger than its first, which no smooth annual cycle has.
+
+### What this leaves
+
+The negative land-cover result is unchanged and is now on firmer ground: a
+confound large enough to carry wind and albedo, and which survives correction,
+still does nothing for land cover. The positive wind result remains
+uninterpretable, and the fix for it is not a better model but a different
+composite. The three coverage-costing options are back on the table, and the
+honest reading is that a sound answer needs seasonal compositing rather than
+seasonal correction.

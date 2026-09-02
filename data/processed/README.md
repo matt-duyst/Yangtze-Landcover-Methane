@@ -700,3 +700,37 @@ argument and the month-by-month sounding counts.
         --checkpoint data/interim/seasonal_2018.npz \
         --verify-against data/processed/methane_composite_2018.tif \
         --export-deseasonalised data/processed/methane_deseasonalised_2018
+
+## deseasonalisation_2018.csv and baseline_results_deseasonalised_2018.csv
+
+Whether removing the seasonal cycle removed the sampling artefact. The first
+holds 22 rows, eleven relationships under two weightings, each computed on the
+raw composite mean and on the deseasonalised field over the same cells, so the
+change is visible in one line. The second is the full baseline suite re-run with
+the deseasonalised field as the target, 88 rows matching
+baseline_results_2018.csv model for model.
+
+The answer is no. The association between the field and the mean sampling date
+falls from Pearson +0.701 to +0.631, and every other contaminated relationship
+moves as little. A variable that measures only when each cell was observed still
+reaches held-out R squared 0.426 on the corrected field and still beats the
+spatial null. Removing the cycle took out 20.6 percent of the between-cell
+variance and left the structure of the problem intact. Fitting one harmonic
+rather than two fails in the same way.
+
+The land-cover associations are unchanged, at +0.355 for impervious fraction and
++0.096 for rice, and land cover still does not beat the spatial null on the
+corrected field. That is the same negative finding as before, and correcting for
+season neither rescued nor weakened it.
+
+notes/decisions.md carries why the correction failed: the shared-cycle
+assumption holds, the sampling date is only a third geography, and what remains
+is day-specific synoptic variation rather than anything a function of
+day-of-year can reach.
+
+    python scripts/test_deseasonalisation.py --write
+    python scripts/run_baselines.py \
+        --target ch4_deseasonalised_ppb \
+        --target-from data/processed/methane_deseasonalised_2018.csv \
+        --covariates data/processed/methane_covariates_2018.csv \
+        --out data/processed/baseline_results_deseasonalised_2018.csv --write
