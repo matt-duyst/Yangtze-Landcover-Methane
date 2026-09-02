@@ -128,3 +128,33 @@ states that values range 0 to 37, zero meaning non-impervious, and pairs the
 years 1972, 1978, 1985, 1986 and so on through 2019 with the values 1, 2, 3, 4
 and so on through 37. So 2000 is value >= 18, 2010 is value >= 28, and 2018 is
 value >= 36. Source: http://irsip.whu.edu.cn/resv2/dataweb.php.
+
+## The NESDC rice rasters carry no nodata
+
+All thirty-six NESDC rice GeoTIFFs, four provinces across 2017 to 2025, return
+None when asked for their nodata value. The field is simply not set. The product
+documents three pixel values, 0 for non-rice, 1 for single-season rice and 2 for
+double-season rice, and those are the only three values that occur; there is no
+fourth value acting as an undeclared fill.
+
+The consequence is that 0 carries two meanings at once. Each file is a plain
+rectangular raster covering the province's bounding box, not a raster clipped to
+the province polygon, so every pixel outside the province but inside the box is
+also written as 0. Real non-rice land inside the province and territory that
+belongs to a neighbouring province are indistinguishable in the file.
+
+The scale of that is not marginal. Measured in an equal-area projection,
+Shanghai's raster box encloses 13,914 km2 around a province of 6,746 km2, so 52
+percent of the zeros in the Shanghai file are not Shanghai at all. Zhejiang is
+the same proportion, its box enclosing 209,840 km2 around 101,337 km2. Jiangsu
+is worse at 60 percent, with a box of 252,380 km2 around 100,091 km2. Anhui is
+the tightest and still has 23 percent of its box outside the province.
+
+Any rice fraction computed as class 1 or 2 divided by the raster extent, rather
+than against the province polygon, will therefore be wrong, and wrong by roughly
+a factor of two for three of the four provinces. Nothing in the file signals it:
+there is no mask band, no nodata value, and no metadata field that distinguishes
+background from genuine non-rice. Every provincial statistic from these rasters
+must be taken through data/reference/yrd_provinces.geojson, and the pixel counts
+recorded during characterisation are whole-file counts that must not be used as
+provincial totals.
