@@ -90,7 +90,7 @@ gaia:
   citation: >-
     Gong, P., Li, X., Wang, J., Bai, Y., Chen, B., Hu, T., Liu, X., Xu, B.,
     Yang, J., Zhang, W., and Zhou, Y. (2020), Annual maps of global artificial
-    impervious areas (GAIA) between 1985 and 2018, Remote Sensing of
+    impervious area (GAIA) between 1985 and 2018, Remote Sensing of
     Environment, 236, 111510, doi:10.1016/j.rse.2019.111510
 
   api_base: https://api.figshare.com/v2
@@ -246,7 +246,7 @@ gisa:
   citation: >-
     Huang, X., Li, J., Yang, J., Zhang, Z., Li, D., and Liu, X. (2021), 30 m
     global impervious surface area dynamics and urban expansion pattern
-    observed by Landsat satellites: from 1972 to 2019, Science China Earth
+    observed by Landsat satellites: From 1972 to 2019, Science China Earth
     Sciences, 64, 1922-1933, doi:10.1007/s11430-020-9797-9
 
   # WHAT THE FILENAMES DO NOT TELL YOU. The bundle holds 257 tiles named

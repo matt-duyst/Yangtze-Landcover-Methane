@@ -239,7 +239,8 @@ of the notebook's own crop sampling, under its province-inclusion rules.
 ### 4.1 Section 3.3 describes a masked autoencoder
 
 Section 3.3 describes the network as randomly masking patches of the urban and
-rice inputs and reconstructing them, citing He et al. (2022) throughout,
+rice inputs and reconstructing them, citing He et al. (2022,
+doi:10.1109/CVPR52688.2022.01553) throughout,
 including that work's Transformer-block encoder and its loss computed on
 masked patches.
 

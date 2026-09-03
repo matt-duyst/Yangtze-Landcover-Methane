@@ -32,7 +32,7 @@
   "gaia_1985_2022": {
     "product": "GAIA annual global artificial impervious area, 30 m, year-of-first-imperviousness encoding",
     "version": "figshare version 1 of the record (10.6084/m9.figshare.27245775.v1); the archive is named GAIA_1985_2022.zip and its readme is headed Version 2022, but the data stops at 2021, so the archive name overstates the coverage by one year",
-    "citation": "Gong, P., Li, X., Wang, J., Bai, Y., Chen, B., Hu, T., Liu, X., Xu, B., Yang, J., Zhang, W., & Zhou, Y. (2020). Annual maps of global artificial impervious areas (GAIA) between 1985 and 2018. Remote Sensing of Environment, 236, 111510. doi:10.1016/j.rse.2019.111510",
+    "citation": "Gong, P., Li, X., Wang, J., Bai, Y., Chen, B., Hu, T., Liu, X., Xu, B., Yang, J., Zhang, W., & Zhou, Y. (2020). Annual maps of global artificial impervious area (GAIA) between 1985 and 2018. Remote Sensing of Environment, 236, 111510. doi:10.1016/j.rse.2019.111510",
     "url": "https://doi.org/10.6084/m9.figshare.27245775.v1",
     "retrieved": "2026-09-01",
     "licence": "CC BY 4.0, as stated on the figshare record",
@@ -93,7 +93,7 @@
   "s5p_l2_ch4_2018": {
     "product": "Sentinel-5P TROPOMI Level 2 methane, RPRO stream, L2__CH4___",
     "version": "processor 020400, homogeneous across every 2018 granule used; the mirror also carries these orbits at other versions and only the highest per orbit was kept",
-    "citation": "Copernicus Sentinel-5P (processed by ESA), TROPOMI Level 2 Methane total column products. Version 02. European Space Agency. doi:10.5270/S5P-3p6lnwd",
+    "citation": "Copernicus Sentinel-5P (processed by ESA), TROPOMI Level 2 Methane total column products. Version 02. European Space Agency. doi:10.5270/S5P-3lcdqiv",
     "url": "https://meeo-s5p.s3.amazonaws.com/RPRO/L2__CH4___/",
     "retrieved": "2026-09-02",
     "licence": "Copernicus open and free data policy; the MEEO mirror redistributes the ESA products unchanged and states no separate licence",
@@ -114,6 +114,7 @@
         "sha256": "0f77fcb56f0c2371beb98a6f58a508595c6e6ed8b95727da74fac566de1cd099"
       }
     ],
-    "notes": "NO CONTENT CHECKSUM IS AVAILABLE FOR THIS SOURCE and the archive sha256 is null for that reason rather than because one was not computed. Every S3 ETag the mirror returns is a multipart tag with a minus-N suffix, which is an MD5 of the concatenated part MD5s rather than of the object, and the part size the uploader used is not published, so the tag cannot be reproduced or checked. Verification is structural instead: each granule must open as netCDF4 and hold a PRODUCT group with the methane, qa_value, latitude and longitude variables. That is weaker than the MD5 verification the figshare and Science Data Bank entries carry, and re-fetching cannot be proven to return the same bytes. The two files listed here are the derived composite and its per-cell table, which ARE checksummed, so the outputs verify even though the inputs cannot. The 578 granules themselves are not retained: they total 28.9 GB and were streamed one at a time, gridded and deleted. Pixel values encode qa in stored uint8 units with scale_factor 0.01, and fill values must be read per variable from their own _FillValue attribute."
+    "notes": "NO CONTENT CHECKSUM IS AVAILABLE FOR THIS SOURCE and the archive sha256 is null for that reason rather than because one was not computed. Every S3 ETag the mirror returns is a multipart tag with a minus-N suffix, which is an MD5 of the concatenated part MD5s rather than of the object, and the part size the uploader used is not published, so the tag cannot be reproduced or checked. Verification is structural instead: each granule must open as netCDF4 and hold a PRODUCT group with the methane, qa_value, latitude and longitude variables. That is weaker than the MD5 verification the figshare and Science Data Bank entries carry, and re-fetching cannot be proven to return the same bytes. The two files listed here are the derived composite and its per-cell table, which ARE checksummed, so the outputs verify even though the inputs cannot. The 578 granules themselves are not retained: they total 28.9 GB and were streamed one at a time, gridded and deleted. Pixel values encode qa in stored uint8 units with scale_factor 0.01, and fill values must be read per variable from their own _FillValue attribute.",
+    "doi_note": "Two ESA DOIs exist for this product and both resolve. 10.5270/S5P-3lcdqiv, registered 2021, resolves to the KNMI/SRON product page at tropomi.eu and is the value the granules themselves declare in identifier_product_doi. 10.5270/S5P-3p6lnwd, registered 2019, resolves to the ESA Copernicus catalogue page and was cited here previously. The granule metadata is authoritative for which product was actually read, so the tropomi.eu DOI is the one carried."
   }
 }

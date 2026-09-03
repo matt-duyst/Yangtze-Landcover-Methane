@@ -118,17 +118,18 @@ Cited in `config/sources.yml`, `data/manifest.json`,
 `data/processed/README.md`, `scripts/recon_rice_provincial_areas.py`,
 `src/fetch/figshare.py`, `tests/test_fetch_figshare.py`.
 
-**European Space Agency (2019).** TROPOMI Level 2 Methane Total Column.
-`10.5270/S5P-3p6lnwd` — dataset record; the methane product, as cited by the
-manifest.
-Cited in `data/manifest.json`.
-
 **European Space Agency (2021).** TROPOMI Level 2 Methane Total Column.
-`10.5270/S5P-3lcdqiv` — dataset record; the methane product, as declared by the
-granules themselves in `identifier_product_doi`. This is a **different DOI from
-the one the manifest cites**, for a product of the same name; see the
-disagreement note below.
-Cited in `notes/decisions.md`.
+`10.5270/S5P-3lcdqiv` — dataset record; the methane product actually read. This
+is the DOI the granules declare in `identifier_product_doi`, and it resolves to
+the KNMI/SRON product page at tropomi.eu.
+Cited in `data/manifest.json`, `notes/decisions.md`.
+
+**European Space Agency (2019).** TROPOMI Level 2 Methane Total Column.
+`10.5270/S5P-3p6lnwd` — dataset record; the same product under the ESA
+Copernicus catalogue, resolving to sentinels.copernicus.eu. Recorded because the
+manifest cited it until 3 September 2026 and a reader may meet it in the
+history; it is not the DOI the files declare.
+Not cited in any current file; retained here for the record.
 
 ## Findings relied on
 
@@ -169,14 +170,18 @@ Named in `ERRATA.md`.
 
 ---
 
-## One disagreement worth recording
+## The two Sentinel-5P DOIs, resolved
 
-The Sentinel-5P methane product is cited under two different DOIs in two files.
-`data/manifest.json` gives `10.5270/S5P-3p6lnwd`, registered 2019;
-`notes/decisions.md` gives `10.5270/S5P-3lcdqiv`, registered 2021 and read
-directly from the granule's own `identifier_product_doi` attribute. Both resolve
-to a dataset titled "TROPOMI Level 2 Methane Total Column" published by ESA.
-They are versions of the same product and neither is wrong, but the manifest
-cites a DOI the files themselves do not declare, and a reader checking one
-against the other will find they disagree. Resolving which to carry is a change
-to the manifest and is not made here.
+The methane product carries two ESA DOIs and both resolve, to identical titles
+and publisher, differing only in registration year and landing page.
+`10.5270/S5P-3p6lnwd`, registered 2019, resolves to the ESA Copernicus
+data-products catalogue at sentinels.copernicus.eu. `10.5270/S5P-3lcdqiv`,
+registered 2021, resolves to the KNMI/SRON mission page at tropomi.eu. Neither
+is wrong; they are the same product registered by two parts of the same
+programme.
+
+The granules settle it. Every one declares `identifier_product_doi =
+'10.5270/S5P-3lcdqiv'` with `identifier_product_doi_authority = 'http://dx.doi.org/'`,
+so that is what the files we actually read say they are, and it is what the
+manifest now carries. `data/manifest.json` records both and the reason for the
+choice in its `doi_note` field.
