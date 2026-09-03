@@ -1000,3 +1000,46 @@ albedo bias, so the reading that a partial correlation survives there because th
 control is incomplete is at least as available as the reading that there is a
 real urban signal the correction destroys. Either way it does not change the
 headline, because the spatial-null test fails on the raw variable too.
+
+## Preprocessing this pipeline does not do
+
+Recorded so the gap is on record rather than discovered later. None of these is
+implemented and none is claimed.
+
+**Destriping.** TROPOMI XCH4 carries an across-track bias that varies by ground
+pixel index and is routinely removed by subtracting a per-row median or fitting
+a low-order function of the row index. This pipeline does not. It is fully
+reachable with what is already read: the granule carries the ground pixel index
+implicitly in the array shape, and the streaming loop could accumulate per-row
+statistics at the cost of a few floats per row. This is the cheapest of the four
+and the most clearly missing.
+
+**Cloud clearing beyond the qa filter.** The only cloud screening here is
+`qa_value >= 0.75`, which bundles cloud with every other quality condition.
+Studies commonly add an explicit cloud-fraction threshold from the co-located
+cloud product. Reachable: cloud fraction sits in the same SUPPORT_DATA groups
+the covariates were taken from and would cost one more variable in the existing
+covariate list.
+
+**Boundary-layer separation.** The column-averaged mixing ratio mixes the
+boundary layer, where local emission shows, with the free troposphere, where it
+does not. The standard treatment subtracts the modelled column above the
+planetary boundary layer using reanalysis profiles, typically CAMS EAC4. Not
+reachable with what is here: it needs external reanalysis data on a vertical
+grid, and both CAMS and ERA5 return 401 to an unauthenticated request, which is
+already recorded in `config/sources.yml`.
+
+**Departures from a model forecast rather than absolute values.** Rather than
+analysing XCH4 itself, the common approach analyses the difference between the
+observation and a chemical transport model's forecast for the same time and
+place, so that advected large-scale structure cancels and what remains is closer
+to local emission. Not reachable without a model field. **This is the standard
+answer to the synoptic residual the harmonic fit could not reach**, and it is
+the specific thing that would make this composite analysable: a per-sounding
+model departure removes both the seasonal cycle and the day-specific synoptic
+anomaly, which is precisely the residual left after deseasonalising failed.
+
+The order of value here is roughly the reverse of the order of cost. Destriping
+and cloud clearing are cheap and would tidy the field. Boundary-layer separation
+and model departures are expensive, need external data, and are the two that
+would actually change what the field means.
