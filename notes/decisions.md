@@ -1204,3 +1204,86 @@ the Harvard TROPOMI inversion code reverses the layer axis on reading. The ratio
 of sums is order-invariant so the column computation is unaffected, and a test
 asserts that explicitly, so that nobody adds a per-layer step assuming the same
 protection. `surface_first()` is provided for when one is added.
+
+## Task instructions are hypotheses, not specifications
+
+Across this project the briefs directing the work have supplied figures,
+conventions and factual premises that did not survive being checked against the
+data. That happened often enough, and in a consistent enough shape, that the
+pattern is worth recording as a working practice rather than as a list of
+corrections.
+
+### The pattern
+
+Three failure modes recur.
+
+**A figure recalled from an earlier report loses its qualifiers.** A number that
+was stated with a scope, a projection or a sample attached comes back without
+them and is then wrong, or right about something else. Provincial areas quoted
+without the projection they were measured in. A count of duplicates that had
+been two reported as four. A correlation attached to the wrong methane variable.
+Two retrieved means off by about 1 ppb because they had been rounded once and
+re-rounded. The figures are rarely invented; they are usually true of something
+adjacent.
+
+**A convention explained correctly can still be applied backwards in the same
+breath.** The clearest instance is the GISA selector. The brief stated that GISA
+counts upward from the oldest year and that GAIA counts downward, warned in
+terms that getting this backwards inverts the urbanisation history and fails
+silently, and then in the next sentence specified `value >= 36`, which is GAIA's
+rule. Understanding a distinction and applying it are separate acts and the
+first does not protect the second.
+
+**A globally reported property does not transfer to a region.** GAIA is reported
+to omit impervious surface relative to GISA, with a producer's accuracy worse by
+28.35 percent over 124,190 global validation samples. In these four provinces
+GISA finds 19.9 percent *less* impervious surface than GAIA, and the direction is
+reversed in every one of them. A validation statistic is an average over a
+sample that may not include the place being studied.
+
+### The instances
+
+Recorded compactly as evidence for the pattern. A rice CSV specification that
+produced duplicate rows; four provincial areas quoted in the wrong projection; a
+duplicate count of four when two was correct; a colour convention generalised
+from one figure to a set; a figure identification reversed twice; a citation
+taken from a repository author field that named the wrong person; a Shanghai
+raster box estimated in degrees rather than projected, with only one province
+checked when the worst case was elsewhere; a claim that a README cited an author
+when it cited only a DOI; an assertion that a `conftest.py` existed when it did
+not; a WFMD benchmark attributed to a paper whose abstract describes something
+else; a GISA filename convention that does not ship; the GISA selector above;
+the direction of GAIA's regional bias; a plateau shortcut that found no
+plateaus; and the two retrieved means.
+
+### The practice
+
+A factual claim in a brief is treated as a hypothesis to verify against the
+data, not as an instruction to implement, and the verification is reported
+whether or not it agrees. That costs a few minutes per claim and it caught every
+instance above. Where a premise fails, the work proceeds on the measurement and
+the failure is stated rather than quietly routed around, because a brief whose
+premises are silently corrected teaches nobody anything and the same premise
+returns in the next one.
+
+The corollary is that agreement is worth reporting too. Most premises did
+survive: the GISA archive's byte count and digest, its pixel census to the
+digit, the encoding table, the count of unweighted exceptions, every figure in
+the prior gate. Reporting only the failures would misrepresent the base rate and
+make the checking look more adversarial than it is.
+
+### The one that mattered
+
+The inverted GISA selector. Applied as written it would have computed impervious
+fraction from 9,468,801 pixels instead of 202,830,997, a factor of 21.4 too
+small, across a study area where impervious fraction is the strongest land-cover
+predictor available. The resulting association with methane would have been
+approximately zero.
+
+That is the study's expected answer. The error would have produced a result
+agreeing with the conclusion already reached, on a robustness check whose entire
+purpose was to test that conclusion against a second product, and it would have
+been reported as confirmation. Nothing downstream would have looked wrong: the
+fractions would have been small but plausible, the models would have run, the
+null would have won. A wrong number that contradicts the expectation gets
+caught; a wrong number that confirms it does not.
