@@ -1,0 +1,30 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+type: software
+title: "Yangtze-Landcover-Methane: reproduction and rework of a 2023 master's thesis on urban methane in the Yangtze River Delta"
+authors:
+  - family-names: Duyst
+    given-names: Matthew
+    # TODO: fill in once an ORCID is registered.
+    # orcid: "https://orcid.org/0000-0000-0000-0000"
+repository-code: "https://github.com/matt-duyst/Yangtze-Landcover-Methane"
+license: MIT
+abstract: >-
+  This repository holds a reproduction and reworking of a 2023 Master of
+  Environmental Science thesis on forecasting historical atmospheric methane
+  concentrations over China's Yangtze River Delta from urban and paddied rice
+  extents. It contains the original analysis as submitted alongside a rebuilt
+  pipeline, so that the two can be compared directly. ERRATA.md documents
+  defects found in the original work during that reproduction.
+references:
+  - type: thesis
+    thesis-type: "Master of Environmental Science thesis"
+    title: "Urban-Methane Transfers (2000 - 2018): A Convolutional Neural Network (CNN) Approach at Forecasting Historical XCH4 Emissions through Urban Boundaries and Paddied Rice Extents Along China's YRD"
+    authors:
+      - family-names: Duyst
+        given-names: Matthew
+    institution:
+      name: "Yale School of the Environment"
+    year: 2023
+    month: 4
+    notes: "Advisor: Xuhui Lee. CFF 1.2.0 defines no advisor or supervisor field for a reference, so the role is recorded here rather than in an invented key."
