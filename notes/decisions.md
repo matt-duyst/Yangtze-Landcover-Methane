@@ -22,8 +22,8 @@ of the earliest edit, and a signed root commit makes that the whole history.
 ## The PDF is the document of record
 
 For any question about what the thesis says, read `writeup/Duyst_Thesis.pdf`,
-not `Duyst-Yale-Thesis.md`. The two are not the same document and the markdown
-is the weaker source.
+not `legacy/Duyst-Yale-Thesis.md`. The two are not the same document and the
+markdown is the weaker source.
 
 The markdown numbers its figures sequentially, Figure 1 through Figure 18, with
 no chapter-decimal number anywhere; the PDF uses the chapter-decimal scheme the
@@ -38,6 +38,15 @@ none named for any of them.
 A figure identification made in this audit was wrong and had to be reversed
 after checking the PDF. That is the reason for the rule rather than an
 illustration of it.
+
+The markdown was moved from the repository root to `legacy/` on 3 September
+2026, so that its status is legible from its location rather than only from
+this note. It sat directly above `Duyst_Thesis_Final.ipynb` in the root
+listing, where a visitor exploring the repository met it first and found the
+weaker of the two documents; and at 6,625,368 bytes it is past the size GitHub
+will render, so clicking it returned a size refusal rather than any content.
+The rule above is why it is not at the root; the render limit is why leaving it
+there was worse than useless.
 
 ## Provincial_Graph.png is the published figure
 
