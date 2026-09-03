@@ -289,17 +289,35 @@ cross-correlation with other sources sharing similar spatial structure. That
 exchange is not cited in the thesis. Causal language in Section 5.1 should be
 replaced with language describing spatial association.
 
+The exchange is Zhang et al. (2020, Nature Communications 11, 554,
+doi:10.1038/s41467-019-14155-5), the pillar reference; Zeng et al. (2021,
+Nature Communications 12, 1163, doi:10.1038/s41467-021-21434-7), the Matters
+Arising; and Zhang et al. (2021, Nature Communications 12, 1189,
+doi:10.1038/s41467-021-21437-4), the reply. All three are in
+`notes/references.md`.
+
 ### 5.3 Urban methane attributed to natural gas vehicles
 
 Sections 1.1 and 1.5 attribute urban methane to natural gas vehicles, with a
 framing of retrofitted vehicles and faulty tailpipes. The cited source
 measured real-world emissions from heavy-duty natural gas vehicles and
 attributed them to engine and aftertreatment behaviour; it does not support
-the retrofitting framing. Separately, waste treatment (landfill, incineration,
-sewage) is reported in the literature as the dominant anthropogenic methane
-source at city scale in China. The thesis includes no waste layer and does not
-mention the sector. Impervious surface should be described as a proxy for the
-urban source bundle as a whole rather than for vehicle emissions.
+the retrofitting framing. Mobile measurements in a Yangtze River Delta megacity
+subsequently found the natural gas distribution system there to be a low
+emitter (Zhao et al., 2024, ACS ES&T Air 1, 1511-1518,
+doi:10.1021/acsestair.4c00068), which is the regional measurement the
+attribution has to answer to. Sectoral partitioning of anthropogenic methane for
+this region exists and does not put vehicles first (Hu et al., 2019, Journal of
+Geophysical Research: Biogeosciences 124, 1148-1170, doi:10.1029/2018JG004850).
+Impervious surface should be described as a proxy for the urban source bundle as
+a whole rather than for vehicle emissions.
+
+This item previously also asserted that waste treatment is the dominant
+anthropogenic methane source at city scale in China. That claim is left
+unsourced: searches for it returned landfill and wastewater work for other
+regions and nothing supporting it for Chinese cities as stated. It should be
+struck or narrowed to what the two citations above support, and
+`notes/decisions.md` records the attempt.
 
 ### 5.4 Global warming potential
 
@@ -419,6 +437,15 @@ Impervious fraction, which the thesis treats as the secondary driver, behaves
 better but not well: held-out R squared 0.096 against the spatial null's 0.343
 on the seasonally corrected field, and its association with methane falls from
 Pearson +0.346 to +0.020 once surface albedo is controlled for.
+
+A tower-based Bayesian inversion of this study's own region and year reaches a
+compatible conclusion by a method that can support it: Huang et al. (2021,
+Advances in Atmospheric Sciences 38, 1537-1551, doi:10.1007/s00376-021-0383-9)
+attribute seasonal CH4 variability in the Yangtze River Delta to agricultural
+activity. The difference is the inference, not the answer. That study constrains
+emissions with a transport model and tower observations; the thesis inferred
+them from a spatial correlation with land cover, which cannot support the claim
+however the correlation comes out.
 
 *Verified by:* `data/processed/baseline_results_2018.csv` and
 `baseline_results_deseasonalised_2018.csv`, 88 rows each;

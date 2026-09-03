@@ -1335,3 +1335,83 @@ network... and running it backward through the decades", which `ERRATA.md` 1.1
 and 3.5 record is not evidenced in the thesis and which the reproduction does not
 support, and it describes the repository as holding "data, model, and figures"
 when there is no model and no figures directory.
+
+## The register's finding was not format drift, it was that the methods were uncited
+
+`notes/references.md` was built to fix inconsistent citation formatting across
+four files. It did that, and found four errors worth fixing: the GAIA title
+pluralised, the GISA title miscapitalised after its colon, a Sentinel-5P DOI the
+granules do not declare, and He et al. 2022 named without a DOI.
+
+None of that was the useful finding. The useful finding was the count. Before
+this pass the register held fourteen sources, of which **thirteen were subject
+literature and one was method literature** — and that one was the thesis's
+citation of a masked-autoencoder paper, reported in the errata as a defect,
+not something the reproduction used. So the reproduction's own methods were
+cited **zero** times.
+
+That is not a small omission. The evaluation design that carries the study's
+central negative result is spatial cross-validation, chosen because random
+splits leak through spatial autocorrelation, and it rested on no reference. The
+semivariograms that closed the TM5 prior gate, the partial correlations that
+carried the albedo confounder test, the fixed-effects harmonic fit, and the
+flux-divergence conversion that was gated and declined were all applied without
+one. A reader in atmospheric science would have found a repository citing its
+data thoroughly and its methods not at all.
+
+After this pass the register holds twenty-six sources: **twenty-one subject and
+five method**, of which one, the value-suppressing uncertainty palette, is
+explicitly borrowed from human-computer interaction and labelled as such.
+
+**The practice.** A method applied without a citation is not checkable. A reader
+cannot tell whether the choice is standard, contested, or invented here, and
+cannot find the argument for it. Scattered citations hide this, because no file
+is obviously incomplete; a register makes it arithmetic, and the arithmetic was
+13 to 1. That is why the register earns its place beyond tidiness, and why the
+count is worth recomputing whenever it is regenerated.
+
+**One thing the register could not fix.** `ERRATA.md` 5.3 claims that waste
+treatment is the dominant anthropogenic methane source at city scale in China.
+Repeated searches found landfill and wastewater studies for other regions and
+nothing supporting that claim for Chinese cities as stated. It is left in place
+unsourced and flagged here rather than quietly cut, because the section's other
+half — that the cited source does not support the retrofitting framing — is
+sound and now carries Zhao et al. 2024, a mobile-measurement study finding the
+natural gas distribution system of a Yangtze River Delta megacity to be a low
+emitter. If 5.3 is narrowed, that is what it narrows to.
+
+## Our spatial blocks are unbuffered, and the block size is the reason it may not matter
+
+Recorded as a known limitation rather than acted on.
+
+The spatial cross-validation literature splits data into blocks so that training
+and validation are not drawn from the same dependence structure, and its variants
+exclude observations within a buffer of the validation set for the same reason.
+Neither of this repository's schemes buffers. The spatial blocks are 4 by 4 cells
+in five folds with no exclusion zone, so a cell on one side of a block seam and
+a cell on the other sit in training and test at 25 km separation.
+
+What the literature supports is the principle rather than a quantification.
+Roberts et al. (2017, doi:10.1111/ecog.02881) establish that dependence in the
+data persists as dependence in the residuals and that random splits are
+over-optimistic in consequence. Valavi et al. (2019,
+doi:10.1111/2041-210X.13107) supply the operational step: measure the spatial
+autocorrelation range in the covariates and choose the block size from it.
+Neither abstract quantifies what an unbuffered seam costs, and the full texts
+were not read for this, so no figure is claimed here.
+
+This repository's own measurements bear on it in both directions. The methane
+field's half-sill range over the 927 cells is **102 km**, and a 4 by 4 block at
+0.25 degrees is about **111 km** across, so the block size is well matched to the
+correlation length, which is what Valavi's procedure asks for. But at 25 km
+separation the semivariogram shows methane has expressed only about **24 percent**
+of its variance, so cells facing each other across a seam are strongly dependent,
+and every block has a perimeter.
+
+The direction of the resulting bias is what makes this worth recording. Seam
+pairs help a model that predicts a cell from its neighbours, which is the spatial
+null, more than they help a model that predicts from land cover, which has no
+neighbour term. So an unbuffered scheme should if anything **inflate the bar** the
+land-cover models fail to clear. The negative finding is therefore not threatened
+by this, and might be understated by it. Buffering would be the way to find out
+and is not done here.

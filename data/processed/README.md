@@ -493,7 +493,14 @@ sample of it.
 
 Evaluation is spatial and never random. Cells are contiguous and neighbouring
 cells are not independent, so a random split puts a cell's own neighbours in
-training and every model scores well by memorising the field. Leave-one-province
+training and every model scores well by memorising the field. That is the
+standard argument for blocked cross-validation (Roberts et al., 2017, Ecography
+40, 913-929, doi:10.1111/ecog.02881), and the block size follows the measured
+autocorrelation range as Valavi et al. (2019, Methods in Ecology and Evolution
+10, 225-232, doi:10.1111/2041-210X.13107) prescribe: the methane field's
+half-sill range is 102 km and a four-cell block is about 111 km across. Neither
+scheme here buffers the seam between blocks; `notes/decisions.md` records why
+that should if anything raise the bar rather than lower it. Leave-one-province
 -out holds out each of the four provinces and, as a fifth fold, the cells inside
 the bounding box but outside all four; it asks whether a relationship learned in
 three provinces transfers to a fourth, which is the claim a land-cover model

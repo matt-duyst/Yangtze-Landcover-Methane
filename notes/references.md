@@ -14,7 +14,7 @@ listing two of six authors in reverse order. And a benchmark was attributed to
 the TROPOMI/WFMD v2.0 paper, whose abstract describes quality filtering rather
 than the albedo correction the benchmark was said to come from.
 
-`notes/references.bib` carries the same fourteen entries as BibTeX. It is
+`notes/references.bib` carries the same twenty-six entries as BibTeX. It is
 **generated**, not typed: each entry comes from `https://doi.org` under content
 negotiation for `application/x-bibtex`, so the two files cannot drift and no
 transcription step exists between the registry and the repository. Regenerate it
@@ -26,16 +26,22 @@ discusses a work the thesis cites, the work appears here and its role says so.
 
 ## What could not be verified
 
-Nothing failed to verify. All fourteen DOIs resolved: eight through Crossref and
-six through DataCite, which is the registry that carries dataset DOIs and the
-reason a Crossref-only lookup returns "not found" for five of them.
+Nothing in the register failed to verify. All twenty-six DOIs resolved: twenty
+through Crossref and six through DataCite, which is the registry that carries
+dataset DOIs and the reason a Crossref-only lookup returns "not found" for the
+deposits.
 
-Two sources named in the repository carry no DOI and are therefore not in the
-register. Natural Earth's admin-1 boundaries, cited in `data/manifest.json` as a
-public-domain download from naturalearthdata.com, has no DOI to verify. And
-`ERRATA.md` 5.2 and 5.3 refer to a published Matters Arising and to
-waste-sector literature without naming either, so there is nothing to look up;
-that is a gap in the errata rather than an unverifiable citation.
+Three things named in the repository are still not in the register. Natural
+Earth's admin-1 boundaries, cited in `data/manifest.json` as a public-domain
+download from naturalearthdata.com, has no DOI. The Copernicus author
+guidelines, which recommend Scientific colour maps and are the route by which
+that recommendation reaches this field, are a web page rather than a citable
+work; they are recorded beside the Crameri entry instead. And `ERRATA.md` 5.3's
+claim that waste treatment is the dominant anthropogenic methane source at city
+scale in China could not be sourced: repeated searches returned landfill and
+wastewater studies for other regions but nothing supporting the claim as the
+errata states it, for Chinese cities. What that section can support is narrower
+and is set out under Zhao et al. below.
 
 ## Ordering
 
@@ -43,6 +49,11 @@ Grouped by role rather than alphabetically. Alphabetical order is conventional
 and would be the right choice for a bibliography, but this is a register of what
 the work rests on, and the question a reader arrives with is what kind of weight
 each source bears. Within each group, alphabetical by first author.
+
+The groups are: datasets used, methods applied, findings relied on, findings
+contested, and the rice-paddy exchange, which is kept together because its three
+parts are a single argument and splitting them across the other groups would
+misrepresent all three.
 
 ---
 
@@ -167,6 +178,136 @@ implementation performs supervised segmentation with no masking anywhere. The
 errata names it as "He et al. (2022)" without a DOI; the DOI here was resolved
 for this register.
 Named in `ERRATA.md`.
+
+## Methods applied
+
+Added 3 September 2026. Before that date the reproduction's methods carried no
+citations at all; see `notes/decisions.md`.
+
+**Roberts, D. R., Bahn, V., Ciuti, S., Boyce, M. S., Elith, J.,
+Guillera-Arroita, G., Hauenstein, S., Lahoz-Monfort, J. J., Schröder, B.,
+Thuiller, W., Warton, D. I., Wintle, B. A., Hartig, F., and Dormann, C. F.
+(2017).** Cross-validation strategies for data with temporal, spatial,
+hierarchical, or phylogenetic structure. *Ecography* 40, 913–929.
+`10.1111/ecog.02881` — peer-reviewed paper; a method applied. The authority for
+evaluating spatially structured data by blocking rather than random splits,
+which is why this repository uses leave-one-province-out and spatial blocks. Its
+abstract states the case directly: dependence structures in the data persist as
+dependence structures in model residuals, and "block cross-validation, where
+data are split strategically rather than randomly, can address these issues".
+Belongs beside the evaluation design in `src/model/baselines.py` and
+`data/processed/README.md`.
+
+**Valavi, R., Elith, J., Lahoz-Monfort, J. J., and Guillera-Arroita, G.
+(2019).** blockCV: An R package for generating spatially or environmentally
+separated folds for k-fold cross-validation of species distribution models.
+*Methods in Ecology and Evolution* 10, 225–232.
+`10.1111/2041-210X.13107` — peer-reviewed paper; a method applied. Its
+contribution here is the principle rather than the software: it provides tools
+to measure the spatial autocorrelation range in the covariates and choose a
+block size from it, which is the step that makes a block size defensible rather
+than arbitrary. Cited with the print year 2019; Crossref's `issued` gives
+2018-11-08, the online date. This is the same online-versus-print gap
+`ERRATA.md` 6.3 raises against the thesis, and the convention taken here is the
+print year, matching the volume and issue.
+
+**Crameri, F., Shephard, G. E., and Heron, P. J. (2020).** The misuse of colour
+in science communication. *Nature Communications* 11, article 5444.
+`10.1038/s41467-020-19160-7` — peer-reviewed paper; a method applied, when
+figures exist. No figure has been generated from the reproduced data yet, so
+this is cited in advance of use. It reaches this field through the venue as well
+as the literature: Copernicus, which publishes *Atmospheric Measurement
+Techniques* and *Earth System Science Data*, recommends Scientific colour maps in
+its own author guidelines, so following it is a venue standard here and not only
+a borrowed visualisation preference.
+
+**Correll, M., Moritz, D., and Heer, J. (2018).** Value-Suppressing Uncertainty
+Palettes. *Proceedings of the 2018 CHI Conference on Human Factors in Computing
+Systems*, 1–11.
+`10.1145/3173574.3174216` — peer-reviewed paper; a method applied, when figures
+exist. **Borrowed method literature, from human-computer interaction.** It is
+the reference for encoding uncertainty by suppressing colour value, which is the
+natural treatment for a composite whose per-cell sounding counts run from 1 to
+410. Carried with a caveat rather than as settled practice: value-suppressing
+palettes can flatten a spatial trend where uncertainty is high, which over this
+composite would be exactly the sparsely sampled cells, so the palette could hide
+the pattern in the cells the reader most needs to discount.
+
+**Liu, M., van der A, R., van Weele, M., Eskes, H., Lu, X., and 8 others
+(2021).** A New Divergence Method to Quantify Methane Emissions Using
+Observations of Sentinel-5P TROPOMI. *Geophysical Research Letters* 48, article
+e2021GL094151.
+`10.1029/2021GL094151` — peer-reviewed paper; a method **not** applied, recorded
+because it is the standard route from column concentration to emissions and the
+reproduction never took it. It is also in the 2023 thesis's own bibliography,
+uncited in its text. `notes/decisions.md` records the gate that established why
+the conversion is not feasible on this composite.
+
+## Findings relied on
+
+**Hu, C., Griffis, T. J., Liu, S., Xiao, W., Hu, N., Huang, W., Yang, D., and
+Lee, X. (2019).** Anthropogenic Methane Emission and Its Partitioning for the
+Yangtze River Delta Region of China. *Journal of Geophysical Research:
+Biogeosciences* 124, 1148–1170.
+`10.1029/2018JG004850` — peer-reviewed paper; a finding relied on. Sectoral
+partitioning of anthropogenic methane for this study's own region.
+
+**Huang, W., Griffis, T. J., Hu, C., Xiao, W., and Lee, X. (2021).** Seasonal
+Variations of CH4 Emissions in the Yangtze River Delta Region of China Are
+Driven by Agricultural Activities. *Advances in Atmospheric Sciences* 38,
+1537–1551.
+`10.1007/s00376-021-0383-9` — peer-reviewed paper; a finding relied on, and the
+most directly relevant work in this register. A tower-based Bayesian inversion
+of the Yangtze River Delta for 2018, this study's own year, attributing seasonal
+variability to agricultural activity. It reaches a conclusion compatible with
+the thesis's by a method that can support it, where the thesis used one that
+cannot. `ERRATA.md` 7.1 makes that point and should carry this citation.
+
+**Huang, W., Xiao, W., Zhang, M., Wang, W., Xu, J., and 4 others (2019).**
+Anthropogenic CH4 Emissions in the Yangtze River Delta Based on A "Top-Down"
+Method. *Atmosphere* 10, 185.
+`10.3390/atmos10040185` — peer-reviewed paper; a finding relied on. A top-down
+regional estimate for the same area.
+
+**Zhao, S., Zhang, Y., Liang, R., Chen, W., Xie, X., Wang, R., Xia, Z.,
+Shen, J., and 2 others (2024).** Low Methane Emissions from the Natural Gas
+Distribution System Indicated by Mobile Measurements in a Chinese Megacity
+Hangzhou. *ACS ES&T Air* 1, 1511–1518.
+`10.1021/acsestair.4c00068` — peer-reviewed paper; a finding relied on, and a
+finding that contests the thesis. Mobile measurements in a Yangtze River Delta
+megacity find the natural gas distribution system to be a low emitter, which
+bears directly on `ERRATA.md` 5.3: the thesis attributes urban methane to
+natural gas vehicles, and this is the measurement in this region that the
+attribution has to answer to. It is what section 5.3 can actually be supported
+by, in place of the unsourced waste-dominance claim.
+
+## The rice-paddy exchange
+
+`ERRATA.md` 5.2 refers to this exchange without naming it. All three parts are
+recorded, because the original and the response are each incomplete without the
+other, and the reply is part of the published record.
+
+**Zhang, Z., Xiao, X., Dong, J., Xin, F., Zhang, Y., and 3 others (2020).**
+Fingerprint of rice paddies in spatial-temporal dynamics of atmospheric methane
+concentration in monsoon Asia. *Nature Communications* 11, 554.
+`10.1038/s41467-019-14155-5` — peer-reviewed paper; a finding contested. The
+original claim that rice paddy dynamics are visible in satellite methane.
+
+**Zeng, Z.-C., Byrne, B., Gong, F.-Y., He, Z., and Lei, L. (2021).** Correlation
+between paddy rice growth and satellite-observed methane column abundance does
+not imply causation. *Nature Communications* 12, 1163.
+`10.1038/s41467-021-21434-7` — peer-reviewed paper; a finding relied on. The
+Matters Arising `ERRATA.md` 5.2 refers to. Its argument, that local column
+variation is driven by advected large-scale signals and that rice-methane
+correlations are confounded by co-located sources, is the published form of what
+this reproduction measured independently.
+
+**Zhang, Z., Xiao, X., Dong, J., Zhang, Y., Xin, F., and 3 others (2021).**
+Reply to: "Correlation between paddy rice growth and satellite-observed methane
+column abundance does not imply causation". *Nature Communications* 12, 1189.
+`10.1038/s41467-021-21437-4` — peer-reviewed paper; a finding contested. The
+original authors' response, recorded so the exchange is not represented by one
+side of it.
 
 ---
 
