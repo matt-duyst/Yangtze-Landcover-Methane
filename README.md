@@ -9,8 +9,8 @@ pipeline and does not reach the same conclusion.
 
 The thesis itself is unchanged and preserved as submitted. It was never
 published or submitted for publication. What is new here is the pipeline, the
-reproduced data, an audit of the original document in `ERRATA.md`, and a
-reasoning record in `notes/decisions.md`.
+reproduced data, an audit of the original document in [`ERRATA.md`](ERRATA.md), and a
+reasoning record in [`notes/decisions.md`](notes/decisions.md).
 
 ## What the reproduction found
 
@@ -104,7 +104,7 @@ days, against a seasonal swing more than twice the spatial spread of the field
 being analysed. A variable encoding nothing but when each cell was observed
 reaches held-out R squared 0.426 on the seasonally corrected field and 0.467 on
 the composite, beating the spatial null on both. Fitting a shared seasonal cycle
-at the sounding level and removing it, which is what `src/methane/seasonal.py`
+at the sounding level and removing it, which is what [`src/methane/seasonal.py`](src/methane/seasonal.py)
 does in a single streaming pass, removed 20.6 percent of the between-cell
 variance and left every association where it was. The residual appears to be
 day-specific rather than seasonal: cells sampled on few dates inherit those
@@ -119,7 +119,7 @@ separated from sampling season.
 The pipeline also omits preprocessing the literature applies. It does not
 destripe the across-track bias, does not clear cloud beyond the quality filter,
 does not separate the boundary layer from the free troposphere, and does not
-work with departures from a model forecast. `notes/decisions.md` lists each with
+work with departures from a model forecast. [`notes/decisions.md`](notes/decisions.md) lists each with
 what it would take: the first two are reachable with what is already read, the
 second two need external reanalysis or a transport model.
 
@@ -131,7 +131,7 @@ of the variation at cell scale. It was not pursued because the departure
 inherits the albedo bias intact while removing only 3.5 percent of the variance,
 which makes that problem worse as a share of what remains, and because one
 granule holds no seasonal or synoptic variation to test the thing the approach
-is for. `src/methane/apriori.py` is committed and tested but uncalled, so
+is for. [`src/methane/apriori.py`](src/methane/apriori.py) is committed and tested but uncalled, so
 resuming it is a configuration change rather than a rebuild.
 
 None of this weakens the negative finding, and some of it strengthens it. A
@@ -156,19 +156,19 @@ rather than through a module of its own, because its whole distribution is one
 filename, so the tiles covering the study box are found by reading each member's
 georeferencing out of the archive without extracting it.
 
-`src/landcover/` computes zonal statistics over provincial polygons with the
+[`src/landcover/`](src/landcover/) computes zonal statistics over provincial polygons with the
 constraints enforced by the types rather than by convention: a fraction divides
 by the area a raster actually assessed and never by the zone, because the rice
 rasters are clipped and dividing by the zone would understate rice exactly where
-the clipping is. `src/grid/` joins those fractions onto the methane lattice by
+the clipping is. [`src/grid/`](src/grid/) joins those fractions onto the methane lattice by
 integer arithmetic rather than by rasterising a thousand cell polygons, and
 refuses to construct a row for a cell with no soundings, so the 96 unobserved
 cells are excluded by the type instead of by a filter someone can forget.
 
-`src/methane/` reads Sentinel-5P Level 2 granules with auto-masking off,
+[`src/methane/`](src/methane/) reads Sentinel-5P Level 2 granules with auto-masking off,
 applying each variable's own fill value and scale factor, and streams a full
 year one granule at a time: the 2018 composite is 28.9 GB processed at a peak
-working-directory size of one granule, checkpointed atomically. `src/model/`
+working-directory size of one granule, checkpointed atomically. [`src/model/`](src/model/)
 holds the baselines and the association tests, with leave-one-province-out and
 spatial-block cross-validation, because cells are contiguous and a random split
 leaks a cell's own neighbours into its training set.
@@ -178,7 +178,7 @@ There are 403 tests. All of them run offline on a clone with nothing fetched.
 ## Regenerating the results
 
 Every committed table states its own provenance and cost in
-`data/processed/README.md`, which is the place to look before running anything.
+[`data/processed/README.md`](data/processed/README.md), which is the place to look before running anything.
 In outline:
 
 | result | command | cost |
@@ -224,7 +224,7 @@ differs only in that one, in 190 of 927 rows.
 
 ## The thesis and the errata
 
-The thesis PDF is in `writeup/`, and `ERRATA.md` records what a 2026 audit found
+The thesis PDF is in [`writeup/`](writeup/), and [`ERRATA.md`](ERRATA.md) records what a 2026 audit found
 in it. One item should be read before the thesis itself: Figure 4.7, captioned
 as the model's predicted XCH4 boundaries for 2000 and 2010, is the same image as
 Figure 4.5(a), the raw TROPOMI observations. All three placements resolve to a
@@ -232,7 +232,7 @@ single PDF object with byte-identical decoded pixels, and all three carry the
 title "Raw TROPOMI XCH4 Concentrations (2018)" rendered into the image. Section
 4.7 therefore contains no result, and the study's stated novel contribution is
 not evidenced anywhere in the document. The notebook cell that would have
-generated those predictions is preserved in `Duyst_Thesis_Final.ipynb` with its
+generated those predictions is preserved in [`Duyst_Thesis_Final.ipynb`](Duyst_Thesis_Final.ipynb) with its
 runtime failure intact.
 
 The errata also records that the thesis's causal attribution of methane hotspots
@@ -242,7 +242,7 @@ reproduction has now tested the attribution directly and does not support it.
 
 ## Data sources
 
-`data/manifest.json` carries the version, citation, retrieval date and file
+[`data/manifest.json`](data/manifest.json) carries the version, citation, retrieval date and file
 digests for the four sources whose fetch scripts write to it. In brief:
 
 | source | product | licence as recorded |
@@ -261,7 +261,7 @@ is a multipart tag, an MD5 of the part MD5s with an unpublished part size, so
 verification there is structural: a granule must open as netCDF4 and hold a
 PRODUCT group with the expected variables. GISA's bundle publishes no digest
 either, so its sha256 was computed on first download and pinned in
-`config/sources.yml`, and a changed distribution stops the fetch.
+[`config/sources.yml`](config/sources.yml), and a changed distribution stops the fetch.
 
 Two gaps are worth naming. The Science Data Bank rice product has a fetch
 module but its script does not write a manifest entry, so the product the
@@ -275,7 +275,7 @@ coverage by one year.
 ## What this repository does not claim
 
 Four of these were decided before any code was written, in
-`notes/repository-architecture.md`, and are carried forward unchanged.
+[`notes/repository-architecture.md`](notes/repository-architecture.md), and are carried forward unchanged.
 
 It does not claim that the 2023 model results are reproduced: no checkpoint
 exists and the stored outputs cannot be attributed to the committed code. It
@@ -299,25 +299,25 @@ uninterpretable rather than positive or null.
 
 ## Layout
 
-`src/` holds the pipeline, one package per concern, with `scripts/` as thin CLI
-entry points over it and `tests/` mirroring both. One module,
-`src/methane/apriori.py`, is committed and tested but called by nothing: it is
+[`src/`](src/) holds the pipeline, one package per concern, with [`scripts/`](scripts/) as thin CLI
+entry points over it and [`tests/`](tests/) mirroring both. One module,
+[`src/methane/apriori.py`](src/methane/apriori.py), is committed and tested but called by nothing: it is
 the gated departure work, kept so that resuming it costs a configuration change
-rather than a rebuild. `config/sources.yml` carries
+rather than a rebuild. [`config/sources.yml`](config/sources.yml) carries
 dataset versions, bounds, thresholds and the covariate list, each with the
-reasoning that fixed it. `data/processed/` holds the small derived tables,
+reasoning that fixed it. [`data/processed/`](data/processed/) holds the small derived tables,
 committed, with their own README; `data/raw/` and `data/interim/` are
-gitignored. `notes/` holds the decision record and the architecture design.
-`writeup/` holds the thesis PDF. `legacy/` holds the 2023 notebook outputs and
+gitignored. [`notes/`](notes/) holds the decision record and the architecture design.
+[`writeup/`](writeup/) holds the thesis PDF. [`legacy/`](legacy/) holds the 2023 notebook outputs and
 the ArcGIS figure exports, whose provenance is documented but which no code in
 this repository produces.
 
 There is no `figures/` directory. Nothing has been generated from the reproduced
-data yet, and the 2023 exports in `legacy/figures/` are not a substitute for it,
+data yet, and the 2023 exports in [`legacy/figures/`](legacy/figures/) are not a substitute for it,
 so the directory is absent rather than misleadingly empty.
 
 ## Licence and citation
 
-MIT, in `LICENSE`, for the code. The thesis text and figures are the author's
-own work and are not covered by it. `CITATION.cff` carries the citation metadata
-for the repository; cite the thesis itself from `writeup/`.
+MIT, in [`LICENSE`](LICENSE), for the code. The thesis text and figures are the author's
+own work and are not covered by it. [`CITATION.cff`](CITATION.cff) carries the citation metadata
+for the repository; cite the thesis itself from [`writeup/`](writeup/).
