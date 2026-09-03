@@ -324,3 +324,111 @@ overall accuracy, producer's and user's accuracy, precision, recall, F1 and
 IoU, returning no standalone occurrence of any; the same search across the
 notebook's source and stored outputs, returning none; and visual inspection of
 the rendered Accuracy_Assessment.png.
+
+---
+
+## 7. Claims tested against reproduced data
+
+The six sections above record defects found by reading the thesis, the notebook
+and the repository's history. This one is different in kind: it records what
+happened when the study's central claim was rebuilt from source data and tested.
+It is kept apart from Section 5 because that section records claims superseded
+by other people's published work, whereas these are first-party results with
+their own limits, and the two should not be read as carrying equal weight.
+
+The reproduction is described in `README.md`, its reasoning in
+`notes/decisions.md`, and the tables it rests on are committed under
+`data/processed/`.
+
+### 7.1 The rice attribution is not supported by the reproduced data
+
+Section 5.1 identifies paddy rice fields as the largest driver of XCH4 hotspots,
+and Section 5.2 of this document already notes that published work argues such
+correlations are confounded. The reproduction tests the claim directly and does
+not support it.
+
+Over the four study provinces at 0.25 degrees for 2018, no land-cover model
+beats a spatial null that predicts each cell from the mean of its eight
+neighbours, under inverse-variance weighting, at either sample size, under
+either cross-validation scheme. Rice fraction's fitted coefficient is +8.83 ppb
+per unit fraction when cells are counted equally and -3.20 when they are
+weighted by the number of soundings each rests on, and it is negative under both
+weightings once wind is included. Its association with methane survives control
+for surface albedo on no methane field at either weighting: the partial
+correlations are -0.010, -0.065, +0.033 and -0.021.
+
+Impervious fraction, which the thesis treats as the secondary driver, behaves
+better but not well: held-out R squared 0.096 against the spatial null's 0.343
+on the seasonally corrected field, and its association with methane falls from
+Pearson +0.346 to +0.020 once surface albedo is controlled for.
+
+*Verified by:* `data/processed/baseline_results_2018.csv` and
+`baseline_results_deseasonalised_2018.csv`, 88 rows each;
+`albedo_confounder_2018.csv`; `predictor_comparison_2018.csv`. Regenerable by
+`scripts/run_baselines.py` and `scripts/test_albedo_confounder.py`.
+
+### 7.2 The negative result survives independently built predictors
+
+This is the part that makes 7.1 worth stating rather than merely arguable, and
+it was established after the rest of this section's substance.
+
+Measurement error in a predictor attenuates an association toward zero, so it is
+the failure mode that could produce a negative result out of nothing, and both
+land-cover predictors carry documented error. The finding was therefore
+recomputed against second products with different error structures: GISA in
+place of GAIA for impervious surface, GloRice in place of the NESDC
+classification for rice, in all four combinations.
+
+Zero cases beat the spatial null under inverse-variance weighting across all
+four pairs, both schemes and both sample sizes, out of 176 weighted
+opportunities. The two urban products agree at Spearman +0.956 across all 927
+cells; the two rice products agree only at +0.654, so the rice test is a genuine
+one and gives the same answer.
+
+*Verified by:* `data/processed/alternative_predictors_2018.csv`, 352 rows;
+`predictor_comparison_2018.csv`. Regenerable by
+`scripts/test_alternative_predictors.py`.
+
+### 7.3 The reference data Section 5.2 requires now exists and was used
+
+Section 5.1 of this document records that datasets published since 2023 provide
+independent reference for the paddy rice layer. Those datasets have now been
+used: provincial rice areas in `data/processed/rice_area_by_province.csv` come
+from GloRice, and the analysis grid's rice fractions from a 10 m provincial
+classification distributed through Science Data Bank. The claim that validation
+was impossible for want of reference data is superseded in practice and not only
+in principle.
+
+### 7.4 The reproduction's own positive results are not attributable
+
+Recorded so that 7.1 is not read as stronger than it is, and so that nobody
+cites the reproduction for a claim it does not support.
+
+The reproduction found associations between the methane field and surface
+albedo, wind, and a variable encoding only when each cell was observed, all
+stronger than anything land cover achieves. None is attributable. Impervious
+fraction and surface albedo are collinear at Spearman +0.761, so a retrieval
+bias and a genuine urban signal cannot be separated in this data. Wind cannot be
+separated from sampling season, because each cell's annual mean is taken over
+whichever days were observed there and those differ across cells by up to 228
+days. Removing a fitted seasonal cycle at the sounding level took out 20.6
+percent of the between-cell variance and changed no association materially,
+because the residual is day-specific rather than seasonal.
+
+One further result is uninterpretable rather than null and should not be read
+either way. GloRice's rice association is stronger than the NESDC
+classification's and survives control for albedo where that one does not, but it
+is confounded four ways: a different sample of cells, an allocation model rather
+than an observation, correlation with impervious fraction at Spearman +0.561,
+and 368 of its 395 extra cells lying entirely outside the four provinces.
+
+The negative result in 7.1 depends on none of this, which is why it is stated
+without qualification and these are not. It is also mildly strengthened by it: a
+confound large enough to carry albedo and wind through a seasonal correction
+still does nothing for land cover, and correcting a retrieval bias correlated
+with the predictor would remove signal from the land-cover association rather
+than add it.
+
+*Verified by:* `data/processed/deseasonalisation_2018.csv`,
+`albedo_correction_2018.csv`, and the corresponding sections of
+`notes/decisions.md`.
