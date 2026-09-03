@@ -116,6 +116,7 @@ description.
 | NBS statistics | provincial sown area of rice | manual CSV | **not used** |
 | GloRice | gridded paddy rice, 2017–2021 | *unplanned* | built, via figshare; supplies 28 of the 36 rice rows |
 | Science Data Bank rice | classified rice, 10 m, by province | *unplanned* | built, anonymous Croissant route; supplies the analysis grid |
+| GISA | global impervious surface, 30 m, 1972–2019 | *unplanned* | built, direct WHU bundle; the independent urban product the robustness test needed |
 | SPAM | rice area | *unplanned* | committed as 8 rows, no fetch module |
 
 The rice reimplementation this plan was built around never happened. Rice extent
@@ -205,10 +206,15 @@ a geographically weighted regression. If the network does not beat all three,
 that is the finding and it gets reported.
 
 **The baselines were built first and the model was not built at all.** That
-last sentence turned out to be the operative one. No land-cover model beats a
-spatial null under either cross-validation scheme at either weighting, and a
-variable encoding only when each cell was observed beats it comfortably, so
-there is nothing for a network to improve on and no sound field to fit it to.
+last sentence turned out to be the operative one. Under inverse-variance
+weighting no land-cover model beats a queen-neighbour spatial null anywhere:
+not on any of the three methane fields, at either sample size, under either
+cross-validation scheme, with either of two independently built urban products
+or either of two rice products. The exceptions are all unweighted and between
+1.7 and 6.0 percent, and they recur in the same places on every field and every
+predictor pair. Meanwhile a variable encoding only when each cell was observed
+beats the null comfortably, so there is nothing for a network to improve on and
+no sound field to fit it to.
 The geographically weighted regression was replaced by a queen-neighbour
 spatial null, which tests the same thing more directly. The finding is in the
 README and the argument is in `notes/decisions.md`.
