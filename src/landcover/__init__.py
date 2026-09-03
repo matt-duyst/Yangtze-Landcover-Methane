@@ -35,6 +35,7 @@ from src.landcover.selectors import (  # noqa: F401
     Selector,
     at_least,
     at_most,
+    between,
     in_classes,
 )
 from src.landcover.zonal import (  # noqa: F401

@@ -320,3 +320,53 @@ def test_reproduces_committed_gaia_values_for_shanghai(year, cutoff):
     expected = committed_urban(year, "Shanghai")
     assert result.area_km2 == pytest.approx(expected, rel=0.005)
     assert result.coverage == pytest.approx(1.0, abs=0.01)
+
+
+# --------------------------------------------------------------------------
+# the bounded selector, for a product that counts upward and uses 0 for absence
+# --------------------------------------------------------------------------
+
+def test_between_includes_both_ends():
+    from src.landcover import between
+
+    values = np.array([0, 1, 2, 35, 36, 37, 255], dtype="uint8")
+    got = between(1, 36)(values)
+    assert got.tolist() == [False, True, True, True, True, False, False]
+
+
+def test_between_describes_itself():
+    from src.landcover import between
+
+    assert between(1, 36).description == "1 <= value <= 36"
+
+
+def test_between_refuses_an_inverted_range():
+    from src.landcover import between
+
+    with pytest.raises(ValueError, match="low <= high"):
+        between(36, 1)
+
+
+def test_between_is_not_at_most_because_zero_means_absence():
+    """at_most(36) would count every non-impervious pixel as impervious."""
+    from src.landcover import at_most, between
+
+    values = np.array([0, 0, 0, 5, 36, 37], dtype="uint8")
+    assert int(between(1, 36)(values).sum()) == 2
+    assert int(at_most(36)(values).sum()) == 5
+
+
+def test_between_is_not_at_least_which_would_invert_the_history():
+    """The failure the selector exists to prevent, stated as a test.
+
+    GISA counts upward from 1972, so extent as of 2018 is 1 to 36. Applying
+    GAIA's downward rule selects only what was built in 2018 and 2019.
+    """
+    from src.landcover import at_least, between
+
+    values = np.array([0, 1, 18, 30, 36, 37], dtype="uint8")
+    extent = between(1, 36)(values)
+    inverted = at_least(36)(values)
+    assert int(extent.sum()) == 4, "everything built by 2018"
+    assert int(inverted.sum()) == 2, "only the newest two years"
+    assert not (extent & inverted).all()

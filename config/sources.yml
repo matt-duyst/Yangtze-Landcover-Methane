@@ -229,3 +229,54 @@ s5p:
   # L3 CH4 collection begins 2019-02-08.
   start_date: 2018-01-01
   end_date: 2018-12-31
+
+gisa:
+  product: GISA global impervious surface area, 30 m, 1972-2019
+  # Wuhan University serves the whole bundle over plain HTTP with no
+  # credentials. GISA's documented per-tile links go through Zenodo, which
+  # returns 403 at the network level from this host, so this is the only route.
+  url: http://irsip.whu.edu.cn/resv2/GISA_tif.zip
+  destination: data/raw/gisa
+  archive: GISA_tif.zip
+  archive_bytes: 882324389
+  archive_sha256: 0f5476e39ec7762cea39dbcfd0ccdbd9474db32dc83666e12d284e1227da9a82
+
+  licence: not stated on the download page; the product is described as freely
+    available for research in the paper below
+  citation: >-
+    Huang, X., Li, J., Yang, J., Zhang, Z., Li, D., and Liu, X. (2021), 30 m
+    global impervious surface area dynamics and urban expansion pattern
+    observed by Landsat satellites: from 1972 to 2019, Science China Earth
+    Sciences, 64, 1922-1933, doi:10.1007/s11430-020-9797-9
+
+  # WHAT THE FILENAMES DO NOT TELL YOU. The bundle holds 257 tiles named
+  # urban_1.tif to urban_257.tif inside a GISA_tif/ directory. No filename
+  # carries a version, a year or a coordinate, so the release cannot be
+  # identified from the names and the tiles must be selected by reading each
+  # one's georeferencing. Tiles are 10 degrees square, not the 5 degrees GAIA
+  # uses, and the four covering the study box are listed below.
+  tiles:
+    - urban_205.tif        # 110-120 E, 20-30 N
+    - urban_206.tif        # 110-120 E, 30-40 N
+    - urban_217.tif        # 120-130 E, 20-30 N
+    - urban_218.tif        # 120-130 E, 30-40 N
+
+  # ENCODING, MEASURED not assumed, over 5,507,866,225 pixels in those four
+  # tiles. Values 0 to 37 are present and nothing above 37. 0 is
+  # non-impervious, 96.23 percent of pixels. Values 1 to 37 are the year a
+  # pixel first became impervious, counting UPWARD from the oldest:
+  #   [1972, 1978, 1985, 1986, 1987, ... 2018, 2019] -> [1, 2, 3, 4, 5, ... 36, 37]
+  # This is the REVERSE of GAIA, which counts downward via year = 2023 - value.
+  # Extent as of 2018 is therefore 1 <= value <= 36, which is
+  # src.landcover.between(1, 36). at_least(36) would select only what was built
+  # in 2018 and 2019; at_most(36) would count non-impervious pixels as
+  # impervious. Both produce a plausible raster of the wrong thing.
+  year_first_impervious_min: 1972
+  year_values_ascend: true
+  extent_2018_selector: between(1, 36)
+
+  # Pixel size is 0.00026949458523585647 degrees, matching the documented
+  # 0.000269494585235856472. CRS EPSG:4326, dtype uint8, and NO declared
+  # nodata, the same situation as GAIA and the NESDC rice rasters.
+  pixel_size_deg: 0.00026949458523585647
+  nodata: null
