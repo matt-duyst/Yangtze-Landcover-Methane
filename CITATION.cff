@@ -1,13 +1,13 @@
 cff-version: 1.2.0
 message: "If you use this software, please cite it as below."
 type: software
-title: "Yale-Masters-Thesis: reproduction and rework of a 2023 master's thesis on urban methane in the Yangtze River Delta"
+title: "Yangtze-Landcover-Methane: reproduction and rework of a 2023 master's thesis on urban methane in the Yangtze River Delta"
 authors:
   - family-names: Duyst
     given-names: Matthew
     # TODO: fill in once an ORCID is registered.
     # orcid: "https://orcid.org/0000-0000-0000-0000"
-repository-code: "https://github.com/matt-duyst/Yale-Masters-Thesis"
+repository-code: "https://github.com/matt-duyst/Yangtze-Landcover-Methane"
 license: MIT
 abstract: >-
   This repository holds a reproduction and reworking of a 2023 Master of

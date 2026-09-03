@@ -1287,3 +1287,42 @@ been reported as confirmation. Nothing downstream would have looked wrong: the
 fractions would have been small but plausible, the models would have run, the
 null would have won. A wrong number that contradicts the expectation gets
 caught; a wrong number that confirms it does not.
+
+## The repository was renamed, and two references do not follow it
+
+`Yale-Masters-Thesis` became `Yangtze-Landcover-Methane` on 3 September 2026.
+
+The old name described where the work came from rather than what it contains. It
+was accurate in 2023, when the repository held a thesis and its notebook. It is
+no longer the substance: what is here now is a reproduction that reaches a
+different conclusion from the thesis, with the thesis preserved beside it as the
+thing being reproduced. A reader searching for a study of land cover and methane
+over the Yangtze Delta would not have found it under a name that identified only
+the degree-granting institution, and a reader who did find it would have been
+told the wrong thing about what it was for.
+
+GitHub redirects the old URL permanently, so links and clones keep working, and
+the pinned entry on the profile follows the rename because pins are stored by
+repository identifier rather than by name. Three references in this repository
+did not follow it and were updated by hand: `repository-code` and the leading
+identifier of `title` in `CITATION.cff`, and the opening line of
+`notes/repository-architecture.md`. That last one now names both the old and the
+new name, because it is a document about what was believed before any code
+existed and silently swapping the name would have falsified the record it keeps.
+
+**`CITATION.cff` carries the name twice, in a URL and in a title, and both go
+stale silently.** Nothing validates a `repository-code` against a live URL and
+nothing checks a title against anything, so a future rename breaks both without
+any test failing. `cffconvert --validate` passes on a file pointing at a
+repository that no longer exists under that name. That is the specific failure
+to check for next time rather than to rediscover.
+
+The redirect does not reach outside this repository. The profile README in
+`matt-duyst/matt-duyst` refers to the project as `Yale-Masters-Thesis` in plain
+prose, not as a link, so GitHub cannot redirect it and no test here can see it.
+It needs a manual edit in that repository. Two other things about that README are
+worth the same visit: it describes the thesis as "training a segmentation
+network... and running it backward through the decades", which `ERRATA.md` 1.1
+and 3.5 record is not evidenced in the thesis and which the reproduction does not
+support, and it describes the repository as holding "data, model, and figures"
+when there is no model and no figures directory.

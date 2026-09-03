@@ -1,8 +1,9 @@
 # Repository architecture
 
-Design for the rebuilt `Yale-Masters-Thesis` repository. Written before any
-code, so that the structure follows from what the work needs rather than from
-what accumulates.
+Design for the rebuilt repository, named `Yale-Masters-Thesis` when this was
+written and `Yangtze-Landcover-Methane` since. Written before any code, so that
+the structure follows from what the work needs rather than from what
+accumulates.
 
 The reference point is the peatland repository (`Visiting-Scholar-Research`),
 which reached the standard this project is aiming for. Two of its choices are
