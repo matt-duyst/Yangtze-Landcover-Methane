@@ -50,12 +50,40 @@ sys.path.insert(0, str(REPO))
 
 from src.grid import cells as gc  # noqa: E402
 from src.grid.cells import CellFraction, CellRow, UnobservedCell  # noqa: E402
-from src.landcover import at_least, in_classes, load_zones  # noqa: E402
+from src.landcover import at_least, between, in_classes, load_zones  # noqa: E402
 from src.methane.grid import GridSpec  # noqa: E402
 
 #: GAIA encodes the year of first imperviousness counting downward from 2023,
 #: so 2018 extent is value >= 5. See notes/decisions.md.
 GAIA_EPOCH = 2023
+
+#: GISA encodes the same quantity as GAIA in the opposite direction: values 1
+#: to 37 are the years 1972 to 2019 counting UPWARD, and 0 is non-impervious.
+#: Extent as of 2018 is the closed interval 1 to 36. See config/sources.yml.
+GISA_YEARS = [1972, 1978] + list(range(1985, 2020))
+
+
+def gisa_value_for(year: int) -> int:
+    if year not in GISA_YEARS:
+        raise SystemExit(f"GISA has no value for {year}; it encodes {GISA_YEARS}")
+    return GISA_YEARS.index(year) + 1
+
+
+def gisa_tile_bounds(path):
+    """Nominal ten-degree extent of a GISA tile, from its own georeferencing.
+
+    GISA filenames carry no coordinates, so the corner is recovered by rounding
+    the tile's actual bounds to the nearest ten degrees. The tiles overlap by
+    exactly one pixel on every shared edge, so without this the seams are
+    counted twice, the same problem GAIA's thirty-metre merge buffer creates.
+    """
+    import rasterio
+
+    with rasterio.open(path) as source:
+        b = source.bounds
+    west = round(b.left / 10.0) * 10.0
+    south = round(b.bottom / 10.0) * 10.0
+    return (west, south, west + 10.0, south + 10.0)
 
 PROVINCES = ["Shanghai", "Zhejiang", "Anhui", "Jiangsu"]
 
@@ -101,7 +129,11 @@ def main(argv=None) -> int:
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     parser.add_argument("--config", default=str(REPO / "config" / "sources.yml"))
     parser.add_argument("--year", type=int, default=2018)
-    parser.add_argument("--rice-source", choices=("nesdc", "scidb"), default="nesdc")
+    parser.add_argument("--rice-source",
+                        choices=("nesdc", "scidb", "glorice"), default="nesdc")
+    parser.add_argument("--urban-source", choices=("gaia", "gisa"), default="gaia")
+    parser.add_argument("--gisa", default=str(REPO / "data" / "raw" / "gisa"))
+    parser.add_argument("--glorice", default=str(REPO / "data" / "raw" / "glorice"))
     parser.add_argument("--composite",
                         default=str(REPO / "data" / "processed" /
                                     "methane_composite_2018.tif"))
@@ -128,15 +160,28 @@ def main(argv=None) -> int:
     zones = load_zones(args.zones)
     provinces = {p: zones[p] for p in PROVINCES}
 
-    tiles = sorted(Path(args.gaia).glob("GAIA_1985_2022_*.tif"))
-    if not tiles:
-        raise SystemExit(f"no GAIA tiles in {args.gaia}; run scripts/fetch_gaia.py")
-    cutoff = GAIA_EPOCH - args.year
-    print(f"  impervious: {len(tiles)} GAIA tiles, value >= {cutoff}, NOT masked "
-          f"by province (0 means non-urban everywhere in a global product)")
+    if args.urban_source == "gaia":
+        tiles = sorted(Path(args.gaia).glob("GAIA_1985_2022_*.tif"))
+        if not tiles:
+            raise SystemExit(f"no GAIA tiles in {args.gaia}; run scripts/fetch_gaia.py")
+        cutoff = GAIA_EPOCH - args.year
+        selector, bounds_of = at_least(cutoff), gaia_tile_bounds
+        note = f"value >= {cutoff}, counting downward from {GAIA_EPOCH}"
+    else:
+        tiles = sorted(Path(args.gisa).glob("urban_*.tif"))
+        if not tiles:
+            raise SystemExit(f"no GISA tiles in {args.gisa}; run scripts/fetch_gisa.py")
+        selector = between(1, gisa_value_for(args.year))
+        bounds_of, note = gisa_tile_bounds, f"{selector.description}, counting upward"
+    print(f"  impervious: {len(tiles)} {args.urban_source.upper()} tiles, {note}, "
+          f"NOT masked by province (0 means non-urban everywhere in a global product)")
     impervious = gc.fraction_over_grid(
-        tiles, spec, at_least(cutoff), mask_geometry=None,
-        clip_bounds_of=gaia_tile_bounds)
+        tiles, spec, selector, mask_geometry=None, clip_bounds_of=bounds_of)
+
+    if args.rice_source == "glorice":
+        single = combined = _glorice_fractions(args.glorice, args.year, spec)
+        return _finish(args, spec, counts, ch4_primary, ch4_raw, impervious,
+                       single, combined, provinces)
 
     rice = rice_rasters(args.rice_source, args.year)
     if not rice:
@@ -152,6 +197,34 @@ def main(argv=None) -> int:
     combined = gc.fraction_over_grid(rice, spec, in_classes([1, 2]),
                                      mask_geometry=own_province)
 
+    return _finish(args, spec, counts, ch4_primary, ch4_raw, impervious,
+                   single, combined, provinces)
+
+
+def _glorice_fractions(directory, year, spec):
+    """Rice fraction from GloRice, which stores hectares rather than classes."""
+    import xarray as xr
+    from rasterio.transform import from_origin
+
+    path = Path(directory) / f"exten_phsc_{year}.nc"
+    if not path.exists():
+        raise SystemExit(f"no GloRice file at {path}; run scripts/fetch_glorice.py")
+    dataset = xr.open_dataset(path)
+    lat, lon = dataset["lat"].values, dataset["lon"].values
+    transform = from_origin(float(lon[0]), float(lat[0]),
+                            abs(float(lon[1] - lon[0])), abs(float(lat[1] - lat[0])))
+    print(f"  rice: GloRice {year}, {dataset['area'].shape} at "
+          f"{abs(float(lon[1] - lon[0])):.6f} degrees, hectares per cell, "
+          f"apportioned by area share")
+    print("        NOT masked by province: NaN means no rice, which is a value, "
+          "so every cell gets a fraction and none is blank")
+    # Hectares to square kilometres.
+    return gc.value_sum_over_grid(dataset["area"].values, transform, spec,
+                                  unit_scale=0.01)
+
+
+def _finish(args, spec, counts, ch4_primary, ch4_raw, impervious,
+            single, combined, provinces):
     shares = gc.province_shares(spec, provinces)
 
     rows, refused = [], 0

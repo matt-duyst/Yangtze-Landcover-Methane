@@ -29,4 +29,5 @@ from src.grid.cells import (  # noqa: F401
     fraction_over_grid,
     lattice_edges,
     province_shares,
+    value_sum_over_grid,
 )

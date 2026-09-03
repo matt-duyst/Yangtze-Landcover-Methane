@@ -304,6 +304,67 @@ def fraction_over_grid(
     ]
 
 
+def value_sum_over_grid(
+    values: np.ndarray,
+    transform,
+    spec: GridSpec,
+    *,
+    unit_scale: float = 1.0,
+    crs: str = CHINA_ALBERS,
+) -> list[list[CellFraction]]:
+    """Per-cell fractions from a product whose values are already areas.
+
+    GloRice stores hectares of rice per 5-arcmin cell rather than a class code,
+    so its contribution to an analysis cell is a share of a value, not a count
+    of pixels. At 5 arcmin one source cell is about 9 km across against a 25 km
+    analysis cell, so roughly nine of them fall in each cell and the ones on the
+    edge are cut. Binning by source-cell centre, which is what
+    :func:`accumulate_fraction` does and which is right at 10 and 30 m, would
+    quantise each analysis cell to whole ninths and misplace up to a third of a
+    cell's width at every edge. Each source cell is therefore apportioned by the
+    share of its ground area inside the analysis cell, measured in an equal-area
+    projection, reusing ``fractional_weights``.
+
+    NaN is treated as zero. In GloRice it means no rice rather than no
+    measurement, which is a value and not an absence, so a cell of open sea
+    correctly gets a rice fraction of zero rather than a blank. That differs
+    from the NESDC rasters, where zero is ambiguous and a blank is the honest
+    answer, and it is why the two rice sources cover different numbers of cells.
+    """
+    from src.landcover.geometry import fractional_weights
+
+    values = np.nan_to_num(np.asarray(values, dtype="float64"),
+                           nan=0.0, posinf=0.0, neginf=0.0)
+    height, width = values.shape
+    left, top = transform.c, transform.f
+    right = left + width * abs(transform.a)
+    bottom = top - height * abs(transform.e)
+    extent = box(left, bottom, right, top)
+
+    cell_km2 = cell_areas_m2(spec) / 1e6
+    out: list[list[CellFraction]] = []
+    for r in range(spec.shape[0]):
+        north = spec.north - r * spec.resolution
+        row: list[CellFraction] = []
+        for c in range(spec.shape[1]):
+            west = spec.west + c * spec.resolution
+            cell = box(west, north - spec.resolution, west + spec.resolution, north)
+            overlap = cell.intersection(extent)
+            whole = float(cell_km2[r, c])
+            if overlap.is_empty:
+                row.append(CellFraction(0.0, 0.0, whole))
+                continue
+            rows_i, cols_i, share = fractional_weights(overlap, transform,
+                                                       (height, width), crs=crs)
+            selected = (float((values[rows_i, cols_i] * share).sum()) * unit_scale
+                        if rows_i.size else 0.0)
+            assessed = whole * (overlap.area / cell.area) if cell.area else 0.0
+            row.append(CellFraction(selected_km2=selected, assessed_km2=assessed,
+                                    cell_km2=whole))
+        out.append(row)
+    return out
+
+
 def province_shares(
     spec: GridSpec,
     provinces: Mapping[str, BaseGeometry],

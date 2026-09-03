@@ -1,0 +1,17 @@
+predictor,methane_field,weighting,n,pearson,spearman,partial_pearson_given_albedo,partial_pearson_p,partial_spearman_given_albedo
+GAIA,bias corrected,unweighted,927,0.3459,0.5071,0.0198,5.479e-01,0.128
+GAIA,bias corrected,by sounding count,927,0.216,0.2266,0.033,3.153e-01,-0.004
+GAIA,raw,unweighted,927,0.4405,0.669,0.1505,4.257e-06,0.2658
+GAIA,raw,by sounding count,927,0.3275,0.4821,0.1252,1.336e-04,0.0576
+GISA,bias corrected,unweighted,927,0.3631,0.5362,-0.0252,4.434e-01,0.1584
+GISA,bias corrected,by sounding count,927,0.2519,0.3094,-0.0742,2.391e-02,0.0528
+GISA,raw,unweighted,927,0.478,0.7162,0.1402,1.854e-05,0.3408
+GISA,raw,by sounding count,927,0.4447,0.6282,0.0696,3.413e-02,0.1855
+NESDC,bias corrected,unweighted,532,0.1014,0.0752,-0.0098,8.222e-01,-0.0116
+NESDC,bias corrected,by sounding count,532,-0.0882,-0.1345,-0.0654,1.324e-01,-0.1132
+NESDC,raw,unweighted,532,0.1926,0.147,0.0334,4.427e-01,-0.0391
+NESDC,raw,by sounding count,532,-0.1289,-0.2369,-0.0207,6.341e-01,-0.1419
+GloRice,bias corrected,unweighted,927,0.3983,0.4465,0.1652,4.308e-07,0.1781
+GloRice,bias corrected,by sounding count,927,0.1762,0.0747,0.3452,2.646e-27,0.1239
+GloRice,raw,unweighted,927,0.3896,0.4068,0.135,3.753e-05,-0.0041
+GloRice,raw,by sounding count,927,-0.0037,-0.1492,0.2186,1.759e-11,-0.1052

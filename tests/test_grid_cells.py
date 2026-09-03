@@ -318,3 +318,82 @@ def test_grid_totals_match_the_zonal_path_on_the_same_raster(tmp_path):
     zonal_km2 = zonal_area(raster, {"z": zone}, in_classes([1]))[0].area_km2
     assert grid_km2 == pytest.approx(zonal_km2, rel=1e-9)
     assert grid_km2 > 0
+
+
+# --------------------------------------------------------------------------
+# products whose values are already areas
+# --------------------------------------------------------------------------
+
+def test_value_sum_apportions_a_coarse_products_values_by_area_share():
+    """Half a source cell in the cell contributes half its value."""
+    from rasterio.transform import from_origin
+
+    # One source cell 0.5 deg wide spanning both TOY cells, holding 100 units.
+    values = np.array([[100.0]])
+    transform = from_origin(0.25, 0.5, 0.5, 0.5)
+    got = gc.value_sum_over_grid(values, transform, TOY)
+    assert got[0][0].selected_km2 == pytest.approx(50.0, rel=0.02)
+    assert got[0][1].selected_km2 == pytest.approx(50.0, rel=0.02)
+
+
+def test_value_sum_keeps_a_whole_source_cell_in_one_analysis_cell():
+    from rasterio.transform import from_origin
+
+    values = np.array([[80.0]])
+    transform = from_origin(0.0, 0.5, 0.5, 0.5)      # exactly the left cell
+    got = gc.value_sum_over_grid(values, transform, TOY)
+    assert got[0][0].selected_km2 == pytest.approx(80.0, rel=1e-6)
+    assert got[0][1].selected_km2 == pytest.approx(0.0, abs=1e-9)
+
+
+def test_value_sum_applies_the_unit_scale():
+    from rasterio.transform import from_origin
+
+    values = np.array([[100.0]])
+    transform = from_origin(0.0, 0.5, 0.5, 0.5)
+    got = gc.value_sum_over_grid(values, transform, TOY, unit_scale=0.01)
+    assert got[0][0].selected_km2 == pytest.approx(1.0, rel=1e-6)
+
+
+def test_value_sum_treats_nan_as_zero_not_as_missing():
+    """GloRice writes NaN for no rice, which is a value and not an absence."""
+    from rasterio.transform import from_origin
+
+    values = np.array([[np.nan]])
+    transform = from_origin(0.0, 0.5, 0.5, 0.5)
+    got = gc.value_sum_over_grid(values, transform, TOY)
+    assert got[0][0].selected_km2 == 0.0
+    assert got[0][0].fraction == 0.0, "zero rice, not an unassessed cell"
+    assert got[0][0].coverage == pytest.approx(1.0, rel=0.01)
+
+
+def test_value_sum_marks_a_cell_outside_the_product_as_unassessed():
+    from rasterio.transform import from_origin
+
+    values = np.array([[5.0]])
+    transform = from_origin(50.0, 50.0, 0.5, 0.5)
+    got = gc.value_sum_over_grid(values, transform, TOY)
+    assert got[0][0].assessed_km2 == 0.0
+    assert got[0][0].fraction is None, "no data there is not zero rice"
+
+
+def test_value_sum_totals_are_conserved_across_the_grid():
+    """Nothing is created or lost by the apportioning, to within geodesy.
+
+    Not exact, and it should not be. Shares are measured in an equal-area
+    projection so that a source cell straddling a boundary contributes in
+    proportion to ground area, while the analysis cells are lat/lon boxes, so
+    the two disagree by the difference between the projections. Over this
+    fixture that is about five parts in ten thousand. Demanding exactness here
+    would mean apportioning in degrees, which is the thing the equal-area
+    weighting exists to avoid.
+    """
+    from rasterio.transform import from_origin
+
+    rng = np.random.default_rng(0)
+    values = rng.uniform(0, 10, (10, 20))
+    transform = from_origin(0.0, 0.5, 0.05, 0.05)     # covers TOY exactly
+    got = gc.value_sum_over_grid(values, transform, TOY)
+    total = sum(cell.selected_km2 for row in got for cell in row)
+    assert total == pytest.approx(values.sum(), rel=2e-3)
+    assert abs(total - values.sum()) / values.sum() < 1e-3
