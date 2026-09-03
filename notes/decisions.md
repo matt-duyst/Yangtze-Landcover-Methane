@@ -1120,3 +1120,87 @@ same answer, and a rice product with an entirely different error structure gives
 the same answer under weighting. This is the strongest support the negative
 result has, and it is the reason it can be stated without the qualifications
 every positive result in this repository carries.
+
+## The TM5 prior is coarse enough to subtract, and subtracting it was not pursued
+
+### The gate
+
+The remaining way to clean the methane field without external data was to work
+with departures, retrieved XCH4 minus the TM5 a priori that ships inside every
+granule, on the reasoning that the prior contains background, seasonal cycle and
+synoptic structure together. The objection is that the prior also carries an
+emissions inventory, so subtracting it could remove the land-cover signal by
+construction. Whether it does depends entirely on the prior's spatial scale
+relative to the 0.25 degree cell, which the literature did not settle and which
+is measurable from one granule already on disk.
+
+Measured on granule 03019 of 14 May 2018. The a priori column averages 1797.82
+ppb over the 84,116 soundings that carry one, and 1848.53 ppb over the 408 in
+the study box, which is a plausible methane column and confirms the units and
+the computation. The prior's in-box half-sill range, the separation at which its
+semivariogram reaches half its variance, is **117.4 km against a 27.8 km
+analysis cell, a ratio of 4.7**. At 20 to 25 km separation the prior differs by
+**0.49 ppb RMS against the retrieval's 34.17**, so it contributes 1.4 percent of
+the variation at the scale analysed. Across the whole study box the prior holds
+**0.175 percent** of the retrieved field's variance.
+
+So subtracting the prior would act as a high-pass filter with a cutoff near 100
+km, well above the cell, and would not remove a land-cover signal. On the
+question the gate was set to answer, the approach is safe.
+
+### Why it was not pursued anyway
+
+The gate passes and the approach was still not taken, and this half matters
+more.
+
+The departure inherits the albedo bias essentially intact. In-box it moves the
+correlation with `surface_albedo_SWIR` from +0.4496 to +0.4499 while removing
+3.53 percent of the variance. The bias lives entirely in the retrieved term and
+the prior has no albedo dependence, so the departure keeps the whole bias and
+discards real variance, which makes the problem worse as a share of what
+remains rather than better.
+
+And a single granule is a single instant. It contains no seasonal variation and
+no day-to-day synoptic variation, which are exactly what the departure was
+proposed to remove. The gate therefore confirmed the approach is safe for the
+land-cover question while leaving entirely unestablished that it fixes the
+problem it was proposed for. Establishing that needs TM5's day-to-day variation
+compared against the retrieved field's across many overpasses, which is the 28.9
+GB run itself. The gate cannot be completed cheaply, and the cheap half came
+back neutral at best.
+
+### What could not be determined
+
+Whether TM5 reproduces the day-specific synoptic variation over this region.
+That is the question the departure stands or falls on and one granule cannot
+answer it.
+
+TM5's native grid resolution. The prior is interpolated onto sounding locations
+rather than sampled nearest-neighbour, so it gives **76,749 distinct values from
+84,116 soundings** and shows no plateaus at all. The interpolation destroys the
+block structure that would have revealed the model grid, so the resolution had
+to be inferred from the variogram rather than read off the data.
+
+### An incidental finding worth keeping
+
+The a priori exists on 408 of 12,175 in-box soundings, **3.4 percent**. That is
+the same fraction as `surface_albedo_SWIR` availability, and for the same
+reason: both are written only where the retrieval got far enough, and that is
+very nearly the same condition as `qa_value >= 0.75`. So a departure would be
+computable on essentially the whole quality-filtered composite rather than on a
+subset of it. Whatever else is wrong with the approach, sample size is not the
+objection.
+
+### What was committed
+
+`src/methane/apriori.py`, with the fill handling and the layer-order handling
+and tests, though nothing currently calls it. It is a reusable computation and
+the departure work is now one configuration change away rather than a rebuild,
+which is the right state for a line of work that is gated rather than closed.
+
+Its docstring records that `altitude_levels` runs 63,037.6 m at index 0 down to
+20.6 m at index 12, so the file is stored top-of-atmosphere first, which is why
+the Harvard TROPOMI inversion code reverses the layer axis on reading. The ratio
+of sums is order-invariant so the column computation is unaffected, and a test
+asserts that explicitly, so that nobody adds a per-layer step assuming the same
+protection. `surface_first()` is provided for when one is added.
