@@ -7,11 +7,15 @@ Environment, MESc, April 28, 2023).
 
 The thesis was never published or submitted for publication. This document
 records defects found during a 2026 audit undertaken to prepare the work for
-publication. Every item below was verified against the thesis PDF, the
-committed notebook, or the repository's git history; the method of
-verification is stated for each. Items are grouped by whether they affect the
-written document, the implementation, or claims that later literature has
-superseded.
+publication. Items are grouped by whether they affect the written document, the
+implementation, or claims that later literature has superseded.
+
+Each item that was checked against the thesis PDF, the committed notebook or an
+artefact committed here carries a *Verified by* line naming the method, so that
+the check can be repeated rather than taken on trust. The four items in Section 5
+carry no such line, and deliberately so: each rests on published literature
+described in the item itself rather than on anything in this repository, and
+asserting a method for them would claim more than was done.
 
 No quantitative model result is retracted here, because the thesis reports
 none. Section 5.2 states that mean squared error was calculated but gives no
@@ -69,6 +73,9 @@ and paddied rice extents "in the year 2018". The section heading (4.7) and
 Section 5.2 both state that the inputs were the recorded extents for 2000 and
 2010. The caption is wrong; the method described in the body is correct.
 
+*Verified by:* reading the Figure 4.7 caption in the thesis PDF against the
+section heading and the input years stated in Section 5.2.
+
 ---
 
 ## 2. Numerical and arithmetic corrections
@@ -83,6 +90,9 @@ The neighbouring claims in the same paragraph do reproduce from Table 1: Anhui
 doubles (2.04), Jiangsu triples (3.34), and the full-span Jiangsu figure of
 more than sixfold (3,008 to 19,430, a factor of 6.46) is correct.
 
+*Verified by:* recomputing each ratio from the provincial values in Table 1 of
+the thesis PDF; 6,731 over 1,752 is 3.84 against the stated sixfold.
+
 ### 2.2 2010 YRD urban total
 
 Section 5.1 gives the 2010 YRD total as 24,830 km². The four provincial values
@@ -90,16 +100,25 @@ in Table 1 sum to 24,831 (3,310 + 6,731 + 4,748 + 10,042). The derived change
 figures reported downstream (16,533; 24,895; 41,428 km²) are internally
 consistent with 24,830.
 
+*Verified by:* summing the four provincial 2010 values in Table 1, which give
+24,831 against the 24,830 reported in Section 5.1.
+
 ### 2.3 Yangtze River extent
 
 Section 1.5 states that the Yangtze River "extends roughly 1.8 million km2".
 This is the drainage basin area, not the river's extent or length.
+
+*Verified by:* reading the figure and its units in Section 1.5; 1.8 million km2
+is an area, and the sentence attributes it to the river's extent.
 
 ### 2.4 Spatial resolution notation
 
 TROPOMI XCH4 spatial resolution is given throughout as "7km2 x 7km2". The
 correct notation is 7 km × 7 km (nadir resolution was refined to
 approximately 7 × 5.5 km in August 2019, after the study year).
+
+*Verified by:* full-text search of the thesis PDF for the resolution statement,
+which uses the squared form throughout rather than at one occurrence.
 
 ---
 
@@ -125,6 +144,10 @@ The urban and rice inputs are likewise near-binary masks read from JPEG
 (urban: background 240, foreground 0; rice: background 255, foreground 0),
 each carrying a compression fringe of 0.2% to 0.9% of pixels at ±1.
 
+*Verified by:* opening the committed `legacy/data/XCH4_2018.jpg` and reading its
+mode, dimensions and value histogram: PIL mode L, 5950 by 4016, and 81.5 percent
+of pixels at 255.
+
 ### 3.2 Augmentation was applied to inputs but not targets
 
 In the dataset class, the transform pipeline is applied to the stacked input
@@ -137,6 +160,9 @@ The validation pipeline applies only `ToTensor` and `Normalize`, so validation
 pairs remain aligned. This accounts for the otherwise anomalous ordering of
 the stored losses, in which validation loss (2889.67) sits below final
 training loss (4031.66).
+
+*Verified by:* reading the dataset class and both transform pipelines in the
+committed notebook, and comparing the stored training and validation losses.
 
 ### 3.3 The backbone was randomly initialised and then frozen
 
@@ -151,11 +177,17 @@ implementation does not do this. Inputs are nonetheless normalised with
 ImageNet channel statistics, which is only meaningful with an
 ImageNet-pretrained encoder.
 
+*Verified by:* reading the model instantiation and the `requires_grad` loop in
+the committed notebook, against the pretraining described in Section 3.3.
+
 ### 3.4 Colour augmentation applied to thematic channels
 
 `ColorJitter` with saturation and hue adjustment is applied to a three-channel
 input whose channels are basemap, urban mask, and rice mask. Hue rotation
 mixes information between the urban and rice channels.
+
+*Verified by:* reading the augmentation pipeline in the committed notebook
+against the three channels the dataset class stacks.
 
 ### 3.5 Stored outputs cannot be attributed to the committed code
 
@@ -171,6 +203,10 @@ facts cannot all describe a single run.
 
 Accordingly, the loss values in the notebook should not be cited as results
 of the code as committed.
+
+*Verified by:* parsing the committed notebook's JSON, which gives 37 code cells
+with `execution_count` null and 22 retaining stored outputs; and tracing the
+tensor the dataset class returns into `transforms.ToTensor()`.
 
 ### 3.6 Constant-predictor comparison
 
@@ -193,6 +229,9 @@ This is a comparison of numbers, not a verdict on the model, for the reason
 given in 3.5. It is recorded because the stored losses are otherwise easy to
 read as evidence of fit.
 
+*Verified by:* recomputing the constant-predictor baselines on a reconstruction
+of the notebook's own crop sampling, under its province-inclusion rules.
+
 ---
 
 ## 4. Method description inconsistent with implementation
@@ -210,6 +249,9 @@ against an XCH4 target. No masking occurs anywhere in the notebook. The
 implementation is the more defensible artifact; the description should be
 rewritten to match it.
 
+*Verified by:* reading Section 3.3 of the thesis PDF against the model, the loss
+and the absence of any masking step in the committed notebook.
+
 ### 4.2 Scale invariance claim
 
 Section 3.3 states that the resolution difference between Landsat (30 m) and
@@ -217,6 +259,9 @@ Sentinel-5P (approximately 7 km) can be ignored because CNNs are scale and
 translation invariant. Convolutional networks are approximately translation
 *equivariant*, and are not scale invariant. The resampling actually performed,
 and the limitation it imposes, should be stated instead.
+
+*Verified by:* reading the scale-invariance claim in Section 3.3 against the two
+sensor resolutions as the thesis itself states them.
 
 ---
 
@@ -273,6 +318,9 @@ notebook link as the study's open-source code availability statement. Their
 current resolvability has not been established. This repository is intended to
 supersede that statement.
 
+*Verified by:* reading the three links listed in Section 5.3. They were not
+dereferenced, which is why no claim is made about whether they still resolve.
+
 ### 6.2 Spatial statistics are not reproducible as reported
 
 Section 5.1 reports a Global Moran's I of 0.46 and a z-score of 276.31 for
@@ -283,12 +331,18 @@ value over a dense grid is arithmetically expected rather than informative,
 and positive spatial autocorrelation in a column-concentration field follows
 from atmospheric transport and from the retrieval's own spatial binning.
 
+*Verified by:* full-text search of the thesis PDF for a spatial weights
+definition, distance band, contiguity rule or standardisation, returning none.
+
 ### 6.3 Citation years
 
 Two in-text citations disagree with the reference list: the GAIA reference is
 cited in text as 2019 and listed as 2020, and the TROPOMI XCH4 reference is
 cited in text as 2023 and listed as 2022. Both reflect the online-versus-print
 gap; one convention should be applied throughout.
+
+*Verified by:* cross-checking both in-text citation years against the entries in
+the thesis reference list.
 
 ### 6.4 Auxiliary data described but not used
 
@@ -297,6 +351,9 @@ Initiative emissions, provincial population and natural gas statistics,
 provincial sown area of rice, and World Bank climatology. Only the sown area
 of rice appears in the Results. The others should be removed or their use
 described.
+
+*Verified by:* full-text search of the thesis Results for each of the four
+auxiliary datasets named in Section 1.3; only the sown area of rice appears.
 
 ### 6.5 No classification accuracy is reported
 
@@ -398,6 +455,11 @@ from GloRice, and the analysis grid's rice fractions from a 10 m provincial
 classification distributed through Science Data Bank. The claim that validation
 was impossible for want of reference data is superseded in practice and not only
 in principle.
+
+*Verified by:* `data/processed/rice_area_by_province.csv`, whose 28 GloRice rows
+carry their source, and the rice fractions in `analysis_grid_2018.csv`.
+Regenerable by `scripts/compute_rice_areas.py` and
+`scripts/build_analysis_grid.py`.
 
 ### 7.4 The reproduction's own positive results are not attributable
 
