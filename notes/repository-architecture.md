@@ -46,9 +46,9 @@ demonstrate; they do not compute results.
 ├── requirements.txt
 ├── .gitignore
 ├── config/
-│   ├── sources.yml            # dataset versions, URLs, spatial/temporal bounds
-│   ├── pppm.yml               # rice algorithm parameters, each with a citation
-│   └── model.yml              # architecture, training, augmentation settings
+│   └── sources.yml            # dataset versions, URLs, bounds, covariates
+│                              # pppm.yml and model.yml were NOT BUILT: there
+│                              # is no rice algorithm and no model to configure
 ├── data/
 │   ├── manifest.json          # checksums + versions for every fetched input
 │   ├── raw/                   # gitignored, populated by fetch
@@ -57,20 +57,24 @@ demonstrate; they do not compute results.
 │   └── reference/             # small committed inputs, not derived results
 ├── src/
 │   ├── fetch/                 # one module per source
-│   ├── landcover/             # urban zonal stats, rice reimplementation
-│   ├── methane/               # TROPOMI L2 read, QA filter, gridding
-│   ├── model/                 # dataset, architecture, training, inference
-│   ├── validation/            # metrics, baselines, cross-product comparison
-│   └── figures/               # one module per figure
+│   ├── landcover/             # urban zonal stats, rice zonal stats
+│   ├── grid/                  # NOT PREDICTED: joins land cover onto the
+│   │                          # methane lattice; see the note below
+│   ├── methane/               # TROPOMI L2 read, QA filter, gridding, seasonal
+│   ├── model/                 # AS BUILT: baselines and association tests.
+│   │                          # No dataset, architecture, training or
+│   │                          # inference; see the note below
+│   ├── validation/            # NOT BUILT: absorbed into model/
+│   └── figures/               # NOT BUILT
 ├── scripts/                   # thin CLI entry points over src/
 ├── tests/
-├── figures/                   # generated PNGs, committed
+├── figures/                   # NOT BUILT: nothing has been generated
 ├── notes/                     # reasoning, decisions, audit trail
 ├── writeup/
 │   └── Duyst_Thesis.pdf
-└── legacy/
-    ├── Duyst_Thesis_Final.ipynb
-    └── README.md              # what this is and why it is preserved
+└── legacy/                    # AS BUILT: data/, figures/ and output/, each
+                               # with a README. The notebook stayed at the
+                               # repository root.
 ```
 
 `data/reference/` holds small inputs that are committed rather than fetched,
@@ -98,14 +102,26 @@ concern and its module count will be closer to its test count.
 One module per source, each exposing the same interface: report what it would
 fetch, fetch it, verify it against the manifest.
 
-| source | product | route | notes |
+This table is the plan. What was built is in the right-hand column, and it
+differs enough that the plan should be read as a record of intent rather than a
+description.
+
+| source | product | planned route | as built |
 |---|---|---|---|
-| GAIA | annual impervious area, 30 m, 1985–2018 | direct download | current distribution is a later version than the thesis used; version pinned in `sources.yml` and the difference expected |
-| Landsat | TM / ETM+ / OLI composites | Earth Engine | required only for the rice reimplementation |
-| TROPOMI | Sentinel-5P L2 CH4, 2018 | Copernicus Data Space | Earth Engine's L3 CH4 collection begins February 2019 and cannot serve the study year |
-| CCD-Rice | 30 m paddy rice, China, 1990–2016 | direct download | independent reference for 2000 and 2010 |
-| APRA500 | 500 m rice, Asian monsoon, 2000–2021 | direct download | independent reference for 2018, where CCD-Rice stops |
-| NBS statistics | provincial sown area of rice | manual, committed as CSV | small, stable, and the only input that is genuinely a table |
+| GAIA | annual impervious area, 30 m | direct download | built, via figshare; distributed version reaches 2021, not 2018 |
+| Landsat | TM / ETM+ / OLI composites | Earth Engine | **not built.** No Earth Engine code exists anywhere in the repository |
+| TROPOMI | Sentinel-5P L2 CH4, 2018 | Copernicus Data Space | built, but against the anonymous MEEO S3 mirror; Copernicus Data Space requires authentication and cannot run from a fresh clone |
+| CCD-Rice | 30 m paddy rice, 1990–2016 | direct download | **not used** |
+| APRA500 | 500 m rice, 2000–2021 | direct download | **not used** |
+| NBS statistics | provincial sown area of rice | manual CSV | **not used** |
+| GloRice | gridded paddy rice, 2017–2021 | *unplanned* | built, via figshare; supplies 28 of the 36 rice rows |
+| Science Data Bank rice | classified rice, 10 m, by province | *unplanned* | built, anonymous Croissant route; supplies the analysis grid |
+| SPAM | rice area | *unplanned* | committed as 8 rows, no fetch module |
+
+The rice reimplementation this plan was built around never happened. Rice extent
+comes from published products rather than from a Landsat reimplementation, which
+removed the Earth Engine dependency and with it the parameter file the next
+section describes.
 
 Every fetch writes to `data/raw/`, which is gitignored, and appends to
 `data/manifest.json`. Nothing downstream reads `data/raw/` without first
@@ -137,6 +153,12 @@ is where that is recorded.
 A test asserts that every file present in `data/raw/` matches its manifest
 entry, and that every manifest entry names a version and a citation.
 
+**Not built.** No such test exists. Digests are verified at fetch time by
+`src/fetch/common.py` where the source publishes one, which is the more useful
+half, but nothing checks the manifest's own completeness and two entries
+consequently carry no licence field. The Science Data Bank rice product, which
+the analysis grid is built from, has no manifest entry at all.
+
 ---
 
 ## Order of work
@@ -155,28 +177,48 @@ clipped to provincial boundaries, zonal statistics by province by year.
 Reproduces the 12 urban values in Table 1. This is the smallest piece and the
 one most likely to reproduce closely, which is why it goes first.
 
-**3. Rice reimplementation.** The largest piece of uncertainty. Requires
+**3. Rice reimplementation.** ~~The largest piece of uncertainty. Requires
 Earth Engine for Landsat time series. Every threshold in `config/pppm.yml`
 with its citation. Validated against CCD-Rice for 2000 and 2010 and APRA500
 for 2018, and compared against provincial sown-area statistics as the thesis
-did. Expected to differ from the 2023 values; the difference is documented,
-not reconciled away.
+did.~~
+
+**Not done, and deliberately.** Published rice products now exist at the
+study's own resolution, so rice extent is taken from GloRice and from the
+Science Data Bank 10 m classification rather than reimplemented from Landsat.
+That removed the Earth Engine dependency, the parameter file, and the largest
+piece of uncertainty in the plan, at the cost of no longer being a
+reimplementation of the thesis's own method. The tradeoff is recorded in
+`notes/decisions.md`; the constraints the published rasters carry, which the
+plan did not anticipate, take up four of its sections.
 
 **4. Methane layer.** TROPOMI L2 in ppb, not a rendered image. QA filtering,
 with the count of valid retrievals over the study area reported as a headline
 number. That count is the honest measure of what any model can learn from
 2018, and it belongs in the README rather than buried.
 
-**5. Model.** Corrected implementation against the real methane field.
+**5. Model.** ~~Corrected implementation against the real methane field.
 Pretrained backbone, augmentation applied jointly to input and target,
-channel-appropriate preprocessing, seeded throughout. Baselines are not
+channel-appropriate preprocessing, seeded throughout.~~ Baselines are not
 optional: a constant predictor, a linear model on urban and rice fraction, and
 a geographically weighted regression. If the network does not beat all three,
 that is the finding and it gets reported.
 
-**6. Figures.** Generated by `src/figures/`, one module per figure, outputs
-committed to `figures/`. Captions follow the conventions established on the
-previous project.
+**The baselines were built first and the model was not built at all.** That
+last sentence turned out to be the operative one. No land-cover model beats a
+spatial null under either cross-validation scheme at either weighting, and a
+variable encoding only when each cell was observed beats it comfortably, so
+there is nothing for a network to improve on and no sound field to fit it to.
+The geographically weighted regression was replaced by a queen-neighbour
+spatial null, which tests the same thing more directly. The finding is in the
+README and the argument is in `notes/decisions.md`.
+
+**6. Figures.** ~~Generated by `src/figures/`, one module per figure, outputs
+committed to `figures/`.~~
+
+**Not done.** Neither directory exists. Nothing has been generated from the
+reproduced data, and the 2023 ArcGIS exports in `legacy/figures/` are not a
+substitute, so `figures/` is absent rather than misleadingly empty.
 
 ---
 
@@ -189,12 +231,22 @@ Four categories worth naming, because they are not the same kind of test:
 - **Unit.** Pure functions: index computation, threshold application,
   coordinate handling, area arithmetic.
 - **Manifest.** Every fetched file matches its recorded checksum; every entry
-  carries a version and a citation.
+  carries a version and a citation. *Not built; see the fetch section above.*
 - **Reproduction.** Committed processed tables regenerate from committed
   inputs. This is what makes "every drawn number reproduces" enforceable
-  rather than aspirational.
-- **Figure.** Each figure module runs and produces an output of the expected
-  shape, following peatland's `test_<figure>_figure.py` pattern.
+  rather than aspirational. *Built, and it is the largest category: the
+  committed composite, analysis grid, baselines and confounder tables each
+  have a test module reading them back.*
+- **Figure.** ~~Each figure module runs and produces an output of the expected
+  shape.~~ *Not built; there are no figures.*
+
+Two categories the plan did not anticipate turned out to matter more than the
+figure tests it did. **Structural** tests assert that a constraint cannot be
+violated rather than that it happens not to be: that a cell with no soundings
+cannot be constructed, that a covariate mean is unreachable without its own
+count, that a missing predictor is dropped or raised on and never imputed.
+**Negative-result** tests pin findings that a later change could quietly
+reverse into something more flattering, and make it argue with a test first.
 
 Fixtures are built in memory. No test reads from `data/raw/`, so the suite
 runs on a clone with no data fetched.
