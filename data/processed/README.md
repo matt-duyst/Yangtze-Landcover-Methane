@@ -734,3 +734,32 @@ day-of-year can reach.
         --target-from data/processed/methane_deseasonalised_2018.csv \
         --covariates data/processed/methane_covariates_2018.csv \
         --out data/processed/baseline_results_deseasonalised_2018.csv --write
+
+## albedo_correction_2018.csv
+
+Whether Sentinel-5P's operational bias correction removes the albedo dependence
+this repository measured. Sixteen rows: four series against two albedo bands at
+two weightings, each with Pearson, Spearman, and a fitted slope in ppb per unit
+albedo with its standard error and R squared. Written by
+scripts/test_albedo_correction.py from committed tables only.
+
+The four series are the raw retrieval `methane_mixing_ratio`, the operational
+`methane_mixing_ratio_bias_corrected`, the correction itself as the difference
+between them, and the deseasonalised field. Both methane variables have been
+gridded since the first composite, so the correction is available without
+re-reading a granule. It is positive in all 927 covered cells and averages
++11.64 ppb.
+
+Slopes are reported alongside correlations because only a slope can be set
+beside a published figure: a correlation depends on how much albedo happened to
+vary in this sample. The slope here is still an upper bound rather than a
+measurement of instrument sensitivity, because an annual composite confounds
+albedo with geography, land cover and sampling season.
+
+The answer is that the correction reduces the SWIR slope by 2.0 percent
+unweighted and 30.5 percent weighted, and makes the NIR slope 11.1 percent worse
+unweighted, leaving the corrected variable at 199.8 ± 6.7 ppb per unit albedo at
+R squared 0.49. notes/decisions.md carries the argument, the granule metadata
+that names no correction at all, and the references.
+
+    python scripts/test_albedo_correction.py --write

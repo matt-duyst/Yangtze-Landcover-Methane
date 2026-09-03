@@ -171,3 +171,73 @@ def test_the_record_serialises_with_its_controls_and_sample_size():
     assert record["relationship"] == "methane ~ rice"
     assert record["controlling_for"] == "surface_albedo_SWIR"
     assert record["n"] == 300
+
+
+# --------------------------------------------------------------------------
+# fitted slopes
+# --------------------------------------------------------------------------
+
+def test_a_known_slope_is_recovered_with_its_intercept():
+    from src.model.association import sensitivity
+
+    x = np.linspace(0.0, 1.0, 200)
+    result = sensitivity("y ~ x", 1900.0 + 42.0 * x, x)
+    assert result.slope == pytest.approx(42.0, abs=1e-8)
+    assert result.intercept == pytest.approx(1900.0, abs=1e-8)
+    assert result.r2 == pytest.approx(1.0)
+    assert result.standard_error == pytest.approx(0.0, abs=1e-6)
+    assert result.n == 200
+
+
+def test_the_standard_error_grows_as_the_scatter_grows():
+    from src.model.association import sensitivity
+
+    rng = np.random.default_rng(0)
+    x = rng.uniform(0, 1, 300)
+    tight = sensitivity("t", 10.0 * x + rng.normal(0, 0.1, 300), x)
+    loose = sensitivity("l", 10.0 * x + rng.normal(0, 2.0, 300), x)
+    assert loose.standard_error > 10 * tight.standard_error
+    assert tight.r2 > loose.r2
+
+
+def test_a_slope_survives_restricting_the_predictor_range_where_a_correlation_does_not():
+    """The reason slopes are used for the albedo comparison.
+
+    Restricting the sample to a narrower range of the predictor leaves the
+    slope where it was and collapses the correlation, because a correlation
+    depends on how much the predictor happened to vary. Only the slope can be
+    set beside a figure measured on a different sample.
+    """
+    from src.model.association import correlate, sensitivity
+
+    rng = np.random.default_rng(1)
+    x = rng.uniform(-1.0, 1.0, 4000)
+    y = 5.0 * x + rng.normal(0, 1.0, 4000)
+    narrow = np.abs(x) < 0.25
+
+    whole = sensitivity("whole", y, x)
+    part = sensitivity("part", y[narrow], x[narrow])
+    assert whole.slope == pytest.approx(5.0, abs=0.15)
+    assert part.slope == pytest.approx(5.0, abs=0.6), "the slope is preserved"
+
+    assert correlate("whole", y, x).pearson > 0.9
+    assert correlate("part", y[narrow], x[narrow]).pearson < 0.7, \
+        "the correlation is not"
+
+
+def test_weighting_changes_a_slope_the_way_it_changes_a_fit():
+    from src.model.association import sensitivity
+
+    x = np.array([0.0, 0.25, 0.5, 0.75, 1.0])
+    y = np.array([0.0, 5.0, 10.0, 15.0, 60.0])
+    weight = np.array([100.0, 100.0, 100.0, 100.0, 1.0])
+    assert sensitivity("u", y, x).slope > 40.0
+    assert sensitivity("w", y, x, weight=weight).slope == pytest.approx(
+        20.8, abs=0.5)
+
+
+def test_a_slope_needs_at_least_three_paired_points():
+    from src.model.association import AssociationError, sensitivity
+
+    with pytest.raises(AssociationError, match="paired observations"):
+        sensitivity("y ~ x", np.array([1.0, np.nan]), np.array([1.0, 2.0]))

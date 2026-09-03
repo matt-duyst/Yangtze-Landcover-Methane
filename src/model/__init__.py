@@ -37,3 +37,12 @@ from src.model.baselines import (  # noqa: F401
     spatial_blocks,
     weighted_mean,
 )
+
+from src.model.association import (  # noqa: F401
+    Association,
+    Sensitivity,
+    correlate,
+    paired,
+    partial_correlation,
+    sensitivity,
+)

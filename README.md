@@ -20,11 +20,18 @@ Land cover does not explain the methane field over the Yangtze River Delta at
 The test is whether a land-cover model beats a spatial null that predicts each
 cell from the mean of its eight neighbours, excluding itself. That bar matters
 because the methane field is smooth, and a model that only reproduces smoothness
-has learned nothing about the surface. No land-cover model clears it, under
-either cross-validation scheme, at either weighting, on either the raw composite
-or the seasonally corrected one. On the corrected field, held out by spatial
-blocks and unweighted, impervious fraction reaches R squared 0.096 against the
-spatial null's 0.343. Rice does worse: its coefficient is +8.83 ppb per unit
+has learned nothing about the surface. Under inverse-variance weighting no
+land-cover model clears it anywhere: not on the raw retrieval, the operationally
+corrected one or the seasonally corrected field, at either sample size, under
+either cross-validation scheme. On the full 927 cells held out by spatial
+blocks, none clears it at either weighting; impervious fraction reaches R
+squared 0.096 against the spatial null's 0.343 on the corrected field. The
+exceptions are all unweighted and all small: on the 532-cell subsample that has
+a rice fraction, land-cover models edge past the null by 2 to 5 percent under
+spatial blocks, and impervious fraction beats it by 2.9 percent under
+leave-one-province-out on the raw retrieval. They appear in the same places on
+all three methane fields, which is what makes them look like properties of the
+unweighted comparison rather than of land cover. Rice does worse: its coefficient is +8.83 ppb per unit
 fraction counting cells and -3.20 weighting them by how well each was observed,
 and once wind is included it is negative under both weightings. A coefficient
 that changes sign when cells are weighted by their own precision is not
@@ -42,6 +49,15 @@ out the impervious association falls from Pearson +0.346 to +0.020, which is
 indistinguishable from zero. This does not prove the land-cover signal is an
 artefact, because cities really are bright and controlling for albedo removes
 real urban variation too. It establishes that the data cannot separate the two.
+
+None of that is a discovery. The albedo dependence is a documented property of
+the retrieval and the operational product ships a correction for it, which this
+composite already carries. The correction does not remove it: the corrected
+variable retains a slope of 199.8 ± 6.7 ppb per unit albedo at R squared 0.49,
+against 203.8 for the raw retrieval. That slope is an upper bound rather than a
+measurement of instrument sensitivity, because a composite confounds albedo with
+geography and season, but it is enough to say the composite carries an
+albedo-correlated bias that nothing in this pipeline removes.
 
 Sampling is the second and larger reason. Each cell's annual mean is taken over
 whichever days happened to be observed there, and those days differ
@@ -114,6 +130,7 @@ In outline:
 | baselines | `run_baselines.py --write` | seconds |
 | albedo confounder test | `test_albedo_confounder.py --write` | seconds |
 | deseasonalisation test | `test_deseasonalisation.py --write` | seconds |
+| albedo correction test | `test_albedo_correction.py --write` | seconds |
 
 The composite is the expensive one and it is the only one. It downloads,
 grids and deletes each granule in turn, so it needs 28.9 GB of transfer but only

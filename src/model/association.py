@@ -127,6 +127,68 @@ def _weighted_corr(x, y, w) -> float:
     return float(cov / np.sqrt(vx * vy))
 
 
+@dataclass(frozen=True)
+class Sensitivity:
+    """A fitted slope in the units of y per unit of x.
+
+    A correlation says how tightly two things move together; a slope says by
+    how much. For an instrument bias the slope is the quantity that can be
+    compared against a published one, because it does not depend on how much
+    the predictor happened to vary in this particular sample.
+    """
+
+    name: str
+    n: int
+    slope: float
+    standard_error: float
+    intercept: float
+    r2: float
+
+    @property
+    def t(self) -> float:
+        if self.standard_error <= 0:
+            return float("nan")
+        return self.slope / self.standard_error
+
+    def as_dict(self) -> dict:
+        return {
+            "relationship": self.name,
+            "n": self.n,
+            "slope": round(self.slope, 4),
+            "standard_error": round(self.standard_error, 4),
+            "r2": round(self.r2, 6),
+        }
+
+
+def sensitivity(name: str, y, x, *, weight=None) -> Sensitivity:
+    """Least-squares slope of y on x, with its standard error and R squared.
+
+    Weighted by ``weight`` if given, using the same weights as everything else
+    in this package so a slope and a correlation describe the same cells.
+    """
+    if weight is None:
+        y, x = paired(y, x)
+        w = np.ones(x.size)
+    else:
+        y, x, w = paired(y, x, weight)
+    if x.size < 3:
+        raise AssociationError(f"{name}: only {x.size} paired observations")
+
+    design = np.column_stack([np.ones(x.size), x])
+    root = np.sqrt(w)
+    coefficients, *_ = np.linalg.lstsq(design * root[:, None], y * root, rcond=None)
+    residual = y - design @ coefficients
+    dof = x.size - 2
+    variance = float(np.sum(w * residual ** 2) / dof)
+    covariance = variance * np.linalg.inv((design * w[:, None]).T @ design)
+    centre = float(np.sum(w * y) / w.sum())
+    total = float(np.sum(w * (y - centre) ** 2))
+    explained = 1.0 - float(np.sum(w * residual ** 2)) / total if total > 0 else float("nan")
+    return Sensitivity(name=name, n=int(x.size), slope=float(coefficients[1]),
+                       standard_error=float(np.sqrt(covariance[1, 1])),
+                       intercept=float(coefficients[0]), r2=explained)
+
+
 def partial_correlation(name: str, x, y, controls, control_names,
                         *, weight=None) -> Association:
     """Correlation between x and y with the controls removed from both.

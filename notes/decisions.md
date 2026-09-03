@@ -864,3 +864,139 @@ uninterpretable, and the fix for it is not a better model but a different
 composite. The three coverage-costing options are back on the table, and the
 honest reading is that a sound answer needs seasonal compositing rather than
 seasonal correction.
+
+## The albedo dependence is a known artefact, and the operational correction does not remove it here
+
+### It was never a discovery
+
+The albedo association this repository measured is a documented property of the
+TROPOMI methane retrieval, not a finding. Lorente et al. (2021, *Atmospheric
+Measurement Techniques* 14, 665-684, doi:10.5194/amt-14-665-2021) describe the
+operational product's a posteriori correction for underestimation at low surface
+albedo and overestimation at high albedo. That is exactly the sign measured
+here: retrieved methane higher over brighter ground. The confounder section
+above should be read as having rediscovered a known instrument effect, which
+does not weaken its consequence for the land-cover result but does change who
+is owed the credit.
+
+### Which variable every reported figure used
+
+Every correlation reported anywhere in this repository was computed on the
+bias-corrected variable. `src/model/baselines.py` line 68 sets
+`TARGET = "ch4_bias_corrected_ppb"`, `load_table` takes it as the default, and
+both `scripts/test_albedo_confounder.py` and `scripts/test_deseasonalisation.py`
+call `load_table` without a target argument. The deseasonalised field is the
+same variable: `scripts/compute_methane_composite.py` passes
+`soundings.values[mg.PRIMARY]` to the harmonic accumulator, and `PRIMARY` is
+`methane_mixing_ratio_bias_corrected`. The raw retrieval was gridded from the
+first run and never analysed until now. So the figures on record are all
+post-correction figures, and consistently so; no report used a different
+variable from another.
+
+### The correction test
+
+Both variables are gridded, so the correction is available as their difference.
+It is positive in all 927 covered cells, averaging +11.64 ppb with a standard
+deviation of 4.97 and a range of 25.63 ppb from +3.42 to +29.05.
+
+Against `surface_albedo_SWIR`, in ppb per unit albedo:
+
+| series | unweighted | weighted |
+|--------|-----------|----------|
+| raw retrieval | 203.80 ± 6.10 (R² 0.547) | 183.87 ± 4.38 (R² 0.656) |
+| bias corrected | 199.82 ± 6.67 (R² 0.493) | 127.80 ± 5.61 (R² 0.359) |
+| the correction itself | -3.98 ± 3.12 (R² 0.002) | -56.08 ± 2.86 (R² 0.293) |
+
+The correction reduces the slope by 2.0 percent unweighted and 30.5 percent
+weighted. Against `surface_albedo_NIR` it makes the slope 11.1 percent *worse*
+unweighted, 117.34 to 130.35.
+
+The correction's own relationship to albedo is the direct test of whether it is
+an albedo correction, and it splits. Unweighted, the correction is not a
+detectable function of SWIR albedo at all: a slope of -3.98 against a standard
+error of 3.12, R² 0.002. Weighted by sounding count it clearly is, at -56.08 ±
+2.86, R² 0.293, and negative, meaning a larger correction over darker surfaces,
+which is the documented direction. The most likely reading is that the
+correction operates per sounding and the well-observed cells are where the
+per-cell mean of it is estimated precisely enough to show through; that is a
+hypothesis, not a result.
+
+### The benchmark comparison, and its limits
+
+The residual sensitivity of the corrected variable is **199.82 ± 6.67 ppb per
+unit albedo at R² 0.4926** unweighted, and 127.80 ± 5.61 at R² 0.3594 weighted.
+Deseasonalising reduces it to 172.36 and 107.69 without changing the picture.
+
+A residual of order 1 ppb per unit albedo at R² near zero was offered as the
+benchmark from the TROPOMI/WFMD v2.0 product (Schneising et al., 2026,
+*Atmospheric Measurement Techniques* 19, 2407-2435,
+doi:10.5194/amt-19-2407-2026). Both references verify against Crossref. The
+specific benchmark figures do not: they were not checked against the paper's
+text, and its abstract describes the v2.0 change as replacing a Random Forest
+Classifier with XGBoost for *quality filtering*, not as an albedo correction.
+The characterisation should be treated as unverified.
+
+The comparison is in any case not like for like, and the difference matters more
+than the ratio. A published residual sensitivity is measured after correction
+against reference data, sounding by sounding. The slope here is fitted across an
+annual composite in which albedo is confounded with geography, land cover and
+sampling season, so it absorbs everything that varies spatially with albedo.
+**It is an upper bound on residual albedo sensitivity, not a measurement of it.**
+What can be said without qualification is narrower and still enough: the
+operational correction does not remove the albedo dependence from this
+composite, so the composite carries an albedo-correlated bias of unknown size
+that no step in this pipeline removes.
+
+### What the granule says: nothing
+
+Searched exhaustively, the retained granule
+`S5P_RPRO_L2__CH4____20180514T042147_..._020400_20221109T092730.nc` names no
+bias correction anywhere. No global attribute mentions one. `METADATA/`
+`ALGORITHM_SETTINGS` records `configuration.version.algorithm = '1.5.0'` and
+`configuration.version.framework = '1.2.0'` and the input and output
+configuration, and nothing about a bias or albedo correction or its
+coefficients. The only attributes matching bias, correct or albedo anywhere in
+the file are unrelated: an AAI scene albedo filter count, a sun glint correction
+count and setting, and `processing.correct_surface_pressure_for_altitude`.
+
+The variable's own comment is worse than absent. Verbatim:
+
+> `long_name = 'corrected column-averaged dry-air mole fraction of methane'`
+> `comment = 'This value will be filled with data after the commissioning phase, this is known to be empty for now'`
+
+That comment is a stale commissioning placeholder and it is false in this file:
+the variable differs from the raw retrieval in every one of the 927 covered
+cells. A reader trusting the metadata would conclude the field is empty and
+discard it.
+
+So the correction this composite carries **cannot be identified from the data**.
+It has to be inferred from `processor_version = '2.4.0'`,
+`algorithm_version = '1.5.0'`, `product_version = '1.5.0'` and the product DOI
+`10.5270/S5P-3lcdqiv`, matched against the literature. That inference is not
+made here, because a correction identified by version-number archaeology is not
+a correction whose behaviour can be relied upon.
+
+### The land-cover result does not depend on the variable
+
+Recomputed on the raw retrieval, the corrected one and the deseasonalised field,
+the negative finding holds on all three. Under inverse-variance weighting no
+land-cover model beats the queen-neighbour spatial null on any field, at either
+sample size, under either scheme. On the full 927 cells under spatial blocks,
+none beats it on any field at either weighting.
+
+The exceptions are narrow, unweighted, and identical in kind across all three
+variables, which is what makes them uninteresting: on the 532-cell rice
+subsample under spatial blocks unweighted, land-cover models edge past the null
+by 2 to 5 percent on every field; and under leave-one-province-out unweighted,
+impervious fraction beats it by 2.9 percent on the raw field and 0.3 percent on
+the deseasonalised one. No exception survives weighting.
+
+One difference between the variables is worth recording rather than folding in.
+Controlling for SWIR albedo, the impervious association survives on the **raw**
+retrieval at Pearson +0.150 (p = 4.3e-06) unweighted and +0.125 (p = 1.3e-04)
+weighted, where on the corrected variable it does not, at +0.020 (p = 0.55) and
++0.033 (p = 0.32). The raw retrieval is the one carrying the larger uncorrected
+albedo bias, so the reading that a partial correlation survives there because the
+control is incomplete is at least as available as the reading that there is a
+real urban signal the correction destroys. Either way it does not change the
+headline, because the spatial-null test fails on the raw variable too.
