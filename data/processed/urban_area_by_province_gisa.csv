@@ -1,0 +1,5 @@
+source,year,province,urban_area_km2,boundary,gaia_urban_km2,thesis_urban_km2,gisa_over_gaia
+GISA,2018,Shanghai,2682.2,natural_earth,3433.6,5121,0.781
+GISA,2018,Zhejiang,9003.6,natural_earth,11476.3,14957,0.785
+GISA,2018,Anhui,11010.6,natural_earth,11568.7,10217,0.952
+GISA,2018,Jiangsu,16835.8,natural_earth,22869.4,19430,0.736

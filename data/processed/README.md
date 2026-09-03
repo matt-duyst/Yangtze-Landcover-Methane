@@ -763,3 +763,78 @@ R squared 0.49. notes/decisions.md carries the argument, the granule metadata
 that names no correction at all, and the references.
 
     python scripts/test_albedo_correction.py --write
+
+## impervious_gisa_2018.csv and urban_area_by_province_gisa.csv
+
+An independently built impervious-surface layer, used to test whether the
+negative land-cover finding is an artefact of GAIA's measurement error rather
+than a property of the methane field. Measurement error in a predictor
+attenuates an association toward zero, so it is the threat that bears on a
+negative claim, and answering it needs a second product rather than a better
+argument. The per-cell file carries GISA impervious fraction and its coverage
+on the same 927 cells as analysis_grid_2018.csv; the provincial file carries
+the four 2018 totals beside GAIA's and the thesis's.
+
+Two companion files rather than columns added to existing ones, for a specific
+reason. The rest of a GISA analysis grid would be identical to
+analysis_grid_2018.csv by construction, since methane, rice and province shares
+do not depend on which urban product is used, so a second full grid would be
+ninety percent duplication and an invitation for the two to drift apart. And
+urban_area_by_province.csv cannot take GISA rows at all:
+scripts/compute_urban_areas.py keys rows by year, province and boundary with no
+source component, so GISA rows would collide with GAIA's on the same key and
+break the comparison the script performs before it writes.
+
+The route is the direct bundle from Wuhan University at
+http://irsip.whu.edu.cn/resv2/GISA_tif.zip, 882,324,389 bytes, sha256
+0f5476e39ec7762cea39dbcfd0ccdbd9474db32dc83666e12d284e1227da9a82. GISA's
+documented per-tile links go through Zenodo, which returns 403 at the network
+level from this host, so the whole 882 MB bundle is the only reachable route.
+
+Nothing in the archive says which release it is. It holds 257 tiles named
+urban_1.tif through urban_257.tif inside a GISA_tif/ directory, and no filename
+carries a version, a year or a coordinate. Tiles are ten degrees square, not the
+five GAIA uses, and the four covering the study box were therefore selected by
+reading each member's georeferencing through GDAL's zip virtual filesystem
+without extracting anything, which costs a header read per tile and no disk.
+The release cannot be identified from the archive, and this is recorded rather
+than resolved.
+
+The encoding was confirmed against the documentation over 5,507,866,225 pixels
+in those four tiles. Values 0 to 37 are present and nothing above 37. Zero is
+non-impervious at 96.235 percent of pixels. Values 1 to 37 are the year a pixel
+first became impervious, counting upward through [1972, 1978, 1985, 1986, ...
+2018, 2019], which is the reverse of GAIA, where year = 2023 - value. Nodata is
+undeclared, as it is for GAIA and for the NESDC rice rasters.
+
+Cumulative extent through 2018 is therefore 1 <= value <= 36, which is
+src.landcover.between(1, 36), and not value >= 36. The inverted form selects
+only what was built in 2018 and 2019: 9,468,801 pixels against the correct
+202,830,997, a factor of 21.4. It would have produced an impervious fraction
+twenty-one times too small, and a land-cover association of essentially zero
+that appeared to confirm the study's finding while measuring nothing.
+
+| province | GISA 2018 | GAIA 2018 | thesis | GISA/GAIA |
+|----------|-----------|-----------|--------|-----------|
+| Shanghai | 2,682.2 | 3,433.6 | 5,121 | 0.781 |
+| Zhejiang | 9,003.6 | 11,476.3 | 14,957 | 0.785 |
+| Anhui | 11,010.6 | 11,568.7 | 10,217 | 0.952 |
+| Jiangsu | 16,835.8 | 22,869.4 | 19,430 | 0.736 |
+| total | 39,532.2 | 49,348.0 | 49,725 | 0.801 |
+
+GISA finds 19.9 percent less impervious surface than GAIA across the four
+provinces, but not uniformly: Jiangsu is 26.4 percent lower, Shanghai 21.9 and
+Zhejiang 21.5, while Anhui is only 4.8 percent lower. The direction is the
+opposite of what the global validation literature predicts. GAIA is reported to
+omit impervious surface relative to GISA, with a producer's accuracy worse by
+28.35 percent, which would make GISA the larger here. It is the smaller in every
+province. Whatever holds globally does not transfer to this region, and the
+attenuation argument that motivated fetching GISA does not apply in the
+direction assumed.
+
+    python scripts/fetch_gisa.py --download
+    python scripts/build_analysis_grid.py --urban-source gisa --write --out <path>
+
+The four-way baseline comparison built on this layer is in
+alternative_predictors_2018.csv, and the descriptive comparison between the
+products in predictor_comparison_2018.csv.
