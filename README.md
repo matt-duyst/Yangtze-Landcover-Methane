@@ -24,18 +24,61 @@ has learned nothing about the surface. Under inverse-variance weighting no
 land-cover model clears it anywhere: not on the raw retrieval, the operationally
 corrected one or the seasonally corrected field, at either sample size, under
 either cross-validation scheme. On the full 927 cells held out by spatial
-blocks, none clears it at either weighting; impervious fraction reaches R
-squared 0.096 against the spatial null's 0.343 on the corrected field. The
-exceptions are all unweighted and all small: on the 532-cell subsample that has
-a rice fraction, land-cover models edge past the null by 2 to 5 percent under
-spatial blocks, and impervious fraction beats it by 2.9 percent under
-leave-one-province-out on the raw retrieval. They appear in the same places on
-all three methane fields, which is what makes them look like properties of the
-unweighted comparison rather than of land cover. Rice does worse: its coefficient is +8.83 ppb per unit
-fraction counting cells and -3.20 weighting them by how well each was observed,
-and once wind is included it is negative under both weightings. A coefficient
-that changes sign when cells are weighted by their own precision is not
-evidence of a relationship.
+blocks, none clears it at either weighting: impervious fraction reaches held-out
+R squared 0.096 against the spatial null's 0.343 on the seasonally corrected
+field, and 0.085 against 0.346 on the operationally corrected composite. The
+exceptions are all unweighted and all small, between 1.7 and 6.0 percent, and
+they appear in the same places on every methane field and every predictor pair,
+which is what makes them look like properties of the unweighted comparison
+rather than of land cover.
+
+The 2023 thesis identified paddy rice fields as the dominant driver of the
+methane hotspots. The reanalysis does not support that. Rice fraction's
+coefficient is +8.83 ppb per unit fraction counting cells equally and -3.20
+weighting them by how well each was observed, and once wind is included it is
+negative under both weightings. Its association with methane survives control
+for surface albedo on no methane field at either weighting: the partial
+correlations are -0.010, -0.065, +0.033 and -0.021, none of them distinguishable
+from zero. A coefficient that changes sign when observations are weighted by
+their own precision is not evidence of a relationship.
+
+## Why the finding is not an artefact of measurement error
+
+This is the objection a negative result has to answer, and answering it is the
+reason the study can state one at all.
+
+Contamination of the target biases an association in an unknown direction, so it
+could as easily be hiding a relationship as inventing one. Measurement error in a
+predictor does something specific: it attenuates the association toward zero. So
+predictor error, and only predictor error, is the failure mode that could
+manufacture this result out of nothing, and both predictors carry documented
+error. GAIA is reported to omit impervious surface relative to GISA. The NESDC
+rice rasters have pinned provincial totals, an unclassified region in northern
+and western Anhui, and no declared nodata.
+
+The answer had to be second products with different errors, so four predictor
+pairs were built and the whole baseline suite run over each: GAIA or GISA for
+impervious surface, NESDC or GloRice for rice. **Zero cases beat the spatial null
+under inverse-variance weighting**, across all four pairs, both cross-validation
+schemes and both sample sizes, out of 176 weighted opportunities. The two urban
+products agree at Pearson +0.938 and Spearman +0.956 across all 927 cells, so
+that test is a weak one in that GISA had little room to disagree. The two rice
+products agree only at +0.579 and +0.654, so that test is a real one, and it
+gives the same answer.
+
+One result from that comparison is uninterpretable rather than null and should
+not be read as support for rice. GloRice's raw correlation with methane is
++0.398 against the NESDC classification's +0.101, and its partial correlation
+given albedo survives where NESDC's does not. Four things confound it: it runs on
+927 cells against 532, it allocates official statistics through a model rather
+than observing rice, it correlates with impervious fraction at Spearman +0.561 so
+it partly measures developed land in general, and its NaN means no rice while the
+NESDC blank means not assessed, so the 395 extra cells are precisely the ones
+NESDC declined to assess and 368 of them lie entirely outside the four provinces.
+A predictor that is zero across one coherent region and positive across another
+will correlate with anything else that differs between them.
+
+## What the reanalysis does not establish
 
 That is the strong claim and it is defensible. Everything else the reproduction
 turned up is provisional, and it points the same way: no positive association in
@@ -46,39 +89,57 @@ light and fails preferentially over dark ground, and albedo is more strongly
 associated with the methane field than either land-cover fraction is. Impervious
 fraction and albedo are collinear at Spearman +0.761, and with albedo partialled
 out the impervious association falls from Pearson +0.346 to +0.020, which is
-indistinguishable from zero. This does not prove the land-cover signal is an
+indistinguishable from zero. That does not prove the land-cover signal is an
 artefact, because cities really are bright and controlling for albedo removes
-real urban variation too. It establishes that the data cannot separate the two.
-
-None of that is a discovery. The albedo dependence is a documented property of
-the retrieval and the operational product ships a correction for it, which this
-composite already carries. The correction does not remove it: the corrected
-variable retains a slope of 199.8 ± 6.7 ppb per unit albedo at R squared 0.49,
-against 203.8 for the raw retrieval. That slope is an upper bound rather than a
-measurement of instrument sensitivity, because a composite confounds albedo with
-geography and season, but it is enough to say the composite carries an
-albedo-correlated bias that nothing in this pipeline removes.
+real urban variation too; it establishes that the data cannot separate the two.
+None of it is a discovery either. The dependence is a documented property of the
+retrieval and the operational product ships a correction, which this composite
+carries and which does not remove it: the corrected variable retains a slope of
+199.8 ± 6.7 ppb per unit albedo at R squared 0.49, against 203.8 raw.
 
 Sampling is the second and larger reason. Each cell's annual mean is taken over
 whichever days happened to be observed there, and those days differ
 systematically: per-cell mean day of year runs from 124 to 352, a range of 228
 days, against a seasonal swing more than twice the spatial spread of the field
 being analysed. A variable encoding nothing but when each cell was observed
-reaches held-out R squared 0.426 and beats the spatial null. Fitting a shared
-seasonal cycle at the sounding level and removing it, which is what
-`src/methane/seasonal.py` does in a single streaming pass, removed 20.6 percent
-of the between-cell variance and left every association essentially where it
-was. The residual appears to be day-specific rather than seasonal: cells sampled
-on few dates inherit those overpasses' synoptic conditions, which no function of
-day-of-year can reach. Two competing explanations were ruled out and that one
-was not, which is weaker than having confirmed it.
+reaches held-out R squared 0.426 on the seasonally corrected field and 0.467 on
+the composite, beating the spatial null on both. Fitting a shared seasonal cycle
+at the sounding level and removing it, which is what `src/methane/seasonal.py`
+does in a single streaming pass, removed 20.6 percent of the between-cell
+variance and left every association where it was. The residual appears to be
+day-specific rather than seasonal: cells sampled on few dates inherit those
+overpasses' synoptic conditions, which no function of day-of-year can reach.
+Two competing explanations were ruled out and that one was not, which is weaker
+than having confirmed it.
 
 The consequence is that the wind result, which looks like the reproduction's
 best model at held-out R squared 0.650, is uninterpretable. It cannot be
-separated from sampling season. The negative land-cover result is the one
-finding that survives all of this, and it is stronger for having done so: a
-confound large enough to carry wind and albedo through a correction still does
-nothing for land cover.
+separated from sampling season.
+
+The pipeline also omits preprocessing the literature applies. It does not
+destripe the across-track bias, does not clear cloud beyond the quality filter,
+does not separate the boundary layer from the free troposphere, and does not
+work with departures from a model forecast. `notes/decisions.md` lists each with
+what it would take: the first two are reachable with what is already read, the
+second two need external reanalysis or a transport model.
+
+The last is gated rather than abandoned. Subtracting the TM5 a priori that ships
+inside every granule would remove background, season and synoptic structure at
+once, and one granule established the prior is coarse enough to subtract safely:
+its half-sill range is 117.4 km against a 27.8 km cell, contributing 1.4 percent
+of the variation at cell scale. It was not pursued because the departure
+inherits the albedo bias intact while removing only 3.5 percent of the variance,
+which makes that problem worse as a share of what remains, and because one
+granule holds no seasonal or synoptic variation to test the thing the approach
+is for. `src/methane/apriori.py` is committed and tested but uncalled, so
+resuming it is a configuration change rather than a rebuild.
+
+None of this weakens the negative finding, and some of it strengthens it. A
+confound large enough to carry the wind and albedo associations through a
+seasonal correction still does nothing for land cover. And correcting a
+retrieval bias that is correlated with the predictor would remove signal from
+the land-cover association rather than add it, so the uncorrected bias is not
+hiding a relationship that a cleaner field would reveal.
 
 `notes/decisions.md` carries the argument for each of these in full, with the
 measurements they rest on.
@@ -88,10 +149,12 @@ measurements they rest on.
 The pipeline is complete for everything except the model, which the baselines
 now argue against building. Three fetch modules sit over a shared core that
 resumes partial downloads, writes atomically, and verifies a digest where the
-source publishes one: figshare exposes `computed_md5` per file, Science Data
-Bank exposes a public Croissant export, and the Sentinel-5P mirror publishes no
-usable checksum at all, so verification there is structural instead and a
-granule must open as netCDF4 with the expected group before it is accepted.
+source publishes one: figshare exposes `computed_md5` per file and Science Data
+Bank a public Croissant export. A fourth route, GISA, uses that core directly
+rather than through a module of its own, because its whole distribution is one
+882 MB bundle whose 257 tiles carry no version, year or coordinate in any
+filename, so the tiles covering the study box are found by reading each member's
+georeferencing out of the archive without extracting it.
 
 `src/landcover/` computes zonal statistics over provincial polygons with the
 constraints enforced by the types rather than by convention: a fraction divides
@@ -104,16 +167,13 @@ cells are excluded by the type instead of by a filter someone can forget.
 
 `src/methane/` reads Sentinel-5P Level 2 granules with auto-masking off,
 applying each variable's own fill value and scale factor, and streams a full
-year of them one at a time. The 2018 composite is 28.9 GB of granules processed
-at a peak working-directory size of one granule, checkpointed atomically so a
-crash costs a minute rather than an hour. `src/model/` holds the baselines and
-the association tests: constant predictors, per-province constants, ordinary
-least squares on the fractions and the covariates, the spatial null, and
-leave-one-province-out and spatial-block cross-validation, because cells are
-contiguous and a random split leaks a cell's own neighbours into its training
-set.
+year one granule at a time: the 2018 composite is 28.9 GB processed at a peak
+working-directory size of one granule, checkpointed atomically. `src/model/`
+holds the baselines and the association tests, with leave-one-province-out and
+spatial-block cross-validation, because cells are contiguous and a random split
+leaks a cell's own neighbours into its training set.
 
-There are 345 tests. All of them run offline on a clone with nothing fetched.
+There are 403 tests. All of them run offline on a clone with nothing fetched.
 
 ## Regenerating the results
 
@@ -131,6 +191,8 @@ In outline:
 | albedo confounder test | `test_albedo_confounder.py --write` | seconds |
 | deseasonalisation test | `test_deseasonalisation.py --write` | seconds |
 | albedo correction test | `test_albedo_correction.py --write` | seconds |
+| GISA impervious layer | `fetch_gisa.py --download` then `build_analysis_grid.py --urban-source gisa` | 882 MB, ~15 minutes |
+| predictor robustness | `test_alternative_predictors.py --write` | seconds, over four prebuilt grids |
 
 The composite is the expensive one and it is the only one. It downloads,
 grids and deletes each granule in turn, so it needs 28.9 GB of transfer but only
@@ -190,7 +252,16 @@ digests for the four sources whose fetch scripts write to it. In brief:
 | Sentinel-5P TROPOMI | Level 2 methane, RPRO stream, processor 020400 | Copernicus open and free data policy |
 | Natural Earth | 10 m admin-1 provinces | public domain |
 | Science Data Bank rice | classified single-season rice, 10 m, by province | not in the manifest |
+| GISA | global impervious surface area, 30 m, 1972–2019 | not stated on the download page |
+| NESDC rice | classified single and double season rice, 10 m | personal-use grant, not scripted |
 | SPAM, GADM | rice area, provincial boundaries | not redistributed, see above |
+
+Two sources publish no usable checksum. Every S3 ETag on the Sentinel-5P mirror
+is a multipart tag, an MD5 of the part MD5s with an unpublished part size, so
+verification there is structural: a granule must open as netCDF4 and hold a
+PRODUCT group with the expected variables. GISA's bundle publishes no digest
+either, so its sha256 was computed on first download and pinned in
+`config/sources.yml`, and a changed distribution stops the fetch.
 
 Two gaps are worth naming. The Science Data Bank rice product has a fetch
 module but its script does not write a manifest entry, so the product the
@@ -206,18 +277,15 @@ coverage by one year.
 Four of these were decided before any code was written, in
 `notes/repository-architecture.md`, and are carried forward unchanged.
 
-It does not claim that the 2023 model results are reproduced. They cannot be: no
-checkpoint exists and the stored outputs cannot be attributed to the committed
-code. It does not claim that predicted XCH4 fields represent emissions; they
-would represent a learned spatial association with land cover, and the
-distinction is stated wherever a prediction appears. It does not present the
+It does not claim that the 2023 model results are reproduced: no checkpoint
+exists and the stored outputs cannot be attributed to the committed code. It
+does not claim that predicted XCH4 fields represent emissions; they would
+represent a learned spatial association with land cover. It does not present the
 2026 numbers as corrections to the 2023 numbers; they are a second computation
 under documented conditions, reported alongside. And it does not report a
-validation metric against a dataset measuring a different quantity, so
-comparisons against emission inventories are directional consistency checks and
-are labelled as such.
+validation metric against a dataset measuring a different quantity.
 
-To those the reproduction adds one more. It does not claim that any positive
+To those the reproduction adds two more. It does not claim that any positive
 association in this data is attributable. The urban association cannot be
 separated from a surface-albedo retrieval bias, the wind association cannot be
 separated from sampling season, and the composite's dominant axis of variation
@@ -225,10 +293,17 @@ is when each cell was observed rather than where it is. The negative result is
 the only claim here that does not depend on resolving those, which is why it is
 the only one stated without qualification.
 
+And it does not claim that GloRice's stronger rice association is evidence for
+rice. That result is confounded four ways, as set out above, and is
+uninterpretable rather than positive or null.
+
 ## Layout
 
 `src/` holds the pipeline, one package per concern, with `scripts/` as thin CLI
-entry points over it and `tests/` mirroring both. `config/sources.yml` carries
+entry points over it and `tests/` mirroring both. One module,
+`src/methane/apriori.py`, is committed and tested but called by nothing: it is
+the gated departure work, kept so that resuming it costs a configuration change
+rather than a rebuild. `config/sources.yml` carries
 dataset versions, bounds, thresholds and the covariate list, each with the
 reasoning that fixed it. `data/processed/` holds the small derived tables,
 committed, with their own README; `data/raw/` and `data/interim/` are
