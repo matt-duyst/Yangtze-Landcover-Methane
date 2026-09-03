@@ -14,7 +14,7 @@ listing two of six authors in reverse order. And a benchmark was attributed to
 the TROPOMI/WFMD v2.0 paper, whose abstract describes quality filtering rather
 than the albedo correction the benchmark was said to come from.
 
-`notes/references.bib` carries the same twenty-six entries as BibTeX. It is
+`notes/references.bib` carries the same twenty-seven entries as BibTeX. It is
 **generated**, not typed: each entry comes from `https://doi.org` under content
 negotiation for `application/x-bibtex`, so the two files cannot drift and no
 transcription step exists between the registry and the repository. Regenerate it
@@ -26,7 +26,7 @@ discusses a work the thesis cites, the work appears here and its role says so.
 
 ## What could not be verified
 
-Nothing in the register failed to verify. All twenty-six DOIs resolved: twenty
+Nothing in the register failed to verify. All twenty-seven DOIs resolved: twenty-one
 through Crossref and six through DataCite, which is the registry that carries
 dataset DOIs and the reason a Crossref-only lookup returns "not found" for the
 deposits.
@@ -268,6 +268,20 @@ Anthropogenic CH4 Emissions in the Yangtze River Delta Based on A "Top-Down"
 Method. *Atmosphere* 10, 185.
 `10.3390/atmos10040185` — peer-reviewed paper; a finding relied on. A top-down
 regional estimate for the same area.
+
+**Da Pan, Tao, L., Sun, K., Golston, L. M., Miller, D. J., Zhu, T., Qin, Y.,
+Zhang, Y., Mauzerall, D. L., and Zondlo, M. A. (2020).** Methane emissions from
+natural gas vehicles in China. *Nature Communications* 11, 4588.
+`10.1038/s41467-020-18141-0` — peer-reviewed paper; a finding contested. This is
+the source the thesis cites for attributing urban methane to natural gas
+vehicles. It measured heavy-duty vehicles at about 90 percent above their
+emission limits and framed the problem as one of standards and enforcement; it
+describes neither retrofitting nor faulty tailpipes, which is the thesis's
+framing. See `ERRATA.md` 5.3. Crossref stores the first author as the literal
+string "Da Pan" with no given name, which is the same name-order hazard recorded
+in `notes/decisions.md` for the GloRice deposit, and the reason the DOI rather
+than the name is the thing carried forward.
+Cited in `ERRATA.md`.
 
 **Zhao, S., Zhang, Y., Liang, R., Chen, W., Xie, X., Wang, R., Xia, Z.,
 Shen, J., and 2 others (2024).** Low Methane Emissions from the Natural Gas

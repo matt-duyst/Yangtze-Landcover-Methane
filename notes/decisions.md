@@ -1415,3 +1415,81 @@ neighbour term. So an unbuffered scheme should if anything **inflate the bar** t
 land-cover models fail to clear. The negative finding is therefore not threatened
 by this, and might be understated by it. Buffering would be the way to find out
 and is not done here.
+
+## The errata made the error the errata documents
+
+The reference register's second useful finding was an unsourced claim, and it
+was found by trying to cite the claim rather than by reviewing it.
+
+`ERRATA.md` 5.3 asserted that waste treatment, meaning landfill, incineration
+and sewage, is the dominant anthropogenic methane source at city scale in China,
+and used that to argue the thesis's attribution of urban methane to natural gas
+vehicles was misplaced. Four rounds of searching returned landfill and
+wastewater studies for other regions and nothing supporting the claim for
+Chinese cities as stated. Nobody had reviewed the section and doubted it; the
+claim only failed when someone tried to put a DOI next to it.
+
+**The symmetry is exact and worth stating plainly.** `ERRATA.md` 5.3 criticises
+the thesis for describing a mechanism its own cited source does not report: the
+thesis frames urban methane as retrofitted vehicles and faulty tailpipes, while
+Da Pan et al. (2020, doi:10.1038/s41467-020-18141-0) measured heavy-duty
+vehicles against emission standards and described neither. The errata then did
+the same thing one paragraph later, asserting a sectoral dominance no source it
+could name supported. A document whose purpose is to catch claims stated more
+strongly than their sources allow made that error itself, in public, and kept it
+until the register forced the question.
+
+5.3 now says only what is sourced: that the cited source does not report the
+thesis's mechanism, that a mobile-measurement study in this region finds the gas
+distribution system a low emitter, and that a regional inversion puts
+agricultural soil largest at 29.6 percent. The absence of a waste layer in the
+thesis is recorded as an omission from its source inventory rather than as a
+claim about how large waste is, because that is the difference between what can
+and cannot be supported.
+
+**Why the register sits beside the claims.** A claim about the world is only as
+good as the citation beside it, and a citation in `notes/references.md` that
+nobody reads while reading the claim is barely better than none. That is why the
+method citations were placed in `ERRATA.md` and `data/processed/README.md` at the
+point of use rather than only in the register. The register's value is that it
+makes the arithmetic visible; the citation's value is that it is where the reader
+already is.
+
+## Twelve more claims about the world are uncited
+
+An audit prompted by 5.3 went through `ERRATA.md`, `README.md` and
+`data/processed/README.md` looking for the same shape of claim: an assertion
+about the world rather than about the thesis, the notebook, or a committed
+artefact. Claims of the first kind are checkable against a file; claims of the
+second are not, and are the ones at risk.
+
+There are twelve, which is more than a handful and so a larger problem than one
+section. **Nine have no source anywhere:**
+
+| where | claim |
+|-------|-------|
+| ERRATA 2.3 | 1.8 million km2 is the Yangtze's drainage basin area, not its extent |
+| ERRATA 2.4 | TROPOMI nadir resolution was refined to about 7 by 5.5 km in August 2019 |
+| ERRATA 3.3 | ImageNet channel statistics are only meaningful with an ImageNet-pretrained encoder |
+| ERRATA 4.2 | convolutional networks are approximately translation equivariant and are not scale invariant |
+| ERRATA 5.1 | four categories of post-2023 reference dataset exist; none is named or cited |
+| ERRATA 5.4 | current syntheses give methane GWP as 28 to 36 over 100 years and 84 to 87 over 20 |
+| ERRATA 6.2 | a Moran's z-score scales with feature count, and column autocorrelation follows from transport and retrieval binning |
+| processed README | the literature reports a seasonal surface-albedo bias in TROPOMI methane over agricultural land |
+| processed README | the instrument is known to fail over dark steep terrain |
+
+**Three have a source in the register but no citation at the point of claim:**
+the GAIA omission error and its 28.35 percent producer's-accuracy figure, in
+`README.md` and `data/processed/README.md`, which come from the GISA paper
+(doi:10.1007/s11430-020-9797-9); the documented albedo dependence and its
+operational correction in `README.md`, which is Lorente et al.
+(doi:10.5194/amt-14-665-2021); and the claim that the reference data the thesis
+said did not exist has since been published, which is partly Shen et al.
+(doi:10.5194/essd-15-3203-2023) but names two other products that are still
+uncited.
+
+None of these is fixed here, deliberately. The list is recorded first because
+the pattern is the point: the errata and the READMEs accumulated background
+assertions that read as common knowledge and were never tested, exactly as 5.3
+did. Several will be easy, some are textbook facts that still need a textbook,
+and ERRATA 5.1 may need narrowing rather than citing, as 5.3 did.

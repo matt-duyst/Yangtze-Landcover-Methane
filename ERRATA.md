@@ -299,25 +299,40 @@ doi:10.1038/s41467-021-21437-4), the reply. All three are in
 ### 5.3 Urban methane attributed to natural gas vehicles
 
 Sections 1.1 and 1.5 attribute urban methane to natural gas vehicles, with a
-framing of retrofitted vehicles and faulty tailpipes. The cited source
-measured real-world emissions from heavy-duty natural gas vehicles and
-attributed them to engine and aftertreatment behaviour; it does not support
-the retrofitting framing. Mobile measurements in a Yangtze River Delta megacity
-subsequently found the natural gas distribution system there to be a low
-emitter (Zhao et al., 2024, ACS ES&T Air 1, 1511-1518,
-doi:10.1021/acsestair.4c00068), which is the regional measurement the
-attribution has to answer to. Sectoral partitioning of anthropogenic methane for
-this region exists and does not put vehicles first (Hu et al., 2019, Journal of
-Geophysical Research: Biogeosciences 124, 1148-1170, doi:10.1029/2018JG004850).
-Impervious surface should be described as a proxy for the urban source bundle as
-a whole rather than for vehicle emissions.
+framing of retrofitted vehicles and faulty tailpipes. The source cited for it is
+Da Pan et al. (2020, Nature Communications 11, 4588,
+doi:10.1038/s41467-020-18141-0), which measured real-world emissions from
+heavy-duty natural gas vehicles in China and found them about 90 percent above
+the applicable emission limits, concluding that switching to natural gas
+vehicles has produced a net increase in greenhouse gas emissions since 2000. It
+frames the problem as one of emission standards and their enforcement. It
+describes neither retrofitting nor faulty tailpipes, so the thesis's mechanism
+is not the one its own source reports.
 
-This item previously also asserted that waste treatment is the dominant
-anthropogenic methane source at city scale in China. That claim is left
-unsourced: searches for it returned landfill and wastewater work for other
-regions and nothing supporting it for Chinese cities as stated. It should be
-struck or narrowed to what the two citations above support, and
-`notes/decisions.md` records the attempt.
+Two further studies bear on the attribution, both postdating the thesis. Mobile
+measurements in Hangzhou, a Yangtze River Delta megacity, found the natural gas
+distribution system there to be a low emitter (Zhao et al., 2024, ACS ES&T Air
+1, 1511-1518, doi:10.1021/acsestair.4c00068). And a Bayesian inversion of this
+region's methane budget found agricultural soil to be the largest single
+contributor at 29.6 percent (Hu et al., 2019, Journal of Geophysical Research:
+Biogeosciences 124, 1148-1170, doi:10.1029/2018JG004850). What that paper
+reports for the urban and waste sectors specifically could not be established
+from its abstract and is not claimed here.
+
+The thesis also includes no waste layer and does not mention the sector. That is
+recorded as an omission from the source inventory, not as a claim about how large
+the waste contribution is; no source was found that would support a statement
+about its share for Chinese cities. Impervious surface should therefore be
+described as a proxy for the urban source bundle as a whole rather than for
+vehicle emissions in particular.
+
+*Verified by:* the abstract of the cited source resolved through Crossref, which
+names heavy-duty vehicle measurements and emission standards and contains no
+mention of retrofitting; and the abstracts of the two later studies, which supply
+the regional measurement and the 29.6 percent partitioning figure. An earlier
+version of this item asserted that waste treatment is the dominant anthropogenic
+methane source at city scale in China; that assertion was withdrawn as
+unsourced, and `notes/decisions.md` records why.
 
 ### 5.4 Global warming potential
 
