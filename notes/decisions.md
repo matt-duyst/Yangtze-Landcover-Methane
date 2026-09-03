@@ -1043,3 +1043,80 @@ The order of value here is roughly the reverse of the order of cost. Destriping
 and cloud clearing are cheap and would tidy the field. Boundary-layer separation
 and model departures are expensive, need external data, and are the two that
 would actually change what the field means.
+
+## The negative finding survives independently built predictors
+
+### Why predictor error is the threat that mattered
+
+The study's one firm claim is negative, and a negative claim is not threatened
+by the same things a positive one is. Contamination of the target biases an
+association in an unknown direction, so it could as easily be hiding a
+relationship as inventing one. Measurement error in a predictor does something
+specific: it attenuates the association toward zero. So predictor error, and
+only predictor error, is the failure mode that could manufacture this study's
+result out of nothing.
+
+Both predictors carry documented error. GAIA is reported to omit impervious
+surface relative to GISA, with a producer's accuracy worse by 28.35 percent on
+124,190 validation samples. The NESDC rice rasters have totals pinned for
+Shanghai and Jiangsu across several years, an unclassified region beyond
+33.3462 north and 115.2682 east in Anhui, and no declared nodata. Both of those
+are recorded in their own sections above. Neither can be argued away, so the
+answer had to be a second product with different errors.
+
+### The result
+
+Four predictor pairs were built and the full baseline suite run over each:
+GAIA or GISA for impervious surface, NESDC or GloRice for rice.
+
+**Zero cases beat the queen-neighbour spatial null under inverse-variance
+weighting**, across all four pairs, both cross-validation schemes and both
+sample sizes. Not one, out of 88 opportunities.
+
+Eight unweighted cases beat it, and they appear on every pair, which is what
+makes them a property of the unweighted comparison rather than of any product.
+Six are on the 532-cell rice subsample under spatial blocks, at margins of 1.74
+to 2.55 percent, near-identical between GAIA and GISA. Two are impervious plus
+rice under leave-one-province-out on the GloRice grids, at 4.34 and 5.97
+percent. A finding that survives when observations are weighted by their own
+precision and fails only when a badly observed cell counts as much as a well
+observed one is not a finding.
+
+The two urban products agree closely: Pearson +0.9379 and Spearman +0.9559
+across all 927 cells. The two rice products agree less: Pearson +0.5790 and
+Spearman +0.6537 on the 532 cells where both exist. So the urban test is a weak
+one, in that GISA had little room to disagree, while the rice test is a genuine
+one, and both give the same answer.
+
+### Why GloRice does not strengthen the case for rice
+
+GloRice's raw correlation with methane is +0.3983 against the NESDC
+classification's +0.1014, and its partial correlation given surface albedo
+survives at +0.1652 (p = 4.3e-07) where NESDC's does not, at -0.0098 (p = 0.82).
+Read alone, that looks like the rice signal the study set out to find, emerging
+once a better rice product is used. It is not, and four things confound it.
+
+It runs on 927 cells against NESDC's 532. It allocates official statistics to
+grid cells through a model rather than observing rice, so it inherits the
+statistics' accuracy and the allocation's assumptions and cannot be an
+independent observation of extent. It correlates with impervious fraction at
+Spearman +0.5613, so it partly measures developed land in general rather than
+paddy in particular. And its NaN means no rice while the NESDC blank means not
+assessed, so the 395 extra cells are precisely the ones NESDC declined to
+assess, of which 368 lie entirely outside the four provinces.
+
+That last point is the one that settles it. A predictor which is zero across a
+coherent region and positive across another will correlate with anything else
+that differs between those two regions, and the methane field differs between
+them for reasons this repository has already documented at length. The
+comparison is not rice against no-rice; it is inside-the-provinces against
+outside, wearing a rice label.
+
+### What this establishes
+
+The negative finding is not an artefact of predictor measurement error. Two
+independently built impervious products agreeing at Spearman +0.956 give the
+same answer, and a rice product with an entirely different error structure gives
+the same answer under weighting. This is the strongest support the negative
+result has, and it is the reason it can be stated without the qualifications
+every positive result in this repository carries.
