@@ -125,6 +125,18 @@ class Accumulator:
         #: One (newly covered, cumulative covered) pair per granule added, in
         #: the order they were added. See the class docstring.
         self.saturation: list[tuple[int, int]] = []
+        #: The set of cells each granule touched, one packed bitmap per
+        #: granule, in the same order as `contributions`.
+        #:
+        #: The saturation pair above cannot answer per-granule coverage: a
+        #: newly-covered count of zero is recorded both by a granule that
+        #: covered nothing and by one that covered three hundred cells another
+        #: granule had already reached, and 141 of the 222 productive granules
+        #: in the 2018 run recorded exactly zero. The cell *set* separates
+        #: them. Packed to bits it is ceil(n_cells / 8) bytes per granule,
+        #: 128 for this grid, so a full year costs about 74 kB against a
+        #: 285 kB checkpoint, which is cheap enough not to need a decision.
+        self.granule_cells: list[np.ndarray] = []
         #: Sufficient statistics for the shared seasonal fit. Accumulated at the
         #: sounding level so the cycle can be removed before the cell mean is
         #: taken, in one pass and without holding a sounding twice.
@@ -135,12 +147,25 @@ class Accumulator:
         """Cells with at least one sounding so far."""
         return int((self.counts > 0).sum())
 
+    def _pack_cells(self, row=None, col=None) -> np.ndarray:
+        """One granule's touched cells as a packed bitmap over the flat grid."""
+        flat = np.zeros(self.spec.n_cells, dtype=bool)
+        if row is not None and len(row):
+            flat[np.asarray(row) * self.spec.n_cols + np.asarray(col)] = True
+        return np.packbits(flat)
+
     def add(self, soundings, contribution: GranuleContribution) -> None:
         before = self.covered
         self.contributions.append(contribution)
         self.done.add(contribution.granule)
-        if len(soundings):
+        if not len(soundings):
+            # An empty granule still gets a row, all zero, so that the cell
+            # sets stay index-aligned with `contributions`. A shorter array
+            # would silently reassign every later granule's set.
+            self.granule_cells.append(self._pack_cells())
+        else:
             row, col, _ = self.spec.cell_of(soundings.latitude, soundings.longitude)
+            self.granule_cells.append(self._pack_cells(row, col))
             np.add.at(self.counts, (row, col), 1)
             for name in self.variables:
                 np.add.at(self.sums[name], (row, col), soundings.values[name])
@@ -176,6 +201,12 @@ class Accumulator:
             "contributions": np.array(
                 json.dumps([c.as_dict() for c in self.contributions])),
             "saturation": np.array(self.saturation, dtype="int64").reshape(-1, 2),
+            # One row per granule, in contribution order, bit i set where the
+            # granule reached flat cell i.
+            "granule_cells": (np.array(self.granule_cells, dtype="uint8")
+                              if self.granule_cells
+                              else np.empty((0, (self.spec.n_cells + 7) // 8),
+                                            dtype="uint8")),
             "covariates": np.array(json.dumps(
                 [{"name": c.name, "group": c.group} for c in self.covariates])),
             # The seasonal sufficient statistics. Written as a block so a
@@ -228,6 +259,13 @@ class Accumulator:
             # fabricated one.
             saved = (data["saturation"].astype("int64")
                      if "saturation" in data.files else np.empty((0, 2), "int64"))
+            # Checkpoints written before cell sets were retained have no such
+            # key, and the sets cannot be reconstructed from a finished grid.
+            # An older checkpoint loads with an empty record rather than a
+            # fabricated one, exactly as the saturation curve does.
+            acc.granule_cells = [row.copy() for row in
+                                 data["granule_cells"].astype("uint8")] \
+                if "granule_cells" in data.files else []
             if "hs::n" in data.files:
                 acc.harmonics = se.HarmonicStats(
                     spec.shape, se.HarmonicBasis(int(data["harmonics"])),
@@ -249,7 +287,10 @@ class Accumulator:
                 soundings_valid=record["soundings_valid"],
                 soundings_in_box=record["soundings_in_box"],
                 covariates_valid=record.get("covariates_valid", {}),
-                covariates_missing=tuple(record.get("covariates_missing", ()))))
+                covariates_missing=tuple(record.get("covariates_missing", ())),
+                departure_mean=record.get("departure_mean"),
+                departure_sd=record.get("departure_sd"),
+                departure_n=record.get("departure_n", 0)))
             acc.done.add(record["granule"])
         return acc
 

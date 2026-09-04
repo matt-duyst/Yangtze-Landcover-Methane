@@ -112,6 +112,15 @@ class GridSpec:
         return np.atleast_1d(row), np.atleast_1d(col), np.atleast_1d(inside)
 
 
+#: Group marker for a covariate that is computed rather than read. A spec
+#: carrying it is not looked for in the file; `read_soundings` derives it.
+DERIVED = "derived"
+#: The TM5 a priori column, in ppb, from the profiles inside every granule.
+APRIORI = "xch4_apriori"
+#: Bias-corrected retrieved minus a priori, in ppb.
+DEPARTURE = "xch4_departure"
+
+
 @dataclass(frozen=True)
 class CovariateSpec:
     """One support-data variable and the group it lives in.
@@ -198,6 +207,14 @@ class GranuleContribution:
     #: Covariates the granule does not contain at all. A granule missing one is
     #: still gridded for everything else rather than being discarded.
     covariates_missing: tuple[str, ...] = ()
+    #: Mean and spread of the in-box departure for this granule, and the count
+    #: they rest on. Recorded per granule rather than only per cell so that a
+    #: swath sitting systematically high or low against the prior is
+    #: identifiable as a synoptic anomaly instead of being averaged into the
+    #: cells it crossed.
+    departure_mean: float | None = None
+    departure_sd: float | None = None
+    departure_n: int = 0
 
     @property
     def year(self) -> int | None:
@@ -213,6 +230,9 @@ class GranuleContribution:
             "soundings_in_box": self.soundings_in_box,
             "covariates_valid": dict(self.covariates_valid),
             "covariates_missing": list(self.covariates_missing),
+            "departure_mean": self.departure_mean,
+            "departure_sd": self.departure_sd,
+            "departure_n": self.departure_n,
         }
 
 
@@ -398,6 +418,12 @@ def read_soundings(
     own attributes. A covariate that is absent from the granule is recorded in
     the contribution and skipped; it does not fail the granule, because one
     missing support field is not a reason to discard a swath of methane.
+
+    A covariate whose group is :data:`DERIVED` is computed rather than read.
+    The two that exist are the TM5 a priori column and the departure of the
+    bias-corrected retrieval from it, both in ppb. They travel as ordinary
+    covariates so that each carries its own count and neither can be separated
+    from the denominator it was averaged over.
     """
     import netCDF4
 
@@ -410,6 +436,9 @@ def read_soundings(
         lat, lat_fill, _, _ = _read_variable(group, "latitude")
         lon, lon_fill, _, _ = _read_variable(group, "longitude")
         qa_raw, qa_fill, qa_scale, qa_offset = _read_variable(group, "qa_value")
+
+        wanted = [c for c in covariates if c.group != DERIVED]
+        derived = [c for c in covariates if c.group == DERIVED]
 
         read_values = {}
         good = np.ones(lat.shape, dtype=bool)
@@ -437,7 +466,7 @@ def read_soundings(
         # Covariates are read on `keep` and never fold into it.
         covariate_values, covariate_masks = {}, {}
         missing: list[str] = []
-        for covariate in covariates:
+        for covariate in wanted:
             try:
                 source = open_group(dataset, covariate.path)
                 raw, fill, scale, offset = _read_variable(source, covariate.name)
@@ -450,6 +479,12 @@ def read_soundings(
             value, ok = _scaled(raw, fill, scale, offset)
             covariate_values[covariate.name] = value[keep]
             covariate_masks[covariate.name] = ok[keep]
+
+        departure_stats = (None, None, 0)
+        if derived:
+            departure_stats = _derive_apriori(
+                dataset, path, derived, read_values.get(PRIMARY), keep,
+                covariate_values, covariate_masks, missing)
 
         acquired = _acquired_from(dataset, path)
         soundings = Soundings(
@@ -467,8 +502,69 @@ def read_soundings(
         soundings_valid=valid, soundings_in_box=len(soundings),
         covariates_valid={k: int(m.sum()) for k, m in covariate_masks.items()},
         covariates_missing=tuple(missing),
+        departure_mean=departure_stats[0], departure_sd=departure_stats[1],
+        departure_n=departure_stats[2],
     )
     return soundings, contribution
+
+
+def _derive_apriori(dataset, path, derived, retrieved, keep,
+                    values, masks, missing) -> tuple:
+    """Compute the a priori column and the departure for one open granule.
+
+    Done here, on the dataset the caller already has open, rather than through
+    ``apriori.from_granule``, which would reopen and re-read a 58 MB file for
+    quantities the streaming loop is holding anyway.
+
+    Returns the granule's mean, spread and count of in-box departure. A
+    granule with no usable prior yields ``(None, None, 0)`` and is not a
+    failure: one missing support field is not a reason to discard a swath.
+    """
+    from src.methane import apriori as ap
+
+    names = {c.name for c in derived}
+    unknown = names - {APRIORI, DEPARTURE}
+    if unknown:
+        raise MissingVariable(f"unknown derived covariate(s) {sorted(unknown)}")
+
+    try:
+        node = open_group(dataset, ap.INPUT_DATA)
+        # The variables are checked before either is read. A granule that has
+        # the group but not the profiles must be recorded as missing them, not
+        # raise: one absent support field is not a reason to discard a swath of
+        # methane, which is the same contract the read covariates keep.
+        for name in (ap.PROFILE, ap.DRY_AIR):
+            if name not in node.variables:
+                raise MissingVariable(f"no variable {name!r} in {'/'.join(ap.INPUT_DATA)}")
+        methane, m_fill, m_raw = ap.read_profile(node, ap.PROFILE)
+        dry_air, a_fill, a_raw = ap.read_profile(node, ap.DRY_AIR)
+    except (MissingVariable, ap.AprioriError, KeyError):
+        missing.extend(sorted(names))
+        return (None, None, 0)
+
+    column = ap.column_apriori(methane, dry_air, methane_fill=m_fill,
+                               dry_air_fill=a_fill, methane_raw=m_raw,
+                               dry_air_raw=a_raw)
+
+    if APRIORI in names:
+        values[APRIORI] = column.values[keep]
+        masks[APRIORI] = column.valid[keep]
+
+    if DEPARTURE not in names:
+        return (None, None, 0)
+    if retrieved is None:
+        missing.append(DEPARTURE)
+        return (None, None, 0)
+
+    gap = ap.departure(np.asarray(retrieved, dtype="float64"), column)
+    ok = np.isfinite(gap)
+    values[DEPARTURE] = gap[keep]
+    masks[DEPARTURE] = ok[keep]
+
+    inbox = gap[keep][ok[keep]]
+    if not inbox.size:
+        return (None, None, 0)
+    return (float(inbox.mean()), float(inbox.std()), int(inbox.size))
 
 
 def _acquired_from(dataset, path: Path) -> datetime | None:
