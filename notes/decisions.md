@@ -1815,3 +1815,52 @@ fills. Four fills plus land and sea is six areal classes, and six classes
 cannot all be 0.15 apart in luminance on a zero-to-one scale without some of
 them being too dark to read a label on. The names carry the identity, which is
 what names are for.
+
+## The study area map shows the grid extent and not the coverage
+
+The map does not distinguish the 927 cells that carry methane from the 96 that
+do not. That was a real choice and it cuts both ways: showing the analysis
+extent without saying that 9.4 percent of it is unobserved overstates the
+coverage, but drawing the coverage mask here would pre-empt the composite
+figure, whose central problem it is, and split one argument across two figures.
+
+The resolution is that the caption states the fraction and names the figure
+that shows which cells. A reference map's job is to orient, and a reader who
+learns the coverage number in the caption is not misled by a map that does not
+draw it.
+
+## The lattice is drawn at every cell edge, weighted in two grades
+
+Sixty-six lines will fight the province boundaries if they are all drawn alike.
+Cell edges are drawn as light as a 300 dpi raster will hold and every fourth
+line, which is a whole degree, slightly heavier, so the reader gets the grid as
+a texture and the graticule as structure from one set of lines rather than two
+overlaid. There is no separate background graticule; the venue standard forbids
+gridlines and the lattice is the only grid on the map.
+
+## The map is not full width, and that is the point of having a default
+
+`style.py` sets `FULL_WIDTH_CM` as the project default and says that a figure
+which should be narrow passes its own width deliberately. This is the first
+figure to do so. Its extent draws 1.24 times taller than wide, so at 17 cm the
+map would have sat in a band of white with the drawing itself no larger, and
+the figure is 11.4 cm instead.
+
+The height is not chosen at all. `geo.figure_height_cm()` derives it from the
+extent and the width, so a map fills its figure rather than being fitted into
+one whose proportions were picked first. The remaining map figures inherit
+that, and the first draft of this one showed why: at a hand-picked 17 by 11.4
+cm the map occupied about two thirds of the width.
+
+## What the map leaves out
+
+No north arrow: the map is north-up and the graticule says so. No scale bar:
+the graticule carries scale, and a scale bar on an equirectangular map is only
+correct along one parallel, so it would assert a precision the projection does
+not have. No coordinate-system caption baked into the image, which every 2023
+ArcGIS export in `legacy/figures/` carries. No drop shadows, no decorative
+elements, no background gridlines.
+
+The one piece of non-data ink is a white halo behind each province name. It is
+not decoration: without it a name crossing a boundary line is unreadable, and
+the alternative is moving the name off its own province.

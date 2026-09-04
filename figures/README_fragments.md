@@ -47,3 +47,38 @@ study is about. Coverage is computed on the 0.25 degree grid of 33 by 31 cells;
 qualifying soundings are those with `qa_value` at or above 0.75.
 
 Regenerate with `python scripts/make_coverage_figure.py`.
+
+---
+
+### Study area and analysis grid
+
+![The four Yangtze River Delta provinces with the 0.25 degree analysis grid, and a locator inset](study_area.png)
+
+**The four provinces of the Yangtze River Delta region, with the 0.25 degree
+analysis grid that every later figure in this repository is drawn on.** The
+grid is 33 rows by 31 columns, 1,023 cells, spanning 114.8 to 122.55 east and
+26.95 to 35.2 north. Those are the bounds the cells actually occupy, not the
+declared box of 114.8 to 122.6 and 27.0 to 35.2: the cell count rounds down in
+longitude and up in latitude, so the grid stops 0.05 degrees short of the
+declared east edge and runs 0.05 degrees past the declared south edge.
+
+All boundaries are Natural Earth, 10 m for the provinces and coastline and
+50 m for the inset outline, which is the extent of the 31 units Natural Earth
+files under China and so excludes Taiwan, Hong Kong and Macau. The main map is
+equirectangular with its standard parallel at 31.075 north, the centre of the
+study area, so a degree of longitude is drawn 0.857 times as long as a degree
+of latitude and the analysis cells stay rectangular; scale is exact only at
+that parallel, running 3.9 percent small at the southern edge and 4.8 percent
+large at the northern, and area is not preserved. Nothing in this study is
+measured from a map, since areas are computed analytically on the authalic
+sphere, so the projection is a display choice throughout. The inset is drawn
+in the China Albers equal-area conic, which is why the study box appears
+rotated in it. Of the 1,023 cells, 927 received at least one qualifying
+methane sounding in 2018 and 96 received none; which cells those are is the
+subject of the composite figure and is deliberately not shown here. Natural
+Earth resolves Shanghai with 213 vertices across four parts where GADM 4.1
+uses 1,925 across 112, and that difference is not visible at the size drawn
+here, appearing as straight segments along the coast only above roughly three
+times magnification.
+
+Regenerate with `python scripts/make_study_area_figure.py`.

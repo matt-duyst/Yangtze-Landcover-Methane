@@ -121,13 +121,15 @@ def categories(n: int, name: str = SEQUENTIAL) -> list:
 # three areal classes and a black and white print has to keep them apart, so
 # the three sit at widely spaced luminances rather than at three pleasant hues.
 #
-# The lattice line is deliberately much darker than any fill it crosses. An
-# earlier draft used a mid grey that was within 0.03 luminance of the study
-# fill, which looked fine in colour and vanished in greyscale.
+# All six separate by at least 0.15 in luminance, line colours included, so a
+# greyscale reader can tell a lattice line from a coastline as well as a fill
+# from a fill. Two earlier drafts failed this: one put the lattice within 0.03
+# of the study fill, and one put it within 0.07 of the coastline. Both looked
+# correct in colour.
 MAP_SEA = _mix(sequential()(0.28), 0.421)          # luminance 0.62
 MAP_LAND = _mix(sequential()(0.80), 0.861)        # luminance 0.96
 MAP_STUDY_FILL = _mix(sequential()(0.62), 0.530)  # luminance 0.80
-MAP_LATTICE = "#5a5a5a"
+MAP_LATTICE = "#737373"
 MAP_BOUNDARY = "#1f1f1f"
 MAP_COASTLINE = "#3f4a52"
 
