@@ -1493,3 +1493,67 @@ the pattern is the point: the errata and the READMEs accumulated background
 assertions that read as common knowledge and were never tested, exactly as 5.3
 did. Several will be easy, some are textbook facts that still need a textbook,
 and ERRATA 5.1 may need narrowing rather than citing, as 5.3 did.
+
+## The errata's own correction was wrong, which makes two
+
+The twelve uncited claims were closed on 3 September 2026. Ten now carry a
+verified citation; five were narrowed to what could be sourced. One turned out
+not to be uncited but wrong, and that is the finding worth keeping.
+
+**ERRATA 5.4 corrected the thesis using a figure more dated than the thesis's.**
+It criticised the thesis for giving methane's global warming potential as 25 to
+30 from a 2011 source, and offered "approximately 28 to 36 over 100 years and 84
+to 87 over 20 years" as the current values. Read directly from the chapter PDFs,
+IPCC AR6 Table 7.15 gives GWP-100 as 29.8 ± 11 for fossil methane and 27.0 ± 11
+for non-fossil, and GWP-20 as 82.5 and 79.7. The errata's figures are
+approximately AR5 of 2013, whose Table 8.7 gives 28 and 34 for GWP-100 and 84
+and 86 for GWP-20; neither 36 nor 87 is in that table either.
+
+**Both AR6 central values fall inside the thesis's range of 25 to 30. The
+errata's range excludes one of them.** The correction was further from the
+current assessment than the thing it corrected, and it was published as a
+criticism for as long as the errata has existed. What survives is the
+substantive point, which was always the real one: a GWP figure without a time
+horizon means nothing, and AR6 additionally distinguishes fossil from
+non-fossil methane, which neither the thesis nor the earlier errata did.
+
+**Two instances is a pattern about how this errata was written.** The unsourced
+waste claim in 5.3 and the dated GWP figures in 5.4 arrived the same way: from a
+search snippet, plausible on its face, written into a public document criticising
+someone else's sourcing, and never checked. The errata is careful wherever it
+checks the thesis against the thesis, because that is checkable and was checked;
+it was careless wherever it reached outside for a comparison, because nothing in
+the writing process forced a citation. The register is what forces it now.
+
+## What could not be sourced, and was narrowed instead
+
+Five claims had no citable source and were narrowed rather than left standing.
+Recorded so the narrowing is visible as a decision rather than as an edit.
+
+`ERRATA.md` 2.3 said 1.8 million km2 is the Yangtze's drainage basin area. No
+citable source for the basin area was found, so the item now rests only on the
+unit mismatch, which is checkable from the sentence: an extent is a length and
+cannot be given in square kilometres. Whether the thesis's own cited source
+gives the figure as a basin area, which would make the error descriptive rather
+than numerical, was not established.
+
+`ERRATA.md` 2.4 said TROPOMI's nadir resolution was refined to about 7 by 5.5 km
+in August 2019. That change is in mission documentation rather than a citable
+work and no source for the date or dimensions was found, so it is withdrawn. The
+7 by 7 km design figure is now cited to the instrument paper, and is in any case
+the right figure for 2018.
+
+`ERRATA.md` 3.3 said ImageNet channel statistics are only meaningful with an
+ImageNet-pretrained encoder. That is a practitioner convention, not a theorem,
+and is now stated as one. The item's weight rests on the frozen random backbone,
+which is checkable from the notebook.
+
+`data/processed/README.md` said the literature reports a *seasonal* surface-albedo
+bias in TROPOMI methane over agricultural land. Lorente et al. support the albedo
+dependence and the correction but say nothing about seasonality, so the seasonal
+element is dropped.
+
+The same file said the uncovered cells are "dark steep terrain where the
+instrument is known to fail". That bundled our own measurement with a claim about
+the literature. The terrain description is ours and stands; the retrieval
+difficulty is now cited for low albedo only, and the slope half is not claimed.

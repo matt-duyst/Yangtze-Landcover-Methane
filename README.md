@@ -52,7 +52,11 @@ could as easily be hiding a relationship as inventing one. Measurement error in 
 predictor does something specific: it attenuates the association toward zero. So
 predictor error, and only predictor error, is the failure mode that could
 manufacture this result out of nothing, and both predictors carry documented
-error. GAIA is reported to omit impervious surface relative to GISA. The NESDC
+error. GAIA is reported to omit impervious surface relative to GISA, with a
+producer's accuracy worse by 28.35 percent, in the paper describing GISA
+(Huang et al., 2021, doi:10.1007/s11430-020-9797-9) — though our own regional
+measurement runs the other way, with GISA finding about 20 percent *less*
+impervious surface than GAIA in every province. The NESDC
 rice rasters have pinned provincial totals, an unclassified region in northern
 and western Anhui, and no declared nodata.
 
@@ -93,8 +97,10 @@ indistinguishable from zero. That does not prove the land-cover signal is an
 artefact, because cities really are bright and controlling for albedo removes
 real urban variation too; it establishes that the data cannot separate the two.
 None of it is a discovery either. The dependence is a documented property of the
-retrieval and the operational product ships a correction, which this composite
-carries and which does not remove it: the corrected variable retains a slope of
+retrieval and the operational product ships an a posteriori correction for it
+(Lorente et al., 2021, Atmospheric Measurement Techniques 14, 665-684,
+doi:10.5194/amt-14-665-2021), which this composite carries and which does not
+remove it: the corrected variable retains a slope of
 199.8 ± 6.7 ppb per unit albedo at R squared 0.49, against 203.8 raw.
 
 Sampling is the second and larger reason. Each cell's annual mean is taken over
@@ -237,7 +243,8 @@ runtime failure intact.
 
 The errata also records that the thesis's causal attribution of methane hotspots
 to paddy rice should be spatial-association language, that the reference data
-Section 5.2 says does not exist has since been published, and that the
+Section 5.2 says does not exist has since been published and is now named in
+ERRATA.md 5.1, and that the
 reproduction has now tested the attribution directly and does not support it.
 
 ## Data sources

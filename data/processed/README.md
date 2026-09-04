@@ -375,9 +375,12 @@ present and blank. That is enforced by construction: `CellRow` takes the
 sounding count as a required field and refuses to build a row when it is zero,
 so an uncovered cell cannot be created and then filtered out by a step someone
 later forgets. The gap is a coherent one over mountainous southern Zhejiang and
-along the coastline rather than scatter, and interpolating across it would
-extrapolate from bright flat terrain into dark steep terrain where the
-instrument is known to fail.
+along the coastline rather than scatter, which is our own measurement and is
+visible in the composite. Interpolating across it would extrapolate from the
+terrain that was observed into terrain that was not, and low-albedo scenes are
+among the hardest for this retrieval (Lorente et al., 2021,
+doi:10.5194/amt-14-665-2021). That the failure is specifically a function of
+slope is not claimed here; only the albedo half is sourced.
 
 The two fractions do not share a denominator, and the two coverage columns are
 what say so. Rice is masked by the province each raster is named for. Its zero
@@ -609,9 +612,14 @@ relationship, what was controlled for if anything, the sample size, and Pearson
 and Spearman with their p-values.
 
 TROPOMI's methane retrieval needs light back from the surface, so it works
-better over bright ground; the literature reports a seasonal surface-albedo bias
-in TROPOMI methane over agricultural land; and rice paddies flood, which moves
-their albedo on the same seasonal cycle as their methane. Cities are bright and
+better over bright ground: low- and high-albedo scenes are the most challenging
+for the retrieval algorithm, and the operational product carries an a posteriori
+correction for the resulting bias (Lorente et al., 2021, Atmospheric Measurement
+Techniques 14, 665-684, doi:10.5194/amt-14-665-2021). Rice paddies flood, which
+moves their albedo on the same seasonal cycle as their methane. An earlier
+version of this passage said the literature reports a *seasonal* albedo bias over
+agricultural land specifically; that source was not found, and the seasonal
+element is dropped rather than left standing on nothing. Cities are bright and
 dry year round. So albedo is plausibly connected to both the land cover and the
 retrieved value, which is the shape of a confounder rather than a nuisance.
 
@@ -832,9 +840,11 @@ that appeared to confirm the study's finding while measuring nothing.
 GISA finds 19.9 percent less impervious surface than GAIA across the four
 provinces, but not uniformly: Jiangsu is 26.4 percent lower, Shanghai 21.9 and
 Zhejiang 21.5, while Anhui is only 4.8 percent lower. The direction is the
-opposite of what the global validation literature predicts. GAIA is reported to
-omit impervious surface relative to GISA, with a producer's accuracy worse by
-28.35 percent, which would make GISA the larger here. It is the smaller in every
+opposite of what the global validation predicts. GAIA is reported to omit
+impervious surface relative to GISA, with a producer's accuracy worse by 28.35
+percent over 124,190 global validation samples, in the paper describing GISA
+itself (Huang et al., 2021, Science China Earth Sciences 64, 1922-1933,
+doi:10.1007/s11430-020-9797-9); that would make GISA the larger here. It is the smaller in every
 province. Whatever holds globally does not transfer to this region, and the
 attenuation argument that motivated fetching GISA does not apply in the
 direction assumed.
