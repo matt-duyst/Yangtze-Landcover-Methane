@@ -152,10 +152,31 @@ s5p:
   # keeps the highest version, otherwise the download doubles and a composite
   # mixes two reconstructions of the same overpass.
 
+  # These four values are the extent the 0.25 degree lattice actually
+  # occupies, which is why they carry two decimal places rather than one.
+  #
+  # The box was previously declared as 27.0 south and 122.6 east. A lattice is
+  # built by rounding the declared extent to a whole number of cells, and that
+  # rounding ran in opposite directions on the two axes: 7.8 degrees of
+  # longitude is 31.2 cells, rounded down to 31, so the grid stopped short of
+  # 122.6 and ended at 122.55; 8.2 degrees of latitude is 32.8 cells, rounded
+  # up to 33, so it ran past 27.0 and ended at 26.95.
+  #
+  # Two modules then disagreed about where the study area was. The land-cover
+  # path filtered against the lattice (src/grid/cells.py), while the methane
+  # path filtered against the declared box and clipped (GridSpec.cell_of), so
+  # soundings between 122.55 and 122.6 east were accepted and folded into the
+  # easternmost column, which they do not lie in, while soundings between
+  # 26.95 and 27.0 north were discarded although cells exist there.
+  #
+  # Declaring the lattice extent makes the two definitions the same object.
+  # round((122.55 - 114.8) / 0.25) is 31 and round((35.2 - 26.95) / 0.25) is
+  # 33 exactly, so cell_of's existing filter is now correct as written and its
+  # clipping path is unreachable. Do not "tidy" these back to one decimal.
   bounding_box:         # west, south, east, north
     west: 114.8
-    south: 27.0
-    east: 122.6
+    south: 26.95
+    east: 122.55
     north: 35.2
 
   # 0.25 degree gives 33 by 31 cells over that box. The resolution was chosen
@@ -224,6 +245,27 @@ s5p:
       group: PRODUCT/SUPPORT_DATA/INPUT_DATA
     - name: surface_pressure
       group: PRODUCT/SUPPORT_DATA/INPUT_DATA
+    # Derived rather than read. Group "derived" tells read_soundings to compute
+    # these from the a priori profiles the granule already carries, instead of
+    # looking for a variable of that name.
+    #
+    # xch4_apriori is the TM5 column the retrieval was run against, the ratio
+    # of the summed methane profile to the summed dry-air subcolumns. The
+    # departure is the bias-corrected retrieval minus that column.
+    #
+    # What this buys and what it does not. It cannot fix the albedo bias, which
+    # lives entirely in the retrieved term: the departure's in-box albedo
+    # correlation was measured at +0.4499 against the retrieved field's
+    # +0.4496, while removing 3.53 percent of variance, so the bias grows
+    # slightly as a share of what remains. What it may remove is seasonal and
+    # synoptic structure, which one granule could not test. The prior's in-box
+    # half-sill range is 117.4 km against a 27.8 km cell, so subtracting it is
+    # a high-pass filter well above the cell and cannot remove a land-cover
+    # signal at cell scale.
+    - name: xch4_apriori
+      group: derived
+    - name: xch4_departure
+      group: derived
 
   # 2018 is the study year and cannot be served any other way: Earth Engine's
   # L3 CH4 collection begins 2019-02-08.

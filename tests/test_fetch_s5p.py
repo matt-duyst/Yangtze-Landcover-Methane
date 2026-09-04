@@ -345,8 +345,10 @@ def test_shipped_config_declares_the_box_grid_and_threshold():
         (Path(__file__).resolve().parents[1] / "config" / "sources.yml")
         .read_text(encoding="utf-8"))["s5p"]
     box = config["bounding_box"]
+    # 26.95 and 122.55, not 27.0 and 122.6: the box declares the extent the
+    # 0.25 degree lattice actually occupies. See tests/test_study_extent.py.
     assert (box["west"], box["south"], box["east"], box["north"]) == \
-        (114.8, 27.0, 122.6, 35.2)
+        (114.8, 26.95, 122.55, 35.2)
     assert config["grid_resolution_deg"] == 0.25
     assert config["qa_threshold"] == 0.75
     assert config["base_url"].endswith("meeo-s5p.s3.amazonaws.com")
