@@ -1602,3 +1602,39 @@ for an environment without `cmcrameri`, and exposes `PALETTE_SOURCE` saying
 which resolved. The fallback is a weaker substitute, not an equivalent, so the
 point of naming the source is that a figure can never be drawn in the wrong
 scheme without the fact being recoverable.
+
+## The first figure: what the saturation curve is allowed to claim
+
+The coverage figure marks 36 granules on the saturation curve because that is
+the reconnaissance sample size, but the mark is not the reconnaissance result.
+The reconnaissance drew 36 particular granules and got 56.11 percent; the curve
+shows the first 36 in the order the streaming loop processed them and reaches
+56.01 percent. The two agree to within one cell, which is a coincidence worth
+naming rather than a validation. What the mark shows is the sample size landing
+on the steep part of the curve, and that is all it is offered as.
+
+The 50.4 percent free-asymptote fit is **not drawn**. It was fitted to sixteen
+productive granules on the 0.1 degree grid, where there are 6,396 cells, and
+this figure is the 0.25 degree grid, where there are 1,023. Coverage fractions
+are not comparable across cell sizes, since a coarser cell is easier to hit, so
+a horizontal line at 50.4 percent on this axis would assert a comparison the
+record does not support. The failure of that extrapolation is a real result and
+it is recorded above and in the README; it is not a feature of this figure.
+
+Panels (b) and (c) are stacked and share a month axis rather than being drawn
+as twin axes. Twin axes make the reader establish which series belongs to which
+side before the panel can be read at all, and worse, the apparent relative
+height of the two series is then set by whoever chose the limits. Stacking
+costs vertical space and buys a comparison that cannot be manipulated.
+
+January through March are shaded and labelled in place rather than drawn as
+zero-height bars, because a zero bar and a missing bar look identical and mean
+opposite things. April, at one granule and 290 soundings, is annotated with its
+count for the same reason: its bar is a fraction of a millimetre at this scale
+and would otherwise read as part of the absence beside it. The same distinction
+will be needed for the 96 cells the composite never covered, and it should be
+made the same way there.
+
+The shading is labelled with text placed inside it rather than through a legend
+key. A grey key for a grey span sits on the span it describes and is invisible,
+which the first draft demonstrated.
