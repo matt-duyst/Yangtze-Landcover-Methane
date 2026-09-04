@@ -116,5 +116,35 @@
     ],
     "notes": "NO CONTENT CHECKSUM IS AVAILABLE FOR THIS SOURCE and the archive sha256 is null for that reason rather than because one was not computed. Every S3 ETag the mirror returns is a multipart tag with a minus-N suffix, which is an MD5 of the concatenated part MD5s rather than of the object, and the part size the uploader used is not published, so the tag cannot be reproduced or checked. Verification is structural instead: each granule must open as netCDF4 and hold a PRODUCT group with the methane, qa_value, latitude and longitude variables. That is weaker than the MD5 verification the figshare and Science Data Bank entries carry, and re-fetching cannot be proven to return the same bytes. The two files listed here are the derived composite and its per-cell table, which ARE checksummed, so the outputs verify even though the inputs cannot. The 578 granules themselves are not retained: they total 28.9 GB and were streamed one at a time, gridded and deleted. Pixel values encode qa in stored uint8 units with scale_factor 0.01, and fill values must be read per variable from their own _FillValue attribute.",
     "doi_note": "Two ESA DOIs exist for this product and both resolve. 10.5270/S5P-3lcdqiv, registered 2021, resolves to the KNMI/SRON product page at tropomi.eu and is the value the granules themselves declare in identifier_product_doi. 10.5270/S5P-3p6lnwd, registered 2019, resolves to the ESA Copernicus catalogue page and was cited here previously. The granule metadata is authoritative for which product was actually read, so the tropomi.eu DOI is the one carried."
+  },
+  "natural_earth_land_yrd": {
+    "product": "Natural Earth 10 m physical land polygons, clipped to the study box with 0.5 degree padding",
+    "citation": "Natural Earth, public domain, https://www.naturalearthdata.com",
+    "version": "as bundled in the cartopy shapefile cache on this machine",
+    "retrieved": "2026-09-04",
+    "url": "https://www.naturalearthdata.com/downloads/10m-physical-vectors/10m-land/",
+    "files": [
+      {
+        "path": "data/reference/yrd_land.geojson",
+        "bytes": 119935,
+        "sha256": "e334bcc6e7c84a303b49bf109c965bbc0b8abf5de5e865c609817ec8d8fa56ac"
+      }
+    ],
+    "notes": "Public domain, no attribution required, no restriction on redistribution. Extracted from ne_10m_land in the local cartopy cache at ~/.local/share/cartopy/shapefiles/natural_earth/physical/ by scripts/extract_reference_geometry.py, clipped to 114.3-123.05 E, 26.45-35.7 N, all attributes dropped, written as EPSG:4326 GeoJSON. Seven features, 2,677 exterior vertices. Committed rather than fetched, so it verifies on a fresh clone. Supplies the land and sea of the map figures; the padding keeps the coastline reaching the panel edge. As with the province file the exact Natural Earth release is not recorded in the cache, so the version field describes provenance rather than a version number."
+  },
+  "natural_earth_china_outline": {
+    "product": "Natural Earth 50 m admin-1 states and provinces with lakes, China only, dissolved to a single outline",
+    "citation": "Natural Earth, public domain, https://www.naturalearthdata.com",
+    "version": "as bundled in the cartopy shapefile cache on this machine",
+    "retrieved": "2026-09-04",
+    "url": "https://www.naturalearthdata.com/downloads/50m-cultural-vectors/50m-admin-1-states-provinces/",
+    "files": [
+      {
+        "path": "data/reference/china_admin1_dissolved.geojson",
+        "bytes": 117310,
+        "sha256": "55d299bf9f9de5d459acc694bfd7a294765683de61674b1961e48f34da72dfc7"
+      }
+    ],
+    "notes": "Public domain. Extracted from ne_50m_admin_1_states_provinces_lakes in the local cartopy cache by scripts/extract_reference_geometry.py, filtered to the 31 features with admin = 'China' and dissolved into one geometry, written as EPSG:4326 GeoJSON. The 50 m variant is used deliberately rather than the 10 m one used elsewhere, because this layer is drawn only in a locator inset about 3 cm across where 10 m detail is finer than the line width. Those 31 units are the provinces, autonomous regions and municipalities Natural Earth files under China; Taiwan, Hong Kong and Macau are carried separately in Natural Earth and are not in this geometry. Committed rather than fetched."
   }
 }

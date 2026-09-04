@@ -1735,3 +1735,83 @@ number of granules in the same order, and no granule without an in-box sounding
 may have increased coverage. Either would mean the curve was being built from
 records that do not describe the same run, and dropping rows would make it
 silently wrong instead of obviously wrong.
+
+## The map projection, and why it is not an equal-area one
+
+Every map in this repository is drawn equirectangular with its standard
+parallel at the centre of the study area. Coordinates stay in degrees and the
+axes aspect is set to cos(31.075) = 0.8565, so a degree of longitude is drawn
+0.8565 times as long as a degree of latitude, which is what it is on the ground
+there. The constant lives in `src/figures/geo.py`, not in any figure, because
+seven more figures need it.
+
+Three facts decided it, all of them already in the repository.
+
+The analysis lattice is defined in geographic coordinates, so in this
+projection its cells stay axis-aligned rectangles and a reader can count them
+against the boundaries. In a conic projection the same lattice fans and curves.
+That is honest about the geometry and much harder to read, and reading it is
+the whole purpose of drawing it.
+
+The projection carries no analytical weight. Areas here are computed
+analytically on the authalic sphere and were validated that way to within 0.13
+percent; nothing is ever measured off a map. An equal-area projection would buy
+accuracy in a quantity no figure reports.
+
+And the easy default is wrong in a way worth naming. Plate carree without the
+aspect correction draws this study area **16.8 percent too wide** east to west.
+
+What it distorts, stated rather than hidden: scale is exact only at the
+standard parallel, running 3.9 percent small at the southern edge of the box
+and 4.8 percent large at the northern. Area is not preserved, and because every
+drawn cell is the same size while a cell at 26.95 N covers 9.1 percent more
+ground than one at 35.2 N, the map slightly overstates the north. None of it
+reaches a number.
+
+This is not the 2023 choice. `ERRATA.md` 2.4 records those figures as
+ESRI:102029, Asia South Equidistant Conic, standard parallels 7 N and 32 S for
+a study area at 31 N, in which a one degree box here measures 26.89 percent
+larger than the geodesic truth.
+
+The locator inset is the exception and uses `CHINA_ALBERS`, the equal-area
+conic this project already uses for area measurement. An inset spans most of
+China and an equirectangular map of that extent is badly stretched at its
+northern edge. Two projections in one figure is a cost; a locator that
+misrepresents the country it locates against is a worse one.
+
+## The declared study box and the drawn one differ on two edges
+
+`GridSpec` rounds its shape, and for this grid it rounds in **both** axes and
+in **opposite directions**. Longitude: 7.8 degrees is 31.2 cells, rounded down
+to 31, so the lattice stops short of the declared east edge and ends at 122.55
+rather than 122.6. Latitude: 8.2 degrees is 32.8 cells, rounded up to 33, so
+the lattice runs *past* the declared south edge and ends at 26.95 rather than
+27.0.
+
+The east edge was already known and is recorded in `src/grid/cells.py`. The
+south edge was not, and it is the more dangerous of the two because it extends
+beyond the declared box rather than falling short of it.
+
+`geo.lattice_extent()` derives all four edges from the grid specification, and
+every map uses it. A map drawn to the declared bounds would disagree with its
+own data by one cell at two of four edges, and the disagreement would be
+invisible to inspection.
+
+## Map colours are set for greyscale first
+
+A study-area map has three areal classes, and a black and white print has to
+keep them apart, so `style.py` fixes sea, land and study-provinces at
+luminances of 0.62, 0.96 and 0.80, a minimum pairwise gap of 0.16. They are
+derived from batlow by mixing toward white rather than picked by eye, so maps
+and data panels stay in one colour family.
+
+The lattice line is much darker than any fill it crosses, at 0.35. An earlier
+draft used a mid grey within 0.03 luminance of the study fill: it looked
+correct in colour and disappeared entirely in greyscale. Both constraints are
+now asserted by tests rather than left to the next person's judgement.
+
+Provinces are distinguished by boundary and by name, not by four separate
+fills. Four fills plus land and sea is six areal classes, and six classes
+cannot all be 0.15 apart in luminance on a zero-to-one scale without some of
+them being too dark to read a label on. The names carry the identity, which is
+what names are for.

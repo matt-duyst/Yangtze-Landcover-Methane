@@ -83,6 +83,15 @@ TICK_SIZE = 7.0
 PANEL_LABEL_SIZE = 9.0
 
 
+def _mix(colour, white: float):
+    """Lighten ``colour`` toward white by a fraction, keeping its hue."""
+    return tuple(c * (1.0 - white) + white for c in colour[:3])
+
+
+def _luminance(colour) -> float:
+    return 0.2126 * colour[0] + 0.7152 * colour[1] + 0.0722 * colour[2]
+
+
 def sequential(name: str = SEQUENTIAL):
     """The named scientific colour map, or the closest honest fallback."""
     if _crameri is not None:
@@ -104,6 +113,34 @@ def categories(n: int, name: str = SEQUENTIAL) -> list:
     if n <= len(CATEGORY_POSITIONS):
         return [cmap(p) for p in CATEGORY_POSITIONS[:n]]
     return [cmap(0.08 + 0.78 * i / max(n - 1, 1)) for i in range(n)]
+
+
+# Map fills, shared by every map figure, derived from the scientific colour
+# map rather than picked by eye so that maps and data panels stay in one
+# family. They are set for **greyscale separation first**: a study-area map has
+# three areal classes and a black and white print has to keep them apart, so
+# the three sit at widely spaced luminances rather than at three pleasant hues.
+#
+# The lattice line is deliberately much darker than any fill it crosses. An
+# earlier draft used a mid grey that was within 0.03 luminance of the study
+# fill, which looked fine in colour and vanished in greyscale.
+MAP_SEA = _mix(sequential()(0.28), 0.421)          # luminance 0.62
+MAP_LAND = _mix(sequential()(0.80), 0.861)        # luminance 0.96
+MAP_STUDY_FILL = _mix(sequential()(0.62), 0.530)  # luminance 0.80
+MAP_LATTICE = "#5a5a5a"
+MAP_BOUNDARY = "#1f1f1f"
+MAP_COASTLINE = "#3f4a52"
+
+#: Areal classes whose greyscale separation is asserted by the test suite.
+MAP_AREAL_CLASSES = ("MAP_SEA", "MAP_LAND", "MAP_STUDY_FILL")
+
+
+def map_luminances() -> dict:
+    """Relative luminance of every map colour, for the greyscale check."""
+    import matplotlib.colors as mcolors
+    return {name: _luminance(mcolors.to_rgb(globals()[name]))
+            for name in ("MAP_SEA", "MAP_LAND", "MAP_STUDY_FILL",
+                         "MAP_LATTICE", "MAP_BOUNDARY", "MAP_COASTLINE")}
 
 
 def apply() -> None:

@@ -72,3 +72,33 @@ bundled in the cartopy cache is not recorded anywhere in the shapefile, so the
 manifest entry describes where the file came from rather than naming a version
 number. A future re-extraction from a different Natural Earth release could
 yield slightly different geometries and therefore slightly different areas.
+
+## yrd_land.geojson
+
+Natural Earth 10 m land polygons, clipped to the study box with half a degree
+of padding, for the land and sea of the map figures. Seven features, 2,677
+exterior vertices, EPSG:4326 GeoJSON, all attributes dropped because only the
+geometry is used. Public domain, like the province file.
+
+The padding exists so that the coastline reaches the edge of a drawn panel
+rather than stopping short of it, leaving a sliver of sea colour over land.
+
+## china_admin1_dissolved.geojson
+
+The outline of Natural Earth's 31 China admin-1 units, dissolved into one
+geometry, for the locator inset. Taken from the **50 m** variant rather than
+the 10 m one used everywhere else: the inset is about 3 cm across, where 10 m
+detail is finer than the line width, so the coarser variant is the honest
+choice and the smaller file.
+
+What the outline contains is the extent of those 31 units, which are the
+provinces, autonomous regions and municipalities Natural Earth files under
+`admin = "China"`. Natural Earth carries Taiwan, Hong Kong and Macau
+separately, so none of the three is in this geometry. The figure is a locator
+and the outline is reproduced from a public-domain dataset as that dataset
+draws it; the caption names the source for that reason.
+
+Both files were extracted by `scripts/extract_reference_geometry.py`, which is
+run once by hand and not by the pipeline, on the same principle as the province
+file: a cache is not a version and cannot be verified by anyone else, so the
+committed file is the source from here on.
