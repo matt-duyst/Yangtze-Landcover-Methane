@@ -38,10 +38,12 @@ def main() -> int:
 
     record = from_checkpoint(args.checkpoint)
     print(f"  palette source                {PALETTE_SOURCE}")
-    print(f"  granules processed            {record.granules_processed}")
+    print(f"  granules acquired             {record.granules_acquired}")
     print(f"  productive granules           {record.productive_granules}")
+    print(f"  saturation curve points       {record.curve_length}")
     print(f"  soundings in box              {record.total_soundings:,}")
-    print(f"  coverage after 36 granules    {100 * record.fraction_at(36):.2f} %")
+    for n in (6, 16, 36):
+        print(f"  coverage at {n:>2} productive     {100 * record.fraction_at(n):.2f} %")
     print(f"  coverage at end               {100 * record.final_fraction:.2f} %")
     print("  month  soundings  granules  per granule")
     for m in record.monthly:

@@ -25,7 +25,8 @@ The checks are the venue's, not this repository's invention:
 
 * raster resolution at least :data:`~src.figures.style.MIN_DPI`
 * width at least :data:`~src.figures.style.MIN_WIDTH_CM`
-* each file under :data:`MAX_BYTES`
+* the raster under :data:`MAX_BYTES` and the vector under the tighter
+  :data:`MAX_VECTOR_BYTES`
 * fonts embedded rather than drawn as paths, asserted through rcParams
 
 Figure functions elsewhere in this package return a :class:`~matplotlib.figure.Figure`
@@ -43,8 +44,14 @@ import matplotlib as mpl
 
 from . import style
 
-#: Copernicus rejects individual figures above 5 MB.
+# Copernicus states two limits, not one: "Individual figures in the *.pdf
+# format should not exceed 2 MB, file types other than *.pdf should not exceed
+# 5 MB per figure." ACP, AMT and ESSD all carry the same wording. The vector
+# form is held to the tighter of the two.
+#: Ceiling for the raster companion.
 MAX_BYTES = 5 * 1024 * 1024
+#: Ceiling for the vector form, which the venues set lower.
+MAX_VECTOR_BYTES = 2 * 1024 * 1024
 
 
 def figures_root() -> Path:
@@ -121,11 +128,12 @@ def export(fig, stem: str, directory: Path | None = None,
 
         vector_bytes = tmp_pdf.stat().st_size
         raster_bytes = tmp_png.stat().st_size
-        for name, size in (("vector", vector_bytes), ("raster", raster_bytes)):
-            if size > MAX_BYTES:
+        for name, size, limit in (("vector", vector_bytes, MAX_VECTOR_BYTES),
+                                  ("raster", raster_bytes, MAX_BYTES)):
+            if size > limit:
                 raise ValueError(
                     f"{stem} {name} is {size:,} B, above the "
-                    f"{MAX_BYTES:,} B limit; refusing to write it")
+                    f"{limit:,} B limit; refusing to write it")
 
         pixels = _png_size(tmp_png)
         # Measure the delivered resolution rather than trusting the request.

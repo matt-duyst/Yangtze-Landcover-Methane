@@ -13,6 +13,19 @@ the Yangtze Delta means not during the monsoon, which is also when the rice is
 flooded. Any annual mean over these cells is therefore weighted away from
 exactly the season the study is about.
 
+**The saturation curve is plotted against productive granules, not granules
+processed.** Of 578 granules acquired over the box, 356 contributed no sounding
+that passed the quality filter, and a granule that contributed nothing cannot
+have covered a cell, so those rows are flat by construction. Plotting them puts
+more than half the axis under segments that carry no information and makes a
+sample size on the axis mean something different from a sample size in a
+sampling design. Against productive granules a mark at *n* is a real sample of
+*n* granules that returned data.
+
+The curve is still one ordering of the productive set rather than an expected
+saturation curve. A different order reaches the same endpoint by a different
+path, and neither this figure nor the record behind it averages over orderings.
+
 Structure follows the package convention: :func:`from_checkpoint` reads, and
 :func:`coverage_figure` draws from an in-memory record and returns a figure
 without writing. The two are separate so the drawing can be tested on
@@ -42,7 +55,10 @@ from . import style
 #: Cells in the 0.25 degree analysis grid, 33 rows by 31 columns.
 GRID_CELLS = 1023
 
-#: The reconnaissance sample size, marked on the saturation curve.
+#: The reconnaissance granule count, marked on the saturation curve as a
+#: sample size. It is not the reconnaissance's own coverage result: those 36
+#: granules spanned seven years, only six of them 2018, so the number they
+#: produced is not a point on any single year's curve.
 RECONNAISSANCE_GRANULES = 36
 
 MONTH_INITIALS = "JFMAMJJASOND"
@@ -83,7 +99,8 @@ class CoverageRecord:
     total_cells: int = GRID_CELLS
 
     @property
-    def granules_processed(self) -> int:
+    def curve_length(self) -> int:
+        """Points on the saturation curve: one per productive granule."""
         return int(self.cumulative_cells.size)
 
     @property
@@ -104,7 +121,7 @@ class CoverageRecord:
 
     @property
     def final_fraction(self) -> float:
-        return self.fraction_at(self.granules_processed)
+        return self.fraction_at(self.curve_length)
 
 
 def from_checkpoint(path: Path | str, total_cells: int = GRID_CELLS) -> CoverageRecord:
@@ -119,6 +136,22 @@ def from_checkpoint(path: Path | str, total_cells: int = GRID_CELLS) -> Coverage
         contributions = json.loads(str(data["contributions"]))
 
     cumulative = saturation[:, 1].astype(np.int64)
+    productive = np.array([int(r["soundings_in_box"]) > 0 for r in contributions])
+    if productive.size != cumulative.size:
+        raise ValueError(
+            f"saturation has {cumulative.size} rows but contributions has "
+            f"{productive.size}; they must be the same granules in order")
+
+    # Dropping the unproductive rows must not drop coverage. A granule with no
+    # in-box sounding cannot have covered a cell, so every step it takes should
+    # be flat; if one is not, the two records disagree and the curve would be
+    # silently wrong rather than obviously wrong.
+    newly = np.diff(np.concatenate([[0], cumulative]))
+    if np.any(newly[~productive] != 0):
+        raise ValueError(
+            "a granule with no in-box soundings increased coverage; the "
+            "saturation record and the contribution record disagree")
+    cumulative = cumulative[productive]
 
     # soundings, productive granules, granules acquired
     tally: dict[int, list[int]] = defaultdict(lambda: [0, 0, 0])
@@ -140,13 +173,16 @@ def from_checkpoint(path: Path | str, total_cells: int = GRID_CELLS) -> Coverage
                           total_cells=total_cells)
 
 
-def coverage_figure(record: CoverageRecord):
-    """Build and return the two-part coverage figure. Writes nothing."""
+def coverage_figure(record: CoverageRecord, width_cm: float = style.FULL_WIDTH_CM,
+                    height_cm: float | None = None):
+    """Build and return the coverage figure. Writes nothing."""
     colours = style.categories(4)
     curve_colour, soundings_colour, granule_colour = colours[0], colours[1], colours[2]
     absent_colour = "0.88"
 
-    fig = style.figure(width_cm=style.DOUBLE_COLUMN_CM, height_cm=8.2)
+    if height_cm is None:
+        height_cm = 8.2 * (width_cm / style.FULL_WIDTH_CM)
+    fig = style.figure(width_cm=width_cm, height_cm=height_cm)
     grid = fig.add_gridspec(
         2, 2, width_ratios=(1.0, 1.06), height_ratios=(1.0, 0.78),
         wspace=0.30, hspace=0.20, left=0.075, right=0.985, top=0.90, bottom=0.12)
@@ -166,28 +202,28 @@ def coverage_figure(record: CoverageRecord):
 
 
 def _draw_saturation(ax, record: CoverageRecord, colour) -> None:
-    n = record.granules_processed
+    n = record.curve_length
     x = np.arange(1, n + 1)
     y = 100.0 * record.cumulative_cells / record.total_cells
 
     ax.plot(x, y, color=colour, linewidth=1.4, solid_joinstyle="round",
-            label="cumulative coverage")
+            label=f"cumulative coverage, ending at {100 * record.final_fraction:.1f} %")
 
-    recon = min(RECONNAISSANCE_GRANULES, n)
-    recon_y = 100.0 * record.fraction_at(recon)
-    final_y = 100.0 * record.final_fraction
-
-    ax.plot([recon], [recon_y], marker="o", markersize=4.5, color=colour,
-            markerfacecolor="white", markeredgewidth=1.2, linestyle="none",
-            label=f"{recon} granules, {recon_y:.1f} %", zorder=5)
-    ax.plot([n], [final_y], marker="s", markersize=4.5, color=colour,
-            linestyle="none",
-            label=f"{n} granules, {final_y:.1f} %", zorder=5)
+    # One mark, at the reconnaissance granule count. The endpoint is not marked
+    # because it is the endpoint and the axis already says where it is. A curve
+    # too short to reach the mark gets none, rather than a mark clamped onto
+    # its last point, which would say the opposite of what it means.
+    if n > RECONNAISSANCE_GRANULES:
+        recon_y = 100.0 * record.fraction_at(RECONNAISSANCE_GRANULES)
+        ax.plot([RECONNAISSANCE_GRANULES], [recon_y], marker="o", markersize=4.5,
+                color=colour, markerfacecolor="white", markeredgewidth=1.2,
+                linestyle="none", zorder=5,
+                label=f"{RECONNAISSANCE_GRANULES} granules, {recon_y:.1f} %")
 
     ax.set_xlim(0, n * 1.02)
     ax.set_ylim(0, 100)
     ax.set_yticks([0, 20, 40, 60, 80, 100])
-    ax.set_xlabel("Granules processed (count)")
+    ax.set_xlabel("Productive granules (count)")
     ax.set_ylabel(f"Grid cells covered (% of {record.total_cells})")
     ax.legend(loc="lower right", handlelength=1.4, borderpad=0.4, labelcolor="black")
 
@@ -226,6 +262,28 @@ def _draw_monthly(ax_snd, ax_gran, record: CoverageRecord, snd_colour,
     ax_snd.annotate(f"{first.soundings:,}", xy=(first.month, first.soundings / 1000.0),
                     xytext=(0, 3), textcoords="offset points",
                     ha="center", va="bottom", fontsize=style.TICK_SIZE - 0.5)
+
+    # The finding is the ratio of these two panels, and a ratio the reader has
+    # to compute is a ratio the reader does not see. Panel (c) keeps granule
+    # counts rather than plotting yield directly, because the count is the
+    # control: the summer sounding shortfall only means something once it is
+    # clear the satellite passed over more often, not less. The two extreme
+    # months are annotated with their yield so the factor is on the page
+    # without a fourth panel and without a number on every bar.
+    yields = [(m.month, m.per_granule) for m in record.monthly if m.granules]
+    if yields:
+        low = min(yields, key=lambda item: item[1])
+        high = max(yields, key=lambda item: item[1])
+        top = float(granules[observed].max())
+        ax_gran.set_ylim(0, top * 1.42)
+        for month, value in ({low, high} if low != high else {low}):
+            ax_gran.annotate(f"{value:,.0f}", xy=(month, granules[month - 1]),
+                             xytext=(0, 3), textcoords="offset points",
+                             ha="center", va="bottom",
+                             fontsize=style.TICK_SIZE - 0.5, fontstyle="italic")
+        ax_gran.text(0.5, 0.965, "italic: soundings per granule",
+                     transform=ax_gran.transAxes, ha="center", va="top",
+                     fontsize=style.TICK_SIZE - 0.5, fontstyle="italic")
 
     ax_snd.set_ylabel("Soundings in box\n(thousands)")
     ax_gran.set_ylabel("Productive granules\n(count)")

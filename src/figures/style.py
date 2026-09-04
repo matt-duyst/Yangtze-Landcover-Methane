@@ -51,15 +51,31 @@ SEQUENTIAL = "batlow"
 #: they keep a defined greyscale order rather than being chosen by eye.
 CATEGORY_POSITIONS = (0.08, 0.38, 0.62, 0.86)
 
-#: Copernicus single-column width is about 8.3 cm and two-column about 17 cm.
-#: The standard requires at least 8 cm; these are the two sizes to reach for.
 CM = 1 / 2.54
-SINGLE_COLUMN_CM = 8.3
-DOUBLE_COLUMN_CM = 17.0
+
+# Copernicus states one figure dimension and only one: "The width should not be
+# less than 8 cm." ACP, AMT and ESSD all say exactly that and none of them
+# gives a single-column or full-width figure size, so there is no target width
+# to conform to, only a floor. The two sizes below are this project's, chosen
+# to sit on the typeset page rather than quoted from any guideline.
+#
+#: The floor, quoted from the guidelines. Nothing may be narrower.
+MIN_WIDTH_CM = 8.0
+#: One column of the two-column typeset page. Measured from the layout, not
+#: specified by the venue.
+COLUMN_WIDTH_CM = 8.3
+#: Full text width. **The project default**, because these figures are panelled
+#: and a panelled figure squeezed into one column loses its panels before it
+#: loses anything else. A single-panel figure should pass COLUMN_WIDTH_CM
+#: deliberately rather than inherit this.
+FULL_WIDTH_CM = 17.0
+
+#: Retained spellings of the two widths above.
+SINGLE_COLUMN_CM = COLUMN_WIDTH_CM
+DOUBLE_COLUMN_CM = FULL_WIDTH_CM
 
 #: Raster output must be at least this. Vector output carries no dpi.
 MIN_DPI = 300
-MIN_WIDTH_CM = 8.0
 
 FONT_SIZE = 8.0
 LABEL_SIZE = 8.0
@@ -123,7 +139,7 @@ def apply() -> None:
     })
 
 
-def figure(width_cm: float = DOUBLE_COLUMN_CM, height_cm: float = 8.0):
+def figure(width_cm: float = FULL_WIDTH_CM, height_cm: float = 8.0):
     """A figure at a stated physical size, with the conventions applied."""
     if width_cm < MIN_WIDTH_CM:
         raise ValueError(

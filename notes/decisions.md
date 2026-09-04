@@ -1605,27 +1605,110 @@ scheme without the fact being recoverable.
 
 ## The first figure: what the saturation curve is allowed to claim
 
-The coverage figure marks 36 granules on the saturation curve because that is
-the reconnaissance sample size, but the mark is not the reconnaissance result.
-The reconnaissance drew 36 particular granules and got 56.11 percent; the curve
-shows the first 36 in the order the streaming loop processed them and reaches
-56.01 percent. The two agree to within one cell, which is a coincidence worth
-naming rather than a validation. What the mark shows is the sample size landing
-on the steep part of the curve, and that is all it is offered as.
+The saturation curve is plotted against **productive granules**, not granules
+processed. Processing order is arbitrary, so on an axis of granules processed
+the position of any mark means whatever the streaming loop happened to do
+first. Of 578 granules acquired, 356 returned no qualifying sounding, and a
+granule that returned none cannot have covered a cell, so those rows are flat
+by construction and put more than half the axis under segments carrying no
+information.
 
-The 50.4 percent free-asymptote fit is **not drawn**. It was fitted to sixteen
-productive granules on the 0.1 degree grid, where there are 6,396 cells, and
-this figure is the 0.25 degree grid, where there are 1,023. Coverage fractions
-are not comparable across cell sizes, since a coarser cell is easier to hit, so
-a horizontal line at 50.4 percent on this axis would assert a comparison the
-record does not support. The failure of that extrapolation is a real result and
-it is recorded above and in the README; it is not a feature of this figure.
+Replotting changed the curve's **shape** much less than expected. The area
+under the normalised curve moves from 0.7840 to 0.7916, under one percent. The
+knee, taken as the point of maximum vertical distance above the chord, is the
+same granule on both axes and sits at the same coverage, 66.57 percent; only
+its relative position along the axis moves, from 10.2 to 7.2 percent. The
+reason is that unproductive granules are spread nearly uniformly through the
+processing order, so removing them is close to a uniform rescaling by
+578/222 = 2.60, and a uniform rescaling cannot change the shape of a curve read
+against a normalised axis. The ratio of granules needed to reach a threshold is
+2.56 to 2.61 across the upper range and only rises at the very start, which is
+what moves the knee left.
 
-Panels (b) and (c) are stacked and share a month axis rather than being drawn
-as twin axes. Twin axes make the reader establish which series belongs to which
-side before the panel can be read at all, and worse, the apparent relative
-height of the two series is then set by whoever chose the limits. Stacking
-costs vertical space and buys a comparison that cannot be manipulated.
+So the change is justified by what the axis *means*, not by what it looks like.
+The honest claim is that a mark at *n* is now a sample of *n* granules that
+returned data, comparable to a sampling design, rather than an artefact of
+order.
+
+A related premise also failed. Most of the flatness is not caused by
+unproductive granules. Only 81 granules of the 578 ever added a cell, so 86.0
+percent of steps are flat on the processed axis and 63.5 percent are still flat
+on the productive axis. The flatness is saturation, which is the panel's whole
+subject, not an artefact to be removed.
+
+The endpoint is not marked. It is the endpoint and the axis already says where
+it is.
+
+## The reconnaissance number is not a point on any single year's curve
+
+The mark at 36 granules is the reconnaissance's **sample size**. It is not the
+reconnaissance's coverage result, and the two must not be read against each
+other, because the reconnaissance sampled one granule on the fourteenth or
+fifteenth of alternate months across **seven years**, thirty-six granules of
+which only six fall in 2018. Its 56.11 percent is the union over that
+seven-year pool. A 2018 curve has no point that corresponds to it.
+
+For completeness, the 2018 curve reaches 54.45 percent at six productive
+granules, which is the reconnaissance's 2018 sample size and lands within 1.7
+points of what it reported. That closeness is suggestive and it is not offered
+as more: both numbers remain one ordering of one sample, and thirty granules
+from six other years apparently bought the reconnaissance almost nothing, which
+would be worth a separate measurement rather than an inference here.
+
+The 50.4 percent free-asymptote fit is still **not drawn**, for the reason
+recorded earlier: it was fitted on the 0.1 degree grid of 6,396 cells and this
+figure is the 0.25 degree grid of 1,023. Coverage fractions are not comparable
+across cell sizes, since a coarser cell is easier to hit.
+
+## Panel (c) keeps granule counts and annotates the yield
+
+The finding in the monthly panels is the ratio: 154 soundings per granule in
+July against 1,100 in October, a factor of 7.2, with the minimum landing on the
+flooded-paddy season the study is about.
+
+Panel (c) still plots productive granule counts rather than yield, because the
+count is the **control**. The summer sounding shortfall only means something
+once it is clear the satellite passed over more often in summer, not less. Plot
+yield alone and a reader can reasonably conclude there were simply fewer
+overpasses in July, which is the opposite of the truth: June to August carry 92
+productive granules against October's 31.
+
+Plotting counts and stacking the panels makes the ratio derivable but leaves it
+uncomputed, so the two extreme months are annotated with their yield in italic,
+with one in-figure line defining what the italic numbers are. Two annotations
+rather than a number on every bar, and the two chosen are the minimum and the
+maximum, so they bound the range. This is the venue's own preference, which is
+that a legend clarifies symbols inside the figure rather than in caption prose.
+
+## Figure width: the venues specify a floor and nothing else
+
+ACP, AMT and ESSD all state one figure dimension, in identical wording: "The
+width should not be less than 8 cm." None of them gives a single-column or a
+full-width figure size. There is therefore no venue width to conform to, only a
+minimum, and the question of whether a figure is single-column or full-width is
+this project's to decide.
+
+The project default is full width at 17.0 cm, set in `src/figures/style.py` as
+`FULL_WIDTH_CM` so the other eight figures inherit it from one place.
+`COLUMN_WIDTH_CM` is 8.3 cm and exists for figures that should be narrow; the
+choice is per-figure and deliberate rather than a number repeated nine times.
+Both are measured from the typeset two-column page and neither is quoted from a
+guideline, which the comment beside them says.
+
+This figure does not work at column width, and it was rendered at 8.3 cm and
+looked at rather than reasoned about. Three panels across 8.3 cm give each
+about 4 cm, and panel (a)'s legend is wider than that on its own, so the legend
+runs off the plot, the y-axis label collides with the neighbouring panel and
+the yield annotations overprint each other. Making it work would need a
+different arrangement, three panels stacked in one column and taller than it is
+wide, not an adjustment. Full width for a panelled figure is the standard here.
+
+The same research corrected the export path. Copernicus sets two size limits,
+not one: individual PDF figures must not exceed 2 MB while other formats must
+not exceed 5 MB. The exporter had been applying 5 MB to both, so the vector
+form is now held to the tighter ceiling.
+
+## Absent months, and the mark that must not be clamped
 
 January through March are shaded and labelled in place rather than drawn as
 zero-height bars, because a zero bar and a missing bar look identical and mean
@@ -1638,3 +1721,17 @@ made the same way there.
 The shading is labelled with text placed inside it rather than through a legend
 key. A grey key for a grey span sits on the span it describes and is invisible,
 which the first draft demonstrated.
+
+The sample-size mark is **not drawn at all** on a curve too short to reach it,
+rather than clamped onto the last point. A mark at the reconnaissance sample
+size says "this is what a sample that size reaches"; slid onto the endpoint of
+a shorter curve it would say the sample reached everything, which is the
+opposite. The first implementation clamped, and a test on a short record caught
+it.
+
+Reading the checkpoint now refuses two disagreements rather than absorbing
+them. The saturation record and the contribution record must have the same
+number of granules in the same order, and no granule without an in-box sounding
+may have increased coverage. Either would mean the curve was being built from
+records that do not describe the same run, and dropping rows would make it
+silently wrong instead of obviously wrong.

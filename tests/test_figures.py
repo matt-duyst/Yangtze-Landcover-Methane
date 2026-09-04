@@ -23,7 +23,13 @@ import pytest
 
 import src.figures.output as output_module
 from src.figures import style
-from src.figures.output import MAX_BYTES, Export, export, figures_root
+from src.figures.output import (
+    MAX_BYTES,
+    MAX_VECTOR_BYTES,
+    Export,
+    export,
+    figures_root,
+)
 
 
 @pytest.fixture
@@ -86,9 +92,21 @@ def test_export_refuses_a_file_over_the_size_limit_and_leaves_nothing(monkeypatc
                                                                      blank,
                                                                      tmp_path):
     monkeypatch.setattr(output_module, "MAX_BYTES", 10)
+    monkeypatch.setattr(output_module, "MAX_VECTOR_BYTES", 10)
 
     with pytest.raises(ValueError, match="above the 10 B limit"):
         export(blank, "heavy", directory=tmp_path)
+
+    assert list(tmp_path.iterdir()) == []
+
+
+def test_the_vector_is_held_to_the_tighter_limit_than_the_raster(monkeypatch,
+                                                                blank, tmp_path):
+    # A vector between the two ceilings must still be refused.
+    monkeypatch.setattr(output_module, "MAX_VECTOR_BYTES", 100)
+
+    with pytest.raises(ValueError, match="vector .* above the 100 B limit"):
+        export(blank, "tight", directory=tmp_path)
 
     assert list(tmp_path.iterdir()) == []
 
@@ -104,8 +122,10 @@ def test_a_failed_export_does_not_replace_a_figure_already_written(blank, tmp_pa
     assert sorted(p.name for p in tmp_path.iterdir()) == ["stable.pdf", "stable.png"]
 
 
-def test_the_size_limit_is_the_venue_limit():
+def test_the_size_limits_are_the_venue_limits():
+    # Copernicus sets a tighter ceiling for PDF than for other formats.
     assert MAX_BYTES == 5 * 1024 * 1024
+    assert MAX_VECTOR_BYTES == 2 * 1024 * 1024
 
 
 def test_palette_resolves_to_a_usable_colour_map():
