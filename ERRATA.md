@@ -106,7 +106,14 @@ consistent with 24,830.
 ### 2.3 Yangtze River extent
 
 Section 1.5 states that the Yangtze River "extends roughly 1.8 million km2".
-This is the drainage basin area, not the river's extent or length.
+A river's extent is a length and cannot be given in square kilometres, so the
+figure and its units do not describe the same quantity. The value is of the
+order usually quoted for the basin's drainage area rather than for the river
+itself, but no citable source for the basin area was found for this correction,
+so the claim here is confined to the unit mismatch, which is checkable from the
+sentence alone. The thesis attributes the figure to Zhu et al. 2020; whether
+that source gives it as a basin area, which would make the error one of
+description rather than of number, was not established.
 
 *Verified by:* reading the figure and its units in Section 1.5; 1.8 million km2
 is an area, and the sentence attributes it to the river's extent.
@@ -114,8 +121,19 @@ is an area, and the sentence attributes it to the river's extent.
 ### 2.4 Spatial resolution notation
 
 TROPOMI XCH4 spatial resolution is given throughout as "7km2 x 7km2". The
-correct notation is 7 km × 7 km (nadir resolution was refined to
-approximately 7 × 5.5 km in August 2019, after the study year).
+correct notation is 7 km × 7 km: the figure describes the dimensions of a
+ground pixel, not an area, and squaring both terms states an area of 49 km2 as
+though it were 7 km2 squared. The instrument's design nadir ground pixel for
+the SWIR band is 7 × 7 km (Veefkind et al., 2012, Remote Sensing of Environment
+120, 70-83, doi:10.1016/j.rse.2011.09.027), which is the correct figure for the
+2018 study period.
+
+An earlier version of this item added that the nadir resolution was refined to
+approximately 7 × 5.5 km in August 2019. That refinement is described in mission
+documentation rather than in a citable work, and no source for the date or the
+exact dimensions was found, so the detail is withdrawn. It would in any case be
+context rather than a correction, since any post-2018 change postdates the data
+used here.
 
 *Verified by:* full-text search of the thesis PDF for the resolution statement,
 which uses the squared form throughout rather than at one occurrence.
@@ -174,8 +192,12 @@ backbone. Only the ASPP module and decoder train.
 Section 3.3, step 2, of the thesis states that backbone networks are usually
 pretrained on a large-scale classification dataset such as ImageNet. The
 implementation does not do this. Inputs are nonetheless normalised with
-ImageNet channel statistics, which is only meaningful with an
-ImageNet-pretrained encoder.
+ImageNet channel statistics. Normalisation constants are chosen to match the
+distribution a network was pretrained on, so carrying ImageNet's over to a
+randomly initialised encoder applies a transformation with nothing to match it
+to. This is a practitioner convention rather than a theorem and is stated here
+as such; no citable source is offered for it, and the defect the item rests on
+is the frozen random backbone above, which is checkable from the notebook.
 
 *Verified by:* reading the model instantiation and the `requires_grad` loop in
 the committed notebook, against the pretraining described in Section 3.3.
@@ -258,8 +280,15 @@ and the absence of any masking step in the committed notebook.
 Section 3.3 states that the resolution difference between Landsat (30 m) and
 Sentinel-5P (approximately 7 km) can be ignored because CNNs are scale and
 translation invariant. Convolutional networks are approximately translation
-*equivariant*, and are not scale invariant. The resampling actually performed,
-and the limitation it imposes, should be stated instead.
+*equivariant*, and are not scale invariant. The distinction is the whole of the
+objection: equivariance means a shifted input produces a correspondingly shifted
+feature map, which is a property of the convolution itself (Cohen and Welling,
+2016, doi:10.48550/arXiv.1602.07576), while invariance means the output does not
+change at all, which convolutional networks achieve only approximately and
+which fails even for small translations and rescalings (Azulay and Weiss, 2018,
+doi:10.48550/arXiv.1805.12177). Neither property licenses ignoring a
+two-order-of-magnitude difference in ground sampling distance. The resampling
+actually performed, and the limitation it imposes, should be stated instead.
 
 *Verified by:* reading the scale-invariance claim in Section 3.3 against the two
 sensor resolutions as the thesis itself states them.
@@ -271,12 +300,30 @@ sensor resolutions as the thesis itself states them.
 ### 5.1 Availability of reference data
 
 Section 5.2 states that validation would require reference data that, to the
-author's knowledge, does not exist. Datasets published since 2023 provide
-independent reference for the paddy rice layer at the study's own resolution,
-including a 30 m paddy rice distribution dataset for China covering 1990 to
-2016 and a 500 m Asian monsoon rice product covering 2000 to 2021. Rice
-methane emission inventories at 0.1° monthly resolution, and regional TROPOMI
-flux inversions, have also since been published.
+author's knowledge, does not exist. Four products published since the thesis
+provide it, and they validate different things, which matters because
+conflating them would repeat the category error this reproduction spent
+considerable effort establishing.
+
+Two are rice maps and can validate a rice layer directly. CCD-Rice gives paddy
+rice distribution for China at 30 m from 1990 to 2016 (Shen et al., 2025, Earth
+System Science Data 17, 2193-2216, doi:10.5194/essd-17-2193-2025). Han et al.
+give annual paddy rice planting area and cropping intensity for the Asian
+monsoon region from 2000 to 2020 (2022, Agricultural Systems 200, 103437,
+doi:10.1016/j.agsy.2022.103437).
+
+Two are emission products and cannot validate a rice map or a concentration
+field, only an emission estimate. The Global Rice Paddy Inventory gives methane
+emissions from rice at 0.1 degree and monthly resolution (Chen et al., 2025,
+Earth's Future 13, e2024EF005479, doi:10.1029/2024EF005479). And a satellite
+inversion of methane over China's principal rice-growing region demonstrates the
+regional constraint the thesis assumed impossible (Liang et al., 2024,
+Environmental Science & Technology 58, 23127-23137,
+doi:10.1021/acs.est.4c09822).
+
+A paddy rice map validates a rice layer. An emission inventory validates neither
+a rice map nor a column concentration field, because it is a different quantity
+from either.
 
 ### 5.2 Causal attribution of XCH4 to rice paddies
 
@@ -394,9 +441,15 @@ Section 5.1 reports a Global Moran's I of 0.46 and a z-score of 276.31 for
 XCH4 in 2018. The spatial weights definition, distance band or contiguity
 rule, and standardisation are not reported, so the statistic cannot be
 reproduced. The z-score also scales with the number of features, so a large
-value over a dense grid is arithmetically expected rather than informative,
-and positive spatial autocorrelation in a column-concentration field follows
-from atmospheric transport and from the retrieval's own spatial binning.
+value over a dense grid is arithmetically expected rather than informative: the
+standardised statistic is the deviation of Moran's I from its expectation
+divided by its standard deviation, and that standard deviation shrinks as the
+number of units grows (Moran, 1950, Biometrika 37, 17-23,
+doi:10.1093/biomet/37.1-2.17). Positive spatial autocorrelation in a column
+concentration field is also expected on physical grounds rather than
+informative about local sources, since column variation at these scales is
+driven substantially by advected large-scale signal (Zeng et al., 2021, Nature
+Communications 12, 1163, doi:10.1038/s41467-021-21434-7).
 
 *Verified by:* full-text search of the thesis PDF for a spatial weights
 definition, distance band, contiguity rule or standardisation, returning none.

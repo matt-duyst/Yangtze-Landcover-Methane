@@ -14,7 +14,7 @@ listing two of six authors in reverse order. And a benchmark was attributed to
 the TROPOMI/WFMD v2.0 paper, whose abstract describes quality filtering rather
 than the albedo correction the benchmark was said to come from.
 
-`notes/references.bib` carries the same twenty-seven entries as BibTeX. It is
+`notes/references.bib` carries the same thirty-seven entries as BibTeX. It is
 **generated**, not typed: each entry comes from `https://doi.org` under content
 negotiation for `application/x-bibtex`, so the two files cannot drift and no
 transcription step exists between the registry and the repository. Regenerate it
@@ -26,7 +26,7 @@ discusses a work the thesis cites, the work appears here and its role says so.
 
 ## What could not be verified
 
-Nothing in the register failed to verify. All twenty-seven DOIs resolved: twenty-one
+Nothing in the register failed to verify. All thirty-seven DOIs resolved: twenty-nine
 through Crossref and six through DataCite, which is the registry that carries
 dataset DOIs and the reason a Crossref-only lookup returns "not found" for the
 deposits.
@@ -322,6 +322,92 @@ column abundance does not imply causation". *Nature Communications* 12, 1189.
 `10.1038/s41467-021-21437-4` — peer-reviewed paper; a finding contested. The
 original authors' response, recorded so the exchange is not represented by one
 side of it.
+
+
+## Assessments and instrument documentation
+
+Added 3 September 2026, when the errata's uncited claims were closed.
+
+**Forster, P., Storelvmo, T., Armour, K., Collins, W., Dufresne, J.-L.,
+Frame, D., Lunt, D. J., Mauritsen, T., Palmer, M. D., Watanabe, M., Wild, M.,
+and Zhang, H. (2021).** The Earth's Energy Budget, Climate Feedbacks and
+Climate Sensitivity. In *Climate Change 2021: The Physical Science Basis*,
+923–1054. Cambridge University Press.
+`10.1017/9781009157896.009` — book chapter; a finding relied on. Table 7.15 is
+the current assessment of methane's global warming potential and the source for
+the corrected figures in `ERRATA.md` 5.4. Crossref returns no author list for
+this chapter and dates it 2023, the Cambridge print edition; the authors above
+are read from the chapter itself and the report is 2021.
+
+**Myhre, G., Shindell, D., Bréon, F.-M., Collins, W., Fuglestvedt, J.,
+Huang, J., and 8 others (2013).** Anthropogenic and Natural Radiative Forcing.
+In *Climate Change 2013: The Physical Science Basis*, 659–740. Cambridge
+University Press.
+`10.1017/CBO9781107415324.018` — book chapter; a finding contested. Table 8.7 is
+the AR5 assessment, recorded because an earlier version of `ERRATA.md` 5.4
+quoted approximately these values as current when AR6 had superseded them.
+
+**Veefkind, J. P., Aben, I., McMullan, K., Förster, H., de Vries, J.,
+Otter, G., Claas, J., Eskes, H. J., de Haan, J. F., and 13 others (2012).**
+TROPOMI on the ESA Sentinel-5 Precursor: A GMES mission for global observations
+of the atmospheric composition for climate, air quality and ozone layer
+applications. *Remote Sensing of Environment* 120, 70–83.
+`10.1016/j.rse.2011.09.027` — peer-reviewed paper; describes the instrument used.
+The source for the 7 by 7 km design nadir ground pixel in `ERRATA.md` 2.4.
+
+**Moran, P. A. P. (1950).** Notes on Continuous Stochastic Phenomena.
+*Biometrika* 37, 17–23.
+`10.1093/biomet/37.1-2.17` — peer-reviewed paper; a method whose properties are
+relied on. The origin of Moran's I and the source for the statement in
+`ERRATA.md` 6.2 that its standardised form depends on the number of units.
+
+**Cohen, T. S., and Welling, M. (2016).** Group Equivariant Convolutional
+Networks. arXiv.
+`10.48550/arXiv.1602.07576` — preprint; a finding relied on. **Borrowed method
+literature, from machine learning.** Establishes equivariance as the property
+convolution actually has, which is the distinction `ERRATA.md` 4.2 rests on.
+
+**Azulay, A., and Weiss, Y. (2018).** Why do deep convolutional networks
+generalize so poorly to small image transformations? arXiv.
+`10.48550/arXiv.1805.12177` — preprint; a finding relied on. **Borrowed method
+literature, from machine learning.** Shows that invariance fails in practice
+even for small translations and rescalings, which is the other half of 4.2.
+
+## Reference data published since the thesis
+
+Added 3 September 2026 to close `ERRATA.md` 5.1, which asserted these existed
+without naming any of them. The first two can validate a rice layer; the second
+two are emission products and cannot.
+
+**Chen, Z., Lin, H., Balasus, N., Hardy, A., East, J. D., Zhang, Y.,
+Runkle, B. R. K., Hancock, S. E., Taylor, C. A., Du, X., Sander, B. O., and
+Jacob, D. J. (2025).** Global Rice Paddy Inventory (GRPI): A High-Resolution
+Inventory of Methane Emissions From Rice Agriculture Based on Landsat Satellite
+Inundation Data. *Earth's Future* 13, e2024EF005479.
+`10.1029/2024EF005479` — peer-reviewed paper; describes a dataset not used. A
+rice methane emission inventory at 0.1 degree and monthly resolution.
+
+**Han, J., Zhang, Z., Luo, Y., Cao, J., Zhang, L., Zhuang, H., Cheng, F.,
+Zhang, J., and Tao, F. (2022).** Annual paddy rice planting area and cropping
+intensity datasets and their dynamics in the Asian monsoon region from 2000 to
+2020. *Agricultural Systems* 200, 103437.
+`10.1016/j.agsy.2022.103437` — peer-reviewed paper; describes a dataset not
+used. Covers 2000 to 2020; the acronym APRA500 does not appear in its indexed
+metadata and is not used here.
+
+**Liang, R., Zhang, Y., Hu, Q., Li, T., Li, S., Yuan, W., Xu, J., Zhao, Y.,
+Zhang, P., Chen, W., Zhuang, M., Shen, G., and Chen, Z. (2024).**
+Satellite-Based Monitoring of Methane Emissions from China's Rice Hub.
+*Environmental Science & Technology* 58, 23127–23137.
+`10.1021/acs.est.4c09822` — peer-reviewed paper; a finding relied on. A regional
+satellite constraint on rice methane, which is the kind of result the thesis
+assumed was unavailable.
+
+**Shen, R., Peng, Q., Li, X., Chen, X., and Yuan, W. (2025).** CCD-Rice: a
+long-term paddy rice distribution dataset in China at 30 m resolution.
+*Earth System Science Data* 17, 2193–2216.
+`10.5194/essd-17-2193-2025` — peer-reviewed paper; describes a dataset not used.
+Covers 1990 to 2016 at 30 m.
 
 ---
 
