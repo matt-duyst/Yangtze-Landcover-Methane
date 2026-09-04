@@ -1557,3 +1557,48 @@ The same file said the uncovered cells are "dark steep terrain where the
 instrument is known to fail". That bundled our own measurement with a claim about
 the literature. The terrain description is ours and stands; the retrieval
 difficulty is now cited for low albedo only, and the slope half is not claimed.
+
+## Figures are built by a module that returns them and an exporter that verifies
+
+Every figure in this repository is drawn by a function that returns a figure
+object and writes nothing. Writing is done by one exporter, which produces the
+vector and the raster from the same object in a single call and verifies both
+before either reaches its destination.
+
+The separation is what makes the venue standard testable rather than
+aspirational. Because a figure function only returns, a figure can be built and
+asserted on in memory with no filesystem at all; because the exporter knows
+nothing about content, its refusal to write an out-of-spec figure is tested
+with a blank one. If figures wrote as a side effect, neither test could exist
+and the standard would be a comment in a docstring.
+
+The exporter writes to temporary paths in the destination directory, measures
+what it wrote, and moves the files into place only once every check passes. The
+checks are resolution, width, and byte size, and the resolution is recovered
+from the PNG header rather than trusted from the request. The reason for the
+temporaries is specific: a failed export that leaves a partial file behind is
+worse than one that leaves nothing, because on the next run a stale file looks
+like a current one. A figure that is out of spec produces an error and no file.
+
+Generated figures go to `figures/` at the repository root, which is where
+`notes/repository-architecture.md` said they would go before any existed and
+where the README already points. The destination is overridable through
+`FIGURES_DIR` so that tests never write into the working tree.
+
+## The scientific colour maps install, so the fallback is not load-bearing
+
+`cmcrameri` installs cleanly here and is pinned at 1.10. Crameri's maps are
+what the target venues ask for by name, and the reason is not aesthetic: a
+colour map that is not perceptually uniform shows gradients that are not in the
+data and hides gradients that are.
+
+The 2023 thesis figures fail this test, and the failure already cost something.
+Their red-orange-yellow-green ramp flattens to nearly the same grey at both
+ends, which is why an identification made from those figures had to be reversed
+after checking the PDF, as `ERRATA.md` records.
+
+The palette module keeps a fallback to matplotlib's perceptually uniform maps
+for an environment without `cmcrameri`, and exposes `PALETTE_SOURCE` saying
+which resolved. The fallback is a weaker substitute, not an equivalent, so the
+point of naming the source is that a figure can never be drawn in the wrong
+scheme without the fact being recoverable.

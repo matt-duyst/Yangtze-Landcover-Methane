@@ -23,7 +23,7 @@ DIRECT_IMPORTS = [
     "rasterio", "geopandas", "shapely", "pyproj", "fiona",
     "xarray", "rioxarray", "netCDF4", "h5netcdf", "h5py",
     "sklearn", "scipy",
-    "matplotlib",
+    "matplotlib", "cmcrameri",
     "pytest",
     "yaml", "requests", "tqdm",
 ]
