@@ -336,10 +336,43 @@ unsourced, and `notes/decisions.md` records why.
 
 ### 5.4 Global warming potential
 
-The 100-year global warming potential of methane is given as 25 to 30 times
-that of CO2, citing a 2011 source. Current syntheses give approximately 28 to
-36 over 100 years and 84 to 87 over 20 years. The horizon should be stated
-explicitly wherever the figure appears.
+The thesis gives the global warming potential of methane as 25 to 30 times that
+of CO2, citing a 2011 source, without stating a time horizon. **The horizon is
+the defect.** A GWP figure is meaningless without one, and the thesis's range is
+otherwise defensible.
+
+The current assessment is IPCC AR6 Working Group I, Table 7.15, which
+distinguishes fossil from non-fossil methane, a distinction the thesis does not
+make and an earlier version of this item did not make either:
+
+| | GWP-20 | GWP-100 |
+|---|---|---|
+| CH4 fossil | 82.5 ± 25.8 | 29.8 ± 11 |
+| CH4 non-fossil | 79.7 ± 25.8 | 27.0 ± 11 |
+
+Both AR6 central values for GWP-100, 27.0 and 29.8, fall **inside** the thesis's
+stated range of 25 to 30. Against the assessment current when a 2011 source was
+written, AR4's GWP-100 of 25, the lower bound is also the standard value. So the
+number is not the problem; the missing horizon is, and it should be stated
+wherever the figure appears, along with whether fossil or non-fossil methane is
+meant.
+
+**A correction to an earlier version of this item.** Until 3 September 2026 this
+section asserted that "current syntheses give approximately 28 to 36 over 100
+years and 84 to 87 over 20 years" and used that to criticise the thesis's figure
+as dated. Those numbers are not current. They are approximately the AR5
+assessment of 2013, whose Table 8.7 gives methane GWP-20 as 84 without and 86
+with climate-carbon feedbacks, and GWP-100 as 28 and 34 respectively; neither 36
+nor 87 appears in that table either. So this document criticised the thesis for
+using a dated figure while quoting a dated figure of its own, and its range
+excluded AR6's non-fossil value of 27.0 that the thesis's range contains. The
+correction was further from the current assessment than the thing it corrected.
+
+*Verified by:* IPCC AR6 WG1 Chapter 7 Table 7.15, read directly from the
+chapter PDF (Forster et al., 2021, doi:10.1017/9781009157896.009); and IPCC AR5
+WG1 Chapter 8 Table 8.7, read the same way (Myhre et al., 2013,
+doi:10.1017/CBO9781107415324.018), to establish that the withdrawn figures were
+AR5-era rather than current.
 
 ---
 
