@@ -2030,3 +2030,92 @@ The general point: a regeneration recipe that is *nearly* right is worse than
 none, because the output looks plausible and no test fails. Both of these were
 caught by diffing every regenerated file against a snapshot of the committed
 one, column by column, rather than by checking that the scripts ran.
+
+## Regeneration recipes drift, because nothing was checking them
+
+Three recipes in this repository did not produce the artefacts they claimed to,
+and a fourth artefact had no recipe at all. None of it made a test fail.
+
+`impervious_gisa_2018.csv` is committed with four columns. The documented
+command wrote fifteen. The committed file had been reduced by hand and the
+reduction was never written down, so anyone following the README got a
+different file, and every consumer kept working because nothing reads the extra
+columns. Fixed by adding `--impervious-only`, which makes the reduction part of
+the script rather than part of somebody's shell history.
+
+`analysis_grid_2018.csv` was documented as regenerable with `--rice-source
+scidb`. The committed table was built with `--rice-source nesdc` from the FTP
+rasters. Both sources are legitimate and the difference is confined to
+`rice_fraction_combined`, in 190 rows, every one lower because the anonymous
+product folds the double-season class into background. Neither side is wrong,
+so the fix was neither: the documentation now says which source produced the
+committed file and what the other one costs.
+
+`urban_area_by_province_gisa.csv` is produced by nothing. It was committed in
+f6b1b0c alongside `impervious_gisa_2018.csv`, a commit that added two artefacts
+and no code for either. It is now registered as `unregenerable` with its
+provenance, which is a declaration rather than an omission.
+
+And README.md claimed that "each compute script compares against the committed
+values before writing and refuses to overwrite a row that differs by more than a
+tenth of a percent". That is true of two scripts out of eleven. It is the
+property that would have caught the rice-source substitution, and believing the
+repository had it is part of why nobody looked.
+
+## The mechanism: recipes as data, documentation generated from it
+
+`config/recipes.yml` holds every recipe as a record: the artefact, the exact
+command, its measured cost, whether its inputs are committed or gitignored, how
+the output is compared, and which verification tier it sits in.
+`tests/test_recipes.py` executes it. The regeneration table in README.md is
+generated from it by `scripts/verify_recipes.py --update-readme`, and a test
+asserts the committed README still matches, so the command a reader is shown and
+the command that is tested cannot diverge.
+
+Three tiers, and the repository says which is which rather than implying
+everything is equally verified:
+
+* **continuously**, seven artefacts whose every input is committed. They run in
+  the default suite, in about a second each, on a fresh clone.
+* **on_local**, eight that need `data/raw/` or `data/interim/`, both gitignored.
+  Marked `slow`, excluded from the default run, invoked with `pytest -m slow`,
+  and skipping with a stated reason where the data is absent. About six minutes,
+  nearly all of it rebuilding the analysis grid.
+* **on_demand**, six composite outputs behind a 28.9 GB transfer. A checksum is
+  recorded and asserted, which catches a stale or hand-edited artefact but **not**
+  a drifted recipe, and the registry records the date each was last verified by
+  actually running the command. That limitation is named in the tier's own name.
+
+A fourth category, `unregenerable`, exists for the one artefact nothing
+produces, so that the honest case and the forgotten case do not look alike.
+
+Two smaller things fell out. PDF figures were not byte-reproducible, because
+matplotlib stamps `/CreationDate`; dropping it makes both figure formats
+comparable, and without that a test could only check the raster. And
+`test_every_committed_artefact_has_a_recipe` now fails if an artefact is added
+without one, which is the specific hole that let the GISA files in.
+
+## A recipe is a claim, and an unchecked claim drifts
+
+The transferable point. A regeneration command in a README is a claim about the
+repository: run this, get that file. This repository's whole argument is that
+its results regenerate from committed code, and that argument is worth exactly
+as much as its weakest recipe. A claim nothing executes will drift, and it will
+drift silently, because the failure mode is a plausible file rather than an
+error.
+
+Worth noting how both of this project's structural findings surfaced. The extent
+discrepancy appeared when a figure had to draw the study area, forcing a
+decision that two compatible-sounding sentences of prose had left open. The
+recipe drift appeared when a re-run regenerated everything downstream and the
+outputs were diffed column by column against a snapshot. **Both were found by
+doing rather than by reading**, and neither would have been caught by review,
+because every individual statement involved was true. Review checks whether
+each claim is defensible; it does not check whether the claims still describe
+the artefacts. Only executing them does that.
+
+The corollary is that the diff was the instrument, not the re-run. Re-running
+produced the outputs; comparing them column by column against the committed
+ones is what turned "the scripts ran" into "the scripts reproduce". Checking
+that a pipeline runs is not checking that it reproduces, and the two are easy
+to confuse because both end in a green result.

@@ -179,7 +179,17 @@ holds the baselines and the association tests, with leave-one-province-out and
 spatial-block cross-validation, because cells are contiguous and a random split
 leaks a cell's own neighbours into its training set.
 
-There are 403 tests. All of them run offline on a clone with nothing fetched.
+There are 495 tests in the default run, and all of them work offline on a clone
+with nothing fetched:
+
+    python -m pytest
+
+Eight more verify the regeneration recipes that need `data/raw/` or
+`data/interim/`, both gitignored. They take about six minutes, mostly rebuilding
+the analysis grid from 1.7 GB of rice rasters, so they are excluded by default
+and skip themselves with a reason where the data is absent:
+
+    python -m pytest -m slow
 
 ## Regenerating the results
 
@@ -187,27 +197,59 @@ Every committed table states its own provenance and cost in
 [`data/processed/README.md`](data/processed/README.md), which is the place to look before running anything.
 In outline:
 
-| result | command | cost |
-|---|---|---|
-| provincial urban areas | `fetch_gaia.py --download` then `compute_urban_areas.py --write` | 265 MB, minutes |
-| provincial rice areas | `fetch_glorice.py --download` then `compute_rice_areas.py --write` | 250 MB, minutes |
-| 2018 methane composite | `compute_methane_composite.py --run --max-hours 3` | 28.9 GB, 61 to 66 minutes |
-| analysis grid | `build_analysis_grid.py --rice-source scidb --write` | 1.7 GB rice download, minutes |
-| baselines | `run_baselines.py --write` | seconds |
-| albedo confounder test | `test_albedo_confounder.py --write` | seconds |
-| deseasonalisation test | `test_deseasonalisation.py --write` | seconds |
-| albedo correction test | `test_albedo_correction.py --write` | seconds |
-| GISA impervious layer | `fetch_gisa.py --download` then `build_analysis_grid.py --urban-source gisa` | 882 MB, ~15 minutes |
-| predictor robustness | `test_alternative_predictors.py --write` | seconds, over four prebuilt grids |
+<!-- BEGIN GENERATED RECIPE TABLE -->
+| result | command | cost | verified |
+|---|---|---|---|
+| 2018 methane composite | `compute_methane_composite.py --checkpoint data/interim/extent_2018.npz --export data/processed/methane_composite_2018 --export-csv data/processed/methane_coverage_2018.csv` | 28.9 GB and about two hours to build the checkpoint; seconds to export from it | on demand |
+| composite coverage table | `compute_methane_composite.py --checkpoint data/interim/extent_2018.npz --export data/processed/methane_composite_2018 --export-csv data/processed/methane_coverage_2018.csv` | seconds from the checkpoint | on demand |
+| covariate companion | `compute_methane_composite.py --checkpoint data/interim/extent_2018.npz --export-covariates data/processed/methane_covariates_2018` | seconds from the checkpoint | on demand |
+| covariate table | `compute_methane_composite.py --checkpoint data/interim/extent_2018.npz --export-covariates data/processed/methane_covariates_2018` | seconds from the checkpoint | on demand |
+| deseasonalised field | `compute_methane_composite.py --checkpoint data/interim/extent_2018.npz --export-deseasonalised data/processed/methane_deseasonalised_2018` | seconds from the checkpoint | on demand |
+| deseasonalised table | `compute_methane_composite.py --checkpoint data/interim/extent_2018.npz --export-deseasonalised data/processed/methane_deseasonalised_2018` | seconds from the checkpoint | on demand |
+| analysis grid | `build_analysis_grid.py --rice-source nesdc --write` | about 3 minutes over the local rice and urban rasters | on local |
+| GISA impervious layer | `build_analysis_grid.py --urban-source gisa --impervious-only --write --out data/processed/impervious_gisa_2018.csv` | about 3 minutes over the local GISA rasters | on local |
+| provincial urban areas | `compute_urban_areas.py --write` | about 20 seconds over the local GAIA tiles | on local |
+| provincial rice areas | `compute_rice_areas.py --write` | a few seconds over the local GloRice files | on local |
+| baselines | `run_baselines.py --covariates data/processed/methane_covariates_2018.csv --write` | under a second | continuously |
+| baselines, deseasonalised | `run_baselines.py --target ch4_deseasonalised_ppb --target-from data/processed/methane_deseasonalised_2018.csv --covariates data/processed/methane_covariates_2018.csv --out data/processed/baseline_results_deseasonalised_2018.csv --write` | under a second | continuously |
+| deseasonalisation test | `test_deseasonalisation.py --write` | under a second | continuously |
+| albedo confounder test | `test_albedo_confounder.py --write` | under a second | continuously |
+| albedo correction test | `test_albedo_correction.py --write` | under a second | continuously |
+| predictor robustness | `test_alternative_predictors.py --write` | a second, over four prebuilt grids | on local |
+| predictor comparison | `test_alternative_predictors.py --write` | a second, over four prebuilt grids | on local |
+| study area figure | `make_study_area_figure.py` | about a second | continuously |
+| study area figure, vector | `make_study_area_figure.py` | about a second | continuously |
+| coverage figure | `make_coverage_figure.py` | under a second | on local |
+| coverage figure, vector | `make_coverage_figure.py` | under a second | on local |
+<!-- END GENERATED RECIPE TABLE -->
 
 The composite is the expensive one and it is the only one. It downloads,
 grids and deletes each granule in turn, so it needs 28.9 GB of transfer but only
 one granule of disk. The covariate and deseasonalised fields come from the same
 pass; exporting them from an existing checkpoint costs nothing.
 
-Each compute script compares against the committed values before writing and
-refuses to overwrite a row that differs by more than a tenth of a percent, so
-running one is a check as much as a regeneration.
+Two of these scripts compare against the committed values before writing and
+refuse to overwrite a row that differs by more than a tenth of a percent:
+`compute_urban_areas.py` and `compute_rice_areas.py`. The rest overwrite
+whatever is there. This README previously said all of them did, which is how a
+recipe that produced a different analysis grid went unnoticed for a month.
+
+What checks the others is `config/recipes.yml`, which records every recipe as
+data, and `tests/test_recipes.py`, which runs each one into a temporary
+directory and compares the result against the committed file. The table above
+is generated from that registry, so the command shown and the command tested
+cannot differ. Regenerate it with `python scripts/verify_recipes.py
+--update-readme`, and run the verification directly with `python
+scripts/verify_recipes.py`.
+
+The `verified` column says how each artefact is checked. `continuously` means
+every input is committed and the recipe runs in the default test suite.
+`on local` means it needs `data/raw/` or `data/interim/`, which are gitignored;
+those run under `python -m pytest -m slow` where the data exists and skip with a
+reason where it does not. `on demand` means the composite, which needs 28.9 GB
+of transfer: its checksum is asserted, which catches a stale file but not a
+drifted recipe, and `config/recipes.yml` records the date it was last verified
+by actually running it.
 
 ## What cannot be regenerated
 
@@ -226,7 +268,7 @@ that is deliberately not scripted. The cost is one column rather than the table:
 for 2018 the anonymous Science Data Bank export is the same classification with
 the double-season class folded into the background, verified identical to the
 pixel, so `--rice-source scidb` reproduces every other column exactly and
-differs only in that one, in 190 of 927 rows.
+differs only in that one, in 190 of 926 rows.
 
 ## The thesis and the errata
 
@@ -319,9 +361,10 @@ gitignored. [`notes/`](notes/) holds the decision record and the architecture de
 the ArcGIS figure exports, whose provenance is documented but which no code in
 this repository produces.
 
-There is no `figures/` directory. Nothing has been generated from the reproduced
-data yet, and the 2023 exports in [`legacy/figures/`](legacy/figures/) are not a substitute for it,
-so the directory is absent rather than misleadingly empty.
+[`figures/`](figures/) holds the generated figures, committed as a PDF and PNG pair each,
+with their captions in [`figures/README_fragments.md`](figures/README_fragments.md). Two of a planned nine
+exist. The 2023 exports in [`legacy/figures/`](legacy/figures/) are not a substitute and are kept
+only as a record of the original document.
 
 ## Licence and citation
 

@@ -886,13 +886,16 @@ attenuation argument that motivated fetching GISA does not apply in the
 direction assumed.
 
     python scripts/fetch_gisa.py --download
-    python scripts/build_analysis_grid.py --urban-source gisa --write --out <path>
+    python scripts/build_analysis_grid.py --urban-source gisa --impervious-only \
+        --write --out data/processed/impervious_gisa_2018.csv
 
-That writes the full fifteen-column grid. The committed file keeps only
-`centre_lat`, `centre_lon`, `impervious_fraction` and `impervious_coverage`;
-there is no flag for the reduced form, so the remaining columns are dropped
-afterwards. Nothing reads the extra columns, so running the command as written
-does not break anything, it just does not reproduce the file.
+`--impervious-only` writes the four columns this file is committed with. Without
+it the script writes the full fifteen-column grid, whose other eleven columns
+duplicate analysis_grid_2018.csv and give them a second place to drift. The flag
+was added after the omission was found: the committed file had been reduced by
+hand and the reduction was never written down, so the documented command
+produced a different file and nothing noticed. `config/recipes.yml` now records
+this recipe and `tests/test_recipes.py` runs it.
 
 The four-way baseline comparison built on this layer is in
 alternative_predictors_2018.csv, and the descriptive comparison between the
