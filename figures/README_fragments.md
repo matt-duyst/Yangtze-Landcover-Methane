@@ -18,14 +18,14 @@ narrower than 8 cm. Regenerate with the script named under each caption.
 number of granules that return data, and a small sample measures its own size
 rather than the year's coverage.** Thirty-six productive granules reach 71.5
 percent of the 1,023 cells and the remaining 187 add only 19.1 points to finish
-at 90.52 percent. Soundings also arrive unevenly through the year, and the
+at 90.52<!--#composite.coverage_percent--> percent. Soundings also arrive unevenly through the year, and the
 unevenness runs opposite to the growing season: October alone carries 30.82
-percent of the year's 110,920 in-box soundings, while June, July and August
+percent of the year's 110,920<!--#composite.soundings--> in-box soundings, while June, July and August
 together carry 14.51 percent from three times as many granules.
 
 Panel (a) is the cumulative count of grid cells that have received at least one
 qualifying sounding, against productive granules in the order the streaming
-loop handled them. Of 578 granules acquired over the box, 223 returned a
+loop handled them. Of 578<!--#composite.granules_gridded--> granules acquired over the box, 223<!--#composite.granules_with_data--> returned a
 qualifying sounding and 355 returned none; a granule that returned none cannot
 have covered a cell, so it is not a point on the axis. The curve is one
 ordering of those 223 rather than an expected saturation curve, since a
@@ -73,8 +73,8 @@ large at the northern, and area is not preserved. Nothing in this study is
 measured from a map, since areas are computed analytically on the authalic
 sphere, so the projection is a display choice throughout. The inset is drawn
 in the China Albers equal-area conic, which is why the study box appears
-rotated in it. Of the 1,023 cells, 926 received at least one qualifying
-methane sounding in 2018 and 97 received none; which cells those are is the
+rotated in it. Of the 1,023<!--#composite.total_cells--> cells, 926<!--#composite.covered_cells--> received at least one qualifying
+methane sounding in 2018 and 97<!--#composite.uncovered_cells--> received none; which cells those are is the
 subject of the composite figure and is deliberately not shown here. Natural
 Earth resolves Shanghai with 213 vertices across four parts where GADM 4.1
 uses 1,925 across 112, and that difference is not visible at the size drawn

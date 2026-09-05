@@ -322,7 +322,7 @@ per-cell counts are what make that visible.
 
 Both methane variables are provided because the choice between them is
 substantive. The bias correction adds 11.64 ppb on average, ranging from plus
-3.42 to plus 29.05, and it differs in all 927 covered cells. Its 25.6 ppb
+3.42 to plus 29.05, and it differs in all 926<!--#composite.covered_cells--> covered cells. Its 25.6 ppb
 spread across cells is nearly twice the field's own standard deviation of 14.9
 ppb, so the correction is not a constant offset that cancels in a comparison.
 
@@ -355,7 +355,7 @@ from an existing checkpoint costs nothing and is the --export flag.
 ## analysis_grid_2018.csv
 
 One row is one covered methane cell of the 2018 composite at 0.25 degrees.
-There are 927 of them and fifteen columns. `centre_lat` and `centre_lon` place
+There are 926<!--#grid.rows--> of them and fifteen columns. `centre_lat` and `centre_lon` place
 the cell; `sounding_count`, `ch4_bias_corrected_ppb` and `ch4_raw_ppb` come
 straight from methane_composite_2018.tif; `impervious_fraction`,
 `rice_fraction_single` and `rice_fraction_combined` are the land-cover
@@ -415,8 +415,8 @@ province and their bounding boxes overlap. GAIA is left unmasked. It is a global
 product whose zero means non-urban everywhere, including over sea, so masking it
 to the four provinces would quietly change impervious fraction from a share of
 the cell into a share of the provincial land in the cell. The consequence is
-visible in the coverage columns: impervious coverage exceeds 0.99 in all 927
-rows, while rice coverage has a median of 0.335 and falls below 0.99 in 570.
+visible in the coverage columns: impervious coverage exceeds 0.99 in all 926
+rows, while rice coverage has a median of 0.341 and falls below 0.99 in 569.
 Comparing the two fractions within a cell compares a share of the whole cell
 against a share of the provincial land in it, and that has to be read with the
 coverage alongside.
@@ -453,23 +453,23 @@ count equal to the FTP zero count plus the FTP double-season count exactly. The
 Science Data Bank export is the same classification with the double-season class
 folded back into the background. Building the grid from each source and
 differencing the tables, the only column that differs is
-`rice_fraction_combined`, in 190 of the 927 rows, by at most 0.164 and by 0.022
+`rice_fraction_combined`, in 190 of the 926 rows, by at most 0.164 and by 0.022
 on average where it differs. Every other column is byte-identical, so a reader
 with no grant regenerates all but one column exactly. notes/decisions.md carries
 the pixel counts that establish this, and the equality was checked for 2018 only.
 
-For the distributions as built: impervious fraction is present in all 927 rows
-with a minimum of 0.0000, a median of 0.0595, a maximum of 0.8192 and 136 exact
-zeros. Single-season rice fraction is present in 532 rows with a minimum of
-0.0000, a median of 0.1289, a maximum of 0.5480 and 18 exact zeros. Combined
-rice fraction is present in the same 532 rows with a median of 0.1363 and the
+For the distributions as built: impervious fraction is present in all 926<!--#grid.rows--> rows
+with a minimum of 0.0000, a median of 0.0595<!--#grid.impervious_median-->, a maximum of 0.8192 and 136<!--#grid.impervious_zeros--> exact
+zeros. Single-season rice fraction is present in 531<!--#grid.rice_rows--> rows with a minimum of
+0.0000, a median of 0.1291<!--#grid.rice_single_median-->, a maximum of 0.5480 and 18 exact zeros. Combined
+rice fraction is present in the same 531 rows with a median of 0.1366<!--#grid.rice_combined_median--> and the
 same minimum and maximum. Impervious coverage runs from 0.9986 to 1.0007 with a
 median of 0.9996 and no row below 0.99; the excess above 1.0 is pixel-centre
 quantisation, since a 30 m grid does not divide a 0.25 degree cell evenly and a
 cell gains or loses up to about one pixel row. Rice coverage runs from 0.0000 to
-1.0002 with a median of 0.3354 and 570 rows below 0.99. Of the 927 cells, 69
-straddle more than one province, 544 are partly outside all four and 368 are
-entirely outside all four. A reader counting the file will find 370 rather than
+1.0002 with a median of 0.3412<!--#grid.rice_coverage_median--> and 569<!--#grid.rice_coverage_below_99--> rows below 0.99. Of the 926 cells, 69<!--#grid.straddling_cells-->
+straddle more than one province, 543 are partly outside all four and 368 are
+entirely outside all four. A reader counting the file will find 370<!--#grid.cells_outside_in_file--> rather than
 368 with every province share at zero, because the share columns are written to
 four decimal places and two cells hold a provincial sliver below 0.00005 of
 their area. The figure of 368 is what the intersection actually found; 370 is
@@ -512,12 +512,12 @@ squared, held-out RMSE and R squared, and a detail column holding the fitted
 coefficients for a linear model or the number of fallbacks for the spatial null.
 Errors are in ppb. The `dropped_missing` column counts rows removed from what
 the model was asked for, so it is 395 for a rice model offered the whole grid
-and 0 for one offered only the 532 cells that have a rice fraction, even though
-both end up running on 532. The `n` column is what to compare on.
+and 0 for one offered only the 531 cells that have a rice fraction, even though
+both end up running on 531. The `n` column is what to compare on.
 
 Sample sizes differ and the metrics are not comparable across them. Any model
-naming rice runs on the 532 cells that have a rice fraction; the constants, the
-spatial null and the impervious-only model could run on all 927. Every null is
+naming rice runs on the 531<!--#grid.rice_rows--> cells that have a rice fraction; the constants, the
+spatial null and the impervious-only model could run on all 926. Every null is
 therefore run twice, once on each sample, and a model is only ever compared
 against a null fitted on the same rows. The 395 cells without rice are not a
 random slice: they are disproportionately coastal and outside the four
@@ -609,19 +609,19 @@ in-box soundings, which is correct and does not apply after quality filtering:
 albedo is written where the retrieval got far enough, and qa_value >= 0.75
 selects those same soundings. notes/decisions.md carries the argument.
 
-Annual means over the 927 covered cells, for orientation:
+Annual means over the 926<!--#cov.rows--> covered cells, for orientation:
 
 | field | min | median | max |
 |-------|-----|--------|-----|
-| eastward_wind, m/s | -5.6341 | 0.0305 | 3.6959 |
-| northward_wind, m/s | -5.4241 | -0.8553 | 10.4711 |
-| surface_albedo_SWIR | -0.0480 | 0.0773 | 0.1566 |
-| surface_albedo_NIR | -0.0072 | 0.2178 | 0.3051 |
-| solar_zenith_angle, degrees | 12.6857 | 42.3981 | 56.6597 |
-| surface_altitude, m | 0.0000 | 35.3966 | 1041.0800 |
-| surface_pressure, Pa | 89950.4 | 101161.0 | 102642.0 |
+| eastward_wind, m/s | -5.6341 | 0.0310<!--#cov.eastward_wind_median--> | 3.6959 |
+| northward_wind, m/s | -5.4241 | -0.8562<!--#cov.northward_wind_median--> | 10.3949<!--#cov.northward_wind_max--> |
+| surface_albedo_SWIR | -0.0480 | 0.0774<!--#cov.albedo_swir_median--> | 0.1566 |
+| surface_albedo_NIR | -0.0072 | 0.2180<!--#cov.albedo_nir_median--> | 0.3051 |
+| solar_zenith_angle, degrees | 12.6857 | 42.4004<!--#cov.solar_zenith_median--> | 56.6597 |
+| surface_altitude, m | 0.0000 | 35.4619<!--#cov.altitude_median--> | 1041.0800 |
+| surface_pressure, Pa | 89950.4 | 101159.0<!--#cov.pressure_median--> | 102642.0 |
 
-Surface albedo is negative in 167 of the 927 cells. That is not a fill value
+Surface albedo is negative in 166<!--#cov.albedo_negative--> of the 926 cells. That is not a fill value
 leaking through; it is a fitted retrieval parameter rather than a measured
 reflectance, and over dark surfaces the fit can land below zero. Those cells are
 kept, because dropping them would remove 18 percent of the grid non-randomly and
@@ -798,8 +798,8 @@ The four series are the raw retrieval `methane_mixing_ratio`, the operational
 `methane_mixing_ratio_bias_corrected`, the correction itself as the difference
 between them, and the deseasonalised field. Both methane variables have been
 gridded since the first composite, so the correction is available without
-re-reading a granule. It is positive in all 927 covered cells and averages
-+11.64 ppb.
+re-reading a granule. It is positive in all 926<!--#composite.covered_cells--> covered cells and averages
++11.64<!--#composite.bias_mean--> ppb.
 
 Slopes are reported alongside correlations because only a slope can be set
 beside a published figure: a correlation depends on how much albedo happened to
@@ -823,7 +823,7 @@ than a property of the methane field. Measurement error in a predictor
 attenuates an association toward zero, so it is the threat that bears on a
 negative claim, and answering it needs a second product rather than a better
 argument. The per-cell file carries GISA impervious fraction and its coverage
-on the same 927 cells as analysis_grid_2018.csv; the provincial file carries
+on the same 926<!--#grid.rows--> cells as analysis_grid_2018.csv; the provincial file carries
 the four 2018 totals beside GAIA's and the thesis's.
 
 Two companion files rather than columns added to existing ones, for a specific

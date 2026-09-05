@@ -567,7 +567,7 @@ classification for rice, in all four combinations.
 
 Zero cases beat the spatial null under inverse-variance weighting across all
 four pairs, both schemes and both sample sizes, out of 176 weighted
-opportunities. The two urban products agree at Spearman +0.956 across all 926
+opportunities. The two urban products agree at Spearman +0.956 across all 926<!--#grid.rows-->
 cells; the two rice products agree only at +0.654, so the rice test is a genuine
 one and gives the same answer.
 

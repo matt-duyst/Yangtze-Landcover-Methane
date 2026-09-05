@@ -23,7 +23,7 @@ because the methane field is smooth, and a model that only reproduces smoothness
 has learned nothing about the surface. Under inverse-variance weighting no
 land-cover model clears it anywhere: not on the raw retrieval, the operationally
 corrected one or the seasonally corrected field, at either sample size, under
-either cross-validation scheme. On the full 926 cells held out by spatial
+either cross-validation scheme. On the full 926<!--#composite.covered_cells--> cells held out by spatial
 blocks, none clears it at either weighting: impervious fraction reaches held-out
 R squared 0.095 against the spatial null's 0.337 on the seasonally corrected
 field, and 0.085 against 0.346 on the operationally corrected composite. The
@@ -74,7 +74,7 @@ One result from that comparison is uninterpretable rather than null and should
 not be read as support for rice. GloRice's raw correlation with methane is
 +0.397 against the NESDC classification's +0.096, and its partial correlation
 given albedo survives where NESDC's does not. Four things confound it: it runs on
-926 cells against 531, it allocates official statistics through a model rather
+926 cells against 531<!--#grid.rice_rows-->, it allocates official statistics through a model rather
 than observing rice, it correlates with impervious fraction at Spearman +0.560 so
 it partly measures developed land in general, and its NaN means no rice while the
 NESDC blank means not assessed, so the 395 extra cells are precisely the ones
@@ -168,7 +168,7 @@ by the area a raster actually assessed and never by the zone, because the rice
 rasters are clipped and dividing by the zone would understate rice exactly where
 the clipping is. [`src/grid/`](src/grid/) joins those fractions onto the methane lattice by
 integer arithmetic rather than by rasterising a thousand cell polygons, and
-refuses to construct a row for a cell with no soundings, so the 97 unobserved
+refuses to construct a row for a cell with no soundings, so the 97<!--#composite.uncovered_cells--> unobserved
 cells are excluded by the type instead of by a filter someone can forget.
 
 [`src/methane/`](src/methane/) reads Sentinel-5P Level 2 granules with auto-masking off,
@@ -268,7 +268,7 @@ that is deliberately not scripted. The cost is one column rather than the table:
 for 2018 the anonymous Science Data Bank export is the same classification with
 the double-season class folded into the background, verified identical to the
 pixel, so `--rice-source scidb` reproduces every other column exactly and
-differs only in that one, in 190 of 926 rows.
+differs only in that one, in 190 of 926<!--#grid.rows--> rows.
 
 ## The thesis and the errata
 
