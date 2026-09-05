@@ -30,7 +30,11 @@ REPO = Path(__file__).resolve().parents[1]
 TIF = REPO / "data" / "processed" / "methane_composite_2018.tif"
 CSV = REPO / "data" / "processed" / "methane_coverage_2018.csv"
 
-STUDY = GridSpec(114.8, 27.0, 122.6, 35.2, 0.25)
+#: The live study grid, 26.95 to 35.2 north and 114.8 to 122.55 east. These
+#: are the bounds the 0.25 degree lattice occupies; the box used to be declared
+#: as 27.0 and 122.6 and did not.
+STUDY = GridSpec(west=114.8, south=26.95, east=122.55, north=35.2,
+                 resolution=0.25)
 
 
 def load_script(name):
@@ -156,7 +160,7 @@ def test_uncovered_cells_are_nan_in_the_raster_and_zero_count_in_the_table():
     with rasterio.open(TIF) as src:
         primary, secondary, counts = src.read(1), src.read(2), src.read(3)
     uncovered = counts == 0
-    assert int(uncovered.sum()) == 96
+    assert int(uncovered.sum()) == 97
     assert np.isnan(primary[uncovered]).all()
     assert np.isnan(secondary[uncovered]).all()
     assert np.isfinite(primary[~uncovered]).all()
@@ -165,7 +169,7 @@ def test_uncovered_cells_are_nan_in_the_raster_and_zero_count_in_the_table():
     rows = list(csv.DictReader(open(CSV, newline="")))
     blank = [r for r in rows if r["ch4_bias_corrected_ppb"] == ""]
     zero = [r for r in rows if int(r["sounding_count"]) == 0]
-    assert len(blank) == len(zero) == 96
+    assert len(blank) == len(zero) == 97
     assert blank == zero, "blank mean and zero count must mark the same cells"
 
 
@@ -174,13 +178,19 @@ def test_the_committed_composite_matches_the_reported_headline_numbers():
         primary, counts = src.read(1), src.read(3)
         tags = src.tags()
     covered = counts > 0
-    assert int(covered.sum()) == 927
-    assert int(counts.sum()) == 110_928
-    assert int(tags["soundings"]) == 110_928
+    assert int(covered.sum()) == 926
+    # 110,920 since the extent reconciliation: +151 soundings gained in the
+    # southern row that used to be discarded, -159 removed from the eastern
+    # column that used to be clipped in.
+    assert int(counts.sum()) == 110_920
+    assert int(tags["soundings"]) == 110_920
     assert int(tags["granules_gridded"]) == 578
-    assert int(tags["granules_with_data"]) == 222
+    # 223: one July granule whose only in-box soundings fell in the southern
+    # 26.95-27.0 strip, previously discarded whole so it counted as barren.
+    assert int(tags["granules_with_data"]) == 223
     assert float(tags["qa_threshold"]) == 0.75
-    assert int(np.median(counts[covered])) == 75
+    # 74: the median moved by one as the least-sampled edge cells changed.
+    assert int(np.median(counts[covered])) == 74
     assert int(counts.max()) == 410
     assert 1880.0 < float(np.nanmean(primary)) < 1900.0
 
@@ -328,7 +338,7 @@ def test_the_committed_composite_verifies_against_itself():
     assert check["bias_corrected"] < 1e-3
     assert check["raw"] < 1e-3
     assert check["counts"] == 0.0, "counts are integers and must match exactly"
-    assert check["covered_cells_new"] == check["covered_cells_reference"] == 927
+    assert check["covered_cells_new"] == check["covered_cells_reference"] == 926
 
 
 # --------------------------------------------------------------------------

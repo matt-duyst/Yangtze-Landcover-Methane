@@ -46,7 +46,7 @@ def test_the_deseasonalised_field_covers_the_927_observed_cells():
     records = rows(FIELD)
     assert len(records) == 1023
     observed = [r for r in records if int(r["sounding_count"]) > 0]
-    assert len(observed) == 927
+    assert len(observed) == 926
     for record in observed:
         assert record["ch4_deseasonalised_ppb"] != ""
         assert record["mean_day_of_year"] != ""

@@ -23,7 +23,12 @@ from src.figures import export, figures_root  # noqa: E402
 from src.figures.coverage import coverage_figure, from_checkpoint  # noqa: E402
 from src.figures.style import PALETTE_SOURCE  # noqa: E402
 
-DEFAULT_CHECKPOINT = Path("data/interim/seasonal_2018.npz")
+#: The 2018 checkpoint built against the reconciled extent. It supersedes
+#: seasonal_2018.npz, which was accumulated under the old declared box and so
+#: discarded the southern strip and clipped the eastern one. Both are under
+#: data/interim/, which is gitignored, so this figure cannot be regenerated
+#: from a fresh clone without re-running the composite.
+DEFAULT_CHECKPOINT = Path("data/interim/extent_2018.npz")
 
 
 def main() -> int:
