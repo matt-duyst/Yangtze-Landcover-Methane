@@ -1870,11 +1870,24 @@ the alternative is moving the name off its own province.
 **A note on the figures throughout this file.** The 2018 composite was rebuilt
 against the reconciled extent, and the headline numbers moved with it: coverage
 from 927 cells and 90.62 percent to 926 and 90.52, soundings from 110,928 to
-110,920, productive granules from 222 to 223. Earlier sections have been updated
-to the current values rather than left to contradict the data. Where an argument
-in this file turns on the gap between a reconnaissance estimate and the measured
-year, the gap is unchanged to within a tenth of a percent and the argument
-stands as written.
+110,920, productive granules from 222 to 223, the rice subsample from 532 cells
+to 531.
+
+**This file is not maintained against those figures, and should not be.** It is
+a decision log: each section records what was measured and believed when a
+decision was taken, and the reasoning that followed. Rewriting those numbers to
+today's values would destroy the thing the file exists to preserve. Sections
+written before the reconciliation therefore still quote 927 cells and a 532-cell
+rice subsample in places, and that is correct as a record even though it is not
+the current value.
+
+An earlier version of this note claimed the opposite, that "earlier sections
+have been updated to the current values". That was inaccurate in both directions:
+some coverage figures had been updated and several sample sizes had not, so the
+file was neither a clean record nor a current one. The policy is now the first
+of those. Current values live in `data/processed/README.md`, where they are
+marked and checked by `tests/test_prose_claims.py`; this file is excluded from
+that check deliberately.
 
 
 The study box was declared as 114.8 to 122.6 east, 27.0 to 35.2 north. The
@@ -2119,3 +2132,116 @@ produced the outputs; comparing them column by column against the committed
 ones is what turned "the scripts ran" into "the scripts reproduce". Checking
 that a pipeline runs is not checking that it reproduces, and the two are easy
 to confuse because both end in a green result.
+
+## Prose goes stale when the artefact under it moves
+
+The third drift class. Recipes drifting from artefacts is closed by
+`config/recipes.yml`. Artefacts drifting from the sentences that quote them was
+closed by nothing, and it had already happened: the extent re-run moved values
+in every regenerated table, and eight figures in README.md and ERRATA.md went
+stale. They were caught by a manual sweep minutes before a push. A fuller sweep
+afterwards found twenty more in `data/processed/README.md`, which the first
+sweep never reached, including every median in the covariate table.
+
+Each was correct when written. That is what makes this class hard: nothing is
+wrong at the moment of writing, and the failure is introduced later by an
+unrelated action somewhere else.
+
+### Three classes of number, and only one may be checked
+
+A blanket correction would be wrong, not merely noisy.
+
+**Derived from a committed artefact.** These are the drift risk and the only
+ones worth watching. Cell counts, sample sizes, medians, correlations.
+
+**Stable properties of external things.** A DOI, a granule's byte count, the
+twelve layers of a TROPOMI profile, an accuracy figure from a cited paper, a
+year. These never change and need no mechanism. A checker that touched them
+would be pure cost. Two live examples of why a find-and-replace on a bare
+number is unsafe: `10.1017/CBO9781107415324.018` contains the string 532, and
+a provincial table holds the total 39,532.2.
+
+**Historical records.** `notes/decisions.md` is full of these by design; each
+section states what was measured when a decision was taken. Updating them would
+destroy the record and, worse, would silently rewrite the evidence an argument
+rests on. `data/processed/README.md` also carries one such sentence on purpose,
+stating the composite's figures before the reconciliation, and it is left
+unmarked so the check leaves it alone.
+
+### The mechanism, and what it does not do
+
+A claim is marked where it lives, in the sentence: the number is followed
+immediately by an HTML comment naming the quantity, of the form `<!--` then
+`#grid.rows` then `-->`. It is written here in pieces because a decision log
+must not contain anything that reads as a live marker, to a tool or to a person.
+The comment renders as nothing, so a reader sees only the number, and it travels
+with the sentence, so it cannot drift from its claim. `scripts/verify_claims.py` computes each named
+quantity from the artefact; `tests/test_prose_claims.py` asserts the written
+number and the computed one agree at the precision the sentence itself chose,
+so a rounded figure is not treated as drift.
+
+The alternative was a table of claims maintained beside the prose. That is
+precisely the failure this repository already had, in the README regeneration
+table, and repeating it here would have been the same mistake in a new place.
+
+**It errs toward false negatives, deliberately.** An unmarked number is not
+checked, and 38 claims are marked against roughly 1,400 unmarked numbers in the
+scanned files. The reasoning is the cost asymmetry, read the other way round
+from the obvious: a check that fires on DOIs, years and the historical record
+would produce thousands of failures that must never be "fixed", and a check
+that noisy does not have a high false-positive rate, it has a short life. It
+gets suppressed, and then the false negative rate is one hundred percent. A
+narrower check that survives is worth more than a broad one that does not.
+
+The consequence is stated rather than hidden: `verify_claims.py --coverage`
+reports the unmarked count per file, and a test asserts that at least thirty
+claims are marked, so the check cannot pass by having quietly found nothing.
+Marking a figure is a judgement made once, at writing time, which is also the
+only moment anyone knows which of the three classes it belongs to.
+
+What fails, and when: regenerate a table, and the default test suite fails
+immediately on `test_every_marked_claim_matches_the_data`, naming the file, the
+line, the quantity, what the prose says and what the data says.
+
+### Verifying a published correction needs the content, not a signal that it changed
+
+A caution in its own right, from the push that preceded this. Every substitution
+in that correction happened to be the same character length: 0.096 to 0.095,
++0.561 to +0.560, 927 to 926. The file's byte count was identical before and
+after, and so was its length on the CDN.
+
+The raw endpoint then served a cached pre-correction copy. Nothing about size or
+modification time could have distinguished the corrected file from the stale one,
+because nothing about them differed except the digits. Only fetching the content
+at an explicit commit ref and reading the passage settled it.
+
+So: a published correction is verified by reading what it now says, at a pinned
+ref, not by observing that something changed. "The file is different now" is not
+evidence, and for a same-length edit it is not even available.
+
+## A grep that finds nothing looks exactly like a grep that found nothing wrong
+
+The most transferable thing the push turned up, and it is not about credentials.
+
+The credential gate before that push ran a scan over every blob in the object
+database and reported zero matches for the NESDC username and host. It also
+reported zero for the control string. The intermediate file had been written to
+`/tmp`, which is sandboxed in this environment, so the scan read an empty input
+and matched nothing. A sweep that searched nothing and a sweep that passed
+produce identical output: zero.
+
+Re-run against the scratchpad it worked, and the numbers are worth recording as
+the shape of a real result: **276 `authalic` pairs in tracked content across all
+refs, and 40 matches across 108 MB of blob content**, against zero for every
+credential pattern.
+
+Every grep-based check from here carries a positive control: a string known to
+be present, asserted to be found, in the same invocation as the thing being
+looked for. Without it, "no matches" is not a finding, it is the absence of one,
+and the two are indistinguishable from the output alone.
+
+This generalises past credentials to any check whose passing condition is an
+empty result. A test that silently collects zero items passes; a linter pointed
+at no files reports no problems; a verification that skips everything reports
+nothing wrong. `tests/test_prose_claims.py` and `tests/test_recipes.py` both
+carry a minimum-count assertion for this reason.
