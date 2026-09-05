@@ -535,9 +535,9 @@ for surface albedo on no methane field at either weighting: the partial
 correlations are -0.010, -0.065, +0.033 and -0.021.
 
 Impervious fraction, which the thesis treats as the secondary driver, behaves
-better but not well: held-out R squared 0.096 against the spatial null's 0.343
+better but not well: held-out R squared 0.095 against the spatial null's 0.337
 on the seasonally corrected field, and its association with methane falls from
-Pearson +0.346 to +0.020 once surface albedo is controlled for.
+Pearson +0.345 to +0.021 once surface albedo is controlled for.
 
 A tower-based Bayesian inversion of this study's own region and year reaches a
 compatible conclusion by a method that can support it: Huang et al. (2021,
@@ -610,7 +610,7 @@ One further result is uninterpretable rather than null and should not be read
 either way. GloRice's rice association is stronger than the NESDC
 classification's and survives control for albedo where that one does not, but it
 is confounded four ways: a different sample of cells, an allocation model rather
-than an observation, correlation with impervious fraction at Spearman +0.561,
+than an observation, correlation with impervious fraction at Spearman +0.560,
 and 368 of its 395 extra cells lying entirely outside the four provinces.
 
 The negative result in 7.1 depends on none of this, which is why it is stated

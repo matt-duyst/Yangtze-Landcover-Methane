@@ -23,9 +23,9 @@ because the methane field is smooth, and a model that only reproduces smoothness
 has learned nothing about the surface. Under inverse-variance weighting no
 land-cover model clears it anywhere: not on the raw retrieval, the operationally
 corrected one or the seasonally corrected field, at either sample size, under
-either cross-validation scheme. On the full 927 cells held out by spatial
+either cross-validation scheme. On the full 926 cells held out by spatial
 blocks, none clears it at either weighting: impervious fraction reaches held-out
-R squared 0.096 against the spatial null's 0.343 on the seasonally corrected
+R squared 0.095 against the spatial null's 0.337 on the seasonally corrected
 field, and 0.085 against 0.346 on the operationally corrected composite. The
 exceptions are all unweighted and all small, between 1.7 and 6.0 percent, and
 they appear in the same places on every methane field and every predictor pair,
@@ -72,10 +72,10 @@ gives the same answer.
 
 One result from that comparison is uninterpretable rather than null and should
 not be read as support for rice. GloRice's raw correlation with methane is
-+0.398 against the NESDC classification's +0.101, and its partial correlation
++0.397 against the NESDC classification's +0.096, and its partial correlation
 given albedo survives where NESDC's does not. Four things confound it: it runs on
-927 cells against 532, it allocates official statistics through a model rather
-than observing rice, it correlates with impervious fraction at Spearman +0.561 so
+926 cells against 531, it allocates official statistics through a model rather
+than observing rice, it correlates with impervious fraction at Spearman +0.560 so
 it partly measures developed land in general, and its NaN means no rice while the
 NESDC blank means not assessed, so the 395 extra cells are precisely the ones
 NESDC declined to assess and 368 of them lie entirely outside the four provinces.
@@ -92,7 +92,7 @@ Surface albedo is the first reason. TROPOMI retrieves methane from reflected
 light and fails preferentially over dark ground, and albedo is more strongly
 associated with the methane field than either land-cover fraction is. Impervious
 fraction and albedo are collinear at Spearman +0.761, and with albedo partialled
-out the impervious association falls from Pearson +0.346 to +0.020, which is
+out the impervious association falls from Pearson +0.345 to +0.021, which is
 indistinguishable from zero. That does not prove the land-cover signal is an
 artefact, because cities really are bright and controlling for albedo removes
 real urban variation too; it establishes that the data cannot separate the two.
@@ -168,7 +168,7 @@ by the area a raster actually assessed and never by the zone, because the rice
 rasters are clipped and dividing by the zone would understate rice exactly where
 the clipping is. [`src/grid/`](src/grid/) joins those fractions onto the methane lattice by
 integer arithmetic rather than by rasterising a thousand cell polygons, and
-refuses to construct a row for a cell with no soundings, so the 96 unobserved
+refuses to construct a row for a cell with no soundings, so the 97 unobserved
 cells are excluded by the type instead of by a filter someone can forget.
 
 [`src/methane/`](src/methane/) reads Sentinel-5P Level 2 granules with auto-masking off,
