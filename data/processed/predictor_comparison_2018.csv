@@ -1,17 +1,17 @@
 predictor,methane_field,weighting,n,pearson,spearman,partial_pearson_given_albedo,partial_pearson_p,partial_spearman_given_albedo
-GAIA,bias corrected,unweighted,927,0.3459,0.5071,0.0198,5.479e-01,0.128
-GAIA,bias corrected,by sounding count,927,0.216,0.2266,0.033,3.153e-01,-0.004
-GAIA,raw,unweighted,927,0.4405,0.669,0.1505,4.257e-06,0.2658
-GAIA,raw,by sounding count,927,0.3275,0.4821,0.1252,1.336e-04,0.0576
-GISA,bias corrected,unweighted,927,0.3631,0.5362,-0.0252,4.434e-01,0.1584
-GISA,bias corrected,by sounding count,927,0.2519,0.3094,-0.0742,2.391e-02,0.0528
-GISA,raw,unweighted,927,0.478,0.7162,0.1402,1.854e-05,0.3408
-GISA,raw,by sounding count,927,0.4447,0.6282,0.0696,3.413e-02,0.1855
-NESDC,bias corrected,unweighted,532,0.1014,0.0752,-0.0098,8.222e-01,-0.0116
-NESDC,bias corrected,by sounding count,532,-0.0882,-0.1345,-0.0654,1.324e-01,-0.1132
-NESDC,raw,unweighted,532,0.1926,0.147,0.0334,4.427e-01,-0.0391
-NESDC,raw,by sounding count,532,-0.1289,-0.2369,-0.0207,6.341e-01,-0.1419
-GloRice,bias corrected,unweighted,927,0.3983,0.4465,0.1652,4.308e-07,0.1781
-GloRice,bias corrected,by sounding count,927,0.1762,0.0747,0.3452,2.646e-27,0.1239
-GloRice,raw,unweighted,927,0.3896,0.4068,0.135,3.753e-05,-0.0041
-GloRice,raw,by sounding count,927,-0.0037,-0.1492,0.2186,1.759e-11,-0.1052
+GAIA,bias corrected,unweighted,926,0.3452,0.5055,0.0207,5.296e-01,0.1282
+GAIA,bias corrected,by sounding count,926,0.2124,0.2202,0.0324,3.246e-01,-0.0051
+GAIA,raw,unweighted,926,0.4398,0.668,0.151,4.003e-06,0.2664
+GAIA,raw,by sounding count,926,0.3259,0.4789,0.1252,1.344e-04,0.0586
+GISA,bias corrected,unweighted,926,0.3625,0.5349,-0.024,4.663e-01,0.1586
+GISA,bias corrected,by sounding count,926,0.2481,0.3031,-0.0733,2.583e-02,0.052
+GISA,raw,unweighted,926,0.4774,0.7156,0.1409,1.701e-05,0.3417
+GISA,raw,by sounding count,926,0.4433,0.6256,0.0699,3.354e-02,0.1856
+NESDC,bias corrected,unweighted,531,0.096,0.0718,-0.0073,8.664e-01,-0.0103
+NESDC,bias corrected,by sounding count,531,-0.0882,-0.1346,-0.0657,1.310e-01,-0.1133
+NESDC,raw,unweighted,531,0.1891,0.1439,0.0353,4.167e-01,-0.0381
+NESDC,raw,by sounding count,531,-0.1287,-0.2368,-0.02,6.464e-01,-0.1412
+GloRice,bias corrected,unweighted,926,0.3973,0.4447,0.1657,4.017e-07,0.1781
+GloRice,bias corrected,by sounding count,926,0.1731,0.0715,0.3422,8.330e-27,0.1229
+GloRice,raw,unweighted,926,0.3886,0.4048,0.1358,3.401e-05,-0.0033
+GloRice,raw,by sounding count,926,-0.0071,-0.1542,0.2191,1.617e-11,-0.1033

@@ -58,7 +58,7 @@ def test_every_model_appears_under_both_schemes_and_both_weightings():
 def test_sample_sizes_are_927_or_the_532_with_a_rice_fraction():
     grid = list(csv.DictReader(open(GRID, newline="")))
     with_rice = sum(1 for r in grid if r["rice_fraction_single"] != "")
-    assert len(grid) == 927 and with_rice == 532
+    assert len(grid) == 926 and with_rice == 531
     # A model's name no longer encodes its columns, so the requirement is read
     # from the model definitions rather than guessed from the label.
     module = load_script()
@@ -71,8 +71,8 @@ def test_sample_sizes_are_927_or_the_532_with_a_rice_fraction():
 
     for record in rows():
         n, dropped = int(record["n"]), int(record["dropped_missing"])
-        assert n in (927, 532)
-        if n == 927:
+        assert n in (926, 531)
+        if n == 926:
             assert dropped == 0
         elif dropped:
             # Asked for the whole grid and lost the cells with no rice.
@@ -84,10 +84,10 @@ def test_sample_sizes_are_927_or_the_532_with_a_rice_fraction():
 
 
 def test_a_model_naming_rice_never_runs_on_the_full_grid():
-    """Rice is absent in 395 cells and is never filled in to reach 927."""
+    """Rice is absent in 395 cells and is never filled in to reach 926."""
     for record in rows():
         if "rice_fraction" in record["model"]:
-            assert int(record["n"]) == 532
+            assert int(record["n"]) == 531
 
 
 def test_the_two_constants_agree_out_of_sample_under_leave_one_province_out():
@@ -159,14 +159,14 @@ def test_no_tree_or_network_appears_in_the_baseline_table():
 
 
 def test_the_script_offers_every_null_on_both_samples():
-    """A null on 927 cells cannot referee a model fitted on 532."""
+    """A null on 926 cells cannot referee a model fitted on 531."""
     module = load_script()
     table = load_table(GRID)
     sizes = {}
     for model, subset in module.models(table):
         n = table.n if subset is None else int(subset.size)
         sizes.setdefault(n, []).append(model.name)
-    assert set(sizes) == {927, 532}
+    assert set(sizes) == {926, 531}
     for n, names in sizes.items():
         joined = " ".join(names)
         assert "global mean" in joined, f"no global constant on the {n}-cell sample"
@@ -175,9 +175,9 @@ def test_the_script_offers_every_null_on_both_samples():
 
 
 def test_results_are_grouped_by_the_rows_used_not_by_the_model_name():
-    """An OLS on rice has no tag but still runs on 532 rows."""
+    """An OLS on rice has no tag but still runs on 531 rows."""
     module = load_script()
-    tagged = type("R", (), {"model": "OLS rice_fraction_single", "n": 532})()
-    untagged = type("R", (), {"model": "constant (global mean)", "n": 927})()
+    tagged = type("R", (), {"model": "OLS rice_fraction_single", "n": 531})()
+    untagged = type("R", (), {"model": "constant (global mean)", "n": 926})()
     assert module._sample_of(tagged) != module._sample_of(untagged)
-    assert module._sample_of(tagged) == "532 cells"
+    assert module._sample_of(tagged) == "531 cells"

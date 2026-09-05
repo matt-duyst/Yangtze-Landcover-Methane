@@ -1,89 +1,89 @@
 model,scheme,weighting,n,dropped_missing,in_sample_rmse_ppb,in_sample_r2,held_out_rmse_ppb,held_out_r2,detail
-constant (global mean),leave-one-province-out,unweighted,927,0,13.2438,0.0,14.3824,-0.1793,
-constant (global mean),leave-one-province-out,by sounding count,927,0,6.9707,0.0,7.3706,-0.118,
-constant (global mean),spatial blocks,unweighted,927,0,13.2438,0.0,13.2991,-0.0084,
-constant (global mean),spatial blocks,by sounding count,927,0,6.9707,0.0,6.9943,-0.0068,
-constant (per province),leave-one-province-out,unweighted,927,0,12.2932,0.1384,14.3824,-0.1793,groups: 5
-constant (per province),leave-one-province-out,by sounding count,927,0,6.6194,0.0983,7.3706,-0.118,groups: 5
-constant (per province),spatial blocks,unweighted,927,0,12.2932,0.1384,12.4888,0.1108,groups: 5
-constant (per province),spatial blocks,by sounding count,927,0,6.6194,0.0983,6.6697,0.0845,groups: 5
-spatial null (queen neighbour mean),leave-one-province-out,unweighted,927,0,7.2978,0.6964,13.9246,-0.1055,602 test cells had no training neighbour
-spatial null (queen neighbour mean),leave-one-province-out,by sounding count,927,0,2.4514,0.8763,7.0943,-0.0358,602 test cells had no training neighbour
-spatial null (queen neighbour mean),spatial blocks,unweighted,927,0,7.2978,0.6964,10.7359,0.3429,349 test cells had no training neighbour
-spatial null (queen neighbour mean),spatial blocks,by sounding count,927,0,2.4514,0.8763,4.8616,0.5136,349 test cells had no training neighbour
-OLS impervious_fraction,leave-one-province-out,unweighted,927,0,12.3801,0.1262,13.8847,-0.0991,intercept +1885.2778; impervious_fraction +37.6566
-OLS impervious_fraction,leave-one-province-out,by sounding count,927,0,6.7959,0.0495,7.5846,-0.1839,intercept +1890.7070; impervious_fraction +14.8261
-OLS impervious_fraction,spatial blocks,unweighted,927,0,12.3801,0.1262,12.5903,0.0962,intercept +1885.2778; impervious_fraction +37.6566
-OLS impervious_fraction,spatial blocks,by sounding count,927,0,6.7959,0.0495,6.8658,0.0299,intercept +1890.7070; impervious_fraction +14.8261
-constant (global mean) [rice sample],leave-one-province-out,unweighted,532,0,9.1232,0.0,9.1639,-0.0089,
-constant (global mean) [rice sample],leave-one-province-out,by sounding count,532,0,4.2749,0.0,5.068,-0.4054,
-constant (global mean) [rice sample],spatial blocks,unweighted,532,0,9.1232,0.0,9.3177,-0.0431,
-constant (global mean) [rice sample],spatial blocks,by sounding count,532,0,4.2749,0.0,4.4552,-0.0861,
-constant (per province) [rice sample],leave-one-province-out,unweighted,532,0,9.056,0.0147,9.1639,-0.0089,groups: 5
-constant (per province) [rice sample],leave-one-province-out,by sounding count,532,0,3.787,0.2153,5.068,-0.4054,groups: 5
-constant (per province) [rice sample],spatial blocks,unweighted,532,0,9.056,0.0147,9.4162,-0.0653,groups: 5
-constant (per province) [rice sample],spatial blocks,by sounding count,532,0,3.787,0.2153,4.0628,0.0968,groups: 5
-spatial null (queen neighbour mean) [rice sample],leave-one-province-out,unweighted,532,0,7.5465,0.3158,9.1067,0.0036,412 test cells had no training neighbour
-spatial null (queen neighbour mean) [rice sample],leave-one-province-out,by sounding count,532,0,2.3981,0.6853,4.999,-0.3674,412 test cells had no training neighbour
-spatial null (queen neighbour mean) [rice sample],spatial blocks,unweighted,532,0,7.5465,0.3158,9.3538,-0.0512,215 test cells had no training neighbour
-spatial null (queen neighbour mean) [rice sample],spatial blocks,by sounding count,532,0,2.3981,0.6853,3.8833,0.1748,215 test cells had no training neighbour
-OLS impervious_fraction [rice sample],leave-one-province-out,unweighted,532,0,8.8115,0.0672,9.3441,-0.049,intercept +1890.4927; impervious_fraction +16.8030
-OLS impervious_fraction [rice sample],leave-one-province-out,by sounding count,532,0,4.1969,0.0362,5.9242,-0.9205,intercept +1892.3299; impervious_fraction +7.1716
-OLS impervious_fraction [rice sample],spatial blocks,unweighted,532,0,8.8115,0.0672,8.9708,0.0331,intercept +1890.4927; impervious_fraction +16.8030
-OLS impervious_fraction [rice sample],spatial blocks,by sounding count,532,0,4.1969,0.0362,4.4121,-0.0652,intercept +1892.3299; impervious_fraction +7.1716
-OLS rice_fraction_single,leave-one-province-out,unweighted,532,395,9.081,0.0092,9.4978,-0.0838,intercept +1891.7904; rice_fraction_single +7.0105
-OLS rice_fraction_single,leave-one-province-out,by sounding count,532,395,4.2613,0.0064,5.2264,-0.4947,intercept +1893.9048; rice_fraction_single -2.6713
-OLS rice_fraction_single,spatial blocks,unweighted,532,395,9.081,0.0092,9.3005,-0.0392,intercept +1891.7904; rice_fraction_single +7.0105
-OLS rice_fraction_single,spatial blocks,by sounding count,532,395,4.2613,0.0064,4.4785,-0.0975,intercept +1893.9048; rice_fraction_single -2.6713
-OLS rice_fraction_combined,leave-one-province-out,unweighted,532,395,9.0813,0.0092,9.4583,-0.0748,intercept +1891.7566; rice_fraction_combined +6.8702
-OLS rice_fraction_combined,leave-one-province-out,by sounding count,532,395,4.2659,0.0042,5.2243,-0.4935,intercept +1893.8148; rice_fraction_combined -2.1331
-OLS rice_fraction_combined,spatial blocks,unweighted,532,395,9.0813,0.0092,9.2994,-0.039,intercept +1891.7566; rice_fraction_combined +6.8702
-OLS rice_fraction_combined,spatial blocks,by sounding count,532,395,4.2659,0.0042,4.4914,-0.1038,intercept +1893.8148; rice_fraction_combined -2.1331
-OLS impervious_fraction + rice_fraction_single,leave-one-province-out,unweighted,532,395,8.7753,0.0748,9.711,-0.133,intercept +1889.5697; impervious_fraction +16.6127; rice_fraction_single +6.3834
-OLS impervious_fraction + rice_fraction_single,leave-one-province-out,by sounding count,532,395,4.189,0.0398,6.0604,-1.0097,intercept +1892.7629; impervious_fraction +6.9342; rice_fraction_single -2.0322
-OLS impervious_fraction + rice_fraction_single,spatial blocks,unweighted,532,395,8.7753,0.0748,8.9686,0.0336,intercept +1889.5697; impervious_fraction +16.6127; rice_fraction_single +6.3834
-OLS impervious_fraction + rice_fraction_single,spatial blocks,by sounding count,532,395,4.189,0.0398,4.4512,-0.0841,intercept +1892.7629; impervious_fraction +6.9342; rice_fraction_single -2.0322
-OLS impervious_fraction + rice_fraction_single + interaction,leave-one-province-out,unweighted,532,395,8.6797,0.0949,9.4445,-0.0717,intercept +1888.6424; impervious_fraction +26.3938; rice_fraction_single +18.7058; impervious_fraction x rice_fraction_single -106.4343
-OLS impervious_fraction + rice_fraction_single + interaction,leave-one-province-out,by sounding count,532,395,4.1014,0.0795,5.8798,-0.8918,intercept +1891.5476; impervious_fraction +16.9377; rice_fraction_single +7.1088; impervious_fraction x rice_fraction_single -75.0131
-OLS impervious_fraction + rice_fraction_single + interaction,spatial blocks,unweighted,532,395,8.6797,0.0949,8.8686,0.055,intercept +1888.6424; impervious_fraction +26.3938; rice_fraction_single +18.7058; impervious_fraction x rice_fraction_single -106.4343
-OLS impervious_fraction + rice_fraction_single + interaction,spatial blocks,by sounding count,532,395,4.1014,0.0795,4.3403,-0.0308,intercept +1891.5476; impervious_fraction +16.9377; rice_fraction_single +7.1088; impervious_fraction x rice_fraction_single -75.0131
-"OLS trend surface (lat, lon)",leave-one-province-out,unweighted,927,0,11.5979,0.2331,15.1645,-0.3111,intercept +2230.9590; centre_lat -0.7942; centre_lon -2.6737
-"OLS trend surface (lat, lon)",leave-one-province-out,by sounding count,927,0,6.036,0.2502,7.3213,-0.1031,intercept +2117.9845; centre_lat -0.7187; centre_lon -1.7199
-"OLS trend surface (lat, lon)",spatial blocks,unweighted,927,0,11.5979,0.2331,11.7851,0.2081,intercept +2230.9590; centre_lat -0.7942; centre_lon -2.6737
-"OLS trend surface (lat, lon)",spatial blocks,by sounding count,927,0,6.036,0.2502,6.1145,0.2306,intercept +2117.9845; centre_lat -0.7187; centre_lon -1.7199
-"OLS wind (u, v, speed)",leave-one-province-out,unweighted,927,0,7.7118,0.6609,8.1661,0.6198,intercept +1890.6717; wind_u +3.2076; wind_v -2.8164; wind_speed -0.4902
-"OLS wind (u, v, speed)",leave-one-province-out,by sounding count,927,0,4.4198,0.598,6.1393,0.2243,intercept +1893.2998; wind_u +0.6785; wind_v -2.9030; wind_speed -2.1230
-"OLS wind (u, v, speed)",spatial blocks,unweighted,927,0,7.7118,0.6609,7.8393,0.6496,intercept +1890.6717; wind_u +3.2076; wind_v -2.8164; wind_speed -0.4902
-"OLS wind (u, v, speed)",spatial blocks,by sounding count,927,0,4.4198,0.598,4.6055,0.5635,intercept +1893.2998; wind_u +0.6785; wind_v -2.9030; wind_speed -2.1230
-OLS albedo (SWIR),leave-one-province-out,unweighted,927,0,9.7163,0.4618,11.1724,0.2884,intercept +1877.8826; surface_albedo_SWIR +172.3623
-OLS albedo (SWIR),leave-one-province-out,by sounding count,927,0,5.7539,0.3187,6.8285,0.0404,intercept +1882.0476; surface_albedo_SWIR +107.6896
-OLS albedo (SWIR),spatial blocks,unweighted,927,0,9.7163,0.4618,9.8404,0.4479,intercept +1877.8826; surface_albedo_SWIR +172.3623
-OLS albedo (SWIR),spatial blocks,by sounding count,927,0,5.7539,0.3187,5.9384,0.2743,intercept +1882.0476; surface_albedo_SWIR +107.6896
-OLS wind + impervious,leave-one-province-out,unweighted,927,0,7.677,0.664,8.2889,0.6083,intercept +1889.9687; wind_u +2.9062; wind_v -2.8028; wind_speed -0.5112; impervious_fraction +6.6056
-OLS wind + impervious,leave-one-province-out,by sounding count,927,0,4.4095,0.5998,6.1993,0.2091,intercept +1893.0368; wind_u +0.3931; wind_v -2.8815; wind_speed -2.2183; impervious_fraction +3.3582
-OLS wind + impervious,spatial blocks,unweighted,927,0,7.677,0.664,7.8217,0.6512,intercept +1889.9687; wind_u +2.9062; wind_v -2.8028; wind_speed -0.5112; impervious_fraction +6.6056
-OLS wind + impervious,spatial blocks,by sounding count,927,0,4.4095,0.5998,4.6096,0.5627,intercept +1893.0368; wind_u +0.3931; wind_v -2.8815; wind_speed -2.2183; impervious_fraction +3.3582
-"OLS wind (u, v, speed) [rice sample]",leave-one-province-out,unweighted,532,0,7.3024,0.3593,8.1342,0.2051,intercept +1891.2734; wind_u +3.6608; wind_v -2.1228; wind_speed -0.4902
-"OLS wind (u, v, speed) [rice sample]",leave-one-province-out,by sounding count,532,0,4.1026,0.079,6.3656,-1.2173,intercept +1894.5060; wind_u +1.4298; wind_v -0.4435; wind_speed -1.8404
-"OLS wind (u, v, speed) [rice sample]",spatial blocks,unweighted,532,0,7.3024,0.3593,7.5782,0.31,intercept +1891.2734; wind_u +3.6608; wind_v -2.1228; wind_speed -0.4902
-"OLS wind (u, v, speed) [rice sample]",spatial blocks,by sounding count,532,0,4.1026,0.079,4.4122,-0.0653,intercept +1894.5060; wind_u +1.4298; wind_v -0.4435; wind_speed -1.8404
-OLS albedo (SWIR) [rice sample],leave-one-province-out,unweighted,532,0,8.5201,0.1278,8.9802,0.0311,intercept +1884.8522; surface_albedo_SWIR +98.9270
-OLS albedo (SWIR) [rice sample],leave-one-province-out,by sounding count,532,0,4.2348,0.0187,5.3131,-0.5447,intercept +1890.7613; surface_albedo_SWIR +26.4213
-OLS albedo (SWIR) [rice sample],spatial blocks,unweighted,532,0,8.5201,0.1278,8.807,0.0681,intercept +1884.8522; surface_albedo_SWIR +98.9270
-OLS albedo (SWIR) [rice sample],spatial blocks,by sounding count,532,0,4.2348,0.0187,4.5151,-0.1155,intercept +1890.7613; surface_albedo_SWIR +26.4213
-OLS wind + both fractions,leave-one-province-out,unweighted,532,395,7.2711,0.3648,8.9906,0.0289,intercept +1891.1469; wind_u +3.4400; wind_v -2.1067; wind_speed -0.5426; impervious_fraction +4.5479; rice_fraction_single -2.5649
-OLS wind + both fractions,leave-one-province-out,by sounding count,532,395,4.0281,0.1122,6.6339,-1.4081,intercept +1894.2344; wind_u +0.7300; wind_v -0.5678; wind_speed -2.1974; impervious_fraction +7.2744; rice_fraction_single -1.8006
-OLS wind + both fractions,spatial blocks,unweighted,532,395,7.2711,0.3648,7.5472,0.3156,intercept +1891.1469; wind_u +3.4400; wind_v -2.1067; wind_speed -0.5426; impervious_fraction +4.5479; rice_fraction_single -2.5649
-OLS wind + both fractions,spatial blocks,by sounding count,532,395,4.0281,0.1122,4.3851,-0.0522,intercept +1894.2344; wind_u +0.7300; wind_v -0.5678; wind_speed -2.1974; impervious_fraction +7.2744; rice_fraction_single -1.8006
-OLS full covariates + both fractions,leave-one-province-out,unweighted,532,395,6.8537,0.4356,9.9454,-0.1884,intercept +3731.6888; wind_u +2.6184; wind_v -2.0936; wind_speed -0.5539; surface_albedo_SWIR +43.1707; surface_albedo_NIR +3.4854; solar_zenith_angle +0.7091; surface_altitude -0.2084; surface_pressure -0.0184; impervious_fraction +8.2233; rice_fraction_single +0.8556
-OLS full covariates + both fractions,leave-one-province-out,by sounding count,532,395,3.8229,0.2003,6.93,-1.6279,intercept +3370.4670; wind_u +0.5917; wind_v -1.2606; wind_speed -2.9083; surface_albedo_SWIR +18.6149; surface_albedo_NIR -45.7106; solar_zenith_angle +0.7294; surface_altitude -0.1875; surface_pressure -0.0147; impervious_fraction +6.3596; rice_fraction_single +1.8530
-OLS full covariates + both fractions,spatial blocks,unweighted,532,395,6.8537,0.4356,7.7394,0.2803,intercept +3731.6888; wind_u +2.6184; wind_v -2.0936; wind_speed -0.5539; surface_albedo_SWIR +43.1707; surface_albedo_NIR +3.4854; solar_zenith_angle +0.7091; surface_altitude -0.2084; surface_pressure -0.0184; impervious_fraction +8.2233; rice_fraction_single +0.8556
-OLS full covariates + both fractions,spatial blocks,by sounding count,532,395,3.8229,0.2003,4.4305,-0.0741,intercept +3370.4670; wind_u +0.5917; wind_v -1.2606; wind_speed -2.9083; surface_albedo_SWIR +18.6149; surface_albedo_NIR -45.7106; solar_zenith_angle +0.7294; surface_altitude -0.1875; surface_pressure -0.0147; impervious_fraction +6.3596; rice_fraction_single +1.8530
-OLS wind + trend surface,leave-one-province-out,unweighted,927,0,7.587,0.6718,8.1115,0.6249,intercept +1984.3022; wind_u +3.6060; wind_v -2.5115; wind_speed -0.1468; centre_lat -0.2034; centre_lon -0.7404
-OLS wind + trend surface,leave-one-province-out,by sounding count,927,0,3.9153,0.6845,4.773,0.5312,intercept +2037.0892; wind_u +3.0661; wind_v -1.7480; wind_speed -1.3056; centre_lat -1.0375; centre_lon -0.9417
-OLS wind + trend surface,spatial blocks,unweighted,927,0,7.587,0.6718,7.8005,0.6531,intercept +1984.3022; wind_u +3.6060; wind_v -2.5115; wind_speed -0.1468; centre_lat -0.2034; centre_lon -0.7404
-OLS wind + trend surface,spatial blocks,by sounding count,927,0,3.9153,0.6845,4.0498,0.6625,intercept +2037.0892; wind_u +3.0661; wind_v -1.7480; wind_speed -1.3056; centre_lat -1.0375; centre_lon -0.9417
-OLS sampling composition (when observed),leave-one-province-out,unweighted,927,0,9.988,0.4312,11.2794,0.2746,intercept +1889.0014; sampling_season +0.9019
-OLS sampling composition (when observed),leave-one-province-out,by sounding count,927,0,5.3844,0.4033,7.7533,-0.2371,intercept +1889.3786; sampling_season +0.8886
-OLS sampling composition (when observed),spatial blocks,unweighted,927,0,9.988,0.4312,10.0311,0.4263,intercept +1889.0014; sampling_season +0.9019
-OLS sampling composition (when observed),spatial blocks,by sounding count,927,0,5.3844,0.4033,5.4832,0.3813,intercept +1889.3786; sampling_season +0.8886
+constant (global mean),leave-one-province-out,unweighted,926,0,13.2559,0.0,14.412,-0.182,
+constant (global mean),leave-one-province-out,by sounding count,926,0,6.9227,0.0,7.3127,-0.1159,
+constant (global mean),spatial blocks,unweighted,926,0,13.2559,0.0,13.3125,-0.0086,
+constant (global mean),spatial blocks,by sounding count,926,0,6.9227,0.0,6.9463,-0.0068,
+constant (per province),leave-one-province-out,unweighted,926,0,12.2885,0.1406,14.412,-0.182,groups: 5
+constant (per province),leave-one-province-out,by sounding count,926,0,6.5791,0.0968,7.3127,-0.1159,groups: 5
+constant (per province),spatial blocks,unweighted,926,0,12.2885,0.1406,12.4842,0.113,groups: 5
+constant (per province),spatial blocks,by sounding count,926,0,6.5791,0.0968,6.6297,0.0829,groups: 5
+spatial null (queen neighbour mean),leave-one-province-out,unweighted,926,0,7.2735,0.6989,13.9647,-0.1098,601 test cells had no training neighbour
+spatial null (queen neighbour mean),leave-one-province-out,by sounding count,926,0,2.4459,0.8752,7.0385,-0.0337,601 test cells had no training neighbour
+spatial null (queen neighbour mean),spatial blocks,unweighted,926,0,7.2735,0.6989,10.7903,0.3374,349 test cells had no training neighbour
+spatial null (queen neighbour mean),spatial blocks,by sounding count,926,0,2.4459,0.8752,4.8081,0.5176,349 test cells had no training neighbour
+OLS impervious_fraction,leave-one-province-out,unweighted,926,0,12.3963,0.1255,13.9271,-0.1038,intercept +1885.3014; impervious_fraction +37.5776
+OLS impervious_fraction,leave-one-province-out,by sounding count,926,0,6.754,0.0481,7.523,-0.181,intercept +1890.7779; impervious_fraction +14.5191
+OLS impervious_fraction,spatial blocks,unweighted,926,0,12.3963,0.1255,12.6081,0.0953,intercept +1885.3014; impervious_fraction +37.5776
+OLS impervious_fraction,spatial blocks,by sounding count,926,0,6.754,0.0481,6.8234,0.0285,intercept +1890.7779; impervious_fraction +14.5191
+constant (global mean) [rice sample],leave-one-province-out,unweighted,531,0,9.0367,0.0,9.0802,-0.0096,
+constant (global mean) [rice sample],leave-one-province-out,by sounding count,531,0,4.274,0.0,5.0676,-0.4058,
+constant (global mean) [rice sample],spatial blocks,unweighted,531,0,9.0367,0.0,9.2227,-0.0416,
+constant (global mean) [rice sample],spatial blocks,by sounding count,531,0,4.274,0.0,4.4543,-0.0861,
+constant (per province) [rice sample],leave-one-province-out,unweighted,531,0,8.9651,0.0158,9.0802,-0.0096,groups: 5
+constant (per province) [rice sample],leave-one-province-out,by sounding count,531,0,3.7854,0.2156,5.0676,-0.4058,groups: 5
+constant (per province) [rice sample],spatial blocks,unweighted,531,0,8.9651,0.0158,9.3075,-0.0608,groups: 5
+constant (per province) [rice sample],spatial blocks,by sounding count,531,0,3.7854,0.2156,4.0612,0.0971,groups: 5
+spatial null (queen neighbour mean) [rice sample],leave-one-province-out,unweighted,531,0,7.4802,0.3148,9.0205,0.0036,411 test cells had no training neighbour
+spatial null (queen neighbour mean) [rice sample],leave-one-province-out,by sounding count,531,0,2.4045,0.6835,4.9986,-0.3678,411 test cells had no training neighbour
+spatial null (queen neighbour mean) [rice sample],spatial blocks,unweighted,531,0,7.4802,0.3148,9.3173,-0.0631,215 test cells had no training neighbour
+spatial null (queen neighbour mean) [rice sample],spatial blocks,by sounding count,531,0,2.4045,0.6835,3.8781,0.1767,215 test cells had no training neighbour
+OLS impervious_fraction [rice sample],leave-one-province-out,unweighted,531,0,8.7351,0.0656,9.2546,-0.0488,intercept +1890.5969; impervious_fraction +16.4523
+OLS impervious_fraction [rice sample],leave-one-province-out,by sounding count,531,0,4.196,0.0362,5.9238,-0.921,intercept +1892.3327; impervious_fraction +7.1694
+OLS impervious_fraction [rice sample],spatial blocks,unweighted,531,0,8.7351,0.0656,8.8851,0.0333,intercept +1890.5969; impervious_fraction +16.4523
+OLS impervious_fraction [rice sample],spatial blocks,by sounding count,531,0,4.196,0.0362,4.411,-0.0651,intercept +1892.3327; impervious_fraction +7.1694
+OLS rice_fraction_single,leave-one-province-out,unweighted,531,395,8.9994,0.0082,9.4295,-0.0888,intercept +1891.9152; rice_fraction_single +6.5610
+OLS rice_fraction_single,leave-one-province-out,by sounding count,531,395,4.2604,0.0064,5.2262,-0.4952,intercept +1893.9079; rice_fraction_single -2.6741
+OLS rice_fraction_single,spatial blocks,unweighted,531,395,8.9994,0.0082,9.2086,-0.0384,intercept +1891.9152; rice_fraction_single +6.5610
+OLS rice_fraction_single,spatial blocks,by sounding count,531,395,4.2604,0.0064,4.4779,-0.0977,intercept +1893.9079; rice_fraction_single -2.6741
+OLS rice_fraction_combined,leave-one-province-out,unweighted,531,395,8.9996,0.0082,9.3927,-0.0803,intercept +1891.8827; rice_fraction_combined +6.4351
+OLS rice_fraction_combined,leave-one-province-out,by sounding count,531,395,4.2649,0.0043,5.2241,-0.494,intercept +1893.8191; rice_fraction_combined -2.1414
+OLS rice_fraction_combined,spatial blocks,unweighted,531,395,8.9996,0.0082,9.2068,-0.038,intercept +1891.8827; rice_fraction_combined +6.4351
+OLS rice_fraction_combined,spatial blocks,by sounding count,531,395,4.2649,0.0043,4.4908,-0.104,intercept +1893.8191; rice_fraction_combined -2.1414
+OLS impervious_fraction + rice_fraction_single,leave-one-province-out,unweighted,531,395,8.7031,0.0725,9.6367,-0.1372,intercept +1889.7300; impervious_fraction +16.2831; rice_fraction_single +5.9775
+OLS impervious_fraction + rice_fraction_single,leave-one-province-out,by sounding count,531,395,4.1881,0.0398,6.0599,-1.0103,intercept +1892.7664; impervious_fraction +6.9316; rice_fraction_single -2.0351
+OLS impervious_fraction + rice_fraction_single,spatial blocks,unweighted,531,395,8.7031,0.0725,8.8869,0.0329,intercept +1889.7300; impervious_fraction +16.2831; rice_fraction_single +5.9775
+OLS impervious_fraction + rice_fraction_single,spatial blocks,by sounding count,531,395,4.1881,0.0398,4.4504,-0.0842,intercept +1892.7664; impervious_fraction +6.9316; rice_fraction_single -2.0351
+OLS impervious_fraction + rice_fraction_single + interaction,leave-one-province-out,unweighted,531,395,8.6099,0.0922,9.38,-0.0774,intercept +1888.8157; impervious_fraction +25.8996; rice_fraction_single +18.0920; impervious_fraction x rice_fraction_single -104.5681
+OLS impervious_fraction + rice_fraction_single + interaction,leave-one-province-out,by sounding count,531,395,4.1004,0.0796,5.8791,-0.8921,intercept +1891.5506; impervious_fraction +16.9390; rice_fraction_single +7.1093; impervious_fraction x rice_fraction_single -75.0414
+OLS impervious_fraction + rice_fraction_single + interaction,spatial blocks,unweighted,531,395,8.6099,0.0922,8.7884,0.0542,intercept +1888.8157; impervious_fraction +25.8996; rice_fraction_single +18.0920; impervious_fraction x rice_fraction_single -104.5681
+OLS impervious_fraction + rice_fraction_single + interaction,spatial blocks,by sounding count,531,395,4.1004,0.0796,4.3394,-0.0308,intercept +1891.5506; impervious_fraction +16.9390; rice_fraction_single +7.1093; impervious_fraction x rice_fraction_single -75.0414
+"OLS trend surface (lat, lon)",leave-one-province-out,unweighted,926,0,11.6147,0.2323,15.262,-0.3256,intercept +2230.7284; centre_lat -0.8084; centre_lon -2.6680
+"OLS trend surface (lat, lon)",leave-one-province-out,by sounding count,926,0,6.0101,0.2463,7.265,-0.1013,intercept +2115.0309; centre_lat -0.7121; centre_lon -1.6965
+"OLS trend surface (lat, lon)",spatial blocks,unweighted,926,0,11.6147,0.2323,11.8028,0.2072,intercept +2230.7284; centre_lat -0.8084; centre_lon -2.6680
+"OLS trend surface (lat, lon)",spatial blocks,by sounding count,926,0,6.0101,0.2463,6.0873,0.2268,intercept +2115.0309; centre_lat -0.7121; centre_lon -1.6965
+"OLS wind (u, v, speed)",leave-one-province-out,unweighted,926,0,7.7054,0.6621,8.195,0.6178,intercept +1890.7147; wind_u +3.2520; wind_v -2.7994; wind_speed -0.5041
+"OLS wind (u, v, speed)",leave-one-province-out,by sounding count,926,0,4.419,0.5925,6.1513,0.2104,intercept +1893.2995; wind_u +0.6648; wind_v -2.9148; wind_speed -2.1231
+"OLS wind (u, v, speed)",spatial blocks,unweighted,926,0,7.7054,0.6621,7.8341,0.6507,intercept +1890.7147; wind_u +3.2520; wind_v -2.7994; wind_speed -0.5041
+"OLS wind (u, v, speed)",spatial blocks,by sounding count,926,0,4.419,0.5925,4.5997,0.5585,intercept +1893.2995; wind_u +0.6648; wind_v -2.9148; wind_speed -2.1231
+OLS albedo (SWIR),leave-one-province-out,unweighted,926,0,9.7487,0.4592,11.3172,0.2711,intercept +1877.8685; surface_albedo_SWIR +172.4677
+OLS albedo (SWIR),leave-one-province-out,by sounding count,926,0,5.7456,0.3112,6.7895,0.0381,intercept +1882.1896; surface_albedo_SWIR +106.4512
+OLS albedo (SWIR),spatial blocks,unweighted,926,0,9.7487,0.4592,9.8728,0.4453,intercept +1877.8685; surface_albedo_SWIR +172.4677
+OLS albedo (SWIR),spatial blocks,by sounding count,926,0,5.7456,0.3112,5.9292,0.2664,intercept +1882.1896; surface_albedo_SWIR +106.4512
+OLS wind + impervious,leave-one-province-out,unweighted,926,0,7.6728,0.665,8.3176,0.6063,intercept +1890.0318; wind_u +2.9598; wind_v -2.7874; wind_speed -0.5239; impervious_fraction +6.3958
+OLS wind + impervious,leave-one-province-out,by sounding count,926,0,4.4086,0.5944,6.2044,0.1967,intercept +1893.0347; wind_u +0.3758; wind_v -2.8943; wind_speed -2.2195; impervious_fraction +3.3821
+OLS wind + impervious,spatial blocks,unweighted,926,0,7.6728,0.665,7.8172,0.6522,intercept +1890.0318; wind_u +2.9598; wind_v -2.7874; wind_speed -0.5239; impervious_fraction +6.3958
+OLS wind + impervious,spatial blocks,by sounding count,926,0,4.4086,0.5944,4.6029,0.5579,intercept +1893.0347; wind_u +0.3758; wind_v -2.8943; wind_speed -2.2195; impervious_fraction +3.3821
+"OLS wind (u, v, speed) [rice sample]",leave-one-province-out,unweighted,531,0,7.3054,0.3465,8.13,0.1906,intercept +1891.3008; wind_u +3.6968; wind_v -2.0688; wind_speed -0.4751
+"OLS wind (u, v, speed) [rice sample]",leave-one-province-out,by sounding count,531,0,4.1036,0.0782,6.3724,-1.2229,intercept +1894.5097; wind_u +1.4423; wind_v -0.4148; wind_speed -1.8223
+"OLS wind (u, v, speed) [rice sample]",spatial blocks,unweighted,531,0,7.3054,0.3465,7.588,0.2949,intercept +1891.3008; wind_u +3.6968; wind_v -2.0688; wind_speed -0.4751
+"OLS wind (u, v, speed) [rice sample]",spatial blocks,by sounding count,531,0,4.1036,0.0782,4.4134,-0.0663,intercept +1894.5097; wind_u +1.4423; wind_v -0.4148; wind_speed -1.8223
+OLS albedo (SWIR) [rice sample],leave-one-province-out,unweighted,531,0,8.497,0.1159,8.932,0.023,intercept +1885.2226; surface_albedo_SWIR +94.7428
+OLS albedo (SWIR) [rice sample],leave-one-province-out,by sounding count,531,0,4.2349,0.0182,5.3184,-0.5484,intercept +1890.7948; surface_albedo_SWIR +26.1075
+OLS albedo (SWIR) [rice sample],spatial blocks,unweighted,531,0,8.497,0.1159,8.7716,0.0578,intercept +1885.2226; surface_albedo_SWIR +94.7428
+OLS albedo (SWIR) [rice sample],spatial blocks,by sounding count,531,0,4.2349,0.0182,4.5136,-0.1153,intercept +1890.7948; surface_albedo_SWIR +26.1075
+OLS wind + both fractions,leave-one-province-out,unweighted,531,395,7.2748,0.3519,8.9966,0.0089,intercept +1891.1958; wind_u +3.4846; wind_v -2.0531; wind_speed -0.5289; impervious_fraction +4.4456; rice_fraction_single -2.6146
+OLS wind + both fractions,leave-one-province-out,by sounding count,531,395,4.0297,0.1111,6.6404,-1.4139,intercept +1894.2396; wind_u +0.7447; wind_v -0.5560; wind_speed -2.1951; impervious_fraction +7.2572; rice_fraction_single -1.7889
+OLS wind + both fractions,spatial blocks,unweighted,531,395,7.2748,0.3519,7.5588,0.3003,intercept +1891.1958; wind_u +3.4846; wind_v -2.0531; wind_speed -0.5289; impervious_fraction +4.4456; rice_fraction_single -2.6146
+OLS wind + both fractions,spatial blocks,by sounding count,531,395,4.0297,0.1111,4.3868,-0.0535,intercept +1894.2396; wind_u +0.7447; wind_v -0.5560; wind_speed -2.1951; impervious_fraction +7.2572; rice_fraction_single -1.7889
+OLS full covariates + both fractions,leave-one-province-out,unweighted,531,395,6.8537,0.4248,9.9865,-0.2213,intercept +3754.7931; wind_u +2.6407; wind_v -2.0575; wind_speed -0.5453; surface_albedo_SWIR +42.9000; surface_albedo_NIR +3.7015; solar_zenith_angle +0.7295; surface_altitude -0.2112; surface_pressure -0.0186; impervious_fraction +8.2004; rice_fraction_single +0.9218
+OLS full covariates + both fractions,leave-one-province-out,by sounding count,531,395,3.8243,0.1994,6.9331,-1.6314,intercept +3381.9428; wind_u +0.6034; wind_v -1.2423; wind_speed -2.9146; surface_albedo_SWIR +18.1168; surface_albedo_NIR -45.3261; solar_zenith_angle +0.7425; surface_altitude -0.1888; surface_pressure -0.0148; impervious_fraction +6.3778; rice_fraction_single +1.8917
+OLS full covariates + both fractions,spatial blocks,unweighted,531,395,6.8537,0.4248,7.7286,0.2686,intercept +3754.7931; wind_u +2.6407; wind_v -2.0575; wind_speed -0.5453; surface_albedo_SWIR +42.9000; surface_albedo_NIR +3.7015; solar_zenith_angle +0.7295; surface_altitude -0.2112; surface_pressure -0.0186; impervious_fraction +8.2004; rice_fraction_single +0.9218
+OLS full covariates + both fractions,spatial blocks,by sounding count,531,395,3.8243,0.1994,4.4265,-0.0726,intercept +3381.9428; wind_u +0.6034; wind_v -1.2423; wind_speed -2.9146; surface_albedo_SWIR +18.1168; surface_albedo_NIR -45.3261; solar_zenith_angle +0.7425; surface_altitude -0.1888; surface_pressure -0.0148; impervious_fraction +6.3778; rice_fraction_single +1.8917
+OLS wind + trend surface,leave-one-province-out,unweighted,926,0,7.5782,0.6732,8.1079,0.6259,intercept +1985.3206; wind_u +3.6637; wind_v -2.4829; wind_speed -0.1607; centre_lat -0.2209; centre_lon -0.7440
+OLS wind + trend surface,leave-one-province-out,by sounding count,926,0,3.913,0.6805,4.7769,0.5238,intercept +2038.4131; wind_u +3.1147; wind_v -1.7390; wind_speed -1.2832; centre_lat -1.0413; centre_lon -0.9522
+OLS wind + trend surface,spatial blocks,unweighted,926,0,7.5782,0.6732,7.7956,0.6542,intercept +1985.3206; wind_u +3.6637; wind_v -2.4829; wind_speed -0.1607; centre_lat -0.2209; centre_lon -0.7440
+OLS wind + trend surface,spatial blocks,by sounding count,926,0,3.913,0.6805,4.0464,0.6583,intercept +2038.4131; wind_u +3.1147; wind_v -1.7390; wind_speed -1.2832; centre_lat -1.0413; centre_lon -0.9522
+OLS sampling composition (when observed),leave-one-province-out,unweighted,926,0,10.0308,0.4274,11.4415,0.255,intercept +1889.0209; sampling_season +0.9008
+OLS sampling composition (when observed),leave-one-province-out,by sounding count,926,0,5.3768,0.3967,7.706,-0.2391,intercept +1889.4253; sampling_season +0.8843
+OLS sampling composition (when observed),spatial blocks,unweighted,926,0,10.0308,0.4274,10.0761,0.4222,intercept +1889.0209; sampling_season +0.9008
+OLS sampling composition (when observed),spatial blocks,by sounding count,926,0,5.3768,0.3967,5.4777,0.3739,intercept +1889.4253; sampling_season +0.8843

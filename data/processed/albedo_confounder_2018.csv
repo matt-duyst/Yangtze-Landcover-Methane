@@ -1,27 +1,27 @@
 weighting,relationship,controlling_for,n,pearson,pearson_p,spearman,spearman_p
-unweighted,methane ~ surface_albedo_SWIR,,927,0.7019,1.981e-138,0.4629,2.114e-50
-unweighted,methane ~ surface_albedo_NIR,,927,0.7484,3.869e-167,0.462,3.417e-50
-unweighted,methane ~ solar_zenith_angle,,927,0.6969,1.003e-135,0.3114,2.700e-22
-unweighted,surface_albedo_SWIR ~ impervious_fraction,,927,0.4752,2.159e-53,0.761,5.170e-176
-unweighted,surface_albedo_SWIR ~ rice_fraction_single,,532,0.3245,1.629e-14,0.3881,1.428e-20
-unweighted,surface_albedo_NIR ~ impervious_fraction,,927,0.3402,1.529e-26,0.5445,1.133e-72
-unweighted,surface_albedo_NIR ~ rice_fraction_single,,532,0.5006,4.356e-35,0.6,2.472e-53
-unweighted,methane ~ impervious_fraction,,927,0.3459,1.903e-27,0.5071,1.030e-61
-unweighted,methane ~ rice_fraction_single,,532,0.1014,1.930e-02,0.0752,8.309e-02
-unweighted,methane ~ impervious_fraction,surface_albedo_SWIR,927,0.0198,5.479e-01,0.128,9.339e-05
-unweighted,methane ~ rice_fraction_single,surface_albedo_SWIR,532,-0.0098,8.222e-01,-0.0116,7.901e-01
-unweighted,methane ~ impervious_fraction,"surface_albedo_SWIR, surface_albedo_NIR, solar_zenith_angle",927,0.1419,1.487e-05,0.1838,1.825e-08
-unweighted,methane ~ rice_fraction_single,"surface_albedo_SWIR, surface_albedo_NIR, solar_zenith_angle",532,-0.0574,1.873e-01,-0.0107,8.061e-01
-by sounding count,methane ~ surface_albedo_SWIR,,927,0.5995,1.580e-91,0.2605,7.555e-16
-by sounding count,methane ~ surface_albedo_NIR,,927,0.7103,3.102e-143,0.2724,3.112e-17
-by sounding count,methane ~ solar_zenith_angle,,927,0.7071,2.108e-141,0.1162,3.911e-04
-by sounding count,surface_albedo_SWIR ~ impervious_fraction,,927,0.3185,2.643e-23,0.6093,2.659e-95
-by sounding count,surface_albedo_SWIR ~ rice_fraction_single,,532,-0.1812,2.618e-05,-0.1092,1.173e-02
-by sounding count,surface_albedo_NIR ~ impervious_fraction,,927,0.1965,1.605e-09,0.4333,1.012e-43
-by sounding count,surface_albedo_NIR ~ rice_fraction_single,,532,0.2988,1.977e-12,0.2644,5.828e-10
-by sounding count,methane ~ impervious_fraction,,927,0.216,3.000e-11,0.2266,2.906e-12
-by sounding count,methane ~ rice_fraction_single,,532,-0.0882,4.199e-02,-0.1345,1.876e-03
-by sounding count,methane ~ impervious_fraction,surface_albedo_SWIR,927,0.033,3.153e-01,-0.004,9.033e-01
-by sounding count,methane ~ rice_fraction_single,surface_albedo_SWIR,532,-0.0654,1.324e-01,-0.1132,9.026e-03
-by sounding count,methane ~ impervious_fraction,"surface_albedo_SWIR, surface_albedo_NIR, solar_zenith_angle",927,0.0615,6.165e-02,-0.0213,5.182e-01
-by sounding count,methane ~ rice_fraction_single,"surface_albedo_SWIR, surface_albedo_NIR, solar_zenith_angle",532,-0.0174,6.894e-01,-0.0144,7.414e-01
+unweighted,methane ~ surface_albedo_SWIR,,926,0.6999,3.381e-137,0.4609,6.857e-50
+unweighted,methane ~ surface_albedo_NIR,,926,0.7461,2.006e-165,0.4597,1.330e-49
+unweighted,methane ~ solar_zenith_angle,,926,0.695,1.644e-134,0.3098,4.802e-22
+unweighted,surface_albedo_SWIR ~ impervious_fraction,,926,0.4746,3.408e-53,0.7609,9.827e-176
+unweighted,surface_albedo_SWIR ~ rice_fraction_single,,531,0.3215,3.127e-14,0.3859,2.642e-20
+unweighted,surface_albedo_NIR ~ impervious_fraction,,926,0.3393,2.245e-26,0.5434,2.931e-72
+unweighted,surface_albedo_NIR ~ rice_fraction_single,,531,0.5021,2.922e-35,0.5991,4.981e-53
+unweighted,methane ~ impervious_fraction,,926,0.3452,2.639e-27,0.5055,3.116e-61
+unweighted,methane ~ rice_fraction_single,,531,0.096,2.700e-02,0.0718,9.816e-02
+unweighted,methane ~ impervious_fraction,surface_albedo_SWIR,926,0.0207,5.296e-01,0.1282,9.232e-05
+unweighted,methane ~ rice_fraction_single,surface_albedo_SWIR,531,-0.0073,8.664e-01,-0.0103,8.122e-01
+unweighted,methane ~ impervious_fraction,"surface_albedo_SWIR, surface_albedo_NIR, solar_zenith_angle",926,0.1413,1.649e-05,0.1835,1.952e-08
+unweighted,methane ~ rice_fraction_single,"surface_albedo_SWIR, surface_albedo_NIR, solar_zenith_angle",531,-0.053,2.242e-01,-0.0081,8.525e-01
+by sounding count,methane ~ surface_albedo_SWIR,,926,0.5919,1.253e-88,0.2534,4.989e-15
+by sounding count,methane ~ surface_albedo_NIR,,926,0.7049,5.473e-140,0.267,1.394e-16
+by sounding count,methane ~ solar_zenith_angle,,926,0.7026,1.101e-138,0.1136,5.313e-04
+by sounding count,surface_albedo_SWIR ~ impervious_fraction,,926,0.3169,4.764e-23,0.607,2.677e-94
+by sounding count,surface_albedo_SWIR ~ rice_fraction_single,,531,-0.1819,2.468e-05,-0.1091,1.185e-02
+by sounding count,surface_albedo_NIR ~ impervious_fraction,,926,0.1928,3.307e-09,0.4286,1.171e-42
+by sounding count,surface_albedo_NIR ~ rice_fraction_single,,531,0.2989,2.019e-12,0.2646,5.907e-10
+by sounding count,methane ~ impervious_fraction,,926,0.2124,6.648e-11,0.2202,1.238e-11
+by sounding count,methane ~ rice_fraction_single,,531,-0.0882,4.213e-02,-0.1346,1.884e-03
+by sounding count,methane ~ impervious_fraction,surface_albedo_SWIR,926,0.0324,3.246e-01,-0.0051,8.769e-01
+by sounding count,methane ~ rice_fraction_single,surface_albedo_SWIR,531,-0.0657,1.310e-01,-0.1133,9.015e-03
+by sounding count,methane ~ impervious_fraction,"surface_albedo_SWIR, surface_albedo_NIR, solar_zenith_angle",926,0.0614,6.242e-02,-0.0218,5.081e-01
+by sounding count,methane ~ rice_fraction_single,"surface_albedo_SWIR, surface_albedo_NIR, solar_zenith_angle",531,-0.0176,6.858e-01,-0.0146,7.380e-01

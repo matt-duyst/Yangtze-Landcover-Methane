@@ -1,353 +1,353 @@
 predictors,model,scheme,weighting,n,in_sample_rmse_ppb,in_sample_r2,held_out_rmse_ppb,held_out_r2,beats_spatial_null
-gaia+nesdc,constant (global mean),leave-one-province-out,unweighted,927,14.8652,0.0,16.0732,-0.1691,no
-gaia+nesdc,constant (global mean),leave-one-province-out,by sounding count,927,7.7898,0.0,8.1241,-0.0877,no
-gaia+nesdc,constant (global mean),spatial blocks,unweighted,927,14.8652,0.0,14.9255,-0.0081,no
-gaia+nesdc,constant (global mean),spatial blocks,by sounding count,927,7.7898,0.0,7.8017,-0.003,no
-gaia+nesdc,constant (per province),leave-one-province-out,unweighted,927,13.8694,0.1295,16.0732,-0.1691,no
-gaia+nesdc,constant (per province),leave-one-province-out,by sounding count,927,7.5029,0.0723,8.1241,-0.0877,no
-gaia+nesdc,constant (per province),spatial blocks,unweighted,927,13.8694,0.1295,14.1014,0.1001,no
-gaia+nesdc,constant (per province),spatial blocks,by sounding count,927,7.5029,0.0723,7.562,0.0576,no
-gaia+nesdc,spatial null (queen neighbour mean),leave-one-province-out,unweighted,927,8.3568,0.684,15.5183,-0.0898,no
-gaia+nesdc,spatial null (queen neighbour mean),leave-one-province-out,by sounding count,927,2.677,0.8819,7.7975,-0.002,no
-gaia+nesdc,spatial null (queen neighbour mean),spatial blocks,unweighted,927,8.3568,0.684,12.024,0.3457,no
-gaia+nesdc,spatial null (queen neighbour mean),spatial blocks,by sounding count,927,2.677,0.8819,5.4553,0.5096,no
-gaia+nesdc,OLS impervious_fraction,leave-one-province-out,unweighted,927,13.9476,0.1197,15.6737,-0.1117,no
-gaia+nesdc,OLS impervious_fraction,leave-one-province-out,by sounding count,927,7.6059,0.0467,8.4092,-0.1653,no
-gaia+nesdc,OLS impervious_fraction,spatial blocks,unweighted,927,13.9476,0.1197,14.2161,0.0854,no
-gaia+nesdc,OLS impervious_fraction,spatial blocks,by sounding count,927,7.6059,0.0467,7.6883,0.0259,no
-gaia+nesdc,constant (global mean) [rice sample],leave-one-province-out,unweighted,532,10.8862,0.0,10.9219,-0.0066,no
-gaia+nesdc,constant (global mean) [rice sample],leave-one-province-out,by sounding count,532,4.6236,0.0,5.3036,-0.3157,no
-gaia+nesdc,constant (global mean) [rice sample],spatial blocks,unweighted,532,10.8862,0.0,11.0712,-0.0343,no
-gaia+nesdc,constant (global mean) [rice sample],spatial blocks,by sounding count,532,4.6236,0.0,4.8327,-0.0925,no
-gaia+nesdc,constant (per province) [rice sample],leave-one-province-out,unweighted,532,10.8371,0.009,10.9219,-0.0066,no
-gaia+nesdc,constant (per province) [rice sample],leave-one-province-out,by sounding count,532,4.2211,0.1665,5.3036,-0.3157,no
-gaia+nesdc,constant (per province) [rice sample],spatial blocks,unweighted,532,10.8371,0.009,11.2086,-0.0601,no
-gaia+nesdc,constant (per province) [rice sample],spatial blocks,by sounding count,532,4.2211,0.1665,4.5394,0.0361,no
-gaia+nesdc,spatial null (queen neighbour mean) [rice sample],leave-one-province-out,unweighted,532,9.4591,0.245,10.9334,-0.0087,no
-gaia+nesdc,spatial null (queen neighbour mean) [rice sample],leave-one-province-out,by sounding count,532,2.7288,0.6517,5.2694,-0.2988,no
-gaia+nesdc,spatial null (queen neighbour mean) [rice sample],spatial blocks,unweighted,532,9.4591,0.245,10.9845,-0.0181,no
-gaia+nesdc,spatial null (queen neighbour mean) [rice sample],spatial blocks,by sounding count,532,2.7288,0.6517,4.3958,0.0961,no
-gaia+nesdc,OLS impervious_fraction [rice sample],leave-one-province-out,unweighted,532,10.6245,0.0475,11.2278,-0.0637,no
-gaia+nesdc,OLS impervious_fraction [rice sample],leave-one-province-out,by sounding count,532,4.5591,0.0277,6.1097,-0.7461,no
-gaia+nesdc,OLS impervious_fraction [rice sample],spatial blocks,unweighted,532,10.6245,0.0475,10.7913,0.0174,yes
-gaia+nesdc,OLS impervious_fraction [rice sample],spatial blocks,by sounding count,532,4.5591,0.0277,4.7815,-0.0695,no
-gaia+nesdc,OLS rice_fraction_single,leave-one-province-out,unweighted,532,10.8301,0.0103,11.2248,-0.0632,no
-gaia+nesdc,OLS rice_fraction_single,leave-one-province-out,by sounding count,532,4.6056,0.0078,5.4978,-0.4139,no
-gaia+nesdc,OLS rice_fraction_single,spatial blocks,unweighted,532,10.8301,0.0103,11.0624,-0.0326,no
-gaia+nesdc,OLS rice_fraction_single,spatial blocks,by sounding count,532,4.6056,0.0078,4.8324,-0.0923,no
-gaia+nesdc,OLS rice_fraction_combined,leave-one-province-out,unweighted,532,10.8323,0.0099,11.1763,-0.054,no
-gaia+nesdc,OLS rice_fraction_combined,leave-one-province-out,by sounding count,532,4.6084,0.0066,5.4816,-0.4055,no
-gaia+nesdc,OLS rice_fraction_combined,spatial blocks,unweighted,532,10.8323,0.0099,11.0663,-0.0334,no
-gaia+nesdc,OLS rice_fraction_combined,spatial blocks,by sounding count,532,4.6084,0.0066,4.8326,-0.0924,no
-gaia+nesdc,OLS impervious_fraction + rice_fraction_single,leave-one-province-out,unweighted,532,10.575,0.0564,11.5508,-0.1258,no
-gaia+nesdc,OLS impervious_fraction + rice_fraction_single,leave-one-province-out,by sounding count,532,4.5471,0.0328,6.281,-0.8454,no
-gaia+nesdc,OLS impervious_fraction + rice_fraction_single,spatial blocks,unweighted,532,10.575,0.0564,10.7934,0.017,yes
-gaia+nesdc,OLS impervious_fraction + rice_fraction_single,spatial blocks,by sounding count,532,4.5471,0.0328,4.7996,-0.0776,no
-gaia+nesdc,OLS impervious_fraction + rice_fraction_single + interaction,leave-one-province-out,unweighted,532,10.4763,0.0739,11.2751,-0.0727,no
-gaia+nesdc,OLS impervious_fraction + rice_fraction_single + interaction,leave-one-province-out,by sounding count,532,4.4788,0.0617,6.1972,-0.7965,no
-gaia+nesdc,OLS impervious_fraction + rice_fraction_single + interaction,spatial blocks,unweighted,532,10.4763,0.0739,10.704,0.0332,yes
-gaia+nesdc,OLS impervious_fraction + rice_fraction_single + interaction,spatial blocks,by sounding count,532,4.4788,0.0617,4.7195,-0.0419,no
-gaia+nesdc,"OLS trend surface (lat, lon)",leave-one-province-out,unweighted,927,12.7108,0.2689,16.7426,-0.2685,no
-gaia+nesdc,"OLS trend surface (lat, lon)",leave-one-province-out,by sounding count,927,6.5876,0.2849,8.0958,-0.0801,no
-gaia+nesdc,"OLS trend surface (lat, lon)",spatial blocks,unweighted,927,12.7108,0.2689,12.9453,0.2416,no
-gaia+nesdc,"OLS trend surface (lat, lon)",spatial blocks,by sounding count,927,6.5876,0.2849,6.6908,0.2623,no
-gaia+nesdc,"OLS wind (u, v, speed)",leave-one-province-out,unweighted,927,8.5884,0.6662,8.9739,0.6356,no
-gaia+nesdc,"OLS wind (u, v, speed)",leave-one-province-out,by sounding count,927,4.8988,0.6045,6.4324,0.3181,no
-gaia+nesdc,"OLS wind (u, v, speed)",spatial blocks,unweighted,927,8.5884,0.6662,8.754,0.6532,no
-gaia+nesdc,"OLS wind (u, v, speed)",spatial blocks,by sounding count,927,4.8988,0.6045,5.1249,0.5672,no
-gaia+nesdc,OLS albedo (SWIR),leave-one-province-out,unweighted,927,10.5888,0.4926,12.3318,0.3118,no
-gaia+nesdc,OLS albedo (SWIR),leave-one-province-out,by sounding count,927,6.235,0.3594,7.5183,0.0685,no
-gaia+nesdc,OLS albedo (SWIR),spatial blocks,unweighted,927,10.5888,0.4926,10.7297,0.479,no
-gaia+nesdc,OLS albedo (SWIR),spatial blocks,by sounding count,927,6.235,0.3594,6.3997,0.3251,no
-gaia+nesdc,OLS wind + impervious,leave-one-province-out,unweighted,927,8.5385,0.6701,9.1862,0.6181,no
-gaia+nesdc,OLS wind + impervious,leave-one-province-out,by sounding count,927,4.8924,0.6056,6.5365,0.2959,no
-gaia+nesdc,OLS wind + impervious,spatial blocks,unweighted,927,8.5385,0.6701,8.7451,0.6539,no
-gaia+nesdc,OLS wind + impervious,spatial blocks,by sounding count,927,4.8924,0.6056,5.1481,0.5632,no
-gaia+nesdc,"OLS wind (u, v, speed) [rice sample]",leave-one-province-out,unweighted,532,8.4542,0.3969,9.4804,0.2416,no
-gaia+nesdc,"OLS wind (u, v, speed) [rice sample]",leave-one-province-out,by sounding count,532,4.5034,0.0514,6.7762,-1.1478,no
-gaia+nesdc,"OLS wind (u, v, speed) [rice sample]",spatial blocks,unweighted,532,8.4542,0.3969,8.7689,0.3512,no
-gaia+nesdc,"OLS wind (u, v, speed) [rice sample]",spatial blocks,by sounding count,532,4.5034,0.0514,4.8276,-0.0902,no
-gaia+nesdc,OLS albedo (SWIR) [rice sample],leave-one-province-out,unweighted,532,10.2406,0.1151,10.7737,0.0206,no
-gaia+nesdc,OLS albedo (SWIR) [rice sample],leave-one-province-out,by sounding count,532,4.5812,0.0183,5.4679,-0.3985,no
-gaia+nesdc,OLS albedo (SWIR) [rice sample],spatial blocks,unweighted,532,10.2406,0.1151,10.5758,0.0562,no
-gaia+nesdc,OLS albedo (SWIR) [rice sample],spatial blocks,by sounding count,532,4.5812,0.0183,4.8767,-0.1125,no
-gaia+nesdc,OLS wind + both fractions,leave-one-province-out,unweighted,532,8.445,0.3982,10.3831,0.0903,no
-gaia+nesdc,OLS wind + both fractions,leave-one-province-out,by sounding count,532,4.4293,0.0823,7.0268,-1.3096,no
-gaia+nesdc,OLS wind + both fractions,spatial blocks,unweighted,532,8.445,0.3982,8.7835,0.349,no
-gaia+nesdc,OLS wind + both fractions,spatial blocks,by sounding count,532,4.4293,0.0823,4.7601,-0.0599,no
-gaia+nesdc,OLS full covariates + both fractions,leave-one-province-out,unweighted,532,7.5339,0.5211,11.1062,-0.0408,no
-gaia+nesdc,OLS full covariates + both fractions,leave-one-province-out,by sounding count,532,4.0941,0.2159,7.2675,-1.4706,no
-gaia+nesdc,OLS full covariates + both fractions,spatial blocks,unweighted,532,7.5339,0.5211,8.7284,0.3571,no
-gaia+nesdc,OLS full covariates + both fractions,spatial blocks,by sounding count,532,4.0941,0.2159,4.7256,-0.0446,no
-gaia+nesdc,OLS wind + trend surface,leave-one-province-out,unweighted,927,8.2705,0.6905,9.1138,0.6241,no
-gaia+nesdc,OLS wind + trend surface,leave-one-province-out,by sounding count,927,4.2754,0.6988,5.1358,0.5653,no
-gaia+nesdc,OLS wind + trend surface,spatial blocks,unweighted,927,8.2705,0.6905,8.5567,0.6687,no
-gaia+nesdc,OLS wind + trend surface,spatial blocks,by sounding count,927,4.2754,0.6988,4.4278,0.6769,no
-gaia+nesdc,OLS sampling composition (when observed),leave-one-province-out,unweighted,927,10.8182,0.4704,12.5289,0.2896,no
-gaia+nesdc,OLS sampling composition (when observed),leave-one-province-out,by sounding count,927,5.8084,0.444,8.689,-0.2442,no
-gaia+nesdc,OLS sampling composition (when observed),spatial blocks,unweighted,927,10.8182,0.4704,10.8566,0.4666,no
-gaia+nesdc,OLS sampling composition (when observed),spatial blocks,by sounding count,927,5.8084,0.444,5.8996,0.4264,no
-gaia+glorice,constant (global mean),leave-one-province-out,unweighted,927,14.8652,0.0,16.0732,-0.1691,no
-gaia+glorice,constant (global mean),leave-one-province-out,by sounding count,927,7.7898,0.0,8.1241,-0.0877,no
-gaia+glorice,constant (global mean),spatial blocks,unweighted,927,14.8652,0.0,14.9255,-0.0081,no
-gaia+glorice,constant (global mean),spatial blocks,by sounding count,927,7.7898,0.0,7.8017,-0.003,no
-gaia+glorice,constant (per province),leave-one-province-out,unweighted,927,13.8694,0.1295,16.0732,-0.1691,no
-gaia+glorice,constant (per province),leave-one-province-out,by sounding count,927,7.5029,0.0723,8.1241,-0.0877,no
-gaia+glorice,constant (per province),spatial blocks,unweighted,927,13.8694,0.1295,14.1014,0.1001,no
-gaia+glorice,constant (per province),spatial blocks,by sounding count,927,7.5029,0.0723,7.562,0.0576,no
-gaia+glorice,spatial null (queen neighbour mean),leave-one-province-out,unweighted,927,8.3568,0.684,15.5183,-0.0898,no
-gaia+glorice,spatial null (queen neighbour mean),leave-one-province-out,by sounding count,927,2.677,0.8819,7.7975,-0.002,no
-gaia+glorice,spatial null (queen neighbour mean),spatial blocks,unweighted,927,8.3568,0.684,12.024,0.3457,no
-gaia+glorice,spatial null (queen neighbour mean),spatial blocks,by sounding count,927,2.677,0.8819,5.4553,0.5096,no
-gaia+glorice,OLS impervious_fraction,leave-one-province-out,unweighted,927,13.9476,0.1197,15.6737,-0.1117,no
-gaia+glorice,OLS impervious_fraction,leave-one-province-out,by sounding count,927,7.6059,0.0467,8.4092,-0.1653,no
-gaia+glorice,OLS impervious_fraction,spatial blocks,unweighted,927,13.9476,0.1197,14.2161,0.0854,no
-gaia+glorice,OLS impervious_fraction,spatial blocks,by sounding count,927,7.6059,0.0467,7.6883,0.0259,no
-gaia+glorice,constant (global mean) [rice sample],leave-one-province-out,unweighted,927,14.8652,0.0,16.0732,-0.1691,no
-gaia+glorice,constant (global mean) [rice sample],leave-one-province-out,by sounding count,927,7.7898,0.0,8.1241,-0.0877,no
-gaia+glorice,constant (global mean) [rice sample],spatial blocks,unweighted,927,14.8652,0.0,14.9255,-0.0081,no
-gaia+glorice,constant (global mean) [rice sample],spatial blocks,by sounding count,927,7.7898,0.0,7.8017,-0.003,no
-gaia+glorice,constant (per province) [rice sample],leave-one-province-out,unweighted,927,13.8694,0.1295,16.0732,-0.1691,no
-gaia+glorice,constant (per province) [rice sample],leave-one-province-out,by sounding count,927,7.5029,0.0723,8.1241,-0.0877,no
-gaia+glorice,constant (per province) [rice sample],spatial blocks,unweighted,927,13.8694,0.1295,14.1014,0.1001,no
-gaia+glorice,constant (per province) [rice sample],spatial blocks,by sounding count,927,7.5029,0.0723,7.562,0.0576,no
-gaia+glorice,spatial null (queen neighbour mean) [rice sample],leave-one-province-out,unweighted,927,8.3568,0.684,15.5183,-0.0898,no
-gaia+glorice,spatial null (queen neighbour mean) [rice sample],leave-one-province-out,by sounding count,927,2.677,0.8819,7.7975,-0.002,no
-gaia+glorice,spatial null (queen neighbour mean) [rice sample],spatial blocks,unweighted,927,8.3568,0.684,12.024,0.3457,no
-gaia+glorice,spatial null (queen neighbour mean) [rice sample],spatial blocks,by sounding count,927,2.677,0.8819,5.4553,0.5096,no
-gaia+glorice,OLS impervious_fraction [rice sample],leave-one-province-out,unweighted,927,13.9476,0.1197,15.6737,-0.1117,no
-gaia+glorice,OLS impervious_fraction [rice sample],leave-one-province-out,by sounding count,927,7.6059,0.0467,8.4092,-0.1653,no
-gaia+glorice,OLS impervious_fraction [rice sample],spatial blocks,unweighted,927,13.9476,0.1197,14.2161,0.0854,no
-gaia+glorice,OLS impervious_fraction [rice sample],spatial blocks,by sounding count,927,7.6059,0.0467,7.6883,0.0259,no
-gaia+glorice,OLS rice_fraction_single,leave-one-province-out,unweighted,927,13.6349,0.1587,16.041,-0.1644,no
-gaia+glorice,OLS rice_fraction_single,leave-one-province-out,by sounding count,927,7.668,0.031,8.6219,-0.225,no
-gaia+glorice,OLS rice_fraction_single,spatial blocks,unweighted,927,13.6349,0.1587,13.7006,0.1505,no
-gaia+glorice,OLS rice_fraction_single,spatial blocks,by sounding count,927,7.668,0.031,7.717,0.0186,no
-gaia+glorice,OLS rice_fraction_combined,leave-one-province-out,unweighted,927,13.6349,0.1587,16.041,-0.1644,no
-gaia+glorice,OLS rice_fraction_combined,leave-one-province-out,by sounding count,927,7.668,0.031,8.6219,-0.225,no
-gaia+glorice,OLS rice_fraction_combined,spatial blocks,unweighted,927,13.6349,0.1587,13.7006,0.1505,no
-gaia+glorice,OLS rice_fraction_combined,spatial blocks,by sounding count,927,7.668,0.031,7.717,0.0186,no
-gaia+glorice,OLS impervious_fraction + rice_fraction_single,leave-one-province-out,unweighted,927,13.2717,0.2029,16.0714,-0.1689,no
-gaia+glorice,OLS impervious_fraction + rice_fraction_single,leave-one-province-out,by sounding count,927,7.5246,0.067,8.9795,-0.3288,no
-gaia+glorice,OLS impervious_fraction + rice_fraction_single,spatial blocks,unweighted,927,13.2717,0.2029,13.4869,0.1768,no
-gaia+glorice,OLS impervious_fraction + rice_fraction_single,spatial blocks,by sounding count,927,7.5246,0.067,7.6383,0.0385,no
-gaia+glorice,OLS impervious_fraction + rice_fraction_single + interaction,leave-one-province-out,unweighted,927,12.2993,0.3154,14.8455,0.0026,yes
-gaia+glorice,OLS impervious_fraction + rice_fraction_single + interaction,leave-one-province-out,by sounding count,927,7.1281,0.1627,8.451,-0.1769,no
-gaia+glorice,OLS impervious_fraction + rice_fraction_single + interaction,spatial blocks,unweighted,927,12.2993,0.3154,12.8296,0.2551,no
-gaia+glorice,OLS impervious_fraction + rice_fraction_single + interaction,spatial blocks,by sounding count,927,7.1281,0.1627,7.4782,0.0784,no
-gaia+glorice,"OLS trend surface (lat, lon)",leave-one-province-out,unweighted,927,12.7108,0.2689,16.7426,-0.2685,no
-gaia+glorice,"OLS trend surface (lat, lon)",leave-one-province-out,by sounding count,927,6.5876,0.2849,8.0958,-0.0801,no
-gaia+glorice,"OLS trend surface (lat, lon)",spatial blocks,unweighted,927,12.7108,0.2689,12.9453,0.2416,no
-gaia+glorice,"OLS trend surface (lat, lon)",spatial blocks,by sounding count,927,6.5876,0.2849,6.6908,0.2623,no
-gaia+glorice,"OLS wind (u, v, speed)",leave-one-province-out,unweighted,927,8.5884,0.6662,8.9739,0.6356,no
-gaia+glorice,"OLS wind (u, v, speed)",leave-one-province-out,by sounding count,927,4.8988,0.6045,6.4324,0.3181,no
-gaia+glorice,"OLS wind (u, v, speed)",spatial blocks,unweighted,927,8.5884,0.6662,8.754,0.6532,no
-gaia+glorice,"OLS wind (u, v, speed)",spatial blocks,by sounding count,927,4.8988,0.6045,5.1249,0.5672,no
-gaia+glorice,OLS albedo (SWIR),leave-one-province-out,unweighted,927,10.5888,0.4926,12.3318,0.3118,no
-gaia+glorice,OLS albedo (SWIR),leave-one-province-out,by sounding count,927,6.235,0.3594,7.5183,0.0685,no
-gaia+glorice,OLS albedo (SWIR),spatial blocks,unweighted,927,10.5888,0.4926,10.7297,0.479,no
-gaia+glorice,OLS albedo (SWIR),spatial blocks,by sounding count,927,6.235,0.3594,6.3997,0.3251,no
-gaia+glorice,OLS wind + impervious,leave-one-province-out,unweighted,927,8.5385,0.6701,9.1862,0.6181,no
-gaia+glorice,OLS wind + impervious,leave-one-province-out,by sounding count,927,4.8924,0.6056,6.5365,0.2959,no
-gaia+glorice,OLS wind + impervious,spatial blocks,unweighted,927,8.5385,0.6701,8.7451,0.6539,no
-gaia+glorice,OLS wind + impervious,spatial blocks,by sounding count,927,4.8924,0.6056,5.1481,0.5632,no
-gaia+glorice,"OLS wind (u, v, speed) [rice sample]",leave-one-province-out,unweighted,927,8.5884,0.6662,8.9739,0.6356,no
-gaia+glorice,"OLS wind (u, v, speed) [rice sample]",leave-one-province-out,by sounding count,927,4.8988,0.6045,6.4324,0.3181,no
-gaia+glorice,"OLS wind (u, v, speed) [rice sample]",spatial blocks,unweighted,927,8.5884,0.6662,8.754,0.6532,no
-gaia+glorice,"OLS wind (u, v, speed) [rice sample]",spatial blocks,by sounding count,927,4.8988,0.6045,5.1249,0.5672,no
-gaia+glorice,OLS albedo (SWIR) [rice sample],leave-one-province-out,unweighted,927,10.5888,0.4926,12.3318,0.3118,no
-gaia+glorice,OLS albedo (SWIR) [rice sample],leave-one-province-out,by sounding count,927,6.235,0.3594,7.5183,0.0685,no
-gaia+glorice,OLS albedo (SWIR) [rice sample],spatial blocks,unweighted,927,10.5888,0.4926,10.7297,0.479,no
-gaia+glorice,OLS albedo (SWIR) [rice sample],spatial blocks,by sounding count,927,6.235,0.3594,6.3997,0.3251,no
-gaia+glorice,OLS wind + both fractions,leave-one-province-out,unweighted,927,8.5007,0.673,9.4564,0.5953,no
-gaia+glorice,OLS wind + both fractions,leave-one-province-out,by sounding count,927,4.8731,0.6087,6.5861,0.2852,no
-gaia+glorice,OLS wind + both fractions,spatial blocks,unweighted,927,8.5007,0.673,8.7498,0.6535,no
-gaia+glorice,OLS wind + both fractions,spatial blocks,by sounding count,927,4.8731,0.6087,5.1761,0.5585,no
-gaia+glorice,OLS full covariates + both fractions,leave-one-province-out,unweighted,927,7.7662,0.7271,9.5445,0.5877,no
-gaia+glorice,OLS full covariates + both fractions,leave-one-province-out,by sounding count,927,4.2797,0.6982,6.5617,0.2905,no
-gaia+glorice,OLS full covariates + both fractions,spatial blocks,unweighted,927,7.7662,0.7271,8.1458,0.6997,no
-gaia+glorice,OLS full covariates + both fractions,spatial blocks,by sounding count,927,4.2797,0.6982,4.6633,0.6416,no
-gaia+glorice,OLS wind + trend surface,leave-one-province-out,unweighted,927,8.2705,0.6905,9.1138,0.6241,no
-gaia+glorice,OLS wind + trend surface,leave-one-province-out,by sounding count,927,4.2754,0.6988,5.1358,0.5653,no
-gaia+glorice,OLS wind + trend surface,spatial blocks,unweighted,927,8.2705,0.6905,8.5567,0.6687,no
-gaia+glorice,OLS wind + trend surface,spatial blocks,by sounding count,927,4.2754,0.6988,4.4278,0.6769,no
-gaia+glorice,OLS sampling composition (when observed),leave-one-province-out,unweighted,927,10.8182,0.4704,12.5289,0.2896,no
-gaia+glorice,OLS sampling composition (when observed),leave-one-province-out,by sounding count,927,5.8084,0.444,8.689,-0.2442,no
-gaia+glorice,OLS sampling composition (when observed),spatial blocks,unweighted,927,10.8182,0.4704,10.8566,0.4666,no
-gaia+glorice,OLS sampling composition (when observed),spatial blocks,by sounding count,927,5.8084,0.444,5.8996,0.4264,no
-gisa+nesdc,constant (global mean),leave-one-province-out,unweighted,927,14.8652,0.0,16.0732,-0.1691,no
-gisa+nesdc,constant (global mean),leave-one-province-out,by sounding count,927,7.7898,0.0,8.1241,-0.0877,no
-gisa+nesdc,constant (global mean),spatial blocks,unweighted,927,14.8652,0.0,14.9255,-0.0081,no
-gisa+nesdc,constant (global mean),spatial blocks,by sounding count,927,7.7898,0.0,7.8017,-0.003,no
-gisa+nesdc,constant (per province),leave-one-province-out,unweighted,927,13.8694,0.1295,16.0732,-0.1691,no
-gisa+nesdc,constant (per province),leave-one-province-out,by sounding count,927,7.5029,0.0723,8.1241,-0.0877,no
-gisa+nesdc,constant (per province),spatial blocks,unweighted,927,13.8694,0.1295,14.1014,0.1001,no
-gisa+nesdc,constant (per province),spatial blocks,by sounding count,927,7.5029,0.0723,7.562,0.0576,no
-gisa+nesdc,spatial null (queen neighbour mean),leave-one-province-out,unweighted,927,8.3568,0.684,15.5183,-0.0898,no
-gisa+nesdc,spatial null (queen neighbour mean),leave-one-province-out,by sounding count,927,2.677,0.8819,7.7975,-0.002,no
-gisa+nesdc,spatial null (queen neighbour mean),spatial blocks,unweighted,927,8.3568,0.684,12.024,0.3457,no
-gisa+nesdc,spatial null (queen neighbour mean),spatial blocks,by sounding count,927,2.677,0.8819,5.4553,0.5096,no
-gisa+nesdc,OLS impervious_fraction,leave-one-province-out,unweighted,927,13.8508,0.1318,15.5333,-0.0919,no
-gisa+nesdc,OLS impervious_fraction,leave-one-province-out,by sounding count,927,7.5386,0.0635,8.2254,-0.115,no
-gisa+nesdc,OLS impervious_fraction,spatial blocks,unweighted,927,13.8508,0.1318,14.1234,0.0973,no
-gisa+nesdc,OLS impervious_fraction,spatial blocks,by sounding count,927,7.5386,0.0635,7.6441,0.0371,no
-gisa+nesdc,constant (global mean) [rice sample],leave-one-province-out,unweighted,532,10.8862,0.0,10.9219,-0.0066,no
-gisa+nesdc,constant (global mean) [rice sample],leave-one-province-out,by sounding count,532,4.6236,0.0,5.3036,-0.3157,no
-gisa+nesdc,constant (global mean) [rice sample],spatial blocks,unweighted,532,10.8862,0.0,11.0712,-0.0343,no
-gisa+nesdc,constant (global mean) [rice sample],spatial blocks,by sounding count,532,4.6236,0.0,4.8327,-0.0925,no
-gisa+nesdc,constant (per province) [rice sample],leave-one-province-out,unweighted,532,10.8371,0.009,10.9219,-0.0066,no
-gisa+nesdc,constant (per province) [rice sample],leave-one-province-out,by sounding count,532,4.2211,0.1665,5.3036,-0.3157,no
-gisa+nesdc,constant (per province) [rice sample],spatial blocks,unweighted,532,10.8371,0.009,11.2086,-0.0601,no
-gisa+nesdc,constant (per province) [rice sample],spatial blocks,by sounding count,532,4.2211,0.1665,4.5394,0.0361,no
-gisa+nesdc,spatial null (queen neighbour mean) [rice sample],leave-one-province-out,unweighted,532,9.4591,0.245,10.9334,-0.0087,no
-gisa+nesdc,spatial null (queen neighbour mean) [rice sample],leave-one-province-out,by sounding count,532,2.7288,0.6517,5.2694,-0.2988,no
-gisa+nesdc,spatial null (queen neighbour mean) [rice sample],spatial blocks,unweighted,532,9.4591,0.245,10.9845,-0.0181,no
-gisa+nesdc,spatial null (queen neighbour mean) [rice sample],spatial blocks,by sounding count,532,2.7288,0.6517,4.3958,0.0961,no
-gisa+nesdc,OLS impervious_fraction [rice sample],leave-one-province-out,unweighted,532,10.622,0.048,11.0936,-0.0385,no
-gisa+nesdc,OLS impervious_fraction [rice sample],leave-one-province-out,by sounding count,532,4.5585,0.028,5.7559,-0.5497,no
-gisa+nesdc,OLS impervious_fraction [rice sample],spatial blocks,unweighted,532,10.622,0.048,10.7906,0.0175,yes
-gisa+nesdc,OLS impervious_fraction [rice sample],spatial blocks,by sounding count,532,4.5585,0.028,4.7871,-0.072,no
-gisa+nesdc,OLS rice_fraction_single,leave-one-province-out,unweighted,532,10.8301,0.0103,11.2248,-0.0632,no
-gisa+nesdc,OLS rice_fraction_single,leave-one-province-out,by sounding count,532,4.6056,0.0078,5.4978,-0.4139,no
-gisa+nesdc,OLS rice_fraction_single,spatial blocks,unweighted,532,10.8301,0.0103,11.0624,-0.0326,no
-gisa+nesdc,OLS rice_fraction_single,spatial blocks,by sounding count,532,4.6056,0.0078,4.8324,-0.0923,no
-gisa+nesdc,OLS rice_fraction_combined,leave-one-province-out,unweighted,532,10.8323,0.0099,11.1763,-0.054,no
-gisa+nesdc,OLS rice_fraction_combined,leave-one-province-out,by sounding count,532,4.6084,0.0066,5.4816,-0.4055,no
-gisa+nesdc,OLS rice_fraction_combined,spatial blocks,unweighted,532,10.8323,0.0099,11.0663,-0.0334,no
-gisa+nesdc,OLS rice_fraction_combined,spatial blocks,by sounding count,532,4.6084,0.0066,4.8326,-0.0924,no
-gisa+nesdc,OLS impervious_fraction + rice_fraction_single,leave-one-province-out,unweighted,532,10.55,0.0608,11.4445,-0.1052,no
-gisa+nesdc,OLS impervious_fraction + rice_fraction_single,leave-one-province-out,by sounding count,532,4.5548,0.0296,6.195,-0.7952,no
-gisa+nesdc,OLS impervious_fraction + rice_fraction_single,spatial blocks,unweighted,532,10.55,0.0608,10.7754,0.0203,yes
-gisa+nesdc,OLS impervious_fraction + rice_fraction_single,spatial blocks,by sounding count,532,4.5548,0.0296,4.8355,-0.0937,no
-gisa+nesdc,OLS impervious_fraction + rice_fraction_single + interaction,leave-one-province-out,unweighted,532,10.473,0.0745,11.3752,-0.0919,no
-gisa+nesdc,OLS impervious_fraction + rice_fraction_single + interaction,leave-one-province-out,by sounding count,532,4.4459,0.0754,6.3924,-0.9114,no
-gisa+nesdc,OLS impervious_fraction + rice_fraction_single + interaction,spatial blocks,unweighted,532,10.473,0.0745,10.7298,0.0285,yes
-gisa+nesdc,OLS impervious_fraction + rice_fraction_single + interaction,spatial blocks,by sounding count,532,4.4459,0.0754,4.7431,-0.0523,no
-gisa+nesdc,"OLS trend surface (lat, lon)",leave-one-province-out,unweighted,927,12.7108,0.2689,16.7426,-0.2685,no
-gisa+nesdc,"OLS trend surface (lat, lon)",leave-one-province-out,by sounding count,927,6.5876,0.2849,8.0958,-0.0801,no
-gisa+nesdc,"OLS trend surface (lat, lon)",spatial blocks,unweighted,927,12.7108,0.2689,12.9453,0.2416,no
-gisa+nesdc,"OLS trend surface (lat, lon)",spatial blocks,by sounding count,927,6.5876,0.2849,6.6908,0.2623,no
-gisa+nesdc,"OLS wind (u, v, speed)",leave-one-province-out,unweighted,927,8.5884,0.6662,8.9739,0.6356,no
-gisa+nesdc,"OLS wind (u, v, speed)",leave-one-province-out,by sounding count,927,4.8988,0.6045,6.4324,0.3181,no
-gisa+nesdc,"OLS wind (u, v, speed)",spatial blocks,unweighted,927,8.5884,0.6662,8.754,0.6532,no
-gisa+nesdc,"OLS wind (u, v, speed)",spatial blocks,by sounding count,927,4.8988,0.6045,5.1249,0.5672,no
-gisa+nesdc,OLS albedo (SWIR),leave-one-province-out,unweighted,927,10.5888,0.4926,12.3318,0.3118,no
-gisa+nesdc,OLS albedo (SWIR),leave-one-province-out,by sounding count,927,6.235,0.3594,7.5183,0.0685,no
-gisa+nesdc,OLS albedo (SWIR),spatial blocks,unweighted,927,10.5888,0.4926,10.7297,0.479,no
-gisa+nesdc,OLS albedo (SWIR),spatial blocks,by sounding count,927,6.235,0.3594,6.3997,0.3251,no
-gisa+nesdc,OLS wind + impervious,leave-one-province-out,unweighted,927,8.4916,0.6737,9.09,0.6261,no
-gisa+nesdc,OLS wind + impervious,leave-one-province-out,by sounding count,927,4.8527,0.6119,6.446,0.3153,no
-gisa+nesdc,OLS wind + impervious,spatial blocks,unweighted,927,8.4916,0.6737,8.688,0.6584,no
-gisa+nesdc,OLS wind + impervious,spatial blocks,by sounding count,927,4.8527,0.6119,5.0899,0.5731,no
-gisa+nesdc,"OLS wind (u, v, speed) [rice sample]",leave-one-province-out,unweighted,532,8.4542,0.3969,9.4804,0.2416,no
-gisa+nesdc,"OLS wind (u, v, speed) [rice sample]",leave-one-province-out,by sounding count,532,4.5034,0.0514,6.7762,-1.1478,no
-gisa+nesdc,"OLS wind (u, v, speed) [rice sample]",spatial blocks,unweighted,532,8.4542,0.3969,8.7689,0.3512,no
-gisa+nesdc,"OLS wind (u, v, speed) [rice sample]",spatial blocks,by sounding count,532,4.5034,0.0514,4.8276,-0.0902,no
-gisa+nesdc,OLS albedo (SWIR) [rice sample],leave-one-province-out,unweighted,532,10.2406,0.1151,10.7737,0.0206,no
-gisa+nesdc,OLS albedo (SWIR) [rice sample],leave-one-province-out,by sounding count,532,4.5812,0.0183,5.4679,-0.3985,no
-gisa+nesdc,OLS albedo (SWIR) [rice sample],spatial blocks,unweighted,532,10.2406,0.1151,10.5758,0.0562,no
-gisa+nesdc,OLS albedo (SWIR) [rice sample],spatial blocks,by sounding count,532,4.5812,0.0183,4.8767,-0.1125,no
-gisa+nesdc,OLS wind + both fractions,leave-one-province-out,unweighted,532,8.4273,0.4007,10.4203,0.0838,no
-gisa+nesdc,OLS wind + both fractions,leave-one-province-out,by sounding count,532,4.4428,0.0767,7.2034,-1.4272,no
-gisa+nesdc,OLS wind + both fractions,spatial blocks,unweighted,532,8.4273,0.4007,8.7518,0.3537,no
-gisa+nesdc,OLS wind + both fractions,spatial blocks,by sounding count,532,4.4428,0.0767,4.8065,-0.0807,no
-gisa+nesdc,OLS full covariates + both fractions,leave-one-province-out,unweighted,532,7.5328,0.5212,11.073,-0.0346,no
-gisa+nesdc,OLS full covariates + both fractions,leave-one-province-out,by sounding count,532,4.1094,0.2101,7.3518,-1.5283,no
-gisa+nesdc,OLS full covariates + both fractions,spatial blocks,unweighted,532,7.5328,0.5212,8.7655,0.3517,no
-gisa+nesdc,OLS full covariates + both fractions,spatial blocks,by sounding count,532,4.1094,0.2101,4.8179,-0.0858,no
-gisa+nesdc,OLS wind + trend surface,leave-one-province-out,unweighted,927,8.2705,0.6905,9.1138,0.6241,no
-gisa+nesdc,OLS wind + trend surface,leave-one-province-out,by sounding count,927,4.2754,0.6988,5.1358,0.5653,no
-gisa+nesdc,OLS wind + trend surface,spatial blocks,unweighted,927,8.2705,0.6905,8.5567,0.6687,no
-gisa+nesdc,OLS wind + trend surface,spatial blocks,by sounding count,927,4.2754,0.6988,4.4278,0.6769,no
-gisa+nesdc,OLS sampling composition (when observed),leave-one-province-out,unweighted,927,10.8182,0.4704,12.5289,0.2896,no
-gisa+nesdc,OLS sampling composition (when observed),leave-one-province-out,by sounding count,927,5.8084,0.444,8.689,-0.2442,no
-gisa+nesdc,OLS sampling composition (when observed),spatial blocks,unweighted,927,10.8182,0.4704,10.8566,0.4666,no
-gisa+nesdc,OLS sampling composition (when observed),spatial blocks,by sounding count,927,5.8084,0.444,5.8996,0.4264,no
-gisa+glorice,constant (global mean),leave-one-province-out,unweighted,927,14.8652,0.0,16.0732,-0.1691,no
-gisa+glorice,constant (global mean),leave-one-province-out,by sounding count,927,7.7898,0.0,8.1241,-0.0877,no
-gisa+glorice,constant (global mean),spatial blocks,unweighted,927,14.8652,0.0,14.9255,-0.0081,no
-gisa+glorice,constant (global mean),spatial blocks,by sounding count,927,7.7898,0.0,7.8017,-0.003,no
-gisa+glorice,constant (per province),leave-one-province-out,unweighted,927,13.8694,0.1295,16.0732,-0.1691,no
-gisa+glorice,constant (per province),leave-one-province-out,by sounding count,927,7.5029,0.0723,8.1241,-0.0877,no
-gisa+glorice,constant (per province),spatial blocks,unweighted,927,13.8694,0.1295,14.1014,0.1001,no
-gisa+glorice,constant (per province),spatial blocks,by sounding count,927,7.5029,0.0723,7.562,0.0576,no
-gisa+glorice,spatial null (queen neighbour mean),leave-one-province-out,unweighted,927,8.3568,0.684,15.5183,-0.0898,no
-gisa+glorice,spatial null (queen neighbour mean),leave-one-province-out,by sounding count,927,2.677,0.8819,7.7975,-0.002,no
-gisa+glorice,spatial null (queen neighbour mean),spatial blocks,unweighted,927,8.3568,0.684,12.024,0.3457,no
-gisa+glorice,spatial null (queen neighbour mean),spatial blocks,by sounding count,927,2.677,0.8819,5.4553,0.5096,no
-gisa+glorice,OLS impervious_fraction,leave-one-province-out,unweighted,927,13.8508,0.1318,15.5333,-0.0919,no
-gisa+glorice,OLS impervious_fraction,leave-one-province-out,by sounding count,927,7.5386,0.0635,8.2254,-0.115,no
-gisa+glorice,OLS impervious_fraction,spatial blocks,unweighted,927,13.8508,0.1318,14.1234,0.0973,no
-gisa+glorice,OLS impervious_fraction,spatial blocks,by sounding count,927,7.5386,0.0635,7.6441,0.0371,no
-gisa+glorice,constant (global mean) [rice sample],leave-one-province-out,unweighted,927,14.8652,0.0,16.0732,-0.1691,no
-gisa+glorice,constant (global mean) [rice sample],leave-one-province-out,by sounding count,927,7.7898,0.0,8.1241,-0.0877,no
-gisa+glorice,constant (global mean) [rice sample],spatial blocks,unweighted,927,14.8652,0.0,14.9255,-0.0081,no
-gisa+glorice,constant (global mean) [rice sample],spatial blocks,by sounding count,927,7.7898,0.0,7.8017,-0.003,no
-gisa+glorice,constant (per province) [rice sample],leave-one-province-out,unweighted,927,13.8694,0.1295,16.0732,-0.1691,no
-gisa+glorice,constant (per province) [rice sample],leave-one-province-out,by sounding count,927,7.5029,0.0723,8.1241,-0.0877,no
-gisa+glorice,constant (per province) [rice sample],spatial blocks,unweighted,927,13.8694,0.1295,14.1014,0.1001,no
-gisa+glorice,constant (per province) [rice sample],spatial blocks,by sounding count,927,7.5029,0.0723,7.562,0.0576,no
-gisa+glorice,spatial null (queen neighbour mean) [rice sample],leave-one-province-out,unweighted,927,8.3568,0.684,15.5183,-0.0898,no
-gisa+glorice,spatial null (queen neighbour mean) [rice sample],leave-one-province-out,by sounding count,927,2.677,0.8819,7.7975,-0.002,no
-gisa+glorice,spatial null (queen neighbour mean) [rice sample],spatial blocks,unweighted,927,8.3568,0.684,12.024,0.3457,no
-gisa+glorice,spatial null (queen neighbour mean) [rice sample],spatial blocks,by sounding count,927,2.677,0.8819,5.4553,0.5096,no
-gisa+glorice,OLS impervious_fraction [rice sample],leave-one-province-out,unweighted,927,13.8508,0.1318,15.5333,-0.0919,no
-gisa+glorice,OLS impervious_fraction [rice sample],leave-one-province-out,by sounding count,927,7.5386,0.0635,8.2254,-0.115,no
-gisa+glorice,OLS impervious_fraction [rice sample],spatial blocks,unweighted,927,13.8508,0.1318,14.1234,0.0973,no
-gisa+glorice,OLS impervious_fraction [rice sample],spatial blocks,by sounding count,927,7.5386,0.0635,7.6441,0.0371,no
-gisa+glorice,OLS rice_fraction_single,leave-one-province-out,unweighted,927,13.6349,0.1587,16.041,-0.1644,no
-gisa+glorice,OLS rice_fraction_single,leave-one-province-out,by sounding count,927,7.668,0.031,8.6219,-0.225,no
-gisa+glorice,OLS rice_fraction_single,spatial blocks,unweighted,927,13.6349,0.1587,13.7006,0.1505,no
-gisa+glorice,OLS rice_fraction_single,spatial blocks,by sounding count,927,7.668,0.031,7.717,0.0186,no
-gisa+glorice,OLS rice_fraction_combined,leave-one-province-out,unweighted,927,13.6349,0.1587,16.041,-0.1644,no
-gisa+glorice,OLS rice_fraction_combined,leave-one-province-out,by sounding count,927,7.668,0.031,8.6219,-0.225,no
-gisa+glorice,OLS rice_fraction_combined,spatial blocks,unweighted,927,13.6349,0.1587,13.7006,0.1505,no
-gisa+glorice,OLS rice_fraction_combined,spatial blocks,by sounding count,927,7.668,0.031,7.717,0.0186,no
-gisa+glorice,OLS impervious_fraction + rice_fraction_single,leave-one-province-out,unweighted,927,13.0459,0.2298,15.838,-0.1352,no
-gisa+glorice,OLS impervious_fraction + rice_fraction_single,leave-one-province-out,by sounding count,927,7.3637,0.1064,8.9728,-0.3268,no
-gisa+glorice,OLS impervious_fraction + rice_fraction_single,spatial blocks,unweighted,927,13.0459,0.2298,13.2775,0.2022,no
-gisa+glorice,OLS impervious_fraction + rice_fraction_single,spatial blocks,by sounding count,927,7.3637,0.1064,7.4929,0.0748,no
-gisa+glorice,OLS impervious_fraction + rice_fraction_single + interaction,leave-one-province-out,unweighted,927,12.1694,0.3298,14.5914,0.0365,yes
-gisa+glorice,OLS impervious_fraction + rice_fraction_single + interaction,leave-one-province-out,by sounding count,927,6.929,0.2088,8.3995,-0.1626,no
-gisa+glorice,OLS impervious_fraction + rice_fraction_single + interaction,spatial blocks,unweighted,927,12.1694,0.3298,12.5213,0.2905,no
-gisa+glorice,OLS impervious_fraction + rice_fraction_single + interaction,spatial blocks,by sounding count,927,6.929,0.2088,7.1672,0.1535,no
-gisa+glorice,"OLS trend surface (lat, lon)",leave-one-province-out,unweighted,927,12.7108,0.2689,16.7426,-0.2685,no
-gisa+glorice,"OLS trend surface (lat, lon)",leave-one-province-out,by sounding count,927,6.5876,0.2849,8.0958,-0.0801,no
-gisa+glorice,"OLS trend surface (lat, lon)",spatial blocks,unweighted,927,12.7108,0.2689,12.9453,0.2416,no
-gisa+glorice,"OLS trend surface (lat, lon)",spatial blocks,by sounding count,927,6.5876,0.2849,6.6908,0.2623,no
-gisa+glorice,"OLS wind (u, v, speed)",leave-one-province-out,unweighted,927,8.5884,0.6662,8.9739,0.6356,no
-gisa+glorice,"OLS wind (u, v, speed)",leave-one-province-out,by sounding count,927,4.8988,0.6045,6.4324,0.3181,no
-gisa+glorice,"OLS wind (u, v, speed)",spatial blocks,unweighted,927,8.5884,0.6662,8.754,0.6532,no
-gisa+glorice,"OLS wind (u, v, speed)",spatial blocks,by sounding count,927,4.8988,0.6045,5.1249,0.5672,no
-gisa+glorice,OLS albedo (SWIR),leave-one-province-out,unweighted,927,10.5888,0.4926,12.3318,0.3118,no
-gisa+glorice,OLS albedo (SWIR),leave-one-province-out,by sounding count,927,6.235,0.3594,7.5183,0.0685,no
-gisa+glorice,OLS albedo (SWIR),spatial blocks,unweighted,927,10.5888,0.4926,10.7297,0.479,no
-gisa+glorice,OLS albedo (SWIR),spatial blocks,by sounding count,927,6.235,0.3594,6.3997,0.3251,no
-gisa+glorice,OLS wind + impervious,leave-one-province-out,unweighted,927,8.4916,0.6737,9.09,0.6261,no
-gisa+glorice,OLS wind + impervious,leave-one-province-out,by sounding count,927,4.8527,0.6119,6.446,0.3153,no
-gisa+glorice,OLS wind + impervious,spatial blocks,unweighted,927,8.4916,0.6737,8.688,0.6584,no
-gisa+glorice,OLS wind + impervious,spatial blocks,by sounding count,927,4.8527,0.6119,5.0899,0.5731,no
-gisa+glorice,"OLS wind (u, v, speed) [rice sample]",leave-one-province-out,unweighted,927,8.5884,0.6662,8.9739,0.6356,no
-gisa+glorice,"OLS wind (u, v, speed) [rice sample]",leave-one-province-out,by sounding count,927,4.8988,0.6045,6.4324,0.3181,no
-gisa+glorice,"OLS wind (u, v, speed) [rice sample]",spatial blocks,unweighted,927,8.5884,0.6662,8.754,0.6532,no
-gisa+glorice,"OLS wind (u, v, speed) [rice sample]",spatial blocks,by sounding count,927,4.8988,0.6045,5.1249,0.5672,no
-gisa+glorice,OLS albedo (SWIR) [rice sample],leave-one-province-out,unweighted,927,10.5888,0.4926,12.3318,0.3118,no
-gisa+glorice,OLS albedo (SWIR) [rice sample],leave-one-province-out,by sounding count,927,6.235,0.3594,7.5183,0.0685,no
-gisa+glorice,OLS albedo (SWIR) [rice sample],spatial blocks,unweighted,927,10.5888,0.4926,10.7297,0.479,no
-gisa+glorice,OLS albedo (SWIR) [rice sample],spatial blocks,by sounding count,927,6.235,0.3594,6.3997,0.3251,no
-gisa+glorice,OLS wind + both fractions,leave-one-province-out,unweighted,927,8.4494,0.6769,9.422,0.5983,no
-gisa+glorice,OLS wind + both fractions,leave-one-province-out,by sounding count,927,4.8428,0.6135,6.6217,0.2774,no
-gisa+glorice,OLS wind + both fractions,spatial blocks,unweighted,927,8.4494,0.6769,8.6873,0.6585,no
-gisa+glorice,OLS wind + both fractions,spatial blocks,by sounding count,927,4.8428,0.6135,5.1319,0.566,no
-gisa+glorice,OLS full covariates + both fractions,leave-one-province-out,unweighted,927,7.7582,0.7276,9.4879,0.5926,no
-gisa+glorice,OLS full covariates + both fractions,leave-one-province-out,by sounding count,927,4.2791,0.6983,6.5792,0.2867,no
-gisa+glorice,OLS full covariates + both fractions,spatial blocks,unweighted,927,7.7582,0.7276,8.1239,0.7013,no
-gisa+glorice,OLS full covariates + both fractions,spatial blocks,by sounding count,927,4.2791,0.6983,4.6523,0.6433,no
-gisa+glorice,OLS wind + trend surface,leave-one-province-out,unweighted,927,8.2705,0.6905,9.1138,0.6241,no
-gisa+glorice,OLS wind + trend surface,leave-one-province-out,by sounding count,927,4.2754,0.6988,5.1358,0.5653,no
-gisa+glorice,OLS wind + trend surface,spatial blocks,unweighted,927,8.2705,0.6905,8.5567,0.6687,no
-gisa+glorice,OLS wind + trend surface,spatial blocks,by sounding count,927,4.2754,0.6988,4.4278,0.6769,no
-gisa+glorice,OLS sampling composition (when observed),leave-one-province-out,unweighted,927,10.8182,0.4704,12.5289,0.2896,no
-gisa+glorice,OLS sampling composition (when observed),leave-one-province-out,by sounding count,927,5.8084,0.444,8.689,-0.2442,no
-gisa+glorice,OLS sampling composition (when observed),spatial blocks,unweighted,927,10.8182,0.4704,10.8566,0.4666,no
-gisa+glorice,OLS sampling composition (when observed),spatial blocks,by sounding count,927,5.8084,0.444,5.8996,0.4264,no
+gaia+nesdc,constant (global mean),leave-one-province-out,unweighted,926,14.8569,0.0,16.0868,-0.1724,no
+gaia+nesdc,constant (global mean),leave-one-province-out,by sounding count,926,7.7362,0.0,8.0594,-0.0853,no
+gaia+nesdc,constant (global mean),spatial blocks,unweighted,926,14.8569,0.0,14.9191,-0.0084,no
+gaia+nesdc,constant (global mean),spatial blocks,by sounding count,926,7.7362,0.0,7.7483,-0.0031,no
+gaia+nesdc,constant (per province),leave-one-province-out,unweighted,926,13.8408,0.1321,16.0868,-0.1724,no
+gaia+nesdc,constant (per province),leave-one-province-out,by sounding count,926,7.4579,0.0707,8.0594,-0.0853,no
+gaia+nesdc,constant (per province),spatial blocks,unweighted,926,13.8408,0.1321,14.0727,0.1028,no
+gaia+nesdc,constant (per province),spatial blocks,by sounding count,926,7.4579,0.0707,7.5171,0.0559,no
+gaia+nesdc,spatial null (queen neighbour mean),leave-one-province-out,unweighted,926,8.3424,0.6847,15.5196,-0.0912,no
+gaia+nesdc,spatial null (queen neighbour mean),leave-one-province-out,by sounding count,926,2.6767,0.8803,7.7255,0.0028,no
+gaia+nesdc,spatial null (queen neighbour mean),spatial blocks,unweighted,926,8.3424,0.6847,12.1395,0.3324,no
+gaia+nesdc,spatial null (queen neighbour mean),spatial blocks,by sounding count,926,2.6767,0.8803,5.3952,0.5136,no
+gaia+nesdc,OLS impervious_fraction,leave-one-province-out,unweighted,926,13.9437,0.1192,15.7045,-0.1174,no
+gaia+nesdc,OLS impervious_fraction,leave-one-province-out,by sounding count,926,7.5598,0.0451,8.3394,-0.162,no
+gaia+nesdc,OLS impervious_fraction,spatial blocks,unweighted,926,13.9437,0.1192,14.214,0.0847,no
+gaia+nesdc,OLS impervious_fraction,spatial blocks,by sounding count,926,7.5598,0.0451,7.6412,0.0244,no
+gaia+nesdc,constant (global mean) [rice sample],leave-one-province-out,unweighted,531,10.766,0.0,10.8023,-0.0068,no
+gaia+nesdc,constant (global mean) [rice sample],leave-one-province-out,by sounding count,531,4.6233,0.0,5.3033,-0.3158,no
+gaia+nesdc,constant (global mean) [rice sample],spatial blocks,unweighted,531,10.766,0.0,10.9397,-0.0325,no
+gaia+nesdc,constant (global mean) [rice sample],spatial blocks,by sounding count,531,4.6233,0.0,4.8325,-0.0925,no
+gaia+nesdc,constant (per province) [rice sample],leave-one-province-out,unweighted,531,10.7147,0.0095,10.8023,-0.0068,no
+gaia+nesdc,constant (per province) [rice sample],leave-one-province-out,by sounding count,531,4.2205,0.1666,5.3033,-0.3158,no
+gaia+nesdc,constant (per province) [rice sample],spatial blocks,unweighted,531,10.7147,0.0095,11.0611,-0.0556,no
+gaia+nesdc,constant (per province) [rice sample],spatial blocks,by sounding count,531,4.2205,0.1666,4.5384,0.0364,no
+gaia+nesdc,spatial null (queen neighbour mean) [rice sample],leave-one-province-out,unweighted,531,9.4309,0.2326,10.8121,-0.0086,no
+gaia+nesdc,spatial null (queen neighbour mean) [rice sample],leave-one-province-out,by sounding count,531,2.7375,0.6494,5.2691,-0.2989,no
+gaia+nesdc,spatial null (queen neighbour mean) [rice sample],spatial blocks,unweighted,531,9.4309,0.2326,11.092,-0.0615,no
+gaia+nesdc,spatial null (queen neighbour mean) [rice sample],spatial blocks,by sounding count,531,2.7375,0.6494,4.3919,0.0976,no
+gaia+nesdc,OLS impervious_fraction [rice sample],leave-one-province-out,unweighted,531,10.5158,0.0459,11.0989,-0.0628,no
+gaia+nesdc,OLS impervious_fraction [rice sample],leave-one-province-out,by sounding count,531,4.5588,0.0277,6.1092,-0.7461,no
+gaia+nesdc,OLS impervious_fraction [rice sample],spatial blocks,unweighted,531,10.5158,0.0459,10.6684,0.018,yes
+gaia+nesdc,OLS impervious_fraction [rice sample],spatial blocks,by sounding count,531,4.5588,0.0277,4.7809,-0.0694,no
+gaia+nesdc,OLS rice_fraction_single,leave-one-province-out,unweighted,531,10.7163,0.0092,11.1228,-0.0674,no
+gaia+nesdc,OLS rice_fraction_single,leave-one-province-out,by sounding count,531,4.6052,0.0078,5.4975,-0.4139,no
+gaia+nesdc,OLS rice_fraction_single,spatial blocks,unweighted,531,10.7163,0.0092,10.9336,-0.0314,yes
+gaia+nesdc,OLS rice_fraction_single,spatial blocks,by sounding count,531,4.6052,0.0078,4.8323,-0.0925,no
+gaia+nesdc,OLS rice_fraction_combined,leave-one-province-out,unweighted,531,10.7185,0.0088,11.0773,-0.0587,no
+gaia+nesdc,OLS rice_fraction_combined,leave-one-province-out,by sounding count,531,4.6079,0.0066,5.4814,-0.4057,no
+gaia+nesdc,OLS rice_fraction_combined,spatial blocks,unweighted,531,10.7185,0.0088,10.9364,-0.0319,yes
+gaia+nesdc,OLS rice_fraction_combined,spatial blocks,by sounding count,531,4.6079,0.0066,4.8324,-0.0925,no
+gaia+nesdc,OLS impervious_fraction + rice_fraction_single,leave-one-province-out,unweighted,531,10.4718,0.0539,11.4394,-0.129,no
+gaia+nesdc,OLS impervious_fraction + rice_fraction_single,leave-one-province-out,by sounding count,531,4.5468,0.0328,6.2804,-0.8454,no
+gaia+nesdc,OLS impervious_fraction + rice_fraction_single,spatial blocks,unweighted,531,10.4718,0.0539,10.6746,0.0169,yes
+gaia+nesdc,OLS impervious_fraction + rice_fraction_single,spatial blocks,by sounding count,531,4.5468,0.0328,4.7991,-0.0775,no
+gaia+nesdc,OLS impervious_fraction + rice_fraction_single + interaction,leave-one-province-out,unweighted,531,10.376,0.0711,11.174,-0.0772,no
+gaia+nesdc,OLS impervious_fraction + rice_fraction_single + interaction,leave-one-province-out,by sounding count,531,4.4785,0.0616,6.1966,-0.7964,no
+gaia+nesdc,OLS impervious_fraction + rice_fraction_single + interaction,spatial blocks,unweighted,531,10.376,0.0711,10.5864,0.0331,yes
+gaia+nesdc,OLS impervious_fraction + rice_fraction_single + interaction,spatial blocks,by sounding count,531,4.4785,0.0616,4.7189,-0.0418,no
+gaia+nesdc,"OLS trend surface (lat, lon)",leave-one-province-out,unweighted,926,12.7152,0.2675,16.8501,-0.2863,no
+gaia+nesdc,"OLS trend surface (lat, lon)",leave-one-province-out,by sounding count,926,6.5658,0.2797,8.0303,-0.0775,no
+gaia+nesdc,"OLS trend surface (lat, lon)",spatial blocks,unweighted,926,12.7152,0.2675,12.9512,0.2401,no
+gaia+nesdc,"OLS trend surface (lat, lon)",spatial blocks,by sounding count,926,6.5658,0.2797,6.6646,0.2579,no
+gaia+nesdc,"OLS wind (u, v, speed)",leave-one-province-out,unweighted,926,8.5881,0.6659,8.9976,0.6332,no
+gaia+nesdc,"OLS wind (u, v, speed)",leave-one-province-out,by sounding count,926,4.8955,0.5996,6.4214,0.311,no
+gaia+nesdc,"OLS wind (u, v, speed)",spatial blocks,unweighted,926,8.5881,0.6659,8.7555,0.6527,no
+gaia+nesdc,"OLS wind (u, v, speed)",spatial blocks,by sounding count,926,4.8955,0.5996,5.1159,0.5627,no
+gaia+nesdc,OLS albedo (SWIR),leave-one-province-out,unweighted,926,10.6115,0.4899,12.5226,0.2896,no
+gaia+nesdc,OLS albedo (SWIR),leave-one-province-out,by sounding count,926,6.2354,0.3504,7.4765,0.066,no
+gaia+nesdc,OLS albedo (SWIR),spatial blocks,unweighted,926,10.6115,0.4899,10.7529,0.4762,no
+gaia+nesdc,OLS albedo (SWIR),spatial blocks,by sounding count,926,6.2354,0.3504,6.3977,0.3161,no
+gaia+nesdc,OLS wind + impervious,leave-one-province-out,unweighted,926,8.5407,0.6695,9.2108,0.6156,no
+gaia+nesdc,OLS wind + impervious,leave-one-province-out,by sounding count,926,4.8888,0.6007,6.521,0.2895,no
+gaia+nesdc,OLS wind + impervious,spatial blocks,unweighted,926,8.5407,0.6695,8.7465,0.6534,no
+gaia+nesdc,OLS wind + impervious,spatial blocks,by sounding count,926,4.8888,0.6007,5.1379,0.5589,no
+gaia+nesdc,"OLS wind (u, v, speed) [rice sample]",leave-one-province-out,unweighted,531,8.4613,0.3823,9.5022,0.221,no
+gaia+nesdc,"OLS wind (u, v, speed) [rice sample]",leave-one-province-out,by sounding count,531,4.5066,0.0498,6.7844,-1.1534,no
+gaia+nesdc,"OLS wind (u, v, speed) [rice sample]",spatial blocks,unweighted,531,8.4613,0.3823,8.7799,0.3349,no
+gaia+nesdc,"OLS wind (u, v, speed) [rice sample]",spatial blocks,by sounding count,531,4.5066,0.0498,4.8281,-0.0906,no
+gaia+nesdc,OLS albedo (SWIR) [rice sample],leave-one-province-out,unweighted,531,10.2035,0.1018,10.6841,0.0152,no
+gaia+nesdc,OLS albedo (SWIR) [rice sample],leave-one-province-out,by sounding count,531,4.5821,0.0177,5.473,-0.4014,no
+gaia+nesdc,OLS albedo (SWIR) [rice sample],spatial blocks,unweighted,531,10.2035,0.1018,10.5137,0.0463,no
+gaia+nesdc,OLS albedo (SWIR) [rice sample],spatial blocks,by sounding count,531,4.5821,0.0177,4.8753,-0.112,no
+gaia+nesdc,OLS wind + both fractions,leave-one-province-out,unweighted,531,8.4528,0.3836,10.4116,0.0647,no
+gaia+nesdc,OLS wind + both fractions,leave-one-province-out,by sounding count,531,4.4329,0.0807,7.0344,-1.315,no
+gaia+nesdc,OLS wind + both fractions,spatial blocks,unweighted,531,8.4528,0.3836,8.7974,0.3323,no
+gaia+nesdc,OLS wind + both fractions,spatial blocks,by sounding count,531,4.4329,0.0807,4.7615,-0.0607,no
+gaia+nesdc,OLS full covariates + both fractions,leave-one-province-out,unweighted,531,7.5422,0.5092,11.212,-0.0846,no
+gaia+nesdc,OLS full covariates + both fractions,leave-one-province-out,by sounding count,531,4.098,0.2143,7.2788,-1.4787,no
+gaia+nesdc,OLS full covariates + both fractions,spatial blocks,unweighted,531,7.5422,0.5092,8.6889,0.3486,no
+gaia+nesdc,OLS full covariates + both fractions,spatial blocks,by sounding count,531,4.098,0.2143,4.7193,-0.042,no
+gaia+nesdc,OLS wind + trend surface,leave-one-province-out,unweighted,926,8.2693,0.6902,9.1156,0.6235,no
+gaia+nesdc,OLS wind + trend surface,leave-one-province-out,by sounding count,926,4.2811,0.6938,5.1518,0.5565,no
+gaia+nesdc,OLS wind + trend surface,spatial blocks,unweighted,926,8.2693,0.6902,8.5641,0.6677,no
+gaia+nesdc,OLS wind + trend surface,spatial blocks,by sounding count,926,4.2811,0.6938,4.4323,0.6718,no
+gaia+nesdc,OLS sampling composition (when observed),leave-one-province-out,unweighted,926,10.8446,0.4672,12.7394,0.2647,no
+gaia+nesdc,OLS sampling composition (when observed),leave-one-province-out,by sounding count,926,5.8099,0.436,8.6305,-0.2445,no
+gaia+nesdc,OLS sampling composition (when observed),spatial blocks,unweighted,926,10.8446,0.4672,10.8853,0.4632,no
+gaia+nesdc,OLS sampling composition (when observed),spatial blocks,by sounding count,926,5.8099,0.436,5.902,0.418,no
+gaia+glorice,constant (global mean),leave-one-province-out,unweighted,926,14.8569,0.0,16.0868,-0.1724,no
+gaia+glorice,constant (global mean),leave-one-province-out,by sounding count,926,7.7362,0.0,8.0594,-0.0853,no
+gaia+glorice,constant (global mean),spatial blocks,unweighted,926,14.8569,0.0,14.9191,-0.0084,no
+gaia+glorice,constant (global mean),spatial blocks,by sounding count,926,7.7362,0.0,7.7483,-0.0031,no
+gaia+glorice,constant (per province),leave-one-province-out,unweighted,926,13.8408,0.1321,16.0868,-0.1724,no
+gaia+glorice,constant (per province),leave-one-province-out,by sounding count,926,7.4579,0.0707,8.0594,-0.0853,no
+gaia+glorice,constant (per province),spatial blocks,unweighted,926,13.8408,0.1321,14.0727,0.1028,no
+gaia+glorice,constant (per province),spatial blocks,by sounding count,926,7.4579,0.0707,7.5171,0.0559,no
+gaia+glorice,spatial null (queen neighbour mean),leave-one-province-out,unweighted,926,8.3424,0.6847,15.5196,-0.0912,no
+gaia+glorice,spatial null (queen neighbour mean),leave-one-province-out,by sounding count,926,2.6767,0.8803,7.7255,0.0028,no
+gaia+glorice,spatial null (queen neighbour mean),spatial blocks,unweighted,926,8.3424,0.6847,12.1395,0.3324,no
+gaia+glorice,spatial null (queen neighbour mean),spatial blocks,by sounding count,926,2.6767,0.8803,5.3952,0.5136,no
+gaia+glorice,OLS impervious_fraction,leave-one-province-out,unweighted,926,13.9437,0.1192,15.7045,-0.1174,no
+gaia+glorice,OLS impervious_fraction,leave-one-province-out,by sounding count,926,7.5598,0.0451,8.3394,-0.162,no
+gaia+glorice,OLS impervious_fraction,spatial blocks,unweighted,926,13.9437,0.1192,14.214,0.0847,no
+gaia+glorice,OLS impervious_fraction,spatial blocks,by sounding count,926,7.5598,0.0451,7.6412,0.0244,no
+gaia+glorice,constant (global mean) [rice sample],leave-one-province-out,unweighted,926,14.8569,0.0,16.0868,-0.1724,no
+gaia+glorice,constant (global mean) [rice sample],leave-one-province-out,by sounding count,926,7.7362,0.0,8.0594,-0.0853,no
+gaia+glorice,constant (global mean) [rice sample],spatial blocks,unweighted,926,14.8569,0.0,14.9191,-0.0084,no
+gaia+glorice,constant (global mean) [rice sample],spatial blocks,by sounding count,926,7.7362,0.0,7.7483,-0.0031,no
+gaia+glorice,constant (per province) [rice sample],leave-one-province-out,unweighted,926,13.8408,0.1321,16.0868,-0.1724,no
+gaia+glorice,constant (per province) [rice sample],leave-one-province-out,by sounding count,926,7.4579,0.0707,8.0594,-0.0853,no
+gaia+glorice,constant (per province) [rice sample],spatial blocks,unweighted,926,13.8408,0.1321,14.0727,0.1028,no
+gaia+glorice,constant (per province) [rice sample],spatial blocks,by sounding count,926,7.4579,0.0707,7.5171,0.0559,no
+gaia+glorice,spatial null (queen neighbour mean) [rice sample],leave-one-province-out,unweighted,926,8.3424,0.6847,15.5196,-0.0912,no
+gaia+glorice,spatial null (queen neighbour mean) [rice sample],leave-one-province-out,by sounding count,926,2.6767,0.8803,7.7255,0.0028,no
+gaia+glorice,spatial null (queen neighbour mean) [rice sample],spatial blocks,unweighted,926,8.3424,0.6847,12.1395,0.3324,no
+gaia+glorice,spatial null (queen neighbour mean) [rice sample],spatial blocks,by sounding count,926,2.6767,0.8803,5.3952,0.5136,no
+gaia+glorice,OLS impervious_fraction [rice sample],leave-one-province-out,unweighted,926,13.9437,0.1192,15.7045,-0.1174,no
+gaia+glorice,OLS impervious_fraction [rice sample],leave-one-province-out,by sounding count,926,7.5598,0.0451,8.3394,-0.162,no
+gaia+glorice,OLS impervious_fraction [rice sample],spatial blocks,unweighted,926,13.9437,0.1192,14.214,0.0847,no
+gaia+glorice,OLS impervious_fraction [rice sample],spatial blocks,by sounding count,926,7.5598,0.0451,7.6412,0.0244,no
+gaia+glorice,OLS rice_fraction_single,leave-one-province-out,unweighted,926,13.6341,0.1578,16.0967,-0.1739,no
+gaia+glorice,OLS rice_fraction_single,leave-one-province-out,by sounding count,926,7.6194,0.03,8.5493,-0.2212,no
+gaia+glorice,OLS rice_fraction_single,spatial blocks,unweighted,926,13.6341,0.1578,13.7005,0.1496,no
+gaia+glorice,OLS rice_fraction_single,spatial blocks,by sounding count,926,7.6194,0.03,7.6685,0.0174,no
+gaia+glorice,OLS rice_fraction_combined,leave-one-province-out,unweighted,926,13.6341,0.1578,16.0967,-0.1739,no
+gaia+glorice,OLS rice_fraction_combined,leave-one-province-out,by sounding count,926,7.6194,0.03,8.5493,-0.2212,no
+gaia+glorice,OLS rice_fraction_combined,spatial blocks,unweighted,926,13.6341,0.1578,13.7005,0.1496,no
+gaia+glorice,OLS rice_fraction_combined,spatial blocks,by sounding count,926,7.6194,0.03,7.6685,0.0174,no
+gaia+glorice,OLS impervious_fraction + rice_fraction_single,leave-one-province-out,unweighted,926,13.272,0.202,16.1275,-0.1783,no
+gaia+glorice,OLS impervious_fraction + rice_fraction_single,leave-one-province-out,by sounding count,926,7.4816,0.0647,8.9033,-0.3245,no
+gaia+glorice,OLS impervious_fraction + rice_fraction_single,spatial blocks,unweighted,926,13.272,0.202,13.4871,0.1759,no
+gaia+glorice,OLS impervious_fraction + rice_fraction_single,spatial blocks,by sounding count,926,7.4816,0.0647,7.5945,0.0363,no
+gaia+glorice,OLS impervious_fraction + rice_fraction_single + interaction,leave-one-province-out,unweighted,926,12.303,0.3143,14.9279,-0.0096,yes
+gaia+glorice,OLS impervious_fraction + rice_fraction_single + interaction,leave-one-province-out,by sounding count,926,7.0985,0.1581,8.3843,-0.1746,no
+gaia+glorice,OLS impervious_fraction + rice_fraction_single + interaction,spatial blocks,unweighted,926,12.303,0.3143,12.834,0.2538,no
+gaia+glorice,OLS impervious_fraction + rice_fraction_single + interaction,spatial blocks,by sounding count,926,7.0985,0.1581,7.4454,0.0738,no
+gaia+glorice,"OLS trend surface (lat, lon)",leave-one-province-out,unweighted,926,12.7152,0.2675,16.8501,-0.2863,no
+gaia+glorice,"OLS trend surface (lat, lon)",leave-one-province-out,by sounding count,926,6.5658,0.2797,8.0303,-0.0775,no
+gaia+glorice,"OLS trend surface (lat, lon)",spatial blocks,unweighted,926,12.7152,0.2675,12.9512,0.2401,no
+gaia+glorice,"OLS trend surface (lat, lon)",spatial blocks,by sounding count,926,6.5658,0.2797,6.6646,0.2579,no
+gaia+glorice,"OLS wind (u, v, speed)",leave-one-province-out,unweighted,926,8.5881,0.6659,8.9976,0.6332,no
+gaia+glorice,"OLS wind (u, v, speed)",leave-one-province-out,by sounding count,926,4.8955,0.5996,6.4214,0.311,no
+gaia+glorice,"OLS wind (u, v, speed)",spatial blocks,unweighted,926,8.5881,0.6659,8.7555,0.6527,no
+gaia+glorice,"OLS wind (u, v, speed)",spatial blocks,by sounding count,926,4.8955,0.5996,5.1159,0.5627,no
+gaia+glorice,OLS albedo (SWIR),leave-one-province-out,unweighted,926,10.6115,0.4899,12.5226,0.2896,no
+gaia+glorice,OLS albedo (SWIR),leave-one-province-out,by sounding count,926,6.2354,0.3504,7.4765,0.066,no
+gaia+glorice,OLS albedo (SWIR),spatial blocks,unweighted,926,10.6115,0.4899,10.7529,0.4762,no
+gaia+glorice,OLS albedo (SWIR),spatial blocks,by sounding count,926,6.2354,0.3504,6.3977,0.3161,no
+gaia+glorice,OLS wind + impervious,leave-one-province-out,unweighted,926,8.5407,0.6695,9.2108,0.6156,no
+gaia+glorice,OLS wind + impervious,leave-one-province-out,by sounding count,926,4.8888,0.6007,6.521,0.2895,no
+gaia+glorice,OLS wind + impervious,spatial blocks,unweighted,926,8.5407,0.6695,8.7465,0.6534,no
+gaia+glorice,OLS wind + impervious,spatial blocks,by sounding count,926,4.8888,0.6007,5.1379,0.5589,no
+gaia+glorice,"OLS wind (u, v, speed) [rice sample]",leave-one-province-out,unweighted,926,8.5881,0.6659,8.9976,0.6332,no
+gaia+glorice,"OLS wind (u, v, speed) [rice sample]",leave-one-province-out,by sounding count,926,4.8955,0.5996,6.4214,0.311,no
+gaia+glorice,"OLS wind (u, v, speed) [rice sample]",spatial blocks,unweighted,926,8.5881,0.6659,8.7555,0.6527,no
+gaia+glorice,"OLS wind (u, v, speed) [rice sample]",spatial blocks,by sounding count,926,4.8955,0.5996,5.1159,0.5627,no
+gaia+glorice,OLS albedo (SWIR) [rice sample],leave-one-province-out,unweighted,926,10.6115,0.4899,12.5226,0.2896,no
+gaia+glorice,OLS albedo (SWIR) [rice sample],leave-one-province-out,by sounding count,926,6.2354,0.3504,7.4765,0.066,no
+gaia+glorice,OLS albedo (SWIR) [rice sample],spatial blocks,unweighted,926,10.6115,0.4899,10.7529,0.4762,no
+gaia+glorice,OLS albedo (SWIR) [rice sample],spatial blocks,by sounding count,926,6.2354,0.3504,6.3977,0.3161,no
+gaia+glorice,OLS wind + both fractions,leave-one-province-out,unweighted,926,8.5017,0.6725,9.4812,0.5927,no
+gaia+glorice,OLS wind + both fractions,leave-one-province-out,by sounding count,926,4.8685,0.604,6.5612,0.2807,no
+gaia+glorice,OLS wind + both fractions,spatial blocks,unweighted,926,8.5017,0.6725,8.7492,0.6532,no
+gaia+glorice,OLS wind + both fractions,spatial blocks,by sounding count,926,4.8685,0.604,5.1655,0.5542,no
+gaia+glorice,OLS full covariates + both fractions,leave-one-province-out,unweighted,926,7.781,0.7257,9.577,0.5845,no
+gaia+glorice,OLS full covariates + both fractions,leave-one-province-out,by sounding count,926,4.2781,0.6942,6.51,0.2919,no
+gaia+glorice,OLS full covariates + both fractions,spatial blocks,unweighted,926,7.781,0.7257,8.1587,0.6984,no
+gaia+glorice,OLS full covariates + both fractions,spatial blocks,by sounding count,926,4.2781,0.6942,4.6566,0.6377,no
+gaia+glorice,OLS wind + trend surface,leave-one-province-out,unweighted,926,8.2693,0.6902,9.1156,0.6235,no
+gaia+glorice,OLS wind + trend surface,leave-one-province-out,by sounding count,926,4.2811,0.6938,5.1518,0.5565,no
+gaia+glorice,OLS wind + trend surface,spatial blocks,unweighted,926,8.2693,0.6902,8.5641,0.6677,no
+gaia+glorice,OLS wind + trend surface,spatial blocks,by sounding count,926,4.2811,0.6938,4.4323,0.6718,no
+gaia+glorice,OLS sampling composition (when observed),leave-one-province-out,unweighted,926,10.8446,0.4672,12.7394,0.2647,no
+gaia+glorice,OLS sampling composition (when observed),leave-one-province-out,by sounding count,926,5.8099,0.436,8.6305,-0.2445,no
+gaia+glorice,OLS sampling composition (when observed),spatial blocks,unweighted,926,10.8446,0.4672,10.8853,0.4632,no
+gaia+glorice,OLS sampling composition (when observed),spatial blocks,by sounding count,926,5.8099,0.436,5.902,0.418,no
+gisa+nesdc,constant (global mean),leave-one-province-out,unweighted,926,14.8569,0.0,16.0868,-0.1724,no
+gisa+nesdc,constant (global mean),leave-one-province-out,by sounding count,926,7.7362,0.0,8.0594,-0.0853,no
+gisa+nesdc,constant (global mean),spatial blocks,unweighted,926,14.8569,0.0,14.9191,-0.0084,no
+gisa+nesdc,constant (global mean),spatial blocks,by sounding count,926,7.7362,0.0,7.7483,-0.0031,no
+gisa+nesdc,constant (per province),leave-one-province-out,unweighted,926,13.8408,0.1321,16.0868,-0.1724,no
+gisa+nesdc,constant (per province),leave-one-province-out,by sounding count,926,7.4579,0.0707,8.0594,-0.0853,no
+gisa+nesdc,constant (per province),spatial blocks,unweighted,926,13.8408,0.1321,14.0727,0.1028,no
+gisa+nesdc,constant (per province),spatial blocks,by sounding count,926,7.4579,0.0707,7.5171,0.0559,no
+gisa+nesdc,spatial null (queen neighbour mean),leave-one-province-out,unweighted,926,8.3424,0.6847,15.5196,-0.0912,no
+gisa+nesdc,spatial null (queen neighbour mean),leave-one-province-out,by sounding count,926,2.6767,0.8803,7.7255,0.0028,no
+gisa+nesdc,spatial null (queen neighbour mean),spatial blocks,unweighted,926,8.3424,0.6847,12.1395,0.3324,no
+gisa+nesdc,spatial null (queen neighbour mean),spatial blocks,by sounding count,926,2.6767,0.8803,5.3952,0.5136,no
+gisa+nesdc,OLS impervious_fraction,leave-one-province-out,unweighted,926,13.8463,0.1314,15.5647,-0.0976,no
+gisa+nesdc,OLS impervious_fraction,leave-one-province-out,by sounding count,926,7.4944,0.0615,8.1574,-0.1118,no
+gisa+nesdc,OLS impervious_fraction,spatial blocks,unweighted,926,13.8463,0.1314,14.1219,0.0965,no
+gisa+nesdc,OLS impervious_fraction,spatial blocks,by sounding count,926,7.4944,0.0615,7.5984,0.0353,no
+gisa+nesdc,constant (global mean) [rice sample],leave-one-province-out,unweighted,531,10.766,0.0,10.8023,-0.0068,no
+gisa+nesdc,constant (global mean) [rice sample],leave-one-province-out,by sounding count,531,4.6233,0.0,5.3033,-0.3158,no
+gisa+nesdc,constant (global mean) [rice sample],spatial blocks,unweighted,531,10.766,0.0,10.9397,-0.0325,no
+gisa+nesdc,constant (global mean) [rice sample],spatial blocks,by sounding count,531,4.6233,0.0,4.8325,-0.0925,no
+gisa+nesdc,constant (per province) [rice sample],leave-one-province-out,unweighted,531,10.7147,0.0095,10.8023,-0.0068,no
+gisa+nesdc,constant (per province) [rice sample],leave-one-province-out,by sounding count,531,4.2205,0.1666,5.3033,-0.3158,no
+gisa+nesdc,constant (per province) [rice sample],spatial blocks,unweighted,531,10.7147,0.0095,11.0611,-0.0556,no
+gisa+nesdc,constant (per province) [rice sample],spatial blocks,by sounding count,531,4.2205,0.1666,4.5384,0.0364,no
+gisa+nesdc,spatial null (queen neighbour mean) [rice sample],leave-one-province-out,unweighted,531,9.4309,0.2326,10.8121,-0.0086,no
+gisa+nesdc,spatial null (queen neighbour mean) [rice sample],leave-one-province-out,by sounding count,531,2.7375,0.6494,5.2691,-0.2989,no
+gisa+nesdc,spatial null (queen neighbour mean) [rice sample],spatial blocks,unweighted,531,9.4309,0.2326,11.092,-0.0615,no
+gisa+nesdc,spatial null (queen neighbour mean) [rice sample],spatial blocks,by sounding count,531,2.7375,0.6494,4.3919,0.0976,no
+gisa+nesdc,OLS impervious_fraction [rice sample],leave-one-province-out,unweighted,531,10.512,0.0466,10.9692,-0.0381,no
+gisa+nesdc,OLS impervious_fraction [rice sample],leave-one-province-out,by sounding count,531,4.5582,0.028,5.7554,-0.5497,no
+gisa+nesdc,OLS impervious_fraction [rice sample],spatial blocks,unweighted,531,10.512,0.0466,10.6676,0.0182,yes
+gisa+nesdc,OLS impervious_fraction [rice sample],spatial blocks,by sounding count,531,4.5582,0.028,4.7865,-0.0718,no
+gisa+nesdc,OLS rice_fraction_single,leave-one-province-out,unweighted,531,10.7163,0.0092,11.1228,-0.0674,no
+gisa+nesdc,OLS rice_fraction_single,leave-one-province-out,by sounding count,531,4.6052,0.0078,5.4975,-0.4139,no
+gisa+nesdc,OLS rice_fraction_single,spatial blocks,unweighted,531,10.7163,0.0092,10.9336,-0.0314,yes
+gisa+nesdc,OLS rice_fraction_single,spatial blocks,by sounding count,531,4.6052,0.0078,4.8323,-0.0925,no
+gisa+nesdc,OLS rice_fraction_combined,leave-one-province-out,unweighted,531,10.7185,0.0088,11.0773,-0.0587,no
+gisa+nesdc,OLS rice_fraction_combined,leave-one-province-out,by sounding count,531,4.6079,0.0066,5.4814,-0.4057,no
+gisa+nesdc,OLS rice_fraction_combined,spatial blocks,unweighted,531,10.7185,0.0088,10.9364,-0.0319,yes
+gisa+nesdc,OLS rice_fraction_combined,spatial blocks,by sounding count,531,4.6079,0.0066,4.8324,-0.0925,no
+gisa+nesdc,OLS impervious_fraction + rice_fraction_single,leave-one-province-out,unweighted,531,10.4473,0.0583,11.3404,-0.1096,no
+gisa+nesdc,OLS impervious_fraction + rice_fraction_single,leave-one-province-out,by sounding count,531,4.5545,0.0295,6.1945,-0.7952,no
+gisa+nesdc,OLS impervious_fraction + rice_fraction_single,spatial blocks,unweighted,531,10.4473,0.0583,10.657,0.0201,yes
+gisa+nesdc,OLS impervious_fraction + rice_fraction_single,spatial blocks,by sounding count,531,4.5545,0.0295,4.8347,-0.0936,no
+gisa+nesdc,OLS impervious_fraction + rice_fraction_single + interaction,leave-one-province-out,unweighted,531,10.3721,0.0718,11.2778,-0.0973,no
+gisa+nesdc,OLS impervious_fraction + rice_fraction_single + interaction,leave-one-province-out,by sounding count,531,4.4456,0.0754,6.3919,-0.9114,no
+gisa+nesdc,OLS impervious_fraction + rice_fraction_single + interaction,spatial blocks,unweighted,531,10.3721,0.0718,10.6119,0.0284,yes
+gisa+nesdc,OLS impervious_fraction + rice_fraction_single + interaction,spatial blocks,by sounding count,531,4.4456,0.0754,4.7425,-0.0522,no
+gisa+nesdc,"OLS trend surface (lat, lon)",leave-one-province-out,unweighted,926,12.7152,0.2675,16.8501,-0.2863,no
+gisa+nesdc,"OLS trend surface (lat, lon)",leave-one-province-out,by sounding count,926,6.5658,0.2797,8.0303,-0.0775,no
+gisa+nesdc,"OLS trend surface (lat, lon)",spatial blocks,unweighted,926,12.7152,0.2675,12.9512,0.2401,no
+gisa+nesdc,"OLS trend surface (lat, lon)",spatial blocks,by sounding count,926,6.5658,0.2797,6.6646,0.2579,no
+gisa+nesdc,"OLS wind (u, v, speed)",leave-one-province-out,unweighted,926,8.5881,0.6659,8.9976,0.6332,no
+gisa+nesdc,"OLS wind (u, v, speed)",leave-one-province-out,by sounding count,926,4.8955,0.5996,6.4214,0.311,no
+gisa+nesdc,"OLS wind (u, v, speed)",spatial blocks,unweighted,926,8.5881,0.6659,8.7555,0.6527,no
+gisa+nesdc,"OLS wind (u, v, speed)",spatial blocks,by sounding count,926,4.8955,0.5996,5.1159,0.5627,no
+gisa+nesdc,OLS albedo (SWIR),leave-one-province-out,unweighted,926,10.6115,0.4899,12.5226,0.2896,no
+gisa+nesdc,OLS albedo (SWIR),leave-one-province-out,by sounding count,926,6.2354,0.3504,7.4765,0.066,no
+gisa+nesdc,OLS albedo (SWIR),spatial blocks,unweighted,926,10.6115,0.4899,10.7529,0.4762,no
+gisa+nesdc,OLS albedo (SWIR),spatial blocks,by sounding count,926,6.2354,0.3504,6.3977,0.3161,no
+gisa+nesdc,OLS wind + impervious,leave-one-province-out,unweighted,926,8.4948,0.6731,9.1158,0.6235,no
+gisa+nesdc,OLS wind + impervious,leave-one-province-out,by sounding count,926,4.8487,0.6072,6.4302,0.3091,no
+gisa+nesdc,OLS wind + impervious,spatial blocks,unweighted,926,8.4948,0.6731,8.6924,0.6577,no
+gisa+nesdc,OLS wind + impervious,spatial blocks,by sounding count,926,4.8487,0.6072,5.0799,0.5688,no
+gisa+nesdc,"OLS wind (u, v, speed) [rice sample]",leave-one-province-out,unweighted,531,8.4613,0.3823,9.5022,0.221,no
+gisa+nesdc,"OLS wind (u, v, speed) [rice sample]",leave-one-province-out,by sounding count,531,4.5066,0.0498,6.7844,-1.1534,no
+gisa+nesdc,"OLS wind (u, v, speed) [rice sample]",spatial blocks,unweighted,531,8.4613,0.3823,8.7799,0.3349,no
+gisa+nesdc,"OLS wind (u, v, speed) [rice sample]",spatial blocks,by sounding count,531,4.5066,0.0498,4.8281,-0.0906,no
+gisa+nesdc,OLS albedo (SWIR) [rice sample],leave-one-province-out,unweighted,531,10.2035,0.1018,10.6841,0.0152,no
+gisa+nesdc,OLS albedo (SWIR) [rice sample],leave-one-province-out,by sounding count,531,4.5821,0.0177,5.473,-0.4014,no
+gisa+nesdc,OLS albedo (SWIR) [rice sample],spatial blocks,unweighted,531,10.2035,0.1018,10.5137,0.0463,no
+gisa+nesdc,OLS albedo (SWIR) [rice sample],spatial blocks,by sounding count,531,4.5821,0.0177,4.8753,-0.112,no
+gisa+nesdc,OLS wind + both fractions,leave-one-province-out,unweighted,531,8.4358,0.386,10.4525,0.0574,no
+gisa+nesdc,OLS wind + both fractions,leave-one-province-out,by sounding count,531,4.4463,0.0751,7.2115,-1.4331,no
+gisa+nesdc,OLS wind + both fractions,spatial blocks,unweighted,531,8.4358,0.386,8.7653,0.3371,no
+gisa+nesdc,OLS wind + both fractions,spatial blocks,by sounding count,531,4.4463,0.0751,4.808,-0.0815,no
+gisa+nesdc,OLS full covariates + both fractions,leave-one-province-out,unweighted,531,7.5402,0.5095,11.1789,-0.0782,no
+gisa+nesdc,OLS full covariates + both fractions,leave-one-province-out,by sounding count,531,4.1134,0.2084,7.3643,-1.5372,no
+gisa+nesdc,OLS full covariates + both fractions,spatial blocks,unweighted,531,7.5402,0.5095,8.725,0.3432,no
+gisa+nesdc,OLS full covariates + both fractions,spatial blocks,by sounding count,531,4.1134,0.2084,4.8124,-0.0835,no
+gisa+nesdc,OLS wind + trend surface,leave-one-province-out,unweighted,926,8.2693,0.6902,9.1156,0.6235,no
+gisa+nesdc,OLS wind + trend surface,leave-one-province-out,by sounding count,926,4.2811,0.6938,5.1518,0.5565,no
+gisa+nesdc,OLS wind + trend surface,spatial blocks,unweighted,926,8.2693,0.6902,8.5641,0.6677,no
+gisa+nesdc,OLS wind + trend surface,spatial blocks,by sounding count,926,4.2811,0.6938,4.4323,0.6718,no
+gisa+nesdc,OLS sampling composition (when observed),leave-one-province-out,unweighted,926,10.8446,0.4672,12.7394,0.2647,no
+gisa+nesdc,OLS sampling composition (when observed),leave-one-province-out,by sounding count,926,5.8099,0.436,8.6305,-0.2445,no
+gisa+nesdc,OLS sampling composition (when observed),spatial blocks,unweighted,926,10.8446,0.4672,10.8853,0.4632,no
+gisa+nesdc,OLS sampling composition (when observed),spatial blocks,by sounding count,926,5.8099,0.436,5.902,0.418,no
+gisa+glorice,constant (global mean),leave-one-province-out,unweighted,926,14.8569,0.0,16.0868,-0.1724,no
+gisa+glorice,constant (global mean),leave-one-province-out,by sounding count,926,7.7362,0.0,8.0594,-0.0853,no
+gisa+glorice,constant (global mean),spatial blocks,unweighted,926,14.8569,0.0,14.9191,-0.0084,no
+gisa+glorice,constant (global mean),spatial blocks,by sounding count,926,7.7362,0.0,7.7483,-0.0031,no
+gisa+glorice,constant (per province),leave-one-province-out,unweighted,926,13.8408,0.1321,16.0868,-0.1724,no
+gisa+glorice,constant (per province),leave-one-province-out,by sounding count,926,7.4579,0.0707,8.0594,-0.0853,no
+gisa+glorice,constant (per province),spatial blocks,unweighted,926,13.8408,0.1321,14.0727,0.1028,no
+gisa+glorice,constant (per province),spatial blocks,by sounding count,926,7.4579,0.0707,7.5171,0.0559,no
+gisa+glorice,spatial null (queen neighbour mean),leave-one-province-out,unweighted,926,8.3424,0.6847,15.5196,-0.0912,no
+gisa+glorice,spatial null (queen neighbour mean),leave-one-province-out,by sounding count,926,2.6767,0.8803,7.7255,0.0028,no
+gisa+glorice,spatial null (queen neighbour mean),spatial blocks,unweighted,926,8.3424,0.6847,12.1395,0.3324,no
+gisa+glorice,spatial null (queen neighbour mean),spatial blocks,by sounding count,926,2.6767,0.8803,5.3952,0.5136,no
+gisa+glorice,OLS impervious_fraction,leave-one-province-out,unweighted,926,13.8463,0.1314,15.5647,-0.0976,no
+gisa+glorice,OLS impervious_fraction,leave-one-province-out,by sounding count,926,7.4944,0.0615,8.1574,-0.1118,no
+gisa+glorice,OLS impervious_fraction,spatial blocks,unweighted,926,13.8463,0.1314,14.1219,0.0965,no
+gisa+glorice,OLS impervious_fraction,spatial blocks,by sounding count,926,7.4944,0.0615,7.5984,0.0353,no
+gisa+glorice,constant (global mean) [rice sample],leave-one-province-out,unweighted,926,14.8569,0.0,16.0868,-0.1724,no
+gisa+glorice,constant (global mean) [rice sample],leave-one-province-out,by sounding count,926,7.7362,0.0,8.0594,-0.0853,no
+gisa+glorice,constant (global mean) [rice sample],spatial blocks,unweighted,926,14.8569,0.0,14.9191,-0.0084,no
+gisa+glorice,constant (global mean) [rice sample],spatial blocks,by sounding count,926,7.7362,0.0,7.7483,-0.0031,no
+gisa+glorice,constant (per province) [rice sample],leave-one-province-out,unweighted,926,13.8408,0.1321,16.0868,-0.1724,no
+gisa+glorice,constant (per province) [rice sample],leave-one-province-out,by sounding count,926,7.4579,0.0707,8.0594,-0.0853,no
+gisa+glorice,constant (per province) [rice sample],spatial blocks,unweighted,926,13.8408,0.1321,14.0727,0.1028,no
+gisa+glorice,constant (per province) [rice sample],spatial blocks,by sounding count,926,7.4579,0.0707,7.5171,0.0559,no
+gisa+glorice,spatial null (queen neighbour mean) [rice sample],leave-one-province-out,unweighted,926,8.3424,0.6847,15.5196,-0.0912,no
+gisa+glorice,spatial null (queen neighbour mean) [rice sample],leave-one-province-out,by sounding count,926,2.6767,0.8803,7.7255,0.0028,no
+gisa+glorice,spatial null (queen neighbour mean) [rice sample],spatial blocks,unweighted,926,8.3424,0.6847,12.1395,0.3324,no
+gisa+glorice,spatial null (queen neighbour mean) [rice sample],spatial blocks,by sounding count,926,2.6767,0.8803,5.3952,0.5136,no
+gisa+glorice,OLS impervious_fraction [rice sample],leave-one-province-out,unweighted,926,13.8463,0.1314,15.5647,-0.0976,no
+gisa+glorice,OLS impervious_fraction [rice sample],leave-one-province-out,by sounding count,926,7.4944,0.0615,8.1574,-0.1118,no
+gisa+glorice,OLS impervious_fraction [rice sample],spatial blocks,unweighted,926,13.8463,0.1314,14.1219,0.0965,no
+gisa+glorice,OLS impervious_fraction [rice sample],spatial blocks,by sounding count,926,7.4944,0.0615,7.5984,0.0353,no
+gisa+glorice,OLS rice_fraction_single,leave-one-province-out,unweighted,926,13.6341,0.1578,16.0967,-0.1739,no
+gisa+glorice,OLS rice_fraction_single,leave-one-province-out,by sounding count,926,7.6194,0.03,8.5493,-0.2212,no
+gisa+glorice,OLS rice_fraction_single,spatial blocks,unweighted,926,13.6341,0.1578,13.7005,0.1496,no
+gisa+glorice,OLS rice_fraction_single,spatial blocks,by sounding count,926,7.6194,0.03,7.6685,0.0174,no
+gisa+glorice,OLS rice_fraction_combined,leave-one-province-out,unweighted,926,13.6341,0.1578,16.0967,-0.1739,no
+gisa+glorice,OLS rice_fraction_combined,leave-one-province-out,by sounding count,926,7.6194,0.03,8.5493,-0.2212,no
+gisa+glorice,OLS rice_fraction_combined,spatial blocks,unweighted,926,13.6341,0.1578,13.7005,0.1496,no
+gisa+glorice,OLS rice_fraction_combined,spatial blocks,by sounding count,926,7.6194,0.03,7.6685,0.0174,no
+gisa+glorice,OLS impervious_fraction + rice_fraction_single,leave-one-province-out,unweighted,926,13.0462,0.2289,15.8984,-0.1451,no
+gisa+glorice,OLS impervious_fraction + rice_fraction_single,leave-one-province-out,by sounding count,926,7.3262,0.1032,8.8969,-0.3226,no
+gisa+glorice,OLS impervious_fraction + rice_fraction_single,spatial blocks,unweighted,926,13.0462,0.2289,13.2786,0.2012,no
+gisa+glorice,OLS impervious_fraction + rice_fraction_single,spatial blocks,by sounding count,926,7.3262,0.1032,7.4543,0.0716,no
+gisa+glorice,OLS impervious_fraction + rice_fraction_single + interaction,leave-one-province-out,unweighted,926,12.1719,0.3288,14.6758,0.0242,yes
+gisa+glorice,OLS impervious_fraction + rice_fraction_single + interaction,leave-one-province-out,by sounding count,926,6.9055,0.2032,8.3389,-0.1619,no
+gisa+glorice,OLS impervious_fraction + rice_fraction_single + interaction,spatial blocks,unweighted,926,12.1719,0.3288,12.5281,0.2889,no
+gisa+glorice,OLS impervious_fraction + rice_fraction_single + interaction,spatial blocks,by sounding count,926,6.9055,0.2032,7.141,0.148,no
+gisa+glorice,"OLS trend surface (lat, lon)",leave-one-province-out,unweighted,926,12.7152,0.2675,16.8501,-0.2863,no
+gisa+glorice,"OLS trend surface (lat, lon)",leave-one-province-out,by sounding count,926,6.5658,0.2797,8.0303,-0.0775,no
+gisa+glorice,"OLS trend surface (lat, lon)",spatial blocks,unweighted,926,12.7152,0.2675,12.9512,0.2401,no
+gisa+glorice,"OLS trend surface (lat, lon)",spatial blocks,by sounding count,926,6.5658,0.2797,6.6646,0.2579,no
+gisa+glorice,"OLS wind (u, v, speed)",leave-one-province-out,unweighted,926,8.5881,0.6659,8.9976,0.6332,no
+gisa+glorice,"OLS wind (u, v, speed)",leave-one-province-out,by sounding count,926,4.8955,0.5996,6.4214,0.311,no
+gisa+glorice,"OLS wind (u, v, speed)",spatial blocks,unweighted,926,8.5881,0.6659,8.7555,0.6527,no
+gisa+glorice,"OLS wind (u, v, speed)",spatial blocks,by sounding count,926,4.8955,0.5996,5.1159,0.5627,no
+gisa+glorice,OLS albedo (SWIR),leave-one-province-out,unweighted,926,10.6115,0.4899,12.5226,0.2896,no
+gisa+glorice,OLS albedo (SWIR),leave-one-province-out,by sounding count,926,6.2354,0.3504,7.4765,0.066,no
+gisa+glorice,OLS albedo (SWIR),spatial blocks,unweighted,926,10.6115,0.4899,10.7529,0.4762,no
+gisa+glorice,OLS albedo (SWIR),spatial blocks,by sounding count,926,6.2354,0.3504,6.3977,0.3161,no
+gisa+glorice,OLS wind + impervious,leave-one-province-out,unweighted,926,8.4948,0.6731,9.1158,0.6235,no
+gisa+glorice,OLS wind + impervious,leave-one-province-out,by sounding count,926,4.8487,0.6072,6.4302,0.3091,no
+gisa+glorice,OLS wind + impervious,spatial blocks,unweighted,926,8.4948,0.6731,8.6924,0.6577,no
+gisa+glorice,OLS wind + impervious,spatial blocks,by sounding count,926,4.8487,0.6072,5.0799,0.5688,no
+gisa+glorice,"OLS wind (u, v, speed) [rice sample]",leave-one-province-out,unweighted,926,8.5881,0.6659,8.9976,0.6332,no
+gisa+glorice,"OLS wind (u, v, speed) [rice sample]",leave-one-province-out,by sounding count,926,4.8955,0.5996,6.4214,0.311,no
+gisa+glorice,"OLS wind (u, v, speed) [rice sample]",spatial blocks,unweighted,926,8.5881,0.6659,8.7555,0.6527,no
+gisa+glorice,"OLS wind (u, v, speed) [rice sample]",spatial blocks,by sounding count,926,4.8955,0.5996,5.1159,0.5627,no
+gisa+glorice,OLS albedo (SWIR) [rice sample],leave-one-province-out,unweighted,926,10.6115,0.4899,12.5226,0.2896,no
+gisa+glorice,OLS albedo (SWIR) [rice sample],leave-one-province-out,by sounding count,926,6.2354,0.3504,7.4765,0.066,no
+gisa+glorice,OLS albedo (SWIR) [rice sample],spatial blocks,unweighted,926,10.6115,0.4899,10.7529,0.4762,no
+gisa+glorice,OLS albedo (SWIR) [rice sample],spatial blocks,by sounding count,926,6.2354,0.3504,6.3977,0.3161,no
+gisa+glorice,OLS wind + both fractions,leave-one-province-out,unweighted,926,8.4518,0.6764,9.4493,0.5955,no
+gisa+glorice,OLS wind + both fractions,leave-one-province-out,by sounding count,926,4.8382,0.6089,6.5998,0.2722,no
+gisa+glorice,OLS wind + both fractions,spatial blocks,unweighted,926,8.4518,0.6764,8.6902,0.6579,no
+gisa+glorice,OLS wind + both fractions,spatial blocks,by sounding count,926,4.8382,0.6089,5.1213,0.5618,no
+gisa+glorice,OLS full covariates + both fractions,leave-one-province-out,unweighted,926,7.7727,0.7263,9.5224,0.5892,no
+gisa+glorice,OLS full covariates + both fractions,leave-one-province-out,by sounding count,926,4.2775,0.6943,6.528,0.288,no
+gisa+glorice,OLS full covariates + both fractions,spatial blocks,unweighted,926,7.7727,0.7263,8.1377,0.7,no
+gisa+glorice,OLS full covariates + both fractions,spatial blocks,by sounding count,926,4.2775,0.6943,4.6458,0.6394,no
+gisa+glorice,OLS wind + trend surface,leave-one-province-out,unweighted,926,8.2693,0.6902,9.1156,0.6235,no
+gisa+glorice,OLS wind + trend surface,leave-one-province-out,by sounding count,926,4.2811,0.6938,5.1518,0.5565,no
+gisa+glorice,OLS wind + trend surface,spatial blocks,unweighted,926,8.2693,0.6902,8.5641,0.6677,no
+gisa+glorice,OLS wind + trend surface,spatial blocks,by sounding count,926,4.2811,0.6938,4.4323,0.6718,no
+gisa+glorice,OLS sampling composition (when observed),leave-one-province-out,unweighted,926,10.8446,0.4672,12.7394,0.2647,no
+gisa+glorice,OLS sampling composition (when observed),leave-one-province-out,by sounding count,926,5.8099,0.436,8.6305,-0.2445,no
+gisa+glorice,OLS sampling composition (when observed),spatial blocks,unweighted,926,10.8446,0.4672,10.8853,0.4632,no
+gisa+glorice,OLS sampling composition (when observed),spatial blocks,by sounding count,926,5.8099,0.436,5.902,0.418,no

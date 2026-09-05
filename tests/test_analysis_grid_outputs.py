@@ -40,7 +40,7 @@ def numbers(records, column):
 def test_the_table_holds_one_row_per_covered_cell():
     with rasterio.open(TIF) as src:
         counts = src.read(3)
-    assert len(rows()) == int((counts > 0).sum()) == 927
+    assert len(rows()) == int((counts > 0).sum()) == 926
 
 
 def test_every_row_matches_the_composite_cell_it_names():
@@ -59,7 +59,7 @@ def test_every_row_matches_the_composite_cell_it_names():
 
 
 def test_no_row_has_a_zero_sounding_count():
-    """The 96 uncovered cells are excluded, and CellRow refuses to build one."""
+    """The 97 uncovered cells are excluded, and CellRow refuses to build one."""
     assert all(int(r["sounding_count"]) > 0 for r in rows())
 
 

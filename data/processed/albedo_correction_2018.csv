@@ -1,17 +1,17 @@
 albedo,series,weighting,n,pearson,spearman,slope_ppb_per_unit_albedo,standard_error,r2
-surface_albedo_SWIR,raw retrieval,unweighted,927,0.7395,0.724,203.795,6.099,0.54688
-surface_albedo_SWIR,raw retrieval,by sounding count,927,0.8096,0.7152,183.875,4.383,0.655469
-surface_albedo_SWIR,bias corrected,unweighted,927,0.7019,0.4629,199.82,6.668,0.4926
-surface_albedo_SWIR,bias corrected,by sounding count,927,0.5995,0.2605,127.8,5.61,0.359362
-surface_albedo_SWIR,the correction itself,unweighted,927,-0.0418,-0.3071,-3.975,3.125,0.001747
-surface_albedo_SWIR,the correction itself,by sounding count,927,-0.5415,-0.7292,-56.075,2.863,0.29317
-surface_albedo_SWIR,deseasonalised,unweighted,927,0.6795,0.4549,172.362,6.119,0.461759
-surface_albedo_SWIR,deseasonalised,by sounding count,927,0.5645,0.2265,107.69,5.178,0.318655
-surface_albedo_NIR,raw retrieval,unweighted,927,0.696,0.5851,117.341,3.98,0.484413
-surface_albedo_NIR,raw retrieval,by sounding count,927,0.7287,0.5308,118.225,3.653,0.531005
-surface_albedo_NIR,bias corrected,unweighted,927,0.7484,0.462,130.354,3.798,0.560117
-surface_albedo_NIR,bias corrected,by sounding count,927,0.7103,0.2724,108.179,3.524,0.504581
-surface_albedo_NIR,the correction itself,unweighted,927,0.2236,-0.035,13.013,1.865,0.050014
-surface_albedo_NIR,the correction itself,by sounding count,927,-0.1358,-0.3948,-10.046,2.41,0.018439
-surface_albedo_NIR,deseasonalised,unweighted,927,0.717,0.4205,111.263,3.557,0.514098
-surface_albedo_NIR,deseasonalised,by sounding count,927,0.657,0.1966,89.538,3.378,0.431683
+surface_albedo_SWIR,raw retrieval,unweighted,926,0.7375,0.7227,203.851,6.141,0.543906
+surface_albedo_SWIR,raw retrieval,by sounding count,926,0.8069,0.7128,183.733,4.425,0.651105
+surface_albedo_SWIR,bias corrected,unweighted,926,0.6999,0.4609,199.656,6.703,0.489852
+surface_albedo_SWIR,bias corrected,by sounding count,926,0.5919,0.2534,126.235,5.655,0.350369
+surface_albedo_SWIR,the correction itself,unweighted,926,-0.044,-0.3106,-4.195,3.132,0.001938
+surface_albedo_SWIR,the correction itself,by sounding count,926,-0.5498,-0.7356,-57.498,2.874,0.302239
+surface_albedo_SWIR,deseasonalised,unweighted,926,0.6776,0.4528,172.468,6.158,0.459154
+surface_albedo_SWIR,deseasonalised,by sounding count,926,0.5578,0.2195,106.451,5.211,0.311154
+surface_albedo_NIR,raw retrieval,unweighted,926,0.6936,0.5831,117.286,4.008,0.481028
+surface_albedo_NIR,raw retrieval,by sounding count,926,0.725,0.5272,118.333,3.699,0.525554
+surface_albedo_NIR,bias corrected,unweighted,926,0.7461,0.4597,130.222,3.823,0.556739
+surface_albedo_NIR,bias corrected,by sounding count,926,0.7049,0.267,107.766,3.567,0.496891
+surface_albedo_NIR,the correction itself,unweighted,926,0.2218,-0.0377,12.936,1.871,0.049215
+surface_albedo_NIR,the correction itself,by sounding count,926,-0.1409,-0.3992,-10.567,2.442,0.019863
+surface_albedo_NIR,deseasonalised,unweighted,926,0.7147,0.418,111.295,3.583,0.510831
+surface_albedo_NIR,deseasonalised,by sounding count,926,0.6522,0.1906,89.22,3.412,0.425333

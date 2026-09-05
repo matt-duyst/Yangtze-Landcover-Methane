@@ -1,23 +1,23 @@
 group,predictor,weighting,n,raw_pearson,raw_spearman,mu_pearson,mu_spearman,pearson_change,spearman_change
-sampling composition,mean_day_of_year,unweighted,927,0.7005,0.4052,0.6311,0.3969,-0.0694,-0.0083
-sampling composition,solar_zenith_angle,unweighted,927,0.6969,0.3114,0.673,0.3426,-0.0239,0.0312
-sampling composition,day_of_year_sd,unweighted,927,0.351,0.2029,0.3736,0.2647,0.0226,0.0618
-retrieval and meteorology,surface_albedo_SWIR,unweighted,927,0.7019,0.4629,0.6795,0.4549,-0.0223,-0.008
-retrieval and meteorology,surface_albedo_NIR,unweighted,927,0.7484,0.462,0.717,0.4205,-0.0314,-0.0414
-retrieval and meteorology,wind_u,unweighted,927,0.6165,0.3971,0.6541,0.4362,0.0376,0.039
-retrieval and meteorology,wind_v,unweighted,927,-0.7855,-0.4991,-0.7611,-0.4398,0.0244,0.0594
-retrieval and meteorology,wind_speed,unweighted,927,-0.6621,-0.2835,-0.6875,-0.3134,-0.0254,-0.03
-land cover,impervious_fraction,unweighted,927,0.3459,0.5071,0.3552,0.5094,0.0093,0.0023
-land cover,rice_fraction_single,unweighted,532,0.1014,0.0752,0.0961,0.0718,-0.0053,-0.0034
-land cover,rice_fraction_combined,unweighted,532,0.0994,0.0789,0.0957,0.0773,-0.0036,-0.0016
-sampling composition,mean_day_of_year,by sounding count,927,0.6923,0.2526,0.6498,0.2653,-0.0425,0.0127
-sampling composition,solar_zenith_angle,by sounding count,927,0.7071,0.1162,0.6871,0.16,-0.02,0.0437
-sampling composition,day_of_year_sd,by sounding count,927,0.2532,0.0123,0.2933,0.1255,0.0401,0.1132
-retrieval and meteorology,surface_albedo_SWIR,by sounding count,927,0.5995,0.2605,0.5645,0.2265,-0.035,-0.034
-retrieval and meteorology,surface_albedo_NIR,by sounding count,927,0.7103,0.2724,0.657,0.1966,-0.0533,-0.0758
-retrieval and meteorology,wind_u,by sounding count,927,0.4693,0.1296,0.483,0.1241,0.0138,-0.0055
-retrieval and meteorology,wind_v,by sounding count,927,-0.724,-0.1578,-0.6982,-0.1058,0.0258,0.052
-retrieval and meteorology,wind_speed,by sounding count,927,-0.5779,-0.1638,-0.6116,-0.2085,-0.0337,-0.0447
-land cover,impervious_fraction,by sounding count,927,0.216,0.2266,0.2226,0.2201,0.0065,-0.0065
-land cover,rice_fraction_single,by sounding count,532,-0.0882,-0.1345,-0.0797,-0.1204,0.0085,0.0141
-land cover,rice_fraction_combined,by sounding count,532,-0.0811,-0.1282,-0.065,-0.1072,0.0161,0.021
+sampling composition,mean_day_of_year,unweighted,926,0.6986,0.404,0.6287,0.3961,-0.0699,-0.0079
+sampling composition,solar_zenith_angle,unweighted,926,0.695,0.3098,0.6707,0.3412,-0.0243,0.0314
+sampling composition,day_of_year_sd,unweighted,926,0.3484,0.1998,0.3709,0.2616,0.0225,0.0618
+retrieval and meteorology,surface_albedo_SWIR,unweighted,926,0.6999,0.4609,0.6776,0.4528,-0.0223,-0.0082
+retrieval and meteorology,surface_albedo_NIR,unweighted,926,0.7461,0.4597,0.7147,0.418,-0.0314,-0.0416
+retrieval and meteorology,wind_u,unweighted,926,0.6209,0.3973,0.658,0.4361,0.0371,0.0388
+retrieval and meteorology,wind_v,unweighted,926,-0.7837,-0.4978,-0.7601,-0.439,0.0236,0.0588
+retrieval and meteorology,wind_speed,unweighted,926,-0.6626,-0.284,-0.6881,-0.313,-0.0255,-0.029
+land cover,impervious_fraction,unweighted,926,0.3452,0.5055,0.3542,0.5075,0.009,0.0019
+land cover,rice_fraction_single,unweighted,531,0.096,0.0718,0.0908,0.0683,-0.0052,-0.0036
+land cover,rice_fraction_combined,unweighted,531,0.0938,0.0753,0.0905,0.0736,-0.0033,-0.0017
+sampling composition,mean_day_of_year,by sounding count,926,0.6881,0.2511,0.6472,0.2637,-0.0409,0.0126
+sampling composition,solar_zenith_angle,by sounding count,926,0.7026,0.1136,0.6839,0.1576,-0.0187,0.044
+sampling composition,day_of_year_sd,by sounding count,926,0.2431,0.0044,0.2847,0.1184,0.0416,0.114
+retrieval and meteorology,surface_albedo_SWIR,by sounding count,926,0.5919,0.2534,0.5578,0.2195,-0.0341,-0.0339
+retrieval and meteorology,surface_albedo_NIR,by sounding count,926,0.7049,0.267,0.6522,0.1906,-0.0527,-0.0764
+retrieval and meteorology,wind_u,by sounding count,926,0.4627,0.1238,0.4777,0.1183,0.015,-0.0055
+retrieval and meteorology,wind_v,by sounding count,926,-0.7202,-0.1585,-0.6937,-0.1054,0.0265,0.0531
+retrieval and meteorology,wind_speed,by sounding count,926,-0.5694,-0.156,-0.6034,-0.2012,-0.034,-0.0452
+land cover,impervious_fraction,by sounding count,926,0.2124,0.2202,0.2194,0.2137,0.007,-0.0065
+land cover,rice_fraction_single,by sounding count,531,-0.0882,-0.1346,-0.0798,-0.1203,0.0084,0.0143
+land cover,rice_fraction_combined,by sounding count,531,-0.0814,-0.1284,-0.0653,-0.1071,0.0161,0.0213

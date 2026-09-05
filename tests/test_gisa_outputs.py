@@ -29,7 +29,9 @@ def rows(path):
 
 def test_the_gisa_cells_are_the_analysis_grid_cells():
     gisa, grid = rows(CELLS), rows(GRID)
-    assert len(gisa) == len(grid) == 927
+    # 926 since the extent reconciliation: one column-30 cell was covered
+    # only by soundings clipped in from the 122.55-122.6 strip.
+    assert len(gisa) == len(grid) == 926
     for a, b in zip(gisa, grid):
         assert a["centre_lat"] == b["centre_lat"]
         assert a["centre_lon"] == b["centre_lon"]

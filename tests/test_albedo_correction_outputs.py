@@ -47,7 +47,7 @@ def test_every_series_is_reported_against_both_bands_at_both_weightings():
     seen = {(r["albedo"], r["series"], r["weighting"]) for r in records}
     assert seen == {(a, s, w) for a in ALBEDOS for s in SERIES for w in WEIGHTINGS}
     for record in records:
-        assert int(record["n"]) == 927
+        assert int(record["n"]) == 926
 
 
 def test_the_correction_is_not_zero_and_is_positive_on_average():

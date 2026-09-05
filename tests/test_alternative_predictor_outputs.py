@@ -48,11 +48,31 @@ def test_nothing_beats_the_spatial_null_under_inverse_variance_weighting():
 
 
 def test_the_unweighted_exceptions_are_few_and_small():
-    rows = [r for r in baselines()
+    """12 of 176, all by small margins, spread across every predictor pair.
+
+    Was 8 before the extent reconciliation. The edge cells that changed carry
+    few soundings, so they weigh almost nothing under inverse-variance
+    weighting and comparatively much unweighted, which is why the unweighted
+    count moves while the weighted count stays at zero.
+
+    The margin is asserted as well as the count, because a count alone would
+    pass if one model started beating the null decisively.
+    """
+    every = baselines()
+    rows = [r for r in every
             if r["weighting"] == "unweighted" and r["beats_spatial_null"] == "yes"]
-    assert len(rows) == 8
+    assert len(rows) == 12
     assert {r["predictors"] for r in rows} == PAIRS, \
         "the exceptions appear on every pair, so they are not a property of one"
+
+    nulls = {(r["predictors"], r["scheme"], r["weighting"], r["n"]):
+             float(r["held_out_rmse_ppb"])
+             for r in every if r["model"].startswith("spatial null")}
+    for record in rows:
+        reference = nulls[(record["predictors"], record["scheme"],
+                           record["weighting"], record["n"])]
+        margin = (reference - float(record["held_out_rmse_ppb"])) / reference
+        assert margin < 0.10, f"{record['model']} beat the null by {margin:.1%}"
 
 
 def test_the_glorice_grid_covers_more_cells_than_the_nesdc_one():
@@ -60,14 +80,14 @@ def test_the_glorice_grid_covers_more_cells_than_the_nesdc_one():
     rows = comparison()
     nesdc = {int(r["n"]) for r in rows if r["predictor"] == "NESDC"}
     glorice = {int(r["n"]) for r in rows if r["predictor"] == "GloRice"}
-    assert nesdc == {532}
-    assert glorice == {927}
+    assert nesdc == {531}
+    assert glorice == {926}
 
 
 def test_the_two_urban_products_are_reported_on_the_same_cells():
     rows = comparison()
     for name in ("GAIA", "GISA"):
-        assert {int(r["n"]) for r in rows if r["predictor"] == name} == {927}
+        assert {int(r["n"]) for r in rows if r["predictor"] == name} == {926}
 
 
 def test_the_rice_association_does_not_survive_albedo_control_on_nesdc():

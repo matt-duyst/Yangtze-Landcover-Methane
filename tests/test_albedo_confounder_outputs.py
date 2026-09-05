@@ -49,15 +49,15 @@ def test_both_weightings_are_reported():
 
 def test_every_row_states_its_sample_size():
     for record in rows():
-        assert int(record["n"]) in (927, 532)
+        assert int(record["n"]) in (926, 531)
 
 
 def test_the_controlled_association_uses_the_same_cells_as_the_raw_one():
     """Partialling must not quietly change the sample it is computed on."""
     records = rows()
     for weighting in WEIGHTINGS:
-        for relationship, n in (("methane ~ impervious_fraction", 927),
-                                ("methane ~ rice_fraction_single", 532)):
+        for relationship, n in (("methane ~ impervious_fraction", 926),
+                                ("methane ~ rice_fraction_single", 531)):
             raw = find(records, relationship, "", weighting)
             given = find(records, relationship, ALBEDO, weighting)
             assert int(raw["n"]) == int(given["n"]) == n
@@ -109,4 +109,4 @@ def test_the_multi_control_row_names_all_three_controls():
     controls = f"{ALBEDO}, surface_albedo_NIR, solar_zenith_angle"
     for weighting in WEIGHTINGS:
         record = find(records, "methane ~ impervious_fraction", controls, weighting)
-        assert int(record["n"]) == 927
+        assert int(record["n"]) == 926
