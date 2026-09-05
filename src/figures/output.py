@@ -123,7 +123,12 @@ def export(fig, stem: str, directory: Path | None = None,
     tmp_pdf = directory / f".{stem}.pdf.tmp"
     tmp_png = directory / f".{stem}.png.tmp"
     try:
-        fig.savefig(tmp_pdf, format="pdf", bbox_inches=None)
+        # CreationDate is dropped so the vector output is byte-reproducible.
+        # Left in, matplotlib stamps the wall clock and two runs of the same
+        # figure differ in one field, which makes "does the recipe still
+        # reproduce the committed artefact" unanswerable for the PDF.
+        fig.savefig(tmp_pdf, format="pdf", bbox_inches=None,
+                    metadata={"CreationDate": None})
         fig.savefig(tmp_png, format="png", dpi=dpi, bbox_inches=None)
 
         vector_bytes = tmp_pdf.stat().st_size

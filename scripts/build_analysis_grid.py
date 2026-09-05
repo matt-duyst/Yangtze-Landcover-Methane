@@ -94,6 +94,15 @@ FIELDS = ["centre_lat", "centre_lon", "sounding_count",
           "province_share_outside",
           "share_anhui", "share_jiangsu", "share_shanghai", "share_zhejiang"]
 
+#: The subset written for the GISA impervious comparison. That table exists to
+#: carry a second impervious product on the same cells, and the other eleven
+#: columns would duplicate analysis_grid_2018.csv, giving them a second place
+#: to drift. The committed file was reduced by hand and the reduction was not
+#: documented, so the recipe could not reproduce it; --impervious-only is that
+#: reduction, made part of the script.
+IMPERVIOUS_FIELDS = ["centre_lat", "centre_lon",
+                     "impervious_fraction", "impervious_coverage"]
+
 
 def gaia_tile_bounds(path: Path):
     """Nominal five-degree extent of a GAIA tile, from its filename.
@@ -143,6 +152,9 @@ def main(argv=None) -> int:
     parser.add_argument("--gaia", default=str(REPO / "data" / "raw" / "gaia"))
     parser.add_argument("--out", default=str(REPO / "data" / "processed" /
                                              "analysis_grid_2018.csv"))
+    parser.add_argument("--impervious-only", action="store_true",
+                        help="write only the two impervious columns, which is "
+                             "the form impervious_gisa_2018.csv is committed in")
     parser.add_argument("--write", action="store_true")
     args = parser.parse_args(argv)
 
@@ -250,7 +262,9 @@ def _finish(args, spec, counts, ch4_primary, ch4_raw, impervious,
         out = Path(args.out)
         out.parent.mkdir(parents=True, exist_ok=True)
         with open(out, "w", newline="") as handle:
-            writer = csv.DictWriter(handle, fieldnames=FIELDS, restval="")
+            fields = IMPERVIOUS_FIELDS if args.impervious_only else FIELDS
+            writer = csv.DictWriter(handle, fieldnames=fields, restval="",
+                                    extrasaction="ignore")
             writer.writeheader()
             for row in rows:
                 writer.writerow(row.as_dict())
