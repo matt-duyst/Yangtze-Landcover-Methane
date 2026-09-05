@@ -1,0 +1,284 @@
+# How every committed artefact is regenerated, and how that claim is checked.
+#
+# This file exists because two regeneration recipes drifted from the artefacts
+# they claim to produce, and nothing noticed. A recipe written only as prose is
+# a claim no code checks. Here it is data, tests/test_recipes.py executes it,
+# and the table in README.md is generated from it rather than maintained beside
+# it.
+#
+# Fields
+#   artefact  committed file the command produces, repository-relative
+#   command   exactly what to run, from the repository root
+#   label     short name, used in the README table
+#   cost      human-readable, shown in the README table
+#   seconds   measured wall-clock, for tiering
+#   inputs    committed  every input is in the repository; runs on a fresh clone
+#             local      needs data/raw or data/interim, which are gitignored
+#             network    needs a large fetch; never run by the test suite
+#   compare   bytes      output must be byte-identical to the committed file
+#             subset     output reproduces a documented subset of the rows
+#   out_flag  the flag that redirects this artefact, where the script writes
+#             more than one file and a bare --out would be ambiguous
+#   verified  continuously  a test runs the command and diffs, every suite run
+#             on_local      the same, but only where the local inputs exist
+#             on_demand     too expensive to run; checksum plus a dated record
+#             unregenerable no command produces it; provenance recorded instead
+#
+# Adding a committed artefact without adding it here fails
+# test_every_committed_artefact_has_a_recipe. That is deliberate: an artefact
+# with no recipe is the strongest form of drift, and this repository had one.
+
+recipes:
+- artefact: data/processed/methane_composite_2018.tif
+  command: python scripts/compute_methane_composite.py --checkpoint data/interim/extent_2018.npz
+    --export data/processed/methane_composite_2018 --export-csv data/processed/methane_coverage_2018.csv
+  label: 2018 methane composite
+  cost: 28.9 GB and about two hours to build the checkpoint; seconds to export from it
+  seconds: 1
+  inputs: network
+  compare: bytes
+  verified: on_demand
+  note: 'The export is instant from a checkpoint. What is expensive is building the checkpoint:
+    compute_methane_composite.py --run --max-hours 3, which streams 28.9 GB one granule at
+    a time. The checkpoint is gitignored, so this cannot be verified on a fresh clone.'
+  sha256: 393e365a8f26c7c142bea08b056a2290482b1401e4d8ff46d5b135a614da9b24
+  last_verified: '2026-09-04'
+  last_verified_by: the extent re-run, which executed compute_methane_composite.py --run end
+    to end over all 578 granules and exported from the result
+- artefact: data/processed/methane_coverage_2018.csv
+  command: python scripts/compute_methane_composite.py --checkpoint data/interim/extent_2018.npz
+    --export data/processed/methane_composite_2018 --export-csv data/processed/methane_coverage_2018.csv
+  label: composite coverage table
+  cost: seconds from the checkpoint
+  seconds: 1
+  inputs: network
+  compare: bytes
+  verified: on_demand
+  note: Written by the same command as the composite raster.
+  sha256: 9df96581ebe96bbe0332ec7d3b0fe5c837fce5d40e1654677da29c156376dcc4
+  last_verified: '2026-09-04'
+  last_verified_by: the extent re-run, which executed compute_methane_composite.py --run end
+    to end over all 578 granules and exported from the result
+- artefact: data/processed/methane_covariates_2018.tif
+  command: python scripts/compute_methane_composite.py --checkpoint data/interim/extent_2018.npz
+    --export-covariates data/processed/methane_covariates_2018
+  label: covariate companion
+  cost: seconds from the checkpoint
+  seconds: 1
+  inputs: network
+  compare: bytes
+  verified: on_demand
+  note: Same pass as the composite; exporting costs nothing.
+  sha256: 0b58e81464bf05bb762e00f5dc6ea808deb0426002b64bd477f91403f31fb462
+  last_verified: '2026-09-04'
+  last_verified_by: the extent re-run, which executed compute_methane_composite.py --run end
+    to end over all 578 granules and exported from the result
+- artefact: data/processed/methane_covariates_2018.csv
+  command: python scripts/compute_methane_composite.py --checkpoint data/interim/extent_2018.npz
+    --export-covariates data/processed/methane_covariates_2018
+  label: covariate table
+  cost: seconds from the checkpoint
+  seconds: 1
+  inputs: network
+  compare: bytes
+  verified: on_demand
+  note: null
+  sha256: a5e6d20de5785d14d6298ef061dd79c57449440436f73501e5e70d7e1a0d43b6
+  last_verified: '2026-09-04'
+  last_verified_by: the extent re-run, which executed compute_methane_composite.py --run end
+    to end over all 578 granules and exported from the result
+- artefact: data/processed/methane_deseasonalised_2018.tif
+  command: python scripts/compute_methane_composite.py --checkpoint data/interim/extent_2018.npz
+    --export-deseasonalised data/processed/methane_deseasonalised_2018
+  label: deseasonalised field
+  cost: seconds from the checkpoint
+  seconds: 1
+  inputs: network
+  compare: bytes
+  verified: on_demand
+  note: null
+  sha256: 8e4049d9b5eed4b0eada65a8ac0518958986a33d2b54fdd6d99611527b43372b
+  last_verified: '2026-09-04'
+  last_verified_by: the extent re-run, which executed compute_methane_composite.py --run end
+    to end over all 578 granules and exported from the result
+- artefact: data/processed/methane_deseasonalised_2018.csv
+  command: python scripts/compute_methane_composite.py --checkpoint data/interim/extent_2018.npz
+    --export-deseasonalised data/processed/methane_deseasonalised_2018
+  label: deseasonalised table
+  cost: seconds from the checkpoint
+  seconds: 1
+  inputs: network
+  compare: bytes
+  verified: on_demand
+  note: null
+  sha256: 05f10f3d4d63a95d63aa149dd6f912acba20bd55ff91a5bbfd2b781e6d092be9
+  last_verified: '2026-09-04'
+  last_verified_by: the extent re-run, which executed compute_methane_composite.py --run end
+    to end over all 578 granules and exported from the result
+- artefact: data/processed/analysis_grid_2018.csv
+  command: python scripts/build_analysis_grid.py --rice-source nesdc --write
+  label: analysis grid
+  cost: about 3 minutes over the local rice and urban rasters
+  seconds: 180
+  inputs: local
+  compare: bytes
+  verified: on_local
+  note: --rice-source nesdc is what the committed file was built from and needs the FTP rasters.
+    --rice-source scidb is the anonymous route and reproduces every column except rice_fraction_combined,
+    which it lowers in 190 rows because that product folds the double-season class into background.
+    Both are legitimate; the committed file is the nesdc one.
+- artefact: data/processed/impervious_gisa_2018.csv
+  command: python scripts/build_analysis_grid.py --urban-source gisa --impervious-only --write
+    --out data/processed/impervious_gisa_2018.csv
+  label: GISA impervious layer
+  cost: about 3 minutes over the local GISA rasters
+  seconds: 178
+  inputs: local
+  compare: bytes
+  verified: on_local
+  note: --impervious-only exists because the committed file carries four columns and the script
+    previously had no flag that produced them; the reduction was done by hand and never written
+    down.
+- artefact: data/processed/urban_area_by_province.csv
+  command: python scripts/compute_urban_areas.py --write
+  label: provincial urban areas
+  cost: about 20 seconds over the local GAIA tiles
+  seconds: 20
+  inputs: local
+  compare: subset
+  verified: on_local
+  note: Reproduces 148 of 160 rows exactly. The other 12 use GADM 4.1 boundaries, which cannot
+    be redistributed, so they need a user-supplied copy via --gadm.
+- artefact: data/processed/rice_area_by_province.csv
+  command: python scripts/compute_rice_areas.py --write
+  label: provincial rice areas
+  cost: a few seconds over the local GloRice files
+  seconds: 4
+  inputs: local
+  compare: subset
+  verified: on_local
+  note: Reproduces 28 of 36 rows exactly. The other 8 come from SPAM, for which no fetch module
+    exists; they are carried for completeness and used in no analysis.
+- artefact: data/processed/baseline_results_2018.csv
+  command: python scripts/run_baselines.py --covariates data/processed/methane_covariates_2018.csv
+    --write
+  label: baselines
+  cost: under a second
+  seconds: 1
+  inputs: committed
+  compare: bytes
+  verified: continuously
+  note: null
+- artefact: data/processed/baseline_results_deseasonalised_2018.csv
+  command: python scripts/run_baselines.py --target ch4_deseasonalised_ppb --target-from data/processed/methane_deseasonalised_2018.csv
+    --covariates data/processed/methane_covariates_2018.csv --out data/processed/baseline_results_deseasonalised_2018.csv
+    --write
+  label: baselines, deseasonalised
+  cost: under a second
+  seconds: 1
+  inputs: committed
+  compare: bytes
+  verified: continuously
+  note: null
+- artefact: data/processed/deseasonalisation_2018.csv
+  command: python scripts/test_deseasonalisation.py --write
+  label: deseasonalisation test
+  cost: under a second
+  seconds: 1
+  inputs: committed
+  compare: bytes
+  verified: continuously
+  note: null
+- artefact: data/processed/albedo_confounder_2018.csv
+  command: python scripts/test_albedo_confounder.py --write
+  label: albedo confounder test
+  cost: under a second
+  seconds: 1
+  inputs: committed
+  compare: bytes
+  verified: continuously
+  note: null
+- artefact: data/processed/albedo_correction_2018.csv
+  command: python scripts/test_albedo_correction.py --write
+  label: albedo correction test
+  cost: under a second
+  seconds: 1
+  inputs: committed
+  compare: bytes
+  verified: continuously
+  note: null
+- artefact: data/processed/alternative_predictors_2018.csv
+  out_flag: --out-baselines
+  command: python scripts/test_alternative_predictors.py --write
+  label: predictor robustness
+  cost: a second, over four prebuilt grids
+  seconds: 1
+  inputs: local
+  compare: bytes
+  verified: on_local
+  note: Reads the four grids under data/interim/alt_grids, which are gitignored and built
+    by build_analysis_grid.py with each --urban-source and --rice-source pair.
+- artefact: data/processed/predictor_comparison_2018.csv
+  out_flag: --out-comparison
+  command: python scripts/test_alternative_predictors.py --write
+  label: predictor comparison
+  cost: a second, over four prebuilt grids
+  seconds: 1
+  inputs: local
+  compare: bytes
+  verified: on_local
+  note: Written by the same command as alternative_predictors_2018.csv.
+- artefact: figures/study_area.png
+  command: python scripts/make_study_area_figure.py
+  label: study area figure
+  cost: about a second
+  seconds: 1
+  inputs: committed
+  compare: bytes
+  verified: continuously
+  note: null
+- artefact: figures/study_area.pdf
+  command: python scripts/make_study_area_figure.py
+  label: study area figure, vector
+  cost: about a second
+  seconds: 1
+  inputs: committed
+  compare: bytes
+  verified: continuously
+  note: Byte-reproducible because src/figures/output.py drops the PDF CreationDate; left in,
+    matplotlib stamps the wall clock and no two runs agree.
+- artefact: figures/coverage_saturation_2018.png
+  command: python scripts/make_coverage_figure.py
+  label: coverage figure
+  cost: under a second
+  seconds: 1
+  inputs: local
+  compare: bytes
+  verified: on_local
+  note: Reads the gitignored 2018 checkpoint, so it cannot be verified on a fresh clone.
+- artefact: figures/coverage_saturation_2018.pdf
+  command: python scripts/make_coverage_figure.py
+  label: coverage figure, vector
+  cost: under a second
+  seconds: 1
+  inputs: local
+  compare: bytes
+  verified: on_local
+  note: null
+- artefact: data/processed/urban_area_by_province_gisa.csv
+  command: null
+  label: GISA provincial urban areas
+  cost: null
+  seconds: 0
+  inputs: none
+  compare: none
+  verified: unregenerable
+  note: 'The one committed artefact no command produces. It was written by hand in
+    commit f6b1b0c, which added it and impervious_gisa_2018.csv together and added no
+    code for either. Four rows: GISA impervious area per province in 2018 against
+    GAIA''s and the thesis''s, on Natural Earth boundaries. compute_urban_areas.py
+    cannot produce it, being specific to GAIA''s tile naming and its downward year
+    encoding, where GISA counts upward. It is registered here rather than left out so
+    that test_every_committed_artefact_has_a_recipe keeps passing honestly: an
+    artefact with no recipe is a fact about the repository, and hiding it by omitting
+    it from the registry is how this class of problem starts.'
