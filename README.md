@@ -65,7 +65,7 @@ pairs were built and the whole baseline suite run over each: GAIA or GISA for
 impervious surface, NESDC or GloRice for rice. **Zero cases beat the spatial null
 under inverse-variance weighting**, across all four pairs, both cross-validation
 schemes and both sample sizes, out of 176 weighted opportunities. The two urban
-products agree at Pearson +0.938 and Spearman +0.956 across all 927 cells, so
+products agree at Pearson +0.938 and Spearman +0.956 across all 926 cells, so
 that test is a weak one in that GISA had little room to disagree. The two rice
 products agree only at +0.579 and +0.654, so that test is a real one, and it
 gives the same answer.

@@ -20,9 +20,10 @@ from matplotlib.figure import Figure
 
 from src.figures import geo, style
 from src.figures.study_area import PROVINCE_LABELS, study_area_figure
-from src.methane.grid import GridSpec
 
-STUDY = GridSpec(west=114.8, south=27.0, east=122.6, north=35.2, resolution=0.25)
+#: The real grid, read from the configuration rather than written out here, so
+#: the figure cannot be tested against a spec the data was not built on.
+STUDY = geo.study_spec()
 
 
 @pytest.fixture
@@ -49,9 +50,11 @@ def test_the_drawn_extent_is_the_lattice_extent_not_the_declared_box(figure):
 
     assert main.get_xlim() == pytest.approx((extent.west, extent.east))
     assert main.get_ylim() == pytest.approx((extent.south, extent.north))
-    # Specifically not the declared bounds, which differ on two edges.
-    assert main.get_xlim()[1] != pytest.approx(STUDY.east)
-    assert main.get_ylim()[0] != pytest.approx(STUDY.south)
+    # The declared box and the lattice now coincide, so these agree. They did
+    # not before: the box declared 122.6 and 27.0 and the lattice reached
+    # 122.55 and 26.95. See tests/test_study_extent.py for the guard.
+    assert main.get_xlim()[1] == pytest.approx(STUDY.east)
+    assert main.get_ylim()[0] == pytest.approx(STUDY.south)
 
 
 def test_the_map_carries_the_projection_aspect(figure):

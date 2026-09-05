@@ -94,7 +94,7 @@ class Accumulator:
     reconnaissance sample cannot be extrapolated to a year without knowing the
     shape of the curve. Six granules covering 1.04 percent of 2018 reached 50.4
     percent of cells, which was read at the time as an estimate of what the year
-    would reach; the year reached 90.62 percent. The early granules each add
+    would reach; the year reached 90.52 percent. The early granules each add
     many new cells and the late ones add almost none, so a small sample lands
     far up a curve that is still climbing and understates the ceiling badly. The
     record is what would let a reader see that shape instead of inferring it,

@@ -240,10 +240,13 @@ def lattice_edges(spec: GridSpec) -> tuple[float, float]:
     """The east and south edges the grid's cells actually reach.
 
     ``GridSpec`` rounds its shape, so a box whose width is not a whole number
-    of cells has a lattice narrower than its declared bounds. The study grid is
-    one: 122.6 minus 114.8 is 31.2 cells at 0.25 degrees, rounded to 31, so the
-    easternmost cell ends at 122.55 and the last 0.05 degrees of the declared
-    box has no column. ``GridSpec.cell_of`` clips soundings there into the last
+    of cells has a lattice that does not occupy its declared bounds. The study
+    grid used to be one: 122.6 minus 114.8 is 31.2 cells at 0.25 degrees,
+    rounded to 31, so the easternmost cell ended at 122.55 and the last 0.05
+    degrees of the declared box had no column. The configuration now declares
+    122.55 and 26.95 so the live grid has no remainder, and this function
+    returns the declared edges unchanged. It is kept and still called because
+    nothing enforces that a future box or cell size divides evenly. ``GridSpec.cell_of`` clips soundings there into the last
     column; this package filters instead, because a land-cover pixel outside
     the lattice belongs to no cell and folding it into the edge cell would
     inflate that cell's assessed area with ground it does not cover.

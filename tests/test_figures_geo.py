@@ -20,7 +20,23 @@ import pytest
 from src.figures import geo
 from src.methane.grid import GridSpec
 
+#: The **superseded** declaration, kept deliberately. It is the case
+#: `lattice_extent` exists for: a box that is not a whole number of cells, and
+#: one that rounds in opposite directions on its two axes. The configuration no
+#: longer declares this, so no live grid exercises the remainder path and this
+#: fixture is the only thing that does. Do not "correct" it to 26.95/122.55.
 STUDY = GridSpec(west=114.8, south=27.0, east=122.6, north=35.2, resolution=0.25)
+
+
+def test_the_configured_grid_needs_no_correction_any_more():
+    """The live grid: declared and derived are the same object."""
+    live = geo.study_spec()
+    extent = geo.lattice_extent(live)
+
+    assert extent.west == pytest.approx(live.west)
+    assert extent.east == pytest.approx(live.east)
+    assert extent.south == pytest.approx(live.south, abs=1e-9)
+    assert extent.north == pytest.approx(live.north)
 
 
 def test_the_lattice_extent_is_the_measured_one_not_the_declared_one():

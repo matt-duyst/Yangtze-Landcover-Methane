@@ -86,18 +86,42 @@ class Extent:
                       self.south - degrees, self.north + degrees)
 
 
+CONFIG = Path(__file__).resolve().parents[2] / "config" / "sources.yml"
+
+
+def study_spec():
+    """The analysis grid, read from the configuration.
+
+    One definition for every figure. A figure that writes its own literals can
+    drift from the grid the data was built on, which is the failure this whole
+    module exists because of.
+    """
+    import yaml
+
+    from src.methane.grid import GridSpec
+
+    config = yaml.safe_load(CONFIG.read_text(encoding="utf-8"))["s5p"]
+    box = config["bounding_box"]
+    return GridSpec(box["west"], box["south"], box["east"], box["north"],
+                    config["grid_resolution_deg"])
+
+
 def lattice_extent(spec) -> Extent:
     """The extent the analysis lattice **actually** occupies.
 
-    Not the declared bounds. ``GridSpec`` rounds its shape, and it rounds in
-    both axes and in opposite directions for this grid: 7.8 degrees of
-    longitude is 31.2 cells, rounded down to 31, so the lattice stops short of
-    the declared east edge at 122.55 rather than 122.6; while 8.2 degrees of
-    latitude is 32.8 cells, rounded up to 33, so it runs past the declared
-    south edge to 26.95 rather than 27.0.
+    Derived from the cell count, never from the declared bounds, because a
+    lattice built by rounding a declared extent to a cell size does not in
+    general occupy it.
 
-    Drawing the declared box instead would put the map and the data a cell
-    apart at two of the four edges.
+    The study grid used to be exactly such a case, and it rounded in **opposite
+    directions on the two axes**: 7.8 degrees of longitude was 31.2 cells,
+    rounded down to 31, so the lattice stopped short of the declared east edge
+    at 122.55 rather than 122.6; 8.2 degrees of latitude was 32.8 cells,
+    rounded up to 33, so it ran past the declared south edge to 26.95 rather
+    than 27.0. The configuration now declares 122.55 and 26.95, so the two
+    coincide and this function returns the declared bounds unchanged. It is
+    kept, and still used everywhere, because nothing enforces that a future box
+    or cell size divides evenly.
     """
     return Extent(west=spec.west,
                   east=spec.west + spec.n_cols * spec.resolution,

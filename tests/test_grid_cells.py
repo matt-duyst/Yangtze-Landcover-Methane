@@ -230,7 +230,11 @@ def test_cell_areas_shrink_toward_the_pole():
 # the lattice is not always the declared box
 # --------------------------------------------------------------------------
 
-#: The real study grid. Its width is 31.2 cells, which GridSpec rounds to 31.
+#: The study grid **as it used to be declared**. Its width was 31.2 cells and
+#: its height 32.8, which GridSpec rounded to 31 and 33, in opposite
+#: directions. The configuration now declares 26.95 and 122.55 so the live grid
+#: has no remainder; this fixture is retained because it is the case
+#: `lattice_edges` exists for and nothing else exercises it. Do not update it.
 STUDY = GridSpec(114.8, 27.0, 122.6, 35.2, 0.25)
 
 

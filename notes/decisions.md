@@ -415,7 +415,7 @@ obvious explanation for it turns out to be the wrong one.
 Reconnaissance sampled one granule on the fourteenth or fifteenth of alternate
 months, thirty-six granules across seven years, six of them in 2018. It reported
 56.11 percent of cells covered at 0.25 degrees and 1,004 valid in-box soundings
-for 2018. The full year gives 90.62 percent and 110,928 soundings from 578
+for 2018. The full year gives 90.52 percent and 110,920 soundings from 578
 candidate granules.
 
 The natural explanation is that the sample landed in the wrong months. Yield is
@@ -437,7 +437,7 @@ reports a number that says more about the sample size than about the data. Worse
 fitting a saturating model to the small sample and extrapolating did not rescue
 it. A free-asymptote fit to sixteen productive granules put the ceiling at 50.4
 percent of cells at 0.1 degrees and was reported as an upper bound; the measured
-result at 0.25 degrees is 90.62 percent. Extrapolating a saturation curve from
+result at 0.25 degrees is 90.52 percent. Extrapolating a saturation curve from
 data that has barely begun to saturate estimates the curvature, not the ceiling.
 
 The general rule that follows is that any statistic which is a union, an extent,
@@ -457,7 +457,7 @@ months a uniform sample under-represents.
 One decision rests on the understated figure and should be revisited rather than
 changed now. The 0.25 degree analysis grid was chosen partly because 56 percent
 coverage at that resolution looked like the most the data would support, against
-32.91 percent at 0.1 degrees. At 90.62 percent for a single year a finer grid may
+32.91 percent at 0.1 degrees. At 90.52 percent for a single year a finer grid may
 now be defensible, and the question is worth reopening with the measured
 saturation rather than the estimated one. Changing it would invalidate the
 committed composite and the coverage table, so it is a decision to take
@@ -533,7 +533,7 @@ median single-season fraction came out at 0.079 against a correct 0.129.
 ## Coverage saturation is recorded per granule, going forward only
 
 The reconnaissance sample put 2018 coverage at 50.4 percent of cells. The
-measured year is 90.62 percent. The gap is not sampling noise and it is not a
+measured year is 90.52 percent. The gap is not sampling noise and it is not a
 seasonal bias in which granules were sampled: the six reconnaissance granules
 were 1.04 percent of the year's granules and carried 0.91 percent of its
 soundings, a ratio of 0.87, so they were very slightly poorer than average in
@@ -600,7 +600,7 @@ any of them by that band.
 ## The 3.4 percent albedo figure does not survive quality filtering
 
 The reconnaissance figure is correct and does not apply here. Measured over the
-full 2018 composite, all seven covariates are valid on 110,928 of 110,928
+full 2018 composite, all nine covariates are valid on 110,920 of 110,920
 soundings and cover all 927 cells: 100.00 percent, not 3.4 percent.
 
 The two figures are not in conflict because they count different things. The 3.4
@@ -776,7 +776,7 @@ analysed. That is the whole problem in one comparison.
 ### The four fixes, and why the harmonic one
 
 Compositing within season, carrying day-of-year as a covariate, and requiring a
-minimum sampling spread per cell all cost coverage, and coverage at 90.62
+minimum sampling spread per cell all cost coverage, and coverage at 90.52
 percent was expensive to reach. The fourth costs none: remove a fitted seasonal
 cycle at the **sounding** level, before the cell mean is taken.
 
@@ -1864,3 +1864,169 @@ elements, no background gridlines.
 The one piece of non-data ink is a white halo behind each province name. It is
 not decoration: without it a name crossing a boundary line is unreadable, and
 the alternative is moving the name off its own province.
+
+## The declared box and the lattice were two different objects
+
+**A note on the figures throughout this file.** The 2018 composite was rebuilt
+against the reconciled extent, and the headline numbers moved with it: coverage
+from 927 cells and 90.62 percent to 926 and 90.52, soundings from 110,928 to
+110,920, productive granules from 222 to 223. Earlier sections have been updated
+to the current values rather than left to contradict the data. Where an argument
+in this file turns on the gap between a reconnaissance estimate and the measured
+year, the gap is unchanged to within a tenth of a percent and the argument
+stands as written.
+
+
+The study box was declared as 114.8 to 122.6 east, 27.0 to 35.2 north. The
+lattice built from it occupied 114.8 to 122.55 and 26.95 to 35.2. The two were
+never the same region, and the rounding that separated them ran in **opposite
+directions on the two axes**.
+
+Longitude: 7.8 degrees is 31.2 cells at 0.25 degrees, rounded **down** to 31,
+so the lattice stopped 0.05 degrees **short** of the declared east edge.
+Latitude: 8.2 degrees is 32.8 cells, rounded **up** to 33, so the lattice ran
+0.05 degrees **past** the declared south edge. One edge fell inside the
+declared box and the other outside it, which is why noticing the first did not
+lead to the second.
+
+Two modules then disagreed about where the study area was. `src/grid/cells.py`
+filtered land-cover pixels against `lattice_edges` and dropped anything
+outside, which is correct. `GridSpec.cell_of` filtered soundings against the
+declared box and then clipped the row and column into range. The consequences
+were opposite at the two edges:
+
+* **East.** Soundings between 122.55 and 122.6 passed the filter, computed
+  column 31, and were clipped into column 30, a cell they do not lie in. The
+  composite's easternmost column carried soundings from 0.30 degrees of ground
+  in a 0.25 degree cell.
+* **South.** Soundings between 26.95 and 27.0 failed the filter and were
+  discarded, although cells existed there. The southernmost row was sampled
+  over 0.20 of its 0.25 degrees.
+
+The measured containment: 59 of 927 covered cells touched, 1,683 soundings or
+1.52 percent, but **53 of those 59 cells lie entirely outside the four study
+provinces**. Only 6 of the 557 province-weighted cells were affected, 1.1
+percent, with a median province share of 0.0000 against 0.5820 for the table as
+a whole. The east edge carried the visible artefact: column 30 exceeded column
+29 by a factor of 1.168 against the 1.20 predicted by absorbing a 0.05 degree
+strip, and the excess was broad and uniform, 1.167 as a median across the 31
+rows where both columns had data, rather than concentrated.
+
+## The fix is in the configuration, not in the binning code
+
+The box now declares 26.95 and 122.55, the extent the lattice occupies.
+`round((122.55 - 114.8) / 0.25)` is 31 and `round((35.2 - 26.95) / 0.25)` is 33
+exactly, so declared and derived are one object and `cell_of`'s existing filter
+is correct as written, with its clipping path unreachable for any real
+coordinate.
+
+Teaching `cell_of` to filter against `lattice_edges` would have worked equally
+well at the east edge and been equally correct. It was rejected because it
+leaves the configuration declaring a region the data does not occupy, so every
+caption, README line and future filter that quotes the box would still be
+quoting the wrong thing, and the next module to read the config would face the
+same choice again. A discrepancy that has to be worked around in every consumer
+is worse than one removed at the source.
+
+## How it was found, which is the more transferable lesson
+
+Both constituent facts were already written down, in `data/processed/README.md`,
+**three lines apart**. Line 366: "Clipping is what `GridSpec.cell_of` does to
+soundings." Line 371: "The same rounding applies to the southern edge, where 33
+rows reach 26.95 rather than the declared 27.0." Neither statement was wrong.
+Neither was even incomplete. Their **conjunction** was a bug, and nobody had put
+them together, including whoever wrote them in the same paragraph.
+
+It surfaced only when a figure had to draw the extent. Prose can hold two
+compatible-sounding sentences indefinitely; a map has to put a line somewhere,
+and choosing where forces the question of which number is right. **Drawing a
+thing forces a decision that prose can leave ambiguous**, and that is a
+different discovery mechanism from review. It is worth reaching for
+deliberately: rendering a quantity is a cheap way to find out whether the
+repository actually agrees with itself about what the quantity is.
+
+Review would not have found this. Every individual statement passes review.
+
+## A declared extent and a derived lattice are different objects
+
+The general caution, because it will recur. A lattice built by rounding a
+declared extent to a cell size **will not in general occupy that extent**. The
+two coincide only when the extent divides evenly, which is a property of the
+numbers and not something the code enforces or the reader can assume.
+
+So any figure, caption, filter or selection that quotes the declared box is
+quoting a region the data may not occupy. Derive the extent from the cell count
+and use that everywhere, and if the declared and derived values are meant to be
+the same, assert it. `tests/test_study_extent.py` does exactly that, with both
+sides derived, so a future change to the box or the cell size fails loudly
+instead of reintroducing the gap.
+
+The same applies to any quantity obtained by rounding a continuous
+specification to a discrete one: the rounded object is not the thing it was
+rounded from, and code that treats them as interchangeable is correct only by
+coincidence.
+
+## What the re-run changed
+
+The 2018 composite was rebuilt against the reconciled extent rather than the
+fix being left to apply only to future runs, because this repository's argument
+is that everything regenerates from committed code against one definition, and
+a composite built under a superseded extent undercuts that more than an hour of
+transfer costs. The pass took 122.7 minutes at 4.0 MB/s for 28.9 GB.
+
+**49 cells changed, and nothing outside the two edge strips changed at all.**
+19 in the southern row and 30 in the eastern column, 0 elsewhere. The maximum
+absolute difference is 5.44 ppb in bias-corrected methane and 5.62 ppb in raw,
+over 48 cells; one cell changed only in its count.
+
+The soundings decompose exactly as the diagnosis predicted, with each edge
+moving in one direction only:
+
+* southern row 32: **+151 gained, none lost**, across 19 cells
+* eastern column 30: **-159 removed, none gained**, across 30 cells
+* everywhere else: **zero**
+
+Net -8 soundings, 110,928 to 110,920. Coverage fell from 927 cells to 926,
+because the cell at 30.325 N, 122.425 E held exactly one sounding and that
+sounding came from the 122.55 to 122.6 strip, so it was never inside the cell.
+Productive granules rose from 222 to 223, because one July granule's only in-box
+soundings lay in the southern strip and had been discarded whole, leaving it
+recorded as barren. The rice sample fell from 532 cells to 531 with the dropped
+cell; the 395 cells with no rice fraction are unchanged.
+
+**The negative land-cover finding is unaffected: still zero of 176 weighted
+opportunities.** Unweighted exceptions rose from 8 to 12 of 176, still spread
+across all four predictor pairs and still small, with the largest margin below
+the null falling from 5.97 to 5.44 percent. That the unweighted count moves
+while the weighted count does not is what one would expect: the cells that
+changed carry few soundings, so they weigh almost nothing under inverse-variance
+weighting and comparatively much unweighted.
+
+The study-area figure is byte-identical before and after, which is the
+confirmation that it was drawing the true lattice all along and that only the
+declaration was wrong.
+
+## Two committed artefacts whose stated recipe does not reproduce them
+
+Found while propagating the re-run, and worth recording because both would waste
+someone's afternoon.
+
+`impervious_gisa_2018.csv` carries four columns, but
+`scripts/build_analysis_grid.py` has no flag that produces four; it always
+writes the full grid. The committed file was reduced afterwards and the
+reduction was never written down. Running the documented command overwrites it
+with a fifteen-column file that every consumer still reads, so nothing fails.
+
+`analysis_grid_2018.csv` is documented as regenerable with `--rice-source
+scidb`, which is the reproducible anonymous product, but the committed table was
+built with `--rice-source nesdc` from the FTP rasters for the double-season
+class. Building it the documented way changes `rice_fraction_combined` in 190
+of the rows, every one a decrease, and changes nothing else. The script's own
+docstring records this and the README's recipe did not, so following the README
+silently downgrades the table. The recipe now says which command reproduces the
+committed file and which reproduces everything except that one column.
+
+The general point: a regeneration recipe that is *nearly* right is worse than
+none, because the output looks plausible and no test fails. Both of these were
+caught by diffing every regenerated file against a snapshot of the committed
+one, column by column, rather than by checking that the scripts ran.

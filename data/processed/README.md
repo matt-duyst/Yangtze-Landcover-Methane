@@ -294,10 +294,16 @@ sounding. Fill values are read from each variable's own _FillValue attribute
 and never assumed, which matters because the same code must not depend on
 whether netCDF4, h5py or xarray opened the file.
 
-The yield for 2018 was 578 candidate granules, of which 222 carried any
-in-box sounding and 356 carried none. Those 222 gave 110,928 soundings, which
-covered 927 of the 1,023 cells, 90.62 percent, with a median of 75 soundings
-per covered cell and a maximum of 410. That is far more than an earlier
+The yield for 2018 was 578 candidate granules, of which 223 carried any
+in-box sounding and 355 carried none. Those 223 gave 110,920 soundings, which
+covered 926 of the 1,023 cells, 90.52 percent, with a median of 74 soundings
+per covered cell and a maximum of 410.
+
+These figures moved when the declared box was reconciled with the lattice
+extent. They were 222 granules, 110,928 soundings, 927 cells, 90.62 percent and
+a median of 75 before that. The change is +151 soundings gained in the southern
+row that had been discarded and -159 removed from the eastern column that had
+been clipped in, over 49 cells; see notes/decisions.md. That is far more than an earlier
 36-granule sample suggested, for reasons recorded in notes/decisions.md.
 
 January through March are absent because the data does not exist. The public L2
@@ -358,17 +364,34 @@ each fraction rests on; and `province_share_outside` together with four
 `share_<province>` columns gives the cell's area split between the four study
 provinces and everything else. Built by scripts/build_analysis_grid.py.
 
-The lattice is slightly smaller than the box the configuration declares, and
-the difference matters at the eastern edge. The declared box runs from 114.8 to
-122.6 east, which is 31.2 columns at 0.25 degrees, and the grid rounds that to
-31. The easternmost cell therefore ends at 122.55 and the last 0.05 degrees of
-the declared box has no column at all. Land-cover pixels that fall in that strip
-are filtered out rather than clipped into column 30. Clipping is what
-`GridSpec.cell_of` does to soundings, but it is wrong for area: a pixel outside
-the lattice belongs to no cell, and folding it into the edge cell would inflate
-that cell's assessed area with ground the cell does not cover, which would then
-appear in the denominator of its fraction. The same rounding applies to the
-southern edge, where 33 rows reach 26.95 rather than the declared 27.0.
+The lattice and the declared box are now the same region, and this paragraph
+records that they were not, because the discrepancy reached the data.
+
+**What was true until the extent was reconciled.** The box was declared as
+114.8 to 122.6 east and 27.0 to 35.2 north. That is 31.2 columns and 32.8 rows
+at 0.25 degrees, which `GridSpec` rounded to 31 and 33 -- **down on one axis and
+up on the other**. The lattice therefore ended at 122.55, short of the declared
+east edge, and at 26.95, past the declared south edge.
+
+Land-cover pixels in the eastern strip were filtered out rather than clipped
+into column 30, which was correct: a pixel outside the lattice belongs to no
+cell, and folding it into the edge cell would inflate that cell's assessed area
+with ground the cell does not cover, which would then appear in the denominator
+of its fraction. But `GridSpec.cell_of` clipped soundings rather than filtering
+them, and it tested them against the declared box rather than the lattice. So
+soundings between 122.55 and 122.6 east were accepted and folded into column 30,
+and soundings between 26.95 and 27.0 north were discarded although cells existed
+there. The two statements in this paragraph -- that the lattice stops short in
+longitude and runs long in latitude, and that `cell_of` clips -- were each
+correct and were written three lines apart; their conjunction was the bug.
+
+**What is true now.** `config/sources.yml` declares 26.95 and 122.55, so the
+declared box is exactly the lattice, `cell_of` filters correctly against it, and
+its clipping path is unreachable for any real coordinate. `lattice_edges` is
+still called everywhere because nothing enforces that a future box or cell size
+divides evenly. `tests/test_study_extent.py` asserts the two agree, with both
+sides derived. The 2018 composite was rebuilt against the corrected extent; see
+`notes/decisions.md` for what changed.
 
 The 96 cells that received no soundings are absent from the table rather than
 present and blank. That is enforced by construction: `CellRow` takes the
@@ -457,7 +480,14 @@ nothing fetched:
 
     python scripts/fetch_rice.py --download
     python scripts/fetch_gaia.py --download
-    python scripts/build_analysis_grid.py --rice-source scidb --write
+    python scripts/build_analysis_grid.py --rice-source nesdc --write
+
+`--rice-source nesdc` is what the committed table was built with, and it needs
+the FTP rasters. A reader without that grant should use `--rice-source scidb`,
+which reproduces every column exactly except `rice_fraction_combined`, in 190
+rows, each of them lower because the anonymous product is single-season only.
+Substituting scidb silently produces a plausible table, so the choice is worth
+making deliberately.
 
 Reproducing `rice_fraction_combined` as committed additionally requires the FTP
 rasters in data/raw/nesdc_rice/ and `--rice-source nesdc`, which is the form the
@@ -556,13 +586,19 @@ reproduction check below meaningful.
 The methane grids were verified cell by cell against the committed composite
 before anything here was written. Maximum absolute difference is 0 for
 bias-corrected methane, 0 for raw methane and 0 for the sounding counts, over
-all 1,023 cells, with 927 covered and 110,928 soundings on both sides. The
+all 1,023 cells, with 926 covered and 110,920 soundings on both sides. The
 re-run reproduces the committed composite exactly rather than approximately.
+
+That check was re-established after the extent reconciliation. Against the
+*previous* composite it deliberately does not hold: 49 cells changed, all of
+them in the southernmost row or the easternmost column, with a maximum absolute
+difference of 5.44 ppb in bias-corrected methane. Reproducing the superseded
+composite is not the goal; reproducing the current one is.
 
 Covariates do not gate a sounding. A sounding with no valid albedo still
 contributes its methane, and folding albedo into the validity mask would have
 been a one-word change that silently discarded most of the record. All seven
-turn out to be valid on 110,928 of 110,928 soundings and to cover all 927 cells,
+turn out to be valid on 110,920 of 110,920 soundings and to cover all 926 cells,
 so in this composite every covariate count equals the sounding count. That is
 not a licence to divide by the wrong one: it is a fact about 2018 at qa 0.75,
 not a property of the product, and the count bands are there so a future year
@@ -851,6 +887,12 @@ direction assumed.
 
     python scripts/fetch_gisa.py --download
     python scripts/build_analysis_grid.py --urban-source gisa --write --out <path>
+
+That writes the full fifteen-column grid. The committed file keeps only
+`centre_lat`, `centre_lon`, `impervious_fraction` and `impervious_coverage`;
+there is no flag for the reduced form, so the remaining columns are dropped
+afterwards. Nothing reads the extra columns, so running the command as written
+does not break anything, it just does not reproduce the file.
 
 The four-way baseline comparison built on this layer is in
 alternative_predictors_2018.csv, and the descriptive comparison between the

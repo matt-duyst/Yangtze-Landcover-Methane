@@ -26,7 +26,11 @@ from src.methane import Composite, GridSpec, coverage_of, grid_granules, read_so
 FILL = 9.969209968386869e+36
 
 #: 0.25 degree over the study box: 33 by 31 cells, as the config declares.
-STUDY = GridSpec(west=114.8, south=27.0, east=122.6, north=35.2, resolution=0.25)
+#: The live study grid, 26.95 to 35.2 north and 114.8 to 122.55 east. These
+#: are the bounds the 0.25 degree lattice occupies; the box used to be declared
+#: as 27.0 and 122.6 and did not.
+STUDY = GridSpec(west=114.8, south=26.95, east=122.55, north=35.2,
+                 resolution=0.25)
 
 #: A small grid with round numbers, for fixtures whose answer is hand-checkable.
 TOY = GridSpec(west=0.0, south=0.0, east=1.0, north=1.0, resolution=0.5)

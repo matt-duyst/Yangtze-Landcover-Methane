@@ -11,7 +11,7 @@ their annual mean for reasons that have nothing to do with emissions.
 Subtracting a seasonal cycle from the *cell means* cannot fix this, because by
 then the information about which days contributed has already been averaged
 away. It has to come off at the sounding level. That normally means either
-holding every sounding in memory, which is 110,928 soundings for one year and
+holding every sounding in memory, which is 110,920 soundings for one year and
 does not stream, or two passes over 28.9 GB. Neither is necessary.
 
 THE MODEL
