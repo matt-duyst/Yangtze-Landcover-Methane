@@ -81,9 +81,12 @@ def composite_figure(spec=None, corrected=None, counts=None, absent=None,
     return fig
 
 
-def _basemap(ax, spec, extent, provinces, land) -> None:
-    ax.set_facecolor(style.MAP_SEA)
-    land.plot(ax=ax, facecolor=style.MAP_LAND, edgecolor="none", zorder=1)
+# There is deliberately no basemap. The lattice covers all 1,023 cells of the
+# extent, 926 in the mesh and 97 as absence, so a land or sea fill beneath it
+# is drawn and then entirely hidden: measured at zero visible pixels. Leaving
+# it in would be ink that carries nothing, and worse, would imply to a later
+# reader that the sea tone means something here. The coastline is still drawn,
+# over the field, because it locates the geography.
 
 
 def _overlay(ax, spec, extent, provinces, land) -> None:
@@ -106,7 +109,6 @@ def _overlay(ax, spec, extent, provinces, land) -> None:
 def _draw_value_panel(ax, spec, extent, corrected, absent, provinces, land):
     from matplotlib.colors import Normalize
 
-    _basemap(ax, spec, extent, provinces, land)
     finite = corrected[~absent]
     # Clipped to the 2nd and 98th percentiles, with the bar carrying arrow caps
     # so the reader is told values run past it. The full range is 106 ppb and
@@ -129,7 +131,6 @@ def _draw_value_panel(ax, spec, extent, corrected, absent, provinces, land):
 
 
 def _draw_count_panel(ax, spec, extent, counts, absent, provinces, land):
-    _basemap(ax, spec, extent, provinces, land)
     mesh = fields.draw_lattice_field(ax, counts.astype("float64"), spec,
                                      cmap=fields.field_cmap(fields.COUNT_RAMP),
                                      norm=fields.count_norm(), absent=absent)

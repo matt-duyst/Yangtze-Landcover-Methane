@@ -221,6 +221,8 @@ In outline:
 | study area figure, vector | `make_study_area_figure.py` | about a second | continuously |
 | coverage figure | `make_coverage_figure.py` | under a second | on local |
 | coverage figure, vector | `make_coverage_figure.py` | under a second | on local |
+| methane composite figure | `make_composite_figure.py` | about a second | continuously |
+| methane composite figure, vector | `make_composite_figure.py` | about a second | continuously |
 <!-- END GENERATED RECIPE TABLE -->
 
 The composite is the expensive one and it is the only one. It downloads,

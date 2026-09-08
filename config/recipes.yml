@@ -282,3 +282,22 @@ recipes:
     that test_every_committed_artefact_has_a_recipe keeps passing honestly: an
     artefact with no recipe is a fact about the repository, and hiding it by omitting
     it from the registry is how this class of problem starts.'
+- artefact: figures/methane_composite_2018.png
+  command: python scripts/make_composite_figure.py
+  label: methane composite figure
+  cost: about a second
+  seconds: 1
+  inputs: committed
+  compare: bytes
+  verified: continuously
+  note: 'Reads only committed artefacts: methane_composite_2018.tif and the reference
+    boundary layers. Runs on a fresh clone.'
+- artefact: figures/methane_composite_2018.pdf
+  command: python scripts/make_composite_figure.py
+  label: methane composite figure, vector
+  cost: about a second
+  seconds: 1
+  inputs: committed
+  compare: bytes
+  verified: continuously
+  note: null

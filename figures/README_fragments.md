@@ -82,3 +82,42 @@ here, appearing as straight segments along the coast only above roughly three
 times magnification.
 
 Regenerate with `python scripts/make_study_area_figure.py`.
+
+---
+
+### The 2018 methane composite
+
+![Mean bias-corrected XCH4 and sounding count per cell over the analysis lattice](methane_composite_2018.png)
+
+**The methane field is smooth at the scale of the analysis lattice, and 9.5<!--#composite.uncovered_percent-->
+percent of the lattice is not observed at all.** Cell means run from 1,840 to
+1,947 ppb, but the middle 96 percent of them span only 59 ppb, and neighbouring
+cells rarely differ by more than a few. The unobserved part is not scattered
+noise: 97<!--#composite.uncovered_cells--> of the 1,023<!--#composite.total_cells--> cells
+carry no qualifying sounding, and they fall into 19<!--#composite.absent_components-->
+connected groups of which the largest holds 47<!--#composite.largest_absent_block-->
+cells over mountainous southern Zhejiang. Where the field is observed it rests
+on very unequal evidence, from 1<!--#composite.min_soundings--> sounding to
+410<!--#composite.max_soundings--> with a median of 74<!--#composite.median_soundings-->.
+
+Panel (a) is the mean of the bias-corrected retrieval, which is the
+operationally corrected product and the variable the reproduction's analysis
+used throughout; it is not interchangeable with the raw retrieval, since the
+correction averages +11.64<!--#composite.bias_mean--> ppb and varies across
+cells by more than the field's own standard deviation. The correction does not
+remove the field's dependence on surface albedo, which is 199.7<!--#albedo.slope_corrected-->
+ppb per unit albedo after correction against 203.9<!--#albedo.slope_raw--> before.
+The scale is clipped to the middle 96 percent of cell means, with the arrow caps
+marking values beyond it; the excluded tails sit in the least-sampled cells,
+whose median count is 2 soundings at the high end and 12 at the low against
+74 overall, so they are thin sampling rather than methane. Panel (b) is the
+number of qualifying soundings each cell mean rests on, classed in half-decade
+steps rather than shaded continuously, because a linear scale would render
+every sparse cell alike and the sparse cells are where the sampling structure
+is. Both panels share one frame and one lattice of 33 by 31 cells at 0.25
+degrees, so a cell in one is the same cell in the other. Coverage is
+90.52<!--#composite.coverage_percent--> percent of the lattice over
+110,920<!--#composite.soundings--> in-box soundings; qualifying means a
+`qa_value` at or above 0.75. Boundaries and coastline are Natural Earth.
+
+Regenerate with `python scripts/make_composite_figure.py`.

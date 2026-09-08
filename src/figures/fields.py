@@ -48,8 +48,11 @@ COUNT_RAMP = "lipari"
 #: Cells with no observation. Near-white, which is the literature's convention
 #: for missing, and outside the truncated ramp by 0.19 in luminance.
 ABSENT_FILL = "#f7f7f7"
-#: Without this a single absent cell is a pale square in a pale field.
-ABSENT_EDGE = "#4d4d4d"
+#: Without this a single absent cell is a pale square in a pale field. Set at
+#: luminance 0.50 rather than darker so that it stays 0.22 clear of the
+#: coastline; at 0.30 the two were 0.02 apart and indistinguishable in
+#: greyscale, which is the failure the whole colour convention exists to catch.
+ABSENT_EDGE = "#808080"
 ABSENT_LABEL = "no qualifying sounding"
 #: Artist label for the absence collection. A basemap layer is also a
 #: PatchCollection, so anything looking for the holes must select by name

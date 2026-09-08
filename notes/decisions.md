@@ -2245,3 +2245,87 @@ empty result. A test that silently collects zero items passes; a linter pointed
 at no files reports no problems; a verification that skips everything reports
 nothing wrong. `tests/test_prose_claims.py` and `tests/test_recipes.py` both
 carry a minimum-count assertion for this reason.
+
+## Drawing a field with holes in it
+
+The composite figure had two design problems and neither had an obvious answer.
+
+### Absence at map scale
+
+97 cells of 1,023 carry no sounding and must read as absent rather than as a
+low value. The coverage figure's solution, a shaded span labelled in place, does
+not transfer: absence there was one contiguous block of three months, and here
+it is 19 connected groups running from a 47-cell block over southern Zhejiang
+down to eight isolated single cells. The same treatment has to work at both.
+
+What was tried and rejected. **Leaving the cells unfilled** so the basemap shows
+through: this gives absence two appearances, pale over land and dark over sea,
+for one meaning. **Hatching and stippling**: a 0.25 degree cell is about 3.5 mm
+on a 17 cm figure, which is two or three hatch lines, and at that size a hatch
+is a texture the eye reads as a shade. **Outline only**, no fill: too weak
+against a coloured field, and the 47-cell block becomes a grid of empty boxes
+rather than a hole. **A mid grey fill**: collides with the middle of any
+sequential ramp in greyscale.
+
+What was kept is a near-white fill with a thin outline. Near-white is the
+literature's convention for missing, and the outline is what makes a single
+cell read as a deliberate mark rather than a light patch in a light part of the
+ramp. The fill alone loses the eight singletons.
+
+This forced a change to the ramp. Full batlow runs to luminance 0.85, leaving
+only 0.11 between its light end and white, against this project's own
+convention of 0.15 for anything carrying meaning. The ramp is therefore
+truncated at 0.88 of its range, which brings the light end to 0.77 and opens a
+gap of 0.20. The cost is a slightly shorter ramp; the alternative was an
+absence colour indistinguishable from the top of the scale in a black and white
+print, which is exactly what the colour convention exists to prevent.
+
+### The count scale, 1 to 410
+
+A linear scale puts the median of 74 at a fifth of the range and renders every
+sparse cell the same colour, which is where the sampling structure lives: the
+mixed-coast cells sit at a median of 6 soundings against 133 for land. A
+continuous log scale keeps that distinction but is hard to read off a legend
+and implies a precision a count of 2 does not carry.
+
+What was kept is half-decade classes, 1-3, 4-10, 11-31, 32-99, 100-315 and 316
+and above, with the legend drawn as equal boxes and the numbers at the class
+edges rather than centred in them. That follows what the literature does, which
+masks below a sampling threshold rather than encoding count as a gradient, and
+a class boundary is a statement a caption can defend where a gradient position
+is not. Six centred range labels also do not fit across half a 17 cm figure.
+
+### Two panels, two ramps, and no third panel
+
+The panels use different ramps. A shared ramp invites reading a colour across
+them, and here that reading would be actively wrong: the high-methane cells and
+the high-count cells are not the same cells.
+
+The value panel is clipped to the middle 96 percent of cell means. The full
+range is 106 ppb and that middle spans 59, so an unclipped ramp gives nearly
+half its length to four percent of cells -- and those cells are the least
+reliable in the composite, with a median count of 2 soundings in the top two
+percent of values and 12 in the bottom, against 74 overall. The bar carries
+arrow caps so the clipping is declared rather than hidden.
+
+A third panel was rejected. The deseasonalised field is a candidate, since
+removing the seasonal cycle changed no association and that is a finding, but
+it is a finding about a *comparison* of model results and not about a map: two
+nearly identical fields side by side show a reader almost nothing, and the
+result already has a table. The coastal count contrast belongs with the
+coverage figure, which is about sampling. Two panels well drawn beat three
+cramped, and the panel that would have been added is the one whose message a
+map carries worst.
+
+### The basemap was drawn and never seen
+
+Measured, not assumed: rendering the figure with the basemap set to a loud
+colour produced **zero** visible pixels of it. The lattice covers all 1,023
+cells of the extent, 926 in the mesh and 97 as absence, so a land and sea fill
+beneath it is drawn and then entirely hidden. It was removed, which also cut
+the vector file by a quarter. Ink that carries nothing is not free: it would
+have told a later reader that the sea tone means something here.
+
+That probe is worth keeping as a habit. A figure element can be present in the
+code, correct in isolation, and contribute nothing to the image, and no test of
+the code will say so.

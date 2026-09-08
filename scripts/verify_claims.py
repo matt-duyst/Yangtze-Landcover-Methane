@@ -95,6 +95,27 @@ def _cov_column(name: str) -> np.ndarray:
                      if r.get(name) not in ("", None)])
 
 
+def _absence_blocks() -> tuple[int, int]:
+    """Connected components of the absent cells, and the largest, 8-connected."""
+    if "blocks" not in _cache:
+        from scipy import ndimage
+        absent = _composite()[2] == 0
+        labels, n = ndimage.label(absent, structure=np.ones((3, 3)))
+        sizes = ndimage.sum(absent, labels, range(1, n + 1))
+        _cache["blocks"] = (int(n), int(sizes.max()) if n else 0)
+    return _cache["blocks"]
+
+
+def _albedo_slope(series: str) -> float:
+    if "albedo" not in _cache:
+        with (PROCESSED / "albedo_correction_2018.csv").open(newline="") as h:
+            _cache["albedo"] = list(csv.DictReader(h))
+    row = next(r for r in _cache["albedo"]
+               if r["series"] == series and r["weighting"] == "unweighted"
+               and r["albedo"] == "surface_albedo_SWIR")
+    return float(row["slope_ppb_per_unit_albedo"])
+
+
 def _shares() -> np.ndarray:
     keys = [k for k in _grid()[0] if k.startswith("share_")]
     return np.array([[float(r[k]) if r[k] else 0.0 for k in keys]
@@ -118,6 +139,13 @@ QUANTITIES = {
         lambda: int(_composite()[3]["granules_with_data"]),
     "composite.bias_mean": lambda: float(
         (_composite()[0] - _composite()[1])[_composite()[2] > 0].mean()),
+    "composite.min_soundings": lambda: int(_composite()[2][_composite()[2] > 0].min()),
+    "composite.uncovered_percent":
+        lambda: 100.0 * (_composite()[2] == 0).sum() / _composite()[2].size,
+    "composite.absent_components": lambda: _absence_blocks()[0],
+    "composite.largest_absent_block": lambda: _absence_blocks()[1],
+    "albedo.slope_corrected": lambda: _albedo_slope("bias corrected"),
+    "albedo.slope_raw": lambda: _albedo_slope("raw retrieval"),
 
     "grid.rows": lambda: len(_grid()),
     "grid.rice_rows": lambda: int(np.isfinite(_column("rice_fraction_single")).sum()),
