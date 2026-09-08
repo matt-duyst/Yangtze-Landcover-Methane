@@ -67,7 +67,12 @@ CELLS_PER_DEGREE = 128
 #: Sub-samples per display cell, per axis, for the exact aggregation.
 SUBSAMPLE = 32
 
-YEARS = (2000, 2010, 2018)
+#: 2018 and 2019 both, because the maps and the totals panel want different
+#: ones. 2019 is the last year both products cover -- GISA's values stop at 37,
+#: which is 2019 -- so a map going further would drop GISA and lose the product
+#: disagreement, which is the figure's sharpest finding. 2018 stays because it
+#: is the year the 2023 thesis reported and the totals panel compares against.
+YEARS = (2000, 2010, 2018, 2019)
 
 #: GAIA's epoch: year = EPOCH - value. From ReadMe-GAIA.txt, and the same
 #: constant `scripts/compute_urban_areas.py` uses.
@@ -75,8 +80,9 @@ GAIA_EPOCH = 2023
 
 #: GISA's value-to-year table is not annual at its start: 1 is 1972, 2 is 1978,
 #: and from 3 onward it runs one per year from 1985. So value = year - 1982 for
-#: any year this figure draws.
-GISA_CODES = {2000: 18, 2010: 28, 2018: 36}
+#: any year this figure draws, and 37 is both 2019 and the largest value the
+#: rasters contain, which is how the product's end is known from the data.
+GISA_CODES = {2000: 18, 2010: 28, 2018: 36, 2019: 37}
 
 PRODUCTS = {
     "gaia": {

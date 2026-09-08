@@ -94,7 +94,18 @@ TOTALS = PROCESSED / "urban_extent_totals.csv"
 #: The thesis's own provincial figures travel in this file's last column.
 THESIS_TABLE = PROCESSED / "urban_area_by_province.csv"
 
-YEARS = (2000, 2010, 2018)
+#: The years the maps draw. 2019 rather than 2018 because it is the last year
+#: both products cover: GISA's values stop at 37, which is 2019, so a map going
+#: further would drop GISA and lose the disagreement this figure is for.
+MAP_YEARS = (2000, 2010, 2019)
+
+#: The years the totals panel draws. 2018 rather than 2019 because that is the
+#: year the 2023 thesis reported, and comparing against it is half of what the
+#: panel is for.
+TOTALS_YEARS = (2000, 2010, 2018)
+
+#: Every year the committed aggregate carries.
+YEARS = (2000, 2010, 2018, 2019)
 
 #: A display cell is inked for a year when at least this much of it had become
 #: impervious by then. A quarter, and see the module docstring for what it
@@ -104,12 +115,12 @@ THRESHOLD = 0.25
 #: How many stored cells go into one drawn cell, per axis.
 #:
 #: The committed aggregate is 1/128 degree, which is 992 cells across the box.
-#: A 5.20 cm panel at 300 dpi is 614 pixels, so drawing it cell for cell asks
-#: the page for 0.62 pixels per cell and gets aliasing: isolated inked cells
+#: A 4.95 cm panel at 300 dpi is 585 pixels, so drawing it cell for cell asks
+#: the page for 0.59 pixels per cell and gets aliasing: isolated inked cells
 #: survive or vanish according to where they fall, and the map reads as
 #: stipple rather than as cities. The first draft did exactly that.
 #:
-#: Two stored cells per axis gives 1/64 degree, 496 across the box, 1.24 drawn
+#: Two stored cells per axis gives 1/64 degree, 496 across the box, 1.18 drawn
 #: pixels each. The averaging happens on the **fractions**, before the
 #: threshold, so a drawn cell is inked when a quarter of its own 1.4 km square
 #: was impervious -- which is the same statement at a coarser scale, not a
@@ -117,23 +128,36 @@ THRESHOLD = 0.25
 DISPLAY_FACTOR = 2
 
 #: Which role draws which class. The keys are the year a class runs *to*.
-CLASS_ROLES = {2000: "urban_2000", 2010: "urban_2010", 2018: "urban_2018"}
+CLASS_ROLES = {2000: "urban_2000", 2010: "urban_2010", 2019: "urban_2019"}
 CLASS_LABELS = {2000: "impervious by 2000", 2010: "first 2001–2010",
-                2018: "first 2011–2018"}
+                2019: "first 2011–2019"}
 
-#: Panel (c)'s three series, in the order they are drawn and keyed.
-SERIES_ORDER = ("thesis 2023", "GAIA", "GISA")
+#: Panel (c)'s three lines, as (source, computation) and in legend order.
+#:
+#: **Not three sources.** GAIA and GISA are data; the 2023 thesis is a prior
+#: study whose impervious figures came from GAIA, so listing "thesis" beside
+#: the two products would imply three independent measurements where there are
+#: two, one of them measured twice. `style.source_computation_styles` gives the
+#: source the colour and the computation the dash, and the comparison that
+#: layout makes visible is the one that matters: the same product recomputed
+#: holds 2018 to 0.8 percent and moves 2000 by a factor of two.
+SERIES_PAIRS = (("GAIA", "as reported 2023"),
+                ("GAIA", "reproduced 2026"),
+                ("GISA", "reproduced 2026"))
+
+#: Which computation takes the solid line. The current one.
+COMPUTATION_ORDER = ("reproduced 2026", "as reported 2023")
 
 # Layout in centimetres. Two maps and a numbers panel across the full width.
 FIG_WIDTH_CM = style.FULL_WIDTH_CM
 LEFT_CM = 1.15
-MAP_CM = 5.20
+MAP_CM = 4.95
 MAP_GAP_CM = 0.35
-PANEL_GAP_CM = 1.35
-NUMBERS_CM = 3.00
+PANEL_GAP_CM = 1.30
+NUMBERS_CM = 3.55
 RIGHT_CM = 0.75
 NOTE_CM = 0.12
-LEGEND_CM = 1.30
+LEGEND_CM = 1.75
 TICKS_CM = 0.50
 TITLE_CM = 0.40
 BOTTOM_CM = LEGEND_CM + 0.95 + TICKS_CM
@@ -187,10 +211,32 @@ def urban_change_figure(width_cm: float = WIDTH_CM,
 # the maps
 # --------------------------------------------------------------------------
 
-def display_fractions(product: str, factor: int = DISPLAY_FACTOR):
-    """The committed fractions, averaged to the resolution the page resolves."""
+def stored_years(product: str) -> tuple[int, ...]:
+    """The years the committed aggregate carries, read from its own tags.
+
+    Read rather than assumed, so that adding a year to the artefact cannot
+    silently renumber the bands a figure draws. That is not hypothetical: the
+    maps moved from 2018 to 2019 while the totals panel kept 2018, and a
+    positional read would have quietly drawn one as the other.
+    """
+    import rasterio
+    with rasterio.open(EXTENT_RASTERS[product]) as src:
+        tags = src.tags()
+    return tuple(int(year) for year in tags["years"].split(","))
+
+
+def display_fractions(product: str, factor: int = DISPLAY_FACTOR,
+                      years=None):
+    """The committed fractions, averaged to the resolution the page resolves.
+
+    ``years`` selects bands by year rather than by position; it defaults to
+    the map's years.
+    """
+    wanted = MAP_YEARS if years is None else tuple(years)
+    stored = stored_years(product)
     bands, extent = geo.read_raster(EXTENT_RASTERS[product])
     fractions = np.moveaxis(np.asarray(bands), -1, 0) / 100.0
+    fractions = np.stack([fractions[stored.index(year)] for year in wanted])
     if factor > 1:
         n, rows, cols = fractions.shape
         fractions = fractions[:, :rows // factor * factor,
@@ -212,7 +258,7 @@ def extent_classes(product: str, threshold: float = THRESHOLD,
     """
     fractions, extent = display_fractions(product, factor)
     classes = np.zeros(fractions.shape[1:], dtype="uint8")
-    for index in (2, 1, 0):
+    for index in reversed(range(len(MAP_YEARS))):
         classes[fractions[index] >= threshold] = index + 1
     return classes, extent
 
@@ -243,7 +289,7 @@ def drawn_area_ratio(product: str, threshold: float = THRESHOLD) -> dict:
                    * np.cos(np.radians(latitudes))))
     truth = provincial_totals()
     out = {}
-    for index, year in enumerate(YEARS):
+    for index, year in enumerate(MAP_YEARS):
         drawn = float(((fractions[index] >= threshold)
                        * cell_km2[:, None] * inside).sum())
         out[year] = drawn / sum(truth[product][year].values())
@@ -296,7 +342,7 @@ def _class_rgba(classes):
     import matplotlib.colors as mcolors
 
     rgba = np.zeros(classes.shape + (4,), dtype="float64")
-    for index, year in enumerate(YEARS, start=1):
+    for index, year in enumerate(MAP_YEARS, start=1):
         mask = classes == index
         rgba[mask, :3] = mcolors.to_rgb(style.role(CLASS_ROLES[year]))
         rgba[mask, 3] = 1.0
@@ -338,19 +384,24 @@ def thesis_totals() -> dict:
 
 
 def series() -> dict:
-    """Total urban area over the four provinces, by source and year."""
+    """Total urban area over the four provinces, by (source, computation).
+
+    Keyed by the pair rather than by a name, because the pair is the thing:
+    "GAIA" alone does not say whether the number is the 2023 report or the
+    2026 recomputation, and those differ by a factor of two in 2000.
+    """
     totals = provincial_totals()
-    out = {"thesis 2023": thesis_totals()}
+    out = {("GAIA", "as reported 2023"): thesis_totals()}
     for product in ("GAIA", "GISA"):
-        out[product] = {year: sum(totals[product][year].values())
-                        for year in YEARS}
+        out[(product, "reproduced 2026")] = {
+            year: sum(totals[product][year].values()) for year in YEARS}
     return out
 
 
 def growth_factors() -> dict:
-    """2018 over 2000, per source. The figure's sharpest number."""
-    return {name: values[2018] / values[2000]
-            for name, values in series().items()}
+    """2018 over 2000, per (source, computation). The figure's sharpest number."""
+    values = series()
+    return {pair: values[pair][2018] / values[pair][2000] for pair in values}
 
 
 def _draw_numbers(ax) -> None:
@@ -362,22 +413,26 @@ def _draw_numbers(ax) -> None:
     reader expects and is the whole point of the panel.
     """
     values = series()
-    colours = dict(zip(SERIES_ORDER, style.series(3)))
     factors = growth_factors()
-    for name in SERIES_ORDER:
-        points = [values[name][year] / 1000.0 for year in YEARS]
+    styles = style.source_computation_styles(
+        SERIES_PAIRS, computation_order=COMPUTATION_ORDER)
+    for pair, line in zip(SERIES_PAIRS, styles):
+        source, computation = pair
+        points = [values[pair][year] / 1000.0 for year in TOTALS_YEARS]
         # The growth factor goes in the key rather than beside the 2018
         # point. Three annotations at the right-hand end of three converging
         # lines land on each other, which the first draft demonstrated.
-        ax.plot(YEARS, points, color=colours[name], linewidth=1.3,
-                marker="o", markersize=3.0, markerfacecolor=colours[name],
-                markeredgewidth=0, zorder=3,
-                label=f"{name}  ×{factors[name]:.1f}")
+        ax.plot(TOTALS_YEARS, points, linewidth=1.3, marker="o",
+                markersize=3.0, markeredgewidth=0, zorder=3,
+                markerfacecolor=line["color"],
+                label=f"{source}, {computation}  ×{factors[pair]:.1f}",
+                **line)
 
     ax.set_xlim(1997, 2021)
     ax.set_ylim(0, 55)
-    ax.set_xticks(list(YEARS))
-    ax.set_xticklabels([str(year) for year in YEARS], fontsize=style.TICK_SIZE - 1)
+    ax.set_xticks(list(TOTALS_YEARS))
+    ax.set_xticklabels([str(year) for year in TOTALS_YEARS],
+                       fontsize=style.TICK_SIZE - 1)
     ax.set_yticks([0, 10, 20, 30, 40, 50])
     ax.tick_params(length=2.5)
     ax.set_ylabel("Impervious area (10$^3$ km$^2$)",
@@ -398,13 +453,15 @@ def _draw_numbers(ax) -> None:
 # --------------------------------------------------------------------------
 
 NOTE = (
-    "Maps show where, not how much: a 1/64° cell, about 1.4 km, is inked where "
-    "at least {threshold:.0%} of it had become impervious, which draws the 2000 class at "
-    "{r2000:.2f} of its true area and the 2018 class at {r2018:.2f}, so area is "
-    "read from (c). No rice panel: NESDC begins in 2017, Shanghai's and "
-    "Jiangsu's totals are pinned across most of its record, and GloRice "
-    "allocates statistics rather than observing extent. No methane panel: "
-    "TROPOMI's footprint is 7 by 7 km and one year is usable.")
+    "Maps show where, not how much: a 1/64° cell, about 1.4 km, is inked where at "
+    "least {threshold:.0%} of it had become impervious, which draws the 2000 class at "
+    "{r2000:.2f} of its true area and the 2019 class at {r2019:.2f}, so area is read "
+    "from (c). Maps run to 2019, the last year both products cover; 2019 is the first "
+    "year past GAIA's original 1985–2018 release and sits inside a stretch whose "
+    "year-on-year growth drops from 7.1–10.5 % to 1.9–2.6 %, so it inherits that "
+    "doubt. (c) keeps 2018, the year the thesis reported. Rice is drawn in its own "
+    "figure; there is no methane equivalent, TROPOMI's footprint being 7 by 7 km with "
+    "one usable year.")
 
 
 def _keys(fig, width_cm, height_cm) -> None:
@@ -413,7 +470,7 @@ def _keys(fig, width_cm, height_cm) -> None:
     handles = [Patch(facecolor=style.role(CLASS_ROLES[year]),
                      edgecolor=style.role("boundary"), linewidth=0.5,
                      label=CLASS_LABELS[year])
-               for year in YEARS]
+               for year in MAP_YEARS]
     handles.append(Patch(facecolor=style.role("land_flat"),
                          edgecolor=style.role("boundary"), linewidth=0.5,
                          label="land below 25%"))
@@ -430,7 +487,7 @@ def _keys(fig, width_cm, height_cm) -> None:
 
     ratios = drawn_area_ratio("GAIA")
     text = NOTE.format(threshold=THRESHOLD, r2000=ratios[2000],
-                       r2018=ratios[2018])
+                       r2019=ratios[2019])
     fig.text(LEFT_CM / width_cm, NOTE_CM / height_cm, _wrap(text, 132),
              ha="left", va="bottom", fontsize=style.TICK_SIZE - 1.5,
              linespacing=1.4, color=style.role("label_text"))

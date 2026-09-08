@@ -327,7 +327,7 @@ _ROLE_LIST = (
           "coastline alone cannot carry the land/water distinction in a print "
           "with no colour, and it has to leave the lattice somewhere to live.",
           ("relief_dark", "boundary", "coastline", "lattice", "land_flat",
-           "urban_2000", "urban_2010", "urban_2018", "rice_single",
+           "urban_2000", "urban_2010", "urban_2019", "rice_single",
            "rice_double", "unassessed")),
     _role("land_outside",
           _at_luminance(_desaturate(_BATLOW(0.72), 0.55), 0.41), "tint",
@@ -388,7 +388,7 @@ _ROLE_LIST = (
           ("sea", "relief_dark", "relief_light", "absent_fill",
            "boundary_minor", "coastline", "land_flat", "impervious",
            "rice_single", "rice_double", "urban_2000", "urban_2010",
-           "urban_2018", "unassessed")),
+           "urban_2019", "unassessed")),
     _role("boundary_minor", _at_luminance("#8a8a8a", 0.42), "line",
           "A neighbouring province's boundary. Present so the study region "
           "sits in a country rather than in white, and lighter than the study "
@@ -427,7 +427,7 @@ _ROLE_LIST = (
           "the same statement. Distinct from `absent_fill`, which means the "
           "opposite -- not looked at.",
           ("sea", "boundary", "lattice", "impervious", "rice_single",
-           "rice_double", "urban_2000", "urban_2010", "urban_2018",
+           "rice_double", "urban_2000", "urban_2010", "urban_2019",
            "unassessed")),
 
     # -- native-resolution land cover classes. Impervious and rice are drawn
@@ -490,19 +490,24 @@ _ROLE_LIST = (
           "areal",
           "Impervious by 2000, which is the oldest class the two products "
           "can be compared on and the darkest of the three.",
-          ("land_flat", "urban_2010", "urban_2018", "sea", "boundary",
+          ("land_flat", "urban_2010", "urban_2019", "sea", "boundary",
            "page")),
     _role("urban_2010", _at_luminance(_desaturate(_BATLOW(0.62), 0.15), 0.585),
           "areal",
           "First impervious between 2001 and 2010, which is the decade the "
           "thesis reported the sharpest growth in.",
-          ("land_flat", "urban_2000", "urban_2018", "sea", "boundary",
+          ("land_flat", "urban_2000", "urban_2019", "sea", "boundary",
            "page")),
-    _role("urban_2018", _at_luminance(_desaturate(_BATLOW(0.88), 0.20), 0.755),
+    _role("urban_2019", _at_luminance(_desaturate(_BATLOW(0.88), 0.20), 0.755),
           "areal",
-          "First impervious between 2011 and 2018. The newest class and the "
+          "First impervious between 2011 and 2019. The newest class and the "
           "lightest, and the one that carries the finding: it is most of the "
-          "2018 extent.",
+          "extent. Named for the year the class runs to, which is 2019 because "
+          "that is the last year both impervious products cover -- GISA's "
+          "values stop at 37 -- so a map going further would drop GISA and "
+          "lose the disagreement the figure is for. The tone did not move when "
+          "the class did: it was solved into the gap the other roles leave and "
+          "the gap did not change.",
           ("land_flat", "urban_2000", "urban_2010", "sea", "boundary",
            "page")),
 
@@ -521,7 +526,7 @@ _ROLE_LIST = (
           "because a figure that writes `white` has made a colour decision "
           "and should have to say which one.",
           ("absent_span", "label_text", "impervious", "rice_single",
-           "rice_double", "urban_2000", "urban_2010", "urban_2018",
+           "rice_double", "urban_2000", "urban_2010", "urban_2019",
            "unassessed")),
 
     # -- marks and text
@@ -841,6 +846,71 @@ def cvd_report() -> dict:
             "failures": [(a, b, d) for a, b, d in distances
                          if d < MIN_CVD_DISTANCE],
         }
+    return out
+
+
+# --------------------------------------------------------------------------
+# source and computation are different things and take different channels
+# --------------------------------------------------------------------------
+
+#: Dash patterns for the computation axis, in the order a figure declares its
+#: computations. Solid first, because the current computation is the one a
+#: reader should take as the figure's own.
+COMPUTATION_DASHES = ((), (4.0, 1.6), (1.2, 1.2))
+
+
+def source_computation_styles(pairs, computation_order=None):
+    """Line styles for a figure drawing several sources computed several ways.
+
+    **A figure showing values from more than one source must distinguish the
+    source from the computation, and must never place a study in a list of
+    datasets.** The urban change figure had the 2023 thesis in a legend beside
+    GAIA and GISA as though it were a third data source. It is not: the
+    thesis's impervious figures came from GAIA, so that legend implied three
+    independent measurements where there are two, one of them measured twice.
+    Which is the interesting comparison and the one the layout was hiding --
+    the same product recomputed moves 2000 by a factor of two while 2018 holds
+    to 0.8 percent.
+
+    Source takes the **colour**, which is the stronger channel because it is
+    the stronger distinction, and comes from :data:`SERIES` so it inherits the
+    greyscale ordering. Computation takes the **dash**, which is a weaker
+    channel for a weaker distinction and survives greyscale on its own.
+
+    ``pairs`` is a sequence of ``(source, computation)`` in the order the
+    figure will list them. ``computation_order`` decides which computation
+    takes the solid line and defaults to the order of first appearance; pass
+    it when the legend should read in one order and the emphasis fall in
+    another, which is the usual case, since a reader looks for the current
+    computation and reads the older one first.
+
+    Returns a list of keyword dictionaries in the order given, ready to hand
+    to ``plot``.
+    """
+    sources, computations = [], []
+    for source, computation in pairs:
+        if source not in sources:
+            sources.append(source)
+        if computation not in computations:
+            computations.append(computation)
+    if computation_order is not None:
+        missing = set(computations) - set(computation_order)
+        if missing:
+            raise ValueError(
+                f"computation_order does not name {sorted(missing)}")
+        computations = list(computation_order)
+    if len(computations) > len(COMPUTATION_DASHES):
+        raise ValueError(
+            f"{len(computations)} computations and only "
+            f"{len(COMPUTATION_DASHES)} dash patterns that separate; a figure "
+            f"needing more must distinguish them by something else")
+    colours = series(len(sources))
+    out = []
+    for source, computation in pairs:
+        dashes = COMPUTATION_DASHES[computations.index(computation)]
+        style = {"color": colours[sources.index(source)]}
+        style["linestyle"] = "solid" if not dashes else (0, dashes)
+        out.append(style)
     return out
 
 

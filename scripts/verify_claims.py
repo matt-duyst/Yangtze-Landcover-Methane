@@ -167,12 +167,21 @@ def _urban_series() -> dict:
     return _cache["urban"]
 
 
+#: The figure keys its series by (source, computation), because "GAIA" alone
+#: does not say whether a number is the 2023 report or the 2026 recomputation
+#: and those differ by a factor of two in 2000. These are the short spellings
+#: the prose uses, mapped onto the pairs.
+_URBAN_KEYS = {"gaia": ("GAIA", "reproduced 2026"),
+               "gisa": ("GISA", "reproduced 2026"),
+               "thesis": ("GAIA", "as reported 2023")}
+
+
 def _urban(source: str, year: int) -> float:
-    return _urban_series()[source][year]
+    return _urban_series()[_URBAN_KEYS[source]][year]
 
 
 def _urban_factor(source: str) -> float:
-    values = _urban_series()[source]
+    values = _urban_series()[_URBAN_KEYS[source]]
     return values[2018] / values[2000]
 
 
@@ -276,20 +285,22 @@ QUANTITIES = {
         lambda: int((_cell_elevation()[_composite()[2] == 0] > 500).sum()),
     "composite.covered_above_500m":
         lambda: int((_cell_elevation()[_composite()[2] > 0] > 500).sum()),
-    "urban.gaia_2000": lambda: _urban("GAIA", 2000),
-    "urban.gaia_2010": lambda: _urban("GAIA", 2010),
-    "urban.gaia_2018": lambda: _urban("GAIA", 2018),
-    "urban.gisa_2000": lambda: _urban("GISA", 2000),
-    "urban.gisa_2010": lambda: _urban("GISA", 2010),
-    "urban.gisa_2018": lambda: _urban("GISA", 2018),
-    "urban.thesis_2000": lambda: _urban("thesis 2023", 2000),
-    "urban.thesis_2010": lambda: _urban("thesis 2023", 2010),
-    "urban.thesis_2018": lambda: _urban("thesis 2023", 2018),
-    "urban.gaia_factor": lambda: _urban_factor("GAIA"),
-    "urban.gisa_factor": lambda: _urban_factor("GISA"),
-    "urban.thesis_factor": lambda: _urban_factor("thesis 2023"),
+    "urban.gaia_2000": lambda: _urban("gaia", 2000),
+    "urban.gaia_2010": lambda: _urban("gaia", 2010),
+    "urban.gaia_2018": lambda: _urban("gaia", 2018),
+    "urban.gisa_2000": lambda: _urban("gisa", 2000),
+    "urban.gisa_2010": lambda: _urban("gisa", 2010),
+    "urban.gisa_2018": lambda: _urban("gisa", 2018),
+    "urban.thesis_2000": lambda: _urban("thesis", 2000),
+    "urban.thesis_2010": lambda: _urban("thesis", 2010),
+    "urban.thesis_2018": lambda: _urban("thesis", 2018),
+    "urban.gaia_factor": lambda: _urban_factor("gaia"),
+    "urban.gisa_factor": lambda: _urban_factor("gisa"),
+    "urban.thesis_factor": lambda: _urban_factor("thesis"),
+    "urban.gaia_2019": lambda: _urban("gaia", 2019),
+    "urban.gisa_2019": lambda: _urban("gisa", 2019),
     "urban.gisa_over_gaia_2018":
-        lambda: _urban("GISA", 2018) / _urban("GAIA", 2018),
+        lambda: _urban("gisa", 2018) / _urban("gaia", 2018),
     "window.impervious_gisa_percent":
         lambda: _window()["impervious_gisa_percent"],
     "window.impervious_gaia_percent":

@@ -11,6 +11,10 @@ GAIA,2018,Shanghai,3433.6,natural_earth,3433.6,-0.00001
 GAIA,2018,Zhejiang,11476.3,natural_earth,11476.3,-0.00000
 GAIA,2018,Anhui,11568.7,natural_earth,11568.7,+0.00000
 GAIA,2018,Jiangsu,22869.4,natural_earth,22869.4,-0.00000
+GAIA,2019,Shanghai,3474.6,natural_earth,3474.6,+0.00001
+GAIA,2019,Zhejiang,11813.5,natural_earth,11813.5,-0.00000
+GAIA,2019,Anhui,11821.0,natural_earth,11821.0,+0.00000
+GAIA,2019,Jiangsu,23238.6,natural_earth,23238.6,-0.00000
 GISA,2000,Shanghai,1459.4,natural_earth,,
 GISA,2000,Zhejiang,3231.2,natural_earth,,
 GISA,2000,Anhui,6110.6,natural_earth,,
@@ -23,3 +27,7 @@ GISA,2018,Shanghai,2682.2,natural_earth,2682.2,-0.00001
 GISA,2018,Zhejiang,9003.6,natural_earth,9003.6,+0.00000
 GISA,2018,Anhui,11010.6,natural_earth,11010.6,+0.00000
 GISA,2018,Jiangsu,16835.8,natural_earth,16835.8,+0.00000
+GISA,2019,Shanghai,2718.1,natural_earth,,
+GISA,2019,Zhejiang,9144.6,natural_earth,,
+GISA,2019,Anhui,11314.2,natural_earth,,
+GISA,2019,Jiangsu,17275.5,natural_earth,,

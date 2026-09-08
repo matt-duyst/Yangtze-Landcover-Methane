@@ -32,18 +32,23 @@ def main() -> int:
 
     values = uc.series()
     factors = uc.growth_factors()
-    print(f"  four-province totals, km2      "
-          + "  ".join(f"{y:>9d}" for y in uc.YEARS) + "     factor")
-    for name in uc.SERIES_ORDER:
-        row = "  ".join(f"{values[name][y]:9,.0f}" for y in uc.YEARS)
-        print(f"  {name:30s} {row}      x{factors[name]:.2f}")
+    print("  four-province totals, km2, as panel (c) draws them")
+    print("    " + " " * 32
+          + "  ".join(f"{y:>9d}" for y in uc.TOTALS_YEARS) + "   2018/2000")
+    for pair in uc.SERIES_PAIRS:
+        name = f"{pair[0]}, {pair[1]}"
+        row = "  ".join(f"{values[pair][y]:9,.0f}" for y in uc.TOTALS_YEARS)
+        print(f"    {name:30s} {row}       x{factors[pair]:.2f}")
+    print("    two sources, one of them computed twice; the thesis's figures "
+          "are GAIA's")
 
-    print(f"\n  maps inked at a {uc.THRESHOLD:.0%} threshold on a 1/128 degree cell")
+    print(f"\n  maps inked at a {uc.THRESHOLD:.0%} threshold on a 1/64 degree cell, "
+          f"years {uc.MAP_YEARS}")
     print("  drawn area / true area, inside the four provinces:")
     for product in ("GAIA", "GISA"):
         ratios = uc.drawn_area_ratio(product)
         print(f"    {product}  "
-              + "  ".join(f"{y} {ratios[y]:.3f}" for y in uc.YEARS))
+              + "  ".join(f"{y} {ratios[y]:.3f}" for y in uc.MAP_YEARS))
 
     figure = uc.urban_change_figure()
     result = export(figure, args.stem, directory=figures_root())

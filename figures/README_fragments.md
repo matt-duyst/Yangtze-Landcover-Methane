@@ -229,74 +229,84 @@ reads are cut once by `python scripts/clip_landcover_window.py --write`.
 
 ---
 
-### Urban expansion, 2000 to 2018, from two products
+### Urban expansion, 2000 to 2019, from two products
 
-![Cumulative urban extent by year of first imperviousness for GAIA and GISA, and the four-province totals for both against the thesis](urban_change.png)
+![Cumulative urban extent by year of first imperviousness for GAIA and GISA to 2019, and four-province totals for the thesis's GAIA figures against both products recomputed](urban_change.png)
 
 **Urban extent in these four provinces grew several-fold between 2000 and 2018,
 and the three available accounts of it disagree about the growth factor by a
 factor of three.** This is the reproduction's one positive quantitative
-land-cover finding. The 2023 thesis reported 8,297<!--#urban.thesis_2000--> km2
-in 2000 rising to 49,725<!--#urban.thesis_2018--> km2 in 2018, a factor of
-6.0<!--#urban.thesis_factor-->. GAIA reproduces
-16,387<!--#urban.gaia_2000--> km2 and 49,348<!--#urban.gaia_2018--> km2, a
-factor of 3.0<!--#urban.gaia_factor-->. GISA gives
-19,787<!--#urban.gisa_2000--> km2 and 39,532<!--#urban.gisa_2018--> km2, a
-factor of 2.0<!--#urban.gisa_factor-->.
+land-cover finding.
 
-The three agree far better about the recent end than the historical one. GISA's
-2018 total is 0.80<!--#urban.gisa_over_gaia_2018--> of GAIA's, a difference of
-about a fifth, and the direction is the opposite of what the global validation
-predicts, since GAIA is the product reported to omit impervious surface. But
-GISA is the **larger** of the two in 2000, so the products cross over and
-disagree about the history rather than about the extent. That is the shape a
-year-of-change product's release history produces: both encode the year a pixel
-first became impervious in a single band, and a later reprocessing redates
-transitions across the whole archive, which moves the historical end and leaves
-the recent end alone. A disagreement here is not an error in either
-computation, and the 2000 and 2010 figures should not be read as reproductions
-of the thesis's.
+Panel (c) separates the **source** from the **computation**, because there are
+two sources and not three. GAIA and GISA are datasets; the 2023 thesis is a
+prior study whose impervious figures came from GAIA, so the colour names the
+product and the dash names the computation. GAIA as reported in 2023 gives
+8,297<!--#urban.thesis_2000--> km2 in 2000 and
+49,725<!--#urban.thesis_2018--> km2 in 2018, a factor of
+6.0<!--#urban.thesis_factor-->. GAIA recomputed here in 2026 gives
+16,387<!--#urban.gaia_2000--> and 49,348<!--#urban.gaia_2018-->, a factor of
+3.0<!--#urban.gaia_factor-->. GISA recomputed gives
+19,787<!--#urban.gisa_2000--> and 39,532<!--#urban.gisa_2018-->, a factor of
+2.0<!--#urban.gisa_factor-->.
 
-Panels (a) and (b) show where the growth is, drawn from an aggregate at 1/128
-degree and inked at 1/64 degree, about 1.4 km, wherever at least a quarter of a
-cell had become impervious by that date. Classes nest, so a cell carries the
-earliest date it qualifies for and the three are exclusive. **Area must not be
-read from the maps.** That threshold is stated because it does not preserve
-area and does not fail evenly: urban land in 2000 is more dispersed than in
-2018, so the drawn 2000 class is 0.73 of its true area while the drawn 2018
-class is 1.31, which flatters growth by about four fifths. Panel (c) carries
-the magnitudes and the maps carry the pattern.
+That layout makes the sharper comparison visible. **The same product recomputed
+holds 2018 to within 0.8 percent and moves 2000 by a factor of two.** A
+year-of-change product stores the year each pixel first became impervious, so a
+reprocessing with more training years and better cloud handling redates earlier
+transitions, and the effect is largest in the earliest years where observations
+are sparsest. The disagreement is a property of the product's release history
+and not an error in either computation.
+
+The two products also cross over. GISA's 2018 total is
+0.80<!--#urban.gisa_over_gaia_2018--> of GAIA's, a difference of about a fifth
+in the direction opposite to what the global validation predicts, since GAIA is
+the product reported to omit impervious surface. But GISA is the **larger** of
+the two in 2000, so the products disagree about the history rather than about
+the extent.
+
+Panels (a) and (b) show where the growth is, in three nested classes by the year
+a pixel first became impervious. They run to 2019 and not to 2018 because 2019
+is the last year both products cover: GISA's pixel values stop at 37, which
+decodes to 2019, so a map going further would drop GISA and lose the
+disagreement. GAIA reaches 50,348<!--#urban.gaia_2019--> km2 in 2019 and GISA
+40,452<!--#urban.gisa_2019-->. **2019 carries a caveat**: it is the first year
+past GAIA's original 1985 to 2018 release, and it sits inside a stretch whose
+year-on-year growth of the four-province total drops from 7.1 to 10.5 percent
+across 2011 to 2016 to between 1.9 and 2.6 percent from 2017 onward. Panel (c)
+keeps 2018, which is the year the thesis reported and the only year a
+comparison against it can be made.
+
+**Area must not be read from the maps.** A cell is inked where at least a
+quarter of it had become impervious by that date, drawn at 1/64 degree, about
+1.4 km, from an aggregate at 1/128. That threshold does not preserve area and
+does not fail evenly: urban land in 2000 is more dispersed than in 2019, so the
+drawn 2000 class is 0.73 of its true area while the drawn 2019 class is 1.30,
+which flatters growth by about four fifths. Panel (c) carries the magnitudes and
+the maps carry the pattern.
 
 Totals are for the four provinces on the Natural Earth boundaries and come from
-`data/processed/urban_extent_totals.csv`, whose sixteen overlapping rows
+`data/processed/urban_extent_totals.csv`, whose twenty overlapping rows
 reproduce the two older provincial tables to 1.3e-05; that agreement is the
-check that the two products' opposite conventions were both applied the right
-way round. Inverting GISA's would select only what was built in 2018 and 2019,
-9,468,801 pixels against 202,830,997, and would still draw a plausible map.
+check that the two products' opposite year conventions were both applied the
+right way round. GAIA counts down from 2023, so 2019 is `value >= 4`; GISA
+counts up from 1972, so 2019 is `1 <= value <= 37`. Inverting GISA's would
+select only what was built in the last two years, 9,468,801 pixels against
+202,830,997, and would still draw a plausible map.
 
-**There is no rice panel**, and that is a finding rather than an omission. The
-NESDC classification begins in 2017 and reaches neither 2000 nor 2010;
-Shanghai's provincial totals are pinned across 2019 to 2025 and Jiangsu's
-across 2020 to 2025 and again over 2017 to 2018, with the whole-raster count
-held fixed while the classified area relocates, so half the study region cannot
-contribute a year-on-year value; Anhui's rasters classify only the 86.1 percent
-of the province south of 33.3462 north and east of 115.2682 east; and GloRice,
-which does reach 2000, allocates official statistics to grid cells through a
-model rather than observing extent and correlates with impervious fraction at
-Spearman +0.5613. What remains is two provinces over a window that misses both
-comparison years.
-
-**There is no methane equivalent either**, which is where a reader will most
-expect one. TROPOMI's footprint is 7 by 7 km at nadir, the analysis grid is 0.25
-degrees because coverage forced it there, and the 2018 composite leaves
-97<!--#composite.uncovered_cells--> of its 1,023<!--#composite.total_cells-->
-cells with no qualifying sounding at all, with per-cell counts running from
-1<!--#composite.min_soundings--> to 410<!--#composite.max_soundings-->. There
-is one year of usable methane, not three, and a fine-resolution methane field
-from this data would be interpolation presented as observation.
+Rice is drawn in its own figure. There is no methane equivalent and that is
+where a reader will most expect one: TROPOMI's footprint is 7 by 7 km at nadir,
+the analysis grid is 0.25 degrees because coverage forced it there, and the 2018
+composite leaves 97<!--#composite.uncovered_cells--> of its
+1,023<!--#composite.total_cells--> cells with no qualifying sounding at all,
+with per-cell counts running from 1<!--#composite.min_soundings--> to
+410<!--#composite.max_soundings-->. There is one year of usable methane, not
+three, and a fine-resolution methane field from this data would be interpolation
+presented as observation.
 
 Regenerate with `python scripts/make_urban_change_figure.py`. The aggregate and
 the totals are built once by `python scripts/compute_urban_extent.py --write`.
+
 ---
 
 ### Paddy rice across the four provinces, 2018

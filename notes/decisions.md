@@ -3047,3 +3047,66 @@ the raster extents rather than from a grid. And the totals table's Anhui rice
 of 22,594.6 km2 reproduces the 22,594.7 recorded here for 2018. Neither number
 was used to build the other.
 
+## The urban figure's maps end at 2019, and its legend had a category error
+
+### 2019, because that is where the two products stop agreeing to exist
+
+The maps drew 2000, 2010 and 2018 and now draw 2000, 2010 and 2019. The reason
+is not that 2019 is better but that it is the last year both products cover:
+GISA's values run to 37 and 37 decodes to 2019, verified on the rasters rather
+than from the documentation -- 37 is both the code for 2019 and the largest
+value the files contain. The fetched GAIA release runs to 2021. A map at 2020
+or 2021 would therefore have to drop GISA, and dropping GISA loses the product
+disagreement, which is the figure's sharpest finding.
+
+The selectors are the documented ones and were checked, not assumed: GAIA
+counts down from 2023, so 2019 is `at_least(4)`; GISA counts up with 1972 as 1
+and annual from 1985, so 2019 is `between(1, 37)`.
+
+**2019 carries a caveat and the caption says so.** It is the first year past
+GAIA's original 1985 to 2018 release. It also sits inside the stretch
+`data/processed/README.md` already flags: year-on-year growth of the
+four-province total runs 7.1 to 10.5 percent across 2011 to 2016 and then drops
+to 1.9 to 2.6 percent from 2017 onward. Worth being exact about what that
+means: 2018, which the figure was already drawing, is the *second* year of that
+stretch, so 2019 does not enter new territory so much as go one year further
+into territory the figure was already in.
+
+The committed aggregate now carries four years rather than three, because the
+maps and the totals panel want different ones. That created a hazard worth
+naming: a figure reading bands by position would have silently drawn 2018 as
+2019 the moment the fourth band was added. `display_fractions` now selects by
+year from the raster's own `years` tag and a test asserts it.
+
+### A study is not a data source
+
+Panel (c) listed "thesis 2023" beside "GAIA" and "GISA" as though the three
+were three datasets. They are not. The thesis's impervious figures came from
+GAIA, so the legend implied three independent measurements where there are two,
+one of them measured twice.
+
+The fix is an encoding rather than a relabelling. **Source takes the colour and
+computation takes the dash**: GAIA navy and GISA teal, the 2026 recomputation
+solid and the 2023 report dashed. Two navy lines then diverge at 2000 and
+converge at 2018, which is the comparison the old layout was hiding -- the same
+product recomputed holds 2018 to 0.8 percent and moves 2000 by a factor of two.
+
+That is not a fact about this figure and it is now a convention rather than one
+fixed legend. `style.source_computation_styles` implements it, in
+`src/figures/style.py` where the conventions live, and its docstring carries
+the rule: *a figure showing values from more than one source must distinguish
+the source from the computation, and must never place a study in a list of
+datasets.* Colour is the stronger channel and takes the stronger distinction;
+the dash is a weaker channel and survives greyscale on its own. The helper
+refuses more computations than it has patterns that separate, rather than
+silently reusing one, and a test asserts the refusal.
+
+The role rename followed: `urban_2018` became `urban_2019`, because a role's
+name should say what it is and the class now runs to 2019. **The tone did not
+move.** The three vintages were solved into the gaps the other roles leave --
+each clearing `boundary` at 0.078, `sea` at 0.42 and `land_flat` at 0.925 by
+0.15, which leaves [0.228, 0.27] and [0.57, 0.775] with room for exactly three
+-- and none of those constraints depends on which year a class ends in. Checked
+rather than assumed: the role set's minimum luminance gap and its three
+colour-vision minima are unchanged.
+

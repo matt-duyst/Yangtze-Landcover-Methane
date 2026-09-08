@@ -903,6 +903,14 @@ products in predictor_comparison_2018.csv.
 
 ## urban_extent_gaia.tif, urban_extent_gisa.tif and urban_extent_totals.csv
 
+**Four years, not three.** 2000, 2010, 2018 and 2019, because the figure's maps
+and its totals panel want different ones. The maps run to 2019, the last year
+both products cover -- GISA's values stop at 37, which decodes to 2019 -- and
+the totals panel keeps 2018, the year the 2023 thesis reported. A figure reading
+bands by position would have drawn one as the other when the fourth band was
+added, so `src.figures.urban_change` selects bands by year from the raster's own
+`years` tag.
+
 Built for `figures/urban_change.png`, and the totals table is useful on its own
 because it is the first regenerable GISA series this repository has had.
 
