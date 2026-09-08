@@ -223,6 +223,11 @@ In outline:
 | coverage figure, vector | `make_coverage_figure.py` | under a second | on local |
 | methane composite figure | `make_composite_figure.py` | about a second | continuously |
 | methane composite figure, vector | `make_composite_figure.py` | about a second | continuously |
+| native window, GISA | `clip_landcover_window.py --write` | seconds, from gitignored raw rasters | on local |
+| native window, GAIA | `clip_landcover_window.py --write` | seconds, from gitignored raw rasters | on local |
+| native window, NESDC rice | `clip_landcover_window.py --write` | seconds, from gitignored raw rasters | on local |
+| native land cover figure | `make_landcover_figure.py` | about a second | continuously |
+| native land cover figure, vector | `make_landcover_figure.py` | about a second | continuously |
 <!-- END GENERATED RECIPE TABLE -->
 
 The composite is the expensive one and it is the only one. It downloads,
@@ -364,7 +369,7 @@ the ArcGIS figure exports, whose provenance is documented but which no code in
 this repository produces.
 
 [`figures/`](figures/) holds the generated figures, committed as a PDF and PNG pair each,
-with their captions in [`figures/README_fragments.md`](figures/README_fragments.md). Three of a planned nine
+with their captions in [`figures/README_fragments.md`](figures/README_fragments.md). Four of a planned nine
 exist. Every colour any of them draws is a named role in
 [`src/figures/style.py`](src/figures/style.py), checked once over the whole role set for greyscale and
 colour-vision separation; a figure module may not name a colour, and a test

@@ -154,6 +154,29 @@ def _absent_on_land() -> int:
     return _cache["absent_land"]
 
 
+def _window() -> dict:
+    """Class shares and native pixel counts of the land-cover window."""
+    if "window" not in _cache:
+        from src.figures import landcover
+        gisa, _, _ = landcover.impervious_mask(landcover.IMPERVIOUS_GISA, "gisa")
+        gaia, _, _ = landcover.impervious_mask(landcover.IMPERVIOUS_GAIA, "gaia")
+        rice, _ = landcover.rice_classes()
+        _cache["window"] = {
+            "impervious_gisa_percent": 100.0 * float(gisa.mean()),
+            "impervious_gaia_percent": 100.0 * float(gaia.mean()),
+            "rice_single_percent": 100.0 * float((rice == 1).mean()),
+            "rice_double_percent": 100.0 * float((rice == 2).mean()),
+            "rice_columns": int(rice.shape[1]),
+            "impervious_columns": int(gisa.shape[1]),
+            "cell_rice_combined":
+                landcover.cell_values()[(31.325, 118.425)]
+                ["rice_fraction_combined"],
+            "cell_impervious_gisa":
+                landcover.cell_values()[(31.325, 118.425)]["impervious_gisa"],
+        }
+    return _cache["window"]
+
+
 def _albedo_slope(series: str) -> float:
     if "albedo" not in _cache:
         with (PROCESSED / "albedo_correction_2018.csv").open(newline="") as h:
@@ -201,6 +224,23 @@ QUANTITIES = {
         lambda: int((_cell_elevation()[_composite()[2] == 0] > 500).sum()),
     "composite.covered_above_500m":
         lambda: int((_cell_elevation()[_composite()[2] > 0] > 500).sum()),
+    "window.impervious_gisa_percent":
+        lambda: _window()["impervious_gisa_percent"],
+    "window.impervious_gaia_percent":
+        lambda: _window()["impervious_gaia_percent"],
+    "window.rice_single_percent": lambda: _window()["rice_single_percent"],
+    "window.rice_double_percent": lambda: _window()["rice_double_percent"],
+    "window.rice_columns": lambda: _window()["rice_columns"],
+    "window.impervious_columns": lambda: _window()["impervious_columns"],
+    "window.cell_rice_combined": lambda: _window()["cell_rice_combined"],
+    "window.cell_impervious_gisa": lambda: _window()["cell_impervious_gisa"],
+    # The caption speaks in percent where the tables store a fraction. Both
+    # spellings exist rather than the prose converting, because a marked claim
+    # has to name the quantity it is, not one a reader must rescale.
+    "window.cell_rice_combined_percent":
+        lambda: 100.0 * _window()["cell_rice_combined"],
+    "window.cell_impervious_gisa_percent":
+        lambda: 100.0 * _window()["cell_impervious_gisa"],
     "albedo.slope_corrected": lambda: _albedo_slope("bias corrected"),
     "albedo.slope_raw": lambda: _albedo_slope("raw retrieval"),
 

@@ -2720,3 +2720,98 @@ Article 6(b), and it is on the image because a figure travels away from its
 caption and the obligation attaches to the image. Article 6(c)'s liability
 sentence goes in the caption and in `data/reference/README.md`, since it is
 about redistribution rather than display.
+
+## Two figures for land cover, and one of them is about resolution
+
+The set had a hole: every land-cover figure drew a fraction per 0.25 degree
+cell, so a reader saw fractions and never saw the thing being fractioned, and
+the 30 m and 10 m products the 2023 thesis rests on were invisible in a
+repository about that thesis.
+
+### A native-resolution figure cannot also be a cell-scale figure
+
+The first thing measured was the arithmetic, and it rules out the obvious
+layout. A 10 m pixel needs at least one drawn pixel to be a pixel rather than a
+smudge, so at 300 dpi a panel of *n* centimetres can show 118*n* metres of
+ground per drawn pixel: a 6.9 cm panel covers 5.7 km. A 0.25 degree cell is 24
+by 28 km. **The two scales are 2,800 to 1 apart in area and cannot share a
+panel.**
+
+So the figure is a window at native resolution *and* a separate panel of six
+cells, with the window marked inside the cell it belongs to. That is the
+detail-box pattern the study area figure established, applied to a ratio four
+times larger.
+
+Measured drawn pixels per source pixel, printed on every build: 4.37 for the
+30 m products and **1.46** for the 10 m rice. The second is the binding one and
+it is why the panel is 6.875 cm and not smaller. `interpolation="nearest"` is
+asserted by a test rather than left as a setting, because any other value
+invents intermediate values between classes that have no intermediate, and
+because it would still look like a figure.
+
+### The window was searched for, not chosen
+
+Four constraints, and the second eliminated half the study region.
+
+Both classes had to be present and abundant. Double-season rice had to be
+present, and only two of the four provinces carry the class at all: measured on
+the 2018 rasters, Anhui 1.0 percent of pixels and Zhejiang 0.4, against zero in
+Jiangsu and Shanghai. The window had to lie wholly inside one province, because
+the NESDC rasters declare no nodata and 0 means both real non-rice land and
+out-of-province background, so a window across a boundary draws two different
+things in one colour. And it had to lie wholly inside one analysis cell, so
+that the native pixels and the number they become are the same ground.
+
+Seven cities across Anhui and Zhejiang were scored on the balance of the three
+classes. Wuhu won: 23.9 percent impervious under GISA, 29.4 percent
+single-season rice, 4.9 percent double.
+
+The study area figure's detail window was considered and does not serve. It was
+chosen for a land fraction of 0.58 because that figure needed a land-water
+boundary; this one needs an urban-rice boundary, it sits in Jiangsu and
+Shanghai where there is no double-season class, and at 0.75 degrees it is
+thirteen times too wide to draw a 10 m pixel.
+
+Its height was then set so that all four panels draw in one proportion, 0.782,
+which is the shape of the three-by-two block of cells beside them. Four panels
+on one grid rather than one of them standing 0.9 cm taller.
+
+### Numbers rather than two more colour panels
+
+Panel (d) writes both impervious fractions and the rice fraction into each of
+six cells rather than drawing two more ramps. A ramp would show a reader that
+the fraction varies across six cells, which the three panels above already
+show. What a ramp cannot recover is the value, and the value is what the model
+was fitted on.
+
+### The window is not a sample and the figure says so
+
+34.2 percent rice against 19.5 for the cell that contains it, and 23.9 percent
+impervious against 26.3. Both are on the figure. A window chosen for the
+balance of its classes is by construction unrepresentative, and a figure that
+did not say so would invite exactly the inference it was chosen to prevent.
+
+## Four roles, and a second basemap style with a reason
+
+The palette went from sixteen roles to twenty. Three are categorical
+land-cover classes -- `impervious`, `rice_single` and `rice_double` -- and the
+fourth, `land_flat`, is a second basemap style, which needs justifying because
+the set already has one.
+
+**Relief is drawn where the land surface is the subject, and not otherwise.**
+In the study area figure the terrain explains the composite's holes and is the
+figure's argument. In an urban-extent map it would be a competing signal: urban
+land follows the plains, so relief under it invites a reader to see a
+terrain-urbanisation relationship the figure is not testing. A flat ground is
+the neutral choice. It is also much cheaper, a relief image costing about
+1.2 MB of a 2 MB vector ceiling, but that is a consequence and not the reason.
+
+`land_flat` does double duty as the observed-negative class in a categorical
+raster: ground that was looked at and is not the thing being mapped. One tone,
+because it is one statement. It is distinct from `absent_fill`, which means the
+opposite.
+
+Minimum luminance gap over the role set is unchanged at 0.159 and the three
+colour-vision minima are unchanged at 14.4, because the new roles were fitted
+into the gaps the existing ones left rather than allowed to move them.
+

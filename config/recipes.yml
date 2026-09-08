@@ -301,3 +301,57 @@ recipes:
   compare: bytes
   verified: continuously
   note: null
+- artefact: data/processed/landcover_window_impervious_gisa.tif
+  command: python scripts/clip_landcover_window.py --write
+  label: native window, GISA
+  cost: seconds, from gitignored raw rasters
+  seconds: 6
+  inputs: local
+  compare: bytes
+  verified: on_local
+  note: 'One 5.7 by 3.7 km window at the product''s own resolution and with its own pixel values, not
+    a mask: the figure applies the selector, so the rule that decides what counts is one object. Written
+    together by one command; the verifier is handed the path of the artefact it is checking and the script
+    writes its siblings beside it.'
+- artefact: data/processed/landcover_window_impervious_gaia.tif
+  command: python scripts/clip_landcover_window.py --write
+  label: native window, GAIA
+  cost: seconds, from gitignored raw rasters
+  seconds: 6
+  inputs: local
+  compare: bytes
+  verified: on_local
+  note: 'One 5.7 by 3.7 km window at the product''s own resolution and with its own pixel values, not
+    a mask: the figure applies the selector, so the rule that decides what counts is one object. Written
+    together by one command; the verifier is handed the path of the artefact it is checking and the script
+    writes its siblings beside it.'
+- artefact: data/processed/landcover_window_rice_nesdc.tif
+  command: python scripts/clip_landcover_window.py --write
+  label: native window, NESDC rice
+  cost: seconds, from gitignored raw rasters
+  seconds: 6
+  inputs: local
+  compare: bytes
+  verified: on_local
+  note: 'One 5.7 by 3.7 km window at the product''s own resolution and with its own pixel values, not
+    a mask: the figure applies the selector, so the rule that decides what counts is one object. Written
+    together by one command; the verifier is handed the path of the artefact it is checking and the script
+    writes its siblings beside it.'
+- artefact: figures/landcover_native.png
+  command: python scripts/make_landcover_figure.py
+  label: native land cover figure
+  cost: about a second
+  seconds: 2
+  inputs: committed
+  compare: bytes
+  verified: continuously
+  note: null
+- artefact: figures/landcover_native.pdf
+  command: python scripts/make_landcover_figure.py
+  label: native land cover figure, vector
+  cost: about a second
+  seconds: 2
+  inputs: committed
+  compare: bytes
+  verified: continuously
+  note: null

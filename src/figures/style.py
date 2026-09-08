@@ -326,7 +326,7 @@ _ROLE_LIST = (
           "the darkest tone the veiled out-of-region relief reaches, because a "
           "coastline alone cannot carry the land/water distinction in a print "
           "with no colour, and it has to leave the lattice somewhere to live.",
-          ("relief_dark", "boundary", "coastline", "lattice")),
+          ("relief_dark", "boundary", "coastline", "lattice", "land_flat")),
     _role("land_outside",
           _at_luminance(_desaturate(_BATLOW(0.72), 0.55), 0.41), "tint",
           "Land beyond the four provinces. Relief is drawn over it and then "
@@ -384,7 +384,8 @@ _ROLE_LIST = (
           "line on the map, because it is what the province fill no longer "
           "does.",
           ("sea", "relief_dark", "relief_light", "absent_fill",
-           "boundary_minor", "coastline")),
+           "boundary_minor", "coastline", "land_flat", "impervious",
+           "rice_single", "rice_double")),
     _role("boundary_minor", _at_luminance("#8a8a8a", 0.42), "line",
           "A neighbouring province's boundary. Present so the study region "
           "sits in a country rather than in white, and lighter than the study "
@@ -404,7 +405,49 @@ _ROLE_LIST = (
           "and all 0.15 below the band. The tone step from sea to lit relief "
           "is 0.47 at the size the detail box is drawn, so the stroke was the "
           "thing to drop.",
-          ("sea", "relief_dark", "relief_light")),
+          ("sea", "relief_dark", "relief_light", "land_flat")),
+
+    # -- flat ground, where a figure's subject is not the land surface.
+    #
+    # Relief is drawn where terrain is what the figure is about. It is not
+    # drawn here, and the reason is substantive rather than economic: urban
+    # land follows the plains, so shaded relief under an urban-extent map
+    # invites a reader to see a terrain-urbanisation relationship a figure of
+    # extent would not be testing. A flat ground is the neutral choice, and it
+    # is what the cells panel of the land cover figure stands on. It is also much
+    # cheaper -- a relief image costs about 1.2 MB of a 2 MB vector ceiling --
+    # but that is a consequence, not the argument.
+    _role("land_flat", _at_luminance(_desaturate(_BATLOW(0.72), 0.72), 0.925),
+          "areal",
+          "Land in a panel that draws no relief, and, in a categorical raster "
+          "panel, the observed-negative class: ground that was looked at and "
+          "is not the thing being mapped. One tone for both, because they are "
+          "the same statement. Distinct from `absent_fill`, which means the "
+          "opposite -- not looked at.",
+          ("sea", "boundary", "lattice", "impervious", "rice_single",
+           "rice_double")),
+
+    # -- native-resolution land cover classes. Impervious and rice are drawn
+    # in separate panels and so never meet; the two rice seasons do.
+    _role("impervious", _at_luminance(_desaturate(_BATLOW(0.86), 0.25), 0.45),
+          "areal",
+          "A 30 m pixel classed as impervious surface. Warm and dark, which "
+          "is the convention for built land, and dark enough that a single "
+          "pixel reads at the size the native panel draws one.",
+          ("land_flat", "boundary", "page")),
+    _role("rice_single", _at_luminance(_desaturate(_BATLOW(0.46), 0.20), 0.62),
+          "areal",
+          "A 10 m pixel classed as single-season rice. The lighter of the two "
+          "seasons, because double-cropping is the greater intensity and the "
+          "pair should be ordered in tone as well as in hue.",
+          ("land_flat", "rice_double", "boundary", "page")),
+    _role("rice_double", _at_luminance(_desaturate(_BATLOW(0.36), 0.20), 0.40),
+          "areal",
+          "A 10 m pixel classed as double-season rice. A real distinction and "
+          "not a nuance: only two of the four study provinces carry the class "
+          "at all, Anhui at 1.0 percent of pixels and Zhejiang at 0.4, and "
+          "Jiangsu and Shanghai have none.",
+          ("land_flat", "rice_single", "boundary", "page")),
 
     # -- non-map roles, for the line and bar figures
     _role("absent_span", _at_luminance("#e0e0e0", 0.84), "areal",
@@ -420,7 +463,8 @@ _ROLE_LIST = (
           "a legend box and the face of an open marker. Named as a role "
           "because a figure that writes `white` has made a colour decision "
           "and should have to say which one.",
-          ("absent_span", "label_text")),
+          ("absent_span", "label_text", "impervious", "rice_single",
+           "rice_double")),
 
     # -- marks and text
     _role("place_marker", _at_luminance("#1f1f1f", 0.08), "mark",

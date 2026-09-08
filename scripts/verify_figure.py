@@ -58,8 +58,14 @@ def _composite():
     return composite_figure()
 
 
+def _landcover():
+    from src.figures.landcover import landcover_figure
+    return landcover_figure()
+
+
 BUILDERS["study_area"] = _study_area
 BUILDERS["methane_composite_2018"] = _composite
+BUILDERS["landcover_native"] = _landcover
 
 
 def render(fig, dpi: int = style.MIN_DPI) -> np.ndarray:
@@ -142,7 +148,7 @@ def report_colour(stem: str, write_renders: bool, out_dir: Path) -> None:
     for name, clearance in sorted(relief["overlay_clearance"].items(),
                                   key=lambda item: item[1]):
         print(f"    {name:16s} sits {clearance:.3f} below the darker band")
-    measured = _measured_relief_range()
+    measured = _measured_relief_range() if stem == "study_area" else None
     if measured is not None:
         print("\n  measured on the composited relief itself, not on the "
               "declared band:")
@@ -299,6 +305,35 @@ def report_visibility(stem: str, dpi: int = 150) -> None:
         print("\n  no artist contributes zero pixels")
 
 
+NATIVE = {
+    "landcover_native": lambda: _native_landcover(),
+}
+
+
+def _native_landcover():
+    """Drawn pixels per native pixel, per raster panel."""
+    from src.figures import landcover as lc
+    panel_px = lc.PANEL_CM / 2.54 * style.MIN_DPI
+    out = {}
+    for label, path, product in (("GISA 30 m", lc.IMPERVIOUS_GISA, "gisa"),
+                                 ("GAIA 30 m", lc.IMPERVIOUS_GAIA, "gaia")):
+        mask, _, _ = lc.impervious_mask(path, product)
+        out[label] = (mask.shape[1], panel_px / mask.shape[1])
+    values, _ = lc.rice_classes()
+    out["NESDC 10 m"] = (values.shape[1], panel_px / values.shape[1])
+    return out
+
+
+def report_native(stem: str) -> None:
+    """Whether a raster panel is drawing what it says it is drawing."""
+    if stem not in NATIVE:
+        return
+    print("\ndrawn pixels per source pixel, across the panel")
+    for label, (columns, ratio) in NATIVE[stem]().items():
+        verdict = "" if ratio >= 1.0 else "   <-- BELOW ONE, resampled away"
+        print(f"  {label:16s} {columns:5d} source px -> {ratio:5.2f}{verdict}")
+
+
 def main(argv=None) -> int:
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     parser.add_argument("stem", choices=sorted(BUILDERS))
@@ -309,6 +344,7 @@ def main(argv=None) -> int:
     args = parser.parse_args(argv)
 
     report_standard(args.stem)
+    report_native(args.stem)
     report_colour(args.stem, args.renders, Path(args.out))
     if not args.skip_visibility:
         report_visibility(args.stem)

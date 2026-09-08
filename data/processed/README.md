@@ -900,3 +900,44 @@ this recipe and `tests/test_recipes.py` runs it.
 The four-way baseline comparison built on this layer is in
 alternative_predictors_2018.csv, and the descriptive comparison between the
 products in predictor_comparison_2018.csv.
+
+## landcover_window_impervious_gisa.tif, landcover_window_impervious_gaia.tif and landcover_window_rice_nesdc.tif
+
+Three clips of one 5.7 by 3.7 km window, at the products' own resolutions and
+carrying the products' own pixel values, for `figures/landcover_native.png`.
+118.44 to 118.49 east, 31.3248 to 31.3582 north, on the eastern edge of Wuhu in
+Anhui. 186 by 124 pixels at 30 m for each impervious product and 557 by 372 at
+10 m for the rice classification.
+
+The values are the products' own year codes and class codes, not a boolean
+mask. That is the point: the figure applies `src.landcover.selectors` to them,
+so the rule that decides what counts is the same object in the figure, in the
+provincial totals and in the display-grid aggregation. A committed boolean
+would move that decision into a file nobody re-examines.
+
+The window had four constraints and each was tested rather than eyeballed.
+
+* **All three classes present and none marginal.** 23.9 percent impervious
+  under GISA, 29.7 under GAIA, 29.4 percent single-season rice and 4.9 percent
+  double-season. A window that is nearly all one thing shows a texture rather
+  than a boundary.
+* **Double-season rice present**, which restricted the search to two provinces:
+  measured on the 2018 rasters, Anhui carries class 2 on 1.0 percent of its
+  pixels and Zhejiang on 0.4, while Jiangsu and Shanghai have none at all.
+  Seven cities across both provinces were scored and Wuhu won on the balance of
+  the three classes.
+* **Wholly inside one province**, tested with `contains`. The NESDC rasters
+  declare no nodata and 0 means both real non-rice land and out-of-province
+  background, so a window across a boundary would draw two different things in
+  one colour.
+* **Wholly inside one analysis cell**, the one centred at 31.325 N, 118.425 E,
+  so the native pixels and the number they become are the same ground.
+
+The window is **not** a representative sample and the caption says so: it is
+34.2 percent rice against 19.5 percent for the cell that contains it, and 23.9
+percent impervious against 26.3.
+
+    python scripts/clip_landcover_window.py --write
+
+Seconds, from the gitignored raw rasters. `on_local` in `config/recipes.yml`.
+

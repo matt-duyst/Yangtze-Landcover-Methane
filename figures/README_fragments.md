@@ -166,3 +166,63 @@ degrees, so a cell in one is the same cell in the other. Coverage is
 `qa_value` at or above 0.75. Boundaries and coastline are Natural Earth.
 
 Regenerate with `python scripts/make_composite_figure.py`.
+---
+
+### Land cover at the resolution it was measured
+
+![Impervious surface at 30 m from GISA and GAIA, rice at 10 m from NESDC, and the six 0.25 degree cell fractions those become](landcover_native.png)
+
+**Every other land-cover figure in this repository shows a fraction per
+0.25 degree cell; this is what the fractions are made of.** The window is 5.7
+by 3.7 km on the eastern edge of Wuhu, in Anhui, at 118.44 to 118.49 east and
+31.3248 to 31.3582 north. Panels (a) and (b) draw impervious surface at 30 m,
+186<!--#window.impervious_columns--> pixels across, from GISA and from GAIA;
+panel (c) draws the NESDC rice classification at 10 m,
+557<!--#window.rice_columns--> pixels across. Each panel gives at least one
+drawn pixel to every source pixel, 4.4 for the 30 m products and 1.5 for the
+10 m one, so nothing here has been resampled into a smoother picture of itself.
+
+Panel (d) is the same ground as the analysis reads it: three by two cells of
+0.25 degrees, about 24 by 28 km each, with the impervious fraction from both
+products and the combined rice fraction written in each. The window of panels
+(a) to (c) is the small rectangle in the lower middle cell. All six cells have
+complete coverage from both products, so none of the numbers rests on a partial
+raster.
+
+**The window is not a representative sample and is not offered as one.** It is
+34.2 percent rice against 19.5<!--#window.cell_rice_combined_percent--> percent for the
+cell that contains it, and 23.9<!--#window.impervious_gisa_percent--> percent
+impervious against 26.3<!--#window.cell_impervious_gisa_percent-->. It is a place to
+see the resolution.
+
+What the aggregation discards is visible by comparing the panels: the
+interdigitation of paddy blocks and built land at a few hundred metres, which
+is the scale at which this landscape is organised, becomes one number per
+24 by 28 km cell. Of the window, 29.4<!--#window.rice_single_percent--> percent
+is single-season rice and 4.9<!--#window.rice_double_percent--> percent is
+double-season; the second class exists in only two of the four study provinces,
+Anhui and Zhejiang, and Jiangsu and Shanghai have none of it, so the window was
+chosen in Anhui in order to show a distinction the study region really carries.
+Because the window lies wholly inside Anhui, every 0 in the rice raster here is
+real non-rice land; the product declares no nodata and 0 elsewhere also means
+out-of-province background, which is why that containment was tested rather
+than assumed.
+
+**The two impervious products are not interchangeable at pixel scale either.**
+GISA calls 23.9<!--#window.impervious_gisa_percent--> percent of this window
+impervious and GAIA calls 29.7<!--#window.impervious_gaia_percent--> percent,
+a ratio of 0.81, which is close to the ratio of 0.80 they reach over the four
+provinces as a whole.
+
+A caution about resolution that the panels invite and the analysis does not
+support: the rice grid is three times finer than the impervious one, and that
+buys nothing here. GISA and GAIA are 30 m products derived from Landsat; the
+NESDC classification is 10 m, derived from Sentinel-1 and Sentinel-2 by a
+time-weighted dynamic time warping method. They are different kinds of product
+with different error structures, and both are averaged into the same 0.25
+degree cell before anything is fitted. Extent is selected by
+`src.landcover.selectors`, `1 <= value <= 36` for GISA and `value >= 5` for
+GAIA, which are the two products' opposite year-of-change conventions.
+
+Regenerate with `python scripts/make_landcover_figure.py`. The window clips it
+reads are cut once by `python scripts/clip_landcover_window.py --write`.
