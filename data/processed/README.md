@@ -874,7 +874,7 @@ that appeared to confirm the study's finding while measuring nothing.
 | total | 39,532.2 | 49,348.0 | 49,725 | 0.801 |
 
 GISA finds 19.9 percent less impervious surface than GAIA across the four
-provinces, but not uniformly: Jiangsu is 26.4 percent lower, Shanghai 21.9 and
+provinces **in 2018**, but not uniformly: Jiangsu is 26.4 percent lower, Shanghai 21.9 and
 Zhejiang 21.5, while Anhui is only 4.8 percent lower. The direction is the
 opposite of what the global validation predicts. GAIA is reported to omit
 impervious surface relative to GISA, with a producer's accuracy worse by 28.35

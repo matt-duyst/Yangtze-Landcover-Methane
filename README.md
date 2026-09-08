@@ -42,6 +42,22 @@ correlations are -0.010, -0.065, +0.033 and -0.021, none of them distinguishable
 from zero. A coefficient that changes sign when observations are weighted by
 their own precision is not evidence of a relationship.
 
+The one positive land-cover result is urban expansion, and its magnitude does
+not reproduce. The thesis reports the four-province impervious total rising from
+8,297<!--#urban.thesis_2000--> km² in 2000 to
+49,725<!--#urban.thesis_2018--> km² in 2018, a factor of
+6.0<!--#urban.thesis_factor-->. Recomputed from the current release of the same
+product, GAIA gives 16,387<!--#urban.gaia_2000--> and
+49,348<!--#urban.gaia_2018-->, a factor of 3.0<!--#urban.gaia_factor-->; GISA
+gives 19,787<!--#urban.gisa_2000--> and 39,532<!--#urban.gisa_2018-->, a factor
+of 2.0<!--#urban.gisa_factor-->. The 2018 extent reproduces to within 0.8
+percent against the same product and the 2000 extent comes back at 1.98 times
+the reported value, which is what a year-of-change product does when it is
+reprocessed: the reconstruction moves at the historical end, where the satellite
+record is sparsest, and holds at the recent one. Every account agrees the growth
+was substantial and none of them agrees on how much. `ERRATA.md` 7.5 records it
+and `figures/urban_change.png` draws it.
+
 ## Why the finding is not an artefact of measurement error
 
 This is the objection a negative result has to answer, and answering it is the
@@ -56,7 +72,10 @@ error. GAIA is reported to omit impervious surface relative to GISA, with a
 producer's accuracy worse by 28.35 percent, in the paper describing GISA
 (Huang et al., 2021, doi:10.1007/s11430-020-9797-9) — though our own regional
 measurement runs the other way, with GISA finding about 20 percent *less*
-impervious surface than GAIA in every province. The NESDC
+impervious surface than GAIA in 2018, in every province. That comparison holds
+for the analysis year and not for the record: in 2000 GISA finds 20.7 percent
+*more*, so the two products cross over and disagree about the history rather
+than about the extent. The NESDC
 rice rasters have pinned provincial totals, an unclassified region in northern
 and western Anhui, and no declared nodata.
 

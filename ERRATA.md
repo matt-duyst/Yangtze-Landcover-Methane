@@ -623,3 +623,83 @@ than add it.
 *Verified by:* `data/processed/deseasonalisation_2018.csv`,
 `albedo_correction_2018.csv`, and the corresponding sections of
 `notes/decisions.md`.
+
+### 7.5 The headline urban expansion is not reproduced by either product
+
+This is the largest correction in this section and the only one that touches a
+number the thesis reports rather than an inference it draws.
+
+Section 5.1 gives the four-province urban total as 8,297 km² in 2000 and
+49,725 km² in 2018, a factor of 6.0 and an expansion of 41,428 km². Recomputed
+from the current release of the same product, GAIA gives 16,387 km² and
+49,348 km², a factor of 3.0 and an expansion of 32,961 km². GISA, an
+independently built impervious product, gives 19,787 km² and 39,532 km², a
+factor of 2.0 and an expansion of 19,745 km².
+
+| account | 2000 km² | 2018 km² | factor | expansion km² |
+|---------|---------|---------|--------|---------------|
+| GAIA, as reported 2023 | 8,297 | 49,725 | 6.0 | 41,428 |
+| GAIA, reproduced 2026 | 16,387 | 49,348 | 3.0 | 32,961 |
+| GISA, reproduced 2026 | 19,787 | 39,532 | 2.0 | 19,745 |
+
+**The 2018 extent reproduces and the 2000 extent does not.** Against the same
+product, 2018 comes back 0.8 percent low while 2000 comes back 1.98 times high
+and 2010 1.15 times high. The disagreement is concentrated entirely at the
+historical end, and it is large enough that the growth factor is not reproduced
+by either product: three accounts, three factors, spanning a factor of three.
+
+The mechanism matters more than the discrepancy, because it is what makes this a
+finding about the data rather than a disagreement between computations. GAIA
+does not store urban extent per year. It stores, in a single band, the year each
+pixel first became impervious, and an extent for any year is recovered by
+thresholding that band. A reprocessing therefore re-runs change detection over
+the whole archive: with more training years and better cloud handling, a pixel
+one release dates to 2004 another may date to 1996. The effect is largest in the
+earliest years, where the Landsat record is sparsest and a single added
+observation can move a transition by a decade. Nothing in the file signals it,
+and the raster decodes cleanly under either version.
+
+The thesis used the 1985–2018 release. The archive reachable now is 1985–2021,
+and Star Cloud distributes a later version again. So the two computations are
+not two computations of the same data; they are two reconstructions of the same
+history, and the sentence above about where they disagree is the shape that
+implies.
+
+What this does and does not undermine, stated separately because they are
+different:
+
+* **Urban extent grew substantially between 2000 and 2018, and every account
+  agrees on that.** The smallest of the three still has extent doubling and
+  adding 19,745 km², which is larger than Shanghai and Zhejiang's 2000 extents
+  combined under any of them. No correction here touches the direction or the
+  substantial character of the growth.
+* **The magnitude does not reproduce.** The thesis's expansion of 41,428 km² and
+  its sixfold factor rest on a GAIA release whose historical reconstruction has
+  since changed, and neither figure is recoverable from the current release of
+  that product or from an independent one.
+* **This is not an arithmetic error.** Section 2.1 and Section 2.2 above record
+  two of those, in the Zhejiang multiplier and the 2010 total, and this is not a
+  third. The thesis's numbers are internally consistent with the data it had.
+  What has changed is the data.
+
+The version dependence is a general property of year-of-change products and
+applies to GISA as well, which has its own release history. It is recorded at
+length in `notes/decisions.md` under "Year-of-change products are
+version-dependent"; it is repeated here because the claim it bears on is made
+here.
+
+A second disagreement sits underneath and is recorded for completeness. The two
+products cross over: GISA finds 20.7 percent *more* impervious surface than GAIA
+in 2000 and 19.9 percent *less* in 2018. So they disagree about the history far
+more than about the extent, which is the same signature by a different route,
+and it is why 7.2's use of GISA as an independent predictor is unaffected — that
+test runs on 2018, where the two agree to a fifth.
+
+*Verified by:* `data/processed/urban_extent_totals.csv`, twenty-four rows over
+two products, four years and four provinces, computed with
+`src.landcover.zonal_histogram` on the Natural Earth boundaries; its twenty rows
+that overlap `urban_area_by_province.csv` and `urban_area_by_province_gisa.csv`
+reproduce them to a worst relative difference of 1.3e-05. The thesis figures are
+the `thesis_urban_km2` column of `urban_area_by_province.csv`, transcribed from
+Table 1 of the thesis PDF. Regenerable by `scripts/compute_urban_extent.py
+--write`, and drawn in `figures/urban_change.png`.

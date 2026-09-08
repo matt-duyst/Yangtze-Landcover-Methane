@@ -81,8 +81,10 @@ Landsat satellites: From 1972 to 2019. *Science China Earth Sciences* 64,
 1922–1933.
 `10.1007/s11430-020-9797-9` — peer-reviewed paper; describes a dataset used, and
 a finding contested. Its reported comparison against GAIA does not transfer to
-this study area: GISA finds 19.9 percent *less* impervious surface here, in
-every province. See `data/processed/README.md`.
+this study area: GISA finds 19.9 percent *less* impervious surface here in
+2018, in every province. That is the analysis year and not the record — in 2000
+GISA finds 20.7 percent *more*, so the two products cross over. See
+`data/processed/README.md` and `ERRATA.md` 7.5.
 Cited in `config/sources.yml`.
 
 **International Food Policy Research Institute (2019).** Global
