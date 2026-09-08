@@ -333,7 +333,7 @@ def build_inset_boundaries(out: Path) -> dict:
     do, like Kyushu; Hong Kong and Macau are not distinguished, because this
     layer carries no feature for either. Natural Earth classes six of the
     lines in the extent as `Disputed (please verify)` and carries per-country
-    viewpoint fields -- `FCLASS_CN`, `FCLASS_TW`, `FCLASS_IN` and twenty-eight
+    viewpoint fields -- `FCLASS_CN`, `FCLASS_TW`, `FCLASS_IN` and thirty
     more -- which is the source's own statement that the classification depends
     on who is asked. The caption says whose lines these are.
     """

@@ -177,6 +177,36 @@ def test_shanghai_is_named_once_and_takes_no_leader_line(figure):
         assert line.get_marker() != "None", line.get_label()
 
 
+def test_shanghai_is_the_only_province_that_cannot_hold_its_own_label(provinces):
+    """The measurement behind the decision, not the decision's restatement.
+
+    An 8 pt "Shanghai" occupies 0.99 by 0.21 degrees on this panel. Slid over
+    the municipality at a fiftieth of a degree it never fits entirely inside;
+    the other three fit easily. Its bounding box is 1.13 degrees wide, wider
+    than the label, which is why the bounding box is the wrong question: the
+    municipality is an estuary lobe and a chain of islands, not a rectangle.
+    """
+    from shapely.geometry import box
+
+    cm_per_degree = sa.MAP_WIDTH_CM / 7.75
+    width = 1.30 / cm_per_degree
+    height = (0.32 / cm_per_degree) * geo.geographic_aspect(31.075)
+    indexed = provinces.set_index("name_en")
+
+    def fits(name):
+        polygon = indexed.loc[name].geometry
+        west, south, east, north = polygon.bounds
+        for lon in np.arange(west, east, 0.02):
+            for lat in np.arange(south, north, 0.02):
+                if polygon.contains(box(lon, lat, lon + width, lat + height)):
+                    return True
+        return False
+
+    assert not fits("Shanghai")
+    for name in ("Anhui", "Jiangsu", "Zhejiang"):
+        assert fits(name), name
+
+
 def test_all_four_study_provinces_are_identifiable_by_name(figure):
     names = {text.get_text() for text in figure.axes[0].texts}
 

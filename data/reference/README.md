@@ -261,7 +261,7 @@ boundary and so appears only as a coastline in the hypsometric raster, exactly
 as Hainan and Kyushu do. Natural Earth classes six of the 59 lines in the
 extent as `Disputed (please verify)`, two as `Indefinite (please verify)`, two
 as `Indeterminant frontier` and four as `Line of control (please verify)`, and
-ships 34 per-country viewpoint fields, `FCLASS_CN` and `FCLASS_TW` among them,
+ships 33 per-country viewpoint fields, `FCLASS_CN` and `FCLASS_TW` among them,
 which is the source's own statement that the classification depends on who is
 asked. This repository takes no position on any of them and the caption says
 so.

@@ -2686,7 +2686,7 @@ land boundary line Natural Earth files in the extent -- 59 of them, unfiltered,
 with no country named or filled. Taiwan appears as its coastline does, like
 Hainan and Kyushu. Hong Kong and Macau are not distinguished, because that layer
 carries no feature for either. Natural Earth classes six of the 59 as `Disputed
-(please verify)` and ships 34 per-country viewpoint fields, `FCLASS_CN` and
+(please verify)` and ships 33 per-country viewpoint fields, `FCLASS_CN` and
 `FCLASS_TW` among them, which is the source saying in its own data that the
 classification depends on who is asked. The figure carries a line saying whose
 lines these are and the caption says this repository takes no position.

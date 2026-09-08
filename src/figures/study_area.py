@@ -33,11 +33,20 @@ again; six areal classes cannot separate, and the boundaries and the names
 carry which province is which.
 
 **Shanghai is labelled in place, and it takes no leader line.** The leader in
-the first version was the tell that the encoding was wrong. At this scale the
-word "Shanghai" is about 1.2 degrees wide and the municipality is 0.9, so the
-name cannot sit inside the polygon -- but Shanghai is also one of the four
-provincial capitals, and a city label beside its own marker is a label in
-place. One name does both jobs and no line is drawn to anything.
+the first version was the tell that the encoding was wrong.
+
+The constraint is real and was measured rather than eyeballed. At 8 pt the word
+"Shanghai" occupies 0.99 by 0.21 degrees on this panel, and sliding that box
+over the municipality's polygon at a fiftieth of a degree finds no position
+where it fits entirely inside. The same test fits Anhui, Jiangsu and Zhejiang
+easily. Shanghai's bounding box is 1.13 degrees wide, which is wider than the
+label, but the municipality is an estuary lobe and a chain of islands rather
+than a rectangle, so the bounding box is not the question.
+
+The answer is not a smaller font or a better leader. Shanghai is also one of the
+four provincial capitals, so its city label names the municipality too, and a
+name beside its own marker is a label in place. One name does both jobs and no
+line is drawn to anything.
 
 **The lattice is gone from the main panel and is a detail box instead.** The
 composite already shows the analysis resolution by drawing the cells as the
@@ -557,7 +566,7 @@ def _draw_inset(ax, extent: Extent) -> None:
     boundary-lines layer carries no feature for either. Natural Earth classes
     six of the lines in this extent as "Disputed (please verify)" and ships
     per-country viewpoint fields -- `FCLASS_CN`, `FCLASS_TW`, `FCLASS_IN` and
-    twenty-eight more -- which is the source's own statement that the
+    thirty more -- which is the source's own statement that the
     classification depends on who is asked. The caption says whose lines these
     are and that this repository takes no position on any of them.
 

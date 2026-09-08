@@ -73,8 +73,9 @@ capitals, selected as Natural Earth's admin-1 capitals of the four study
 provinces at scale rank 4 or better, which is the narrowest rule that returns
 all four: Shanghai is rank 0, Nanjing and Hangzhou rank 2 and Hefei rank 4, and
 a bare threshold reaching Hefei also reaches fourteen other places in the box.
-Shanghai's name serves both the municipality and the city, since the word is
-wider than the municipality at this scale. The analysis lattice is **not** drawn
+Shanghai's name serves both the municipality and the city: at 8 pt the word
+occupies 0.99 by 0.21 degrees here and no position inside the municipality's
+polygon fits it, while the other three provinces each hold their name easily. The analysis lattice is **not** drawn
 across the main panel, where 66 lines would be texture rather than reference and
 where the composite figure already shows the resolution by drawing the cells as
 the data; the detail box instead shows six cells over the Yangtze mouth at 4.6
@@ -83,7 +84,7 @@ drawn size. One cell is 24 by 28 km at 31.7 north. The locator sits outside the
 map frame rather than over Zhejiang's coast, and draws Natural Earth's admin-0
 land boundary lines unfiltered, with no country named, filled or excluded; six
 of the 59 lines in its extent are classed "Disputed (please verify)" by Natural
-Earth itself, which also ships 34 per-country viewpoint fields, and this
+Earth itself, which also ships 33 per-country viewpoint fields, and this
 repository takes no position on any of them.
 
 The terrain is the finding, thin as a reference map's finding must be. The 97<!--#composite.uncovered_cells-->
@@ -105,7 +106,7 @@ Boundaries, coastline, populated places and the inset relief are Natural Earth
 and are public domain; the province and land layers are 10 m and the inset
 boundaries 50 m. Shanghai's outline is the one caveat worth naming at this size:
 Natural Earth resolves the municipality with 213 vertices across four parts
-where GADM 4.1 uses 1,925 across 112, and at 1.3 cm of drawn width the
+where GADM 4.1 uses 1,925 across 112, and at 1.5 cm of drawn width the
 difference is not visible, appearing as straight segments along the coast only
 above roughly three times magnification. Shaded relief is derived data and its
 licence requires the notice carried on the figure: produced using Copernicus
