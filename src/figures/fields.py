@@ -45,14 +45,11 @@ RAMP_TRUNCATION = 0.88
 #: and still leaves 0.18 of luminance between its light end and absence.
 COUNT_RAMP = "lipari"
 
-#: Cells with no observation. Near-white, which is the literature's convention
-#: for missing, and outside the truncated ramp by 0.19 in luminance.
-ABSENT_FILL = "#f7f7f7"
-#: Without this a single absent cell is a pale square in a pale field. Set at
-#: luminance 0.50 rather than darker so that it stays 0.22 clear of the
-#: coastline; at 0.30 the two were 0.02 apart and indistinguishable in
-#: greyscale, which is the failure the whole colour convention exists to catch.
-ABSENT_EDGE = "#808080"
+#: Cells with no observation, and the outline that makes a single one read as
+#: a deliberate mark. Both are roles in `style.py`; see there for the tones and
+#: for what each is checked against. Nothing in this module names a colour.
+ABSENT_FILL = style.role("absent_fill")
+ABSENT_EDGE = style.role("absent_edge")
 ABSENT_LABEL = "no qualifying sounding"
 #: Artist label for the absence collection. A basemap layer is also a
 #: PatchCollection, so anything looking for the holes must select by name

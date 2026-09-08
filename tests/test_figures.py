@@ -142,14 +142,37 @@ def test_palette_records_which_source_it_came_from():
 
 
 def test_categorical_colours_are_distinct_and_ordered_in_lightness():
-    colours = style.categories(4)
+    colours = style.series(4)
 
     assert len(colours) == 4
     assert len(set(colours)) == 4
-    # Sampling along a sequential map must give a monotone greyscale order, so
-    # the keys stay distinguishable in a black and white print.
-    grey = [0.299 * r + 0.587 * g + 0.114 * b for r, g, b, _ in colours]
+    # The series must have a monotone greyscale order, so the keys stay
+    # distinguishable and orderable in a black and white print. They come from
+    # Crameri's categorical map, whose own order is by hue distinctness, and
+    # are sorted here; the sort is the reason this assertion can hold.
+    grey = [style._luminance(colour) for colour in colours]
     assert grey == sorted(grey)
+
+
+def test_the_categorical_series_is_a_prefix_so_adding_one_recolours_nothing():
+    """A three-series figure and a four-series figure share three colours.
+
+    This is the property that makes the series usable across nine figures. A
+    palette sampled at *n* fixed positions along a ramp does not have it: every
+    existing series moves when one is added.
+    """
+    assert style.series(3) == style.series(4)[:3]
+    assert style.series(2) == style.series(4)[:2]
+
+
+def test_the_series_refuses_more_colours_than_it_can_separate():
+    """Four is measured, not chosen. See `style.SERIES`."""
+    with pytest.raises(ValueError, match="other than colour"):
+        style.series(len(style.SERIES) + 1)
+
+
+def test_categories_is_still_spelled_the_old_way_for_existing_callers():
+    assert style.categories(3) == style.series(3)
 
 
 def test_conventions_forbid_gridlines_and_embed_fonts():

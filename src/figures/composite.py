@@ -91,8 +91,8 @@ def composite_figure(spec=None, corrected=None, counts=None, absent=None,
 
 def _overlay(ax, spec, extent, provinces, land) -> None:
     """Boundaries and frame, drawn over the field so the geography stays read."""
-    land.boundary.plot(ax=ax, color=style.MAP_COASTLINE, linewidth=0.45, zorder=4)
-    provinces.boundary.plot(ax=ax, color=style.MAP_BOUNDARY, linewidth=0.6,
+    land.boundary.plot(ax=ax, color=style.role("coastline"), linewidth=0.45, zorder=4)
+    provinces.boundary.plot(ax=ax, color=style.role("boundary"), linewidth=0.6,
                             zorder=5)
     geo.apply_projection(ax, extent)
     xticks, yticks = geo.graticule(extent, step=2.0)
@@ -103,7 +103,7 @@ def _overlay(ax, spec, extent, provinces, land) -> None:
     for spine in ax.spines.values():
         spine.set_visible(True)
         spine.set_linewidth(0.7)
-        spine.set_edgecolor(style.MAP_BOUNDARY)
+        spine.set_edgecolor(style.role("boundary"))
 
 
 def _draw_value_panel(ax, spec, extent, corrected, absent, provinces, land):
@@ -124,8 +124,9 @@ def _draw_value_panel(ax, spec, extent, corrected, absent, provinces, land):
                                      absent=absent)
     _overlay(ax, spec, extent, provinces, land)
     ax.legend(handles=[fields.absence_handle()], loc="lower left",
-              labelcolor="black", handlelength=1.2, borderpad=0.35,
-              frameon=True, facecolor="white", edgecolor="none",
+              labelcolor=style.role("label_text"), handlelength=1.2,
+              borderpad=0.35, frameon=True, facecolor=style.role("page"),
+              edgecolor="none",
               framealpha=0.92)
     return mesh
 
@@ -174,5 +175,5 @@ def _class_bar(fig, ax, label, top: int) -> None:
     cax.set_yticks([])
     for spine in cax.spines.values():
         spine.set_linewidth(0.6)
-        spine.set_edgecolor(style.MAP_BOUNDARY)
+        spine.set_edgecolor(style.role("boundary"))
     cax.set_xlabel(label, fontsize=style.LABEL_SIZE, labelpad=3)

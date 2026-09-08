@@ -2329,3 +2329,118 @@ have told a later reader that the sea tone means something here.
 That probe is worth keeping as a habit. A figure element can be present in the
 code, correct in isolation, and contribute nothing to the image, and no test of
 the code will say so.
+
+
+## The palette is a set of roles, and a role knows what it is drawn against
+
+Three figures existed and each had picked its own colours: the coverage curve
+sampled four fixed positions along batlow, the composite used batlow and lipari
+as ramps, and the study area map carried six constants named `MAP_*`. Nothing
+was wrong with any of them individually and there was no shared language, with
+six more figures to come.
+
+`src/figures/style.py` now holds 16 **roles**. A role is a job on the page --
+`sea`, `coastline`, `absent_fill`, `label_halo` -- carrying its colour, what
+kind of mark it is, why it exists, and, the part that matters, the set of other
+roles it is actually drawn **against**. A figure calls `style.role("sea")` and
+cannot name a colour of its own; `tests/test_figures_palette.py` walks each
+figure module's syntax tree and fails on any colour-shaped string literal, with
+a positive control so that a scan finding nothing is distinguishable from a
+scan that searched nothing.
+
+### Why adjacency, and not a flat list
+
+The obvious structure is a dictionary of names to colours and a test that every
+pair separates by 0.15 in luminance. That test cannot pass and it is worth
+being precise about why: 0.15 steps fit seven values into a zero-to-one scale,
+and there are 16 roles. The first attempt at this section was going to record
+which pairs "failed"; what it actually recorded was that the test was wrong.
+
+Adjacency is the fix. A place marker and a neighbouring province's boundary
+never have to be told apart by tone, because one is a dot and the other is a
+line. A coastline and the sea it separates absolutely do. So each role names
+what it meets, the graph's symmetry is asserted -- an adjacency one side claims
+and the other does not is a bug in the declaration, and two such bugs were
+caught this way -- and the checks run over 28 declared pairs.
+
+The numbers: minimum luminance gap over the declared pairs
+**0.157**, at `lattice` against `sea`. Minimum over
+*all* pairs 0.000, at `absent_fill` against `relief_light`, which is reported
+and deliberately not asserted: those two are near-white and are drawn in
+different figures, so they never meet.
+
+### The over-constrained corner, which changed a design
+
+The relief band takes the top of the luminance scale, so every line on the map
+has to fit below it. Measured, with the band's floor at 0.74, there is **no
+assignment** that puts the sea, a coastline and a lattice line all 0.15 apart
+from each other and all 0.15 below the band. Four classes need 0.45 of range
+and the constraint leaves less.
+
+That is a finding about the figure, not about the palette. The lattice and the
+coastline only ever meet in the detail box, so the detail box does not stroke a
+coastline: at the size it is drawn the tone step from sea to lit relief is 0.47,
+which is three times what a stroke would add. The constraint was measured and
+then a design decision was taken; it was not worked around by relaxing the
+convention.
+
+### Colour vision deficiency, which was never checked before
+
+The repository had greyscale checks in two test files and **no colour-vision
+check anywhere**. The brief that asked for these to be "moved" was describing a
+consolidation of one thing and the creation of another.
+
+`style.simulate_cvd` implements the Vienot-Brettel-Mollon dichromat simulation
+directly rather than taking a dependency, because a figure standard that rests
+on an unpinned package is not a standard, and because a simulation that quietly
+returned its input would pass every test written against it -- so one test
+asserts that the simulation changes colours at all. Minimum CIE76 distance over
+the declared pairs: protanopia **14.4**, deuteranopia **14.4**,
+tritanopia **14.4**, against a stated convention of 10. That
+threshold is this project's, roughly ten just-noticeable differences, and is
+labelled as such rather than borrowed as though it were published.
+
+### What the role check does not cover
+
+A sequential ramp is not a discrete role and a minimum pairwise gap says
+nothing about one: its adjacent samples are arbitrarily close by construction.
+The ramps keep the separate test they already had, for monotonicity in
+luminance and for span, in `tests/test_figures_fields.py`. The relief is a
+third case again -- a continuous grey under discrete overlays -- and is checked
+as a **band**: every overlay must sit clear *below* the darkest tone it
+reaches, which is a directional constraint a pairwise test cannot express.
+
+### The categorical series stops at four, and that is measured
+
+`style.SERIES` is Crameri's `batlowS`, the categorical variant of batlow, whose
+defining property is that **any prefix** is a maximally distinct set. That is
+what lets a three-series figure and a four-series figure share three colours
+instead of being recoloured against each other; the previous scheme, four fixed
+positions along the ramp, moved every colour when one was added.
+
+Two modifications, both stated where they are made. Entries above luminance
+0.78 are skipped, because a line at 0.85 on a white page is not ink.
+And the prefix is sorted by luminance, because `batlowS` orders for hue
+distinctness and a *series* is ordered.
+
+The set holds four. `batlowS` has no five-colour subset below the ink ceiling
+that separates by 0.15 in luminance, so `series(5)` raises rather than
+returning something that fails the convention silently. A figure needing five
+series has to distinguish them by something that is not colour.
+
+### What changed in the two existing figures
+
+**The composite is byte-identical.** Its four colours -- coastline, boundary,
+absence fill, absence outline -- were already the values the roles now carry,
+so the retrofit replaced literals with `style.role()` calls and the recipe test
+reproduced the committed PNG and PDF exactly. That is the useful outcome: the
+consolidation was a renaming there, not a redesign.
+
+**The coverage figure moved three colours and one grey.** Its series went from
+batlow sampled at 0.08, 0.38 and 0.62 -- luminances 0.189, 0.410, 0.574 -- to
+the first three of `SERIES` at 0.096, 0.325 and 0.487. All three are darker,
+which suits line and bar ink on white, and the minimum pairwise gap is 0.162
+against the old 0.164, so nothing was given up. The absent-months span moved
+from 0.88 to 0.84, because at 0.88 it sat 0.12 from the white page and
+the convention is 0.15; that was a real failure the old per-figure check had no
+reason to look for.

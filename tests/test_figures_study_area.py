@@ -137,18 +137,23 @@ def test_the_areal_classes_stay_separable_in_greyscale():
     areal = [luminance[name] for name in style.MAP_AREAL_CLASSES]
 
     gaps = [abs(a - b) for i, a in enumerate(areal) for b in areal[i + 1:]]
-    assert min(gaps) >= 0.15
+    assert min(gaps) >= style.MIN_LUMINANCE_GAP
 
 
-def test_every_map_colour_separates_from_every_other_in_greyscale():
-    """Line colours included, not only the fills.
+def test_the_map_colours_are_roles_and_the_roles_are_checked_elsewhere():
+    """The all-pairs check this file used to carry has moved, and narrowed.
 
-    A reader in black and white has to tell a lattice line from a coastline
-    as well as a fill from a fill, and the two line colours are the pair that
-    has failed twice.
+    It asserted that all six map colours separate from each other in
+    greyscale. That is no longer possible and, measured, it never was
+    necessary. With shaded relief under the overlays the relief's floor takes
+    the top 0.25 of the scale, and sea, a coastline and a lattice line cannot
+    all sit 0.15 apart in what is left; the detail box drops its coastline
+    stroke for exactly that reason. The check that replaced it is over the
+    pairs that actually meet on the page, in `tests/test_figures_palette.py`,
+    and it runs once over the role set rather than once per figure.
     """
-    luminance = style.map_luminances()
-    values = sorted(luminance.items(), key=lambda item: item[1])
-
-    for (lo_name, lo), (hi_name, hi) in zip(values, values[1:]):
-        assert hi - lo >= 0.15, f"{lo_name} {lo:.3f} vs {hi_name} {hi:.3f}"
+    for constant in ("MAP_SEA", "MAP_LAND", "MAP_STUDY_FILL", "MAP_LATTICE",
+                     "MAP_BOUNDARY", "MAP_COASTLINE"):
+        assert getattr(style, constant) in {r.colour for r in
+                                            style.ROLES.values()}
+    assert style.greyscale_report()["failures"] == []

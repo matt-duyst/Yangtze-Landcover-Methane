@@ -176,9 +176,13 @@ def from_checkpoint(path: Path | str, total_cells: int = GRID_CELLS) -> Coverage
 def coverage_figure(record: CoverageRecord, width_cm: float = style.FULL_WIDTH_CM,
                     height_cm: float | None = None):
     """Build and return the coverage figure. Writes nothing."""
-    colours = style.categories(4)
-    curve_colour, soundings_colour, granule_colour = colours[0], colours[1], colours[2]
-    absent_colour = "0.88"
+    # Three of the four ordered categorical keys, from `style.SERIES`, which
+    # is Crameri's categorical variant of the sequential map reordered by
+    # lightness. The fourth is unused here; taking a prefix rather than
+    # sampling three positions is what lets a later four-series figure keep
+    # these three unchanged.
+    curve_colour, soundings_colour, granule_colour = style.series(3)
+    absent_colour = style.role("absent_span")
 
     if height_cm is None:
         height_cm = 8.2 * (width_cm / style.FULL_WIDTH_CM)
@@ -216,7 +220,7 @@ def _draw_saturation(ax, record: CoverageRecord, colour) -> None:
     if n > RECONNAISSANCE_GRANULES:
         recon_y = 100.0 * record.fraction_at(RECONNAISSANCE_GRANULES)
         ax.plot([RECONNAISSANCE_GRANULES], [recon_y], marker="o", markersize=4.5,
-                color=colour, markerfacecolor="white", markeredgewidth=1.2,
+                color=colour, markerfacecolor=style.role("page"), markeredgewidth=1.2,
                 linestyle="none", zorder=5,
                 label=f"{RECONNAISSANCE_GRANULES} granules, {recon_y:.1f} %")
 
@@ -225,7 +229,8 @@ def _draw_saturation(ax, record: CoverageRecord, colour) -> None:
     ax.set_yticks([0, 20, 40, 60, 80, 100])
     ax.set_xlabel("Productive granules (count)")
     ax.set_ylabel(f"Grid cells covered (% of {record.total_cells})")
-    ax.legend(loc="lower right", handlelength=1.4, borderpad=0.4, labelcolor="black")
+    ax.legend(loc="lower right", handlelength=1.4, borderpad=0.4,
+              labelcolor=style.role("label_text"))
 
 
 def _draw_monthly(ax_snd, ax_gran, record: CoverageRecord, snd_colour,
@@ -300,5 +305,5 @@ def _draw_monthly(ax_snd, ax_gran, record: CoverageRecord, snd_colour,
     if absent.size:
         ax_snd.text(float(absent.mean()), 0.5, "no granules\nacquired",
                     transform=ax_snd.get_xaxis_transform(),
-                    ha="center", va="center", color="black",
+                    ha="center", va="center", color=style.role("label_text"),
                     fontsize=style.TICK_SIZE)

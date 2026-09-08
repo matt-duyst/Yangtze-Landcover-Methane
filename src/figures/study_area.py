@@ -128,11 +128,11 @@ def _label_provinces(ax, provinces) -> None:
         lon, lat, anchor = PROVINCE_LABELS[name]
         align = "right" if anchor is not None else "center"
         ax.text(lon, lat, name, ha=align, va="center", zorder=7,
-                fontsize=style.LABEL_SIZE, color="black",
+                fontsize=style.LABEL_SIZE, color=style.role("label_text"),
                 path_effects=_halo())
         if anchor is not None:
             ax.plot([lon - 0.72, anchor[0]], [lat + 0.10, anchor[1]],
-                    color="black", linewidth=0.5, zorder=6)
+                    color=style.role("label_text"), linewidth=0.5, zorder=6)
 
 
 def _halo():
@@ -143,7 +143,7 @@ def _halo():
     own province.
     """
     from matplotlib import patheffects
-    return [patheffects.withStroke(linewidth=1.8, foreground="white")]
+    return [patheffects.withStroke(linewidth=1.8, foreground=style.role("label_halo"))]
 
 
 def _legend(ax, spec) -> None:
@@ -162,9 +162,10 @@ def _legend(ax, spec) -> None:
     # Lower left: the south-west corner is land outside the study region and
     # carries the least information on the map, and the inset takes the
     # opposite corner.
-    ax.legend(handles=handles, loc="lower left", labelcolor="black",
-              handlelength=1.4, borderpad=0.45, framealpha=0.92,
-              frameon=True, facecolor="white", edgecolor="none")
+    ax.legend(handles=handles, loc="lower left",
+              labelcolor=style.role("label_text"), handlelength=1.4,
+              borderpad=0.45, framealpha=0.92, frameon=True,
+              facecolor=style.role("page"), edgecolor="none")
 
 
 def _draw_inset(ax, china, extent: Extent) -> None:
@@ -175,7 +176,7 @@ def _draw_inset(ax, china, extent: Extent) -> None:
     than the main panel's projection. Two projections in one figure is a cost;
     a locator that misrepresents the country it locates against is a worse one.
     """
-    ax.set_facecolor("white")
+    ax.set_facecolor(style.role("page"))
     for collection in china.geometry:
         parts = (collection.geoms if collection.geom_type == "MultiPolygon"
                  else [collection])
@@ -189,7 +190,7 @@ def _draw_inset(ax, china, extent: Extent) -> None:
     corners_lat = [extent.south, extent.south, extent.north, extent.north,
                    extent.south]
     x, y = geo.to_albers(corners_lon, corners_lat)
-    ax.fill(x, y, facecolor=style.MAP_STUDY_FILL, edgecolor="black",
+    ax.fill(x, y, facecolor=style.MAP_STUDY_FILL, edgecolor=style.role("label_text"),
             linewidth=0.8, zorder=2)
 
     xs, ys = geo.to_albers([INSET_EXTENT.west, INSET_EXTENT.east],
