@@ -104,7 +104,15 @@ Huang, J., and Yuan, W. (2023).** High-resolution distribution maps of
 single-season rice in China from 2017 to 2022. *Earth System Science Data* 15,
 3203–3222.
 `10.5194/essd-15-3203-2023` — peer-reviewed paper; describes a dataset used.
-Cited in `config/sources.yml`.
+The method and sensors were read off the article rather than assumed, because
+`figures/landcover_native.png` states them beside a 30 m Landsat product and
+the contrast is the caption's point: Sentinel-1A synthetic aperture radar and
+Sentinel-2 optical imagery at 10 or 20 m, classified by time-weighted dynamic
+time warping with translation and stretching, over a ranking-based fusion of
+the SWIR1 optical band and the VH radar polarisation. The files this
+repository reads measure 0.00008983 degrees per pixel, which is the 10 m
+variant.
+Cited in `config/sources.yml`, `figures/README_fragments.md`.
 
 **Shen, R., Pan, B., Peng, Q., Dong, J., Chen, X., Zhang, X., and others
 (2026).** High-resolution distribution maps of single-season rice in China from

@@ -59,7 +59,7 @@ rather than leaving a reader to wonder. Four reasons, all recorded in
   it between 2023 and 2024 alone. Half the study region cannot contribute a
   year-on-year value.
 * Anhui's rasters classify only the part of the province south of 33.3462 N and
-  east of 115.2682 E, in every year, which is 86.8 percent of it.
+  east of 115.2682 E, in every year, which is 86.1 percent of it.
 * GloRice reaches 2000 but allocates official statistics to grid cells through
   a model rather than observing extent, and correlates with impervious fraction
   at Spearman +0.5613, so a GloRice rice trend partly measures development.

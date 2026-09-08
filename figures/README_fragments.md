@@ -279,7 +279,7 @@ NESDC classification begins in 2017 and reaches neither 2000 nor 2010;
 Shanghai's provincial totals are pinned across 2019 to 2025 and Jiangsu's
 across 2020 to 2025 and again over 2017 to 2018, with the whole-raster count
 held fixed while the classified area relocates, so half the study region cannot
-contribute a year-on-year value; Anhui's rasters classify only the 86.8 percent
+contribute a year-on-year value; Anhui's rasters classify only the 86.1 percent
 of the province south of 33.3462 north and east of 115.2682 east; and GloRice,
 which does reach 2000, allocates official statistics to grid cells through a
 model rather than observing extent and correlates with impervious fraction at
