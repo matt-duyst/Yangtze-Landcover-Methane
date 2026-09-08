@@ -264,6 +264,20 @@ def _at_luminance(colour, target: float):
     return tuple(np.clip(rgb * (target / current), 0.0, 1.0))
 
 
+def _desaturate(colour, amount: float):
+    """Pull ``colour`` toward its own grey by ``amount``, keeping luminance.
+
+    A ground tone at high chroma reads as a thematic class rather than as
+    ground. The first rebuilt draft put land outside the study region at
+    batlow's own chroma and it came out salmon, which a reader reasonably
+    took to mean something.
+    """
+    import matplotlib.colors as mcolors
+    rgb = np.array(mcolors.to_rgb(colour))
+    grey = _luminance(rgb)
+    return tuple(np.clip(rgb * (1 - amount) + grey * amount, 0.0, 1.0))
+
+
 def _role(name, colour, kind, why, against=()):
     return Role(name=name, colour=_hex(colour), kind=kind, why=why,
                 against=frozenset(against))
@@ -278,7 +292,26 @@ _GREY = sequential(GREYSCALE)
 # of the *darkest* tone the relief reaches. Widening the band by 0.1 at the
 # dark end costs 0.1 of the range every line colour has to fit into.
 RELIEF_LIGHT_LUMINANCE = 0.97
-RELIEF_DARK_LUMINANCE = 0.74
+RELIEF_DARK_LUMINANCE = 0.66
+
+# How a hillshade's 0-255 digital numbers become positions in the band.
+#
+# Measured over the 4.02 million land pixels of the committed relief, not
+# assumed: the 2nd percentile is 118, the 98th is 220, the median is 181, and
+# the quartiles are 179 and 182. Four fifths of the land sits within three
+# digital numbers of flat, because four fifths of the study area **is** flat --
+# it is a delta. Mapping the full 0-255 range onto the band therefore spends
+# nearly all of the band on tones nothing occupies and renders the mountains
+# of southern Zhejiang, which are the reason this figure has relief at all, as
+# a barely perceptible smudge. The first draft did exactly that.
+#
+# The stretch is [118, 224], which is a gain of 2.4, and it puts flat ground at
+# 0.594 of the band rather than at its top. That is why the flat-ground check
+# in `relief_report` reads the band at this position and not at its light end.
+RELIEF_STRETCH = (118.0, 224.0)
+RELIEF_FLAT_DN = 181.0
+RELIEF_FLAT_POSITION = ((RELIEF_FLAT_DN - RELIEF_STRETCH[0])
+                        / (RELIEF_STRETCH[1] - RELIEF_STRETCH[0]))
 
 _ROLE_LIST = (
     # -- ground tones. `land_outside` and `province_fill` are **tints**, not
@@ -287,28 +320,33 @@ _ROLE_LIST = (
     # these values. They are therefore checked by `relief_report()` against
     # the bands they produce, and appear in the pairwise graph only against
     # each other and the sea, which are the tones they meet at the frame.
-    _role("sea", _at_luminance(_BATLOW(0.28), 0.50), "areal",
+    _role("sea", _at_luminance(_desaturate(_BATLOW(0.28), 0.30), 0.42),
+          "areal",
           "Flat water. Its tone is not chosen but solved for: it has to clear "
           "the darkest tone the veiled out-of-region relief reaches, because a "
           "coastline alone cannot carry the land/water distinction in a print "
           "with no colour, and it has to leave the lattice somewhere to live.",
-          ("land_outside", "province_fill", "relief_dark", "boundary",
-           "coastline", "lattice")),
-    _role("land_outside", _at_luminance(_BATLOW(0.80), 0.66), "tint",
+          ("relief_dark", "boundary", "coastline", "lattice")),
+    _role("land_outside",
+          _at_luminance(_desaturate(_BATLOW(0.72), 0.55), 0.41), "tint",
           "Land beyond the four provinces. Relief is drawn over it and then "
           "veiled toward this tone, so it reads as land with terrain rather "
           "than as absence, while staying recessive. The earlier palette put "
           "it at 0.96, which is why the first version of this map read as a "
-          "study region floating in white.",
-          ("sea", "province_fill")),
-    _role("province_fill", _mix(_BATLOW(0.62), 0.72), "tint",
+          "study region floating in white. A **tint**, not a tone: what a "
+          "reader sees is the veiled relief band, so its separation from the "
+          "sea is checked by `relief_report` as the sea's clearance below "
+          "that band, not pairwise against this value.",
+          ("province_fill",)),
+    _role("province_fill", _desaturate(_mix(_BATLOW(0.62), 0.72), 0.25),
+          "tint",
           "The four study provinces. A tint over the relief, not a fill: four "
           "distinguishable fills over shaded relief is six areal classes and "
           "they cannot all separate. The boundaries and the names carry the "
           "distinction between provinces, and the tone difference a reader "
           "sees between inside and outside is the veil on the outside, not "
-          "this.",
-          ("sea", "land_outside")),
+          "this. A tint, checked as a band; see `land_outside`.",
+          ("land_outside",)),
 
     # -- the relief band's two ends. Every line drawn over land clears the
     # darker of these, which is the binding constraint on the line palette.
@@ -341,23 +379,23 @@ _ROLE_LIST = (
           ("absent_fill",)),
 
     # -- lines
-    _role("boundary", "#1f1f1f", "line",
+    _role("boundary", _at_luminance("#1f1f1f", 0.08), "line",
           "A study province boundary, and every panel frame. The heaviest "
           "line on the map, because it is what the province fill no longer "
           "does.",
           ("sea", "relief_dark", "relief_light", "absent_fill",
            "boundary_minor", "coastline")),
-    _role("boundary_minor", "#8a8a8a", "line",
+    _role("boundary_minor", _at_luminance("#8a8a8a", 0.42), "line",
           "A neighbouring province's boundary. Present so the study region "
           "sits in a country rather than in white, and lighter than the study "
           "boundary so a reader can see which four provinces are the subject "
           "without reading the names.",
           ("relief_dark", "relief_light", "boundary")),
-    _role("coastline", "#3f4a52", "line",
+    _role("coastline", _at_luminance("#3f4a52", 0.26), "line",
           "Where land meets water in the main panel. It separates from both, "
           "which is a tighter constraint than any other line on the map has.",
           ("sea", "relief_dark", "relief_light", "absent_fill", "boundary")),
-    _role("lattice", _at_luminance("#5c5c5c", 0.34), "line",
+    _role("lattice", _at_luminance("#5c5c5c", 0.26), "line",
           "An analysis cell edge, drawn only in the detail box now. It sits "
           "over sea and over relief, so it carries the coastline's two-sided "
           "constraint -- and that is why the detail box does not stroke a "
@@ -385,7 +423,7 @@ _ROLE_LIST = (
           ("absent_span", "label_text")),
 
     # -- marks and text
-    _role("place_marker", "#1f1f1f", "mark",
+    _role("place_marker", _at_luminance("#1f1f1f", 0.08), "mark",
           "A populated place. Same ink as the study boundary: a dot and a "
           "line are not confusable by shape, so they need no tonal separation "
           "from each other and both want to be the darkest thing on the page.",
@@ -479,6 +517,17 @@ def relief_cmap(name: str = GREYSCALE):
         "relief", np.repeat(target[:, None], 3, axis=1))
 
 
+def relief_normalise(digital_numbers):
+    """Hillshade digital numbers to positions in :func:`relief_band`.
+
+    Applies :data:`RELIEF_STRETCH` and clips. See the comment beside that
+    constant for the measurement that set it.
+    """
+    low, high = RELIEF_STRETCH
+    return np.clip((np.asarray(digital_numbers, dtype="float64") - low)
+                   / (high - low), 0.0, 1.0)
+
+
 def veil(colour, toward, alpha: float):
     """``colour`` composited under ``toward`` at ``alpha``. Straight alpha."""
     import matplotlib.colors as mcolors
@@ -490,7 +539,7 @@ def veil(colour, toward, alpha: float):
 #: How far out-of-region relief is pushed toward `land_outside`. The study
 #: region is distinguished by **contrast**, not by hue, so the distinction
 #: survives a black and white print; a tint alone would not.
-LAND_VEIL_ALPHA = 0.55
+LAND_VEIL_ALPHA = 0.35
 #: How far in-region relief is tinted toward `province_fill`. Small, because
 #: the relief has to stay readable underneath it -- the terrain is the reason
 #: this figure has terrain.
@@ -532,16 +581,23 @@ def relief_report() -> dict:
     outside = veiled_band("land_outside", LAND_VEIL_ALPHA)
     lum = {n: ROLES[n].luminance for n in OVER_RELIEF}
     clearance = {n: min(inside[0], outside[0]) - v for n, v in lum.items()}
+
+    def at_flat(band):
+        return band[0] + RELIEF_FLAT_POSITION * (band[1] - band[0])
+
+    flat_gap = at_flat(inside) - at_flat(outside)
     return {
         "inside_band": inside,
         "outside_band": outside,
-        "flat_ground_gap": inside[1] - outside[1],
+        "inside_flat": at_flat(inside),
+        "outside_flat": at_flat(outside),
+        "flat_ground_gap": flat_gap,
         "sea_clearance": outside[0] - ROLES["sea"].luminance,
         "overlay_clearance": clearance,
         "failures": (
             [(n, c) for n, c in clearance.items() if c < MIN_LUMINANCE_GAP]
-            + ([("flat ground", inside[1] - outside[1])]
-               if inside[1] - outside[1] < MIN_LUMINANCE_GAP else [])
+            + ([("flat ground", flat_gap)]
+               if flat_gap < MIN_LUMINANCE_GAP else [])
             + ([("sea", outside[0] - ROLES["sea"].luminance)]
                if outside[0] - ROLES["sea"].luminance < MIN_LUMINANCE_GAP
                else [])),

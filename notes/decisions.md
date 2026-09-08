@@ -2444,3 +2444,279 @@ against the old 0.164, so nothing was given up. The absent-months span moved
 from 0.88 to 0.84, because at 0.88 it sat 0.12 from the white page and
 the convention is 0.15; that was a real failure the old per-figure check had no
 reason to look for.
+
+
+## The study area map was rebuilt, not adjusted
+
+Three figures were looked at together for the first time and this one did not
+survive it. The verdict was that it had no geography in it: land outside the
+four provinces was near-white and so read as absence rather than as land,
+nothing outside the study region was named, and a reader who does not already
+know eastern China learned nothing from it about where this is. Four provinces
+shared one fill and were distinguished only by their boundaries; Shanghai
+needed a leader line to a sliver, which is the tell that an encoding is not
+working; the inset sat over Zhejiang's coast and the Zhoushan archipelago,
+covering data; and the lattice was drawn at full extent over sea and
+out-of-region land, where 66 lines are hatching rather than reference.
+
+### The relief is the argument, not the decoration
+
+The map now has shaded relief because of a number, not because relief looks
+good. Measured on the committed per-cell elevation: the composite's 97 absent
+cells have a **median elevation of 502 m** against **35 m** for the 926
+observed ones, 50 of the 97 sit above 500 m against 24 of the 926, and the
+largest connected block of 47 has a median of 552 m and reaches 1,119 m. That
+block is 35 cells falling mostly in Zhejiang and 11 in Fujian, along the
+southern edge of the box.
+
+So the terrain is why the next figure has holes, and a reader who has seen it
+here does not have to be told. That is what makes a reference map earn its
+place rather than orient and stop.
+
+One premise from the brief did not survive the check and is worth stating
+because it is a definition problem, not an arithmetic one. "75 of the 97 absent
+cells are on land" is not a single number: 93 of the 97 touch land at all, 83
+have their centre on land, 81 are more than half land and **74** are entirely
+land. Four defensible readings, four different answers, none of them 75. The
+caption says which it means.
+
+### Two terrain sources, and the resolution claim that half held
+
+The brief predicted that Natural Earth's 10 m raster would be visibly soft in
+the main panel: 21,600 by 10,800 is 60 px/deg, the study box is 7.75 degrees
+wide, so 465 pixels against a 2,007-pixel target at 17 cm and 300 dpi, a 4.3
+times upscale.
+
+The arithmetic is exactly right and the conclusion was checked by rendering
+rather than accepted. Two corrections came out of it. The map panel is not the
+figure: at 10.2 cm of drawn width it wants 1,205 pixels, so the upscale is
+**2.8 times, not 4.3**. And at 2.8 times the Natural Earth raster does not look
+obviously soft. It looks, if anything, more contrasty than a naive GLO-90
+hillshade, because it is a cartographically tuned product with its own
+exaggeration and generalisation baked in.
+
+What is measurable is structure rather than softness: upscaled to the panel's
+width, the Natural Earth raster carries a mean absolute gradient of 1.84 DN per
+pixel against 5.48 for GLO-90 downsampled to the same width, so it holds about
+a third of the local detail. And there is a better reason than sharpness for
+preferring the DEM, which the softness argument obscures: an elevation model is
+a measurement this repository can quote numbers from and check a claim against,
+while a shaded-relief image is a rendering. The 502 m and 35 m above could not
+have come from the Natural Earth raster at all.
+
+Natural Earth is used for the inset, where 30 px/deg against about 8 needed is
+ample and where hypsometric tints cost nothing because nothing is drawn over
+them.
+
+### What the DEM's readme actually warns about
+
+Both cautions were checked rather than carried over.
+
+**Ocean areas have no tiles.** True, and it matters for a delta: 20 of the 100
+one-degree tiles over the padded box are absent and all 20 are offshore. They
+are filled with zero, which the readme instructs, and the sea is then painted
+over anyway.
+
+**The non-square pixel warning does not reach this study area.** The readme's
+table gives a longitude spacing that widens with **latitude** -- 1x from 0 to
+50 degrees, 1.5x to 60, and reaching 10x above 85 -- not with longitude. At
+26.9 to 35.3 N every one of the 80 tiles is 1200 by 1200 at 1/1200 degree in
+both axes, measured across all of them with no variation. The 1:5
+height-to-width ratio that motivates cubic resampling elsewhere occurs in the
+80 to 85 degree band. Nothing about southern Zhejiang being rugged brings it
+closer.
+
+Cubic was used anyway, because it is the right resampler for a 3.9x decimation
+whatever the pixel shape, and the seams were checked anyway rather than skipped
+on the strength of the above. Over the rugged 27 to 29.5 N band the mean second
+difference along tile-edge columns is **0.989** of its value elsewhere under
+cubic and **1.041** under bilinear. A ratio near one is the answer. A ratio
+well above one would have been the artefact.
+
+The bucket is `copernicus-dem-90m`. The brief named `copernicus-dem-30m`, which
+serves GLO-30 and a **byte-identical readme**, so the readme can be read from
+the wrong bucket without any sign of it. In a tile name, `10` is GLO-30's arc
+second spacing and `30` is GLO-90's, which is the reverse of the bucket names.
+
+### Square in metres, not square in degrees
+
+`gdaldem` takes one vertical-to-horizontal scale and applies it to both axes,
+so a hillshade computed on a lat/lon grid under-weights east-west slope by
+1/cos(latitude), which is 17 percent here. The DEM is therefore warped onto a
+grid whose pixels are square in **ground metres** at 31.075 N, the same centre
+latitude the display aspect uses, after which `-s 111120` is exact in both
+axes. That is why the committed relief's longitude step is larger than its
+latitude step.
+
+### The relief's resolution was set by what a PDF can hold
+
+200 rows per degree, which is 1.29 times what the panel resolves at 300 dpi.
+The first build used 300 and the reason to come down is not the committed file,
+though that falls from 2.13 MB to 0.92 MB. It is that a hillshade computed at
+twice the resolution a page can show is half noise, and noise is exactly what a
+deflate stream inside a PDF cannot compress.
+
+The route to that finding is worth recording because two intermediate steps
+were wrong. Downsampling the array before `imshow` barely moved the file, and
+quantising its colours made it **larger**. Both because matplotlib resamples an
+image to the output device's resolution when it writes a vector file: the
+embedded image is about 1,205 pixels wide whatever is handed to it, so the only
+levers are the device resolution, which the venue fixes, and how compressible
+the content is at that size. Quantising a source that is then bilinearly
+resampled produces more distinct values, not fewer.
+
+What did work was reducing the source's own detail. 300 rows per degree gave a
+1.76 MB vector against a 2 MB ceiling; 200 gives 1.66 MB; 150 gives 1.49 MB and
+was rejected because it puts the relief below the panel's own resolution, which
+is the softness this whole exercise was about avoiding.
+
+Two smaller savings came from the same audit. The relief was being drawn as two
+full-extent images with two clip paths, one veiled and one tinted, each hidden
+wherever the other was visible; compositing them against a rasterised province
+mask draws one. And the detail box was drawing the whole eight-degree raster
+into a 0.75 degree panel and clipping it, which is five million pixels to show
+forty thousand.
+
+### The cities are a threshold and two filters, because a threshold alone fails
+
+Natural Earth's populated places layer carries `SCALERANK`, and the brief's
+expectation was that a threshold on it would be a rule rather than a hand-picked
+list. It would be, and it cannot produce the set this map needs: **Natural Earth
+does not rank the four provincial capitals together.** Shanghai is rank 0,
+Nanjing and Hangzhou are rank 2, and **Hefei is rank 4**. A threshold reaching
+Hefei also reaches fourteen other places among the 57 in the study box,
+including Zaozhuang and Linyi in Shandong and Nanchang in Jiangxi, which is more
+than an 11 cm panel can label.
+
+The rule adopted is still a rule and still comes entirely from the layer's own
+fields: scale rank 4 or better, feature class `Admin-1 capital`, admin-1 unit
+one of the four study provinces. Four places, and they are there because of what
+they are.
+
+Suzhou, Wuxi and Ningbo are rank 4 and are left off. The crowding numbers:
+Suzhou and Wuxi are 0.35 degrees apart, 4.6 mm on the drawn panel, and both sit
+in the same cluster as Shanghai, whose label already needs the room. The panel
+carries 12 pieces of text as it is.
+
+**The populated places layer was not in the cartopy cache**, unlike the province
+and land layers. The cache on this machine holds 14 layers, all physical or
+administrative boundaries, and no populated places at any scale. The habit of
+checking the cache first is still right; this time it returned nothing and the
+layer was fetched, which is the better outcome anyway because the archive
+carries a `VERSION.txt` and the cached shapefiles do not.
+
+### Shanghai is labelled by its own city marker
+
+At this scale the word "Shanghai" is about 1.2 degrees wide and the municipality
+is 0.9, so it cannot sit inside its own polygon and the first version drew a
+leader line to it. The answer is not a smaller font or a better leader: Shanghai
+is also one of the four provincial capitals, so its city label names the
+municipality too, and a name beside its own marker is a label in place. The map
+therefore carries three province names and four city names rather than four and
+four, and no line is drawn from any name to anything. A test asserts that every
+line on the main panel is a marker.
+
+### The study region is carried by contrast, and the sea paid for it
+
+Four distinguishable fills over relief was not attempted again; the earlier
+finding stands that six areal classes cannot separate. What replaced it is one
+raster drawn twice: veiled toward `land_outside` beyond the four provinces and
+tinted toward `province_fill` inside them.
+
+The veil rather than the tint is what does the work, and the reason is
+greyscale. A hue difference between inside and outside vanishes in a black and
+white print; a **contrast and lightness** difference does not. Flat ground reads
+at 0.849 inside and 0.692 outside, a gap of 0.156, which is the convention.
+
+That gap was expensive and the price fell on the sea. Every line on the map has
+to sit 0.15 below the darkest tone the veiled relief reaches, which is 0.573, so
+the whole line palette lives below 0.42; and the sea has to clear the same
+floor, which puts it at 0.42 rather than the 0.96-adjacent tone the old palette
+had room for. The map is darker than it was and that is the cost of the region
+being legible without colour.
+
+### The lattice became a detail box, and the detail box lost its coastline
+
+The lattice is gone from the main panel. The composite figure already shows the
+analysis resolution by drawing the cells as the data, so 66 lines here were
+redundant and cost the panel a layer of texture over ground that is now
+carrying terrain.
+
+What replaced it is six cells over the Yangtze mouth at 4.6 times the main
+panel's scale, in the right-hand column where it covers nothing, **with the same
+six outlined on the main panel at their drawn size**. The pair is the point: the
+enlargement is legible and the rectangle is honest about how big a cell actually
+is on this page, and neither alone answers "what does 0.25 degrees mean".
+
+The window is 121.30 to 122.05 east, 31.45 to 31.95 north, chosen for a land
+fraction of 0.58. A window that is nearly all land or nearly all water shows a
+grid on a plain background.
+
+The detail box draws **no coastline stroke**, and that is a measured decision.
+A lattice line there crosses both sea and relief, so it carries the coastline's
+two-sided constraint as well as its own, and with the relief band's floor where
+it is there is no assignment that holds the sea, a coastline and a lattice line
+all 0.15 apart and all clear of the band. The tone step from sea to lit relief
+is 0.47 at the size the box is drawn, three times what a stroke would add, so
+the stroke is what was dropped.
+
+There is still no scale bar. What the detail box carries instead is a statement
+about one cell at one stated latitude -- 24 by 28 km at 31.7 N, computed on the
+authalic sphere this project measures areas on -- because a scale bar on an
+equirectangular map is correct along one parallel only, and a claim about a
+named latitude survives being read off the wrong part of the map.
+
+### The inset asserts nothing, and that took finding out what it used to assert
+
+The inset is out of the frame, in the right-hand column. A portrait map at full
+width leaves 4.5 cm of page and the inset now occupies it rather than covering
+Zhejiang's coast.
+
+The boundary question was raised deliberately rather than inherited. The old
+inset outlined the 31 admin-1 units filed under `admin = "China"` in Natural
+Earth's 50 m layer, and both this file and `data/reference/README.md` recorded
+that Taiwan, Hong Kong and Macau were therefore excluded because Natural Earth
+carries them separately. The conclusion was right and **the mechanism was
+wrong**: the 50 m admin-1 layer has no Taiwan, Hong Kong or Macau features at
+all. Only the 10 m layer carries them, as 21, 1 and 1 units against China's 32.
+Nothing was excluded, because there was nothing to exclude.
+
+The inset now draws terrain, which has no opinion, and over it every admin-0
+land boundary line Natural Earth files in the extent -- 59 of them, unfiltered,
+with no country named or filled. Taiwan appears as its coastline does, like
+Hainan and Kyushu. Hong Kong and Macau are not distinguished, because that layer
+carries no feature for either. Natural Earth classes six of the 59 as `Disputed
+(please verify)` and ships 34 per-country viewpoint fields, `FCLASS_CN` and
+`FCLASS_TW` among them, which is the source saying in its own data that the
+classification depends on who is asked. The figure carries a line saying whose
+lines these are and the caption says this repository takes no position.
+
+### The figure is full width now, which reverses an earlier decision
+
+`notes/decisions.md` recorded that this map was 11.4 cm and that "the map is not
+full width, and that is the point of having a default": its extent draws 1.24
+times taller than wide, so at 17 cm it would have sat in a band of white.
+
+That reasoning was correct for a figure that was only a map. It is now a map and
+a column -- locator, detail box, keys, source notice -- and the column is
+precisely the band of white the earlier decision was avoiding. The map itself is
+10.2 cm wide, slightly narrower than the 11.4 it had; what changed is that the
+page beside it is doing something.
+
+The keys moved into that column too. They used to sit in the map's lower-left
+corner, and off the map they cover no geography at all. That is the same
+reasoning that moved the inset, applied to the other thing that was sitting on
+the data.
+
+### The attribution is on the figure, which the standard does not forbid
+
+`What the map leaves out` still holds: no north arrow, no scale bar, no drop
+shadows, no coordinate-system stamp of the kind every 2023 ArcGIS export in
+`legacy/figures/` carries.
+
+The Copernicus notice is not that stamp. A coordinate caption is a machine's
+default, printed because nobody turned it off; this is a licence condition,
+Article 6(b), and it is on the image because a figure travels away from its
+caption and the obligation attaches to the image. Article 6(c)'s liability
+sentence goes in the caption and in `data/reference/README.md`, since it is
+about redistribution rather than display.

@@ -364,9 +364,19 @@ the ArcGIS figure exports, whose provenance is documented but which no code in
 this repository produces.
 
 [`figures/`](figures/) holds the generated figures, committed as a PDF and PNG pair each,
-with their captions in [`figures/README_fragments.md`](figures/README_fragments.md). Two of a planned nine
-exist. The 2023 exports in [`legacy/figures/`](legacy/figures/) are not a substitute and are kept
+with their captions in [`figures/README_fragments.md`](figures/README_fragments.md). Three of a planned nine
+exist. Every colour any of them draws is a named role in
+[`src/figures/style.py`](src/figures/style.py), checked once over the whole role set for greyscale and
+colour-vision separation; a figure module may not name a colour, and a test
+scans for it. The 2023 exports in [`legacy/figures/`](legacy/figures/) are not a substitute and are kept
 only as a record of the original document.
+
+One committed input carries an attribution obligation: the shaded relief in
+[`data/reference/yrd_hillshade.tif`](data/reference/yrd_hillshade.tif) is derived from Copernicus DEM GLO-90,
+whose licence requires a stated notice for adapted data and for redistribution.
+Both notices are quoted verbatim in [`data/reference/README.md`](data/reference/README.md), in
+[`data/manifest.json`](data/manifest.json), on the study area figure itself and in its caption.
+Everything else in [`data/reference/`](data/reference/) is Natural Earth and public domain.
 
 ## Licence and citation
 

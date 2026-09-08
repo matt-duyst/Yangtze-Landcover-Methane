@@ -64,6 +64,13 @@ PROVINCES = REFERENCE_DIR / "yrd_provinces.geojson"
 LAND = REFERENCE_DIR / "yrd_land.geojson"
 CHINA = REFERENCE_DIR / "china_admin1_dissolved.geojson"
 
+#: Terrain and place layers, built by `scripts/build_map_reference.py`.
+HILLSHADE = REFERENCE_DIR / "yrd_hillshade.tif"
+INSET_RELIEF = REFERENCE_DIR / "china_hypsometric.tif"
+PLACES = REFERENCE_DIR / "yrd_places.geojson"
+NEIGHBOURS = REFERENCE_DIR / "yrd_neighbours.geojson"
+INSET_BOUNDARIES = REFERENCE_DIR / "inset_boundaries.geojson"
+
 
 @dataclass(frozen=True)
 class Extent:
@@ -217,3 +224,55 @@ def read_layer(path: Path):
     if frame.crs is not None and frame.crs.to_epsg() != 4326:
         frame = frame.to_crs(GEOGRAPHIC)
     return frame
+
+
+def read_raster(path: Path):
+    """A committed reference raster and the extent matplotlib wants for it.
+
+    Returns ``(array, (west, east, south, north))``. Bands come back as a
+    (rows, cols) array for a single band and (rows, cols, bands) otherwise, so
+    the caller can hand either straight to ``imshow``.
+    """
+    import rasterio
+
+    with rasterio.open(path) as src:
+        data = src.read()
+        bounds = src.bounds
+    array = data[0] if data.shape[0] == 1 else np.moveaxis(data, 0, -1)
+    return array, (bounds.left, bounds.right, bounds.bottom, bounds.top)
+
+
+def polygon_path(geometries):
+    """One matplotlib Path covering every polygon in ``geometries``.
+
+    Used as a clip path, which is how the relief is drawn twice -- once veiled
+    for land outside the study region and once tinted inside it -- from a
+    single raster and with no second copy of the array. Interiors are included
+    as reversed rings so a hole in a polygon stays a hole.
+    """
+    from matplotlib.path import Path as MplPath
+
+    vertices, codes = [], []
+
+    def add(ring, reverse=False):
+        points = list(ring.coords)
+        if reverse:
+            points = points[::-1]
+        vertices.extend(points)
+        codes.extend([MplPath.MOVETO] + [MplPath.LINETO] * (len(points) - 2)
+                     + [MplPath.CLOSEPOLY])
+
+    for geometry in geometries:
+        if geometry is None or geometry.is_empty:
+            continue
+        parts = (geometry.geoms if geometry.geom_type.startswith("Multi")
+                 else [geometry])
+        for part in parts:
+            if part.geom_type != "Polygon":
+                continue
+            add(part.exterior)
+            for interior in part.interiors:
+                add(interior, reverse=True)
+    if not vertices:
+        raise ValueError("no polygon geometry to build a clip path from")
+    return MplPath(np.asarray(vertices), np.asarray(codes))

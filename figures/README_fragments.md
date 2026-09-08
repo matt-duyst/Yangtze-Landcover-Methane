@@ -52,36 +52,80 @@ Regenerate with `python scripts/make_coverage_figure.py`.
 
 ### Study area and analysis grid
 
-![The four Yangtze River Delta provinces with the 0.25 degree analysis grid, and a locator inset](study_area.png)
+![The four Yangtze River Delta provinces on shaded relief, with a locator, a detail box showing the 0.25 degree analysis cells, and the neighbouring provinces named](study_area.png)
 
-**The four provinces of the Yangtze River Delta region, with the 0.25 degree
-analysis grid that every later figure in this repository is drawn on.** The
-grid is 33 rows by 31 columns, 1,023 cells, spanning 114.8 to 122.55 east and
-26.95 to 35.2 north. Those are the bounds the cells actually occupy, not the
-declared box of 114.8 to 122.6 and 27.0 to 35.2: the cell count rounds down in
-longitude and up in latitude, so the grid stops 0.05 degrees short of the
-declared east edge and runs 0.05 degrees past the declared south edge.
+**The four provinces of the Yangtze River Delta region, on the terrain that
+explains where the methane composite has no data.** The analysis grid is 33
+rows by 31 columns, 1,023<!--#composite.total_cells--> cells at 0.25 degrees,
+spanning 114.8 to 122.55 east and 26.95 to 35.2 north. Those are the bounds the
+cells actually occupy, not the declared box of 114.8 to 122.6 and 27.0 to 35.2:
+the cell count rounds down in longitude and up in latitude, so the grid stops
+0.05 degrees short of the declared east edge and runs 0.05 degrees past the
+declared south edge.
 
-All boundaries are Natural Earth, 10 m for the provinces and coastline and
-50 m for the inset outline, which is the extent of the 31 units Natural Earth
-files under China and so excludes Taiwan, Hong Kong and Macau. The main map is
-equirectangular with its standard parallel at 31.075 north, the centre of the
-study area, so a degree of longitude is drawn 0.857 times as long as a degree
-of latitude and the analysis cells stay rectangular; scale is exact only at
-that parallel, running 3.9 percent small at the southern edge and 4.8 percent
+The main panel is shaded relief from Copernicus DEM GLO-90 at 90 m, drawn over
+all land in the frame and then veiled outside the four study provinces and
+tinted inside them, so the study region is separated by tone as well as by its
+heavier boundary and survives a print with no colour. The five provinces that
+share the frame are named in italic; each is every admin-1 unit intersecting
+the drawn extent, not a chosen list. Marked places are the four provincial
+capitals, selected as Natural Earth's admin-1 capitals of the four study
+provinces at scale rank 4 or better, which is the narrowest rule that returns
+all four: Shanghai is rank 0, Nanjing and Hangzhou rank 2 and Hefei rank 4, and
+a bare threshold reaching Hefei also reaches fourteen other places in the box.
+Shanghai's name serves both the municipality and the city, since the word is
+wider than the municipality at this scale. The analysis lattice is **not** drawn
+across the main panel, where 66 lines would be texture rather than reference and
+where the composite figure already shows the resolution by drawing the cells as
+the data; the detail box instead shows six cells over the Yangtze mouth at 4.6
+times the main panel's scale, and the same six are outlined on the map at their
+drawn size. One cell is 24 by 28 km at 31.7 north. The locator sits outside the
+map frame rather than over Zhejiang's coast, and draws Natural Earth's admin-0
+land boundary lines unfiltered, with no country named, filled or excluded; six
+of the 59 lines in its extent are classed "Disputed (please verify)" by Natural
+Earth itself, which also ships 34 per-country viewpoint fields, and this
+repository takes no position on any of them.
+
+The terrain is the finding, thin as a reference map's finding must be. The 97<!--#composite.uncovered_cells-->
+cells of the lattice that received no qualifying sounding in 2018 are not
+scattered evenly over it: 74<!--#composite.absent_on_land--> of them lie wholly
+on land, and their median elevation is 502<!--#composite.absent_median_elevation-->
+m against 35<!--#composite.covered_median_elevation--> m for the 926<!--#composite.covered_cells-->
+cells that were observed. 50<!--#composite.absent_above_500m--> of the 97 sit
+above 500 m, against 24<!--#composite.covered_above_500m--> of the 926. The
+largest connected group, 47<!--#composite.largest_absent_block--> cells of the
+19<!--#composite.absent_components--> the absent cells form, covers the
+mountains along the southern edge of the box, 35 of its 47 cells falling mostly
+in Zhejiang and 11 in Fujian, at a median 552 m and reaching 1,119 m. That block
+is the darkest terrain in this panel, and it is the hole in the middle of the
+composite figure's southern edge. Which cells those are is the composite
+figure's subject and is deliberately not drawn here.
+
+Boundaries, coastline, populated places and the inset relief are Natural Earth
+and are public domain; the province and land layers are 10 m and the inset
+boundaries 50 m. Shanghai's outline is the one caveat worth naming at this size:
+Natural Earth resolves the municipality with 213 vertices across four parts
+where GADM 4.1 uses 1,925 across 112, and at 1.3 cm of drawn width the
+difference is not visible, appearing as straight segments along the coast only
+above roughly three times magnification. Shaded relief is derived data and its
+licence requires the notice carried on the figure: produced using Copernicus
+WorldDEM™-90 © DLR e.V. 2010–2014 and © Airbus Defence and Space GmbH 2014–2018
+provided under COPERNICUS by the European Union and ESA; all rights reserved.
+The organisations in charge of the Copernicus programme by law or by delegation
+do not incur any liability for any use of the Copernicus WorldDEM™-90. The main
+map is equirectangular with its standard parallel at 31.075 north, the centre of
+the study area, so a degree of longitude is drawn 0.857 times as long as a
+degree of latitude and the analysis cells stay rectangular; scale is exact only
+at that parallel, running 3.9 percent small at the southern edge and 4.8 percent
 large at the northern, and area is not preserved. Nothing in this study is
 measured from a map, since areas are computed analytically on the authalic
-sphere, so the projection is a display choice throughout. The inset is drawn
-in the China Albers equal-area conic, which is why the study box appears
-rotated in it. Of the 1,023<!--#composite.total_cells--> cells, 926<!--#composite.covered_cells--> received at least one qualifying
-methane sounding in 2018 and 97<!--#composite.uncovered_cells--> received none; which cells those are is the
-subject of the composite figure and is deliberately not shown here. Natural
-Earth resolves Shanghai with 213 vertices across four parts where GADM 4.1
-uses 1,925 across 112, and that difference is not visible at the size drawn
-here, appearing as straight segments along the coast only above roughly three
-times magnification.
+sphere, so the projection is a display choice throughout. The locator is drawn
+in the China Albers equal-area conic, which is why the study box appears rotated
+in it.
 
-Regenerate with `python scripts/make_study_area_figure.py`.
+Regenerate with `python scripts/make_study_area_figure.py`. The relief and place
+layers it reads are built once by `python scripts/build_map_reference.py --write`
+from tiles fetched by `python scripts/fetch_copernicus_dem.py --download`.
 
 ---
 

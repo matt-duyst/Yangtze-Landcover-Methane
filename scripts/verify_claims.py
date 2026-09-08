@@ -40,11 +40,16 @@ import argparse
 import csv
 import json
 import re
+import sys
 from pathlib import Path
 
 import numpy as np
 
 REPO = Path(__file__).resolve().parents[1]
+# One quantity reads the committed land layer through `src.figures.geo`, and
+# this script is run directly as well as imported by the test suite.
+if str(REPO) not in sys.path:
+    sys.path.insert(0, str(REPO))
 PROCESSED = REPO / "data" / "processed"
 
 #: Files scanned for markers. `notes/decisions.md` is deliberately absent: it
@@ -106,6 +111,49 @@ def _absence_blocks() -> tuple[int, int]:
     return _cache["blocks"]
 
 
+def _cell_elevation() -> np.ndarray:
+    """Mean GLO-90 elevation per analysis cell, on the composite's own grid.
+
+    Committed to `data/reference/` by `scripts/build_map_reference.py`, which
+    is what lets the study area figure's caption quote an elevation and have it
+    checked: the DEM itself is 408 MB and gitignored.
+    """
+    if "elev" not in _cache:
+        import rasterio
+        path = (REPO / "data" / "reference" / "yrd_cell_elevation.tif")
+        with rasterio.open(path) as src:
+            _cache["elev"] = src.read(1)
+    return _cache["elev"]
+
+
+def _absent_on_land() -> int:
+    """Absent cells lying wholly on land.
+
+    Wholly, and the qualifier is doing work: of the 97, 93 touch land at all,
+    83 have their centre on land, 81 are more than half land and 74 are
+    entirely land. Any of the four is defensible and they are not the same
+    number, so the caption says which one it means.
+    """
+    if "absent_land" not in _cache:
+        from shapely.geometry import box
+
+        from src.figures import geo
+
+        spec = geo.study_spec()
+        land = geo.read_layer(geo.LAND).union_all()
+        absent = _composite()[2] == 0
+        res = spec.resolution
+        total = 0
+        for row, col in zip(*np.where(absent)):
+            west = spec.west + col * res
+            south = spec.north - (row + 1) * res
+            cell = box(west, south, west + res, south + res)
+            if land.intersection(cell).area / cell.area >= 0.999:
+                total += 1
+        _cache["absent_land"] = total
+    return _cache["absent_land"]
+
+
 def _albedo_slope(series: str) -> float:
     if "albedo" not in _cache:
         with (PROCESSED / "albedo_correction_2018.csv").open(newline="") as h:
@@ -144,6 +192,15 @@ QUANTITIES = {
         lambda: 100.0 * (_composite()[2] == 0).sum() / _composite()[2].size,
     "composite.absent_components": lambda: _absence_blocks()[0],
     "composite.largest_absent_block": lambda: _absence_blocks()[1],
+    "composite.absent_on_land": _absent_on_land,
+    "composite.absent_median_elevation":
+        lambda: float(np.median(_cell_elevation()[_composite()[2] == 0])),
+    "composite.covered_median_elevation":
+        lambda: float(np.median(_cell_elevation()[_composite()[2] > 0])),
+    "composite.absent_above_500m":
+        lambda: int((_cell_elevation()[_composite()[2] == 0] > 500).sum()),
+    "composite.covered_above_500m":
+        lambda: int((_cell_elevation()[_composite()[2] > 0] > 500).sum()),
     "albedo.slope_corrected": lambda: _albedo_slope("bias corrected"),
     "albedo.slope_raw": lambda: _albedo_slope("raw retrieval"),
 
