@@ -146,5 +146,76 @@
       }
     ],
     "notes": "Public domain. Extracted from ne_50m_admin_1_states_provinces_lakes in the local cartopy cache by scripts/extract_reference_geometry.py, filtered to the 31 features with admin = 'China' and dissolved into one geometry, written as EPSG:4326 GeoJSON. The 50 m variant is used deliberately rather than the 10 m one used elsewhere, because this layer is drawn only in a locator inset about 3 cm across where 10 m detail is finer than the line width. Those 31 units are the provinces, autonomous regions and municipalities Natural Earth files under China; Taiwan, Hong Kong and Macau are carried separately in Natural Earth and are not in this geometry. Committed rather than fetched."
+  },
+  "copernicus_dem_glo90_yrd": {
+    "product": "Copernicus DEM GLO-90, 80 one-degree tiles over the study box, shaded and committed as relief",
+    "citation": "European Space Agency, Sinergise (2021). Copernicus Global Digital Elevation Model. Distributed by OpenTopography and by the AWS Open Data registry.",
+    "version": "GLO-90 as served by the copernicus-dem-90m S3 bucket, retrieved 2026-09-08; the bucket does not version its tiles",
+    "retrieved": "2026-09-08",
+    "url": "https://copernicus-dem-90m.s3.amazonaws.com/",
+    "licence": "Free of charge for any use, worldwide and without limit in time, including reproduction, distribution, communication to the public, adaptation and modification. Attribution is REQUIRED.",
+    "required_notice": "produced using Copernicus WorldDEM™-90 © DLR e.V. 2010-2014 and © Airbus Defence and Space GmbH 2014-2018 provided under COPERNICUS by the European Union and ESA; all rights reserved",
+    "required_liability_notice": "The organisations in charge of the Copernicus programme by law or by delegation do not incur any liability for any use of the Copernicus WorldDEM™-90",
+    "files": [
+      {
+        "path": "data/reference/yrd_hillshade.tif",
+        "bytes": 915872,
+        "sha256": "3629b90100219c4f6d2cf9c5792e5c2517ba5136224343a5692d512db4334672"
+      }
+    ],
+    "notes": "Fetched by scripts/fetch_copernicus_dem.py into the gitignored data/raw/copernicus_dem/ (80 tiles, 408 MB) and turned into the committed hillshade by scripts/build_map_reference.py. What is committed is the shaded relief, not the elevation model. The bucket for GLO-90 is copernicus-dem-90m; copernicus-dem-30m serves GLO-30 and an identical readme, so the readme can be read from the wrong bucket without noticing. In a tile name, 10 is GLO-30's arc-second spacing and 30 is GLO-90's, which is the opposite of the two bucket names. Two cautions from the readme, both checked here rather than assumed. Ocean areas have no tiles and height may be assumed zero there: measured, 20 of the 100 tiles over the padded box are absent and all 20 are offshore, and they are filled with zero. Pixel spacing varies with LATITUDE, not longitude, and only above 50 degrees; at 26.9 to 35.3 N every one of the 80 tiles is 1200 by 1200 at 1/1200 degree in both axes, so the 1:5 height-to-width ratio that motivates cubic resampling in some derived products is not reachable from this study area. Cubic was used anyway, being right for a 3.9x decimation, and the tile seams were checked anyway: over the rugged 27 to 29.5 N band the mean second difference along tile-edge columns is 0.989 of its value elsewhere under cubic and 1.041 under bilinear, so neither shows a seam artefact. The DEM is warped onto a grid whose pixels are square in ground metres at 31.075 N, so gdaldem's single -s scale is exact in both axes; without that, east-west slope is under-weighted by 1/cos(31.075) = 17 percent. Shading is gdaldem hillshade -s 111120 -multidirectional -z 1.6 -compute_edges at GDAL 3.11.4. The required notice above is quoted verbatim from Article 6(b) of the Copernicus WorldDEM-90 licence, which applies because a hillshade is adapted data; the liability notice is Article 6(c), which applies because this repository redistributes a derived product."
+  },
+  "natural_earth_hypsometric_inset": {
+    "product": "Natural Earth 50 m cross-blended hypsometric tints with shaded relief, clipped to the locator inset and warped to the project equal-area conic",
+    "citation": "Natural Earth, public domain, https://www.naturalearthdata.com",
+    "version": "Natural Earth raster 2.0.0, as stated in HYP_50M_SR_W.VERSION.txt in the downloaded archive",
+    "retrieved": "2026-09-08",
+    "url": "https://naciscdn.org/naturalearth/50m/raster/HYP_50M_SR_W.zip",
+    "licence": "Public domain, no attribution required, no restriction on redistribution or derivative works.",
+    "files": [
+      {
+        "path": "data/reference/china_hypsometric.tif",
+        "bytes": 1852333,
+        "sha256": "50ad1b2ebf929ffd966bc3f25ec5aba412df9ba0741ea988a2039910a6324ba3"
+      }
+    ],
+    "notes": "The global raster is 10800 by 5400, which is 30 pixels per degree. The inset is about 4.6 cm wide across 64 degrees, or 543 pixels at 300 dpi, so the committed clip is reduced to 16 px/deg and warped onto CHINA_ALBERS. The 10 m raster was measured rather than assumed: it is 21600 by 10800, 60 px/deg exactly, which is 465 pixels across the 7.75 degree study box against the main panel's 1205, so it is used for the inset and not for the main panel. Hypsometric here and grey relief in the main panel, because nothing is drawn over the inset."
+  },
+  "natural_earth_places_yrd": {
+    "product": "Natural Earth 10 m populated places, filtered to the four study provinces' admin-1 capitals",
+    "citation": "Natural Earth, public domain, https://www.naturalearthdata.com",
+    "version": "Natural Earth vector 5.1.2, as stated in ne_10m_populated_places.VERSION.txt in the downloaded archive",
+    "retrieved": "2026-09-08",
+    "url": "https://naciscdn.org/naturalearth/10m/cultural/ne_10m_populated_places.zip",
+    "licence": "Public domain.",
+    "files": [
+      {
+        "path": "data/reference/yrd_places.geojson",
+        "bytes": 940,
+        "sha256": "885a87e37a40d494d2799bbd87ca09fc79f2d526eb481832479fda6e164398ed"
+      }
+    ],
+    "notes": "The selection rule is SCALERANK <= 4 and FEATURECLA == 'Admin-1 capital' and ADM1NAME in the four study provinces, which yields Shanghai, Nanjing, Hangzhou and Hefei. A bare scale-rank threshold cannot produce this set: Shanghai is rank 0, Nanjing and Hangzhou are rank 2 and Hefei is rank 4, so a threshold reaching Hefei also reaches fourteen other places in the box, among them Zaozhuang and Linyi in Shandong and Nanchang in Jiangxi. Suzhou, Wuxi and Ningbo are rank 4 and are deliberately left off: Suzhou and Wuxi are 0.35 degrees apart, which is 4.6 mm on the drawn panel, and both sit in the same cluster as Shanghai. 57 places fall in the study box in total. Unlike the province and land layers, this one was NOT in the local cartopy cache, which holds only physical and admin boundary layers, so it was fetched."
+  },
+  "natural_earth_context_layers": {
+    "product": "Natural Earth admin-1 units neighbouring the study region, and admin-0 land boundary lines across the locator inset",
+    "citation": "Natural Earth, public domain, https://www.naturalearthdata.com",
+    "version": "as bundled in the cartopy shapefile cache on this machine",
+    "retrieved": "2026-09-08",
+    "url": "https://www.naturalearthdata.com/downloads/",
+    "licence": "Public domain.",
+    "files": [
+      {
+        "path": "data/reference/yrd_neighbours.geojson",
+        "bytes": 137329,
+        "sha256": "ac665fbb086512bcf11e894d6535596b9c7fec2fb3cd95b9c22dc4aff88a6fbc"
+      },
+      {
+        "path": "data/reference/inset_boundaries.geojson",
+        "bytes": 167710,
+        "sha256": "864bc52ceb5250f7c799af80a458e67bc5093a0a71428dc55466a57514334633"
+      }
+    ],
+    "notes": "yrd_neighbours.geojson is every admin-1 unit with admin = 'China' whose geometry intersects the drawn extent and which is not a study province, clipped to the padded box: Fujian, Henan, Hubei, Jiangxi and Shandong. Selected by intersection, not hand-listed. From the 10 m layer. inset_boundaries.geojson is every feature of ne_50m_admin_0_boundary_lines_land intersecting the inset extent, 59 lines, UNFILTERED. The previous inset drew the 31 admin-1 units filed under admin = 'China' in the 50 m layer, which excluded Taiwan, Hong Kong and Macau by inheritance rather than by choice -- and not even by the mechanism the reference README described, since the 50 m admin-1 layer has no Taiwan, Hong Kong or Macau features to exclude; only the 10 m layer carries them, as 21, 1 and 1 units against China's 32. Nothing is filtered now and no country is named or filled. This layer carries no Hong Kong or Macau feature at all, and Taiwan appears only as a coastline in the hypsometric raster. Natural Earth classes 6 of the 59 lines as 'Disputed (please verify)' and ships 34 per-country viewpoint fields including FCLASS_CN and FCLASS_TW, which is the source's own statement that the classification depends on who is asked."
   }
 }

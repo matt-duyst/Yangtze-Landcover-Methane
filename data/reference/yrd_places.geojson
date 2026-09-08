@@ -1,0 +1,11 @@
+{
+"type": "FeatureCollection",
+"name": "yrd_places",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "name": "Hangzhou", "province": "Zhejiang", "scalerank": 2, "pop_max": 3007000 }, "geometry": { "type": "Point", "coordinates": [ 120.1680728, 30.2519198 ] } },
+{ "type": "Feature", "properties": { "name": "Hefei", "province": "Anhui", "scalerank": 4, "pop_max": 2035000 }, "geometry": { "type": "Point", "coordinates": [ 117.2780683, 31.8519772 ] } },
+{ "type": "Feature", "properties": { "name": "Nanjing", "province": "Jiangsu", "scalerank": 2, "pop_max": 3679000 }, "geometry": { "type": "Point", "coordinates": [ 118.7780285, 32.051965 ] } },
+{ "type": "Feature", "properties": { "name": "Shanghai", "province": "Shanghai", "scalerank": 0, "pop_max": 14987000 }, "geometry": { "type": "Point", "coordinates": [ 121.4345588, 31.2183983 ] } }
+]
+}

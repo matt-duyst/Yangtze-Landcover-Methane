@@ -8,3 +8,4 @@ __pycache__/
 # Raw inputs are fetched and verified against data/manifest.json rather than committed.
 data/raw/
 data/interim/
+figures/checks/
