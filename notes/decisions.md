@@ -2791,12 +2791,114 @@ impervious against 26.3. Both are on the figure. A window chosen for the
 balance of its classes is by construction unrepresentative, and a figure that
 did not say so would invite exactly the inference it was chosen to prevent.
 
-## Four roles, and a second basemap style with a reason
+## The urban change figure, and the finding it turned up
 
-The palette went from sixteen roles to twenty. Three are categorical
-land-cover classes -- `impervious`, `rice_single` and `rice_double` -- and the
-fourth, `land_flat`, is a second basemap style, which needs justifying because
-the set already has one.
+### The maps show where and the numbers show how much
+
+A 30 m product cannot be drawn over 7.75 degrees at native resolution, so
+`data/processed/urban_extent_*.tif` carries the impervious fraction per 1/128
+degree cell and the figure inks a cell where at least a quarter of it had
+become impervious. The threshold is stated because it does not preserve area
+and, measured, it does not fail evenly: urban land in 2000 is more dispersed
+than in 2018, so the drawn 2000 class is **0.73** of its true area while the
+drawn 2018 class is **1.31**. A reader measuring the maps would over-state
+growth by about four fifths.
+
+The answer is not a better threshold, because there is none: swept from 0.05 to
+0.40 no single value brings all six product-years within 10 percent of truth.
+The answer is a division of labour, stated on the figure and asserted by a
+test: area comes from panel (c) and the maps carry the pattern.
+
+A threshold-free alternative was tried and rejected. Shading each cell by its
+fraction is area-honest and leaves the region nearly blank: the median land
+cell in this box is 2 percent impervious and only 14.8 percent of land cells
+reach a quarter.
+
+### The stored grid and the drawn grid are not the same grid
+
+The first draft drew the stored 1/128 degree cells directly into a 5.2 cm panel
+and got stipple, because that asks the page for 0.62 pixels per cell and
+isolated cells then survive or vanish according to where they fall. The figure
+now averages two stored cells per axis to 1/64 degree, about 1.4 km, 1.24 drawn
+pixels each.
+
+The averaging happens on the **fractions**, before the threshold. Thresholding
+first and then asking whether any sub-cell passed would be a looser statement
+wearing the same words, and a test asserts the order.
+
+### The finding is not the one the brief expected
+
+The known disagreement is that GISA finds about 20 percent less impervious
+surface here than GAIA in 2018, against a global validation that predicts the
+opposite. Computing both products for 2000 and 2010 as well turned up something
+sharper: **the products cross over.** GISA is 20.7 percent larger than GAIA in
+2000 and 19.9 percent smaller in 2018.
+
+So the three available accounts give three growth factors over the same
+eighteen years and the same four provinces: the 2023 thesis 6.0, GAIA 3.0,
+GISA 2.0. They agree far better about the 2018 extent than about the history,
+which is exactly the signature this file already records for year-of-change
+products: a reprocessing redates transitions across the whole archive, moving
+the historical end and leaving the recent end alone.
+
+That is why panel (c) is a line and not bars. Three lines that fan out at 2000
+and converge at 2018 say "they disagree about the history, not the extent" in
+one look, which is the opposite of what a reader expects.
+
+### GISA now has a regenerable provincial series, and the old file is left alone
+
+`urban_area_by_province_gisa.csv` carries 2018 alone and is registered
+`unregenerable`, having been committed with no code that makes it.
+`urban_extent_totals.csv` is a new table with both products across all three
+years, computed by the same `zonal_histogram` route the GAIA table took, and it
+does not replace the old one. It states its agreement with it instead: sixteen
+overlapping rows, worst relative difference **1.3e-05**.
+
+That agreement is the check that both products' opposite conventions were
+applied the right way round, which is the failure mode this repository has
+already been bitten by once. It is not a formality: the inverted GISA selector
+would have drawn a plausible map of 9,468,801 pixels instead of 202,830,997.
+
+### No rice time series exists, and that is the finding
+
+Four constraints, each already recorded above, and together they leave nothing
+to draw.
+
+NESDC covers 2017 to 2025 and the comparison years are 2000 and 2010; it
+reaches neither. Shanghai's totals are pinned across 2019 to 2025 and Jiangsu's
+across 2020 to 2025 and again over 2017 to 2018, so half the study region
+cannot contribute a year-on-year value. Anhui's rasters classify only the 86.8
+percent of the province south of 33.3462 N and east of 115.2682 E. And GloRice,
+which does reach 2000, allocates official statistics through a model rather
+than observing extent and correlates with impervious fraction at Spearman
++0.5613, so a GloRice rice trend partly measures development.
+
+What is left is two provinces over a window that misses both comparison years,
+from a product whose other two provinces are pinned. That is not a time series,
+and drawing one would have been the most defensible-looking mistake available
+in this whole exercise: nine years, four provinces, a plausible shape, and
+nothing in the picture to say that two of the four lines are measuring a
+constraint rather than a landscape.
+
+The absence is stated on the urban figure and in its caption rather than left
+for a reader to wonder about.
+
+### And no methane equivalent
+
+A reader arriving at a land-cover change figure expects a methane change figure
+beside it. TROPOMI's footprint is 7 by 7 km at nadir, the analysis grid is 0.25
+degrees because coverage forced it there, and the 2018 composite already leaves
+97 of 1,023 cells with no qualifying sounding and runs from 1 to 410 per cell.
+There is one year of usable methane, not three. A fine-resolution methane field
+from this data would be interpolation presented as observation, which is the
+distinction the composite figure's treatment of absence already turns on.
+
+## Seven roles, and a second basemap style with a reason
+
+The palette went from sixteen roles to twenty-three. Six of the seven are
+categorical land-cover classes -- `impervious`, `rice_single`, `rice_double`
+and the three urban vintages -- and the seventh, `land_flat`, is a second
+basemap style, which needs justifying because the set already has one.
 
 **Relief is drawn where the land surface is the subject, and not otherwise.**
 In the study area figure the terrain explains the composite's holes and is the
@@ -2810,6 +2912,14 @@ the neutral choice. It is also much cheaper, a relief image costing about
 raster: ground that was looked at and is not the thing being mapped. One tone,
 because it is one statement. It is distinct from `absent_fill`, which means the
 opposite.
+
+**The three urban vintages were solved, not chosen.** Each has to clear the
+boundary line at 0.078, the sea at 0.42 and the flat land at 0.925, all by
+0.15, which leaves the intervals [0.228, 0.27] and [0.57, 0.775] and exactly
+room for three. Adding a coastline at 0.26 to the set makes it infeasible, so
+the urban maps do not stroke one -- the same arithmetic that removed the
+coastline from the study area figure's detail box, arrived at independently
+from a different starting point. The land-to-sea tone step is 0.505 without it.
 
 Minimum luminance gap over the role set is unchanged at 0.159 and the three
 colour-vision minima are unchanged at 14.4, because the new roles were fitted

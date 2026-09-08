@@ -301,6 +301,45 @@ recipes:
   compare: bytes
   verified: continuously
   note: null
+- artefact: data/processed/urban_extent_gaia.tif
+  command: python scripts/compute_urban_extent.py --write
+  label: urban extent grid, GAIA
+  cost: about a minute over 900 MB of gitignored impervious rasters
+  seconds: 70
+  inputs: local
+  compare: bytes
+  verified: on_local
+  note: Impervious fraction per 1/128 degree cell for 2000, 2010 and 2018, and the exact provincial totals
+    behind them. The sixteen rows that overlap the two older tables reproduce them to 1.3e-05, which is
+    the check that the two products' opposite year encodings are both applied the right way round. Written
+    together by one command; the verifier is handed the path of the artefact it is checking and the script
+    writes its siblings beside it.
+- artefact: data/processed/urban_extent_gisa.tif
+  command: python scripts/compute_urban_extent.py --write
+  label: urban extent grid, GISA
+  cost: about a minute over 900 MB of gitignored impervious rasters
+  seconds: 70
+  inputs: local
+  compare: bytes
+  verified: on_local
+  note: Impervious fraction per 1/128 degree cell for 2000, 2010 and 2018, and the exact provincial totals
+    behind them. The sixteen rows that overlap the two older tables reproduce them to 1.3e-05, which is
+    the check that the two products' opposite year encodings are both applied the right way round. Written
+    together by one command; the verifier is handed the path of the artefact it is checking and the script
+    writes its siblings beside it.
+- artefact: data/processed/urban_extent_totals.csv
+  command: python scripts/compute_urban_extent.py --write
+  label: urban extent provincial totals
+  cost: about a minute over 900 MB of gitignored impervious rasters
+  seconds: 70
+  inputs: local
+  compare: bytes
+  verified: on_local
+  note: Impervious fraction per 1/128 degree cell for 2000, 2010 and 2018, and the exact provincial totals
+    behind them. The sixteen rows that overlap the two older tables reproduce them to 1.3e-05, which is
+    the check that the two products' opposite year encodings are both applied the right way round. Written
+    together by one command; the verifier is handed the path of the artefact it is checking and the script
+    writes its siblings beside it.
 - artefact: data/processed/landcover_window_impervious_gisa.tif
   command: python scripts/clip_landcover_window.py --write
   label: native window, GISA
@@ -349,6 +388,24 @@ recipes:
 - artefact: figures/landcover_native.pdf
   command: python scripts/make_landcover_figure.py
   label: native land cover figure, vector
+  cost: about a second
+  seconds: 2
+  inputs: committed
+  compare: bytes
+  verified: continuously
+  note: null
+- artefact: figures/urban_change.png
+  command: python scripts/make_urban_change_figure.py
+  label: urban change figure
+  cost: about a second
+  seconds: 2
+  inputs: committed
+  compare: bytes
+  verified: continuously
+  note: null
+- artefact: figures/urban_change.pdf
+  command: python scripts/make_urban_change_figure.py
+  label: urban change figure, vector
   cost: about a second
   seconds: 2
   inputs: committed

@@ -226,3 +226,74 @@ GAIA, which are the two products' opposite year-of-change conventions.
 
 Regenerate with `python scripts/make_landcover_figure.py`. The window clips it
 reads are cut once by `python scripts/clip_landcover_window.py --write`.
+
+---
+
+### Urban expansion, 2000 to 2018, from two products
+
+![Cumulative urban extent by year of first imperviousness for GAIA and GISA, and the four-province totals for both against the thesis](urban_change.png)
+
+**Urban extent in these four provinces grew several-fold between 2000 and 2018,
+and the three available accounts of it disagree about the growth factor by a
+factor of three.** This is the reproduction's one positive quantitative
+land-cover finding. The 2023 thesis reported 8,297<!--#urban.thesis_2000--> km2
+in 2000 rising to 49,725<!--#urban.thesis_2018--> km2 in 2018, a factor of
+6.0<!--#urban.thesis_factor-->. GAIA reproduces
+16,387<!--#urban.gaia_2000--> km2 and 49,348<!--#urban.gaia_2018--> km2, a
+factor of 3.0<!--#urban.gaia_factor-->. GISA gives
+19,787<!--#urban.gisa_2000--> km2 and 39,532<!--#urban.gisa_2018--> km2, a
+factor of 2.0<!--#urban.gisa_factor-->.
+
+The three agree far better about the recent end than the historical one. GISA's
+2018 total is 0.80<!--#urban.gisa_over_gaia_2018--> of GAIA's, a difference of
+about a fifth, and the direction is the opposite of what the global validation
+predicts, since GAIA is the product reported to omit impervious surface. But
+GISA is the **larger** of the two in 2000, so the products cross over and
+disagree about the history rather than about the extent. That is the shape a
+year-of-change product's release history produces: both encode the year a pixel
+first became impervious in a single band, and a later reprocessing redates
+transitions across the whole archive, which moves the historical end and leaves
+the recent end alone. A disagreement here is not an error in either
+computation, and the 2000 and 2010 figures should not be read as reproductions
+of the thesis's.
+
+Panels (a) and (b) show where the growth is, drawn from an aggregate at 1/128
+degree and inked at 1/64 degree, about 1.4 km, wherever at least a quarter of a
+cell had become impervious by that date. Classes nest, so a cell carries the
+earliest date it qualifies for and the three are exclusive. **Area must not be
+read from the maps.** That threshold is stated because it does not preserve
+area and does not fail evenly: urban land in 2000 is more dispersed than in
+2018, so the drawn 2000 class is 0.73 of its true area while the drawn 2018
+class is 1.31, which flatters growth by about four fifths. Panel (c) carries
+the magnitudes and the maps carry the pattern.
+
+Totals are for the four provinces on the Natural Earth boundaries and come from
+`data/processed/urban_extent_totals.csv`, whose sixteen overlapping rows
+reproduce the two older provincial tables to 1.3e-05; that agreement is the
+check that the two products' opposite conventions were both applied the right
+way round. Inverting GISA's would select only what was built in 2018 and 2019,
+9,468,801 pixels against 202,830,997, and would still draw a plausible map.
+
+**There is no rice panel**, and that is a finding rather than an omission. The
+NESDC classification begins in 2017 and reaches neither 2000 nor 2010;
+Shanghai's provincial totals are pinned across 2019 to 2025 and Jiangsu's
+across 2020 to 2025 and again over 2017 to 2018, with the whole-raster count
+held fixed while the classified area relocates, so half the study region cannot
+contribute a year-on-year value; Anhui's rasters classify only the 86.8 percent
+of the province south of 33.3462 north and east of 115.2682 east; and GloRice,
+which does reach 2000, allocates official statistics to grid cells through a
+model rather than observing extent and correlates with impervious fraction at
+Spearman +0.5613. What remains is two provinces over a window that misses both
+comparison years.
+
+**There is no methane equivalent either**, which is where a reader will most
+expect one. TROPOMI's footprint is 7 by 7 km at nadir, the analysis grid is 0.25
+degrees because coverage forced it there, and the 2018 composite leaves
+97<!--#composite.uncovered_cells--> of its 1,023<!--#composite.total_cells-->
+cells with no qualifying sounding at all, with per-cell counts running from
+1<!--#composite.min_soundings--> to 410<!--#composite.max_soundings-->. There
+is one year of usable methane, not three, and a fine-resolution methane field
+from this data would be interpolation presented as observation.
+
+Regenerate with `python scripts/make_urban_change_figure.py`. The aggregate and
+the totals are built once by `python scripts/compute_urban_extent.py --write`.

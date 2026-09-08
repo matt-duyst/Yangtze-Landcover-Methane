@@ -63,9 +63,15 @@ def _landcover():
     return landcover_figure()
 
 
+def _urban_change():
+    from src.figures.urban_change import urban_change_figure
+    return urban_change_figure()
+
+
 BUILDERS["study_area"] = _study_area
 BUILDERS["methane_composite_2018"] = _composite
 BUILDERS["landcover_native"] = _landcover
+BUILDERS["urban_change"] = _urban_change
 
 
 def render(fig, dpi: int = style.MIN_DPI) -> np.ndarray:
@@ -307,6 +313,7 @@ def report_visibility(stem: str, dpi: int = 150) -> None:
 
 NATIVE = {
     "landcover_native": lambda: _native_landcover(),
+    "urban_change": lambda: _native_urban_change(),
 }
 
 
@@ -321,6 +328,18 @@ def _native_landcover():
         out[label] = (mask.shape[1], panel_px / mask.shape[1])
     values, _ = lc.rice_classes()
     out["NESDC 10 m"] = (values.shape[1], panel_px / values.shape[1])
+    return out
+
+
+def _native_urban_change():
+    """Drawn pixels per drawn cell. These panels aggregate and say so."""
+    from src.figures import urban_change as uc
+    panel_px = uc.MAP_CM / 2.54 * style.MIN_DPI
+    out = {}
+    for product in ("GAIA", "GISA"):
+        fractions, _ = uc.display_fractions(product)
+        out[f"{product} 1/64 deg"] = (fractions.shape[2],
+                                      panel_px / fractions.shape[2])
     return out
 
 

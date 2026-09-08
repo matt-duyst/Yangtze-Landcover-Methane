@@ -154,6 +154,28 @@ def _absent_on_land() -> int:
     return _cache["absent_land"]
 
 
+def _urban_series() -> dict:
+    """Four-province totals by source and year, from the committed tables.
+
+    The figure reads the same two files through `src.figures.urban_change`, so
+    a caption number and a drawn number cannot disagree without one of them
+    failing here.
+    """
+    if "urban" not in _cache:
+        from src.figures import urban_change
+        _cache["urban"] = urban_change.series()
+    return _cache["urban"]
+
+
+def _urban(source: str, year: int) -> float:
+    return _urban_series()[source][year]
+
+
+def _urban_factor(source: str) -> float:
+    values = _urban_series()[source]
+    return values[2018] / values[2000]
+
+
 def _window() -> dict:
     """Class shares and native pixel counts of the land-cover window."""
     if "window" not in _cache:
@@ -224,6 +246,20 @@ QUANTITIES = {
         lambda: int((_cell_elevation()[_composite()[2] == 0] > 500).sum()),
     "composite.covered_above_500m":
         lambda: int((_cell_elevation()[_composite()[2] > 0] > 500).sum()),
+    "urban.gaia_2000": lambda: _urban("GAIA", 2000),
+    "urban.gaia_2010": lambda: _urban("GAIA", 2010),
+    "urban.gaia_2018": lambda: _urban("GAIA", 2018),
+    "urban.gisa_2000": lambda: _urban("GISA", 2000),
+    "urban.gisa_2010": lambda: _urban("GISA", 2010),
+    "urban.gisa_2018": lambda: _urban("GISA", 2018),
+    "urban.thesis_2000": lambda: _urban("thesis 2023", 2000),
+    "urban.thesis_2010": lambda: _urban("thesis 2023", 2010),
+    "urban.thesis_2018": lambda: _urban("thesis 2023", 2018),
+    "urban.gaia_factor": lambda: _urban_factor("GAIA"),
+    "urban.gisa_factor": lambda: _urban_factor("GISA"),
+    "urban.thesis_factor": lambda: _urban_factor("thesis 2023"),
+    "urban.gisa_over_gaia_2018":
+        lambda: _urban("GISA", 2018) / _urban("GAIA", 2018),
     "window.impervious_gisa_percent":
         lambda: _window()["impervious_gisa_percent"],
     "window.impervious_gaia_percent":

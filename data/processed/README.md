@@ -901,6 +901,65 @@ The four-way baseline comparison built on this layer is in
 alternative_predictors_2018.csv, and the descriptive comparison between the
 products in predictor_comparison_2018.csv.
 
+## urban_extent_gaia.tif, urban_extent_gisa.tif and urban_extent_totals.csv
+
+Built for `figures/urban_change.png`, and the totals table is useful on its own
+because it is the first regenerable GISA series this repository has had.
+
+The two rasters carry the impervious **fraction** of each 1/128 degree cell in
+2000, 2010 and 2018, one band per year, as a uint8 percentage. 992 by 1056
+cells over the analysis lattice. 1/128 degree because it divides the 0.25
+degree analysis cell exactly, 32 to a side, so a display cell is a subdivision
+of the unit the analysis consumes rather than an unrelated grid.
+
+A fraction rather than a class, deliberately. A 30 m product cannot be drawn
+over 7.75 degrees at native resolution -- 880 million pixels against a panel
+that resolves about a million -- so something must be aggregated, and storing
+the fraction keeps the aggregation reversible and leaves the display threshold
+in the figure, where display decisions belong. Storing a class would bake a
+cartographic choice into a data product.
+
+Aggregation is exact rather than resampled: each display cell is read at 32 by
+32 sub-samples aligned to its own bounds, nearest-neighbour so no value is
+invented, the selector is applied, and the mean taken.
+
+`urban_extent_totals.csv` carries the **exact** provincial areas, by
+`src.landcover.zonal_histogram`, which is the same route
+`urban_area_by_province.csv` took. Twenty-four rows: two products, three years,
+four provinces, on the Natural Earth boundaries.
+
+| source | 2000 | 2010 | 2018 | 2018/2000 |
+|--------|------|------|------|-----------|
+| thesis 2023 | 8,297 | 24,831 | 49,725 | 6.0 |
+| GAIA | 16,387.1 | 28,565.6 | 49,348.0 | 3.0 |
+| GISA | 19,786.9 | 30,713.2 | 39,532.2 | 2.0 |
+
+Sixteen of the twenty-four rows overlap tables already in this directory, and
+they reproduce them to a worst relative difference of **1.3e-05**. That number
+is the check that matters here, because it is what says the two products'
+opposite year-of-change conventions were both applied the right way round.
+GISA's extent through 2018 is `1 <= value <= 36`; the inverted `value >= 36`
+selects only 2018 and 2019 construction, 9,468,801 pixels against 202,830,997,
+and produces a plausible-looking map of the wrong thing.
+
+The table does **not** replace `urban_area_by_province_gisa.csv`, which is
+registered `unregenerable` and carries 2018 alone. It sits beside it, states
+its agreement with it in a `relative_difference` column, and leaves the older
+file's provenance record intact.
+
+**The products cross over.** GISA is 19.9 percent smaller than GAIA in 2018 and
+20.7 percent larger in 2000, so they disagree about the growth factor far more
+than about the extent. Both are year-of-change products whose release history
+redates transitions across the whole archive when reprocessed, which moves the
+historical end and leaves the recent end alone; see `notes/decisions.md`,
+"Year-of-change products are version-dependent". The 2000 and 2010 figures are
+therefore not reproductions of the thesis's and should not be read as such.
+
+    python scripts/compute_urban_extent.py --write
+
+About a minute over the 900 MB of gitignored impervious rasters. Registered in
+`config/recipes.yml` in the `on_local` tier.
+
 ## landcover_window_impervious_gisa.tif, landcover_window_impervious_gaia.tif and landcover_window_rice_nesdc.tif
 
 Three clips of one 5.7 by 3.7 km window, at the products' own resolutions and
