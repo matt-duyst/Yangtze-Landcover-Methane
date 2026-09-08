@@ -412,3 +412,46 @@ recipes:
   compare: bytes
   verified: continuously
   note: null
+- artefact: data/processed/rice_extent_2018.tif
+  command: python scripts/compute_rice_extent.py --write
+  label: rice extent grid
+  cost: about three minutes over 3.5 GB of gitignored rice rasters
+  seconds: 155
+  inputs: local
+  compare: bytes
+  verified: on_local
+  note: 'Single-season, double-season and classified-share per 1/128 degree cell for 2018. Each of the
+    four rasters is masked by the province it is named for, never by the union: the files overlap and
+    a union mask assesses shared ground once per file. The script asserts the assessed area against the
+    province polygons before writing and reproduces Anhui''s recorded 86.1 percent footprint independently.
+    Written with the totals table by one command; the verifier is handed the path of the artefact it is
+    checking.'
+- artefact: data/processed/rice_extent_totals_2018.csv
+  command: python scripts/compute_rice_extent.py --write
+  label: rice extent provincial totals
+  cost: about three minutes over 3.5 GB of gitignored rice rasters
+  seconds: 155
+  inputs: local
+  compare: bytes
+  verified: on_local
+  note: Rice area by province and season with both denominators beside it, the assessed area and the province
+    polygon. Its Anhui total of 22,594.6 km2 reproduces the 22,594.7 recorded in notes/decisions.md from
+    a separate route. Written by the same command as the grid.
+- artefact: figures/landcover_regional.png
+  command: python scripts/make_landcover_regional_figure.py
+  label: regional land cover figure
+  cost: about a second
+  seconds: 2
+  inputs: committed
+  compare: bytes
+  verified: continuously
+  note: null
+- artefact: figures/landcover_regional.pdf
+  command: python scripts/make_landcover_regional_figure.py
+  label: regional land cover figure, vector
+  cost: about a second
+  seconds: 2
+  inputs: committed
+  compare: bytes
+  verified: continuously
+  note: null

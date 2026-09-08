@@ -70,7 +70,13 @@ def _urban_change():
 
 BUILDERS["study_area"] = _study_area
 BUILDERS["methane_composite_2018"] = _composite
+def _landcover_regional():
+    from src.figures.landcover_regional import landcover_regional_figure
+    return landcover_regional_figure()
+
+
 BUILDERS["landcover_native"] = _landcover
+BUILDERS["landcover_regional"] = _landcover_regional
 BUILDERS["urban_change"] = _urban_change
 
 
@@ -314,6 +320,7 @@ def report_visibility(stem: str, dpi: int = 150) -> None:
 NATIVE = {
     "landcover_native": lambda: _native_landcover(),
     "urban_change": lambda: _native_urban_change(),
+    "landcover_regional": lambda: _native_landcover_regional(),
 }
 
 
@@ -341,6 +348,14 @@ def _native_urban_change():
         out[f"{product} 1/64 deg"] = (fractions.shape[2],
                                       panel_px / fractions.shape[2])
     return out
+
+
+def _native_landcover_regional():
+    """Drawn pixels per drawn cell. This panel aggregates and says so."""
+    from src.figures import landcover_regional as lr
+    classes, _ = lr.rice_classes()
+    panel_px = lr.MAP_CM / 2.54 * style.MIN_DPI
+    return {"rice 1/64 deg": (classes.shape[1], panel_px / classes.shape[1])}
 
 
 def report_native(stem: str) -> None:

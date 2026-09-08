@@ -1,0 +1,9 @@
+province,season,rice_area_km2,assessed_km2,polygon_km2,assessed_over_polygon,rice_share_of_assessed
+Shanghai,single,741.2,6746.6,6746.1,1.0001,0.10986
+Shanghai,double,0.0,6746.6,6746.1,1.0001,0.00000
+Zhejiang,single,4053.7,101456.1,101337.3,1.0012,0.03995
+Zhejiang,double,787.7,101456.1,101337.3,1.0012,0.00776
+Anhui,single,20704.9,120720.6,140193.8,0.8611,0.17151
+Anhui,double,1889.7,120720.6,140193.8,0.8611,0.01565
+Jiangsu,single,21865.2,100141.8,100090.9,1.0005,0.21834
+Jiangsu,double,0.0,100141.8,100090.9,1.0005,0.00000

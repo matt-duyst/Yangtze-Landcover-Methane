@@ -199,6 +199,36 @@ def _window() -> dict:
     return _cache["window"]
 
 
+def _rice() -> dict:
+    """Rice areas and provincial shares, from the committed regional tables.
+
+    The figure reads the same files through
+    `src.figures.landcover_regional`, so a caption number and a drawn number
+    cannot disagree without one of them failing here.
+    """
+    if "rice" not in _cache:
+        from src.figures import landcover_regional as lr
+        provincial = lr.provincial_rice()
+        shares = lr.provincial_shares()
+        ratios = lr.drawn_area_ratio()
+        _cache["rice"] = {
+            "total_km2": sum(v["single"] + v["double"]
+                             for v in provincial.values()),
+            "double_km2": sum(v["double"] for v in provincial.values()),
+            "double_anhui_km2": provincial["Anhui"]["double"],
+            "double_zhejiang_km2": provincial["Zhejiang"]["double"],
+            "anhui_coverage": provincial["Anhui"]["assessed_over_polygon"],
+            "drawn_over_true": ratios["total"],
+            "share_shanghai_percent": 100.0 * shares["Shanghai"]["rice_single"],
+            "share_jiangsu_percent": 100.0 * shares["Jiangsu"]["rice_single"],
+            "urban_share_shanghai_percent":
+                100.0 * shares["Shanghai"]["impervious"],
+            "urban_share_jiangsu_percent":
+                100.0 * shares["Jiangsu"]["impervious"],
+        }
+    return _cache["rice"]
+
+
 def _albedo_slope(series: str) -> float:
     if "albedo" not in _cache:
         with (PROCESSED / "albedo_correction_2018.csv").open(newline="") as h:
@@ -277,6 +307,18 @@ QUANTITIES = {
         lambda: 100.0 * _window()["cell_rice_combined"],
     "window.cell_impervious_gisa_percent":
         lambda: 100.0 * _window()["cell_impervious_gisa"],
+    "rice.total_km2": lambda: _rice()["total_km2"],
+    "rice.double_km2": lambda: _rice()["double_km2"],
+    "rice.double_anhui_km2": lambda: _rice()["double_anhui_km2"],
+    "rice.double_zhejiang_km2": lambda: _rice()["double_zhejiang_km2"],
+    "rice.anhui_coverage": lambda: _rice()["anhui_coverage"],
+    "rice.drawn_over_true": lambda: _rice()["drawn_over_true"],
+    "rice.share_shanghai_percent": lambda: _rice()["share_shanghai_percent"],
+    "rice.share_jiangsu_percent": lambda: _rice()["share_jiangsu_percent"],
+    "urban.share_shanghai_percent":
+        lambda: _rice()["urban_share_shanghai_percent"],
+    "urban.share_jiangsu_percent":
+        lambda: _rice()["urban_share_jiangsu_percent"],
     "albedo.slope_corrected": lambda: _albedo_slope("bias corrected"),
     "albedo.slope_raw": lambda: _albedo_slope("raw retrieval"),
 

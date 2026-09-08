@@ -1000,3 +1000,64 @@ percent impervious against 26.3.
 
 Seconds, from the gitignored raw rasters. `on_local` in `config/recipes.yml`.
 
+## rice_extent_2018.tif and rice_extent_totals_2018.csv
+
+Built for `figures/landcover_regional.png`, and the totals table is the first
+per-province NESDC rice series this repository has carried; `rice_area_by_province.csv`
+holds only GloRice and SPAM.
+
+The raster carries three bands per 1/128 degree cell: single-season rice as a
+percentage of the cell, double-season as a percentage of the cell, and the
+percentage of the cell the product actually classified. 992 by 1056 cells over
+the analysis lattice, on the same grid as `urban_extent_*.tif` and for the same
+reason: 1/128 degree divides the 0.25 degree analysis cell exactly, 32 to a
+side.
+
+**The third band is not a convenience.** These rasters declare no nodata and
+their 0 means both real non-rice land and ground the product never covered, so
+a fraction with the cell as its denominator would report ground nobody looked
+at as rice-free. The band is what lets the figure draw the two apart.
+
+**Each raster is masked by the province it is named for.** Not by the union of
+the four: the files' bounding boxes overlap, between 23 and 60 percent of each
+box lies outside its own province, and a union mask assesses shared ground once
+per file. That failure has happened, and produced a cell at 2.94 times its own
+area with a median single-season fraction of 0.079 against a correct 0.129. The
+mask goes in through `src.grid.cells.accumulate_fraction`, one province per
+file, and the script refuses to write until it has checked the assessed area
+back against the province polygons:
+
+| province | assessed km2 | polygon km2 | ratio |
+|----------|--------------|-------------|-------|
+| Shanghai | 6,746.6 | 6,746.1 | 1.0001 |
+| Zhejiang | 101,456.1 | 101,337.3 | 1.0012 |
+| Anhui | 120,720.6 | 140,193.8 | **0.8611** |
+| Jiangsu | 100,141.8 | 100,090.9 | 1.0005 |
+
+Anhui is legitimately short and the other three are not, which is the shape a
+correct mask produces. A ratio above one is the shape an incorrect one
+produces, and the check refuses at 1.02. Anhui's 0.8611 reproduces the 86.1
+percent classification footprint recorded in `notes/decisions.md` by an
+entirely separate route, and the totals table's Anhui rice of 22,594.6 km2
+reproduces the 22,594.7 recorded there for 2018.
+
+The totals:
+
+| province | single km2 | double km2 |
+|----------|-----------|------------|
+| Shanghai | 741.2 | 0.0 |
+| Zhejiang | 4,053.7 | 787.7 |
+| Anhui | 20,704.9 | 1,889.7 |
+| Jiangsu | 21,865.2 | 0.0 |
+
+Double-season rice exists in two of the four provinces and not in the other
+two, which is a real property of the region and is why the figure draws the
+seasons apart rather than summing them as the 2023 thesis did.
+
+    python scripts/compute_rice_extent.py --write
+
+About three minutes over the 3.5 GB of gitignored rice rasters, eight passes:
+one per raster per season, with the second season's pass used as a free check
+that the two agree about which ground was assessed. `on_local` in
+`config/recipes.yml`.
+

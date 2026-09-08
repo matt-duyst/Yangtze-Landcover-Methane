@@ -297,3 +297,64 @@ from this data would be interpolation presented as observation.
 
 Regenerate with `python scripts/make_urban_change_figure.py`. The aggregate and
 the totals are built once by `python scripts/compute_urban_extent.py --write`.
+---
+
+### Paddy rice across the four provinces, 2018
+
+![Single and double season rice per 1.4 km cell across the four Yangtze River Delta provinces, with the unclassified part of Anhui marked, and rice and impervious surface as a share of each province](landcover_regional.png)
+
+**Rice is the study's subject and this is where it is, in the year the methane
+composite covers.** Panel (a) draws the NESDC classification on a 1/64 degree
+cell, about 1.4 km. Panel (b) puts rice beside the impervious surface it
+competes with, as a share of each province's own area.
+
+The map's threshold is chosen by a rule rather than by eye: a cell is inked
+where at least 35 percent of it is rice, which is the value at which the drawn
+area equals the true area. Measured, the inked total is 1.06 of the
+50,042<!--#rice.total_km2--> km2 the provincial totals record, against 0.73 to
+1.31 for the urban figure at its own threshold. Rice can be drawn area-honestly
+and impervious surface cannot, because this map draws one quantity where that
+one draws three.
+
+**The season colour says which season a cell's rice mostly is, not how much.**
+The two cannot share a threshold: single-season rice area-matches at 0.35 and
+double-season at 0.17, because double-season paddy is 5.3 percent of the rice
+and interleaved with single rather than segregated. So one threshold decides
+whether a cell is rice and the colour reports the majority season, at the cost
+that the double-season colour covers 1,191 km2 of a true
+2,677<!--#rice.double_km2-->. Panel (b) carries the areas.
+
+That distinction is a real property of the region and not a nuance. Only two of
+the four provinces grow double-season rice at all:
+1,890<!--#rice.double_anhui_km2--> km2 in Anhui and
+788<!--#rice.double_zhejiang_km2--> km2 in Zhejiang, against none in Jiangsu
+and none in Shanghai.
+
+**Unclassified is drawn, because absence here has two meanings.** The NESDC
+rasters declare no nodata and their 0 means both real non-rice land and ground
+the product never covered, so the map separates the two. The dark class is
+land the classification does not reach: the other provinces, which the product
+does not cover at all, and the part of Anhui north of 33.3462 north and west of
+115.2682 east. That northern boundary is a processing artefact and not an
+absence of rice — five annual products across three raster extents all
+terminate classification within 22 m of the same latitude, and GloRice puts
+about 320 km2 of rice in the region — so drawing it as ordinary non-rice land
+would have said northern Anhui grows none. Each of the four rasters is masked
+by the province it is named for and never by their union, because the files'
+boxes overlap and a union mask assesses shared ground once per file; the
+committed totals record the assessed area at 0.861<!--#rice.anhui_coverage-->
+of the Anhui polygon and within 0.2 percent of the polygon for the other three.
+
+Anhui's rice bars in panel (b) are therefore a lower bound, and are marked as
+one: the denominator throughout the panel is the province polygon, so that
+three bars in one group can be compared, and Anhui's rice is measured over the
+86 percent of it the product classified. The comparison the panel is for is
+this: Shanghai is 50.9<!--#urban.share_shanghai_percent--> percent impervious
+and 11.0<!--#rice.share_shanghai_percent--> percent rice, while Jiangsu is
+22.8<!--#urban.share_jiangsu_percent--> percent impervious and
+21.8<!--#rice.share_jiangsu_percent--> percent rice. Impervious areas are
+GAIA's, which is the product the analysis grid carries; GISA finds about a
+fifth less in 2018 and the urban change figure draws that disagreement out.
+
+Regenerate with `python scripts/make_landcover_regional_figure.py`. The rice
+grid it reads is built once by `python scripts/compute_rice_extent.py --write`.

@@ -2925,3 +2925,125 @@ Minimum luminance gap over the role set is unchanged at 0.159 and the three
 colour-vision minima are unchanged at 14.4, because the new roles were fitted
 into the gaps the existing ones left rather than allowed to move them.
 
+## The regional rice figure, and the palette move it forced
+
+Rice is the study's subject and the set had no picture of it. It appeared only
+inside a 5.7 by 3.7 km window in Wuhu, because the regional predictor maps were
+sequenced after the statistical figures on the assumption that they would
+inherit the geospatial conventions. They do inherit them. Sequencing them last
+still meant the largest figure in the set was the one that did not exist.
+
+### The threshold is cheaper here, and the reason is arithmetic rather than agronomy
+
+The urban figure inks a 1/64 degree cell at a quarter and pays 0.73 to 1.31
+across its three years, because no threshold serves all three. Rice is drawn at
+**0.35**, which is the value where the drawn area equals the true area, and
+pays **1.06** of 50,042 km2.
+
+The difference is not that paddy is more contiguous than impervious surface,
+which was the expectation going in. It is that this map draws **one** quantity
+where the urban map draws three. A single quantity can always be
+threshold-matched to its own area; three cannot be matched simultaneously
+unless they happen to share a spatial distribution, and 2000 urban land and
+2018 urban land do not.
+
+Split by season, rice is **dearer** than urban, which is the opposite of the
+expectation. At a common quarter the two rice classes come out at 1.70 and
+0.43, a spread of 4.0 against urban's 1.8 across three years. Single-season
+rice area-matches at 0.35 and double-season at 0.17, because double-season
+paddy is 5.3 percent of the rice and is interleaved with single-season at
+1.4 km rather than segregated into blocks of its own.
+
+Inking each class at its own threshold was rejected. Two colours on one map
+inked at different densities would let a reader compare their extents and be
+wrong, and no legend fixes that. What the figure does instead is let one
+threshold decide **whether** a cell is rice and let the colour report which
+season that cell's rice mostly is. The cost is stated on the figure: the
+double-season colour covers 1,191 km2 of a true 2,677, and the bar panel
+carries the areas.
+
+### Double-season rice reaches the coast, and the palette had to move
+
+The rice roles were set when the only figure drawing them was a window with no
+water in it. `rice_single` sat at 0.62 and `rice_double` at 0.40, and the sea
+is at 0.42.
+
+Measured before assuming: Zhejiang's class-2 pixels reach the coastline at a
+minimum distance of **0.0 km**, with a first percentile of 0.3 km. Anhui's are
+inland, at a minimum of 96.7 km. So the adjacency is real for one of the two
+provinces that carry the class, and 0.40 was unusable the moment rice was drawn
+regionally.
+
+The sea cannot move. It is pinned at 0.42 by the relief band in the study area
+figure, needing to clear the veiled band's floor of 0.573 by 0.15. So the rice
+pair moved instead, to **0.76 and 0.60**, keeping the ordering that
+double-cropping is the darker of the two.
+
+That change reaches back into the native-resolution figure, which is the right
+outcome: a role is one colour everywhere, and a constraint discovered in one
+figure applies to every figure that draws the role. The native figure was
+regenerated and its own tightest pair, `rice_single` against `land_flat`, sits
+at 0.159 -- which is now the minimum over the whole role set, replacing
+`coastline` against `sea` at the same value.
+
+### Four areal classes is the ceiling, and it decided the layout
+
+The obvious figure is rice and impervious side by side, because the thesis's
+framing is urban expansion encroaching on paddy. It is not what was drawn, for
+two reasons and the second is the binding one.
+
+Regional impervious surface already has two maps in the urban figure, from the
+same aggregate at the same resolution. And the competition for land is not
+legible as two maps at 1.4 km, where a single cell holds both; it is legible as
+numbers per province, which the bar panel carries, and at 10 m in the native
+figure, which shows the abutment directly.
+
+The binding reason is that the palette cannot hold it. With both rice classes
+adjacent to the sea, the areal fills have to fit into the two intervals the
+convention leaves -- [0.228, 0.27] and [0.57, 0.769] -- which hold exactly three
+tones. Rice takes two and `unassessed` takes the third. A fourth areal role for
+impervious would have landed in one of the same two bands, in a panel beside
+the rice map, and the two would have been indistinguishable in a black and
+white print. Impervious therefore appears as a number and not as a fill.
+
+### `unassessed` is a class because absence here has two meanings
+
+The NESDC rasters declare no nodata and their 0 means both real non-rice land
+and ground the product never covered. At window scale inside one province that
+ambiguity does not bite. At regional scale it is most of the frame.
+
+So the figure draws four classes: rice by majority season, ground the product
+classified and found no rice in, and ground the product did not classify. The
+last has two causes and one meaning -- the other provinces, which the product
+does not cover at all, and the part of Anhui north of 33.3462 N and west of
+115.2682 E.
+
+Drawing that region as ordinary non-rice land would have said northern Anhui
+grows no rice. It grows some: GloRice puts about 320 km2 there, and the
+boundary is a processing artefact, five annual products across three raster
+extents all terminating classification within 22 m of the same latitude.
+
+`unassessed` is **dark**, at 0.25, which is the opposite of the usual
+convention for missing data. The light end of the scale is taken by
+`land_flat`, and the interval arithmetic above leaves nothing between. It reads
+correctly anyway: a blanked region should not look like an empty one.
+
+### The masking check earns its place immediately
+
+Each of the four rasters is masked by the province it is named for, through
+`src.grid.cells.accumulate_fraction`, and never by the union of the four. The
+union failure is recorded in this file already: it assesses shared ground once
+per file and produced a cell at 2.94 times its own area.
+
+`scripts/compute_rice_extent.py` refuses to write until it has compared the
+assessed area against the province polygons. Shanghai 1.0001, Zhejiang 1.0012,
+Jiangsu 1.0005, **Anhui 0.8611**. Three at their polygon area and one short is
+the shape a correct mask produces; a ratio above one is the shape the union
+mask produces, and the check refuses at 1.02.
+
+Two independent reproductions fell out of it. Anhui's 0.8611 is the 86.1
+percent classification footprint this file already recorded, arrived at from
+the raster extents rather than from a grid. And the totals table's Anhui rice
+of 22,594.6 km2 reproduces the 22,594.7 recorded here for 2018. Neither number
+was used to build the other.
+
