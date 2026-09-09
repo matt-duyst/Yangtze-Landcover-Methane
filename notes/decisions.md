@@ -3490,3 +3490,81 @@ recipe. `figures/README.md`, added in the previous commit, is prose and needed
 adding to the exclusion list — and the suite run *before* that commit passed,
 because `git ls-files` cannot see an untracked file. The check is sound and its
 timing is not; the exclusion list now says so.
+
+## The pipeline figure, and the one check a diagram needs
+
+### Two panels, decided by rendering
+
+Panel (a) reads top-down over six columns because acquisition forks: five
+sources, one manifest gate, two aggregation branches, one join. Panel (b) reads
+left-right in one row because modelling is a single chain and drawing a chain
+down the page would double the figure's height to say the same thing. ISO reads
+both ways, so the standard is satisfied either way and the choice is legibility.
+
+Measured rather than argued. As one top-down frame the chart is eleven rows and
+**23.4 cm** tall at 17 cm wide, which is the whole usable height of a
+Copernicus page; as two panels it is **19.0**.
+
+### ISO conformance, and where it needed interpreting
+
+Seven of the twelve declared shapes, all from ISO 5807: terminal, process,
+predefined process, decision, data, stored data, connector. Twenty-five boxes,
+twenty-five flowlines, **zero structural violations**.
+
+Two of the principles needed a reading before they could be checked, and both
+readings are recorded because a check nobody can question is a check nobody has
+thought about.
+
+**"One entry point and one exit point, the decision symbol excepted."** Read as
+a claim about the *point*, not the line. A flowline may leave a box once and
+fork at a junction beyond it, and lines routinely merge before entering one —
+five sources enter the manifest gate here. So what is checked is that every
+line into a node arrives on the same side and every line out of a non-decision
+leaves from the same side. Read as "at most one outgoing line" the pipeline
+would need merge nodes that no code performs, which is a worse diagram.
+
+**"All decision branches must be well-labelled."** A *branch*, not an edge: the
+manifest's "yes" fans out to two aggregation modules, which is one branch going
+two places. So a decision must have exactly two labelled outcomes, each leaving
+its own side, and each outcome must leave from one side only.
+
+The remaining two principles are about content rather than structure and are
+asserted in the figure's own test file. Every process and decision must be
+reached by at least one flowline, or the diagram asserts a step that runs on
+nothing; all nine are. And no departure from the standard was needed elsewhere.
+
+### The check that only a declared graph can have
+
+**Every box names the repository paths it stands for — thirty of them — and the
+test opens each one.** A box naming a module that was renamed, or a step the
+code stopped performing, is the diagram equivalent of a stale prose figure, and
+nothing else in this suite would catch it.
+
+The test goes further where it can, because a path that exists is weak evidence
+that a diamond's text is true. It asserts that `fill_archive_digest` really
+returns `MISMATCH` and leaves the existing digest in place; that both area
+scripts really default to a 0.001 tolerance; that `COVERAGE_CEILING` is really
+1.02 and `COVERAGE_FLOOR` really 0.80; and that `export` really raises below
+300 dpi and below 8 cm. The drawing script refuses to write if any path is
+missing.
+
+### What the brief said about the tiering, and what the register says
+
+The brief gave the tiering as seven recipes on a fresh clone, eight needing
+local data and six needing a network run. The register says **22, 16 and 6 of
+45**. The network count is right and the other two are roughly a third of the
+truth; the numbers were true of a much earlier commit. The figure reads them
+from `config/recipes.yml` at build time rather than carrying them as text, so
+the recipe that rebuilds it reproduces any change — including the change
+registering a new figure makes to the count of figures the figure itself
+quotes.
+
+### What it does not draw
+
+No box mentions a network, an architecture, a backbone or an epoch, and a test
+asserts that. The 2023 thesis's Figure 3.1 is a DeepLabv3+ diagram, and
+`ERRATA.md` 4.1 and 3.3 record that it depicts an architecture that was neither
+described accurately nor implemented as described. A faithful redrawing would
+have to choose which of the two to be faithful to, so this figure draws the
+system that was actually built instead and says on its own face that it is not
+that diagram.

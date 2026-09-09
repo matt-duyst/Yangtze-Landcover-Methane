@@ -86,6 +86,12 @@ def _residual_field():
     return residual_field_figure()
 
 
+def _framework_pipeline():
+    from src.figures.framework_pipeline import framework_pipeline_figure
+    return framework_pipeline_figure()
+
+
+BUILDERS["framework_pipeline"] = _framework_pipeline
 BUILDERS["landcover_regional"] = _landcover_regional
 BUILDERS["observed_predicted"] = _observed_predicted
 BUILDERS["residual_field"] = _residual_field
@@ -421,8 +427,21 @@ def _native_residual_field():
                                  panel_px / observed.shape[1])}
 
 
+#: Figures with no raster at all. Drawn pixels per source pixel is not a weak
+#: number for these, it is not a number: a diagram has no source pixels. Saying
+#: so is better than printing a ratio a reader would take for a measurement.
+VECTOR_ONLY = ("framework_pipeline", "framework_reproduction")
+
+
 def report_native(stem: str) -> None:
     """Whether a raster panel is drawing what it says it is drawing."""
+    if stem in VECTOR_ONLY:
+        print("\ndrawn pixels per source pixel")
+        print("  not applicable: this figure has no raster. Every mark is a "
+              "path or a glyph,")
+        print("  so there are no source pixels to resample and no ratio to "
+              "report.")
+        return
     if stem not in NATIVE:
         return
     print("\ndrawn pixels per source pixel, across the panel")

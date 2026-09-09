@@ -503,3 +503,22 @@ recipes:
   compare: bytes
   verified: continuously
   note: null
+- artefact: figures/framework_pipeline.png
+  command: python scripts/make_framework_pipeline_figure.py
+  label: pipeline framework figure
+  cost: about two seconds
+  seconds: 4
+  inputs: committed
+  compare: bytes
+  verified: continuously
+  note: The figure quotes the tiering of this register and the number of figures in it, so registering
+    a new figure changes this one and the recipe reproduces the change.
+- artefact: figures/framework_pipeline.pdf
+  command: python scripts/make_framework_pipeline_figure.py
+  label: pipeline framework figure, vector
+  cost: about two seconds
+  seconds: 4
+  inputs: committed
+  compare: bytes
+  verified: continuously
+  note: null

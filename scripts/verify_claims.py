@@ -287,6 +287,34 @@ def _baseline() -> dict:
     return _cache["baseline"]
 
 
+def _pipeline() -> dict:
+    """What the two framework figures quote, from the routes they draw from."""
+    if "pipeline" not in _cache:
+        from src.figures import diagram
+        from src.figures import framework_pipeline as fp
+
+        nodes = fp.nodes()
+        tiers = fp.recipe_tiers()
+        outline = diagram.outline_report()
+        _cache["pipeline"] = {
+            "shapes_declared": float(len(diagram.SHAPES)),
+            "shapes_drawn": float(len({n.shape for n in nodes})),
+            "outline_pairs": float(outline["pairs"]),
+            "outline_min": outline["min_difference"],
+            "nodes": float(len(nodes)),
+            "edges": float(len(fp.edges())),
+            "paths_named": float(sum(len(n.exists) for n in nodes)),
+            "gates": float(sum(1 for n in nodes if n.shape == "decision")),
+            "fetch_routes": float(sum(1 for n in nodes if n.shape == "data")),
+            "recipes": float(tiers["total"]),
+            "recipes_committed": float(tiers.get("continuously", 0)),
+            "recipes_local": float(tiers.get("on_local", 0)),
+            "recipes_network": float(tiers.get("on_demand", 0)),
+            "figure_pairs": float(fp.figure_pairs()),
+        }
+    return _cache["pipeline"]
+
+
 def _residual() -> dict:
     """What the model field and residual figure quotes, from the same route."""
     if "residual" not in _cache:
@@ -440,6 +468,20 @@ QUANTITIES = {
         lambda: _baseline()["rice_plus_impervious_r2"],
     "baseline.impervious_rice_sample_r2":
         lambda: _baseline()["impervious_rice_sample_r2"],
+    "pipeline.shapes_declared": lambda: _pipeline()["shapes_declared"],
+    "pipeline.shapes_drawn": lambda: _pipeline()["shapes_drawn"],
+    "pipeline.outline_pairs": lambda: _pipeline()["outline_pairs"],
+    "pipeline.outline_min": lambda: _pipeline()["outline_min"],
+    "pipeline.nodes": lambda: _pipeline()["nodes"],
+    "pipeline.edges": lambda: _pipeline()["edges"],
+    "pipeline.paths_named": lambda: _pipeline()["paths_named"],
+    "pipeline.gates": lambda: _pipeline()["gates"],
+    "pipeline.fetch_routes": lambda: _pipeline()["fetch_routes"],
+    "pipeline.recipes": lambda: _pipeline()["recipes"],
+    "pipeline.recipes_committed": lambda: _pipeline()["recipes_committed"],
+    "pipeline.recipes_local": lambda: _pipeline()["recipes_local"],
+    "pipeline.recipes_network": lambda: _pipeline()["recipes_network"],
+    "pipeline.figure_pairs": lambda: _pipeline()["figure_pairs"],
     "residual.observed_moran": lambda: _residual()["observed_moran"],
     "residual.residual_moran": lambda: _residual()["residual_moran"],
     "residual.moran_removed_percent":

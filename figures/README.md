@@ -29,13 +29,21 @@ verified export path in `src/figures/output.py`, registered in
 | `landcover_regional` | `landcover_regional.py` | continuously | thesis Figures 7–9 and 18, the provincial breakdown |
 | `observed_predicted` | `observed_predicted.py` | continuously | thesis Figure 4.7, which does not exist as published |
 | `residual_field` | `residual_field.py` | continuously | thesis Figure 4.7, likewise |
+| `framework_pipeline` | `framework_pipeline.py` | continuously | nothing — and deliberately not thesis Figure 3.1 |
 
-Eight. The recipe tier is what `tests/test_recipes.py` does with it:
+Nine. The recipe tier is what `tests/test_recipes.py` does with it:
 *continuously* means the artefact is rebuilt and compared byte for byte in the
 default suite, *on local* means it needs an input that is not committed and
-runs only in the slow tier. Seven of the eight are in the default suite; only
-`coverage_saturation_2018` needs an uncommitted input, because it counts
-granules rather than reading a derived table.
+runs only in the slow tier. Eight of the nine are in the default suite; only `coverage_saturation_2018`
+needs an uncommitted input, because it counts granules rather than reading a
+derived table.
+
+The two `framework_*` figures are **diagrams**, and they draw from a second
+declared vocabulary: `src/figures/diagram.py` holds the shapes the way
+`src/figures/style.py` holds the colours. They follow two different visual
+grammars, ISO 5807:1985 for the flowchart and Patil, Peng and Leek (2019) for
+the reproduction status figure, and the vocabulary refuses a figure that mixes
+them.
 
 ## What is planned and does not exist
 
@@ -48,7 +56,7 @@ which is the only place any of them was ever written down.
 | fold map | which cells fall in which spatial block and which province, for both evaluation schemes | not started; it is the figure that would show why a held-out province's interior has no training neighbour, which is currently a sentence in three captions |
 | sampling artefact map | where the composite's cell means rest on few soundings, and where the observation days differ most | not started; `ERRATA.md` 7.4 is why it matters — a cell's annual mean is taken over whichever days it was observed on, and those differ by up to 228 days |
 
-Three, so the set is a planned eleven and eight of them exist.
+Three, so the set is a planned eleven and nine of them exist.
 
 **The README's "nine" could not be reconciled with any of this**, which is the
 clearest evidence that the number was never backed by a list. Seven built plus
@@ -77,7 +85,7 @@ enumerated from a file in this repository.
 | 2023 | Subject | Equivalent here |
 | --- | --- | --- |
 | 1 | study area | `study_area` |
-| 2 | DeepLabv3+ architecture | none, and none planned — the reproduction does not rebuild the segmentation |
+| 2 | DeepLabv3+ architecture | none, and none possible — see below |
 | 3, 4, 5 | urban boundaries, 2000 / 2010 / 2018 | `urban_change`, `landcover_native` |
 | 6 | urban expansion trends 2000–2018 | `urban_change` panel (c) |
 | 7, 8, 9 | urban boundaries by province | `landcover_regional` |
@@ -88,17 +96,33 @@ enumerated from a file in this repository.
 | 18 | remote sensing against agricultural statistics | `landcover_regional` panel (b), in part |
 
 Two of the eighteen have no equivalent and are not planned, for opposite
-reasons. Figure 2 is a diagram of a network architecture the reproduction does
-not rebuild. Figure 17 is a hotspot map whose statistic `ERRATA.md` 6.2 records
+reasons.
+
+**Figure 2, the DeepLabv3+ architecture diagram, must not be redrawn**, and
+that is a stronger statement than "not planned". `ERRATA.md` 4.1 records that
+Section 3.3 describes a masked autoencoder citing He et al. throughout while
+the implementation is supervised segmentation with `nn.MSELoss`, and 3.3
+records that the backbone was randomly initialised and then frozen. The diagram
+therefore depicts an architecture that was neither described accurately nor
+implemented as described, and a faithful redrawing would have to choose which
+of the two to be faithful to. The reproduction built no network at all;
+`notes/repository-architecture.md` records that decision and the baselines that
+forced it. What replaces it is `framework_pipeline`, which draws the system
+that was actually built, and `framework_reproduction`, which is about the
+reproduction rather than about a network.
+
+Figure 17 is a hotspot map whose statistic `ERRATA.md` 6.2 records
 as reported without its spatial weights; redrawing it would mean choosing
 weights the original did not state and presenting the result as the same
 figure. The spatial statistic that *is* reproduced, with its weights written on
 the figure, is the Moran's I in `residual_field` panel (c).
 
-Three figures here answer to nothing in the thesis: `coverage_saturation_2018`,
-`observed_predicted` and `residual_field`. The first reports a coverage
-statistic the thesis never gives. The other two are the diagnostics a negative
-result needs, and the thesis's Figure 4.7 was captioned as one of them —
+Four figures here answer to nothing in the thesis:
+`coverage_saturation_2018`, `observed_predicted`, `residual_field` and
+`framework_pipeline`. The first reports a coverage
+statistic the thesis never gives. `framework_pipeline` depicts a system the thesis
+did not have. The other two are the diagnostics a negative result needs, and
+the thesis's Figure 4.7 was captioned as one of them —
 `ERRATA.md` 1.1 records that its panels are the same embedded image as Figure
 4.5(a), so the comparison it claimed to draw was never drawn at all.
 

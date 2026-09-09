@@ -519,3 +519,67 @@ least 15 CIE76 units apart everywhere beyond a tenth of the scale.
 Regenerate with `python scripts/make_residual_field_figure.py`. It reads the
 same `data/processed/baseline_predictions_2018.csv` as the
 observed-against-predicted figure.
+
+---
+
+### What the repository does, from source to result
+
+![An ISO 5807 flowchart of the reproduction pipeline: five obtained sources and one committed reference layer through a manifest check, two aggregation branches with their refusal gates, the analysis grid, the baseline suite and the verified figure export](framework_pipeline.png)
+
+**A pipeline diagram that leaves out where a system refuses describes a
+different system.** Four of the 25<!--#pipeline.nodes--> boxes here are
+decisions and all four are refusals: the failing branch stops, and nothing is
+written or overwritten. The manifest will not replace a populated digest that
+disagrees with a fetched file. The area scripts will not write a row that has
+moved by more than a tenth of a percent from the committed one. The rice extent
+script will not write when a province's assessed area falls outside 0.80 to
+1.02 of its polygon. The exporter will not write a figure below 300 dpi or 8 cm
+or above the venue's byte limits.
+
+The second thing a naive pipeline diagram omits is **which inputs a reader must
+obtain**. `data/raw/` is gitignored, so five of the six inputs at the top are
+downloads over four platforms — 5<!--#pipeline.fetch_routes--> parallelograms,
+ISO's symbol for data, against one bowed rectangle for the reference layers a
+clone already has. The distinction is carried by shape rather than by fill, so
+it costs no colour and survives a black and white print. Of the
+45<!--#pipeline.recipes--> registered regeneration recipes,
+22<!--#pipeline.recipes_committed--> rebuild their artefact from what a fresh
+clone holds, 16<!--#pipeline.recipes_local--> need a fetched input and
+6<!--#pipeline.recipes_network--> need a network run.
+
+Panel (a) reads top-down and panel (b) left-right, joined by ISO's connector
+symbol. Two panels rather than one, decided by rendering: as a single top-down
+frame the chart is eleven rows and 23.4 cm tall at this width, which is the
+whole usable height of a Copernicus page.
+
+Symbols are ISO 5807:1985's, drawn from the
+12<!--#pipeline.shapes_declared--> declared in `src/figures/diagram.py`, of
+which this figure uses 7<!--#pipeline.shapes_drawn-->. That module is to shapes
+what `src/figures/style.py` is to colour: a figure names a shape and gets the
+one path it means, or it does not draw. The six design principles the layout
+follows — a minimal agreed set of shapes, a top-down and left-right reading
+order, one entry and one exit point per shape with the decision excepted,
+labelled decision branches, and inputs shown where a step needs them — are
+Chaudhuri's (2020), and `notes/references.md` records the provenance chain and
+what in it could not be verified.
+
+**The graph is declared as data and the drawing reads it**, which is what makes
+those principles assertions rather than intentions. It also makes possible the
+one check a diagram needs and no test suite otherwise provides: every box names
+the repository paths it stands for — 30<!--#pipeline.paths_named--> of them —
+and `tests/test_figures_framework_pipeline.py` opens each one, then goes
+further and asserts the thresholds written in the diamonds against the code
+that enforces them. A box naming a module that was renamed fails there rather
+than sitting on the page.
+
+**This is not a redrawing of the 2023 thesis's Figure 3.1.** That figure is a
+DeepLabv3+ architecture, and `ERRATA.md` 4.1 records that Section 3.3 describes
+a masked autoencoder while the implementation is supervised segmentation, while
+3.3 records that the backbone was randomly initialised and then frozen. It
+depicts an architecture that was neither described accurately nor implemented
+as described. The reproduction built no network at all;
+`notes/repository-architecture.md` records that decision and the baselines that
+forced it.
+
+Regenerate with `python scripts/make_framework_pipeline_figure.py`, which
+refuses to write if any box names something the repository does not have.
