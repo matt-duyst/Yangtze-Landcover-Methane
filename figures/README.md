@@ -30,11 +30,12 @@ verified export path in `src/figures/output.py`, registered in
 | `observed_predicted` | `observed_predicted.py` | continuously | thesis Figure 4.7, which does not exist as published |
 | `residual_field` | `residual_field.py` | continuously | thesis Figure 4.7, likewise |
 | `framework_pipeline` | `framework_pipeline.py` | continuously | nothing — and deliberately not thesis Figure 3.1 |
+| `framework_reproduction` | `framework_reproduction.py` | continuously | thesis Figure 3.1's place in the document, not its content |
 
-Nine. The recipe tier is what `tests/test_recipes.py` does with it:
+Ten. The recipe tier is what `tests/test_recipes.py` does with it:
 *continuously* means the artefact is rebuilt and compared byte for byte in the
 default suite, *on local* means it needs an input that is not committed and
-runs only in the slow tier. Eight of the nine are in the default suite; only `coverage_saturation_2018`
+runs only in the slow tier. Nine of the ten are in the default suite; only `coverage_saturation_2018`
 needs an uncommitted input, because it counts granules rather than reading a
 derived table.
 
@@ -56,7 +57,7 @@ which is the only place any of them was ever written down.
 | fold map | which cells fall in which spatial block and which province, for both evaluation schemes | not started; it is the figure that would show why a held-out province's interior has no training neighbour, which is currently a sentence in three captions |
 | sampling artefact map | where the composite's cell means rest on few soundings, and where the observation days differ most | not started; `ERRATA.md` 7.4 is why it matters — a cell's annual mean is taken over whichever days it was observed on, and those differ by up to 228 days |
 
-Three, so the set is a planned eleven and nine of them exist.
+Three, so the set is a planned thirteen and ten of them exist.
 
 **The README's "nine" could not be reconciled with any of this**, which is the
 clearest evidence that the number was never backed by a list. Seven built plus
@@ -85,7 +86,7 @@ enumerated from a file in this repository.
 | 2023 | Subject | Equivalent here |
 | --- | --- | --- |
 | 1 | study area | `study_area` |
-| 2 | DeepLabv3+ architecture | none, and none possible — see below |
+| 2 | DeepLabv3+ architecture, the PDF's Figure 3.1 | not redrawn, and deliberately: `framework_pipeline` and `framework_reproduction` take its place. See below |
 | 3, 4, 5 | urban boundaries, 2000 / 2010 / 2018 | `urban_change`, `landcover_native` |
 | 6 | urban expansion trends 2000–2018 | `urban_change` panel (c) |
 | 7, 8, 9 | urban boundaries by province | `landcover_regional` |
@@ -107,9 +108,17 @@ therefore depicts an architecture that was neither described accurately nor
 implemented as described, and a faithful redrawing would have to choose which
 of the two to be faithful to. The reproduction built no network at all;
 `notes/repository-architecture.md` records that decision and the baselines that
-forced it. What replaces it is `framework_pipeline`, which draws the system
-that was actually built, and `framework_reproduction`, which is about the
-reproduction rather than about a network.
+forced it. **Two figures take its place.** `framework_pipeline` draws the system
+that was actually built, and `framework_reproduction` is about the reproduction
+rather than about a network -- it occupies the place in the argument that
+Figure 3.1 held, which was to say what kind of thing the study is, without
+depicting an architecture that does not correspond to any code.
+
+This is the one row where the two numbering schemes had to be tied together,
+because both are cited in this repository: the markdown rendering's Figure 2 is
+the PDF's **Figure 3.1**, captioned "DeepLabv3+ Architecture" on page 15.
+Verified by extracting that page's text rather than inferred from the section
+it sits in.
 
 Figure 17 is a hotspot map whose statistic `ERRATA.md` 6.2 records
 as reported without its spatial weights; redrawing it would mean choosing
@@ -117,11 +126,13 @@ weights the original did not state and presenting the result as the same
 figure. The spatial statistic that *is* reproduced, with its weights written on
 the figure, is the Moran's I in `residual_field` panel (c).
 
-Four figures here answer to nothing in the thesis:
-`coverage_saturation_2018`, `observed_predicted`, `residual_field` and
-`framework_pipeline`. The first reports a coverage
+Five figures here answer to nothing in the thesis:
+`coverage_saturation_2018`, `observed_predicted`, `residual_field`,
+`framework_pipeline` and `framework_reproduction`. The first reports a coverage
 statistic the thesis never gives. `framework_pipeline` depicts a system the thesis
-did not have. The other two are the diagnostics a negative result needs, and
+did not have and `framework_reproduction` is about the reproduction itself,
+which is not a thing the thesis could have had a figure of. The other two are
+the diagnostics a negative result needs, and
 the thesis's Figure 4.7 was captioned as one of them —
 `ERRATA.md` 1.1 records that its panels are the same embedded image as Figure
 4.5(a), so the comparison it claimed to draw was never drawn at all.

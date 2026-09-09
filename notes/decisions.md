@@ -3568,3 +3568,97 @@ described accurately nor implemented as described. A faithful redrawing would
 have to choose which of the two to be faithful to, so this figure draws the
 system that was actually built instead and says on its own face that it is not
 that diagram.
+
+## The reproduction status figure, and the state the source did not have
+
+`ERRATA.md` records twenty-eight findings across seven sections, and read
+straight through it is a list. A list of defects is the wrong shape for what
+the reproduction established: most of the study is intact, four parts are not,
+and the reasons differ in kind.
+
+### Four adaptations to a cited grammar
+
+The grammar is Patil, Peng and Leek's — stages as rows, studies as columns, one
+state per cell — taken from the authors' own `scifigure` package because the
+paper is paywalled. A departure from a cited grammar is a decision, so all four
+are on the figure's own face as well as here.
+
+**A fifth state, and it is not redundant.** `ERRATA.md` 3.5 is not `incorrect`,
+which asserts a value is wrong: the errata deliberately declines to say the
+stored losses are wrong, only that they "should not be cited as results of the
+code as committed". It is not `unobserved`, which asserts nothing was recorded:
+22 cells retain stored outputs. What cannot be established is the **link**, and
+neither of the two states it sits between says that. A test asserts the errata's
+own wording rather than trusting the reading — including that the word *wrong*
+does not appear in 3.5.
+
+It is used in exactly one cell, which is the right number. The state exists
+because the finding does, not to fill a legend.
+
+**A findings column that is not a study.** The source's columns are studies and
+this figure has two, because there is one study and one reproduction. The text
+on the right is row annotation, the mirror of the stage names on the left. It
+carries what a two-column grid cannot: which section establishes each state and
+which kind of reproduction produced it.
+
+**The unchanged case is not de-emphasised.** The source's difference mode fades
+cells where both studies agree, because across nine columns that is noise. Here
+it is signal. Four of the eleven stages are unchanged in both columns and five
+of the eleven cells in the 2023 column are unchanged or absent; drawing them
+faintly would produce the page of failures the errata's preamble is careful not
+to write.
+
+**All eleven stages are kept, and one is `unobserved` rather than dropped.**
+Neither study collected data — both read published satellite products — so
+`Experimenter` belongs to third parties in both columns. The grammar has a state
+for a stage that is not present, and using it says something; dropping the row
+would silently change a cited grammar's row set and say nothing.
+
+### No colour, because five tones do not exist here
+
+The source's palette is a red and a teal, which `style.py` exists partly to
+refuse. It is not replaced either: five states would need five tones separating
+by 0.15 in luminance, and `style.SERIES` already records the measurement that
+Crameri's categorical set has no such five-colour subset below the line-ink
+ceiling. **No new role was added.**
+
+So the glyph carries the state and the figure is **achromatic**: red, green and
+blue are equal at every one of its 4,034,070 pixels. Greyscale and all three
+dichromat simulations return the same image to within one level of 255, which
+is the sRGB round trip's rounding. Both are asserted — the channel equality
+exactly, the renders to that tolerance. An earlier draft of the caption said
+"pixel-identical", which the measurement does not support.
+
+### Desai's hierarchy maps onto the errata's own sections
+
+Dependent reproducibility uses the original materials; independent rebuilds from
+the methodology. Sections 1 to 6 of `ERRATA.md` read the thesis PDF, the
+committed notebook and the repository's history. Section 7 rebuilds the
+composite from Level 2 granules, joins the lattice and runs the baselines. The
+errata says as much in section 7's own preamble — the six sections above record
+what reading found, and this one is "different in kind".
+
+Neither document was written with the other in mind, so the mapping is asserted
+rather than described: a test derives each row's kind from the chapter numbers
+it cites and compares it with the declared kind.
+
+One case sits on the boundary and is marked as both. 7.5 recomputes the
+provincial urban areas from the same product, which is dependent in method, but
+from a later release, which is not the original material. That is the finding
+rather than a technicality.
+
+### The architecture test, in a different form
+
+The pipeline figure carries a test asserting no box names a network, a backbone
+or an epoch. Applying it literally here would fail, and correctly so: this
+figure's subject includes `ERRATA.md` 3.3, so the word *backbone* appears in a
+finding about the original. Naming a defect is not depicting an architecture.
+
+So the assertion is on **structure** instead. The row set must be the grammar's
+eleven stages, so no row can be an architecture component, and wherever such a
+word appears in a finding, that finding must cite an errata section.
+
+Also verified rather than assumed while doing this: the DeepLabv3+ diagram is
+**Figure 3.1** in the thesis PDF, captioned on page 15. Three captions and a
+figure note already said so on the strength of a brief; `ERRATA.md` never gives
+that number.

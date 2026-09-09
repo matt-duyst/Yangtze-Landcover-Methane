@@ -91,7 +91,14 @@ def _framework_pipeline():
     return framework_pipeline_figure()
 
 
+def _framework_reproduction():
+    from src.figures.framework_reproduction import (
+        framework_reproduction_figure)
+    return framework_reproduction_figure()
+
+
 BUILDERS["framework_pipeline"] = _framework_pipeline
+BUILDERS["framework_reproduction"] = _framework_reproduction
 BUILDERS["landcover_regional"] = _landcover_regional
 BUILDERS["observed_predicted"] = _observed_predicted
 BUILDERS["residual_field"] = _residual_field

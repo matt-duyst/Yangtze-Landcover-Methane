@@ -522,3 +522,22 @@ recipes:
   compare: bytes
   verified: continuously
   note: null
+- artefact: figures/framework_reproduction.png
+  command: python scripts/make_framework_reproduction_figure.py
+  label: reproduction status framework figure
+  cost: about three seconds
+  seconds: 5
+  inputs: committed
+  compare: bytes
+  verified: continuously
+  note: The script refuses to write unless every ERRATA.md section a cell cites exists and every phrase
+    the cell declares as evidence appears in those sections.
+- artefact: figures/framework_reproduction.pdf
+  command: python scripts/make_framework_reproduction_figure.py
+  label: reproduction status framework figure, vector
+  cost: about three seconds
+  seconds: 5
+  inputs: committed
+  compare: bytes
+  verified: continuously
+  note: null

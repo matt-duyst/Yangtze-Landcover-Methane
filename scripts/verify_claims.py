@@ -315,6 +315,34 @@ def _pipeline() -> dict:
     return _cache["pipeline"]
 
 
+def _reproduction() -> dict:
+    """What the reproduction status figure quotes, from the route it draws."""
+    if "reproduction" not in _cache:
+        from src.figures import diagram
+        from src.figures import framework_reproduction as fr
+
+        rows = fr.rows()
+        cited = {number for row in rows for number in row.errata}
+        states = [row.original for row in rows]
+        _cache["reproduction"] = {
+            "stages": float(len(rows)),
+            "columns": float(len(fr.COLUMNS)),
+            "states": float(len(diagram.STATE_GLYPH)),
+            "source_states": float(len(diagram.STATE_GLYPH) - 1),
+            "intact": float(sum(1 for row in rows if row.intact)),
+            "errata_sections": float(len(fr.errata_sections())),
+            "errata_cited": float(len(cited)),
+            "errata_chapters": float(len({n.split(".")[0] for n in cited})),
+            "original_observed": float(states.count("state_observed")),
+            "original_incorrect": float(states.count("state_incorrect")),
+            "dependent_rows": float(sum(1 for row in rows
+                                        if row.kind == fr.DEPENDENT)),
+            "both_rows": float(sum(1 for row in rows
+                                   if row.kind == fr.BOTH)),
+        }
+    return _cache["reproduction"]
+
+
 def _residual() -> dict:
     """What the model field and residual figure quotes, from the same route."""
     if "residual" not in _cache:
@@ -468,6 +496,20 @@ QUANTITIES = {
         lambda: _baseline()["rice_plus_impervious_r2"],
     "baseline.impervious_rice_sample_r2":
         lambda: _baseline()["impervious_rice_sample_r2"],
+    "reproduction.stages": lambda: _reproduction()["stages"],
+    "reproduction.columns": lambda: _reproduction()["columns"],
+    "reproduction.states": lambda: _reproduction()["states"],
+    "reproduction.source_states": lambda: _reproduction()["source_states"],
+    "reproduction.intact": lambda: _reproduction()["intact"],
+    "reproduction.errata_sections": lambda: _reproduction()["errata_sections"],
+    "reproduction.errata_cited": lambda: _reproduction()["errata_cited"],
+    "reproduction.errata_chapters": lambda: _reproduction()["errata_chapters"],
+    "reproduction.original_observed":
+        lambda: _reproduction()["original_observed"],
+    "reproduction.original_incorrect":
+        lambda: _reproduction()["original_incorrect"],
+    "reproduction.dependent_rows": lambda: _reproduction()["dependent_rows"],
+    "reproduction.both_rows": lambda: _reproduction()["both_rows"],
     "pipeline.shapes_declared": lambda: _pipeline()["shapes_declared"],
     "pipeline.shapes_drawn": lambda: _pipeline()["shapes_drawn"],
     "pipeline.outline_pairs": lambda: _pipeline()["outline_pairs"],

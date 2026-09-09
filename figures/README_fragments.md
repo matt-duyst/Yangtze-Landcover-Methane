@@ -542,8 +542,8 @@ downloads over four platforms — 5<!--#pipeline.fetch_routes--> parallelograms,
 ISO's symbol for data, against one bowed rectangle for the reference layers a
 clone already has. The distinction is carried by shape rather than by fill, so
 it costs no colour and survives a black and white print. Of the
-45<!--#pipeline.recipes--> registered regeneration recipes,
-22<!--#pipeline.recipes_committed--> rebuild their artefact from what a fresh
+47<!--#pipeline.recipes--> registered regeneration recipes,
+24<!--#pipeline.recipes_committed--> rebuild their artefact from what a fresh
 clone holds, 16<!--#pipeline.recipes_local--> need a fetched input and
 6<!--#pipeline.recipes_network--> need a network run.
 
@@ -583,3 +583,98 @@ forced it.
 
 Regenerate with `python scripts/make_framework_pipeline_figure.py`, which
 refuses to write if any box names something the repository does not have.
+
+---
+
+### What the reproduction found about each part of the study
+
+![Eleven stages of the scientific process as rows against two studies as columns, with a glyph per cell giving the state of that stage, the ERRATA section establishing it and which kind of reproduction produced it](framework_reproduction.png)
+
+**`ERRATA.md` records twenty-eight findings across seven sections, and read
+straight through it is a list.** A list of defects is the wrong shape for what
+the reproduction established: most of the study is intact, four parts are not,
+and the reasons differ in kind. This puts
+15<!--#reproduction.errata_cited--> of those
+28<!--#reproduction.errata_sections--> sections, drawn from all
+7<!--#reproduction.errata_chapters--> of them, in one frame.
+
+The grammar is not this repository's. Rows are the
+11<!--#reproduction.stages--> stages of the scientific process and columns are
+studies, which is the visual tool Patil, Peng and Leek published for
+reproducibility and replicability (2019, `10.1038/s41562-019-0629-z`). Because
+that paper is paywalled, the stage names, their order and the states were taken
+from the authors' own reference implementation, the `scifigure` package on
+CRAN. `src/figures/diagram.py` holds them; nothing here invents either.
+
+**Four adaptations, and each is a decision rather than a detail.**
+
+*A fifth state.* The source declares 4<!--#reproduction.source_states-->:
+observed, different, unobserved and incorrect. `ERRATA.md` 3.5 is none of them.
+Every execution count in the committed notebook is null while 22 cells retain
+stored outputs, and the committed transform sequence would raise on the tensor
+the dataset class returns, so the stored losses cannot be tied to the code
+beside them. That is not *incorrect*, which asserts a value is wrong — the
+losses may be real, from a version never committed, and the errata deliberately
+declines to say otherwise. It is not *unobserved*, which asserts nothing was
+recorded; something was. It is the absence of a link, and the fifth state names
+exactly that. It is used in one cell, which is the right number: the state
+exists because the finding does.
+
+*A findings column that is not a study.* The source's columns are studies and
+this figure has 2<!--#reproduction.columns-->, because there is one study and
+one reproduction. The text on the right is row annotation — the mirror of the
+stage names on the left — carrying what a two-column grid cannot: the
+`ERRATA.md` section that establishes each state, and the kind of reproduction
+that produced it.
+
+*The unchanged case is not de-emphasised.* The source's difference mode fades
+cells where both studies agree, because across nine columns that is noise. Here
+it is signal. 4<!--#reproduction.intact--> of the 11 stages are unchanged in
+both columns and 5<!--#reproduction.original_observed--> of the eleven cells in
+the 2023 column are unchanged; drawing them faintly would produce the page of
+failures the errata's own preamble is careful not to write.
+
+*No colour carries meaning.* The source's default palette is a red and a teal,
+which `src/figures/style.py` exists partly to refuse — and it is not replaced
+either. Five states would need five tones separating by 0.15 in luminance, and
+`style.SERIES` records the measurement that says Crameri's categorical set has
+no such five-colour subset below the line-ink ceiling. So the glyph carries the
+state and nothing else does, and the figure is **achromatic**: red, green and
+blue are equal at every pixel. Greyscale and all three dichromat simulations
+therefore return the same image to within one level of 255, which is the
+rounding of the sRGB round trip rather than a change of colour, and its tests
+assert both — the channel equality exactly, and the four renders to that
+tolerance.
+
+**Which kind of reproduction produced which finding** is named per row after
+Desai, Abdelhamid and Padalkar (2025, `10.1002/aaai.70004`): dependent
+reproducibility uses the original materials to validate the implementation,
+independent reproducibility rebuilds from the methodology. That hierarchy turns
+out to map onto `ERRATA.md`'s own structure, which is worth stating because
+neither was built with the other in mind — sections 1 to 6 read the thesis PDF,
+the committed notebook and the repository's history, and section 7 rebuilds the
+composite from Level 2 granules and runs the baselines.
+4<!--#reproduction.dependent_rows--> rows are dependent alone and
+2<!--#reproduction.both_rows--> are both. One case sits on the boundary and is
+marked as such: 7.5 recomputes the provincial urban areas from the same product,
+which is dependent in method, but from a later release, which is not the
+original material — and that is the finding rather than a technicality.
+
+**This is not an attack on the thesis and the states are chosen so it cannot
+read as one.** The 2018 urban extent reproduces from the same product to within
+0.8 percent; the 2000 extent does not, because GAIA stores the year each pixel
+first became impervious and a reprocessing re-dates it. So the 2023 numbers were
+consistent with the data the thesis had, and the data changed. Where three of
+four multipliers in a paragraph recompute from the thesis's own table, the
+annotation says three of four. And one of the unchanged stages is the analyst,
+which is the limit on what any of this can claim: a reproduction by its own
+author is not an independent check of the analyst.
+
+Nothing here depicts the 2023 thesis's Figure 3.1. Where a word like *backbone*
+appears it is a finding about the original, citing `ERRATA.md` 3.3, and never a
+component of anything drawn; the row set is the grammar's eleven stages and a
+test asserts it.
+
+Regenerate with `python scripts/make_framework_reproduction_figure.py`, which
+refuses to write unless every `ERRATA.md` section a cell cites exists and every
+phrase the cell declares as evidence appears in the sections it cites.
