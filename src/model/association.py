@@ -83,6 +83,23 @@ def _residuals(values: np.ndarray, controls: np.ndarray,
     return values - design @ coefficients
 
 
+def residuals(values, controls, *, weight=None) -> np.ndarray:
+    """What is left of ``values`` after removing what the controls explain.
+
+    Public because an added-variable plot draws exactly what
+    :func:`partial_correlation` correlates, and drawing it from a second
+    implementation would let the picture and the number disagree. The figure
+    that uses it asserts that the slope through its cloud is the partial
+    correlation this module reports.
+    """
+    values = np.asarray(values, dtype="float64")
+    controls = np.column_stack([np.asarray(c, dtype="float64")
+                                for c in controls])
+    weight = (np.ones(values.size) if weight is None
+              else np.asarray(weight, dtype="float64"))
+    return _residuals(values, controls, weight)
+
+
 def _p_from_r(r: float, n: int, k: int) -> float:
     """Two-sided p for a correlation with ``k`` controls partialled out."""
     df = n - 2 - k

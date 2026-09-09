@@ -541,3 +541,22 @@ recipes:
   compare: bytes
   verified: continuously
   note: null
+- artefact: figures/albedo_collinearity.png
+  command: python scripts/make_albedo_collinearity_figure.py
+  label: albedo collinearity figure
+  cost: about four seconds
+  seconds: 8
+  inputs: committed
+  compare: bytes
+  verified: continuously
+  note: Every correlation is recomputed from analysis_grid_2018.csv and methane_covariates_2018.csv at
+    build time, and the figure refuses to build unless the bias-corrected values reproduce albedo_confounder_2018.csv.
+- artefact: figures/albedo_collinearity.pdf
+  command: python scripts/make_albedo_collinearity_figure.py
+  label: albedo collinearity figure, vector
+  cost: about four seconds
+  seconds: 8
+  inputs: committed
+  compare: bytes
+  verified: continuously
+  note: null

@@ -542,8 +542,8 @@ downloads over four platforms — 5<!--#pipeline.fetch_routes--> parallelograms,
 ISO's symbol for data, against one bowed rectangle for the reference layers a
 clone already has. The distinction is carried by shape rather than by fill, so
 it costs no colour and survives a black and white print. Of the
-47<!--#pipeline.recipes--> registered regeneration recipes,
-24<!--#pipeline.recipes_committed--> rebuild their artefact from what a fresh
+49<!--#pipeline.recipes--> registered regeneration recipes,
+26<!--#pipeline.recipes_committed--> rebuild their artefact from what a fresh
 clone holds, 16<!--#pipeline.recipes_local--> need a fetched input and
 6<!--#pipeline.recipes_network--> need a network run.
 
@@ -678,3 +678,88 @@ test asserts it.
 Regenerate with `python scripts/make_framework_reproduction_figure.py`, which
 refuses to write unless every `ERRATA.md` section a cell cites exists and every
 phrase the cell declares as evidence appears in the sections it cites.
+
+---
+
+### Why the urban association cannot be attributed
+
+![Five panels: impervious fraction against surface albedo with methane in the colour, albedo against methane, impervious fraction against methane, the same with albedo removed from both, and a slope chart of the correlation before and after control on two methane fields and two weightings](albedo_collinearity.png)
+
+**The obvious objection to the reproduction's negative finding is that the
+urban association is real and the analysis is too blunt to find it. This figure
+answers that objection, and the answer is not that the association is false. It
+is that this data cannot separate the two explanations, even in principle.**
+
+Three legs, one panel each. Panel (a): impervious fraction and retrieved
+surface albedo co-vary at Spearman
++0.761<!--#collinear.collinearity--> over 926<!--#collinear.cells--> cells,
+because cities are brighter and drier than their surroundings — a fact about
+cities, not about the instrument. Panel (b): albedo predicts retrieved methane
+at Pearson +0.700<!--#collinear.methane_albedo--> on the bias-corrected field
+and +0.737<!--#collinear.methane_albedo_raw--> on the raw one. That is a
+documented retrieval artefact with the documented sign, and the operational a
+posteriori correction removes only
+2.1<!--#collinear.reduction_percent--> percent of the fitted slope unweighted,
+from 203.9<!--#albedo.slope_raw--> to 199.7<!--#albedo.slope_corrected--> ppb
+per unit albedo. Panels (c) and (d): the association at issue, Pearson
++0.345<!--#collinear.zero_order-->, and the same association with albedo
+removed from both variables, +0.021<!--#collinear.partial--> at p
+0.53<!--#collinear.partial_p-->.
+
+So there is a path from urban extent through surface brightness to retrieved
+methane that has nothing to do with emissions, and the two ends of it are too
+collinear here to be told apart.
+
+**This does not show that the urban signal is an artefact**, and the figure says
+so on its own face. At Spearman +0.76 there is not enough independent variation
+to say which of the two is doing the work. A real urban methane signal would
+produce this same pattern, because cities really are brighter, so controlling
+for albedo over-controls by an unknown amount. `ERRATA.md` 7.4 states this
+carefully and the figure matches its care rather than exceeding it.
+
+**Nor is the partial correlation the corrected estimate.** It is one of two
+readings and the second is visible in panel (e) rather than hidden. On the
+**raw** retrieval the impervious association survives control, falling only from
++0.440<!--#collinear.zero_order_raw--> to
++0.151<!--#collinear.partial_raw--> at p 4.0e-06, and the raw retrieval is the
+field carrying the *larger* uncorrected albedo bias. Incomplete control is at
+least as available a reading of that survival as a real urban signal, so panel
+(e) draws all four field-by-weighting combinations and lets neither field stand
+for the answer.
+
+**Both weightings are reported because they differ.** A cell's value is a mean
+over 1<!--#composite.min_soundings--> to 410<!--#composite.max_soundings-->
+soundings, and mark area carries that count on the composite figure's
+half-decade classes, the convention the observed-against-predicted figure set.
+Weighting by count is the more conservative throughout: the collinearity falls
+to +0.607<!--#collinear.collinearity_weighted-->, the zero-order association to
++0.212<!--#collinear.zero_order_weighted-->, and the partial to
++0.032<!--#collinear.partial_weighted--> at p
+0.32<!--#collinear.partial_weighted_p--> on the corrected field and
++0.125<!--#collinear.partial_raw_weighted--> on the raw. The weighted
+correction also removes far more of the albedo slope,
+31.3<!--#collinear.reduction_weighted_percent--> percent against 2.1.
+
+**What would separate them** is a retrieval known to be albedo-unbiased, or
+variation in urban extent at constant albedo. This region provides neither.
+That is a limitation of the study design rather than of the analysis, and
+saying so is stronger than leaving it implicit.
+
+166<!--#collinear.negative_cells--> of the cells carry a negative annual mean
+SWIR albedo, 18<!--#collinear.negative_percent--> percent of the grid, and a
+reader meeting one will think it is an error. It is not, and it is not a fill
+value either: albedo here is a parameter the retrieval fits, not a reflectance
+it measures, and over dark surfaces the fit lands below zero. Those cells are
+the dark ones — water and the wetter coastal margin — which is precisely the
+population the question concerns, so dropping them would remove the grid's
+darkest fifth non-randomly. `data/processed/README.md` records it and panels
+(a) and (b) mark where the sign changes.
+
+Nothing on this figure is a literal. Every correlation is recomputed at build
+time from `analysis_grid_2018.csv` and `methane_covariates_2018.csv` through
+the same `src.model.association` that `scripts/test_albedo_confounder.py` uses,
+and the module refuses to build unless the bias-corrected values reproduce the
+committed `albedo_confounder_2018.csv`. The two slopes are read from
+`albedo_correction_2018.csv` rather than refitted.
+
+Regenerate with `python scripts/make_albedo_collinearity_figure.py`.

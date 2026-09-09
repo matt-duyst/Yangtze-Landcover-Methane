@@ -3700,3 +3700,97 @@ first of the four — is not reachable by any rule that does not also flag every
 other backticked word in that docstring. What guards it in practice is the
 closure between the inventory, the recipes and `verify_figure`; what would not
 be caught is a docstring naming a figure nobody has started.
+
+## The albedo collinearity figure, and a reference line over a ramp
+
+The reproduction's negative finding is that land cover does not explain the
+observed methane field, and the obvious objection is that the association is
+real and the analysis is too blunt to find it. This figure answers that
+objection. **The answer is not that the association is false.** It is that this
+data cannot separate the two explanations even in principle, and `ERRATA.md`
+7.4 already says so carefully; the figure has to match its care rather than
+exceed it.
+
+### Five panels, because three of the legs are different shapes
+
+Two of the three legs are bivariate relationships and the third is a change in
+one number. Forcing them into one frame would have served neither.
+
+Rejected: **a single scatter of impervious against albedo with methane as the
+colour**. It carries the first leg and hints at the second, and it cannot carry
+the third at all. It survives as panel (a), which is the right size for it.
+
+Rejected: **three panels**, one per leg. The third leg is "the association
+falls from +0.345 to +0.021", and a reader cannot see a fall without seeing
+where it fell from. So (c) draws the association at issue and (d) draws the
+same association with albedo removed from both variables. Those two panels are
+the comparison, and the number is only their caption.
+
+Panel (d) is an added-variable plot, drawn from
+`src.model.association.residuals` -- the same function `partial_correlation`
+uses, made public for this. A figure that computed its own residuals could show
+a cloud whose slope was not the number printed beside it. A test asserts the
+correlation through the drawn cloud equals the reported partial to 1e-9.
+
+Panel (e) is a slope chart of before and after control, on both methane fields
+and both weightings. A pair of bars would ask a reader to compare two lengths
+where a line already is the comparison.
+
+### The asymmetry is the reason panel (e) exists
+
+On the raw retrieval the impervious association survives control at
+**+0.151** (p 4.0e-06); on the bias-corrected field it does not, at **+0.021**
+(p 0.53). Drawing only the corrected field would imply the partial correlation
+is the corrected estimate, which it is not: the raw retrieval carries the
+*larger* uncorrected albedo bias, so incomplete control reads as well as a real
+urban signal. All four combinations are drawn and the note gives that reading,
+so neither field stands for the answer.
+
+Weighting is the more conservative throughout and is reported for that reason:
+the collinearity falls from Spearman +0.761 to +0.607, the zero-order
+association from +0.345 to +0.212, the partial from +0.021 to +0.032 on the
+corrected field and +0.151 to +0.125 on the raw. The correction removes 2.1
+percent of the albedo slope unweighted and 31.3 percent weighted.
+
+### A reference line over a ramp: a case the palette has no answer for
+
+Panel (a) draws methane through the truncated sequential ramp and also draws a
+line at albedo zero, because 166 of 926 cells sit below it and a reader meeting
+a negative albedo will think it is an error.
+
+**No single tone can clear a full sequential ramp by the 0.15 convention.** The
+ramp runs from luminance 0.097 to 0.771, so a clearing tone would have to sit
+below -0.05 or above 0.921, and 0.921 is indistinguishable from the page.
+`reference_line` at 0.099 clears the light end by 0.672 and the dark end by
+0.002.
+
+The treatment is the relief band's rather than a pairwise one. The line is
+drawn **beneath** the marks, so where it meets the darkest cells they occlude
+it instead of blending with it, and it stays legible across the rest of the
+panel, which is where a reader looks for it; the y ticks carry the same
+information independently. Panels (b) and (d) have no such problem, because
+their marks are `observation_mark` at 0.451 and clear `reference_line` by 0.35.
+A test asserts the ordering rather than leaving it to a redraw.
+
+The other new case is the ramp carrying a **third** variable. It separates from
+the page by 0.229 at its light end, which is the requirement that matters when
+a scatter is drawn on paper rather than over a map. What it cannot do is carry
+a *value*: the smallest sounding class is a mark 0.050 cm across, under six
+pixels at the export resolution, and nobody reads a concentration off six
+pixels against a bar. So the colour in (a) carries order, and panel (b) exists
+partly because magnitude needs an axis.
+
+### Where the brief's numbers came from, and why three were slightly off
+
+Several figures in the brief traced to the albedo section of this file rather
+than to the committed tables, and this file is a **log**: its numbers are
+as-measured-at-the-time and `scripts/verify_claims.py` excludes it by design,
+because a mechanism that corrected them would destroy what they record. They
+predate an extent change from 927 cells to 926.
+
+So methane against albedo is **+0.700** and not +0.702 on the corrected field,
+and **+0.738** and not +0.740 on the raw; the partial's p is **0.53** and not
+0.55. The brief's slope figures came from the committed table instead and are
+exact. Nothing here needs correcting: the log is right about what was measured
+then, and the figure is right about what is measured now, which is the split
+that mechanism was built to keep.

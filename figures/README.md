@@ -49,11 +49,12 @@ twelve.
 | `residual_field` | `residual_field.py` | continuously | thesis Figure 4.7, likewise |
 | `framework_pipeline` | `framework_pipeline.py` | continuously | nothing — and deliberately not thesis Figure 3.1 |
 | `framework_reproduction` | `framework_reproduction.py` | continuously | thesis Figure 3.1's place in the document, not its content |
+| `albedo_collinearity` | `albedo_collinearity.py` | continuously | nothing — it answers the objection to a finding the thesis did not make |
 
-Ten. The recipe tier is what `tests/test_recipes.py` does with it:
+Eleven. The recipe tier is what `tests/test_recipes.py` does with it:
 *continuously* means the artefact is rebuilt and compared byte for byte in the
 default suite, *on local* means it needs an input that is not committed and
-runs only in the slow tier. Nine of the ten are in the default suite; only `coverage_saturation_2018`
+runs only in the slow tier. Ten of the eleven are in the default suite; only `coverage_saturation_2018`
 needs an uncommitted input, because it counts granules rather than reading a
 derived table.
 
@@ -75,7 +76,7 @@ which is the only place any of them was ever written down.
 | fold map | which cells fall in which spatial block and which province, for both evaluation schemes | not started; it is the figure that would show why a held-out province's interior has no training neighbour, which is currently a sentence in three captions |
 | sampling artefact map | where the composite's cell means rest on few soundings, and where the observation days differ most | not started; `ERRATA.md` 7.4 is why it matters — a cell's annual mean is taken over whichever days it was observed on, and those differ by up to 228 days |
 
-Three, so the set is a planned thirteen and ten of them exist.
+Three, so the set is a planned fourteen and eleven of them exist.
 
 **The README's "nine" could not be reconciled with any of this**, which is the
 clearest evidence that the number was never backed by a list. Seven built plus
@@ -144,13 +145,14 @@ weights the original did not state and presenting the result as the same
 figure. The spatial statistic that *is* reproduced, with its weights written on
 the figure, is the Moran's I in `residual_field` panel (c).
 
-Five figures here answer to nothing in the thesis:
+Six figures here answer to nothing in the thesis:
 `coverage_saturation_2018`, `observed_predicted`, `residual_field`,
-`framework_pipeline` and `framework_reproduction`. The first reports a coverage
+`framework_pipeline`, `framework_reproduction` and `albedo_collinearity`. The first reports a coverage
 statistic the thesis never gives. `framework_pipeline` depicts a system the thesis
 did not have and `framework_reproduction` is about the reproduction itself,
-which is not a thing the thesis could have had a figure of. The other two are
-the diagnostics a negative result needs, and
+which is not a thing the thesis could have had a figure of.
+`albedo_collinearity` answers an objection to a finding the thesis never made.
+The other two are the diagnostics a negative result needs, and
 the thesis's Figure 4.7 was captioned as one of them —
 `ERRATA.md` 1.1 records that its panels are the same embedded image as Figure
 4.5(a), so the comparison it claimed to draw was never drawn at all.

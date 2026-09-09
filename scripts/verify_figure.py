@@ -97,6 +97,12 @@ def _framework_reproduction():
     return framework_reproduction_figure()
 
 
+def _albedo_collinearity():
+    from src.figures.albedo_collinearity import albedo_collinearity_figure
+    return albedo_collinearity_figure()
+
+
+BUILDERS["albedo_collinearity"] = _albedo_collinearity
 BUILDERS["framework_pipeline"] = _framework_pipeline
 BUILDERS["framework_reproduction"] = _framework_reproduction
 BUILDERS["landcover_regional"] = _landcover_regional
@@ -437,7 +443,8 @@ def _native_residual_field():
 #: Figures with no raster at all. Drawn pixels per source pixel is not a weak
 #: number for these, it is not a number: a diagram has no source pixels. Saying
 #: so is better than printing a ratio a reader would take for a measurement.
-VECTOR_ONLY = ("framework_pipeline", "framework_reproduction")
+VECTOR_ONLY = ("albedo_collinearity", "framework_pipeline",
+               "framework_reproduction")
 
 
 def report_native(stem: str) -> None:

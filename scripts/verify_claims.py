@@ -315,6 +315,49 @@ def _pipeline() -> dict:
     return _cache["pipeline"]
 
 
+def _collinear() -> dict:
+    """What the albedo collinearity figure quotes, from the route it draws.
+
+    Keyed `collinear` rather than `albedo` because `_albedo_slope` already owns
+    that cache key and `albedo.slope_raw` and `albedo.slope_corrected` already
+    exist; this adds the correlations, not the slopes.
+    """
+    if "collinear" not in _cache:
+        from src.figures import albedo_collinearity as ac
+
+        cells = ac.load_cells()
+        computed = ac.associations(cells)
+        corrected = computed[("bias corrected", "unweighted")]
+        weighted = computed[("bias corrected", "by sounding count")]
+        raw = computed[("raw retrieval", "unweighted")]
+        raw_weighted = computed[("raw retrieval", "by sounding count")]
+        fitted = ac.slopes()  # noqa: F841 -- kept for the reduction below
+        _cache["collinear"] = {
+            "cells": float(cells.n),
+            "negative_cells": float(ac.negative_albedo(cells)),
+            "negative_percent": 100.0 * ac.negative_albedo(cells) / cells.n,
+            "collinearity": corrected["albedo_predictor"].spearman,
+            "collinearity_weighted": weighted["albedo_predictor"].spearman,
+            "methane_albedo": corrected["methane_albedo"].pearson,
+            "methane_albedo_weighted": weighted["methane_albedo"].pearson,
+            "methane_albedo_raw": raw["methane_albedo"].pearson,
+            "zero_order": corrected["methane_predictor"].pearson,
+            "zero_order_weighted": weighted["methane_predictor"].pearson,
+            "partial": corrected["partial"].pearson,
+            "partial_p": corrected["partial"].pearson_p,
+            "partial_weighted": weighted["partial"].pearson,
+            "partial_weighted_p": weighted["partial"].pearson_p,
+            "zero_order_raw": raw["methane_predictor"].pearson,
+            "partial_raw": raw["partial"].pearson,
+            "partial_raw_p": raw["partial"].pearson_p,
+            "partial_raw_weighted": raw_weighted["partial"].pearson,
+            "reduction_percent": 100.0 * ac.correction_reduction("unweighted"),
+            "reduction_weighted_percent":
+                100.0 * ac.correction_reduction("by sounding count"),
+        }
+    return _cache["collinear"]
+
+
 def _reproduction() -> dict:
     """What the reproduction status figure quotes, from the route it draws."""
     if "reproduction" not in _cache:
@@ -496,6 +539,26 @@ QUANTITIES = {
         lambda: _baseline()["rice_plus_impervious_r2"],
     "baseline.impervious_rice_sample_r2":
         lambda: _baseline()["impervious_rice_sample_r2"],
+    "collinear.cells": lambda: _collinear()["cells"],
+    "collinear.negative_cells": lambda: _collinear()["negative_cells"],
+    "collinear.negative_percent": lambda: _collinear()["negative_percent"],
+    "collinear.collinearity": lambda: _collinear()["collinearity"],
+    "collinear.collinearity_weighted": lambda: _collinear()["collinearity_weighted"],
+    "collinear.methane_albedo": lambda: _collinear()["methane_albedo"],
+    "collinear.methane_albedo_weighted": lambda: _collinear()["methane_albedo_weighted"],
+    "collinear.methane_albedo_raw": lambda: _collinear()["methane_albedo_raw"],
+    "collinear.zero_order": lambda: _collinear()["zero_order"],
+    "collinear.zero_order_weighted": lambda: _collinear()["zero_order_weighted"],
+    "collinear.partial": lambda: _collinear()["partial"],
+    "collinear.partial_p": lambda: _collinear()["partial_p"],
+    "collinear.partial_weighted": lambda: _collinear()["partial_weighted"],
+    "collinear.partial_weighted_p": lambda: _collinear()["partial_weighted_p"],
+    "collinear.zero_order_raw": lambda: _collinear()["zero_order_raw"],
+    "collinear.partial_raw": lambda: _collinear()["partial_raw"],
+    "collinear.partial_raw_p": lambda: _collinear()["partial_raw_p"],
+    "collinear.partial_raw_weighted": lambda: _collinear()["partial_raw_weighted"],
+    "collinear.reduction_percent": lambda: _collinear()["reduction_percent"],
+    "collinear.reduction_weighted_percent": lambda: _collinear()["reduction_weighted_percent"],
     "reproduction.stages": lambda: _reproduction()["stages"],
     "reproduction.columns": lambda: _reproduction()["columns"],
     "reproduction.states": lambda: _reproduction()["states"],
