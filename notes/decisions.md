@@ -3662,3 +3662,41 @@ Also verified rather than assumed while doing this: the DeepLabv3+ diagram is
 **Figure 3.1** in the thesis PDF, captioned on page 15. Three captions and a
 figure note already said so on the strength of a brief; `ERRATA.md` never gives
 that number.
+
+## A drift class the prose-claims mechanism does not cover
+
+`tests/test_prose_claims.py` verifies every **number** quoted in prose against
+the artefact it comes from. It is a strong check and it is the wrong one for
+this: a sentence naming a file is not a number.
+
+A stopped task left four committed references to `framework_reproduction` — in
+`src/figures/diagram.py`'s docstring, in `scripts/verify_figure.py`'s
+`VECTOR_ONLY`, in the Patil entry in `notes/references.md`, and in
+`figures/README.md`'s Figure 3.1 entry — while no such figure existed. None was
+a broken reference in any mechanical sense. The inventory promised a figure and
+the suite passed.
+
+`tests/test_figure_inventory.py` closes it, in both directions and beyond the
+inventory itself. Every stem the *What exists* table names must have a PNG and a
+PDF; every PNG must have a row; every stem in `verify_figure`'s `BUILDERS`,
+`VECTOR_ONLY` and `NATIVE` must be a built figure; every `figures/<token>` path
+in any committed markdown must resolve; and every bare backticked token in
+`figures/README.md` must be a known figure. Confirmed against `dd99b30`: three
+of those five would have failed there, each on `framework_reproduction`.
+
+**A planned figure is distinguished structurally, not by phrasing.** A built one
+is a backticked stem under *What exists*; a planned one is plain prose with no
+backticks under *What is planned and does not exist*. So the guard never has to
+guess which a row is, and the two section headings are matched verbatim, so
+renaming one fails rather than silently disabling half the check.
+
+The counts are checked too, because a count that is only prose drifts. The
+inventory has already said "a planned eleven" above a table of twelve, in the
+previous commit, and nothing caught it.
+
+**One member of this class is still unguarded and is recorded rather than
+papered over.** A prose mention of a figure inside a module docstring — the
+first of the four — is not reachable by any rule that does not also flag every
+other backticked word in that docstring. What guards it in practice is the
+closure between the inventory, the recipes and `verify_figure`; what would not
+be caught is a docstring naming a figure nobody has started.
