@@ -3367,3 +3367,126 @@ bar dividers, one per bar, and `methane_composite_2018` has reported one of the
 same thing since it was built. The probe now prints each artist's class name
 alongside its label, because "collection _child0" contributing nothing is only
 actionable if a reader can tell whose it is.
+
+## A shape vocabulary, and the two standards behind it
+
+The figure set had eight figures and no diagram. It also had, until now, **no
+literature grounding for diagrams at all**: every other convention in
+`src/figures/style.py` is traceable to Copernicus author guidance or to
+Crameri, and the diagrams had nothing.
+
+### What the two searches actually returned
+
+**ISO 5807:1985** verifies exactly as named — *Information processing —
+Documentation symbols and conventions for data, program and system flowcharts,
+program network charts and system resources charts*, published February 1985,
+confirmed current at ISO's 2019 review. It is **paywalled and was not read**,
+so nothing here cites a clause. What is claimed is the symbol names, which
+every secondary account gives alike, and `src/figures/diagram.py` says so in
+its own docstring.
+
+**The six design principles did not come from where I was told.** They were
+offered as "a citable set of principles accompanying the standard, attributed
+to Chaudhuri 2020 and Lodemann et al. 2022". Three corrections:
+
+* They are not a companion to the standard. They are Appendix 5 of a clinical
+  trial protocol (CSM-BSI, clinicaltrials.gov NCT06271031, October 2023), whose
+  own wording is that its principles and shapes are "in accordance with the ISO
+  standard 5807:1985" *where possible*.
+* **Lodemann et al. 2022 is not a source of them.** It is a real paper and
+  resolves, but the protocol cites it for something else entirely: "flowchart
+  construction will be adapted from a process modelling study of the ABCDE
+  primary survey in trauma resuscitation". That is a method for eliciting a
+  process from clinicians, which this repository does not perform. Recorded in
+  the register and not cited.
+* There are **seven** principles, not six. The seventh — consider re-entrant
+  processes when events are stochastic — is not used here and is not claimed.
+
+So the citation is ISO 5807 for the symbols and Chaudhuri (2020) for the
+principles, with the protocol recorded as the proximate source of the wording
+and both books recorded as **not read**. The register's preamble already
+records two citations that went wrong by collapsing exactly this kind of chain.
+
+**The search's negative result is worth as much as its positive one.** There is
+no flowchart or workflow convention in remote sensing or atmospheric science;
+the workflow figures the search returned are ad hoc, one per paper. Following a
+documentation standard from outside the field is therefore a choice, and it is
+recorded as one rather than passed off as the field's practice.
+
+**Patil, Peng and Leek (2019)** verifies: *Nature Human Behaviour* 3, 650–652,
+`10.1038/s41562-019-0629-z`. Paywalled, so the grammar was taken from the
+authors' own reference implementation, the `scifigure` package on CRAN. Eleven
+stages as rows, studies as columns, four states — `observed`, `different`,
+`unobserved`, `incorrect` — and a difference mode using symbols "semantically
+close to the scenarios that they are encoding". Its default palette is a red
+and a teal, which this repository does not follow, for the reason `style.py`
+exists.
+
+**Desai, Abdelhamid and Padalkar (2025)** verifies, and its definitions are
+verbatim what the brief said they were: "Dependent reproducibility involves
+using the original materials and validating the correctness of the
+implementation as described in the study. Independent reproducibility is
+achieved by reconstructing the experiment based on the original study's
+methodology and similarly validating the implementation's correctness."
+
+### The vocabulary lives beside the palette, not inside it
+
+`src/figures/diagram.py`, a sibling of `style.py` rather than a section of it.
+`style.py` encodes what a mark may look like *anywhere* in the set — venue
+standards, the colour roles, the ramps — and every one of the ten figures reads
+it. A shape vocabulary is narrower: it is what a **diagram** may contain, and
+only two figures may contain one. It also carries a standard from outside the
+venue's guidance, which is a different kind of authority from the one
+`style.py` holds.
+
+The mechanism is deliberately identical. A shape is declared with its grammar,
+the standard's own name for it, why it exists, and what it is drawn **against**
+— the same `against` field the colour roles carry, checked the same way. There,
+by luminance gap; here by **outline**, as a radius profile resampled by angle
+and normalised by its own mean, so it measures form rather than size.
+
+Twelve shapes, eleven declared pairs, minimum difference **0.051** at
+`terminator` against `process`. That number is also the caveat: at the aspect a
+flowchart box is drawn, a stadium's rounding is confined to its ends and is a
+small share of its perimeter, so the measure understates a difference that is
+obvious on the page. The floor is 0.04, which is what it is for — catching a
+shape added as a near-duplicate — and not for adjudicating close calls.
+
+**One pair cannot be separated by outline and is named rather than scored.**
+ISO distinguishes `process` from `predefined process` by two bars *inside* a
+shared rectangle. `outline_report` excludes the pair and lists it under
+`separated_by_decoration`, because scoring it zero and failing would be
+punishing the module for following the standard.
+
+Two failures found while building the measure, both recorded because both
+produced a passing check that meant nothing. Comparing at 1:1 makes a stadium
+*into* a circle, so `terminator` and `connector` scored identical; the
+comparison is now at the aspect the figure draws. And resampling a rectangle
+from its four corners interpolates radius linearly where the true edge follows
+a secant, which collapsed the rectangle's profile to a constant and made it
+identical to a circle; outlines are densified before the profile is taken.
+
+### The graph is data, which is what makes the checks possible
+
+Nodes and edges are dataclasses in a list and the drawing code reads them. Four
+things follow that a hand-placed diagram cannot have.
+
+One entry point and one exit point per shape, the decision excepted. The rule
+is about the *point*, not the line: a branch may fan out past the box, so what
+is checked is that every line into a node arrives on one side and every line out
+of a non-decision leaves from one side. Two labelled outcomes per decision, each
+leaving its own side. A reading order, top-down and left-right, with any line
+running against it required to say so. And **every box names the repository
+paths it stands for, so a test can open them** — which is the check a diagram
+needs and nothing else in this suite provides.
+
+Each of those has a positive control in `tests/test_figures_diagram.py`, because
+a rule that cannot fail is not a rule.
+
+### A test that could only fail after the mistake was committed
+
+`tests/test_recipes.py` asserts every tracked file under `figures/` names a
+recipe. `figures/README.md`, added in the previous commit, is prose and needed
+adding to the exclusion list — and the suite run *before* that commit passed,
+because `git ls-files` cannot see an untracked file. The check is sound and its
+timing is not; the exclusion list now says so.

@@ -1,7 +1,8 @@
 # Reference register
 
 Every source this repository cites, verified against the DOI registries on
-3 September 2026. The register exists because citations here were scattered
+3 September 2026, and extended on 9 September 2026 when the figure set gained
+its first diagrams. The register exists because citations here were scattered
 across `config/sources.yml`, `data/manifest.json`, `notes/decisions.md`,
 `ERRATA.md` and three READMEs, in four different formats, so nobody could say
 how many sources the work rested on without grepping for them.
@@ -14,11 +15,16 @@ listing two of six authors in reverse order. And a benchmark was attributed to
 the TROPOMI/WFMD v2.0 paper, whose abstract describes quality filtering rather
 than the albedo correction the benchmark was said to come from.
 
-`notes/references.bib` carries the same thirty-seven entries as BibTeX. It is
-**generated**, not typed: each entry comes from `https://doi.org` under content
-negotiation for `application/x-bibtex`, so the two files cannot drift and no
-transcription step exists between the registry and the repository. Regenerate it
-rather than editing it.
+`notes/references.bib` carries forty entries as BibTeX. It is **generated**,
+not typed: each entry comes from `https://doi.org` under content negotiation for
+`application/x-bibtex`, so the two files cannot drift and no transcription step
+exists between the registry and the repository. Regenerate it rather than
+editing it.
+
+Two entries in this register are **not** in the BibTeX and cannot be. ISO
+5807:1985 is a standard and Chaudhuri (2020) is a textbook; neither has a DOI,
+so no content negotiation produces them, and typing them by hand would break
+the only guarantee that file makes. Both are under *The diagram sources* below.
 
 This register does **not** include the 2023 thesis's own reference list, which
 is in `writeup/Duyst_Thesis.pdf` and belongs to that document. Where the errata
@@ -26,14 +32,35 @@ discusses a work the thesis cites, the work appears here and its role says so.
 
 ## What could not be verified
 
-Nothing in the register failed to verify. All thirty-seven DOIs resolved: twenty-nine
-through Crossref and six through DataCite, which is the registry that carries
-dataset DOIs and the reason a Crossref-only lookup returns "not found" for the
-deposits.
+Nothing in the register failed to verify **as a work**. All forty DOIs resolved:
+thirty-two through Crossref and six through DataCite, which is the registry that
+carries dataset DOIs and the reason a Crossref-only lookup returns "not found"
+for the deposits. Two entries have no DOI to resolve and are verified by other
+means, which the entries themselves state.
 
-Three things named in the repository are still not in the register. Natural
+One source did not survive verification for the thing it was cited for.
+**Lodemann, T., Akçalı, E., and Fernandez, R. (2022)**, Process Modeling of
+ABCDE Primary Survey in Trauma Resuscitations, *Simulation in Healthcare* 17,
+425–432, `10.1097/SIH.0000000000000622`, is a real paper and resolves. It was
+offered as a joint source of the flowchart design principles, and it is not
+one: the protocol that names it beside Chaudhuri uses it for something else,
+saying "flowchart construction will be adapted from a process modelling study
+of the ABCDE primary survey in trauma resuscitation". That is a method for
+eliciting a process from clinicians, which this repository does not perform. It
+is recorded here and not cited.
+
+The search for a diagramming convention also returned a **negative result worth
+keeping**: there is no flowchart or workflow-diagram convention in remote
+sensing or atmospheric science. The workflow figures the search returned are ad
+hoc, one per paper. So the pipeline figure follows a documentation standard from
+outside the field rather than imitating a discipline norm, and that is a choice
+rather than a default.
+
+Four things named in the repository are still not in the register. Natural
 Earth's admin-1 boundaries, cited in `data/manifest.json` as a public-domain
-download from naturalearthdata.com, has no DOI. The Copernicus author
+download from naturalearthdata.com, has no DOI. The CSM-BSI protocol above is
+a trial registration document rather than a citable work, and appears only in
+the provenance note it belongs to. The Copernicus author
 guidelines, which recommend Scientific colour maps and are the route by which
 that recommendation reaches this field, are a web page rather than a citable
 work; they are recorded beside the Crameri entry instead. And `ERRATA.md` 5.3's
@@ -252,6 +279,84 @@ because it is the standard route from column concentration to emissions and the
 reproduction never took it. It is also in the 2023 thesis's own bibliography,
 uncited in its text. `notes/decisions.md` records the gate that established why
 the conversion is not feasible on this composite.
+
+### The diagram sources, added 9 September 2026
+
+Four entries added when the figure set gained its first two diagrams. All four
+are **borrowed method literature**: none comes from atmospheric science, remote
+sensing or the earth sciences at all. Two are documentation and diagramming
+standards, one is a statistics grammar and one is a machine-learning taxonomy.
+The search that found them also found what it did not find, which is recorded
+below under *What could not be verified*.
+
+**International Organization for Standardization (1985).** ISO 5807:1985,
+Information processing — Documentation symbols and conventions for data,
+program and system flowcharts, program network charts and system resources
+charts. Geneva.
+No DOI — a standard, not a paper; a method applied. **Borrowed method
+literature, from information-processing documentation.** It defines the symbol
+set `src/figures/diagram.py` declares and `figures/framework_pipeline` draws
+from: terminal, process, predefined process, decision, data, stored data and
+connector. Published February 1985 and confirmed current at ISO's 2019 review.
+
+**The standard was not read.** It is paywalled and this repository holds no
+copy, so nothing here quotes or cites a clause of it. What is claimed is the
+symbol *names*, which every secondary account of the standard gives alike, and
+the diagram module says so in its own docstring rather than implying more.
+
+**Chaudhuri, A. B. (2020).** Flowchart and Algorithm Basics: The Art of
+Programming. Mercury Learning and Information, Dulles, VA.
+No DOI — a textbook; a method applied. **Borrowed method literature, from
+programming pedagogy.** The named source of the six design principles the
+pipeline figure follows: agree in advance a minimal set of design shapes and
+use only shapes from that set; read top-down and left-right; one entry point
+and one exit point per shape, the decision symbol excepted; label every
+decision branch; show the information an event requires; show the resource an
+event requires.
+
+**This book was not read either, and the wording above is not its own.** The
+principles were verified in Appendix 5 of the CSM-BSI study protocol
+(clinicaltrials.gov NCT06271031, draft v1.0, October 2023), which states them
+as "adapted from (Chaudhuri, 2020; Lodemann et al., 2022)" and adds that its
+principles and shapes are "in accordance with the ISO standard 5807:1985"
+where possible. The chain is recorded rather than collapsed, because collapsing
+it is how this register's preamble records two earlier citations going wrong.
+The protocol lists a seventh principle — consider re-entrant processes when
+events are stochastic — which the pipeline figure does not use and which is
+therefore not listed above.
+
+**Patil, P., Peng, R. D., and Leek, J. T. (2019).** A visual tool for defining
+reproducibility and replicability. *Nature Human Behaviour* 3, 650–652.
+`10.1038/s41562-019-0629-z` — peer-reviewed paper; a method applied.
+**Borrowed method literature, from statistics.** The grammar
+`figures/framework_reproduction` follows: eleven stages of the scientific
+process as rows, studies as columns, and one state per cell.
+
+The paper is paywalled and, like the standard, was not read. The grammar was
+taken from the authors' own reference implementation, the `scifigure` R package
+on CRAN, whose source gives the eleven stage names in order — population,
+question, hypothesis, experimental design, experimenter, data, analysis plan,
+analyst, code, estimate, claim — and the four states a cell may take:
+`observed`, `different`, `unobserved`, `incorrect`. Its difference mode uses
+symbols "semantically close to the scenarios that they are encoding", a cross
+for unobserved, a not-equals for different and an exclamation mark for
+incorrect, and that is the mode this repository follows. Its default palette,
+a red and a teal, is **not** followed: `src/figures/style.py` exists partly
+because a red-green pair is unreadable to a substantial minority of readers.
+
+**Desai, A., Abdelhamid, M., and Padalkar, N. R. (2025).** What is
+reproducibility in artificial intelligence and machine learning research? *AI
+Magazine* 46, article e70004.
+`10.1002/aaai.70004` — peer-reviewed paper; a method applied. **Borrowed method
+literature, from machine learning.** Its hierarchy is what lets the
+reproduction figure say which *kind* of reproduction each component received.
+Verbatim: "Dependent reproducibility involves using the original materials and
+validating the correctness of the implementation as described in the study.
+Independent reproducibility is achieved by reconstructing the experiment based
+on the original study's methodology and similarly validating the
+implementation's correctness." Recomputing the GAIA provincial areas from the
+same product is the first; rebuilding the methane composite from Level 2
+granules is the second.
 
 ## Findings relied on
 

@@ -451,7 +451,7 @@ _ROLE_LIST = (
           ("sea", "relief_dark", "relief_light", "absent_fill",
            "boundary_minor", "coastline", "land_flat", "impervious",
            "rice_single", "rice_double", "urban_2000", "urban_2010",
-           "urban_2019", "unassessed")),
+           "urban_2019", "unassessed", "diagram_fill", "diagram_gate")),
     _role("boundary_minor", _at_luminance("#8a8a8a", 0.42), "line",
           "A neighbouring province's boundary. Present so the study region "
           "sits in a country rather than in white, and lighter than the study "
@@ -590,7 +590,8 @@ _ROLE_LIST = (
           "and should have to say which one.",
           ("absent_span", "label_text", "impervious", "rice_single",
            "rice_double", "urban_2000", "urban_2010", "urban_2019",
-           "unassessed", "observation_mark", "reference_line")),
+           "unassessed", "observation_mark", "reference_line",
+           "diagram_fill", "diagram_gate")),
 
     # -- the model diagnostic figures
     _role("observation_mark",
@@ -612,6 +613,21 @@ _ROLE_LIST = (
           "and the line runs through the data, so the two do not meet, and a "
           "line and a word are not confusable by shape in any case.",
           ("page", "observation_mark")),
+    _role("diagram_fill",
+          _at_luminance(_desaturate(_BATLOW(0.55), 0.80), 0.83), "areal",
+          "The fill of a declared shape in a diagram. Light, because a "
+          "flowchart box carries black text and the text is the content: the "
+          "box is furniture. Near-neutral for the same reason -- a saturated "
+          "box would read as a thematic class, and in a diagram every box is "
+          "the same kind of thing.",
+          ("page", "label_text", "boundary", "diagram_gate")),
+    _role("diagram_gate",
+          _at_luminance(_desaturate(_BATLOW(0.72), 0.62), 0.63), "areal",
+          "The fill of a decision symbol. Darker than `diagram_fill` because "
+          "every decision in the pipeline figure is a refusal -- the failing "
+          "branch stops rather than warning -- and a diagram that drew the "
+          "refusals like the steps would describe a system that carries on.",
+          ("page", "label_text", "boundary", "diagram_fill")),
     _role("residual_zero", _at_luminance(diverging()(0.5), 0.80), "areal",
           "The tone a cell with no error is drawn in: the centre of the "
           "diverging ramp, named as a role because it is the one tone of that "
@@ -633,7 +649,7 @@ _ROLE_LIST = (
           "Every name on a map. Black, never coloured, which is the venue's "
           "rule and serves the same readers the colour map is chosen for.",
           ("relief_dark", "relief_light", "label_halo", "absent_span",
-           "page")),
+           "page", "diagram_fill", "diagram_gate")),
     _role("label_halo", "#ffffff", "text",
           "A white outline behind label text. Not decoration: without it a "
           "name crossing a boundary line is unreadable, and the alternative "

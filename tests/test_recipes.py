@@ -54,7 +54,16 @@ CONTINUOUS = [r for r in RECIPES if r["verified"] == "continuously"]
 ON_LOCAL = [r for r in RECIPES if r["verified"] == "on_local"]
 ON_DEMAND = [r for r in RECIPES if r["verified"] == "on_demand"]
 
-DOCS = {"data/processed/README.md", "figures/README_fragments.md"}
+#: Prose that lives beside the artefacts and is not one. Every other tracked
+#: file under `data/processed/` and `figures/` must name a recipe.
+#:
+#: `figures/README.md` was added to the repository before it was added here,
+#: and this test caught it one commit later rather than in the run before the
+#: commit -- `git ls-files` lists tracked files, so an untracked new file is
+#: invisible to it. That is worth knowing about this check: it can only fail
+#: after the mistake is committed.
+DOCS = {"data/processed/README.md", "figures/README_fragments.md",
+        "figures/README.md"}
 
 
 def committed_artefacts() -> set[str]:
