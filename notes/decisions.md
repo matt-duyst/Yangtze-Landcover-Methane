@@ -3201,3 +3201,169 @@ in any case. Declaring an adjacency that does not exist would have forced one
 of the two to a tone neither wants, which is the failure mode the adjacency
 graph exists to avoid.
 
+
+## The field a land-cover model produces, and the ramp that had to carry a sign
+
+`ERRATA.md` 1.1 records that the thesis's Figure 4.7, captioned "XCH4 Predicted
+Boundaries", is the same embedded image as Figure 4.5(a). The comparison it
+claimed to draw was never drawn. This is that figure: observed, the field a
+land-cover fit produces, and the difference.
+
+Nothing in it is a prediction of methane. Panel (b) is the field one covariate
+produces and is drawn so the distance to panel (a) can be read cell by cell.
+That is the demonstration of `ERRATA.md` 7.1 rather than a retreat from it.
+
+### Which model, and the second kind of absence
+
+Impervious fraction alone, not impervious with rice. The rice fraction exists
+for **531 of the 926** cells, so a two-covariate field would be blank over 395
+more, and this figure would then carry two kinds of absence — "no sounding" and
+"no rice raster" — in the same near-white, in the same panels. The absence
+treatment is the part of this figure that has to be unambiguous.
+
+The rice numbers argue the same way, but not as cleanly as the first draft of
+the module docstring said. On its own 531 cells, impervious alone reaches
+**0.018** and impervious with an additive rice term reaches **0.017**, which is
+backwards. **With an interaction term it reaches 0.033**, which is forwards,
+and the docstring did not say so until a test made it. Forwards from 0.018 to
+0.033 is still three percent of held-out variance on 57 percent of the cells,
+which does not buy a second absence.
+
+### One scale, and a departure from the composite
+
+Panels (a) and (b) share one scale over the observed field's full range,
+**1840 to 1947 ppb**, unclipped. The composite clips its value panel to the 2nd
+and 98th percentiles and this figure deliberately does not.
+
+The composite's reason is good and does not apply here. There the job is to
+read one field well, and the outer four percent of cells have median sounding
+counts of 2 and 12. Here the job is to compare two spans — the observed field
+covers **106 ppb** and the model field **43** — and clipping would cut the
+observed span shown to 59 while leaving the model field almost untouched. It
+would shrink the contrast the figure exists for, in the direction that flatters
+the model.
+
+### An unobserved cell has no residual
+
+Zero is the most meaningful value on a diverging scale: it is the centre, and
+it means the model was right. Filling the 97 holes with zero would draw the
+model's 97 best cells exactly where it has no cells. So the same 97 are absent
+in all three panels, and the residual panel masks rather than zeroes.
+
+That has a colour consequence. A sequential ramp keeps clear of absence by
+truncation, because the tone that collides sits at an end — `RAMP_TRUNCATION`
+buys 0.19 that way. **A diverging ramp's colliding tone is its centre**, which
+no truncation reaches, and which is where most cells sit. Raw vik centres at
+luminance 0.90 against absence at 0.97: a gap of 0.07 where the convention is
+0.15.
+
+The fix is to rescale the ramp's luminance rather than truncate it, the way
+`relief_cmap` rescales grayC onto the relief band. Each sample's luminance is
+mapped linearly from the ramp's darkest tone toward a centre of **0.80** and
+the channels are scaled to hit it, which preserves hue and saturation exactly
+and cannot clip, because the tone is being lowered. Measured after the fact:
+centre 0.799, **gap to absence 0.170**, limb spans 0.721 and 0.722, no channel
+clipped.
+
+### A role for a tone of a ramp, which the palette had refused before
+
+`style.py` carries a comment saying absence is adjacent to the ramp and to its
+own outline and to nothing else, because a ramp is checked as a ramp. That
+comment now has an exception, `residual_zero`, and the exception is the point:
+naming the centre tone as a role is what puts this collision in front of the
+adjacency machinery instead of leaving it in a comment. The role set is 27 with
+66 declared adjacencies; the minimum luminance gap is unchanged at 0.159 and
+the three colour-vision minima are unchanged at 14.4.
+
+### What a diverging ramp needs that a sequential one does not
+
+Three things, and the second is an admission rather than a pass.
+
+**Per-limb monotonicity and span.** Worst non-monotone step 0.0033, which is
+vik's own wobble at its dark blue end and survives the rescale unchanged;
+ceiling set at 0.005. Limb spans 0.72 each.
+
+**Symmetry, which costs the sign in greyscale.** Equal errors of opposite sign
+must read as equally large, so the limbs are matched in luminance —
+asymmetry 0.056 against a **ceiling** of 0.08, the only ceiling in the module
+where every other number is a floor. Matched limbs cannot separate in
+greyscale, so **a greyscale print of the residual panel shows how large each
+error is and not which way it points**. The alternative buys the sign back by
+drawing equal errors as unequal, which is a worse figure. The figure says this
+in its own text and the test asserts it is false rather than pretending
+otherwise.
+
+**Sign under colour vision deficiency, which is now the only carrier.** For
+every magnitude beyond a tenth of the scale, the colours for `+t` and `-t` are
+compared under each simulated dichromacy. vik holds **15.0, 18.5 and 16.2**
+CIE76 against a convention of 10.
+
+That is most of what chose it, measured over Crameri's diverging set rather
+than assumed. Five of the ten are dark-centred — berlin, lisbon, tofino,
+vanimo, managua — and are outside what this rescale can do at all, since it
+divides by the centre's height above the ramp's floor; `diverging()` now
+refuses them by name rather than emitting noise, which is what it did while I
+was measuring and briefly made all five look like catastrophic failures of the
+sign test. Of the five light-centred ones, **broc (3.4), cork (1.1) and bam
+(4.5) lose the sign under tritanopia**, because green against brown is the pair
+tritanopia collapses.
+
+That leaves vik and **roma**, and roma is better on two of the four measures:
+it separates the signs further (21.4, 24.6, 14.7) and its limbs are more nearly
+matched (0.030 against 0.056). It loses on the two that decided it. Its limbs
+are the shortest of the five, 0.62 against vik's 0.72. And it centres on a
+light green — **CIE chroma 24 against vik's 3.6** — so zero, which on this
+scale means the model was right, would be drawn as a hue and read as a third
+category rather than as the absence of one. `centre_chroma` is in the report
+because it is the number that separated them.
+
+### Moran's I, with its weights, because 6.2
+
+`ERRATA.md` 6.2 records that the thesis reported a Moran's I without stating
+its weights, which makes the number unreproducible. So the weights are on the
+figure, in the caption and in the test: **queen contiguity among observed
+cells on the 0.25 degree analysis lattice, row standardised, self excluded, no
+distance decay.** The eight offsets are the same stencil the spatial null uses.
+
+One cell has no observed queen neighbour. It is dropped and counted rather than
+given a weight of zero, which would quietly read as a cell whose neighbours all
+agreed with it.
+
+The reference distribution is 999 permutations of the values over the same
+cells on a fixed seed, not the analytic normal approximation, because residuals
+from a fit do not satisfy what that approximation needs. The seed is fixed so
+the number in the caption is the number the recipe reproduces byte for byte.
+
+**The result: 0.646 for the residual against 0.709 for the observed field.**
+The fit removes **8.8 percent** of the observed field's spatial
+autocorrelation. Whatever organises this field at the scale of a few cells, one
+land-cover covariate is not it.
+
+### The set, and the figure that was cancelled
+
+The planned baseline comparison — held-out R squared as bars with the spatial
+null as a reference line — is **cancelled, not deferred**. It reports the
+finding without showing it, and panel (e) of `observed_predicted` already
+carries every model under both schemes and both weightings, which is more than
+the bars would have held.
+
+Which exposed a gap. The README has said "of a planned nine" since the set was
+three, and **the membership of that nine was written down nowhere** — three of
+the missing figures were named only in passing, inside the module docstring of
+`src/figures/fields.py`. A planned set that is only a number cannot be checked.
+`figures/README.md` now inventories the set: eight built, three planned — the
+predictor maps, the fold map and the sampling-artefact map, which are the three
+`fields.py` names — and every one of the 2023 thesis's eighteen figures mapped
+to its equivalent or to the reason it has none. **The nine could not be
+reconciled with anything.** Seven built plus these two is nine, but `fields.py`
+names three unbuilt figures and the baseline comparison was a fourth, so the
+planned set was never nine on any reading. The README now says eight of eleven.
+
+### One artist drawn and never seen, twice
+
+The visibility probe reports two artists contributing zero pixels, where the
+convention is none. Both are matplotlib's own empty `LineCollection` of colour
+bar dividers, one per bar, and `methane_composite_2018` has reported one of the
+same thing since it was built. The probe now prints each artist's class name
+alongside its label, because "collection _child0" contributing nothing is only
+actionable if a reader can tell whose it is.

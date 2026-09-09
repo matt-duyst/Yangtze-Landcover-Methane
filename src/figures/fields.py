@@ -64,6 +64,37 @@ def field_cmap(name: str = style.SEQUENTIAL, truncate: float = RAMP_TRUNCATION):
         f"{name}_trunc", base(np.linspace(0.0, truncate, 256)))
 
 
+#: How far a residual scale runs from zero, in ppb. Symmetric, because a
+#: diverging scale that is not symmetric draws two errors of the same size at
+#: different weights depending on their sign.
+#:
+#: The number is a clip and is drawn with arrow caps to say so. The residuals
+#: of the land-cover fit run -48.4 to +60.3, so the symmetric scale that clips
+#: nothing is plus or minus 60.3 -- and that scale spends its outer third on
+#: three cells and leaves the other 923 crowded into the middle. At plus or
+#: minus 45, four cells of 926 run past the ends.
+RESIDUAL_LIMIT = 45.0
+
+
+def residual_cmap():
+    """The diverging map, centred clear of absence. See `style.diverging`."""
+    return style.diverging()
+
+
+def residual_norm(limit: float = RESIDUAL_LIMIT):
+    """A symmetric scale about zero, so the colour of zero is the ramp's centre.
+
+    `TwoSlopeNorm` is deliberately not used. It would centre the ramp on zero
+    while giving the two sides different scales, which puts a -20 and a +40 at
+    the same distance from the middle: the map would then be drawing the *rank*
+    of an error rather than its size, and the sign would be the only thing left
+    that was true.
+    """
+    from matplotlib.colors import Normalize
+
+    return Normalize(vmin=-limit, vmax=limit)
+
+
 #: Half-decade class edges for a sounding count. The upper edge is open.
 COUNT_EDGES = (1, 4, 11, 32, 100, 316, 1_000_000)
 COUNT_LABELS = ("1-3", "4-10", "11-31", "32-99", "100-315", "316 and above")

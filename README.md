@@ -259,6 +259,8 @@ In outline:
 | held-out baseline predictions | `compute_baseline_predictions.py --write` | about ten seconds over the committed grid and covariates | continuously |
 | observed against predicted figure | `make_observed_predicted_figure.py` | about two seconds | continuously |
 | observed against predicted figure, vector | `make_observed_predicted_figure.py` | about two seconds | continuously |
+| model field and residual figure | `make_residual_field_figure.py` | about eight seconds | continuously |
+| model field and residual figure, vector | `make_residual_field_figure.py` | about eight seconds | continuously |
 <!-- END GENERATED RECIPE TABLE -->
 
 The composite is the expensive one and it is the only one. It downloads,
@@ -400,8 +402,8 @@ the ArcGIS figure exports, whose provenance is documented but which no code in
 this repository produces.
 
 [`figures/`](figures/) holds the generated figures, committed as a PDF and PNG pair each,
-with their captions in [`figures/README_fragments.md`](figures/README_fragments.md). Seven of a planned nine
-exist. Every colour any of them draws is a named role in
+with their captions in [`figures/README_fragments.md`](figures/README_fragments.md). Eight of a planned eleven
+exist, inventoried in [`figures/README.md`](figures/README.md) against the 2023 thesis's own eighteen. Every colour any of them draws is a named role in
 [`src/figures/style.py`](src/figures/style.py), checked once over the whole role set for greyscale and
 colour-vision separation; a figure module may not name a colour, and a test
 scans for it. The 2023 exports in [`legacy/figures/`](legacy/figures/) are not a substitute and are kept

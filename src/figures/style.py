@@ -88,6 +88,26 @@ GREYSCALE = "grayC"
 #: is what :func:`series` reorders. See :data:`SERIES`.
 CATEGORICAL = "batlowS"
 
+#: Diverging map for a signed quantity, where zero is a real value and not
+#: merely the bottom of the scale. vik is Crameri's blue-to-red diverging map,
+#: chosen against his set on two measurements that do not arise for an ordered
+#: ramp. Whether two errors of equal size and opposite sign stay apart under
+#: simulated colour vision deficiency: broc, cork and bam lose the sign under
+#: tritanopia, which is the pair green-against-brown collapses to. And whether
+#: the centre is neutral: roma passes the first and centres on a light green at
+#: chroma 24 against vik's 3.6, which would draw "the model was right" as a
+#: hue. See :func:`diverging_report`.
+DIVERGING = "vik"
+
+#: How light the diverging map's **centre** is allowed to be. A sequential ramp
+#: keeps clear of absence by truncation, because the tone that collides sits at
+#: an end. A diverging ramp's colliding tone is its centre, which cannot be
+#: truncated away and can only be moved by rescaling the whole ramp. Raw vik
+#: centres at 0.90 against absence at 0.97, a gap of 0.07; rescaled to this it
+#: is 0.17. The cost is 0.10 off each limb's luminance span, which still leaves
+#: 0.72.
+DIVERGING_CENTRE_LUMINANCE = 0.80
+
 #: The luminance separation anything meaningful must hold, in every place this
 #: module checks. Set once here so the convention has one definition.
 MIN_LUMINANCE_GAP = 0.15
@@ -151,6 +171,42 @@ def sequential(name: str = SEQUENTIAL):
                          "davos": "cividis", "lipari": "plasma",
                          "grayC": "gray", "batlowS": "viridis"}.get(name,
                                                                     "viridis"))
+
+
+def diverging(name: str = DIVERGING,
+              centre: float = DIVERGING_CENTRE_LUMINANCE):
+    """The diverging map, with its centre pulled down clear of absence.
+
+    Built the same way :func:`relief_cmap` is built and for the same reason:
+    what is taken from Crameri's map is its *spacing*, which is the
+    perceptually uniform part, not its endpoints. Here only the light middle is
+    moved. Each sample's luminance is rescaled linearly from the ramp's darkest
+    tone toward ``centre``, and the channels are scaled to hit it, which
+    preserves hue and saturation exactly -- the ratio between channels is
+    untouched -- and does not clip, because the tone is being lowered rather
+    than raised. Both limbs are rescaled by the same factor, so the symmetry
+    the map is chosen for survives.
+    """
+    from matplotlib.colors import LinearSegmentedColormap
+
+    base = sequential(name)
+    rgb = np.array([base(x)[:3] for x in np.linspace(0.0, 1.0, 257)])
+    lum = 0.2126 * rgb[:, 0] + 0.7152 * rgb[:, 1] + 0.0722 * rgb[:, 2]
+    floor = lum.min()
+    reach = lum[len(lum) // 2] - floor
+    if reach < 0.2:
+        # Crameri's set also contains dark-centred diverging maps -- berlin,
+        # lisbon, tofino, vanimo, managua -- whose middle is the ramp's darkest
+        # tone. This rescale divides by the centre's height above the floor,
+        # which for those is near zero, and would emit noise rather than a
+        # ramp. They are refused rather than silently mangled.
+        raise ValueError(
+            f"{name} centres at luminance {lum[len(lum) // 2]:.2f}, only "
+            f"{reach:.2f} above its darkest tone: it is a dark-centred "
+            f"diverging map and this rescale is for light-centred ones")
+    target = floor + (lum - floor) * (centre - floor) / reach
+    scaled = np.clip(rgb * (target / np.clip(lum, 1e-6, None))[:, None], 0, 1)
+    return LinearSegmentedColormap.from_list(f"{name}_centred", scaled)
 
 
 def _hex(colour) -> str:
@@ -367,13 +423,20 @@ _ROLE_LIST = (
 
     # -- the lattice as data, in the composite and its successors. There is no
     # basemap under the lattice -- measured at zero visible pixels -- so
-    # absence is adjacent to the ramp and to its own outline and to nothing
-    # else. The ramp is checked as a ramp, not as a role.
+    # absence is adjacent to its own outline, to the lines drawn over it, and
+    # to one tone of one ramp. A ramp is otherwise checked as a ramp and not as
+    # a role: a minimum pairwise gap says nothing about a continuum. The
+    # exception is `residual_zero`, and the exception is what the diverging
+    # ramp forced. A sequential ramp is kept clear of absence by truncation
+    # because the tone that collides sits at an end; a diverging ramp's
+    # colliding tone is its centre, which no truncation reaches. Naming that
+    # centre as a role is what puts the collision in front of the adjacency
+    # machinery instead of in a comment like this one.
     _role("absent_fill", "#f7f7f7", "areal",
           "A lattice cell with no observation. Near-white, which is the "
           "literature's convention for missing, and outside the truncated "
           "value ramp by 0.19 in luminance.",
-          ("absent_edge", "boundary", "coastline")),
+          ("absent_edge", "boundary", "coastline", "residual_zero")),
     _role("absent_edge", "#808080", "line",
           "The outline that makes one absent cell a deliberate mark rather "
           "than a light patch in a light part of the ramp. A fill alone loses "
@@ -549,6 +612,16 @@ _ROLE_LIST = (
           "and the line runs through the data, so the two do not meet, and a "
           "line and a word are not confusable by shape in any case.",
           ("page", "observation_mark")),
+    _role("residual_zero", _at_luminance(diverging()(0.5), 0.80), "areal",
+          "The tone a cell with no error is drawn in: the centre of the "
+          "diverging ramp, named as a role because it is the one tone of that "
+          "ramp that has to clear something. Most cells sit near it, so it is "
+          "what a reader sees beside every absent cell, and near-white against "
+          "near-white would make `no error here` and `nothing was observed "
+          "here` the same patch. It is not declared against `page`: nothing "
+          "draws lattice cells on bare paper, and the ramp is measured against "
+          "the page as a ramp instead.",
+          ("absent_fill",)),
 
     # -- marks and text
     _role("place_marker", _at_luminance("#1f1f1f", 0.08), "mark",
@@ -868,6 +941,115 @@ def cvd_report() -> dict:
                          if d < MIN_CVD_DISTANCE],
         }
     return out
+
+
+# --------------------------------------------------------------------------
+# the diverging ramp
+# --------------------------------------------------------------------------
+
+#: How far out along each limb a residual has to be before the ramp is asked
+#: to carry its **sign**. Near zero the two limbs meet, by construction, and no
+#: diverging map separates a residual of +0.1 ppb from one of -0.1 ppb; asking
+#: it to would be asking for a discontinuity at zero. A tenth of the half-range
+#: is 4.5 ppb on the scale this project draws, against an observed field
+#: spanning 106, so nothing the figure asks a reader to read falls inside it.
+SIGN_MAGNITUDE_FLOOR = 0.10
+
+#: Luminance a diverging ramp's two limbs are allowed to differ by at matched
+#: magnitude. A **ceiling**, not a floor, and the only such number in this
+#: module: see :func:`diverging_report`. Set below MIN_LUMINANCE_GAP, because a
+#: pair of limbs that came anywhere near separating in greyscale would be
+#: drawing equal errors at unequal weight. vik measures 0.056; the headroom is
+#: for a future ramp, not for this one.
+MAX_LIMB_ASYMMETRY = 0.08
+
+#: Non-monotone step a limb may carry. vik's own dark blue end wobbles by
+#: 0.003 in luminance and the rescale does not introduce or remove it; the
+#: alternative was to flatten Crameri's spacing, which is the part of his map
+#: worth having.
+MAX_LUMINANCE_WOBBLE = 0.005
+
+
+def diverging_report(cmap=None, samples: int = 129) -> dict:
+    """What the diverging ramp does, and the one thing it cannot do.
+
+    A sequential ramp is checked for two things: that it is monotone in
+    luminance, so a greyscale reader can order the values, and that its span is
+    wide enough to resolve them. A diverging ramp needs both, per limb, and
+    then needs three more, because it carries a **sign** and an ordered ramp
+    carries nothing of the kind.
+
+    * **The limbs are symmetric in luminance.** Two errors of equal size and
+      opposite sign must read as equal in size. This is the requirement that
+      makes the next one unavoidable.
+
+    * **Therefore the sign does not survive greyscale, and that is reported
+      rather than fixed.** Symmetric limbs are matched in luminance by
+      definition, so the two are 0.06 apart at worst against a convention of
+      0.15, and a black and white print of a residual map shows how large each
+      error is and not which way it points. The alternative -- limbs of
+      unequal luminance span -- buys the sign by making equal errors look
+      unequal, which is a worse figure. So the constraint is inverted here:
+      asymmetry is capped rather than floored, and the figure that draws this
+      ramp says in its own text that greyscale carries magnitude only.
+
+    * **The centre is near neutral.** Zero is a value on this scale and it
+      means the model was right; a centre with a hue draws that as a category.
+      Reported as CIE L*a*b* chroma rather than asserted, because it is the
+      measure that separated the two maps which passed everything else.
+
+    * **The sign is carried by hue, so hue is where the deficiency check has
+      to bite.** For every magnitude at or beyond :data:`SIGN_MAGNITUDE_FLOOR`,
+      the colours for ``+t`` and ``-t`` are compared under each simulated
+      dichromacy and must hold :data:`MIN_CVD_DISTANCE`. This is not the check
+      :func:`cvd_report` runs: that one compares declared pairs of roles, and
+      the two limbs of a ramp are not roles.
+
+    Returns the measurements. Nothing is asserted here; the tests assert.
+    """
+    cmap = diverging() if cmap is None else cmap
+    mid = samples // 2
+    rgb = np.array([cmap(x)[:3] for x in np.linspace(0.0, 1.0, samples)])
+    lum = 0.2126 * rgb[:, 0] + 0.7152 * rgb[:, 1] + 0.0722 * rgb[:, 2]
+    low, high = lum[:mid + 1], lum[mid:]
+
+    magnitudes = np.linspace(SIGN_MAGNITUDE_FLOOR, 1.0, 96)
+    sign = {}
+    for kind in CVD_KINDS:
+        worst, at = float("inf"), 0.0
+        for t in magnitudes:
+            a = _lab(simulate_cvd(cmap(0.5 - 0.5 * t)[:3], kind))
+            b = _lab(simulate_cvd(cmap(0.5 + 0.5 * t)[:3], kind))
+            distance = float(np.linalg.norm(a - b))
+            if distance < worst:
+                worst, at = distance, float(t)
+        sign[kind] = {"min_distance": worst, "at_magnitude": at}
+
+    # How coloured the centre is. Zero on a residual map means "the model was
+    # right", and a saturated centre draws that as a hue, which reads as a
+    # third category rather than as the absence of one. roma passes every
+    # other measure here and centres on a light green; this is the number that
+    # says so.
+    centre_chroma = float(np.linalg.norm(_lab(cmap(0.5)[:3])[1:]))
+
+    return {
+        "centre_luminance": float(lum[mid]),
+        "centre_chroma": centre_chroma,
+        "end_luminance": (float(lum[0]), float(lum[-1])),
+        "limb_span": (float(lum[mid] - lum[0]), float(lum[mid] - lum[-1])),
+        # Signed, so the direction of each limb is visible and not just its
+        # size: the low limb must climb toward the centre and the high limb
+        # must fall away from it.
+        "wobble": (float(max(0.0, -np.diff(low).min())),
+                   float(max(0.0, np.diff(high).max()))),
+        "asymmetry": float(np.max(np.abs(low - high[::-1]))),
+        "greyscale_separates_sign": bool(
+            np.max(np.abs(low - high[::-1])) >= MIN_LUMINANCE_GAP),
+        "sign_under_cvd": sign,
+        "sign_failures": [(kind, entry["min_distance"])
+                          for kind, entry in sign.items()
+                          if entry["min_distance"] < MIN_CVD_DISTANCE],
+    }
 
 
 # --------------------------------------------------------------------------

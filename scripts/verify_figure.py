@@ -81,8 +81,14 @@ def _observed_predicted():
     return observed_predicted_figure()
 
 
+def _residual_field():
+    from src.figures.residual_field import residual_field_figure
+    return residual_field_figure()
+
+
 BUILDERS["landcover_regional"] = _landcover_regional
 BUILDERS["observed_predicted"] = _observed_predicted
+BUILDERS["residual_field"] = _residual_field
 BUILDERS["urban_change"] = _urban_change
 
 
@@ -152,6 +158,35 @@ def report_colour(stem: str, write_renders: bool, out_dir: Path) -> None:
         print(f"  {kind:13s} minimum distance {result['min_distance']:.1f} "
               f"at {result['min_pair'][0]}/{result['min_pair'][1]}, "
               f"failures {len(result['failures'])}")
+
+    if stem in DIVERGING_STEMS:
+        # A ramp is not a role, so none of the above touches it. A diverging
+        # ramp needs its own report because it carries a sign, which is the
+        # one thing an ordered ramp never has to.
+        print("\nthe diverging ramp, which is a ramp and not a role")
+        report = style.diverging_report()
+        print(f"  centre luminance    {report['centre_luminance']:.3f}, "
+              f"ends {report['end_luminance'][0]:.3f} and "
+              f"{report['end_luminance'][1]:.3f}")
+        print(f"  limb spans          {report['limb_span'][0]:.3f} and "
+              f"{report['limb_span'][1]:.3f}")
+        print(f"  worst non-monotone step per limb "
+              f"{report['wobble'][0]:.4f} and {report['wobble'][1]:.4f}, "
+              f"ceiling {style.MAX_LUMINANCE_WOBBLE}")
+        gap = abs(style._luminance(style.role("absent_fill"))
+                  - report["centre_luminance"])
+        print(f"  centre clears absence by {gap:.3f}")
+        print(f"  limb asymmetry      {report['asymmetry']:.3f}, "
+              f"ceiling {style.MAX_LIMB_ASYMMETRY} -- a CEILING, so the sign "
+              f"does not survive greyscale, by design")
+        print(f"  greyscale separates the sign: "
+              f"{report['greyscale_separates_sign']}, which is why hue is "
+              f"checked instead")
+        for kind, entry in report["sign_under_cvd"].items():
+            print(f"  {kind:13s} the two signs stay "
+                  f"{entry['min_distance']:.1f} apart at their closest, "
+                  f"beyond {style.SIGN_MAGNITUDE_FLOOR:.0%} of the scale")
+        print(f"  sign failures       {len(report['sign_failures'])}")
 
     print("\nthe relief, which is a band and not a role")
     relief = style.relief_report()
@@ -269,8 +304,12 @@ def _artists(fig):
         for image in ax.images:
             out.append((f"{panel} image {image.get_label()}", image))
         for collection in ax.collections:
-            out.append((f"{panel} collection {collection.get_label()}",
-                        collection))
+            # The class name too, because a zero-pixel artist is only
+            # actionable if a reader can tell whose it is: matplotlib builds an
+            # empty LineCollection of dividers inside every colour bar, and
+            # "collection _child0" alone does not say that.
+            out.append((f"{panel} collection {collection.get_label()} "
+                        f"[{type(collection).__name__}]", collection))
         for line in ax.lines:
             out.append((f"{panel} line {line.get_label()}", line))
         for patch in ax.patches:
@@ -323,10 +362,14 @@ def report_visibility(stem: str, dpi: int = 150) -> None:
         print("\n  no artist contributes zero pixels")
 
 
+#: Stems whose figures draw the diverging ramp, and so need its report.
+DIVERGING_STEMS = ("residual_field",)
+
 NATIVE = {
     "landcover_native": lambda: _native_landcover(),
     "urban_change": lambda: _native_urban_change(),
     "landcover_regional": lambda: _native_landcover_regional(),
+    "residual_field": lambda: _native_residual_field(),
 }
 
 
@@ -362,6 +405,20 @@ def _native_landcover_regional():
     classes, _ = lr.rice_classes()
     panel_px = lr.MAP_CM / 2.54 * style.MIN_DPI
     return {"rice 1/64 deg": (classes.shape[1], panel_px / classes.shape[1])}
+
+
+def _native_residual_field():
+    """Drawn pixels per lattice cell. These panels are native, not aggregated.
+
+    The source is the 0.25 degree analysis lattice itself and not a raster, so
+    a cell is the source pixel and there is nothing to average: the same 31
+    columns the model was fitted on are the 31 columns drawn.
+    """
+    from src.figures import residual_field as rf
+    observed, _, _, _ = rf.load_field()
+    panel_px = rf.PANEL_CM / 2.54 * style.MIN_DPI
+    return {"lattice 0.25 deg": (observed.shape[1],
+                                 panel_px / observed.shape[1])}
 
 
 def report_native(stem: str) -> None:

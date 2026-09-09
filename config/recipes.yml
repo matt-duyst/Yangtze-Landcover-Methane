@@ -484,3 +484,22 @@ recipes:
   compare: bytes
   verified: continuously
   note: null
+- artefact: figures/residual_field.png
+  command: python scripts/make_residual_field_figure.py
+  label: model field and residual figure
+  cost: about eight seconds
+  seconds: 12
+  inputs: committed
+  compare: bytes
+  verified: continuously
+  note: The permutation test behind the residual's Moran's I runs on a fixed seed, so the number the
+    figure draws is the same on every run.
+- artefact: figures/residual_field.pdf
+  command: python scripts/make_residual_field_figure.py
+  label: model field and residual figure, vector
+  cost: about eight seconds
+  seconds: 12
+  inputs: committed
+  compare: bytes
+  verified: continuously
+  note: null

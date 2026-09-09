@@ -438,3 +438,84 @@ held-out predictions it reads are built by
 `python scripts/compute_baseline_predictions.py --write`, which refuses to
 write unless the metrics recomputed from them reproduce
 `data/processed/baseline_results_2018.csv`.
+
+---
+
+### The field a land-cover model produces, and what is left over
+
+![The observed 2018 methane field, the held-out field an OLS fit on impervious fraction produces on one shared colour scale, and the difference between them on a diverging scale](residual_field.png)
+
+**The field a land-cover model produces is not the observed field, and the
+difference is not noise: it has almost all of the observed field's spatial
+structure still in it.** Panel (b) is not a prediction of methane. It is the
+field one land-cover covariate produces, drawn beside the observation so the
+distance between them can be read cell by cell; `ERRATA.md` 7.1 records that
+land cover does not explain the observed methane field, and this figure is the
+demonstration of that. `ERRATA.md` 1.1 records that the thesis's Figure 4.7,
+captioned as this comparison, was the same embedded image as Figure 4.5(a), so
+the comparison was never actually drawn.
+
+Panels (a) and (b) share one colour scale,
+1840<!--#residual.scale_low_ppb--> to 1947<!--#residual.scale_high_ppb--> ppb,
+which is the observed field's own full range and is not clipped. Under it the
+observed field spans 106<!--#baseline.observed_span_ppb--> ppb and the field
+the model produces spans 43<!--#baseline.impervious_span_ppb-->, four tenths as
+much, which is the same finding the scatter figure draws as a flat cloud. The
+composite figure clips its value panel to the 2nd and 98th percentiles and this
+one deliberately does not: there the job is to read one field well, here it is
+to compare two spans, and clipping would cut the observed span shown by nearly
+half while leaving the model field almost untouched.
+
+Panel (c) is the residual, symmetric about zero at plus or minus
+45<!--#residual.scale_limit_ppb--> ppb with arrow caps;
+4<!--#residual.clipped_cells--> of the 926<!--#residual.observed_cells--> cells
+run past an end, the residuals themselves running from
+-48<!--#residual.residual_low_ppb--> to
+60<!--#residual.residual_high_ppb--> ppb with a standard deviation of
+14.2<!--#residual.residual_sd_ppb-->. The structure in it is the point:
+Moran's I of the residual is
+0.646<!--#residual.residual_moran-->, against
+0.709<!--#residual.observed_moran--> for the observed field, so the fit removes
+8.8<!--#residual.moran_removed_percent--> percent of the observed field's
+spatial autocorrelation and leaves the rest. **The weights are queen contiguity
+among observed cells on the 0.25 degree analysis lattice, row standardised,
+self excluded, with no distance decay**, stated because `ERRATA.md` 6.2 records
+that the thesis reported a Moran's I without saying what its weights were,
+which makes a number of that kind unreproducible.
+1<!--#residual.isolated_cells--> cell has no observed queen neighbour and is
+dropped from the statistic rather than given a weight of zero; the pseudo p is
+at its floor of 0.001 over 999<!--#residual.permutations--> permutations of the
+residual over the same cells.
+
+**Every value in panel (b) is out of fold**, fitted on the training rows of a
+spatial block and predicted onto rows the fit never saw, from the same
+committed predictions the observed-against-predicted figure draws, so the two
+figures cannot be describing different fits. The model is impervious fraction
+alone rather than impervious with rice: rice exists for only 531 of the
+926<!--#residual.observed_cells--> cells, so a two-covariate field would be
+blank over 395 more of them and this figure would carry two kinds of absence in
+the same near-white, which is the one thing it cannot afford.
+
+97<!--#residual.absent_cells--> cells received no qualifying sounding and are
+absent in all three panels, drawn as this repository draws absence everywhere:
+a near-white fill with a thin outline, so a single isolated cell reads as a
+deliberate mark. In panel (c) that is a statement and not an inheritance —
+**an unobserved cell has no residual, not a residual of zero**, and zero is the
+most meaningful value on a diverging scale, so filling those cells with it
+would draw the model's 97 best cells exactly where it has no cells at all. The
+scale's centre is held 0.17 clear of the absence tone in luminance for the same
+reason.
+
+One property of the diverging scale is worth stating rather than leaving to be
+discovered. Its two limbs are matched in luminance, so that errors of equal
+size and opposite sign read as equally large, which means the sign is carried
+by hue alone: a greyscale print of panel (c) shows how large each error is and
+not which way it points. The alternative — limbs of unequal luminance — buys
+the sign back by drawing equal errors as unequal, which is the worse figure.
+Because hue is the only carrier left, the two limbs are checked against each
+other under simulated protanopia, deuteranopia and tritanopia, and hold at
+least 15 CIE76 units apart everywhere beyond a tenth of the scale.
+
+Regenerate with `python scripts/make_residual_field_figure.py`. It reads the
+same `data/processed/baseline_predictions_2018.csv` as the
+observed-against-predicted figure.

@@ -287,6 +287,39 @@ def _baseline() -> dict:
     return _cache["baseline"]
 
 
+def _residual() -> dict:
+    """What the model field and residual figure quotes, from the same route."""
+    if "residual" not in _cache:
+        import numpy as _np
+
+        from src.figures import fields as _fields
+        from src.figures import residual_field as rf
+
+        observed, predicted, residual, absent = rf.load_field()
+        low, high = rf.shared_ends(observed, predicted)
+        values = residual[~absent]
+        structure = rf.structure_report(observed, residual, absent)
+        _cache["residual"] = {
+            "observed_moran": structure["observed"]["i"],
+            "residual_moran": structure["residual"]["i"],
+            "moran_removed_percent": 100.0 * (
+                1.0 - structure["residual"]["i"] / structure["observed"]["i"]),
+            "isolated_cells": float(structure["residual"]["isolated"]),
+            "permutations": float(rf.PERMUTATIONS),
+            "scale_low_ppb": low,
+            "scale_high_ppb": high,
+            "residual_low_ppb": float(values.min()),
+            "residual_high_ppb": float(values.max()),
+            "residual_sd_ppb": float(values.std(ddof=1)),
+            "scale_limit_ppb": float(_fields.RESIDUAL_LIMIT),
+            "clipped_cells": float(
+                _np.sum(_np.abs(values) > _fields.RESIDUAL_LIMIT)),
+            "absent_cells": float(absent.sum()),
+            "observed_cells": float((~absent).sum()),
+        }
+    return _cache["residual"]
+
+
 def _rice_sample_r2(model: str) -> float:
     """Held-out R squared on the 531-cell rice sample, same scheme."""
     import csv as _csv
@@ -407,6 +440,21 @@ QUANTITIES = {
         lambda: _baseline()["rice_plus_impervious_r2"],
     "baseline.impervious_rice_sample_r2":
         lambda: _baseline()["impervious_rice_sample_r2"],
+    "residual.observed_moran": lambda: _residual()["observed_moran"],
+    "residual.residual_moran": lambda: _residual()["residual_moran"],
+    "residual.moran_removed_percent":
+        lambda: _residual()["moran_removed_percent"],
+    "residual.isolated_cells": lambda: _residual()["isolated_cells"],
+    "residual.permutations": lambda: _residual()["permutations"],
+    "residual.scale_low_ppb": lambda: _residual()["scale_low_ppb"],
+    "residual.scale_high_ppb": lambda: _residual()["scale_high_ppb"],
+    "residual.residual_low_ppb": lambda: _residual()["residual_low_ppb"],
+    "residual.residual_high_ppb": lambda: _residual()["residual_high_ppb"],
+    "residual.residual_sd_ppb": lambda: _residual()["residual_sd_ppb"],
+    "residual.scale_limit_ppb": lambda: _residual()["scale_limit_ppb"],
+    "residual.clipped_cells": lambda: _residual()["clipped_cells"],
+    "residual.absent_cells": lambda: _residual()["absent_cells"],
+    "residual.observed_cells": lambda: _residual()["observed_cells"],
     "albedo.slope_corrected": lambda: _albedo_slope("bias corrected"),
     "albedo.slope_raw": lambda: _albedo_slope("raw retrieval"),
 
