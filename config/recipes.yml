@@ -455,3 +455,32 @@ recipes:
   compare: bytes
   verified: continuously
   note: null
+- artefact: data/processed/baseline_predictions_2018.csv
+  command: python scripts/compute_baseline_predictions.py --write
+  label: held-out baseline predictions
+  cost: about ten seconds over the committed grid and covariates
+  seconds: 12
+  inputs: committed
+  compare: bytes
+  verified: continuously
+  note: One row per cell per model for the four models the diagnostic figures draw, every value out of
+    fold. The script refuses to write unless the metrics recomputed from the pooled predictions reproduce
+    baseline_results_2018.csv, which is what says the figures and the table describe one fit.
+- artefact: figures/observed_predicted.png
+  command: python scripts/make_observed_predicted_figure.py
+  label: observed against predicted figure
+  cost: about two seconds
+  seconds: 3
+  inputs: committed
+  compare: bytes
+  verified: continuously
+  note: null
+- artefact: figures/observed_predicted.pdf
+  command: python scripts/make_observed_predicted_figure.py
+  label: observed against predicted figure, vector
+  cost: about two seconds
+  seconds: 3
+  inputs: committed
+  compare: bytes
+  verified: continuously
+  note: null

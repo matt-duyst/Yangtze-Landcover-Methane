@@ -657,6 +657,68 @@ def rows_for(table: Table, model, index: np.ndarray | None = None, *,
     return index[complete[index]]
 
 
+@dataclass(frozen=True)
+class HeldOut:
+    """Every held-out prediction from every fold, with the rows they belong to.
+
+    The same loop :func:`evaluate` runs, returning the predictions instead of
+    discarding them. It exists because a figure drawing observed against
+    predicted must draw the **held-out** prediction and not the in-sample fit,
+    and the in-sample fit is the more flattering of the two by a wide margin:
+    on this table a land-cover model's in-sample R squared is several times its
+    held-out one. Recomputing the metrics from these arrays reproduces the
+    committed table, which is the check that the figure and the table describe
+    the same fit.
+    """
+
+    rows: np.ndarray
+    actual: np.ndarray
+    predicted: np.ndarray
+    weight: np.ndarray
+    fold: np.ndarray
+
+    def metrics(self) -> Metrics:
+        return Metrics.of(self.actual, self.predicted, self.weight)
+
+
+def held_out_predictions(table: Table, model, *, scheme: str, weighted: bool,
+                         index: np.ndarray | None = None,
+                         on_missing: str = "drop",
+                         **scheme_kwargs) -> HeldOut:
+    """Pooled out-of-fold predictions for one model under one scheme.
+
+    Every row appears exactly once, predicted by a fit that never saw it.
+    """
+    if scheme not in SCHEMES:
+        raise ModelError(f"unknown scheme {scheme!r}")
+    requested = table.all_rows if index is None else index
+    rows = rows_for(table, model, requested, on_missing=on_missing)
+    if rows.size < 3:
+        raise ModelError(f"{model.name} has {rows.size} usable rows")
+
+    def weights_for(subset):
+        return table.weight[subset] if weighted else np.ones(subset.size)
+
+    order, actual, predicted, weight, fold_name = [], [], [], [], []
+    for fold in SCHEMES[scheme](table, rows, **scheme_kwargs):
+        fold_fit = model.fit(table, fold.train, weights_for(fold.train))
+        order.append(fold.test)
+        actual.append(table.y[fold.test])
+        predicted.append(fold_fit.predict(table, fold.test))
+        weight.append(weights_for(fold.test))
+        fold_name.append(np.full(fold.test.size, fold.name, dtype=object))
+
+    stacked = np.concatenate(order)
+    if np.unique(stacked).size != stacked.size:
+        raise ModelError(
+            f"{model.name} under {scheme} predicted a row more than once, so "
+            f"the folds are not a partition")
+    return HeldOut(rows=stacked, actual=np.concatenate(actual),
+                   predicted=np.concatenate(predicted),
+                   weight=np.concatenate(weight),
+                   fold=np.concatenate(fold_name))
+
+
 def evaluate(table: Table, model, *, scheme: str, weighted: bool,
              index: np.ndarray | None = None, on_missing: str = "drop",
              **scheme_kwargs) -> BaselineResult:

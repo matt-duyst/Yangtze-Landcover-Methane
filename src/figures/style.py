@@ -527,7 +527,28 @@ _ROLE_LIST = (
           "and should have to say which one.",
           ("absent_span", "label_text", "impervious", "rice_single",
            "rice_double", "urban_2000", "urban_2010", "urban_2019",
-           "unassessed")),
+           "unassessed", "observation_mark", "reference_line")),
+
+    # -- the model diagnostic figures
+    _role("observation_mark",
+          _at_luminance(_desaturate(_BATLOW(0.30), 0.45), 0.45), "mark",
+          "One cell in a scatter of observed against predicted. Mid-toned "
+          "rather than dark, because 926 marks at 0.10 would read as a solid "
+          "block wherever they overlap and the shape of the cloud is the "
+          "whole finding. Its size carries the sounding count on the same "
+          "half-decade classes the composite figure's legend uses, so a "
+          "reader who has seen one has seen the other.",
+          ("page", "reference_line")),
+    _role("reference_line",
+          _at_luminance(_desaturate(_BATLOW(0.05), 0.60), 0.10), "line",
+          "A line marking an exact relationship rather than data: the 1:1 of "
+          "an observed-against-predicted panel, and the zero of a residual "
+          "scale. Near-black, because it is the thing every mark is judged "
+          "against. It is not declared against `label_text`, which is nearly "
+          "the same tone: the annotations sit in a fixed corner of the panel "
+          "and the line runs through the data, so the two do not meet, and a "
+          "line and a word are not confusable by shape in any case.",
+          ("page", "observation_mark")),
 
     # -- marks and text
     _role("place_marker", _at_luminance("#1f1f1f", 0.08), "mark",

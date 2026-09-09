@@ -76,7 +76,13 @@ def _landcover_regional():
 
 
 BUILDERS["landcover_native"] = _landcover
+def _observed_predicted():
+    from src.figures.observed_predicted import observed_predicted_figure
+    return observed_predicted_figure()
+
+
 BUILDERS["landcover_regional"] = _landcover_regional
+BUILDERS["observed_predicted"] = _observed_predicted
 BUILDERS["urban_change"] = _urban_change
 
 

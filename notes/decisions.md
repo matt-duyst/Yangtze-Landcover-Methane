@@ -3110,3 +3110,94 @@ each clearing `boundary` at 0.078, `sea` at 0.42 and `land_flat` at 0.925 by
 rather than assumed: the role set's minimum luminance gap and its three
 colour-vision minima are unchanged.
 
+## The model diagnostics, and the prediction that had to be held out
+
+The figure set had no model diagnostic at all, which was a sequencing mistake:
+the reproduction's central result is negative, a negative result is carried by
+a *shape* rather than a number, and the set reported the shape as two R squared
+values in a table.
+
+### Held out, and the check that says so
+
+`baseline_results_2018.csv` carries metrics and not predictions, so a figure
+drawing observed against predicted had nothing to read. The predictions now
+come from `held_out_predictions`, added to `src/model/baselines.py`, which runs
+the same loop `evaluate` runs and returns the predictions instead of discarding
+them.
+
+In-sample fitted values were the mistake available here and it is not a small
+one: the spatial null's in-sample R squared is **0.685** against a held-out
+**0.332**. A figure drawing the first would have shown a smoothness bar twice
+the bar it is, looked entirely plausible, and failed no test.
+
+So `scripts/compute_baseline_predictions.py` refuses to write unless the
+metrics recomputed from the pooled predictions reproduce the committed table.
+Worst gap over sixteen comparisons, four models by four metrics: **4.97e-05**.
+That is the only cheap way to tell a held-out prediction from a fitted one
+after the fact, and a test asserts it as well.
+
+### The table is not what the brief for this figure described
+
+Eight model families over 176 rows was the expectation. Measured: **22 families
+and 88 rows**, twelve of the families on the 531-cell rice sample and ten on
+all 926. The distinction matters more than the count, because `baselines.py`
+already records the rule -- results on different samples must not be compared
+without saying so -- and four panels side by side is a comparison whatever a
+caption says.
+
+That rules out the fourth panel the brief proposed. "OLS full covariates + both
+fractions" runs on 531 cells, so it cannot sit beside three models fitted on
+926. The panel is `OLS wind (u, v, speed)` instead, which is on the full sample
+and reaches 0.653.
+
+The four are a progression across the whole range the table holds on that
+sample: constant -0.008, impervious 0.085, spatial null 0.332, wind 0.653. The
+finding is where land cover sits in it, which is nearer the constant than the
+smoothness, and the ranges say the same thing: the observed field spans 106
+ppb, the field impervious fraction produces spans 43, and a constant spans 1.4.
+
+### One scheme drawn and four reported
+
+Spatial blocks and unweighted, and a fifth panel exists so that is not hidden.
+It draws all four models under both schemes and both weightings, colour for the
+scheme and fill for the weighting, which is the same separation
+`source_computation_styles` makes for lines.
+
+Spatial blocks because it is the only scheme in which the spatial null is a bar
+at all. Under leave-one-province-out a held-out province's interior has no
+training neighbour, so the null falls to **-0.091**: below zero, so it explains
+none of the held-out variance and there is no diagonal-tracking cloud to set
+the flat ones against.
+
+**A claim of mine failed its own test here and is worth recording.** The first
+draft of this section, of the module docstring and of the script's comment all
+said the null "falls below the constant" under that scheme. It does not: -0.091
+beats the constant's -0.172. What is true is that it falls below zero. The test
+that caught it was one I had written to assert the wrong thing, which is the
+useful part -- an assertion made from a remembered number rather than a read
+one fails as soon as it meets the file.
+
+### Weight is drawn, because it cannot be argued away
+
+A cell's observed value is the mean of between 1 and 410 soundings. Mark area
+carries the count on the same half-decade classes the composite figure's legend
+uses, so a reader who has met one has met the other.
+
+Area rather than opacity, and the reason is specific: opacity in a cloud of 926
+marks confounds precision with overplotting, so a dense region of poorly
+observed cells would look like a well observed one. Area also survives a black
+and white print without a second channel.
+
+### Two new roles
+
+`observation_mark` at 0.45 and `reference_line` at 0.10. The first is
+mid-toned rather than dark because 926 marks at 0.10 read as a solid block
+wherever they overlap, and the shape of the cloud is the whole finding.
+
+`reference_line` is deliberately **not** declared against `label_text`, which
+is 0.099 away. They do not meet: the annotations sit in a fixed corner and the
+line runs through the data, and a line and a word are not confusable by shape
+in any case. Declaring an adjacency that does not exist would have forced one
+of the two to a tone neither wants, which is the failure mode the adjacency
+graph exists to avoid.
+

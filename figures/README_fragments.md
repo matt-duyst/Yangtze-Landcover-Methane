@@ -368,3 +368,73 @@ fifth less in 2018 and the urban change figure draws that disagreement out.
 
 Regenerate with `python scripts/make_landcover_regional_figure.py`. The rice
 grid it reads is built once by `python scripts/compute_rice_extent.py --write`.
+---
+
+### Observed methane against the fields four models produce
+
+![Observed methane against the held-out field produced by a constant, impervious fraction, a spatial null and wind, with a summary of every scheme and weighting](observed_predicted.png)
+
+**A land-cover model predicts close to the mean everywhere, so its cloud lies
+flat; a model of smoothness tracks the diagonal. That contrast is the
+reproduction's central result, and it is a shape rather than a number.** None
+of these panels is a prediction of methane. Each shows the field a model
+produces from its own predictors, drawn against what was observed, and the
+figure is about the distance between them; `ERRATA.md` 7.1 records that land
+cover does not explain the observed field and this is the demonstration of
+that.
+
+Panel (a) is a constant, which has no information and reaches held-out R
+squared -0.008<!--#baseline.constant_r2-->. Panel (b) is impervious fraction,
+the thesis's own predictor, at 0.085<!--#baseline.impervious_r2--> and an RMSE
+of 14.21<!--#baseline.impervious_rmse--> ppb; its cloud is a thickened version
+of the constant's rather than a rotated one. Panel (c) is the spatial null,
+which predicts each cell from the mean of its eight neighbours and knows
+nothing about the surface, at 0.332<!--#baseline.null_r2-->. Panel (d) is wind,
+at 0.653<!--#baseline.wind_r2-->, and it is a reference and not an
+explanation: `ERRATA.md` 7.4 records that the wind association is not
+attributable, because each cell's annual mean is taken over whichever days it
+was observed on and those differ across cells by up to 228 days.
+
+The same finding in ranges. The observed field spans
+106<!--#baseline.observed_span_ppb--> ppb across the 926 cells. The field
+impervious fraction produces spans 43<!--#baseline.impervious_span_ppb-->, the
+spatial null's spans 67<!--#baseline.null_span_ppb-->, and the constant's spans
+1.4<!--#baseline.constant_span_ppb-->, which is five folds each predicting
+their own training mean. Land cover sits nearer the constant than the
+smoothness on every measure the figure carries.
+
+**Every predicted value is out of fold**, fitted on training blocks and
+predicted onto cells the fit never saw. That distinction is not decoration: the
+spatial null's in-sample R squared is 0.685<!--#baseline.null_in_sample_r2-->
+against its held-out 0.332<!--#baseline.null_r2-->, so a figure drawing fitted
+values would have shown a smoothness bar twice the bar it is. All four panels
+share one pair of axis limits, so a flat cloud is flat rather than stretched,
+and mark area carries the sounding count on the composite figure's half-decade
+classes, because a cell's observed value is the mean of between
+1<!--#composite.min_soundings--> and 410<!--#composite.max_soundings-->
+soundings.
+
+The panels are one scheme and one weighting, spatial blocks and unweighted, and
+panel (e) is there so that is not a hidden choice: it draws the held-out R
+squared of all four models under both schemes and both weightings, with the
+scheme in the colour and the weighting in the fill. Spatial blocks because it
+is the only scheme in which the spatial null is a bar at all — under
+leave-one-province-out a held-out province's interior has no training
+neighbour, so the null falls to -0.091, which still beats the constant's -0.172
+but is below zero and so explains none of the held-out variance.
+
+All four models run on the 926<!--#composite.covered_cells--> cells that carry
+a methane value. The rice models are absent because they run on 531 cells and
+the table's own rule is that results on different samples must not be compared
+without saying so; four panels side by side is a comparison whatever a caption
+says. Their numbers, on the same scheme and weighting: rice alone reaches
+-0.031<!--#baseline.rice_alone_r2-->, impervious on that same sample reaches
+0.018<!--#baseline.impervious_rice_sample_r2-->, and adding rice to impervious
+moves it to 0.017<!--#baseline.rice_plus_impervious_r2-->, which is down rather
+than up.
+
+Regenerate with `python scripts/make_observed_predicted_figure.py`. The
+held-out predictions it reads are built by
+`python scripts/compute_baseline_predictions.py --write`, which refuses to
+write unless the metrics recomputed from them reproduce
+`data/processed/baseline_results_2018.csv`.

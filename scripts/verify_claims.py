@@ -238,6 +238,68 @@ def _rice() -> dict:
     return _cache["rice"]
 
 
+def _baseline() -> dict:
+    """Held-out and in-sample metrics for the diagnostic figure's four models.
+
+    Read through `src.figures.observed_predicted`, which is what the figure
+    reads, so a caption number and a drawn number cannot disagree.
+    """
+    if "baseline" not in _cache:
+        import csv as _csv
+
+        from src.figures import observed_predicted as op
+        metrics = op.load_metrics()
+        predictions = op.load_predictions()
+        in_sample = {}
+        with op.RESULTS.open(newline="") as handle:
+            for row in _csv.DictReader(handle):
+                if (row["scheme"] == op.SCHEME
+                        and row["weighting"] == op.WEIGHTING):
+                    in_sample[row["model"]] = float(row["in_sample_r2"])
+
+        def span(name):
+            field = predictions[name]["predicted"]
+            return float(field.max() - field.min())
+
+        observed = predictions["constant (global mean)"]["observed"]
+        _cache["baseline"] = {
+            "constant_r2": metrics[("constant (global mean)", op.SCHEME,
+                                    op.WEIGHTING)]["r2"],
+            "impervious_r2": metrics[("OLS impervious_fraction", op.SCHEME,
+                                      op.WEIGHTING)]["r2"],
+            "impervious_rmse": metrics[("OLS impervious_fraction", op.SCHEME,
+                                        op.WEIGHTING)]["rmse"],
+            "null_r2": metrics[("spatial null (queen neighbour mean)",
+                                op.SCHEME, op.WEIGHTING)]["r2"],
+            "null_in_sample_r2": in_sample["spatial null (queen neighbour mean)"],
+            "wind_r2": metrics[("OLS wind (u, v, speed)", op.SCHEME,
+                                op.WEIGHTING)]["r2"],
+            "observed_span_ppb": float(observed.max() - observed.min()),
+            "impervious_span_ppb": span("OLS impervious_fraction"),
+            "constant_span_ppb": span("constant (global mean)"),
+            "null_span_ppb": span("spatial null (queen neighbour mean)"),
+            "rice_alone_r2": _rice_sample_r2("OLS rice_fraction_single"),
+            "rice_plus_impervious_r2": _rice_sample_r2(
+                "OLS impervious_fraction + rice_fraction_single"),
+            "impervious_rice_sample_r2": _rice_sample_r2(
+                "OLS impervious_fraction [rice sample]"),
+        }
+    return _cache["baseline"]
+
+
+def _rice_sample_r2(model: str) -> float:
+    """Held-out R squared on the 531-cell rice sample, same scheme."""
+    import csv as _csv
+
+    from src.figures import observed_predicted as op
+    with op.RESULTS.open(newline="") as handle:
+        for row in _csv.DictReader(handle):
+            if (row["model"] == model and row["scheme"] == op.SCHEME
+                    and row["weighting"] == op.WEIGHTING):
+                return float(row["held_out_r2"])
+    raise KeyError(model)
+
+
 def _albedo_slope(series: str) -> float:
     if "albedo" not in _cache:
         with (PROCESSED / "albedo_correction_2018.csv").open(newline="") as h:
@@ -330,6 +392,21 @@ QUANTITIES = {
         lambda: _rice()["urban_share_shanghai_percent"],
     "urban.share_jiangsu_percent":
         lambda: _rice()["urban_share_jiangsu_percent"],
+    "baseline.constant_r2": lambda: _baseline()["constant_r2"],
+    "baseline.impervious_r2": lambda: _baseline()["impervious_r2"],
+    "baseline.impervious_rmse": lambda: _baseline()["impervious_rmse"],
+    "baseline.null_r2": lambda: _baseline()["null_r2"],
+    "baseline.null_in_sample_r2": lambda: _baseline()["null_in_sample_r2"],
+    "baseline.wind_r2": lambda: _baseline()["wind_r2"],
+    "baseline.observed_span_ppb": lambda: _baseline()["observed_span_ppb"],
+    "baseline.impervious_span_ppb": lambda: _baseline()["impervious_span_ppb"],
+    "baseline.constant_span_ppb": lambda: _baseline()["constant_span_ppb"],
+    "baseline.null_span_ppb": lambda: _baseline()["null_span_ppb"],
+    "baseline.rice_alone_r2": lambda: _baseline()["rice_alone_r2"],
+    "baseline.rice_plus_impervious_r2":
+        lambda: _baseline()["rice_plus_impervious_r2"],
+    "baseline.impervious_rice_sample_r2":
+        lambda: _baseline()["impervious_rice_sample_r2"],
     "albedo.slope_corrected": lambda: _albedo_slope("bias corrected"),
     "albedo.slope_raw": lambda: _albedo_slope("raw retrieval"),
 
