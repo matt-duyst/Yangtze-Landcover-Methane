@@ -3794,3 +3794,120 @@ and **+0.738** and not +0.740 on the raw; the partial's p is **0.53** and not
 exact. Nothing here needs correcting: the log is right about what was measured
 then, and the figure is right about what is measured now, which is the split
 that mechanism was built to keep.
+
+## The blended TROPOMI+GOSAT field, and what it did not fix
+
+The reproduction's negative land-cover finding rested on a methane field with a
+documented albedo bias that the operational correction removes about two
+percent of unweighted, and impervious fraction correlates with albedo at
+Spearman +0.761. So the obvious threat was that a properly bias-corrected field
+would show the urban association the reproduction failed to find. Balasus et
+al. (2023, doi:10.5194/amt-16-3787-2023) publish exactly such a field: a
+machine-learned correction for SWIR albedo, aerosol and cirrus scattering, and
+across-track striping, referenced to GOSAT.
+
+It is now built on the same lattice. **The threat did not materialise, and the
+reason it did not is more interesting than the answer.**
+
+### The composite is like for like in the strongest available sense
+
+Not merely the same cell count: **the per-cell sounding counts are identical in
+all 1,023 cells**, 926 covered against 926 and 110,920 soundings against
+110,920. Three things had to hold and each was checked rather than assumed.
+
+The blended files carry the operational rows unaltered — for orbit 03019 the
+maximum absolute difference against the retained operational granule was
+exactly zero on latitude, longitude, both operational methane variables and
+SWIR albedo across all 64,891 soundings. `qa_value` in this product takes only
+{0, 16, 40, 100} across all 578 candidate granules of 2018, so the product's
+`== 1.0` restriction and this project's `>= 0.75` select the same soundings.
+And every one of the 223 orbits that carried an in-box sounding has a blended
+counterpart, as do all 578 candidates.
+
+### The albedo dependence rose
+
+This is the finding, and it was not one of the two outcomes anyone expected.
+
+| field | SWIR slope, unweighted | weighted |
+|---|---|---|
+| raw retrieval | 203.85 | 183.73 |
+| bias corrected | 199.66 | 126.24 |
+| deseasonalised | 172.47 | 106.45 |
+| **blended** | **232.78** | **156.22** |
+
+Up 17 percent unweighted and 24 percent weighted, with Pearson rising from
++0.700 to +0.762. NIR the same, 130.22 to 150.94. Every retrieval-geometry
+predictor improves on the blended field: albedo's held-out R squared goes
++0.316 to +0.412 under spatial blocks weighted, sampling composition +0.418 to
++0.467, wind +0.563 to +0.592, the trend surface +0.258 to +0.366, and the
+spatial null itself +0.514 to +0.562. The field's between-cell spread widens,
+15.91 ppb against 14.86.
+
+**That is a statement about this composite and not about the product**, and the
+distinction has to be held. The paper's own claim is a reduction in spatially
+variable bias *against GOSAT* from 14.3 to 10.4 ppb at 0.25 by 0.3125 degrees.
+That is a different quantity measured against a reference this repository does
+not have. The slope measured here is fitted across an annual mean in which
+albedo is confounded with geography, land cover and sampling season, so it
+absorbs everything that varies spatially with albedo; the same caveat already
+recorded for the operational figure applies unchanged. It is an upper bound on
+residual albedo sensitivity, not a measurement of it.
+
+What can be said without qualification is narrower and still enough: **applying
+the blended correction to this composite does not reduce its albedo-correlated
+structure, it increases it.** A per-sounding correction referenced to a sparse
+instrument is not obliged to reduce the between-cell variance of an annual
+composite, and here it does the opposite.
+
+The paper flags corrections exceeding 10 ppb over persistently cloudy regions,
+and the YRD is one. The mean correction here is -12.31 ppb per cell. But the
+qa census found the box retrieves *better* than the global average, 6.55
+percent at qa 1.0 in-box against 4.65 percent globally, so "persistently
+cloudy" is not straightforwardly the explanation and is not offered as one.
+
+### The land-cover finding strengthened
+
+Held-out R squared under spatial blocks, by sounding count: impervious fraction
+goes from **+0.024 to -0.005**, below a constant. **Zero land-cover models beat
+the spatial null under inverse-variance weighting on either field.** The
+unweighted exceptions on the blended field are two rice models under
+leave-one-province-out where both they and the null are negative.
+
+The zero-order association falls, Pearson +0.345 to +0.315 unweighted and
++0.212 to +0.136 weighted. And controlling for SWIR albedo now takes it
+**negative and significant**: +0.021 at p 0.53 becomes **-0.082 at p 0.013**
+unweighted and -0.103 at p 0.002 weighted.
+
+That last number should not be read as a negative urban effect. It is what
+over-control produces on a field whose albedo dependence has increased:
+partialling out albedo now removes more than the urban signal ever was. The
+collinearity that made attribution impossible is unchanged — albedo against
+impervious fraction is still Spearman +0.761 — so the figure's caption stands
+as written, and the blended field does not rescue attribution. It removes the
+last available reading under which a real urban signal was being hidden by an
+uncorrected bias.
+
+### What this means for the 54 GB rebuild: it is not needed
+
+The covariate-preserving rebuild was to recover `eastward_wind`,
+`northward_wind` and `solar_zenith_angle`, which the blended granules do not
+carry. **It turns out the analysis never needed them from those files.**
+`methane_covariates_2018.csv` already holds all three, averaged over the
+identical soundings, so the full baseline suite — including the
+sampling-composition control that `ERRATA.md` 7.4 rests on — runs against the
+blended target unchanged. The rebuild would recover nothing the committed
+covariate table does not already provide, and it is now confirmatory at most.
+
+### One method note worth keeping
+
+Reading four variables out of 223 remote granules cost 335.6 MB in 1,385 range
+requests and seven minutes, against 23.08 GiB for the year. The AWS bucket
+answers `Accept-Ranges: bytes` and h5py accepts a file-like object, so HDF5
+fetches only the chunks it needs. Validated before use on the largest and
+smallest in-box contributors, where a range read and a whole-file read returned
+bit-identical arrays.
+
+That is the same method the qa census used and it has now paid for itself
+twice. The general point: for any question that needs one variable out of many
+granules, the transfer cost is a property of how the file is read rather than
+of how large it is.
