@@ -154,8 +154,8 @@
     "retrieved": "2026-09-08",
     "url": "https://copernicus-dem-90m.s3.amazonaws.com/",
     "licence": "Free of charge for any use, worldwide and without limit in time, including reproduction, distribution, communication to the public, adaptation and modification. Attribution is REQUIRED.",
-    "required_notice": "produced using Copernicus WorldDEM™-90 © DLR e.V. 2010-2014 and © Airbus Defence and Space GmbH 2014-2018 provided under COPERNICUS by the European Union and ESA; all rights reserved",
-    "required_liability_notice": "The organisations in charge of the Copernicus programme by law or by delegation do not incur any liability for any use of the Copernicus WorldDEM™-90",
+    "required_notice": "produced using Copernicus WorldDEM\u2122-90 \u00a9 DLR e.V. 2010-2014 and \u00a9 Airbus Defence and Space GmbH 2014-2018 provided under COPERNICUS by the European Union and ESA; all rights reserved",
+    "required_liability_notice": "The organisations in charge of the Copernicus programme by law or by delegation do not incur any liability for any use of the Copernicus WorldDEM\u2122-90",
     "files": [
       {
         "path": "data/reference/yrd_hillshade.tif",
@@ -217,5 +217,37 @@
       }
     ],
     "notes": "yrd_neighbours.geojson is every admin-1 unit with admin = 'China' whose geometry intersects the drawn extent and which is not a study province, clipped to the padded box: Fujian, Henan, Hubei, Jiangxi and Shandong. Selected by intersection, not hand-listed. From the 10 m layer. inset_boundaries.geojson is every feature of ne_50m_admin_0_boundary_lines_land intersecting the inset extent, 59 lines, UNFILTERED. The previous inset drew the 31 admin-1 units filed under admin = 'China' in the 50 m layer, which excluded Taiwan, Hong Kong and Macau by inheritance rather than by choice -- and not even by the mechanism the reference README described, since the 50 m admin-1 layer has no Taiwan, Hong Kong or Macau features to exclude; only the 10 m layer carries them, as 21, 1 and 1 units against China's 32. Nothing is filtered now and no country is named or filled. This layer carries no Hong Kong or Macau feature at all, and Taiwan appears only as a coastline in the hypsometric raster. Natural Earth classes 6 of the 59 lines as 'Disputed (please verify)' and ships 33 per-country viewpoint fields including FCLASS_CN and FCLASS_TW, which is the source's own statement that the classification depends on who is asked."
+  },
+  "blended_tropomi_gosat_2018": {
+    "product": "Blended TROPOMI+GOSAT methane, L2__CH4___, BLND stream",
+    "url": "https://blended-tropomi-gosat-methane.s3.us-west-2.amazonaws.com/",
+    "version": "processor 020400, matching every 2018 granule the operational composite used; the product manual scopes its correction to 02.04.00, 02.05.00 and 02.06.00",
+    "retrieved": "2026-09-10",
+    "citation": "Balasus, N., Jacob, D. J., Lorente, A., Maasakkers, J. D., Parker, R. J., Boesch, H., Chen, Z., Kelp, M. M., Nesser, H., and Varon, D. J. (2023), A blended TROPOMI+GOSAT satellite data product for atmospheric methane using machine learning to correct retrieval biases, Atmospheric Measurement Techniques 16, 3787-3807, doi:10.5194/amt-16-3787-2023",
+    "licence": "From the AWS Registry of Open Data entry, verbatim: \"There are no restrictions on the use of this data, but please contact nicholasbalasus@g.harvard.edu before its use in a publication.\" The product user manual asks more broadly: \"please contact me if you plan to use the data in your research so that proper acknowledgements can be made.\" THE AUTHOR HAS NOT BEEN CONTACTED. That is a step for whoever publishes from this, and it is recorded here rather than assumed done.",
+    "archive": {
+      "name": "223 individual granules, not an archive",
+      "bytes": 335600000,
+      "sha256": null
+    },
+    "files": [
+      {
+        "path": "data/processed/methane_blended_2018.tif",
+        "bytes": 5740,
+        "sha256": "3ebc85c1643d653259aa0245152bafbf18d78e8a2efbe7d58a2eac26c157e138"
+      },
+      {
+        "path": "data/processed/methane_blended_2018.csv",
+        "bytes": 29229,
+        "sha256": "f86bd47bcc38ac287967726bba42e51613a0273449fda32b48a1e0c80e753a5a"
+      },
+      {
+        "path": "data/processed/baseline_results_blended_2018.csv",
+        "bytes": 15128,
+        "sha256": "964438a74cffaf74247eae23c57dca7ae3d3958226850009d3b4ddde793847ab"
+      }
+    ],
+    "doi_note": "Registry of Open Data listing at registry.opendata.aws/blended-tropomi-gosat-methane; product user manual at github.com/nicholasbalasus/write_blended_files/blob/main/PUM.md, dated 10 January 2026. A Harvard Dataverse copy exists at dataverse.harvard.edu/dataverse/blended-tropomi-gosat-methane and serves anonymously, but the bucket's own README records that maintenance of it stopped on 7 February 2024, so AWS is the live route.",
+    "notes": "NO CONTENT CHECKSUM IS AVAILABLE FOR 34 PERCENT OF THIS SOURCE and the archive sha256 is null for that reason. Of the 3,436 keys for 2018, 2,254 carry a single-part MD5 ETag that reproduces (verified on one object) and 1,182 carry a multipart tag that cannot; the threshold is exactly 8 MiB. No x-amz-checksum header is returned even with checksum mode enabled. Verification is structural for the remainder: the file must open as HDF5, carry the product's own Title attribute, and hold methane_mixing_ratio_blended, latitude, longitude and qa_value at the root. The files are FLAT ROOTED, with no netCDF groups, and hold only the soundings with qa_value == 1.0; src.methane.blended reads them and src.methane.grid.read_soundings cannot. They carry the operational values unaltered alongside the new variable: for orbit 03019 the maximum absolute difference against the retained operational granule was exactly zero on latitude, longitude, both operational methane variables and surface_albedo_SWIR across all 64,891 soundings. Three of the seven covariates this project grids are absent from these files -- eastward_wind, northward_wind and solar_zenith_angle -- which costs nothing for the analysis, because those covariates are already committed in methane_covariates_2018.csv over the identical soundings. Only the 223 orbits that carried an in-box sounding were read, and only four variables from each, over HTTP range requests: 335.6 MB in 1,385 requests against 23.08 GiB for the year. The granules are not retained."
   }
 }

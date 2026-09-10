@@ -267,6 +267,9 @@ In outline:
 | reproduction status framework figure, vector | `make_framework_reproduction_figure.py` | about three seconds | continuously |
 | albedo collinearity figure | `make_albedo_collinearity_figure.py` | about four seconds | continuously |
 | albedo collinearity figure, vector | `make_albedo_collinearity_figure.py` | about four seconds | continuously |
+| blended TROPOMI+GOSAT composite | `compute_blended_composite.py --write` | about seven minutes and 336 MB of transfer | on demand |
+| blended composite, per-cell table | `compute_blended_composite.py --write` | about seven minutes and 336 MB of transfer | on demand |
+| baselines on the blended field | `run_baselines.py --target ch4_blended_ppb --target-from data/processed/methane_blended_2018.csv --covariates data/processed/methane_covariates_2018.csv --out data/processed/baseline_results_blended_2018.csv --write` | about a minute | continuously |
 <!-- END GENERATED RECIPE TABLE -->
 
 The composite is the expensive one and it is the only one. It downloads,

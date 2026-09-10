@@ -560,3 +560,41 @@ recipes:
   compare: bytes
   verified: continuously
   note: null
+- artefact: data/processed/methane_blended_2018.tif
+  command: python scripts/compute_blended_composite.py --write
+  label: blended TROPOMI+GOSAT composite
+  cost: about seven minutes and 336 MB of transfer
+  seconds: 430
+  inputs: network
+  compare: bytes
+  verified: on_demand
+  sha256: 3ebc85c1643d653259aa0245152bafbf18d78e8a2efbe7d58a2eac26c157e138
+  last_verified: '2026-09-10'
+  last_verified_by: full run over the 223 productive orbits, 335.6 MB in 1,385 range requests
+  note: Reads four variables from each of the 223 orbits that carry an in-box sounding, over HTTP range
+    requests, so the whole 23 GiB record is never fetched. Cheaper than the operational composite by two
+    orders of magnitude and still on_demand because it needs the network.
+- artefact: data/processed/methane_blended_2018.csv
+  command: python scripts/compute_blended_composite.py --write
+  label: blended composite, per-cell table
+  cost: about seven minutes and 336 MB of transfer
+  seconds: 430
+  inputs: network
+  compare: bytes
+  verified: on_demand
+  sha256: f86bd47bcc38ac287967726bba42e51613a0273449fda32b48a1e0c80e753a5a
+  last_verified: '2026-09-10'
+  last_verified_by: full run over the 223 productive orbits, 335.6 MB in 1,385 range requests
+  note: null
+- artefact: data/processed/baseline_results_blended_2018.csv
+  command: python scripts/run_baselines.py --target ch4_blended_ppb --target-from data/processed/methane_blended_2018.csv
+    --covariates data/processed/methane_covariates_2018.csv --out data/processed/baseline_results_blended_2018.csv
+    --write
+  label: baselines on the blended field
+  cost: about a minute
+  seconds: 70
+  inputs: committed
+  compare: bytes
+  verified: continuously
+  note: The three covariates absent from the blended granules are present here, because methane_covariates_2018.csv
+    was averaged over the identical soundings, so the full suite runs unchanged.

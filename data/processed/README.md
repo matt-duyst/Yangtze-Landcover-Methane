@@ -1069,3 +1069,113 @@ one per raster per season, with the second season's pass used as a free check
 that the two agree about which ground was assessed. `on_local` in
 `config/recipes.yml`.
 
+
+## methane_blended_2018.tif, methane_blended_2018.csv and baseline_results_blended_2018.csv
+
+The same 926 cells, from the blended TROPOMI+GOSAT product of Balasus et al.
+(2023, `doi:10.5194/amt-16-3787-2023`), which applies a machine-learned
+correction for SWIR surface albedo, aerosol and cirrus scattering, and
+across-track striping to the operational retrieval, referenced to GOSAT.
+
+Written as a **third field** beside the raw and bias-corrected ones, in its own
+file rather than as extra bands on `methane_composite_2018.tif`. The effect of
+the correction then stays visible instead of being chosen silently, and a
+reader who found four bands in the methane file would reasonably divide any of
+them by the count band — right here, but the mistake the covariate file exists
+to prevent. Band 1 is the blended mean and band 2 is its own sounding count.
+
+**The comparison is like for like, and it is asserted rather than assumed.**
+926 covered cells against 926, 110,920 soundings against 110,920, and the
+per-cell counts are **identical in every one of the 1,023 cells**. That
+follows from three things and each was checked: the blended files hold the
+operational file's `qa_value == 1.0` rows unaltered; `qa_value` in this
+product takes only the raw bytes {0, 16, 40, 100} across all 578 candidate
+granules of 2018, so `>= 0.75` and `== 1.0` select the same soundings; and all
+223 orbits that carried an in-box sounding have a blended counterpart.
+
+The correction is large and negative here. Per cell, blended minus operational
+bias-corrected is **-12.31 ppb** on average with a standard deviation of 4.47,
+running from -31.17 to +20.48; the median is -11.80 and 99 percent of cells
+are corrected downward. The field's own spread is slightly **wider** than the
+operational one, 15.91 ppb against 14.86, over a range of 111.47 against
+106.09.
+
+### What it did to the albedo dependence, which is not what was expected
+
+The correction targets SWIR albedo, and on this composite the albedo
+dependence **rose**:
+
+| field | SWIR slope, unweighted | weighted |
+|---|---|---|
+| raw retrieval | 203.85 | 183.73 |
+| bias corrected | 199.66 | 126.24 |
+| deseasonalised | 172.47 | 106.45 |
+| **blended** | **232.78** | **156.22** |
+
+That is +17 percent unweighted and +24 percent weighted against the
+operational bias-corrected field, and the correlation rises with it, Pearson
++0.700 to +0.762. Surface albedo NIR behaves the same way, 130.22 to 150.94
+unweighted.
+
+This is a statement about a cell-scale annual mean and not about the product.
+The paper's own figure is a reduction in spatially variable bias against GOSAT
+from 14.3 to 10.4 ppb at 0.25 by 0.3125 degrees, which is a different quantity
+measured against a reference this repository does not have. The slope here is
+fitted across an annual composite in which albedo is confounded with geography,
+land cover and sampling season, so it absorbs everything that varies spatially
+with albedo, and it is an upper bound on residual albedo sensitivity rather
+than a measurement of it — the same caveat the operational figure carries.
+
+### What it did to the land-cover finding: strengthened it
+
+Every retrieval-geometry and meteorological predictor gets **better** on the
+blended field, and land cover gets **worse**. Held-out R squared under spatial
+blocks, by sounding count:
+
+| model | operational | blended |
+|---|---|---|
+| spatial null (queen neighbour mean) | +0.514 | +0.562 |
+| OLS wind (u, v, speed) | +0.563 | +0.592 |
+| OLS sampling composition | +0.418 | +0.467 |
+| OLS albedo (SWIR) | +0.316 | +0.412 |
+| OLS trend surface (lat, lon) | +0.258 | +0.366 |
+| **OLS impervious_fraction** | **+0.024** | **-0.005** |
+
+Impervious fraction falls below a constant. **Zero land-cover models beat the
+spatial null under inverse-variance weighting on either field**, and the
+unweighted exceptions on the blended field are two rice models under
+leave-one-province-out where both they and the null are negative.
+
+The zero-order association falls too, Pearson +0.345 to +0.315 unweighted and
++0.212 to +0.136 weighted. And controlling for SWIR albedo now takes it
+**negative**: +0.021 (p 0.53) on the operational field becomes -0.082
+(p 0.013) unweighted and -0.103 (p 0.002) weighted. That is over-control, and
+it is what a field made more albedo-dependent would produce; it is not evidence
+of a negative urban effect.
+
+### Route, cost and terms
+
+Read from the AWS Registry of Open Data bucket `blended-tropomi-gosat-methane`
+in us-west-2, anonymously, partitioned by orbit in monthly folders. Only the
+223 orbits that carried an in-box sounding were read, and only four variables
+from each, over HTTP range requests: **335.6 MB in 1,385 requests and about
+seven minutes**, against 23.08 GiB for the full year and the operational
+composite's 28.9 GB and 122.7 minutes.
+
+Three of the seven covariates this project grids are absent from the blended
+files — `eastward_wind`, `northward_wind` and `solar_zenith_angle`. That costs
+the analysis nothing: `methane_covariates_2018.csv` already carries them,
+averaged over the identical soundings, so the full baseline suite and the
+sampling-composition control run unchanged.
+
+Terms, from the AWS registry entry verbatim: "There are no restrictions on the
+use of this data, but please contact nicholasbalasus@g.harvard.edu before its
+use in a publication." The product user manual asks more broadly to be
+contacted before use in research. **The author has not been contacted.** Cite
+Balasus et al. (2023).
+
+    python scripts/compute_blended_composite.py --write
+    python scripts/run_baselines.py --target ch4_blended_ppb \
+        --target-from data/processed/methane_blended_2018.csv \
+        --covariates data/processed/methane_covariates_2018.csv \
+        --out data/processed/baseline_results_blended_2018.csv --write
