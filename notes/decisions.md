@@ -3965,3 +3965,117 @@ together. The paper's citation is carried instead and the deposit's is recorded
 beside it. Three instances of one hazard, from three different platforms —
 figshare, figshare again and Harvard Dataverse — is enough to treat reading an
 author list off a deposit as a defect rather than a shortcut.
+
+## The work the methods grounding implies
+
+Eight items, recorded on 11 September 2026 from
+[`notes/grounding-methods.md`](grounding-methods.md), with what each would cost.
+**None is implemented here and none is claimed.** They are listed in roughly
+ascending order of cost, which is close to descending order of how badly the
+absence would read to a reviewer.
+
+**Filter on the precision variable.** `methane_mixing_ratio_precision` is in
+every Level 2 granule, carries the random error from the spectral fit, and this
+pipeline neither grids it nor filters on it. A published precedent filters at
+under 10 ppb (Schuit et al., 2023, doi:10.5194/acp-23-9071-2023). Cost: one more
+variable in the existing covariate list and a re-run, which is the 28.9 GB
+transfer the composite recipe already declares on-demand. Reachable with what is
+already read in the sense that no new source is needed; not reachable without
+re-gridding.
+
+**Apply the albedo floor and the blended-albedo ceiling.** A SWIR albedo floor
+of 0.05 and a blended-albedo ceiling of 0.75 outside summer preserve 69 percent
+of high-quality retrievals and reduce seasonal regional biases by 7 to 21
+percent (Nesser et al., 2024, doi:10.5194/acp-24-5069-2024). Surface albedo is
+negative in 166 of the 926 covered cells here, which is not merely below the
+floor but below zero, and a reflectance cannot be negative. Cost: the same
+re-run as above, and both filters should go in the same one. The blended field
+already addresses this for its own band, which is part of why it was added.
+
+**Weight by representativeness rather than by sounding count.** Coverage "is not
+an effective metric to limit representation errors" (Schutgens et al., 2017,
+doi:10.5194/acp-17-9761-2017), and this project uses it as the composite's
+quality metric in a figure, a raster band and every model weighting. The
+implementable alternative is a spatial representativeness uncertainty equal to
+the within-cell standard deviation scaled by the uncovered fraction, with
+temporal weighting by that quantity rather than by count (Glissenaar et al.,
+2025, doi:10.5194/essd-17-4627-2025). Cost: the within-cell variance is not in
+the checkpoint, which holds sums and counts only, so this needs the same re-run;
+after that it is arithmetic. **This is the item with the widest reach**, because
+it would change the weighting of every baseline in the repository.
+
+**Effective degrees of freedom on every reported correlation.** Every Pearson
+and partial correlation here is computed over 926 cells with n treated as 926,
+and both fields are strongly autocorrelated, so every p-value is
+anti-conservative (Dutilleul et al., 1993, doi:10.2307/2532625; Afyouni et al.,
+2019, doi:10.1016/j.neuroimage.2019.05.011). Cost: **the lowest of the eight.**
+No new data, no re-run, one function over the committed covariate table, and it
+would change several stated p-values. The Moran's I permutation test is the only
+statistic in the repository that already handles its own dependence.
+
+**De-attenuate the coefficients.** Regression calibration is unbiased where
+simulation-extrapolation is not when no validation data exist, and needs only an
+assumption about the measurement error variance (Nab and Groenwold, 2021,
+arXiv:2106.04285); SIMEX-WLS handles measurement error and non-constant residual
+variance together, which matters because a cell mean rests on 1 to 410 soundings
+(Xu et al., 2026, doi:10.1080/20964471.2026.2660552). The variance is estimable
+per layer without fieldwork: rice from the CCD-Rice polygons, impervious surface
+from the GAIA-GISA allocation disagreement as a lower bound, methane from the
+per-sounding precision. Cost: moderate, and no new download. **This is the most
+consequential item in the list**, because attenuation is the only mechanism that
+could manufacture this project's null result, and building second predictors
+with different errors is evidence against it rather than a measurement of it.
+
+**Set equivalence bounds for the central claim.** The claim that land cover does
+not explain the methane field is a statement in favour of the null, which
+p-values cannot support (Halsey, 2025, doi:10.1098/rsbl.2025.0506). Two
+one-sided tests against a named smallest effect size of interest would support
+it; the region grounding supplies a basis for naming the bound. Cost: low in
+computation and high in judgement, because the bound has to be defended rather
+than chosen. Until it exists the paper should claim that no association was
+detected.
+
+**Align priors before any Hefei comparison becomes a validation.** A satellite
+and a TCCON retrieval use different a priori profiles and sensitivities, and the
+correction adjusts both to a common prior using the satellite averaging kernel
+(Rodgers and Connor, 2003, as applied by Balasus et al., 2023,
+doi:10.5194/amt-16-3787-2023). The nine-day comparison already run gave a
+blended bias of -5.74 ppb with a standard deviation of 5.79 and was computed
+without it, so part of that figure is an artefact of comparing differently
+constructed quantities. The second correction step, adjusting TCCON with
+satellite kernels, has published precedent for being skipped as negligible.
+Cost: moderate, and it needs the TCCON prior profiles as well as the granules'.
+Also note the collocation rule: 1 hour and 100 km with a 250 m elevation limit
+for satellite-to-TCCON, not the 1 hour and 5 km that paper uses for
+satellite-to-satellite.
+
+**Measure the residual autocorrelation range and draw a buffered decay curve.**
+The block size here has never been justified from the data; the defensible
+choice is the autocorrelation range of the model's residuals, and what the
+repository has is Moran's I of the residual field, which is a different
+quantity (Valavi et al., 2019, already in the register). Neither
+cross-validation scheme buffers, while the literature's variants do, and the
+recommended diagnostic is buffered leave-one-out across increasing radii so that
+the decay of predictive power with distance from training data is visible as a
+shape rather than asserted at one buffer (Wadoux et al., 2021,
+doi:10.1016/j.ecolmodel.2021.109692). Cost: low, no new data, and it would also
+settle whether the gap between this project's two schemes -- a spatial null of
+0.332 under blocks against -0.091 under leave-one-province-out -- is the
+extrapolation effect that literature predicts.
+
+### Why this list is ordered by cost and not by value
+
+Because the two orders agree here, which is unusual and worth noticing. The
+cheapest items -- effective degrees of freedom, the residual range, the decay
+curve -- are also the ones whose absence a reviewer would notice first, since
+they need no new data and so have no excuse. The expensive items all share one
+cost, a re-gridding run, and they should therefore be done together or not at
+all: filtering on precision, applying the albedo bounds and computing within-cell
+variance for representativeness weighting are three uses of one pass over the
+granules.
+
+**One item is deliberately not on the list.** Kappa is not to be computed. Two
+independent authorities call correction for chance agreement bad practice
+(Stehman and Foody, 2019, doi:10.1016/j.rse.2019.05.018; Pontius and Millones,
+2011, doi:10.1080/01431161.2011.552923), and `ERRATA.md` 6.5 has been corrected
+accordingly rather than left asking for it.
