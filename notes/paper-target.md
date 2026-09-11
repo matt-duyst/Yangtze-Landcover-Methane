@@ -278,13 +278,69 @@ having both problems at their most acute — three of nine Chinese sub-national
 regions' worth of emissions on under a third of the land, with rice, aquaculture,
 wetland, coal, waste and gas distribution interleaved across the same cells.
 
-### The candidate framings, in the order they are currently defensible
+### The framing, chosen 14 September 2026
+
+**This section previously recorded three candidate framings, ranked by how much
+had to happen first, and chose between them explicitly not at all.** The reviewer
+pass above closes that. The paragraph below chooses; the three candidates are
+kept after it, marked, per this file's convention of leaving superseded reasoning
+standing rather than deleting it.
+
+#### The contribution statement
+
+**The contribution is a capability assessment of a real satellite column record
+over a region whose methane sources overlap, not a negative result about land
+cover.** What is new is the pairing of two independent limits measured on the
+same domain — an *information-content* limit, that expected degrees of freedom
+for signal accrue across many weakly constrained cells so that a regional total
+is constrainable while cell-level attribution is not, and an *identifiability*
+limit, that sectoral attribution derives from the prior's spatial distinctness
+rather than from the observations — together with the demonstration that the
+second is untouched by any improvement to the first.
+
+**Three things that statement must not be read as claiming**, because the work
+that exists does not support them and the statement has to survive the novelty
+test rather than merely sound like it does:
+
+* **Not an inversion.** The degrees-of-freedom figures are a reimplementation of
+  IMI's own closed-form estimate evaluated over this lattice, which
+  `notes/decisions.md` states in the record, the script's docstring and the
+  recipe note. The number that would settle it is still one free preview run.
+* **Not a priority claim.** No survey established that nobody has done this; what
+  is established is that the two papers and one preprint that define the paper
+  type are simulations and reviews, and that an OSSE cannot measure
+  identifiability because its sectors are separate by construction. The paper
+  should say what distinguishes its version, not that it is first.
+* **Not a validated result.** One year, one instrument, nine coincident TCCON
+  days without prior alignment, and no accuracy assessment on any land-cover
+  layer. The capability claim survives all three; a claim about the *size* of a
+  land-cover effect would not.
+
+#### Why capability and not reproduction
+
+The reproduction framing is not wrong and it is not the headline. Its central
+claim — no evidence that land cover explains the field — is a failed detection,
+and a failed detection of a documented effect in a new region is what the
+objection above says will not carry a paper on its own. **The capability framing
+answers the objection with the same material**, because it reports what the
+observing system can support rather than what one predictor pair failed to
+explain, and "what can a 25 km column record over a mixed-source region
+constrain" is a question nobody has answered against real observations.
+
+The reproduction work becomes the supporting material, and it is *necessary*
+supporting material rather than an appendix: the null is the evidence that the
+information-content limit binds in practice and not only in arithmetic.
+
+#### The three candidates, as previously recorded
+
+Kept because the reasoning that produced them stands and only the choice changed.
 
 **A reproduction paper.** Land cover does not explain the observed methane field
 over the Yangtze River Delta at 0.25 degrees in 2018, established across two
 urban products, two rice products, two cross-validation schemes and a published
 bias-corrected field, with the diagnostic work as the contribution. **Writeable
-now**, subject to the restatement below.
+now**, subject to the restatement below. *Now the supporting half of the chosen
+framing rather than a framing of its own.*
 
 **A methods paper on what a sparse column record can and cannot constrain at 25
 km.** The same material framed as a capability statement rather than as a
@@ -292,14 +348,68 @@ negative finding about land cover. The methods grounding supplies most of what
 this framing needs, including the transport-error ceiling of 12 ppb against a
 between-cell spread of 14.9, and the degrees-of-freedom figures that say what
 information the observing system carries. Writeable after the queue's first
-tier.
+tier. *This is the chosen framing, and the reviewer pass supplied the two things
+it lacked: a named paper type in the field's own venues, and a second limit that
+distinguishes it from an OSSE.*
 
 **An emissions paper**, if a rice reimplementation or a GRPI-method inventory,
 an improved prior and an inversion come together. Several rounds away, and the
 IMI preview is the step that would say whether it is reachable at all.
+*Unchanged, and still the one the IMI preview gates.*
 
-These are not ranked by value and no choice is made here. They are ranked by how
-much has to happen first.
+#### What the framing changes in the remaining work
+
+The queue below is not rewritten, because a capability paper needs most of the
+same items. What changes is which items are **load-bearing** and which are
+**strengthening**, and that distinction did not exist before.
+
+**Load-bearing under this framing**, because they are the capability evidence:
+
+* **The IMI preview run.** It converts the project's central number from a local
+  reimplementation into the tool's own output, and it is free. Under a
+  reproduction framing this was a nice-to-have; under a capability framing it is
+  the single most valuable outstanding item in the whole queue.
+* **The effective-degrees-of-freedom correction** (Tier 0, done). It is what
+  makes the null a statement about information rather than about arithmetic:
+  twenty-seven of seventy-two reported correlations lose significance once
+  spatial dependence is accounted for.
+* **The buffered leave-one-out decay curve** (Tier 0, done). It measures how
+  predictive skill falls with distance from training data, which is the
+  spatial-information claim in its most direct form.
+* **Item 0c, the ten-percent rice-fraction test.** A null on the subset that
+  satisfies the published condition for the association is a stronger
+  information-content statement than a null on the whole field.
+
+**Strengthening but no longer load-bearing**, because the claim is about what the
+observing system can constrain rather than about a measured association's size:
+
+* **The accuracy assessment** of the land-cover layers. It would bound the
+  attenuation on an effect estimate. A capability claim does not rest on an
+  effect estimate, so its absence is a stated limitation rather than a hole.
+* **The TCCON validation.** Nine coincident days cannot validate a field; under
+  the chosen framing they do not need to, because the field's uncertainty enters
+  the capability calculation through the retrieval's own error budget, which
+  `notes/grounding-methane.md` records.
+* **The de-attenuation and equivalence-bound work.** Both are about the size of
+  an effect. They become the route to a *second* paper rather than prerequisites
+  for this one.
+
+**Unmoved**: everything gated on new data — items 0e and 0f, the rice products,
+the facility databases, the building-form layers. They serve whichever paper
+comes next.
+
+#### One thing the framing does not license
+
+**The land-cover result still has to be reported in full.** It is what motivated
+the assessment, and without it the paper is a methods note about an estimator
+with no subject and no data. The negative finding stays — the same wording, the
+same restatement constraint below, the same diagnostic work behind it. **It stops
+being the headline and does not stop being a result.**
+
+That is also the honest description of what happened intellectually: the
+capability question was not the starting question. It is where the starting
+question led, and a paper that hid the starting question would be
+misrepresenting its own method.
 
 ### The first framing's central claim needs restating
 
