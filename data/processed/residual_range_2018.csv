@@ -1,0 +1,11 @@
+field,model,n,residual_sd_ppb,nugget,sill,nugget_fraction,range_a_km,practical_range_km,half_sill_range_km,block_ns_km,block_ew_km,verdict
+operational,the field itself (no model),926,14.865,65.38,650.04,0.101,1390.5,4171.5,103.2,111.2,95.0,residual still correlated at a block width; block is too small
+operational,OLS impervious fraction,926,13.951,57.86,1049.05,0.055,not identified,,96.1,111.2,95.0,residual still correlated at a block width; block is too small
+operational,spatial null (queen neighbour mean),926,8.347,53.08,190.65,0.278,not identified,,12.0,111.2,95.0,residual decorrelates well inside a block; block is ample
+operational,"OLS full covariates (albedo SWIR, NIR, SZA)",926,9.772,54.31,106.44,0.510,200.8,602.5,22.5,111.2,95.0,residual decorrelates well inside a block; block is ample
+operational,OLS impervious plus full covariates,926,9.674,56.50,104.11,0.543,219.6,658.8,19.8,111.2,95.0,residual decorrelates well inside a block; block is ample
+blended,the field itself (no model),926,15.910,51.48,1343.35,0.038,2568.4,7705.2,139.1,111.2,95.0,residual still correlated at a block width; block is too small
+blended,OLS impervious fraction,926,15.098,41.45,1252.12,0.033,2620.2,7860.5,134.5,111.2,95.0,residual still correlated at a block width; block is too small
+blended,spatial null (queen neighbour mean),926,7.932,47.95,173.06,0.277,not identified,,12.0,111.2,95.0,residual decorrelates well inside a block; block is ample
+blended,"OLS full covariates (albedo SWIR, NIR, SZA)",926,9.189,53.59,96.59,0.555,256.2,768.7,12.0,111.2,95.0,residual decorrelates well inside a block; block is ample
+blended,OLS impervious plus full covariates,926,9.181,54.02,96.85,0.558,268.5,805.5,12.0,111.2,95.0,residual decorrelates well inside a block; block is ample

@@ -4579,3 +4579,110 @@ against the spatial null are not significance tests and this correction does not
 reach them. What it reaches is the supporting apparatus — the albedo confounder
 test's partials, and the blended field's negative — and in both the correction
 makes the repository's own cautious reading more clearly right rather than less.
+
+## Queue items 3 and 4: the residual range, and the decay curve it gates
+
+### Item 3: the block size has a different answer for each model
+
+`scripts/measure_residual_range.py` fits an empirical semivariogram to each
+model's in-sample residuals and writes `data/processed/residual_range_2018.csv`.
+In-sample and not held-out, because Roberts' rule is about the structure a
+fitted model leaves behind, and held-out residuals from a blocked scheme mix
+that with the fold geometry — which would make the diagnostic depend on the
+choice it is meant to inform.
+
+**The method agrees with the earlier one.** The variogram of the methane field
+itself gives a half-sill range of **103.2 km** against the 102 km
+`data/processed/README.md` already records, computed in a different session by
+different code. That is the check that matters before anything downstream is
+trusted.
+
+**The block has two widths and only one was ever quoted.**
+`data/processed/README.md` says "a four-cell block is about 111 km across",
+which is the north-south width. East-west a four-cell span at this domain's
+mid-latitude is **95.0 km**, because a degree of longitude shrinks with the
+cosine of latitude. For a range comparison the narrower figure is the one that
+matters, since it is the shortest separation a block guarantees.
+
+**And the answer depends on the model, which is the finding:**
+
+| model | half-sill range, operational | blended |
+|---|---|---|
+| the field itself | 103.2 km | 139.1 km |
+| OLS impervious fraction | **96.1 km** | **134.5 km** |
+| OLS full covariates | 22.5 km | 12.0 km |
+| OLS impervious plus covariates | 19.8 km | 12.0 km |
+| spatial null | 12.0 km | 12.0 km |
+
+So the block is **ample** for every model that includes albedo, whose residuals
+decorrelate inside one cell, and **marginal to too small** for the one model
+that carries the central claim. On the operational field the impervious model's
+residual half-sill of 96.1 km sits just above the block's narrow width of 95.0
+km. On the blended field it is 134.5 km, which is 40 percent wider than the
+block.
+
+A fitted exponential range is reported too, but for four of the ten rows it is
+**not identified**: the variogram does not flatten inside the 600 km fitting
+window, so the fit lands on its bound and reporting `3a` would be reporting the
+bound. Those rows say "not identified" rather than quoting a number, and the
+half-sill range is the comparable quantity throughout.
+
+**What follows for the paper.** The spatial-blocks design is defensible for the
+covariate models and understates the optimism of the impervious model, mildly on
+the operational field and clearly on the blended one. If the paper uses the
+blended field — and `data/processed/README.md` records that the blended field is
+the one where the land-cover result is weakest — the block should be six cells
+rather than four. That is a change to a published design and it is recorded here
+rather than made.
+
+### Item 4: the decay curve, and it supports the bracketing reading
+
+`scripts/buffered_loo_curve.py` holds out each cell in turn, excludes everything
+within a radius from training, refits and predicts, at ten radii from 0 to 500
+km. **The radii are chosen from item 3's measured ranges**, which is why item 3
+gated item 4: they have to resolve below a cell, across the 96 to 135 km
+residual ranges, and out to the distance from a held-out province's interior to
+the nearest training cell. `data/processed/buffered_loo_2018.csv` holds the
+result.
+
+**Read `r2_above_constant` and not `held_out_r2`.** A constant predictor's
+held-out skill also falls as the buffer grows, from −0.002 at 0 km to −0.407 at
+500 km, because the training mean drifts away from the held-out cell's
+neighbourhood. Every curve slopes down for that reason whether or not the model
+is degrading, and the difference removes the common term. Missing this would
+have read the whole exercise as land cover degrading when most of it is the
+target's own structure.
+
+**The spatial null collapses exactly where it should.** 0.685 at no buffer,
+0.664 at 25 km, and **−0.015 at 50 km**. A cell is 27.8 km across, so the null
+loses everything the moment the buffer exceeds one cell, and past that point it
+is numerically identical to the constant — which is the designed fallback when
+every neighbour is excluded, now visible rather than inferred.
+
+**Land cover is not flat, and that was the interesting outcome rather than the
+expected one.** A model that uses no spatial information should not care how far
+away its training data are. Its advantage over a constant decays steadily
+instead: **+0.118 at no buffer, +0.089 at 100 km, +0.063 at 150 km, +0.041 at
+200 km, +0.007 at 300 km, and negative beyond.** On the blended field it reaches
+zero by 200 km. So the impervious coefficient is not stable across this domain:
+the small skill it has is local, and it disappears when the training data are
+more than about 300 km away. That is consistent with what the repository already
+records about the exceptions recurring in the same places, and it is the first
+direct measurement of it.
+
+**And the bracketing reading is supported.**
+`notes/grounding-methods.md` offers the reading that this project's two
+cross-validation schemes may bracket the truth, since leave-one-province-out is
+maximally extrapolative, and says the decay curve is the measurement that would
+show it. The spatial null's leave-one-province-out held-out R squared is
+**−0.091**. Buffered, it is **−0.084 at 150 km and −0.112 at 200 km** on the
+operational field, and **−0.099 at 150 km** on the blended one. A held-out
+province's interior sits roughly 150 to 200 km from the nearest training cell.
+**So the leave-one-province-out figure is what a 150 to 200 km buffer gives, and
+the two schemes are measuring the same thing at two points on one curve rather
+than disagreeing.** The spatial-blocks value of 0.332 and the
+leave-one-province-out value of −0.091 are the curve at roughly 50 and 175 km,
+and neither is wrong.
+
+No figure is built from any of this. The figure set already has a fold-map slot
+planned and whether the decay curve earns one of its own is a later decision.

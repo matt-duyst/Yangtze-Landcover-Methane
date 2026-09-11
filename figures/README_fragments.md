@@ -542,8 +542,8 @@ downloads over four platforms — 5<!--#pipeline.fetch_routes--> parallelograms,
 ISO's symbol for data, against one bowed rectangle for the reference layers a
 clone already has. The distinction is carried by shape rather than by fill, so
 it costs no colour and survives a black and white print. Of the
-54<!--#pipeline.recipes--> registered regeneration recipes,
-28<!--#pipeline.recipes_committed--> rebuild their artefact from what a fresh
+56<!--#pipeline.recipes--> registered regeneration recipes,
+30<!--#pipeline.recipes_committed--> rebuild their artefact from what a fresh
 clone holds, 17<!--#pipeline.recipes_local--> need a fetched input and
 8<!--#pipeline.recipes_network--> need a network run.
 

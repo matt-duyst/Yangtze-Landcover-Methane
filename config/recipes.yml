@@ -210,6 +210,30 @@ recipes:
   compare: bytes
   verified: continuously
   note: null
+- artefact: data/processed/buffered_loo_2018.csv
+  command: python scripts/buffered_loo_curve.py --write
+  label: buffered leave-one-out decay curve
+  cost: about two seconds
+  seconds: 5
+  inputs: committed
+  compare: bytes
+  verified: continuously
+  note: Radii chosen from residual_range_2018.csv rather than arbitrarily, which is why that
+    recipe gates this one. Read the r2_above_constant column rather than held_out_r2, because
+    a constant predictor's skill also falls as the buffer grows -- the training mean drifts
+    from the held-out cell's neighbourhood -- and the difference removes that common term.
+- artefact: data/processed/residual_range_2018.csv
+  command: python scripts/measure_residual_range.py --write
+  label: residual autocorrelation ranges
+  cost: about fifteen seconds
+  seconds: 30
+  inputs: committed
+  compare: bytes
+  verified: continuously
+  note: Roberts et al.'s rule wants the residual's autocorrelation range and this repository
+    had only the target field's. The variogram reproduces the committed 102 km half-sill for
+    the field itself at 103.2 km, which is the check that the method agrees with the earlier
+    one. The block is 111 km north-south by 95 km east-west, not one figure.
 - artefact: data/processed/correlation_dof_2018.csv
   command: python scripts/correct_correlation_dof.py --write
   label: correlations corrected for spatial dependence
