@@ -70,6 +70,63 @@ percent, or 4.58 Tg, using EDGAR v432, rising to 47 percent, or 5.21 Tg, using
 EDGAR v5.0 (Huang et al., 2021, *Advances in Atmospheric Sciences* 38,
 1537–1551, doi:10.1007/s00376-021-0383-9).
 
+**The direction of EDGAR's error in this region is not settled, and this record
+carried only one side of it until 13 September 2026.** The same group, using the
+same tower, reached the opposite conclusion for an earlier period. Hu et al.
+(2019, *Journal of Geophysical Research: Biogeosciences* 124, 1148–1170,
+doi:10.1029/2018JG004850) measured from June 2010 to April 2011, took **EDGAR
+v4.3.2** as the a priori, and applied three top-down approaches — multiplicative
+scaling factors, flux ratio, and scale-factor Bayesian inversion. Its abstract:
+the three posterior estimates "were 30.2(±17.6)%, 31.5 (±5.6)%, and 30.8
+(±27.4)% lower than the a priori ... v432 emission inventory estimate", and "the
+**overestimate** was mainly caused by two source categories including fuel
+exploitation and agricultural soil emissions (rice cultivation)", with posterior
+agricultural soil 47.8 percent *below* the prior. Its total for the region was
+6.52 (±1.59) Tg a⁻¹.
+
+So for agricultural soil in this region, against the same inventory version, one
+study found EDGAR 47.8 percent too high in 2010–11 and the other found it too
+low in 2018. **The two are not compatible as flat statements and the record
+should not carry either as "EDGAR's direction of error in the YRD".**
+
+The reconciliation available is scope, and it is the scope each paper actually
+claims. Hu et al.'s figures are **annual totals** — three estimates of a yearly
+flux density, of which 30.8 percent is the least certain at ±27.4. Huang et
+al.'s statement is about **seasonal shape**: the underestimate is "especially
+during the growing seasons", and the paper's own supporting figure is that in
+summer agricultural soil contributed 42 percent (v432) to 64 percent (v5.0) of
+the concentration enhancement. A prior can be too high over a year and too low
+in the flooded months if its seasonal amplitude is too flat, and EDGAR is a
+plausible candidate for that: Hu et al. record that v4.2 carries annual values
+with no monthly variation at all while v4.3.2 varies monthly, so the monthly
+profile is recent and unvalidated here.
+
+Two further differences may matter and neither paper tests them. The periods are
+seven years apart, over which this record establishes that the region's rice
+area fell. And the two regional totals differ by nearly a factor of two — Hu's
+6.52 Tg a⁻¹ for 2010–11 against Huang's implied 11.7 Tg a⁻¹ for 2018, from 4.58
+Tg of agricultural soil at 39 percent of the total.
+
+**What this changes for how the rice-dominance finding is read.** Huang et al.'s
+attribution of 2018 seasonal variability to agricultural soils stands; nothing
+here touches it, and it remains the closest thing to a local answer for this
+study's year. What does not stand is any inference that EDGAR systematically
+underestimates rice in this region, which would have supported a
+better-rice-prior argument more strongly than the evidence allows. The
+better-prior argument in [`notes/grounding-methods.md`](grounding-methods.md)
+rests on GRPI's finding that EDGAR overspreads rice spatially and on Liang et
+al.'s measured 40 percent bias reduction over Heilongjiang, neither of which is
+affected by this and both of which are about spatial distribution rather than
+about magnitude.
+
+**And one premise that reached this record from a citing paper is wrong.** The
+Chengdu–Chongqing inversion paper attributes to Hu et al. (2019) a finding that
+"EDGAR v7 overestimated methane emissions in the Yangtze River Delta region by
+30.8 percent". The 30.8 percent is real and is in Hu et al. The version is not:
+Hu et al. assessed **v4.3.2**, and EDGAR v7 was released years after that paper.
+A 2019 paper cannot have assessed it. The figure is carried here from the
+primary source and the version is corrected.
+
 This is the paper's strongest positioning and it should be stated in exactly
 these terms. **The reproduction's null result is not that rice does not
 matter.** A tower inversion of this region in this year found rice dominant in
