@@ -284,6 +284,227 @@ would move it. And the estimate is IMI's approximation evaluated locally rather
 than an inversion actually run, so the number that would settle it is still one
 free preview run by someone with an account.
 
+## The cross-layer synthesis, added 14 September 2026
+
+**This section exists because nothing held it, and it only became writable once
+all four grounding records existed.** It goes here rather than in a fifth
+grounding file for a structural reason worth stating: each grounding record is
+about one thing — a region, a predictor, a predictor, a target — and this is
+about the relation between them. A file named after a layer would be the wrong
+container. And its conclusions are claims a paper may make, which is what this
+file governs.
+
+It is the strongest methodological statement this project can make, and it is
+stronger than the capability finding above rather than a restatement of it.
+
+### The field says the thing, in one sentence, and has said it since 2018
+
+"**Inversion modelling is not capable of distinguishing interspersed sources from
+different sectors. Overlapping grid level sources from different sectors are
+typically grouped and treated as a single source**" (Desjardins, R. L.,
+Worth, D. E., Pattey, E., VanderZaag, A., Srinivasan, R., Mauder, M.,
+Worthy, D., Sweeney, C., and Metzger, S., 2018, *The challenge of reconciling
+bottom-up agricultural methane emissions inventories with top-down measurements*,
+*Agricultural and Forest Meteorology* 248, 48–59,
+doi:10.1016/j.agrformet.2017.09.003).
+
+Read that against what this project's domain contains. **It is an
+interspersed-source region in every direction at once:**
+
+* Rice and **aquaculture** occupy the same flooded lowland — same cells, same
+  spectral signature, and the second unrepresented in every inventory.
+  *Established by* [`notes/grounding-rice.md`](grounding-rice.md).
+* Rice and **natural wetland** overlap in the priors by the wetland product's own
+  admission, and a third or more of paddy emission may not be anthropogenic at
+  all. *Established by* the rice record and
+  [`notes/grounding-methane.md`](grounding-methane.md).
+* Urban **waste, gas distribution, wastewater and stationary combustion** are
+  four sectors sharing one allocation surface inside the same city cells.
+  *Established by* [`notes/grounding-urban.md`](grounding-urban.md).
+* **Coal** sits in northern Anhui, immediately adjacent to — and partly inside —
+  the cells where the committed rice raster stops classifying. *Established by*
+  [`notes/grounding-yrd.md`](grounding-yrd.md).
+
+**So the method the field uses would group this project's two predictors' sources
+together**, and the 2023 thesis's question was to tell them apart. That is not a
+statement about the thesis's technique. It is a statement about the question.
+
+### What separability actually depends on, which is not the observations
+
+The decisive mechanism is already in the urban record and its generality was
+not drawn out. Landfills are separable in a US inversion because they are mapped
+on facility coordinates and are spatially distinct from everything else, giving
+posterior error correlations below 0.35 with other sectors. Gas distribution,
+wastewater treatment and stationary combustion are all allocated on population,
+and correlate with one another at 0.45 to 0.87, so "our ability to separate these
+three sectors in the inversion is therefore limited, and their relative
+allocation is heavily weighted by the prior information".
+
+**Stated generally: separability is a property of the prior's spatial
+distinctness, not of the observations.** The same instrument, the same inversion
+and the same domain separate one sector and fail to separate three, and the only
+thing that differs is how each sector's prior was spatially allocated.
+
+Two consequences follow, and they point in opposite directions for this
+project's two predictors.
+
+**It explains why an impervious fraction cannot help, conclusively rather than
+suggestively.** A fraction is a smooth, population-like surface. Adding it to a
+set of sectors already allocated on a smooth population-like surface adds
+correlated information; it does not add distinctness. The urban record reached
+that conclusion from one inversion's correlation coefficients; the general
+principle is why it could not have come out otherwise.
+
+**And it tells you what would work, which is the constructive half.** For the
+urban sectors: facility coordinates, which
+[`notes/dataset-leads.md`](dataset-leads.md) now carries leads for. For rice: a
+genuinely distinct spatial distribution — which is exactly what a better rice map
+provides, and exactly the gain the rice record establishes is real. **So the two
+halves of this project's predictor set are not symmetric.** The rice layer
+addresses the mechanism that governs separability; the impervious layer cannot.
+That asymmetry is the most defensible thing a paper can say about why one half of
+the predictor set has a future and the other has a narrower one.
+
+### Isotopes, the fallback when sources overlap, and why they do not help here
+
+When sources are interspersed, the field's answer is to separate them by
+composition rather than by location. That works, and it does not work for this
+project's particular comparison.
+
+**The signatures overlap where this project needs them separated.** Biogenic
+methane sources sit "in the −70 to −50‰ range for sources such as ruminants,
+wetlands and rice fields", against thermogenic and pyrogenic sources "as
+enriched as −15‰", and pooled literature gives "an average signature of
+approximately **−61 ± 4‰** for all rice fields" (France, J. L., Fisher, R. E.,
+Lowry, D., Allen, G., and twenty others, 2021, *δ13C methane source signatures
+from tropical wetland and rice field emissions*, *Philosophical Transactions of
+the Royal Society A* 380, doi:10.1098/rsta.2020.0449). Waste sources measured
+atmospherically give a weighted average of **−56.1 ± 2.4‰** (Bakkaloglu, S.,
+Lowry, D., Fisher, R. E., Menoud, M., Lanoisellé, M., Chen, H., Röckmann, T., and
+Nisbet, E. G., 2022, *Atmospheric Environment* 276, 119021,
+doi:10.1016/j.atmosenv.2022.119021).
+
+**Rice at −61 ± 4 and waste at −56.1 ± 2.4 overlap within one standard
+deviation.** Both sit inside the biogenic window. The mechanism is that both are
+microbial: methane from wetlands, rice paddies, waste and enteric fermentation
+shares the methanogenic pathway and is therefore all depleted in 13C, while
+fossil methane is enriched. **So isotopes separate microbial from thermogenic,
+not rice from landfill.**
+
+For this domain that means something specific and usable. Isotopes would
+separate **rice and waste together** from **coal and gas together** — which is
+precisely the discrimination the northern Anhui coal question needs, and
+precisely not the discrimination the 2023 thesis's comparison needs. The fallback
+works for the confound the region record found and fails for the comparison the
+thesis made.
+
+**And the data gap lands on exactly the two sectors this project would need.**
+NOAA's global δ13C source signature inventory carries spatially resolved
+signatures for oil and natural gas, coal, biomass and biofuel burning, ruminants
+and wild animals, with geological seeps and wetlands supplied from other work.
+"For other CH4 sources, the current measurement sample sizes are insufficient to
+develop spatial distributions", and globally averaged values are used instead —
+the sources named being **waste and landfills, termites, and rice** (Sherwood,
+O. A., Schwietzke, S., and Lan, X., 2020, `10.15138/qn55-e011`, documented in
+Lan, X., Basu, S., Schwietzke, S., and fourteen others, 2021, *Global
+Biogeochemical Cycles* 35, doi:10.1029/2021GB007000). **The two sectors this
+project compares are the two without spatially resolved isotopic signatures.**
+That is not a coincidence worth dwelling on, but it is a precise statement of
+where the field's knowledge stops relative to this question.
+
+**Then record the opening, because it is a genuine and dated research gap.** A
+2026 South Asian campaign found regional signatures departing substantially from
+global means: rice paddy methane "more enriched in δ13C compared to the global
+mean", with Miller–Tans values of **−53.8 ± 0.8‰** in δ13C and **−311 ± 6‰** in
+δ2H, the enrichment in both suggesting "multiple sources and/or pre-emission
+oxidation"; and the conclusion that "**region-specific isotopic endmembers are
+therefore critical for accurate source apportionment**" (Yao, P., Belec, K.,
+Holmstrand, H., and thirteen others, 2026, *Atmospheric Chemistry and Physics*
+26, 7765–7787, doi:10.5194/acp-26-7765-2026). A rice signature at −53.8 is
+*enriched past* the waste average of −56.1 — **so a regional dual-isotope
+campaign can separate what global means cannot**, and the equivalent campaign for
+China has not been done. That is a concrete, fundable next study rather than a
+lament, and this project's domain is where it would be worth doing.
+
+### The shared mechanism, now seven instances
+
+The five-instance finding above becomes seven with the second rice block, and
+the two additions are the largest ratios in the set:
+
+* **Aquaculture** is determined by pond management, not by pond area. Greenhouse
+  gas emission intensity per unit of fish production runs **197 times higher** in
+  traditional earthen ponds than in in-pond raceway systems. *Established by* the
+  rice record's second block.
+* **Rice straw** is determined by whether residue is incorporated or burned, not
+  by the area it was grown on. Four years of autumn incorporation gave a
+  **five-fold** increase in growing-season CH4 — with no effect on yield, so
+  nothing in an agricultural statistic records it. *Established by* the rice
+  record's second block.
+
+**Seven sectors, seven times, the same structure.** And the two new instances
+sharpen the general claim in a way the first five did not, because both are
+*within-class* ratios: the same pond, the same paddy, the same area, a different
+practice. A factor of 197 between two ways of farming the same water is not a
+proxy problem that better mapping could reduce.
+
+### The shared timing, which nothing recorded
+
+All three layers change under policy during this project's study interval, and
+the three years bracket three separate step changes. Nothing in the repository
+put them in one place.
+
+* **2008: the residue-burning ban**, with straw return becoming the standard
+  alternative and a measured five-fold effect on growing-season rice emissions
+  in the direction of more. *Held by* the rice record's second block.
+* **2010 to 2019: urban gas distribution tripling**, "from 298.6 to 935.6 million
+  meters" of urban supply pipeline, with leakage "not actively monitored". *Held
+  by* the urban record.
+* **2018: the waste policy pivot**, with greenhouse gas emissions from the sector
+  peaking that year and an **84.7 percent** reduction in municipal solid waste
+  methane in Chinese cities since 2017. *Held by* the urban record.
+
+**The three years 2000, 2010 and 2018 therefore sample three different policy
+regimes, and not one of the three step changes is visible in a land-cover
+fraction.** 2018 is simultaneously the peak of the waste arc, nine years into a
+rising straw-return effect, and the end of a decade of tripling gas
+infrastructure. A monotonic impervious series and a declining rice series are
+being asked to track three non-monotonic, policy-driven emission series, two of
+which turn inside or just after the study window.
+
+That is a discussion point rather than a result, and it is the one that most
+directly limits what a cross-sectional 2018 analysis can be said to represent.
+
+### What the synthesis establishes for the paper
+
+**The three layers are not three separable predictors of one field.** They are
+overlapping sources that the field's own best method groups together and treats
+as one. That has been stated in the literature since 2018 and it describes this
+domain exactly: rice with aquaculture and wetland, four urban sectors with one
+another, coal with the cells where the rice classification stops.
+
+**Attribution depends on the prior's spatial distinctness, not on the
+observations.** The same inversion separates landfills, because they are mapped
+on coordinates, and fails to separate three population-allocated sectors from one
+another. That is why an impervious fraction cannot help — it is another smooth
+surface joining a degeneracy — and why a better rice map can, because it supplies
+the distinctness the mechanism requires.
+
+**And the two sectors the 2023 thesis compared are the two for which no spatially
+resolved isotopic signatures exist**, so the field's standard fallback for
+overlapping sources is unavailable for exactly this comparison. It would work for
+the coal question the region record raised, and a regional dual-isotope campaign
+for China — which has not been done — would be the study that changed that.
+
+**Read together with the capability finding above, this is the paper's
+methodological core.** An inversion over this domain could constrain the regional
+total and not the cell-level attribution; and even a perfect cell-level
+attribution would be attributing to sectors the method groups together. **The
+first is a statement about information content and the second about
+identifiability, and they are independent.** Either alone would be enough to say
+the thesis's question is not answerable as asked. Both together say why no
+refinement of the same design would fix it, which is the more useful and the more
+defensible claim.
+
 ## The work queue
 
 Drawn from all four grounding records rather than from any brief, and **ordered
