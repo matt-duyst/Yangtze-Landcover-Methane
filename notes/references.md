@@ -330,7 +330,7 @@ repository reads measure 0.00008983 degrees per pixel, which is the 10 m
 variant.
 Cited in `config/sources.yml`, `figures/README_fragments.md`.
 
-**Shen, R., Pan, B., Peng, Q., Dong, J., Chen, X., Zhang, X., and others
+**Shen, R., Pan, B., Peng, Q., Dong, J., Chen, X., Zhang, X., and 3 others
 (2026).** High-resolution distribution maps of single-season rice in China from
 2017 to 2022, V8. Science Data Bank.
 `10.57760/sciencedb.06963` — dataset record; the deposit fetched, and the source
@@ -1605,14 +1605,15 @@ difficult to define and have been ignored for now". **A premise failed here**:
 its default anthropogenic prior is EDGAR v8, not v6.
 Cited in `notes/grounding-methods.md`, `notes/dataset-leads.md`.
 
-**He, M., Jacob, D. J., and others (2026).** Attributing 2019–2024 methane
+**He, M., Jacob, D. J., Estrada, L. A., Varon, D. J., and 12 others (2026).**
+Attributing 2019–2024 methane
 growth using TROPOMI satellite observations. *Science Advances* 12.
 `10.1126/sciadv.adz9007` — peer-reviewed paper; a finding relied on. The source
 for a global inversion's degrees of freedom for signal of 295 in 2024, "ranging
 from 256 to 426 for individual years, reflecting changes in satellite coverage".
 Cited in `notes/grounding-methods.md`.
 
-**Shen, L., and others (2023).** National quantifications of methane emissions
+**Shen, L., Jacob, D. J., Gautam, R., Omara, M., and 6 others (2023).** National quantifications of methane emissions
 from fuel exploitation using high resolution inversions of satellite
 observations. *Nature Communications* 14.
 `10.1038/s41467-023-40671-6` — peer-reviewed paper; a finding relied on. "Our
@@ -1659,7 +1660,7 @@ composite's own third band.
 Cited in `notes/grounding-methods.md`, `notes/grounding-yrd.md`,
 `notes/dataset-leads.md`.
 
-**Varon, D. J., and others (2023).** Continuous weekly monitoring of methane
+**Varon, D. J., Jacob, D. J., Hmiel, B., Gautam, R., and 17 others (2023).** Continuous weekly monitoring of methane
 emissions from the Permian Basin by inversion of TROPOMI satellite observations.
 *Atmospheric Chemistry and Physics* 23, 7503–7520.
 `10.5194/acp-23-7503-2023` — peer-reviewed paper; a method not applied. The

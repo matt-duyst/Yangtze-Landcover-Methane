@@ -4262,6 +4262,171 @@ readable. **That is now the gating question for the whole PPPM route** and it is
 one email or one library request away, which is why it is queued in
 `notes/paper-target.md` rather than left here.
 
+## The register audit of 14 September 2026, and the general point it makes
+
+Two defects in committed register entries were found on 13 September, both by
+accident: a later pass needed the same paper for something else and noticed the
+citation was wrong. Zhong and others had an author list reading "Zhong, and
+others" and a page range off by one; Sicsik-Paré and others had the fourth author
+placed third and the third dropped entirely. Both had been written during the
+methods grounding pass, and both were written from search-result phrasing rather
+than from the DOI's own metadata.
+
+**Two accidental finds in one file are a sample, not a pair of incidents.** This
+section records the audit that followed.
+
+### Establishing the suspect population
+
+Content negotiation for every DOI's author list was adopted partway through, on
+11 September, during the pass that recorded the inversion frame and the urban
+layer — the pass in which six wrong first authors were caught in a single
+sitting before any of them reached a commit. Everything the register held before
+that point was written without it.
+
+**Provenance was not recorded per entry**, so which entries those were had to be
+reconstructed from git history: walk the commits that touched
+`notes/references.md` in order, diff the set of backticked DOIs at each, and
+attribute each DOI to the commit that introduced it. That gives twelve commits
+and a clean partition.
+
+| Commit | Pass | DOIs introduced | Negotiated? |
+|---|---|---|---|
+| `baa7db5` | the register's creation | 14 | no |
+| `d647fd4` | citing the reproduction's methods | 12 | no |
+| `07a9f28` | narrowing the waste claim | 1 | no |
+| `91a656f` | citing the errata's uncited claims | 10 | no |
+| `e135018` | the diagram sources | 3 | no |
+| `0de7113` | the region grounding | 23 | no |
+| `3b2fc4f` | the methods grounding | 40 | no |
+| `8a292ee` | the inversion frame and urban layer | 25 | yes, from here |
+| `55a864a` | the PPPM and GRPI routes | 1 | yes |
+| `929e5e0` | queue, inventory, fourteen sources | 15 | yes |
+| `0814759` | queue, inventory, twenty-two sources | 22 | yes |
+| `668ef80` | inventory, queue, twenty-nine sources | 28 | yes |
+
+**One hundred entries of one hundred eighty-nine were suspect** — not the
+methods pass alone, which is what the brief that commissioned this audit
+expected, but everything up to and including it. The conservative reading is the
+right one here: an entry that cannot be demonstrated to have been negotiated has
+to be treated as though it was not, because the defect is invisible to reading.
+
+In the event all one hundred eighty-nine were re-negotiated, because once the
+comparison was scripted the marginal cost of the other eighty-nine was a few
+minutes of network time. That turned out to matter: **eleven of the twenty-three
+defective entries were in the negotiated half**, including two of my own from
+the two preceding passes.
+
+### What was wrong
+
+Twenty-three entries, thirty-one fields, in six classes.
+
+**An author list belonging to a different paper, with every other field
+correct.** This is the worst single case and the one that would most certainly
+have reached a submission. `10.5194/amt-11-6379-2018` is Sheng and others
+(2018), *Comparative analysis of low-Earth orbit (TROPOMI) and geostationary
+(GeoCARB, GEO-CAPE) satellite instruments*. The register had the correct title,
+DOI, journal, volume, page range and year — and the eight-author list of
+`10.5194/acp-18-6483-2018`, the same group's companion Southeast US inversion
+paper, same first author, same year, same region. Four of the names are not on
+the paper cited and one author of five is missing. **Nothing a reader could check
+by eye was wrong.**
+
+**Names imported from elsewhere.** Ploton and others carried four wrong surnames
+at positions seven to ten; Passafaro and others carried four at positions two to
+five. In both cases the substituted names are plausible co-authors of the same
+first author's other work.
+
+**A wrong first author**, the seventh instance this register has now produced: the
+MultiTab preprint was entered as Kim where the paper is Lee, with Kim appearing
+at positions four and six.
+
+**Four entries had no author list at all.** The bold citation head held the
+journal, volume and article number — "**Atmospheric Research 308, 107542
+(2024).**" — which reads as a citation head at a glance and contains no author.
+
+**Seven truncations that hid what the citation was for**, of which three were a
+bare surname plus "and others" and four were an uncounted "and others" after one
+or two names. Two further entries dropped trailing authors with no marker at all.
+
+**Ten stated truncation counts were wrong**, which is the largest class and the
+one no earlier pass had thought to check: "and 21 others" for a thirteen-author
+paper, "and 10 others" for eleven, "and 9 others" for nine. Two were mine.
+
+**Seven page ranges were wrong**, including one that was wrong entirely
+(11316–11326 for 11342–11351) and three that carried only a first page where the
+journal has a range. And **three entries used the online-publication year where
+the print year differs**, which contradicts this register's own stated convention
+and is the same inconsistency `ERRATA.md` 6.3 faults the 2023 thesis for.
+
+### What was not wrong, which took most of the effort to establish
+
+A first scripted comparison flagged sixty-six entries. A second, after fixing the
+comparison's own handling of surname particles and hyphenated initials, flagged
+twenty-three. **The difference is entirely artefacts of the checking**, and
+working through them is where the audit's time went:
+
+* Crossref HTML-escapes ampersands, so every *Environmental Science & Technology*
+  looked like a mismatch — sixteen entries.
+* Surnames with lowercase particles ("van der A", "aan de Brugh", "de Leeuw")
+  and hyphenated or particled initials ("Z.-C.", "M. del M.", "Md. A.") break a
+  naive split on commas — about eighteen entries.
+* Seventeen entries have registry records that cannot supply their citation at
+  all: literal institutional author strings, transposed or mis-cased deposit
+  fields, two IPCC chapters for which Crossref returns no authors, one paper for
+  which it returns one author of four, and two JSTOR records carrying a start
+  page where the register gives the range.
+
+**That last group is now recorded** in `scripts/build_references_bib.py` as
+`PROVENANCE`, precisely so the next audit does not have to rediscover that
+flagging them is wrong.
+
+### The general point, which is the transferable one
+
+**A citation assembled from a search result looks correct and is not checkable by
+reading it.** That is the whole finding, and this project has now demonstrated it
+three times in three different fields of the same records:
+
+* **Five DOIs** that resolved — four to the wrong paper, one to nothing — and
+  were carried as real citations across four consecutive passes.
+* **Six wrong first authors** drafted from search phrasing in a single sitting,
+  caught only because a pass began negotiating every DOI before writing.
+* **Twenty-three entries** wrong in thirty-one fields, found here, of which the
+  worst had every checkable field right and the author list of another paper.
+
+The mechanism is the same each time. A search result contains a title, a year, a
+journal and some author surnames, arranged so that assembling a citation from
+them feels like reading rather than inference. What it does not contain is the
+binding between them. **Only negotiation against the registry establishes which
+metadata belongs to which identifier**, and no amount of care in reading
+substitutes for it, because the failure leaves nothing on the page to notice.
+
+The corollary is about where to spend effort. Three of these defect classes were
+found by scripted comparison in an afternoon; none was found by reading, over
+eleven passes of writing and re-reading these same entries. **The register was
+read many times and audited once.**
+
+### What now guards against recurrence
+
+`tests/test_register_authors.py`, which runs offline in the default suite,
+because `notes/references.bib` is generated by content negotiation and committed
+beside the register — so the authoritative record is already in the repository
+and the comparison needs no network. It asserts that no author list is truncated
+without a count, that a truncated list still names at least three authors, that
+every citation head contains something shaped like an author list, that the first
+author matches the negotiated record, and that named authors plus the stated
+remainder equal the registry's count. The seventeen `PROVENANCE` entries are
+exempted **by name rather than by heuristic**, because
+`notes/grounding-methods.md` records this project's own reasoning that a check
+firing on things that are fine is a check that gets turned off.
+
+**What it does not guard.** A page range is checked only for running forwards,
+which caught none of the seven wrong ranges because all seven were ordered. A
+title or journal substitution would not be caught, because the register's prose
+formats both differently from the registry and a fuzzy comparison there would
+produce the false positives the paragraph above warns against. And the
+print-against-online year cannot be checked offline, because the BibTeX carries
+one year rather than both.
+
 ## What the grounding superseded, marked rather than rewritten
 
 Four grounding records were written between 10 and 11 September 2026. Several
