@@ -57,7 +57,8 @@ PROCESSED = REPO / "data" / "processed"
 #: that corrected them would destroy what it records.
 SCANNED = ("README.md", "ERRATA.md", "data/processed/README.md",
            "data/reference/README.md", "figures/README_fragments.md",
-           "notes/repository-architecture.md", "notes/grounding-yrd.md")
+           "notes/repository-architecture.md", "notes/grounding-yrd.md",
+           "notes/grounding-methods.md")
 
 #: number, then optional space, then the marker naming what it is
 CLAIM = re.compile(r"(-?[\d][\d,]*(?:\.\d+)?)\s*<!--#([a-zA-Z0-9_.]+)-->")

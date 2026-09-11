@@ -51,6 +51,29 @@ EXCLUDED = {
     "Chaudhuri (2020)": "a textbook; no DOI exists",
 }
 
+#: DOIs the register **names in order to warn against them**. They resolve, or
+#: fail to resolve, and in either case they are not citations: the register
+#: records them so that a future reader who meets one in a search snippet knows
+#: it was tested. They must not receive a citation key or a BibTeX entry, and
+#: the check below excludes them rather than reporting them as gaps.
+#:
+#: This distinction was forced by the methods grounding, which met three of them
+#: at once. A resolving DOI that points at the wrong paper is the failure mode
+#: this register is least protected against, because resolution looks like
+#: verification.
+NOT_CITATIONS = {
+    "10.1016/j.rse.2025.114953":
+        "resolves to a paper on apple-tree disease spectral indices; the "
+        "prediction-powered inference paper is 10.1016/j.rse.2025.114949",
+    "10.1016/j.spasta.2025.100893":
+        "resolves to 'A spatial autoregressive graphical model'; the "
+        "spatially-lagged errors-in-variables paper is "
+        "10.1016/j.spasta.2025.100909",
+    "10.1016/j.rse.2019.111199":
+        "does not resolve; 111199 is Stehman and Foody's article number and "
+        "their DOI is 10.1016/j.rse.2019.05.018",
+}
+
 #: doi -> citation key. Keys are lowercase, first author plus year plus a short
 #: subject slug, which is the convention the first forty followed.
 KEYS = {
@@ -119,6 +142,44 @@ KEYS = {
     "10.1016/j.rse.2014.02.015": "olofsson2014goodpractice",
     "10.1016/j.jag.2019.101955": "wickham2020nlcdimpervious",
     "10.1016/j.jag.2022.102787": "huang2022gisa2",
+    # the methods grounding, 11 September 2026
+    "10.1016/j.rse.2010.05.010": "riemann2010continuous",
+    "10.1080/15481603.2023.2181143": "wickham2023nlcd2019",
+    "10.1126/science.adi6000": "angelopoulos2023ppi",
+    "10.1016/j.rse.2025.114949": "lu2025ppiremote",
+    "10.48550/arXiv.2501.18577": "kluger2025nonuniform",
+    "10.48550/arXiv.2608.10356": "shirota2026designppi",
+    "10.48550/arXiv.2106.04285": "nab2021sensitivity",
+    "10.1080/20964471.2026.2660552": "xu2026simexwls",
+    "10.1016/j.spasta.2025.100909": "masjkur2025laggedeiv",
+    "10.1080/01431161.2011.552923": "pontius2011deathtokappa",
+    "10.1016/j.rse.2019.05.018": "stehman2019keyissues",
+    "10.1016/j.ecolmodel.2021.109692": "wadoux2021spatialcv",
+    "10.1111/2041-210X.13851": "mila2022nndm",
+    "10.5194/gmd-17-5897-2024": "linnenbrink2024knndm",
+    "10.1038/s41467-020-18321-y": "ploton2020spatialvalidation",
+    "10.3389/fpls.2022.858711": "hawinkel2022fieldtrials",
+    "10.2307/2532039": "clifford1989correlation",
+    "10.2307/2532625": "dutilleul1993modifiedt",
+    "10.1016/j.neuroimage.2019.05.011": "afyouni2019edf",
+    "10.5194/amt-16-3787-2023": "balasus2023blended",
+    "10.5194/acp-17-9761-2017": "schutgens2017representativeness",
+    "10.5194/gmd-18-483-2025": "rijsdijk2025superobservations",
+    "10.5194/essd-17-4627-2025": "glissenaar2025no2l3",
+    "10.5194/acp-23-9071-2023": "schuit2023superemitters",
+    "10.5194/acp-24-5069-2024": "nesser2024usinversion",
+    "10.5194/acp-26-10423-2026": "sicsikpare2026european",
+    "10.1093/braincomms/fcae007": "bourached2023scaling",
+    "10.1016/j.jocm.2018.07.002": "alwosheel2018samplesize",
+    "10.1186/s12864-020-07181-x": "passafaro2020broilers",
+    "10.48550/arXiv.2505.14312": "multitab2025",
+    "10.5194/amt-11-6379-2018": "sheng2018osse",
+    "10.5194/acp-21-14159-2021": "qu2021comparative",
+    "10.1098/rsbl.2025.0506": "halsey2025sayingno",
+    "10.5194/essd-18-4279-2026": "xco2transformerbilstm2026",
+    "10.1016/j.atmosres.2024.107542": "xco2deepfusion2024",
+    "10.1016/j.apr.2026.102918": "xch4gapfill2026",
+    "10.1038/s41598-024-84593-9": "arabianpeninsula2025",
 }
 
 HEADER = """% Verified reference register for Yangtze-Landcover-Methane.
@@ -132,6 +193,9 @@ HEADER = """% Verified reference register for Yangtze-Landcover-Methane.
 % because a DOI may be named more than once there: the two Sentinel-5P
 % registrations, the GISA 2021 paper and the city-scale inventory each are, and
 % the register explains why in each case.
+% Three further DOIs appear in the register and are deliberately absent here:
+% the register names them to warn against them, not to cite them. See
+% NOT_CITATIONS in scripts/build_references_bib.py for each and why.
 % TWO REGISTER ENTRIES ARE NOT HERE AND CANNOT BE. ISO 5807:1985 and
 % Chaudhuri (2020) have no DOI -- a standard and a textbook -- so no content
 % negotiation can produce them, and typing them would break the guarantee this
@@ -144,7 +208,11 @@ def register_dois() -> list[str]:
     text = REGISTER.read_text(encoding="utf-8")
     seen: dict[str, None] = {}
     for match in DOI_IN_PROSE.finditer(text):
-        seen.setdefault(match.group(1).rstrip(".,;"), None)
+        doi = match.group(1).rstrip(".,;")
+        if doi in NOT_CITATIONS or doi.lower() in {d.lower()
+                                                   for d in NOT_CITATIONS}:
+            continue
+        seen.setdefault(doi, None)
     return list(seen)
 
 

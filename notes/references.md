@@ -20,7 +20,7 @@ instance was met on 10 September 2026 and not acted on: the ChinaRiceCalendar
 deposit's author field gives two of eleven authors with their given and family
 names run together, and the paper's citation is carried instead.
 
-`notes/references.bib` carries sixty-three entries as BibTeX. It is
+`notes/references.bib` carries one hundred entries as BibTeX. It is
 **generated**, not typed: each entry comes from `https://doi.org` under content
 negotiation for `application/x-bibtex`, so the two files cannot drift and no
 transcription step exists between the registry and the repository. Regenerate it
@@ -45,10 +45,18 @@ discusses a work the thesis cites, the work appears here and its role says so.
 
 ## What could not be verified
 
-Nothing in the register failed to verify **as a work**. All sixty-three DOIs
-resolved: fifty-five through Crossref and eight through DataCite, which is the
-registry that carries dataset DOIs and the reason a Crossref-only lookup returns
-"not found" for the deposits. Two entries have no DOI to resolve and are
+Nothing in the register failed to verify **as a work**. All one hundred cited
+DOIs resolved: eighty-eight through Crossref and twelve through DataCite, which
+is the registry that carries dataset and preprint DOIs and the reason a
+Crossref-only lookup returns "not found" for them.
+
+**Three further DOIs appear in this register and are not citations.** They are
+named to warn against them, and `scripts/build_references_bib.py` holds them in
+a `NOT_CITATIONS` set with the reason for each, so they cannot acquire a BibTeX
+entry by accident. Two resolve confidently to the wrong paper and one does not
+resolve at all; all three were carried into the methods pass as real citations.
+**A resolving DOI is not a verified citation**, and this is the register's
+newest failure mode. Two entries have no DOI to resolve and are
 verified by other means, which the entries themselves state.
 
 **Two sources did not survive verification for the thing they were cited for.**
@@ -102,12 +110,20 @@ and would be the right choice for a bibliography, but this is a register of what
 the work rests on, and the question a reader arrives with is what kind of weight
 each source bears. Within each group, alphabetical by first author.
 
-The groups are: datasets used, methods applied, findings relied on, findings
-contested, the rice-paddy exchange, the Yangtze River Delta grounding, and
-accuracy assessment. The last three are kept together for the same reason: each
-is a single argument, and splitting its parts across the role groups would
-misrepresent all of them. The grounding group is the largest in the register and
-is the material a paper's introduction and discussion would draw on.
+The groups are: datasets used, methods applied, findings relied on — split
+into the retrieval and the region, because two groups carried that heading until
+11 September 2026 and a duplicate heading is not navigable — findings contested,
+the rice-paddy exchange, the Yangtze River Delta grounding, accuracy assessment,
+and the methods grounding. The last four are kept together for the same reason:
+each is a single argument, and splitting its parts across the role groups would
+misrepresent all of them.
+
+The two grounding groups are the largest in the register and they pull in
+opposite directions. The region grounding is nineteen findings and datasets
+against three methods. The methods grounding is almost entirely method
+literature, most of it borrowed from outside the earth sciences. Together they
+are what a paper's introduction, methods and discussion would draw on, and
+neither share is a drift from the other.
 
 ---
 
@@ -206,7 +222,7 @@ manifest cited it until 3 September 2026 and a reader may meet it in the
 history; it is not the DOI the files declare.
 Not cited in any current file; retained here for the record.
 
-## Findings relied on
+## Findings relied on: the retrieval
 
 **Lorente, A., Borsdorff, T., Butz, A., Hasekamp, O., aan de Brugh, J.,
 Schneider, A., and 12 others (2021).** Methane retrieved from TROPOMI:
@@ -385,7 +401,7 @@ implementation's correctness." Recomputing the GAIA provincial areas from the
 same product is the first; rebuilding the methane composite from Level 2
 granules is the second.
 
-## Findings relied on
+## Findings relied on: the region
 
 **Hu, C., Griffis, T. J., Liu, S., Xiao, W., Hu, N., Huang, W., Yang, D., and
 Lee, X. (2019).** Anthropogenic Methane Emission and Its Partitioning for the
@@ -855,6 +871,473 @@ scores of 0.935 for itself against 0.721 for GAIA. The sample count of 124,190
 that accompanied the figure in this repository matches no published number in
 either paper and has been removed rather than re-sourced.
 Cited in `README.md`, `data/processed/README.md`, `notes/decisions.md`.
+
+---
+
+## The methods grounding, added 11 September 2026
+
+Eleven literature searches on methods, recorded in
+[`notes/grounding-methods.md`](grounding-methods.md). **This group is heavily
+borrowed and heavily method-shaped by construction**, which moves the register's
+subject-versus-method balance sharply back against the correction the region
+grounding made to it a day earlier. That is not drift; it is what a methods pass
+is, and the two passes together are the register the paper needs.
+
+**Eleven premises carried into this pass failed, three of them DOIs that resolve
+confidently to unrelated papers.** That failure mode is the one this register is
+least protected against, because a resolving DOI looks verified. The grounding
+document names all eleven; the three bad DOIs are recorded here as well, because
+this is where a future reader would look.
+
+**Three DOIs that must not be used.** `10.1016/j.rse.2025.114953` is a paper on
+apple-tree disease spectral indices, not the prediction-powered inference work
+four digits away at `10.1016/j.rse.2025.114949`. `10.1016/j.spasta.2025.100893`
+is "A spatial autoregressive graphical model", not the spatially-lagged
+errors-in-variables paper at `10.1016/j.spasta.2025.100909`. And
+`10.1016/j.rse.2019.111199` does not resolve at all: 111199 is Stehman and
+Foody's article number and their DOI is `10.1016/j.rse.2019.05.018`.
+
+### The accuracy-assessment frame for a continuous field
+
+**Riemann, R., Wilson, B. T., Lister, A., and Parks, S. (2010).** An effective
+assessment protocol for continuous geospatial datasets of forest characteristics
+using USFS Forest Inventory and Analysis (FIA) data. *Remote Sensing of
+Environment* 114, 2337–2352.
+`10.1016/j.rse.2010.05.010` — peer-reviewed paper; a method applicable and not
+yet applied. **The primary methodological source for assessing a continuous
+field**, which is what this project's layers are. It is the protocol the NLCD
+percent-impervious assessment cites when it sets Olofsson aside, so it is the
+citation at the root of the argument that recommendations 4 and 5 of the
+good-practice standard do not apply here.
+Cited in `notes/grounding-methods.md`.
+
+**Wickham, J., Stehman, S. V., Sorenson, D., Gass, L., and Dewitz, J. (2023).**
+Thematic accuracy assessment of the NLCD 2019 land cover for the conterminous
+United States. *GIScience & Remote Sensing* 60.
+`10.1080/15481603.2023.2181143` — peer-reviewed paper; a finding relied on, for
+scale rather than for method. Level II overall accuracy of 77.5 percent with a
+standard error of 1 percent, rising to 87.1 percent when a match to an alternate
+reference label counts. It is here so that a reader knows what a normal
+categorical land-cover accuracy looks like before judging any product this
+project uses.
+Cited in `notes/grounding-methods.md`.
+
+### Prediction-powered inference
+
+**Angelopoulos, A. N., Bates, S., Fannjiang, C., Jordan, M. I., and Zrnic, T.
+(2023).** Prediction-powered inference. *Science* 382, 669–674.
+`10.1126/science.adi6000` — peer-reviewed paper; a method not applied.
+**Borrowed method literature, from statistics and machine learning.** The
+framework that makes an accuracy assessment possible with a small reference set
+and a large map: an estimate from all predictions, bias-corrected by a labelled
+subset, valid whatever the model's quality.
+Cited in `notes/grounding-methods.md`.
+
+**Lu, K., Kluger, D. M., Bates, S., and Wang, S. (2025).** Regression
+coefficient estimation from remote sensing maps. *Remote Sensing of Environment*
+330, 114949.
+`10.1016/j.rse.2025.114949` — peer-reviewed paper; a method not applied, and the
+one that would make this project's reference data usable. Its own novelty claim
+is narrower than the one attributed to it and is quoted in the grounding.
+**A premise failed here**: its effective sample sizes range from 1.2× to 17.4×,
+not 1.1 to 2.5, and the largest is an income coefficient, not slope. Its
+separation condition — the calibration set "must be separate from the training
+dataset used to train the machine learning model" — is the argument for using
+the CCD-Rice polygons on the NESDC and GISA layers and not on CCD-Rice itself.
+Cited in `notes/grounding-methods.md`, `notes/dataset-leads.md`.
+
+**Kluger, D. M., Lu, K., Zrnic, T., Wang, S., and Bates, S. (2025).**
+Prediction-Powered Inference with Imputed Covariates and Nonuniform Sampling.
+arXiv.
+`10.48550/arXiv.2501.18577` — preprint; a method not applied. The extension Lu
+et al. rely on for weighted, stratified and clustered samples, recorded because
+the canonical method's i.i.d. assumption is the thing that has to be relaxed for
+spatial data.
+Cited in `notes/grounding-methods.md`.
+
+**Shirota, S. (2026).** Design-Based Prediction-Powered Inference for Spatial
+Data. arXiv.
+`10.48550/arXiv.2608.10356` — preprint; a method not applied, and **carried with
+a warning about its own standing**. It is the only work found that recasts
+prediction-powered inference for spatial labelling, and it is a single-author
+preprint four weeks old. It is the source for the statement that canonical PPI
+"starts from i.i.d. labelling, whereas spatial labels arrive through survey
+designs or covariate-driven mechanisms, and map errors may be spatially
+correlated". A preprint is thin ground for a central method and the grounding
+says so rather than citing it as settled.
+Cited in `notes/grounding-methods.md`.
+
+### Errors-in-variables
+
+**Nab, L., and Groenwold, R. H. H. (2021).** Sensitivity analysis for random
+measurement error using regression calibration and simulation-extrapolation.
+arXiv.
+`10.48550/arXiv.2106.04285` — preprint; a method not applied. The comparison
+that recommends regression calibration over simulation-extrapolation when no
+validation data exist, which is this project's situation exactly. **Four figures
+in one premise failed here**: reliability 0.2 to 0.9 not 0.05 to 0.91, sample
+sizes 125 to 1,000 not 125 to 4,000, median bias 1.4 percent not 0.8, and −12.8
+percent not −19.0. The 0.8 turned out to be the lower edge of an interquartile
+range read as a point estimate.
+Cited in `notes/grounding-methods.md`.
+
+**Xu, Q., Li, B., McRoberts, R. E., and Næsset, E. (2026).** Incorporating
+remote sensing measurement error for forest inventory. *Big Earth Data*.
+`10.1080/20964471.2026.2660552` — peer-reviewed paper; a method not applied.
+SIMEX-WLS, which corrects coefficient attenuation for measurement error and
+non-constant residual variance together. The second half is not optional here: a
+cell mean rests on between 1 and 410 soundings.
+Cited in `notes/grounding-methods.md`.
+
+**Masjkur, M., Saefuddin, A., Mangku, I., Folmer, H., Van der Vlist, A., and
+Grzegorczyk, M. (2025).** Bias correction methods for spatially lagged
+covariates measured with errors. *Spatial Statistics* 68, 100909.
+`10.1016/j.spasta.2025.100909` — peer-reviewed paper; a method not applied.
+Directly on point because this project's spatial null **is** a spatially lagged
+covariate, so the benchmark the land-cover models are judged against is itself
+measured with error. Of Monte Carlo expectation-maximisation, instrumental
+variables and Bayesian analysis, it finds Bayesian analysis best.
+Cited in `notes/grounding-methods.md`.
+
+### Reliability, disagreement, and what not to report
+
+**Pontius, R. G. Jr., and Millones, M. (2011).** Death to Kappa: birth of
+quantity disagreement and allocation disagreement for accuracy assessment.
+*International Journal of Remote Sensing* 32, 4407–4429.
+`10.1080/01431161.2011.552923` — peer-reviewed paper; a method applicable and
+not yet applied, and **a finding that contests this repository's own errata**.
+Its two recommendations are to stop using kappa and to use disagreement
+components. Quantity disagreement is the mismatch in class proportions and
+allocation disagreement the mismatch in where they are put; only the second
+attenuates a regression coefficient, which is why it is the right tool for the
+GAIA–GISA comparison this repository reports as a single area difference.
+Cited in `notes/grounding-methods.md`, `ERRATA.md`.
+
+**Stehman, S. V., and Foody, G. M. (2019).** Key issues in rigorous accuracy
+assessment of land cover products. *Remote Sensing of Environment* 231, 111199.
+`10.1016/j.rse.2019.05.018` — peer-reviewed paper; a method applicable and not
+yet applied, and **the source of a correction to `ERRATA.md` 6.5**. It names
+"three examples of bad practice that are widespread": "the universal application
+of 85% target accuracy, normalization of the error matrix, and correction for
+chance agreement". The third is kappa, which the errata had been asking for. It
+also supplies the six good-practice criteria, the requirement that reference
+data be more accurate than the map, and the quality-assurance criterion of two
+or more independent interpreters that this project cannot meet.
+Verified from the authors' own published highlights sheet hosted by NASA's
+Carbon Cycle and Ecosystems office, which cites the DOI directly; the article
+itself is paywalled.
+Cited in `notes/grounding-methods.md`, `ERRATA.md`.
+
+### Spatial cross-validation, both sides
+
+**Wadoux, A. M. J.-C., Heuvelink, G. B. M., de Bruin, S., and Brus, D. J.
+(2021).** Spatial cross-validation is not the right way to evaluate map
+accuracy. *Ecological Modelling* 457, 109692.
+`10.1016/j.ecolmodel.2021.109692` — peer-reviewed paper; a finding contested, in
+the sense that it contests the design this project implemented. Buffered
+leave-one-out severely overestimated RMSE in all cases, caused by
+over-representation of environmental conditions distinct from those at the
+calibration points. It also names the condition under which standard
+cross-validation fails — clustered calibration samples — which this project does
+not have, and that asymmetry is why the grounding treats the two schemes as
+possibly bracketing the truth.
+Cited in `notes/grounding-methods.md`.
+
+**Milà, C., Mateu, J., Pebesma, E., and Meyer, H. (2022).** Nearest neighbour
+distance matching leave-one-out cross-validation for map validation. *Methods in
+Ecology and Evolution* 13, 1304–1316.
+`10.1111/2041-210X.13851` — peer-reviewed paper; a method not applied. The
+leave-one-out original. **A premise was corrected here**: the k-fold extension
+below is Linnenbrink et al., not Milà et al., and the two are a year and a
+method apart.
+Cited in `notes/grounding-methods.md`.
+
+**Linnenbrink, J., Milà, C., Ludwig, M., and Meyer, H. (2024).** kNNDM CV:
+k-fold nearest-neighbour distance matching cross-validation for map accuracy
+estimation. *Geoscientific Model Development* 17, 5897–5912.
+`10.5194/gmd-17-5897-2024` — peer-reviewed paper; a method not applied. The
+prediction-oriented synthesis of the controversy: match the distribution of
+nearest-neighbour distances between test and training locations to the
+distribution between prediction and training locations, so that validation
+"creates predictive conditions during CV that are comparable to what is required
+when predicting a defined area". Its own framing of the field as "currently the
+subject of controversy" is the honest way to introduce the question in a paper.
+Cited in `notes/grounding-methods.md`.
+
+**Ploton, P., Mortier, F., Réjou-Méchain, M., Barbier, N., Picard, N.,
+Rossi, V., Dauzat, J., Bedeau, C., Bénédet, F., Betrancourt, F., and 21 others
+(2020).** Spatial validation reveals poor predictive performance of large-scale
+ecological mapping models. *Nature Communications* 11, article 4540.
+`10.1038/s41467-020-18321-y` — peer-reviewed paper; a finding relied on. The
+demonstration that nonspatial validation suggested more than half the variance
+explained while spatial validation revealed quasi-null predictive power, and —
+the part that matters for this repository's diagnostics — that after random
+10-fold cross-validation "the residual structure was completely absorbed" into
+the predictions, so residual diagnostics would not have detected the problem.
+Cited in `notes/grounding-methods.md`.
+
+**Hawinkel, S., De Meyer, S., and Maere, S. (2022).** Spatial Regression Models
+for Field Trials: A Comparative Study and New Ideas. *Frontiers in Plant Science*
+13, article 858711.
+`10.3389/fpls.2022.858711` — peer-reviewed paper; a finding relied on. The other
+half of the residual-diagnostic warning: "the absence of spatial autocorrelation
+(SAC) in the model residuals should not be taken as a sign of a good fit, since
+it may result from overfitting the spatial trend". Taken with Ploton et al., it
+makes residual spatial structure a weak diagnostic in both directions.
+**Borrowed method literature, from plant breeding.**
+Cited in `notes/grounding-methods.md`.
+
+### Effective degrees of freedom
+
+**Clifford, P., Richardson, S., and Hémon, D. (1989).** Assessing the
+Significance of the Correlation between Two Spatial Processes. *Biometrics* 45,
+123–134.
+`10.2307/2532039` — peer-reviewed paper; a method not applied. The original
+correction to the degrees of freedom of a correlation between two autocorrelated
+spatial fields, based on a variance approximation.
+Cited in `notes/grounding-methods.md`.
+
+**Dutilleul, P., Clifford, P., Richardson, S., and Hémon, D. (1993).** Modifying
+the t Test for Assessing the Correlation Between Two Spatial Processes.
+*Biometrics* 49, 305–314.
+`10.2307/2532625` — peer-reviewed paper; a method not applied. The exact
+solution where the 1989 procedure approximates, and the standard citation for an
+effective sample size under spatial autocorrelation. Crossref lists all four
+authors, which is worth noting because the method is usually called Dutilleul's
+alone.
+Cited in `notes/grounding-methods.md`.
+
+**Afyouni, S., Smith, S. M., and Nichols, T. E. (2019).** Effective degrees of
+freedom of the Pearson's correlation coefficient under autocorrelation.
+*NeuroImage* 199, 609–625.
+`10.1016/j.neuroimage.2019.05.011` — peer-reviewed paper; a method not applied.
+**Borrowed method literature, from neuroimaging.** The clearest modern statement
+of the problem: under autocorrelation the effective degrees of freedom are
+reduced, the standard error of the sample correlation is biased, and Fisher's
+transformation fails to stabilise the variance. Every Pearson and partial
+correlation this repository reports over 926 cells is affected.
+Cited in `notes/grounding-methods.md`.
+
+### The column field's own uncertainty
+
+**Balasus, N., Jacob, D. J., Lorente, A., Maasakkers, J. D., Parker, R. J.,
+Boesch, H., Chen, Z., Kelp, M. M., Nesser, H., and Varon, D. J. (2023).** A
+blended TROPOMI+GOSAT satellite data product for atmospheric methane using
+machine learning to correct retrieval biases. *Atmospheric Measurement
+Techniques* 16, 3787–3807.
+`10.5194/amt-16-3787-2023` — peer-reviewed paper; describes a dataset used, and
+a method relied on. **This entry closes a gap rather than adding a source.** The
+blended field has been a committed band of `methane_composite_2018.tif` since 9
+September 2026 and its paper was never entered here, which is the exact omission
+this register exists to prevent. It supplies the single-retrieval precisions of
+14.5 ppb operational against 11.9 ppb blended, the prior-alignment procedure,
+and the two collocation rules the grounding disentangles: 1 h and 5 km for
+satellite-to-satellite, 1 h and 100 km with a 250 m elevation limit for
+satellite-to-TCCON.
+Cited in `notes/grounding-methods.md`, `notes/dataset-leads.md`,
+`data/processed/README.md`, `notes/decisions.md`.
+
+**Schutgens, N., Tsyro, S., Gryspeerdt, E., Goto, D., Weigum, N., Schulz, M.,
+and Stier, P. (2017).** On the spatio-temporal representativeness of
+observations. *Atmospheric Chemistry and Physics* 17, 9761–9780.
+`10.5194/acp-17-9761-2017` — peer-reviewed paper; **a finding that contests this
+project's central quality metric.** Coverage "is not an effective metric to limit
+representation errors", and even after substantial averaging significant
+representation errors may remain, larger than typical measurement errors. Its
+range of 300 to 50 km and semi-annual to sub-daily brackets this project's
+regime, and it names emission sources and orography as the hardest cases, both
+of which this study area has.
+Cited in `notes/grounding-methods.md`.
+
+**Rijsdijk, P., Eskes, H., Dingemans, A., Boersma, K. F., Sekiya, T.,
+Miyazaki, K., and Houweling, S. (2025).** Quantifying uncertainties in satellite
+NO2 superobservations for data assimilation and model evaluation. *Geoscientific
+Model Development* 18, 483–509.
+`10.5194/gmd-18-483-2025` — peer-reviewed paper; a method not applied. The
+uncorrelated-plus-correlated decomposition of a superobservation's uncertainty:
+the uncorrelated part tends to zero as observations accumulate, the correlated
+part does not. This project's composite assumes the whole error behaves like the
+first term.
+Cited in `notes/grounding-methods.md`.
+
+**Glissenaar, I. A., Boersma, K. F., Rijsdijk, P., van Geffen, J.,
+Eskes, H., and 4 others (2025).** TROPOMI Level 3 tropospheric NO2 dataset with
+advanced uncertainty analysis from the ESA CCI+ ECV precursor project. *Earth
+System Science Data* 17, 4627–4653.
+`10.5194/essd-17-4627-2025` — peer-reviewed paper; a method not applied, and the
+source of an implementable alternative to weighting by sounding count. It
+supplies a temporal error correlation of 30 percent in both the stratospheric
+and air-mass-factor uncertainties for the analogous NO2 product, a definition of
+spatial representativeness uncertainty computable from within-cell spread, and a
+temporal weighting by representativeness rather than by count. **A premise was
+corrected here**: the weighting factor is called *f* and is high where
+representativeness uncertainty is large, not "1 minus g".
+Cited in `notes/grounding-methods.md`.
+
+### The preprocessing chain
+
+**Schuit, B. J., Maasakkers, J. D., Bijl, P., Mahapatra, G., van den Berg, A.-W.,
+Pandey, S., Lorente, A., Borsdorff, T., Houweling, S., Varon, D. J., and
+7 others (2023).** Automated detection and monitoring of methane super-emitters
+using satellite data. *Atmospheric Chemistry and Physics* 23, 9071–9098.
+`10.5194/acp-23-9071-2023` — peer-reviewed paper; a method not applied. The
+seven-filter preprocessing chain in publication order — albedo-bias-corrected
+data, then filtering, then destriping, then scene splitting — including the
+methane-precision threshold of 10 ppb that this project's unused precision
+variable would support, and the mixed-albedo formula. It also records the
+trade this project made silently: looser quality filtering "provides more
+coverage but also retains more biased retrievals, especially at the borders of
+clouds or along coasts".
+Cited in `notes/grounding-methods.md`.
+
+**Nesser, H., Jacob, D. J., Maasakkers, J. D., Lorente, A., Chen, Z., Lu, X.,
+Shen, L., Qu, Z., Sulprizio, M. P., and 9 others (2024).** High-resolution US
+methane emissions inferred from an inversion of 2019 TROPOMI satellite data:
+contributions from individual states, urban areas, and landfills. *Atmospheric
+Chemistry and Physics* 24, 5069–5091.
+`10.5194/acp-24-5069-2024` — peer-reviewed paper; a method not applied. The only
+source found that gives albedo filters *with their measured effect*: a blended
+albedo ceiling of 0.75 outside summer and a SWIR albedo floor of 0.05 preserve
+69 percent of high-quality retrievals and reduce seasonal regional biases by 7
+to 21 percent. This project has 166 cells below that floor and below zero.
+Cited in `notes/grounding-methods.md`.
+
+**Sicsik-Paré, A., Fortems-Cheiney, A., Broquet, G., and others (2026).**
+Assessment of the differences in European CH4 emission estimates from three
+TROPOMI products. *Atmospheric Chemistry and Physics* 26, 10423–10450.
+`10.5194/acp-26-10423-2026` — peer-reviewed paper; a finding relied on, and the
+source of a hard constraint. "A destriping procedure (Borsdorff et al., 2024) is
+applied to new XCH4 data from 2024/09/07 (v2.07), but older orbits have not been
+reprocessed." This project's 2018 granules are processor version 020400, so the
+official destriping cannot be inherited and only a self-implemented one is
+available.
+Cited in `notes/grounding-methods.md`.
+
+### Model class and resolution
+
+**Bourached, A., Bonkhoff, A. K., Schirmer, M. D., Regenhardt, R. W.,
+Bretzner, M., and 9 others (2023).** Scaling behaviours of deep learning and
+linear algorithms for the prediction of stroke severity. *Brain Communications*
+6, article fcae007.
+`10.1093/braincomms/fcae007` — peer-reviewed paper; a finding relied on.
+**Borrowed method literature, from clinical neuroscience.** The crossover
+evidence at sample sizes bracketing this project's: linear regression
+significantly better at 100, indistinguishable at 300, deep learning
+significantly better at 900.
+Cited in `notes/grounding-methods.md`.
+
+**Alwosheel, A., van Cranenburgh, S., and Chorus, C. G. (2018).** Is your
+dataset big enough? Sample size requirements when using artificial neural
+networks for discrete choice analysis. *Journal of Choice Modelling* 28,
+167–182.
+`10.1016/j.jocm.2018.07.002` — peer-reviewed paper; a finding relied on.
+**Borrowed method literature, from transport choice modelling.** The source for
+the ten-times-the-number-of-weights rule of thumb as the most widely used one.
+**A premise failed alongside it**: no source could be found for the claim that
+successful applications had at least 70,000 observations, and it is not written.
+Cited in `notes/grounding-methods.md`.
+
+**Passafaro, T. L., Fragomeni, B. O., Lourenco, D. A. L., Rekaya, R., and
+Aguilar, I. and others (2020).** Would large dataset sample size unveil the
+potential of deep neural networks for improved genome-enabled prediction of
+complex traits? The case for body weight in broilers. *BMC Genomics* 21, article
+905.
+`10.1186/s12864-020-07181-x` — peer-reviewed paper; a finding relied on, and a
+mixed one. A deep network had superior prediction correlation only up to 3
+percent of a 63,526-observation training set, and poorer correlation after that,
+while having the lowest mean squared error of prediction and lower bias at every
+size. Recorded as mixed rather than as supporting one conclusion.
+Cited in `notes/grounding-methods.md`.
+
+**Kim, K., Lee, J., and others (2025).** MultiTab: A Comprehensive Benchmark
+Suite for Multi-Dimensional Evaluation in Tabular Domains. arXiv.
+`10.48550/arXiv.2505.14312` — preprint; **a finding that contests the convenient
+conclusion** about model class. In small-sample regimes most algorithms perform
+similarly within overlapping confidence intervals and high-capacity networks
+remain competitive, which "challenge[s] the common belief that neural networks
+require large datasets to be effective". It is cited because a methods section
+that quoted only the crossover evidence would be selective.
+Cited in `notes/grounding-methods.md`.
+
+**Sheng, J.-X., Jacob, D. J., Turner, A. J., Maasakkers, J. D., Sulprizio, M. P.,
+Bloom, A. A., Andrews, A. E., and Wunch, D. (2018).** Comparative analysis of
+low-Earth orbit (TROPOMI) and geostationary (GeoCARB, GEO-CAPE) satellite
+instruments for constraining methane emissions on fine regional scales:
+application to the Southeast US. *Atmospheric Measurement Techniques* 11,
+6379–6388.
+`10.5194/amt-11-6379-2018` — peer-reviewed paper; a finding relied on, and the
+ceiling on this whole enterprise. A model transport error standard deviation of
+12 ppb, "larger than the instrument errors when aggregated on the 25 km model
+grid scale", with a 6 h temporal error correlation — against this project's
+between-cell spread of 14.9 ppb, at this project's resolution.
+Cited in `notes/grounding-methods.md`.
+
+**Qu, Z., Jacob, D. J., Shen, L., Lu, X., Zhang, Y., Scarpelli, T. R.,
+Nesser, H., Sulprizio, M. P., Maasakkers, J. D., and 5 others (2021).** Global
+distribution of methane emissions: a comparative inverse analysis of
+observations from the TROPOMI and GOSAT satellite instruments. *Atmospheric
+Chemistry and Physics* 21, 14159–14175.
+`10.5194/acp-21-14159-2021` — peer-reviewed paper; a finding relied on. GOSAT
+achieved 232 degrees of freedom for signal for non-wetland emissions against
+TROPOMI's 151 despite about 100 times fewer observations, because error
+correlation on the inversion grid and spatial inhomogeneity in observation
+counts make density less useful than it looks; and its counterweight, that
+"finer-scale regional inversions would take better advantage of the TROPOMI data
+density". **A premise was refined here**: 232 and 151 are the non-wetland
+partition, and the totals including wetlands and OH are 238 and 155.
+Cited in `notes/grounding-methods.md`.
+
+### Reporting a negative result
+
+**Halsey, L. G. (2025).** Saying 'no' with confidence: statistical approaches to
+test for the absence of an effect. *Biology Letters* 21, article 20250506.
+`10.1098/rsbl.2025.0506` — peer-reviewed paper; a method not applied, and **the
+one that constrains what this project's paper may claim.** Conventional p-value
+analysis "can only argue against the null hypothesis, never in favour of it",
+and "around half of scientific research papers falsely report non-significant
+results as indicating no effect". Equivalence tests and confidence intervals
+address the absence of a meaningful effect; likelihood ratios and Bayes factors
+address the absence of any effect. This project's central claim is a statement
+in favour of the null and is currently supported by neither.
+Cited in `notes/grounding-methods.md`.
+
+### The gap-filling literature, cited as a pattern
+
+Four works cited for what they have in common rather than individually: every
+published machine-learning treatment of sparse satellite column fields found by
+this search is gap-filling or downscaling, and every one uses meteorology, a
+model prior or both as predictors. **None predicts a column from land cover.**
+That absence is the strongest available statement about the 2023 thesis's
+framing, and it needs the set rather than any one member.
+
+**Earth System Science Data 18, 4279–4301 (2026).** Reconstructing two-decade
+daily high-resolution seamless global land XCO2 records using a hybrid
+Transformer–BiLSTM model.
+`10.5194/essd-18-4279-2026` — peer-reviewed paper; a method not applied.
+Predictors include precursor gases, meteorological reanalysis, surface features
+and spatiotemporal encodings.
+
+**Atmospheric Research 308, 107542 (2024).** Estimating high spatio-temporal
+resolution XCO2 using spatial features deep fusion model.
+`10.1016/j.atmosres.2024.107542` — peer-reviewed paper; a method not applied.
+
+**Atmospheric Pollution Research 17, 102918 (2026).** Gap-filled spatiotemporal
+reconstruction of XCH4 data and analysis of methane emission patterns.
+`10.1016/j.apr.2026.102918` — peer-reviewed paper; a method not applied. The
+closest published analogue to anything this project might do with its 97 absent
+cells.
+
+**Scientific Reports 15 (2025).** Improved estimation of carbon dioxide and
+methane using machine learning with satellite observations over the Arabian
+Peninsula.
+`10.1038/s41598-024-84593-9` — peer-reviewed paper; a finding relied on.
+Gradient boosting with CarbonTracker, MODIS Terra and ERA-5 inputs reached R²
+0.98 and RMSE 0.58 ppm for XCO2 but only R² 0.63 and RMSE 13.26 ppb for XCH4,
+described there as moderate accuracy. **Methane is the hard one even with the
+right predictors**, and that RMSE is comparable to this project's entire
+between-cell spread.
+
+All four cited in `notes/grounding-methods.md`.
 
 ---
 

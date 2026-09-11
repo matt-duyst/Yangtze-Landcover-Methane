@@ -77,23 +77,80 @@ def test_the_bibtex_entry_count_matches_its_own_header():
     assert int(stated.group(2)) == mentions
 
 
-def test_the_register_states_the_number_of_entries_it_holds():
-    """The preamble's word-number is checked, because it was wrong once.
+ONES = ("zero", "one", "two", "three", "four", "five", "six", "seven",
+        "eight", "nine", "ten", "eleven", "twelve", "thirteen", "fourteen",
+        "fifteen", "sixteen", "seventeen", "eighteen", "nineteen")
+TENS = ("", "", "twenty", "thirty", "forty", "fifty", "sixty", "seventy",
+        "eighty", "ninety")
 
-    It said "forty" after the register had grown past forty. Spelled numbers in
-    prose are exactly the claims this repository's drift mechanisms exist for,
-    and this one is cheap to assert.
+
+def spell(n: int) -> str:
+    """English for 0-999, hyphenated, as this register's prose writes numbers.
+
+    Written out rather than tabulated because the previous version of this test
+    held a hand-maintained lookup of five numbers and failed the moment the
+    register grew past them -- which is the same brittleness the mechanism
+    exists to catch, reproduced inside the check.
     """
-    words = {40: "forty", 63: "sixty-three", 64: "sixty-four",
-             65: "sixty-five", 66: "sixty-six"}
-    count = len(REGISTER_DOIS)
-    assert count in words, (
-        f"{count} DOIs in the register; add the word to this test and update "
-        f"the register's preamble")
+    if n < 20:
+        return ONES[n]
+    if n < 100:
+        return TENS[n // 10] + ("" if n % 10 == 0 else f"-{ONES[n % 10]}")
+    rest = n % 100
+    return f"{ONES[n // 100]} hundred" + ("" if rest == 0 else f" {spell(rest)}")
+
+
+def test_the_register_states_the_number_of_entries_it_holds():
+    """The preamble's word-number is checked, because it was wrong twice.
+
+    It said "forty" after the register had grown past forty, and "sixty-three"
+    after it passed a hundred. Spelled numbers in prose are exactly the claims
+    this repository's drift mechanisms exist for, and this one is cheap.
+    """
+    word = spell(len(REGISTER_DOIS))
     text = REGISTER.read_text(encoding="utf-8")
-    assert f"carries {words[count]} entries as BibTeX" in text
-    assert f"All {words[count]} DOIs\nresolved" in text or \
-        f"All {words[count]} DOIs resolved" in text
+
+    assert f"carries {word} entries as BibTeX" in text, \
+        f"the register should say it carries {word} entries"
+    assert f"All {word} cited\nDOIs resolved" in text or \
+        f"All {word} cited DOIs resolved" in text or \
+        f"All {word} DOIs\nresolved" in text or \
+        f"All {word} DOIs resolved" in text, \
+        f"the register should say all {word} resolved"
+
+
+def test_the_warned_against_dois_are_in_the_register_and_not_the_bibtex():
+    """A DOI named as a warning must not become a citation by accident.
+
+    Three of these arrived at once in the methods pass: two resolve to the
+    wrong paper and one does not resolve. The register names them so a future
+    reader knows they were tested, which means they appear in the prose and
+    must be kept out of the BibTeX.
+    """
+    from scripts.build_references_bib import NOT_CITATIONS
+
+    register_text = REGISTER.read_text(encoding="utf-8")
+    for doi, reason in NOT_CITATIONS.items():
+        assert doi in register_text, f"{doi} is warned against but not named"
+        assert reason, f"{doi} has no reason recorded"
+        assert doi.lower() not in BIB_DOIS, \
+            f"{doi} is a warning, not a citation, and must not be in the BibTeX"
+        assert doi not in KEYS, f"{doi} must not have a citation key"
+
+
+def test_no_duplicate_section_headings():
+    """Two groups carried the heading "Findings relied on" until 11 September.
+
+    A duplicate heading is not navigable and a cross-reference to it is
+    ambiguous, which is the same class of defect as an unchecked count.
+    """
+    import collections
+
+    headings = re.findall(r"^(#{2,3} .+)$",
+                          REGISTER.read_text(encoding="utf-8"), re.M)
+    repeated = [h for h, n in collections.Counter(headings).items() if n > 1]
+
+    assert repeated == [], f"duplicated headings: {repeated}"
 
 
 @pytest.mark.parametrize("name,reason", sorted(EXCLUDED.items()))
