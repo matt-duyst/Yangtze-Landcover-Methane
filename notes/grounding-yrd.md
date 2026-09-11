@@ -240,6 +240,96 @@ rice layer measures — area under rice — is not the quantity that determines
 emission, and that the missing variable has a larger dynamic range than the one
 present.
 
+## Coal, which no grounding pass had found and which is inside the lattice
+
+**Four grounding passes over this region missed a major methane source in it.**
+The Huainan–Huaibei coalfield lies in northern Anhui, inside the analysis
+lattice, and until 13 September 2026 nothing in this repository mentioned coal
+at all.
+
+Its scale is not marginal. Raw coal production across the whole coalfield was
+**131.45 Mt in 2010**, coalbed methane resources are **1.1 × 10¹² m³**, and net
+accumulated thicknesses of all minable seams are **18 to 32 m in Huainan and 8
+to 18 m in Huaibei** (Liu et al., 2009, *International Journal of Coal Geology*
+79, 97–112, doi:10.1016/j.coal.2009.05.001). In-place gas content is generally 8
+to 16 m³ per tonne in Huaibei and 10 to 30 in Huainan on the same source; a
+mine-specific study of the deep area of Qi'Nan colliery in Huaibei measured
+total gas content of **4.58 to 12.33 m³ per tonne, averaging 8.83**, with
+methane at 92.83 to 99.22 percent of the gas (Wei et al., 2024, *Scientific
+Reports* 14, doi:10.1038/s41598-024-79922-x).
+
+**And the load-bearing claim is that this province leads its region.** A gridded
+bottom-up inventory of Chinese coal mine methane states that "**Anhui and
+Liaoning are the provinces that emit the most in the east and north,
+respectively**" (Sheng et al., 2019, *Environmental Science & Technology
+Letters* 6, doi:10.1021/acs.estlett.9b00294). Shanxi dominates nationally at
+about 35 percent and the southwest accounts for 28, but among eastern provinces
+Anhui is first — and Anhui is one of this study's four.
+
+For national scale: 15.8 Tg of methane released per year by Chinese coal mining
+in 2018, 11.8 Tg after deducting recycling, at a weighted emission factor of
+6.77 m³ per tonne, with Shanxi at 8.43 billion m³ or **35.5 percent** of the
+national total (Zhu et al., 2022, *International Journal of Environmental
+Research and Public Health* 19, 7408, doi:10.3390/ijerph19127408). The two
+independent Shanxi shares, 35 and 35.5 percent, agree.
+
+### The prior-inventory finding, which matters for any inversion
+
+Sheng et al.'s inventory is at **0.25 by 0.25 degrees — this project's own
+resolution** — and was built from a public database of more than 10,000 Chinese
+coal mines for 2011, which is **25 times more mines than EDGAR v4.2 carries and
+2.5 times more than v4.3.2**. Its conclusion about the global inventories is
+direct: "the spatial errors in the EDGAR v4.2 and v4.3.2 inventories remain on
+the provincial level as their relative contributions of provinces to coal mine
+methane emissions differ significantly from the gridded inventory results."
+
+So the same inventory family that
+[`notes/grounding-methods.md`](grounding-methods.md) records as overspreading
+rice across all agricultural land also misallocates coal at provincial scale,
+and the correction exists at the resolution an inversion of this domain would
+use. Whether the gridded inventory is distributed could not be established: the
+paper is paywalled, the publisher's page and the institutional repository copy
+both refused, and no data availability statement was reached. It is recorded in
+[`notes/dataset-leads.md`](dataset-leads.md) as unverified for that reason.
+
+### The consequence, which is specific and now testable
+
+**Northern Anhui cells carry coal mine methane from a source neither predictor
+represents.** Impervious fraction does not see a colliery, and rice fraction
+does not either.
+
+**Those are the same cells where the rice predictor has a hole.**
+`notes/decisions.md` records that the NESDC raster stops classifying north of
+33.3462 north, leaving an unclassified region in northern Anhui. So the part of
+the lattice with an unrepresented major source is also the part with a missing
+predictor, and the two defects coincide rather than being independent.
+
+Tier 0 makes this measurable in a way it was not before. The buffered decay
+curve established that the impervious coefficient is **not stable across the
+domain**, its advantage over a constant falling from +0.118 at no buffer to
++0.007 at 300 km, and `notes/decisions.md` records that as the first direct
+measurement of something the repository had only noticed — that the exceptions
+recur in the same places.
+
+**The question this raises is recorded rather than answered.** Whether the
+coalfield's cells are among those where the coefficient behaves differently, and
+whether excluding them changes the land-cover association, is a computation over
+the artefacts Tier 0 already committed. It needs no new data and it is in
+[`notes/paper-target.md`](paper-target.md)'s queue. It is not answered here
+because answering it inside a literature pass would mean reporting a result
+without the tests and recipe an artefact in this repository requires.
+
+### And it makes a recorded separability problem concrete
+
+`notes/grounding-methods.md` carries GRPI's finding that errors in rice spatial
+distribution "compromise the ability to separate rice emissions from other
+sectors such as coal in southern China". That was recorded as a general caution
+about a region. **This study area contains both sectors in adjacent cells** —
+paddy across the Yangtze plain and collieries in northern Anhui — so the caution
+is not general here. It is the specific reason an inversion over this domain
+would struggle to attribute a northern Anhui enhancement between rice and coal,
+and the reason a better rice map has a value here beyond rice.
+
 ## Emission factors, and the reason a delta is a special case
 
 Deltaic rice production systems are characterised by very specific hydrological
@@ -438,9 +528,19 @@ makes impervious fraction a proxy for boundary-layer depth and wind speed as
 well as for emission, in a direction this study cannot sign. Three quarters of
 the composite's soundings fall after the field's own seasonal peak.
 
-A negative result explained by three mechanisms is a different kind of finding
-from a negative result left unexplained, and it is the form the paper should
-take. The reproduction's own contribution is the measurement that the null
+**A fourth mechanism was added on 13 September 2026 and it is not a confound but
+an omission.** A major coal mine methane source sits inside the lattice in
+northern Anhui, in the province a gridded national inventory names as the
+largest eastern emitter, and neither predictor represents it. It occupies the
+same cells where the rice raster stops classifying. So part of the domain has an
+unrepresented source and a missing predictor in the same place, which is a
+different kind of problem from the three above: those explain why a
+well-measured predictor would fail, and this one says part of the field was
+never being predicted at all.
+
+A negative result explained by three mechanisms and one omission is a different
+kind of finding from a negative result left unexplained, and it is the form the
+paper should take. The reproduction's own contribution is the measurement that the null
 survives independently built predictors and both cross-validation schemes; this
 grounding is what makes that measurement interpretable rather than merely
 discouraging.
@@ -493,6 +593,17 @@ here rather than silently: the sounding distribution is weighted **three** to
 one towards the days after the field's fitted seasonal peak, not two to one.
 75.5 percent of the soundings fall after day 245.8. The error was in the
 direction of weakening the finding.
+
+**Premises checked on 13 September 2026, when coal was added.** Verified: the
+coalfield's 131.45 Mt of 2010 raw coal production, its 1.1 × 10¹² m³ of coalbed
+methane, the 18-to-32 and 8-to-18 m minable seam thicknesses, the Qi'Nan gas
+content of 4.58 to 12.33 m³ per tonne averaging 8.83, the national 15.8 and 11.8
+Tg with a 6.77 m³ per tonne weighted factor and Shanxi at 35.5 percent, and the
+gridded inventory's 0.25-degree resolution, 10,000-mine database, 25-fold and
+2.5-fold comparisons against EDGAR, and its statement that Anhui and Liaoning
+lead the east and north. Not verified: whether that inventory is distributed,
+which could not be established because the paper is paywalled and two open
+routes refused.
 
 One premise was verified and is recorded here because the repository states it
 two ways. The coastline's median sounding count against pure land's is 6 against
