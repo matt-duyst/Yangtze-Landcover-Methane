@@ -118,6 +118,80 @@ a planned fourteen, and the three unbuilt ones — predictor maps, a fold map, a
 sampling-artefact map — are all drawing rather than analysis. None of them is
 between the project and a draft. The absence of connected prose is.
 
+## Tier 0 is done, and it reorders the rest
+
+**Run on 12 September 2026.** All four Tier 0 items are complete and their
+results are in `notes/decisions.md` under their queue numbers, with artefacts at
+`data/processed/inversion_dofs_2018.csv`, `correlation_dof_2018.csv`,
+`residual_range_2018.csv` and `buffered_loo_2018.csv`. The queue below is
+annotated rather than rewritten: each item keeps its number so the records that
+cite it stay valid.
+
+**Item 1 changes the framing and it is the first of the three outcomes, not the
+third.** The IMI preview could not be run — every route needs an account — but
+its DOFS formula is closed-form and published, and evaluating it over this
+lattice gives an expected DOFS of 3.98 to 22.21 over the 5 to 12 Tg a-1 band the
+literature supports for this domain, against IMI's own marginal ceiling of 2.
+**An emissions inversion here is feasible.** So the emissions framing is
+reachable rather than several rounds away, and the Tier 3 items that would feed
+a prior gain value.
+
+Two qualifications hold it in place. No cell reaches a sensitivity above 0.5, so
+the DOFS accumulates from many weakly constrained cells: an inversion could
+constrain the region's total and could not attribute it cell by cell, which is
+the question this project asked. And the median cell would need about 86 Gg a-1
+for the observations to constrain it half independently of the prior, which is
+larger than a large landfill.
+
+**Item 2 changes what the paper may say about its own supporting analysis.**
+Twenty-seven of seventy-two reported correlations lose significance, including
+the one `data/processed/README.md` called negative and significant. The median
+effective sample size is 45.5 of 926. The central negative result is untouched,
+because held-out R squared against a spatial null is not a significance test.
+
+**Items 3 and 4 partly undermine the cross-validation design and partly rescue
+it.** The residual half-sill range of the impervious model is 96.1 km on the
+operational field against a block 95 km across at its narrowest, and 134.5 km on
+the blended field — so the blocks are marginal to too small for the one model
+that carries the claim. But the decay curve shows the two cross-validation
+schemes are two points on one curve, with leave-one-province-out matching a 150
+to 200 km buffer, so neither is wrong and the bracketing reading is supported.
+
+### What this reorders
+
+**A new item, and it is now the highest-value one in the queue.** *Re-block the
+spatial cross-validation at six cells and re-run the baseline suite.* Item 3
+measured that four cells is too small for the impervious model on the blended
+field by 40 percent, and the blended field is where the land-cover result is
+weakest. Until that is re-run, the reported blocked figures overstate the
+land-cover models' skill by an unknown amount on the field that matters most.
+*Established by* item 3. *Cost:* low — the baselines run in minutes and need no
+new data. **It goes above everything except the accuracy assessment.**
+
+**Item 11, de-attenuation, gains a second reason and keeps its place.** Item 4
+shows the impervious coefficient is not stable across the domain, so there are
+now two reasons its small association might be understated or overstated:
+measurement error attenuating it, and spatial non-stationarity meaning there is
+no single coefficient to attenuate. The second is not a correction but a
+limitation, and it belongs in the discussion beside the first.
+
+**Item 18, equivalence bounds, moves up.** It was last because it needed the
+de-attenuated effect size. Item 2 makes it more urgent instead: with
+twenty-seven correlations no longer significant, the paper's supporting analysis
+now says almost nothing either way, and "no evidence of an effect" is carrying
+more weight than it used to. A named bound is what would convert that into a
+statement.
+
+**Tier 3 gains value from item 1 and keeps its cost.** A feasible inversion
+needs a prior, the grounding records that a better rice prior demonstrably moves
+an inversion's answer, and the five Tier 3 items still share one 28.9 GB pass.
+The decision about that pass is now a decision about whether to pursue the
+emissions framing, which is the right way round.
+
+**Nothing moves down.** Item 1 is kept in the queue rather than marked done,
+because what was run was the preview's arithmetic and not the preview, and one
+free run by someone with an AWS account would still be worth having.
+
 ## The work queue
 
 Drawn from all four grounding records rather than from any brief, and **ordered
@@ -133,7 +207,8 @@ Nothing here is implemented and nothing is claimed.
 These need no new data and no re-run. **They are first because they have no
 excuse**, and because two of them gate the framing rather than the analysis.
 
-**1. The IMI preview.** Establishes whether TROPOMI can constrain methane
+**1. The IMI preview.** ✅ *Answered 12 September 2026 by reimplementing its
+formula; the run itself is still worth having.* Establishes whether TROPOMI can constrain methane
 emissions over these four provinces, by reporting the expected degrees of
 freedom for signal over a user-selected domain. The tool runs at this project's
 exact resolution and already ingests the blended field committed here, and its
@@ -143,7 +218,8 @@ own documentation says the preview "has no significant costs". *Established by*
 entirely, and gates whether the paper may say the conversion is infeasible — the
 thing a paper cannot leave as future work.
 
-**2. Effective degrees of freedom on every reported correlation.** Every Pearson
+**2. Effective degrees of freedom on every reported correlation.** ✅ *Done 12
+September 2026; 27 of 72 correlations lose significance.* Every Pearson
 and partial correlation here is computed over 926<!--#composite.covered_cells--> cells with n treated as 926
 while both fields are strongly autocorrelated, so every p-value is
 anti-conservative. One function over the committed covariate table. *Established
@@ -151,13 +227,16 @@ by* the methods record. *Gates* every stated p-value, including the blended
 field's partial correlation of −0.082 at p 0.013 that the repository currently
 reads as over-control.
 
-**3. The residual autocorrelation range.** The block size has never been
+**3. The residual autocorrelation range.** ✅ *Done 12 September 2026; 96.1 km
+on the operational field and 134.5 km on the blended, against a 95 km block.*
+The block size has never been
 justified from the data; the defensible choice is the autocorrelation range of
 the model's residuals, and what exists is Moran's I of the residual field, a
 different quantity. *Established by* the methods record. *Gates* item 4 and any
 defence of the spatial-blocks design.
 
-**4. A buffered leave-one-out decay curve.** Predictive power against increasing
+**4. A buffered leave-one-out decay curve.** ✅ *Done 12 September 2026; the
+bracketing reading is supported.* Predictive power against increasing
 buffer radius, so the decay with distance from training data is visible as a
 shape rather than asserted at one buffer. *Established by* the methods record's
 spatial cross-validation section. *Gated by* item 3. *Would settle* whether the
@@ -290,6 +369,12 @@ record. **Necessarily last**, because it reports the final specification set and
 every item above changes what that set contains.
 
 ### What gates what, in one paragraph
+
+**As of 12 September 2026 Tier 0 is complete and one item has been added above
+it**: re-blocking at six cells and re-running the baselines, which item 3's
+measurement makes the highest-value cheap item in the queue. The paragraph below
+describes the original structure and still holds for items 5 to 20.
+
 
 Item 1 gates the paper's framing and costs nothing, so it is first on both
 counts. Items 2 to 4 are free and change reported statistics, with 3 gating 4.
