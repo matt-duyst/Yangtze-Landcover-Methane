@@ -356,6 +356,30 @@ here, and the consequence it would support for the thesis's first hypothesis —
 that rice area fell while per-hectare intensity rose, so the two oppose each
 other — is recorded as a claim awaiting a source rather than as a finding.
 
+**The 14 September 2026 rice pass tried again and the status stands.** The four
+figures — 416 samples, a 2010–2018 mean of 252.17 kg ha⁻¹ against 146.02 for
+2000–2009, a ratio of 1.52, and p < 0.01 — were returned this pass from the
+publisher's abstract page as rendered by a search engine, matching on all four
+and adding a qualification the query did not contain, namely that air temperature
+and water-saving practices were "not likely the reason for the increase after
+2009". **That is suggestive and it is not verification.** A direct fetch of the
+Springer page returns an authentication redirect; Crossref, OpenAlex and Semantic
+Scholar all hold no abstract for the DOI. A search engine's rendering of a
+paywalled abstract, answering a query that contained the numbers, is the same
+class of evidence that produced six wrong first authors in the methods pass. The
+figures are therefore still not written anywhere, and closing this needs the
+article. What the content negotiation did settle is the citation itself: Zhu, Y.
+and Li, H., *International Journal of Environmental Science and Technology* 22,
+issue 12, 11011–11016, issued 18 September 2024.
+
+The half of the displaced claim that does not depend on this paper is now
+independently established. [`notes/grounding-rice.md`](grounding-rice.md) records
+Qian et al. (2023) putting global rice CH4 at 22 Tg a⁻¹ in 1980–1989, 23 in
+2000–2009 and 24 in 2010–2019 while yield-scaled emissions fell 38 to 55 percent,
+and Jiang et al. (2018) measuring the sown-area decline. **A near-flat total
+against a falling area is a rising intensity**, which is the claim, reached
+without this source.
+
 ## Three land-use transitions, not one
 
 The thesis frames the land-cover story as urban expansion encroaching on paddy.
@@ -544,6 +568,167 @@ paper should take. The reproduction's own contribution is the measurement that t
 survives independently built predictors and both cross-validation schemes; this
 grounding is what makes that measurement interpretable rather than merely
 discouraging.
+
+## The synthesis anchor, which is the field's own statement of its state
+
+Added 14 September 2026, the last of three such anchors and the one with the
+most to anchor: nineteen rounds of literature sit above it, and none of them is
+a review-level account of how well China's methane budget is known. **This
+section is that account.** It matters more here than in the other two records,
+because the region's budget is the quantity this project's entire premise —
+that a satellite column over this domain carries information about sources in
+it — depends on being poorly enough known to be worth constraining.
+
+### China's share, and the size of the disagreement about it
+
+China "is one of the world's largest anthropogenic methane (CH4) emitters,
+accounting for nearly 14 % (53 [34–66] Tg a⁻¹ out of 369 [350–391] Tg a⁻¹) of
+global anthropogenic emissions", and "current bottom-up estimates, which rely on
+emission factors and activity data, **differ by at least 30 % for national-scale
+anthropogenic methane emissions** (e.g., 63 Tg a⁻¹ in EDGARv6 ... versus 48 Tg
+a⁻¹ from Peking University CH4 version 2 inventory)" (Zhong, H., Shen, L.,
+Wan, F., Qu, M., and Qin, K., 2026, *The added value of new ground-based
+observations in improving China's methane emission quantification*, *Atmospheric
+Measurement Techniques* 19, 4759–4778, doi:10.5194/amt-19-4759-2026). The
+national-share figure is attributed there to the Global Methane Budget, so the
+primary source is one step away and is not in this repository's register — the
+same arrangement `notes/decisions.md` records for CCD-Rice's cloud-observation
+count.
+
+**Fifteen Tg is the gap between two inventories of the same country in the same
+year**, which is roughly the whole of China's rice sector. That is the scale of
+the thing a regional constraint would be constraining, and it is stated as a
+percentage floor rather than an estimate: *at least* 30 percent.
+
+The same paper's assembled prior gives the sectoral shape, which is worth
+recording because two of its entries are this project's two hypotheses: "total
+methane emissions in China amount to 68 Tg a⁻¹, with 64 Tg a⁻¹ emitted by
+anthropogenic sources. Sectoral contributions are estimated as follows: coal
+mining 21.0 Tg a⁻¹, oil and gas 1.2 Tg a⁻¹, livestock 8.2 Tg a⁻¹, wastewater
+9.5 Tg a⁻¹, landfills 5.2 Tg a⁻¹, rice paddies 13.7 Tg a⁻¹, wetlands 2.0 Tg a⁻¹,
+and lakes and aquaculture 1.3 Tg a⁻¹." **Coal is the largest single anthropogenic
+sector nationally, at more than half again the rice sector** — which is the
+national-scale counterpart of the coalfield finding this record already carries
+for northern Anhui, and it arrived from a different literature.
+
+**A coincidence of numbers needs flagging so it cannot be conflated later.** The
+rice sector's 13.7 Tg a⁻¹ here and the water-regime emission ratio of 13.7 this
+record quotes from Wu et al. (2018) are unrelated quantities that happen to share
+a value.
+
+### The sub-national picture, which had never been assembled before
+
+The single most useful paper for this project's framing analyses China's methane
+across 2000 to 2019 using both atmospheric inversion ensembles and process-based
+model estimates, contributed by international teams coordinated through the
+Global Carbon Project, and reports that "**approximately 60% of national CH4
+emissions come from three of the nine sub-national regions (North China,
+Southeast China, and Southwest China), which together account for <30% of
+China's land area**", that "these emissions are dominated by the energy and
+agricultural sectors", and that "natural sources contribute 9%–16% of the total
+CH4 budget, but they have the largest relative uncertainties, reaching
+approximately 150%–170% of their estimated magnitudes" (Zhao, P., Zhang, Z.,
+Huang, G., Wang, Z., Canadell, J. G., Ciais, P., Chen, H., Chen, S., Cohen, J.
+B., Dai, F., Gong, P., Jackson, R. B., and fourteen others, 2026, *Two decades
+of methane budgets at the sub-national scale in China*, *Science Bulletin* 71,
+3731–3741, doi:10.1016/j.scib.2026.06.019).
+
+**Southeast China is one of the three named regions, and this study area is in
+it.** That is the hotspot statement this record needed: the domain is not merely
+a place where methane is emitted but one of three sub-national regions carrying
+three-fifths of a national total on under a third of the land, and the
+concentration is attributed to the energy and agricultural sectors — coal and
+rice, which is the pair this record has spent two passes establishing for
+northern Anhui.
+
+Two further figures from the same paper. The change between the two decades is
+driven by anthropogenic emissions, with increases of "10.4 [2.7–16.9] Tg CH4
+a⁻¹ (BU) and 6.1 [−2.6–10.7] Tg CH4 a⁻¹ (TD)", the largest of them in North,
+Southwest, Southeast and Northeast China. **The two methods disagree by nearly a
+factor of two on the size of the increase and the top-down range includes
+zero** — over a twenty-year interval that contains all three of this project's
+years. And the natural-source uncertainty of 150 to 170 percent of the estimate
+means those sources are, in the aggregate, not distinguishable from absent, which
+is the quantitative form of the wetland caveat this record already carries.
+
+### The four uncertainties China's own mitigation assessment names
+
+Assessing China's methane mitigation potential and costs to 2060, Khanna, N.,
+Lin, J., Liu, X., and Wang, W. (2024), *Nature Communications* 15,
+doi:10.1038/s41467-024-54038-y, name the sectors whose 2017 emissions are most
+uncertain as **coal mining, rice cultivation, wastewater, and enteric
+fermentation**. Three of the four are represented in this domain and two of them
+are this project's own hypotheses.
+
+The uncertainty ranges they carry are large and asymmetric: "uncertainties about
+the coal mine methane emission factor in the range of ±80%"; an IPCC range of
+"−40% to +70% for the emission factor for rice cultivation"; and for industrial
+wastewater, "−56% to +103% ... in activity data, with 30% uncertainty in maximum
+methane-producing capacity and −50% to +100% uncertainty in methane correction
+factor". **A rice emission factor uncertain from −40 to +70 percent is a wider
+interval than any correction a better extent map could supply**, which is the
+same conclusion [`notes/grounding-rice.md`](grounding-rice.md) reaches from the
+management literature, arriving here from an inventory-construction direction.
+
+### The observing caveat, which is specific to this domain and this season
+
+This is the finding that most directly qualifies what this project can claim,
+and it names the region and the season.
+
+"Current 'top-down' quantification primarily relies on Shortwave Infrared (SWIR)
+sensors (e.g., TROPOMI, GOSAT) that exhibit sufficient sensitivity to surface
+methane concentrations, but **suffer from frequent data gaps due to cloud cover
+(particularly in southern China during the monsoon season)** and complicated
+terrains (Southwest, Tibet, Northeast)" (Zhong et al., 2026). The consequence is
+quantified: "sectoral emission estimates for rice paddies, lakes, and wetlands –
+predominantly located in southern China – exhibit **large posterior uncertainties
+(53 %–69 %), coinciding with low satellite data availability driven by
+monsoon-related cloudiness**". That figure is attributed to Zhong et al. (2025),
+so it too is one citation step away from its primary source.
+
+**Rice is named as the sector whose posterior is worst constrained, and the
+reason given is cloud over southern China in the monsoon — which is this domain
+in this project's growing season.** The rice record establishes that the same
+cloudiness limits rice *mapping* here to fewer than eight clear Landsat
+observations a year; this establishes that it limits rice *emission estimation*
+from the same region to a posterior uncertainty of a half to two-thirds. The two
+constraints are the same physical cause acting on both halves of the inference
+chain, and no pass had connected them.
+
+**And the capability statement this project reached from its own arithmetic has
+been reached independently for all of China.** The same authors' earlier work
+"demonstrated that while TROPOMI observations can effectively constrain China's
+total methane emissions, estimating individual sources remains challenging due to
+its insufficient spatiotemporal coverage". `notes/paper-target.md` records this
+project's Tier 0 finding in almost those words — that an inversion over this
+lattice could constrain a regional total but not attribute at cell level, because
+no cell reaches an averaging-kernel sensitivity above 0.5. **A published national
+study says the same thing about the same instrument.** Zhong et al. put current
+TROPOMI observations together with thirteen in-situ and four ground-column sites
+in East Asia at "a DOFS of 134 for methane emissions in China" using GEOS-Chem
+at 50 km, which is the comparable figure for the country to the one this
+repository computed for this domain.
+
+One methodological alignment is worth naming because it was not expected. Zhong
+et al. "employ the blended TROPOMI+GOSAT product, which applies a machine
+learning model to correct biases between TROPOMI" and GOSAT — **the same field
+this repository has committed as the composite's third band.** A peer-reviewed
+national inversion and this project read the same corrected product.
+
+### What the anchor adds to the region's conclusion
+
+The region record could already say that this is the right place to ask the
+question. It can now say how poorly the answer is known, in the field's own
+figures: national bottom-up totals differ by at least 30 percent, or fifteen Tg,
+which is about one rice sector; three sub-national regions including this one
+carry 60 percent of emissions on under 30 percent of the land; natural sources
+carry 150 to 170 percent relative uncertainty; the four most uncertain sectors
+include both of this project's hypotheses; the rice emission factor alone is
+uncertain from −40 to +70 percent; and rice, lakes and wetlands in southern China
+carry posterior uncertainties of 53 to 69 percent for the specific reason that
+the monsoon takes the satellite's observations away. **That last one is both the
+argument for the work and the limit on it**, and it is the sentence a paper's
+discussion should be built around.
 
 ## What could not be verified
 
