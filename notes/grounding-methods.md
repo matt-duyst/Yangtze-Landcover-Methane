@@ -14,10 +14,11 @@ where they occur and collected in
 
 Every figure here was checked against its source before it was written, and
 where a figure could not be verified it is named as unverified and the number is
-not repeated. The closing section lists every such case. Eleven of the premises
-carried into this pass failed, including three DOIs that resolve to unrelated
-papers, so the closing section is long by construction and is the honest part of
-the document. Numbers from this repository's own artefacts are marked for
+not repeated. The closing section lists every such case. **Fifteen of the
+premises carried into this pass failed** — thirteen about the literature and two
+about what this repository itself says — including three DOIs that resolve to
+unrelated papers, so the closing section is long by construction and is the
+honest part of the document. Numbers from this repository's own artefacts are marked for
 [`scripts/verify_claims.py`](../scripts/verify_claims.py) where a resolver
 exists; where one does not, the source file is named at the point of use.
 
@@ -703,11 +704,13 @@ is owed to the reader rather than optional.
 
 ## What could not be verified
 
-Eleven premises carried into this pass did not survive checking. They are listed
-because the next person to meet them in a search snippet should know they were
-tested, and because three of them are DOIs that resolve confidently to the wrong
-paper, which is the most dangerous failure mode in a register that verifies by
-DOI.
+Fifteen premises carried into this pass did not survive checking: thirteen about
+the literature and two about this repository's own text. They are listed because
+the next person to meet one in a search snippet should know it was tested, and
+because three of them are DOIs that resolve confidently to the wrong paper,
+which is the most dangerous failure mode in a register that verifies by DOI.
+
+Two further premises were refined rather than failed, and are at the end.
 
 **Three DOIs resolve to unrelated papers.** `10.1016/j.rse.2025.114953` is a
 paper on disease spectral indices of apple trees; the prediction-powered
@@ -784,7 +787,7 @@ apply and 4 and 5 do not. **So there was nothing to correct for that item**, and
 the correction the pass did find was elsewhere: the errata's request for a kappa
 coefficient.
 
-Two premises were refined rather than failed. The degrees-of-freedom pair 232
+**Two premises were refined rather than failed.** The degrees-of-freedom pair 232
 against 151 is correct **for the non-wetland emissions partition**; the totals
 including wetlands and OH are 238 and 155, and a paper should say which it means.
 And the destriping approach the super-emitter study follows is attributed there
