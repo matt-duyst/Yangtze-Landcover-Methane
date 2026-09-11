@@ -118,6 +118,23 @@ point.
 | China oil and gas CH4 database | Methane emissions from China's oil and gas systems 1990–2022, about sevenfold growth from 0.5 to 4.0 Tg per year, with 80 percent of emissions tracked as refineries, facilities, pipelines and field sources, and city-level distribution pipeline lengths | Nature Communications, `10.1038/s41467-025-58237-z`; deposit route not established | article licence | 1990–2022, annual | City totals for gas distribution, which is the sector whose published global product is faulted for allocating "only based on population densities without using an urban land cover map". **That named deficiency is what this project's impervious layer is.** The claim that pipeline lengths cover 347 prefecture-level cities is unverified | documented only |
 | GHGSat global waste survey | 1,447 clear-sky observations from GHGSat C1–C5 of 151 waste disposal sites across 130 urban areas in 47 countries over six continents, 2021–2022, totalling 2.8 Mt CH4 per year | Nature, `10.1038/s41586-025-09683-8` | article licence | 2021–2022 | Point-source quantification of the dominant sector. It includes an example plume from a wastewater treatment plant near Shanghai, **which was filtered from the analysis** and so is an illustration rather than a quantified emission. TROPOMI plumes were detected for 46 of the 130 urban areas | documented only |
 
+## Coal, building form and in-domain observation, added 13 September 2026
+
+The coal entry exists because four grounding passes missed the sector entirely;
+[`notes/grounding-yrd.md`](grounding-yrd.md) now records it. The building-form
+entries exist because the urban record identifies vertical information as the
+dimension an impervious fraction lacks. The last two are in-domain observations
+and are the first entries in this file that are neither products nor
+inventories.
+
+| Candidate | What it is | Route | Licence | Coverage | What it serves | Status |
+|---|---|---|---|---|---|---|
+| Gridded Chinese coal mine methane | Bottom-up inventory at **0.25 by 0.25 degrees — this project's own resolution** — from a public database of more than 10,000 mines for 2011, which is 25 times more than EDGAR v4.2 and 2.5 times more than v4.3.2, with provincial emission factors. It finds provincial contributions differing significantly from EDGAR's, and names Anhui as the largest eastern emitter | No deposit reached. The paper is paywalled; the publisher's page and an institutional repository copy both refused, and no data availability statement was read | unknown | 2011, annual | **The prior for the one major source in this domain that neither predictor represents.** Whether it is distributed is the thing to establish, and it is the single question that would most change an inversion prior for northern Anhui | unverified |
+| 30 m annual building height, China | Building height at 30 m, **annual from 1990 to 2019**, so it contains 2000, 2010 and 2018 — which no other height product does | ESSD article `10.5194/essd-18-5329-2026`; deposit route not established | article is CC-BY; deposit terms not checked | 1990–2019, annual, 30 m | The vertical dimension the Shanghai underestimate names as missing. **Adopt with a second product or not at all**, per the GAIA–GISA lesson | documented only |
+| CMAB | National multi-attribute building dataset at building-instance level, carrying function among its attributes | *Scientific Data* `10.1038/s41597-025-04730-5`; deposit route not established | unknown | one epoch | **Building function, which is closer to the gas-and-waste mechanism than either footprint or height.** It would separate residential from industrial without inferring it from volume | documented only |
+| Shaoxing UAV methane record | A portable CH4 detector on unmanned aerial vehicles and electric bicycles, observing vertical and spatiotemporal CH4 distribution over Shaoxing from April 2022 to February 2023, estimating annual emissions near 69 t km⁻² yr⁻¹ and describing that as higher than other cities worldwide | *Journal of Environmental Sciences* `10.1016/j.jes.2024.03.045`; no deposit named | unknown | April 2022 to February 2023 | **In-domain city-scale methane observation in Zhejiang**, and the only one in this file that measures methane in a city inside the lattice. Its period does not overlap 2018 | unverified |
+| Shanghai urban canopy layer GHG site | Nearly two years of continuous high-precision in-situ measurement from the 632 m Shanghai Tower at 121.51 E, 31.23 N, April 2021 to March 2023, by cavity ring-down spectrometer | *Atmospheric Chemistry and Physics* `10.5194/acp-26-5477-2026`; no deposit named | unknown | April 2021 to March 2023 | **It measures CO2 and CO, not methane**, which is why it is recorded rather than pursued. It is noted because the site, the instrument and the tower exist inside the lattice, and a methane channel on the same platform would be the in-domain urban observation this project lacks | unverified |
+
 ## The highest-value unverified items
 
 The brief that produced this file named three: the CCD-Rice polygons for rice
@@ -157,6 +174,14 @@ Behind it, the **MSW landfill site database** is the highest-value urban
 candidate, because the urban grounding establishes that landfills dominate urban
 methane and that they are quantifiable only through facility coordinates, which
 is the one thing a fractional layer cannot supply.
+
+**Added 13 September 2026: the gridded coal inventory now sits beside it.** Four
+grounding passes missed the sector; the inventory exists at this project's exact
+resolution, it corrects EDGAR's provincial allocation for the one major source in
+this domain that neither predictor represents, and whether it is distributed
+could not be established because the paper is paywalled and two open routes
+refused. It is the second-highest-value unverified item and the one whose answer
+is a single successful request away.
 
 ## What this file is for
 

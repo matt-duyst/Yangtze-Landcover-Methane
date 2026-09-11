@@ -76,6 +76,11 @@ NOT_CITATIONS = {
         "resolves to 'Accuracy design optimization of a CNC grinding machine "
         "towards low-carbon manufacturing'; the rice emission-factor paper is "
         "10.1016/j.jclepro.2023.137245, same journal and year, 145 apart",
+    "10.1038/s41599-026-07688-w":
+        "does not resolve at all: the article number is right and the prefix is "
+        "wrong, since Humanities and Social Sciences Communications registers "
+        "under 10.1057. The correct DOI is 10.1057/s41599-026-07688-w. This is "
+        "the register's first prefix error rather than a wrong-paper error",
 }
 
 #: doi -> citation key. Keys are lowercase, first author plus year plus a short
@@ -211,6 +216,21 @@ KEYS = {
     "10.1038/s41597-024-03815-x": "zhou2024wwtp",
     # the thesis's own rice method, added 12 September 2026
     "10.1080/15481603.2021.1943214": "zhu2021pppm",
+    # coal, building form and the proxy comparison, 13 September 2026
+    "10.1021/acs.estlett.9b00294": "sheng2019coalgrid",
+    "10.1016/j.coal.2009.05.001": "liu2009huainancbm",
+    "10.1038/s41598-024-79922-x": "wei2024qinan",
+    "10.3390/ijerph19127408": "zhu2022coalch4",
+    "10.1057/s41599-026-07688-w": "li2026popchange",
+    "10.1038/s41467-025-56906-7": "langritter2025rural",
+    "10.1080/01431161.2020.1841322": "wei2020imperviouspop",
+    "10.5194/essd-18-5329-2026": "zhang2026buildingheight",
+    "10.5194/essd-16-5357-2024": "che2024globfp",
+    "10.1016/j.rse.2023.113578": "wu2023cnbh10m",
+    "10.1038/s41597-025-04730-5": "zhang2025cmab",
+    "10.1126/sciadv.abn9683": "maasakkers2022landfills",
+    "10.1016/j.jes.2024.03.045": "pang2025shaoxing",
+    "10.5194/acp-26-5477-2026": "fu2026shanghaicanopy",
 }
 
 HEADER = """% Verified reference register for Yangtze-Landcover-Methane.
@@ -224,7 +244,7 @@ HEADER = """% Verified reference register for Yangtze-Landcover-Methane.
 % because a DOI may be named more than once there: the two Sentinel-5P
 % registrations, the GISA 2021 paper and the city-scale inventory each are, and
 % the register explains why in each case.
-% Four further DOIs appear in the register and are deliberately absent here:
+% Five further DOIs appear in the register and are deliberately absent here:
 % the register names them to warn against them, not to cite them. See
 % NOT_CITATIONS in scripts/build_references_bib.py for each and why.
 % TWO REGISTER ENTRIES ARE NOT HERE AND CANNOT BE. ISO 5807:1985 and

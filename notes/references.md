@@ -20,7 +20,7 @@ instance was met on 10 September 2026 and not acted on: the ChinaRiceCalendar
 deposit's author field gives two of eleven authors with their given and family
 names run together, and the paper's citation is carried instead.
 
-`notes/references.bib` carries one hundred twenty-five entries as BibTeX. It is
+`notes/references.bib` carries one hundred thirty-nine entries as BibTeX. It is
 **generated**, not typed: each entry comes from `https://doi.org` under content
 negotiation for `application/x-bibtex`, so the two files cannot drift and no
 transcription step exists between the registry and the repository. Regenerate it
@@ -46,16 +46,18 @@ discusses a work the thesis cites, the work appears here and its role says so.
 ## What could not be verified
 
 Nothing in the register failed to verify **as a work**. All one hundred
-twenty-five cited DOIs resolved: one hundred thirteen through Crossref and twelve
-through DataCite, which is the registry that carries dataset and preprint DOIs
+thirty-nine cited DOIs resolved: one hundred twenty-seven through Crossref and
+twelve through DataCite, which is the registry that carries dataset and preprint DOIs
 and the reason a Crossref-only lookup returns "not found" for them.
 
-**Four further DOIs appear in this register and are not citations.** They are
+**Five further DOIs appear in this register and are not citations.** They are
 named to warn against them, and `scripts/build_references_bib.py` holds them in
 a `NOT_CITATIONS` set with the reason for each, so they cannot acquire a BibTeX
-entry by accident. Three resolve confidently to the wrong paper and one does
-not resolve at all; all four were carried in as real citations, three in the
-methods pass and one in the pass after it. **A resolving DOI is not a verified
+entry by accident. Three resolve confidently to the wrong paper and two do
+not resolve at all; all five were carried in as real citations, across four
+consecutive passes. **The fifth is a new failure mode**: its article number is
+correct and its *prefix* is wrong, so it resolves to nothing rather than to
+something misleading, which is the safer of the two failures. **A resolving DOI is not a verified
 citation**, and it is now the register's best-documented failure mode: three of
 the four differ from the correct DOI only in the last digits of an identifier in
 the same journal and year.
@@ -125,8 +127,8 @@ The groups are: datasets used, methods applied, findings relied on — split
 into the retrieval and the region, because two groups carried that heading until
 11 September 2026 and a duplicate heading is not navigable — findings contested,
 the rice-paddy exchange, the Yangtze River Delta grounding, accuracy assessment,
-the methods grounding, and the inversion frame with the urban layer. The last
-five are kept together for the same reason:
+the methods grounding, the inversion frame with the urban layer, and coal with
+building form. The last six are kept together for the same reason:
 each is a single argument, and splitting its parts across the role groups would
 misrepresent all of them.
 
@@ -1689,6 +1691,184 @@ Facility-level coverage of one of the three population-allocated sectors, in a
 class of plant noted as preferring southeastern coastal locations, which is this
 domain. **A premise was narrowed here**: the record's title names underground
 plants, and the aboveground count of 2,464 attributed to it is unverified.
+Cited in `notes/dataset-leads.md`.
+
+---
+
+## Coal, building form and the proxy comparison, added 13 September 2026
+
+Ten literature rounds after the urban grounding, with the Tier 0 computation
+between them. **Most of this group is subject literature rather than method, and
+it does what the urban pass was expected to do and did not**: the register's
+method share falls from 36 to 34 percent and its dataset share rises from 18 to
+20, on fourteen new entries of which two are methods. That is the first move
+back toward subject literature since the region pass.
+
+**A fifth DOI that does not resolve, and a new failure mode.** The
+population-change evaluation was carried as `10.1038/s41599-026-07688-w`, which
+returns nothing. The article number is right and the **prefix is wrong**:
+*Humanities and Social Sciences Communications* registers under 10.1057. The
+four earlier bad DOIs resolved confidently to the wrong paper; this one resolves
+to nothing at all, which is the safer failure and still one the register has to
+record.
+
+### Coal, the sector four grounding passes missed
+
+**Sheng, J., Song, S., Zhang, Y., Prinn, R. G., and Janssens-Maenhout, G.
+(2019).** Bottom-Up Estimates of Coal Mine Methane Emissions in China: A Gridded
+Inventory, Emission Factors, and Trends. *Environmental Science & Technology
+Letters* 6, 473–478.
+`10.1021/acs.estlett.9b00294` — peer-reviewed paper; **describes a dataset not
+used, and supplies the load-bearing claim of the coal finding.** At 0.25 by 0.25
+degrees, this project's own resolution, from a public database of more than
+10,000 Chinese mines for 2011 — 25 times more than EDGAR v4.2 and 2.5 times more
+than v4.3.2 — it states that "Anhui and Liaoning are the provinces that emit the
+most in the east and north, respectively", and that EDGAR's provincial
+contributions "differ significantly from the gridded inventory results". Anhui
+is one of this study's four provinces. Whether the inventory is distributed could
+not be established: the paper is paywalled and two open routes refused.
+Cited in `notes/grounding-yrd.md`, `notes/dataset-leads.md`.
+
+**Liu, D., Yao, Y., Tang, D., Tang, S., Che, Y., and Huang, W. (2009).** Coal
+reservoir characteristics and coalbed methane resource assessment in Huainan and
+Huaibei coalfields, Southern North China. *International Journal of Coal
+Geology* 79, 97–112.
+`10.1016/j.coal.2009.05.001` — peer-reviewed paper; a finding relied on. The
+coalfield's physical scale: 131.45 Mt of raw coal in 2010, 1.1 × 10¹² m³ of
+coalbed methane, minable seam thicknesses of 18 to 32 m in Huainan and 8 to 18 m
+in Huaibei, and in-place gas content of 8 to 16 and 10 to 30 m³ per tonne. It is
+in northern Anhui, inside the analysis lattice.
+Cited in `notes/grounding-yrd.md`.
+
+**Wei, Q., Chen, S., Yi, W., Gui, H., Jiang, W., Li, F., and Li, S. (2024).**
+Gas content, geochemical characteristics and implications of coalbed methane
+from the Deep Area of Qi'Nan Coalmine in Huaibei Coalfield. *Scientific Reports*
+14.
+`10.1038/s41598-024-79922-x` — peer-reviewed paper; a finding relied on. A
+mine-specific measurement inside the coalfield: total gas content 4.58 to 12.33
+m³ per tonne averaging 8.83, with methane at 92.83 to 99.22 percent of the gas.
+Recorded beside the coalfield-scale figures because the two are different
+quantities and were nearly conflated.
+Cited in `notes/grounding-yrd.md`.
+
+**Zhu, A., Wang, Q., Liu, D., and Zhao, Y. (2022).** Analysis of the
+Characteristics of CH4 Emissions in China's Coal Mining Industry and Research on
+Emission Reduction Measures. *International Journal of Environmental Research
+and Public Health* 19, 7408.
+`10.3390/ijerph19127408` — peer-reviewed paper; a finding relied on, for
+national scale. 15.8 Tg of methane released per year by Chinese coal mining in
+2018, 11.8 after deducting recycling, a weighted emission factor of 6.77 m³ per
+tonne, and Shanxi at 35.5 percent of the national total. Its Shanxi share agrees
+independently with Sheng et al.'s 35 percent, which is why both are kept.
+Cited in `notes/grounding-yrd.md`.
+
+### The proxy comparison
+
+**Li, L., Fu, S., Zhou, X., Xiao, K., Cao, X., Zhang, B., Li, F., Li, H.,
+Lu, Y., Liang, C., Liu, Q., Yuan, Y., and Deng, F. (2026).** Cross-sectional
+accuracy does not imply the reliability of population change in gridded
+population datasets of China. *Humanities and Social Sciences Communications*.
+`10.1057/s41599-026-07688-w` — peer-reviewed paper; a finding relied on, and
+**the reason impervious fraction is the better proxy for this project's
+question.** Six time-series population datasets show cross-sectional Pearson's r
+against Chinese township census data above 0.8 and severely limited ability to
+represent decadal change, with substantial inaccuracies in identifying decline
+trends. **The prefix is 10.1057 and not 10.1038**; see above.
+Cited in `notes/grounding-urban.md`.
+
+**Láng-Ritter, J., Keskinen, M., and Tenkanen, H. (2025).** Global gridded
+population datasets systematically underrepresent rural population. *Nature
+Communications* 16.
+`10.1038/s41467-025-56906-7` — peer-reviewed paper; **a finding relied on and
+contested.** Validated against reported resettlement from 307 large dam projects
+in 35 countries, it reports negative biases of −53 percent for WorldPop through
+−84 for GHS-POP. WorldPop's team has published a rebuttal disputing the claim of
+systematic rural underrepresentation, and the grounding names both sides rather
+than choosing — the same treatment this register gives the rice-paddy exchange.
+Cited in `notes/grounding-urban.md`.
+
+**Wei, S., Lin, Y., Zhang, H., Wan, L., Lin, H., and Wu, Z. (2020).** Estimating
+Chinese residential populations from analysis of impervious surfaces derived
+from satellite images. *International Journal of Remote Sensing* 42, 2303–2326.
+`10.1080/01431161.2020.1841322` — peer-reviewed paper; **a finding contested, in
+the sense that it contests this project's own predictor.** Shanghai downtown's
+census of 6,008,068 against model estimates of 1,065,729 to 1,435,820 across
+fourteen grid resolutions, "greatly underestimated in the model without taking
+the vertical building information into consideration". Shanghai is one of the
+four provinces.
+Cited in `notes/grounding-urban.md`.
+
+### Building form
+
+**Zhang, Y., Wang, Y., Dong, Q., Chen, X.-J., Zhang, F., Li, X., and Liu, Y.
+(2026).** Mapping three decades of urban growth in China: a 30 m annual building
+height dataset (1990–2019). *Earth System Science Data* 18, 5329.
+`10.5194/essd-18-5329-2026` — peer-reviewed paper; describes a dataset not used.
+**The only building-height product whose span contains 2000, 2010 and 2018**,
+annual and at 30 m.
+Cited in `notes/grounding-urban.md`, `notes/dataset-leads.md`.
+
+**Che, Y., Li, X., Liu, X., Wang, Y., Liao, W., Zheng, X., Zhang, X., Xu, X.,
+Shi, Q., Zhu, J., Zhang, H., Yuan, H., and Dai, Y. (2024).** 3D-GloBFP: the
+first global three-dimensional building footprint dataset. *Earth System Science
+Data* 16, 5357.
+`10.5194/essd-16-5357-2024` — peer-reviewed paper; describes a dataset not used.
+1.66 billion buildings, validated in China against CNBH.
+Cited in `notes/grounding-urban.md`.
+
+**Wu, W.-B., Ma, J., Banzhaf, E., Meadows, M. E., Yu, Z.-W., Guo, F.-X.,
+Sengupta, D., Cai, X.-X., and Zhao, B. (2023).** A first Chinese building height
+estimate at 10 m resolution (CNBH-10 m) using multi-source earth observations
+and machine learning. *Remote Sensing of Environment* 291, 113578.
+`10.1016/j.rse.2023.113578` — peer-reviewed paper; describes a dataset not used.
+10 m for 2020, root mean square error 4.65 m validated across 63 cities. One
+epoch only, which is the cross-sectional half of the trade-off the building-form
+literature states.
+Cited in `notes/grounding-urban.md`.
+
+**Zhang, Y., Zhao, H., and Long, Y. (2025).** CMAB: A Multi-Attribute Building
+Dataset of China. *Scientific Data* 12.
+`10.1038/s41597-025-04730-5` — dataset paper; describes a dataset not used, and
+**the one carrying the attribute closest to the mechanism.** Building-instance
+level with function among its attributes, which would separate residential from
+industrial without inferring it from volume — the distinction the urban record
+identifies as what an impervious footprint cannot make.
+Cited in `notes/grounding-urban.md`, `notes/dataset-leads.md`.
+
+### Tip-and-cue, and two in-domain observations
+
+**Maasakkers, J. D., Varon, D. J., Elfarsdóttir, A., McKeever, J., Jervis, D.,
+Mahapatra, G., Pandey, S., Lorente, A., Borsdorff, T., Foorthuis, L. R.,
+Schuit, B. J., Tol, P., van Kempen, T. A., van Hees, R., and Aben, I. (2022).**
+Using satellites to uncover large methane emissions from landfills. *Science
+Advances* 8.
+`10.1126/sciadv.abn9683` — peer-reviewed paper; a method not applied. The
+published tip-and-cue route: TROPOMI identifies the hotspot, a targeted
+instrument resolves the facility. Landfills in Buenos Aires, Delhi, Lahore and
+Mumbai emitting 3 to 29 t h⁻¹, city emissions 1.4 to 2.6 times inventory, and
+landfills contributing 6 to 50 percent. **This project has the tip and not the
+cue**, and Tier 0 establishes that its own tip lacks the sensitivity to
+constrain a single large landfill independently of the prior.
+Cited in `notes/grounding-urban.md`.
+
+**Pang, and others (2025).** Study of spatiotemporal variation and annual
+emission of CH4 in Shaoxing Yangtze River Delta, China, using a portable CH4
+detector on the UAV. *Journal of Environmental Sciences* 151, 140–149.
+`10.1016/j.jes.2024.03.045` — peer-reviewed paper; describes a dataset not used.
+**In-domain city-scale methane observation in Zhejiang**, April 2022 to February
+2023, estimating roughly 69 t km⁻² yr⁻¹ and describing that as higher than other
+cities worldwide. Its period does not overlap 2018.
+Cited in `notes/dataset-leads.md`.
+
+**Fu, and others (2026).** Observational insights into atmospheric CO2 and CO at
+the urban canopy layer top in Metropolitan Shanghai, China. *Atmospheric
+Chemistry and Physics* 26, 5477.
+`10.5194/acp-26-5477-2026` — peer-reviewed paper; describes a dataset **not
+used and not usable for this question**, which is why it is registered. Nearly
+two years of continuous in-situ measurement from the 632 m Shanghai Tower inside
+the lattice, by cavity ring-down spectrometer — of CO2 and CO, not methane. It
+is recorded because the platform exists in the right place and a methane channel
+on it would be the in-domain urban observation this project lacks.
 Cited in `notes/dataset-leads.md`.
 
 ---
