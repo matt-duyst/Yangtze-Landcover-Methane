@@ -764,6 +764,66 @@ combination of committed products does. It sits in Tier 1 because it is one
 request rather than a computation, and it should be first in that tier because
 of what it gates.
 
+### Added 14 September 2026, from the second rice block and the methane record
+
+**0e. Test the rice–aquaculture confound by overlaying China_AP on the rice
+layer.** *Gated by* fetching China_AP, which has no named deposit, so by one
+request rather than by a computation.
+[`notes/grounding-rice.md`](grounding-rice.md) establishes that freshwater
+aquaculture is 1.6 to 2.5 Tg CH4 per year in China against 13.7 Tg for rice
+paddies in a national prior, that it is absent from every inventory, that this
+region holds 26 percent of China's aquaculture area, and that ponds and paddy are
+spectrally similar flooded land whose confusion is a named problem in the mapping
+literature. China_AP is 10 m, annual, and covers 2018.
+
+**The test is a per-cell overlap fraction and it has three possible outcomes,
+all of them worth having.** If the overlap is negligible, the confound is
+dismissed cheaply and the rice fraction is what it claims to be. If it is
+substantial, the rice predictor is partly measuring an unrepresented source, and
+the association's interpretation changes rather than its value. And if the
+overlap correlates with the residual, that is a positive finding about a source
+nobody has mapped into an inventory. **This is the highest-value item added in
+this pass**, because it is the only one that could change what the existing
+association means rather than how confidently it is stated.
+
+**0f. Run the association on a tropospheric partial column rather than a total
+column.** *Gated by* fetching the MUSICA IASI/TROPOMI fused product, which needs
+a registration rather than a credential this project lacks.
+[`notes/grounding-methane.md`](grounding-methane.md) establishes that a total
+column carries stratospheric variability driven by tropopause height and
+large-scale dynamics, which no land-cover predictor over four Chinese provinces
+could ever explain, and that `tro_XCH4` removes it by construction. **This is the
+only item in the whole queue that could raise the association rather than explain
+it.**
+
+Its caveats are recorded with it so the item is not oversold. The product's
+TROPOMI input is a beta version rather than this project's 020400, so the
+comparison would not be like-for-like against the committed field. Coverage is
+the TROPOMI–IASI intersection and therefore sparser, over a domain whose coverage
+is already marginal. And the paper reports the combined tropospheric product's
+degrees of freedom as "weakly above 1.0", so the separation carries barely more
+than one independent piece of information. **A null on the tropospheric column
+would be a stronger negative result than the null already in hand**; a positive
+would need the coverage difference ruled out before it could be believed.
+
+**5a. Sensitivity inversions varying the coal and wetland priors, if an inversion
+is ever run.** *Gated by* the inversion itself, so it sits in Tier 5 with the
+items that consume everything above. The template is Liang et al.'s Heilongjiang
+rice inversion, which substituted the prior inventories for coal and for wetlands
+to assess how those priors affected the rice estimate. IMI makes it cheap by
+construction — "once K has been constructed, any ensemble of analytical
+inversions exploring the sensitivity to different inversion parameters can be
+easily and rapidly generated" — so the marginal cost is one Jacobian and the
+ensemble is free.
+
+**Record why this is not optional here.** The cross-layer synthesis above
+establishes that attribution depends on the prior's spatial distinctness, and
+this domain has coal in northern Anhui where the rice raster stops classifying
+and a wetland prior whose own authors say it may include co-located rice. **Those
+are the two priors whose substitution would most change a rice answer**, and an
+inversion reported without that ensemble would be reporting a number whose
+sensitivity to its own assumptions was never tested.
+
 ### What gates what, in one paragraph
 
 **As of 13 September 2026 Tier 0 is complete and three items sit above or beside
@@ -822,6 +882,31 @@ predictor could explain.
 
 **All four records now exist.** What remains ungrounded is listed below rather
 than by layer.
+
+### What remains ungrounded after four records, 14 September 2026
+
+**Two methane threads were not touched by the eleven rounds.** The first is
+future instruments — MethaneSAT, GOSAT-GW, CO2M and the Chinese missions — which
+bear directly on whether this project's question becomes answerable later rather
+than on whether it is answerable now. [`notes/grounding-methane.md`](grounding-methane.md)
+establishes that the degrees of freedom scale with observation density, so a
+denser instrument moves the capability finding, and no pass has asked by how
+much or when. The second is fetching the WFMD product and comparing it against
+this project's own field. The European three-product comparison now covers that
+question in principle — it puts WFMD 33 points below the other two in an
+inversion budget, with albedo and aerosol scattering named as the cause — so the
+value of doing it here is lower than it was, and it is no longer a gap so much as
+a deferred check.
+
+**And one framing has never been applied to any round.** No pass has asked what a
+reviewer of this paper would object to. Every round followed what was
+interesting, which is a different and more generous filter: it surfaces findings
+that enrich the record and does not systematically surface the objections that
+would sink a submission. **The two filters produce different reading lists**, and
+the difference is the reason this is recorded as an open pass rather than as a
+finished one. A reviewer-objection pass would start from the claims this file
+says the paper may make and look for the literature that contradicts each, which
+is the opposite of how the four grounding records were built.
 
 **The satellite question has not been asked at all.** Whether other instruments
 or validation sources have been overlooked — GOSAT and GOSAT-2 in their own

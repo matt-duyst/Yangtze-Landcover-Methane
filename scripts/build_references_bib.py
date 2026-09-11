@@ -49,6 +49,12 @@ DOI_IN_PROSE = re.compile(r"`(10\.\d{4,9}/[^`\s]+)`")
 EXCLUDED = {
     "ISO 5807:1985": "a standard, not a paper; no DOI exists",
     "Chaudhuri (2020)": "a textbook; no DOI exists",
+    "Zhang, W., and others (2026), Scientia Agricultura Sinica":
+        "the DOI 10.3864/j.issn.0578-1752.2026.04.009 resolves, but the "
+        "publisher serves HTML rather than honouring Accept: "
+        "application/x-bibtex, so content negotiation cannot produce an entry. "
+        "The DOI is written without backticks in the register so the generator "
+        "does not claim it",
 }
 
 #: DOIs the register **names in order to warn against them**. They resolve, or
@@ -253,6 +259,35 @@ KEYS = {
     "10.1016/j.scib.2026.06.019": "zhao2026subnational",
     "10.1038/s41467-024-54038-y": "khanna2024mitigation",
     "10.1038/s41597-022-01522-z": "zhang2022irrigated",
+    # the rice second block, the methane grounding and the synthesis, 14 September 2026
+    "10.1038/s43247-024-01699-8": "zhang2024aquaculture",
+    "10.1021/acs.est.2c05218": "dong2023ponds",
+    "10.1016/j.jhydrol.2025.132765": "zhao2025pondlake",
+    "10.1016/j.agrformet.2021.108600": "zhao2021pondec",
+    "10.1016/j.jes.2025.03.042": "li2026jiangsuponds",
+    "10.1016/j.jag.2025.104958": "sun2025chinaap",
+    "10.1029/2024EF005637": "chen2025aquaindex",
+    "10.1016/S0038-0717(99)00050-4": "bossio1999straw",
+    "10.1126/sciadv.aau9038": "jiang2019acclimation",
+    "10.1371/journal.pone.0198081": "martinezeixarch2018fallow",
+    "10.1007/s11104-020-04809-5": "martinezeixarch2021drivers",
+    "10.35097/wq583rnzpmd83m5g": "shahzadi2026fuseddata",
+    "10.5194/essd-18-2153-2026": "shahzadi2026fused",
+    "10.5194/acp-23-8039-2023": "liang2023eastasia",
+    "10.5194/gmd-18-9279-2025": "nesser2025boundary",
+    "10.5194/gmd-13-3839-2020": "stanevich2020resolution",
+    "10.5194/acp-26-6857-2026": "wang2026twelvekm",
+    "10.5194/gmd-14-7775-2021": "yu2021osse",
+    "10.5194/acp-25-2947-2025": "penn2025oh",
+    "10.5194/gmd-10-2141-2017": "bloom2017wetcharts",
+    "10.3334/ORNLDAAC/1915": "bloom2021wetchartsdata",
+    "10.1021/acs.est.6c05412": "chen2026tropicalwetland",
+    "10.1016/j.agrformet.2017.09.003": "desjardins2018reconciling",
+    "10.1098/rsta.2020.0449": "france2021isotopes",
+    "10.1016/j.atmosenv.2022.119021": "bakkaloglu2022wasteisotopes",
+    "10.15138/qn55-e011": "sherwood2020signatures",
+    "10.1029/2021GB007000": "lan2021d13c",
+    "10.5194/acp-26-7765-2026": "yao2026southasia",
 }
 
 HEADER = """% Verified reference register for Yangtze-Landcover-Methane.

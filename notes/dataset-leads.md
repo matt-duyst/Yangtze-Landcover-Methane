@@ -27,6 +27,35 @@ from reading.
 described in a paper with no data availability statement, or with one naming a
 host that was not tried.
 
+## A fourth status, added 14 September 2026
+
+The three above conflate two different kinds of open. **Most of the entries below
+are open in the sense that anyone may register and download, not in the sense
+that this repository's fetchers reach them without credentials**, and that
+difference decides whether a dataset can enter the pipeline or only a person's
+working directory.
+
+**Open, anonymous** is the strong form: a request from this machine, with no
+account and no key, returns the bytes. The blended TROPOMI+GOSAT product,
+CCD-Rice through Science Data Bank, the CCD-Rice validation polygons, GISA-new
+through the Zenodo API, APRA500 through the Zenodo API, and Landsat Collection 2
+through the Planetary Computer are all in this class, and every one of them is
+reachable by a `src/fetch/` module that exists or could be written in an
+afternoon.
+
+**Open, registered** is the weaker form and it is where most of the new entries
+sit. ORNL DAAC requires a NASA Earthdata login. IMI's compute requires an AWS
+account even though its input buckets are public. KIT's RADAR repository serves
+files but its terms were not read. None of these is closed, and none of them is
+fetchable by a script in this repository as it stands.
+
+**The distinction matters for the dataset stage rather than for the reading.**
+A status of "verified accessible" has meant, throughout this file, that a request
+succeeded without credentials. That standard is kept. What is added is that
+entries which would pass it *given an account* now say so, instead of sitting
+unmarked among the genuinely unreachable. Where an entry below reads **open,
+registered**, the obstacle is an account and not a permission.
+
 ## Methane observations
 
 | Candidate | What it is | Route | Licence | Coverage | What it serves | Status |
@@ -36,6 +65,7 @@ host that was not tried.
 | Xianghe TCCON | The other Chinese TCCON site | — | — | from 2018-06-14 | **Ruled out.** 39.75 N is 4.55 degrees, about 505 km, north of the lattice | considered and excluded |
 | Lin'an WMO/GAW | In-situ surface CH4 at a regional background station in Zhejiang, inside the domain | WDCGG not tried; the station's record is analysed in Shan et al. (2022) | unknown | long-running; 1,942 ppb annual mean in 2011 against Waliguan's 1,861 | A background reference the column field is embedded in, and a surface seasonal cycle | unverified |
 | Suzhou three-station network | Surface CH4 at Wujiang, Xiangcheng and Zhangjiagang, all in Jiangsu | no deposit named in Guo et al. (2023) | unknown | 2020–2021 | The in-domain surface seasonal cycle, peaking mid-July and late August, which the composite's October sounding peak must be read against | unverified |
+| **MUSICA IASI/TROPOMI fused CH4** | A merged TROPOMI–IASI product carrying three variables where this project has one: a total column, a tropospheric partial column for the lowermost 50 percent of the atmosphere, and an upper-troposphere/stratosphere column, combined by Kalman filter from about 444 million TROPOMI observations | KIT RADAR repository, `10.35097/wq583rnzpmd83m5g`, version 4.1; landing page not fetched and terms not read | not established | January 2018 to June 2021; **covers the analysis year in full** | **The only lead in any pass that could raise an association rather than explain it.** A tropospheric column removes stratospheric variance no land-cover predictor could explain. Caveats: a beta-version TROPOMI input rather than 020400, sparser coverage than TROPOMI alone, and information content weakly above one degree of freedom | open, registered |
 
 A premise correction belongs here rather than in a status. It was assumed that
 Lin'an might not be in WDCGG because the China Meteorological Administration's
@@ -52,6 +82,8 @@ station's existence and its figures are not the uncertainty; the data route is.
 | City-scale source-resolved inventory | Methane for 339 prefecture-level cities, resolved by source | Supporting Information PDF attached to the article; no separate data deposit found | article licence | 2018 to 2024 | The urban composition `ERRATA.md` 5.3 rests on, including the 38 cities where waste dominates | documented only |
 | EDGAR | The global gridded anthropogenic inventory | already known | — | — | Known biased **in both directions here**: Huang et al. (2021) found it underestimating agricultural soils especially in growing seasons, and its v432 and v5.0 posteriors differ by eight points of regional share | known |
 | Wastewater facility factors | Facility-level CH4 emission factors from atmospheric measurements at 105 treatment plants, including thirteen in Nanjing measured across three seasons | no deposit named | unknown | measurements to 2023 | The sector `ERRATA.md` 5.3 records the thesis as omitting entirely | unverified |
+| **WetCHARTs v1.3.1** | The wetland methane emission ensemble IMI uses as its default prior, monthly at 0.5 degrees | ORNL DAAC, `10.3334/ORNLDAAC/1915`; **a NASA Earthdata login is required**, so not fetchable anonymously | open data, registered access | 2001 to 2019 | **The prior that overlaps the rice prior in these cells.** Its own documenting paper states that Chinese rice extents are only implicitly excluded, that inundation retrievals cannot separate co-located agriculture from natural wetland, and that the distinction "has yet to be consistently addressed". It also carries a documented seasonal-phase defect, using air temperature rather than soil temperature | open, registered |
+| IMI input buckets | The three public AWS buckets IMI reads: TROPOMI methane at `registry.opendata.aws/sentinel5p/`, the blended TROPOMI+GOSAT product at `registry.opendata.aws/blended-tropomi-gosat-methane/`, and GEOS-FP emissions, boundary conditions and meteorology at `registry.opendata.aws/geoschem-input-data/` | AWS Open Data Registry; the buckets are public and **the compute is not** — running IMI needs an AWS account | open data | TROPOMI record from 2018; the boundary archive begins 1 April 2018 | **The boundary-condition archive is the part this project could not build for itself**, and its start date falls one day before this project's first granule. The second bucket holds the field already committed as the composite's third band | open, registered |
 
 ## Rice
 
@@ -73,6 +105,8 @@ station's existence and its figures are not the uncertainty; the data route is.
 | 30 m Northeastern China rice | Annual paddy rice at 30 m, 2000 to 2023 | figshare `10.6084/m9.figshare.28407710` | CC-BY-4.0 | 2000 to 2023 | **Ruled out on extent**: Northeastern China. Recorded so the reason is on file, because the resolution and the twenty-four-year span would otherwise make it the best candidate here | considered and excluded |
 | 30 m South and Southeast Asia rice | Paddy rice distribution and cropping intensity at 30 m, 1995 to 2024 | not established, from Zhao et al. (2026), `10.5194/essd-18-5583-2026` | unknown | 1995 to 2024 | **Ruled out on extent.** Kept because its first two authors are the authors of the paddy-rice-and-XCH4 Reply, so the group that established the 0.5-degree correlation built the high-resolution map it called for — for another continent | considered and excluded |
 | Rice mapping product review | A consistency assessment of twenty-five rice products, three global and twenty-two regional, over China, Heilongjiang and Vietnam | `10.1016/j.srs.2024.100172`, open access | CC-BY | published 2024 | **The map of this table's own territory.** It finds products losing consistency in fragmented fields, cloud and complex cropping challenging subtropical mapping, no product combining wide coverage with fine resolution and a long series, and ground-truth deficiency impeding validation — the last of which is this repository's own accuracy-assessment conclusion, reached independently | **verified accessible** |
+| **China_AP** | The first 10 m annual aquaculture pond dataset for China, from 119,882 Sentinel-1 and 579,436 Sentinel-2 scenes, with individual-pond extraction accuracy above 90 percent | no deposit named in Sun et al. (2025), `10.1016/j.jag.2025.104958` | unknown | 2016 to 2023; **covers 2018** | **The test of the largest omission in the rice record.** Overlaying it on the committed rice layer would measure the paddy–pond overlap directly, per cell, for the analysis year. Its area totals could not be verified and are not used | unverified |
+| Aquaculture pond index mapping | A second national aquaculture pond mapping, from a new aquaculture index with machine learning | *Earth's Future* `10.1029/2024EF005637`; no deposit named | article licence | published 2025 | **The pair China_AP needs under the GAIA–GISA rule**: two products with different errors beat one better product, and this file has applied that rule to impervious surface and to rice already. Also the clearest source for the paddy-versus-pond classification confound | unverified |
 
 Three of the four products this pass examined for the first time turned out to be
 out of domain, which is the most useful thing the pass established for this file.

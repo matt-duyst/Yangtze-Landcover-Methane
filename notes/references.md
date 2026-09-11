@@ -5,7 +5,8 @@ Every source this repository cites, verified against the DOI registries on
 first diagrams, again on 10 September 2026 when nineteen literature
 searches over the study region were recorded, and again on 14 September 2026
 when the rice layer was given a grounding record and all three layers were given
-review-level anchors. The register exists because
+review-level anchors, and extended the same day with the rice layer's second
+literature block, the methane layer's record and the cross-layer synthesis. The register exists because
 citations here were scattered
 across `config/sources.yml`, `data/manifest.json`, `notes/decisions.md`,
 `ERRATA.md` and three READMEs, in four different formats, so nobody could say
@@ -22,7 +23,7 @@ instance was met on 10 September 2026 and not acted on: the ChinaRiceCalendar
 deposit's author field gives two of eleven authors with their given and family
 names run together, and the paper's citation is carried instead.
 
-`notes/references.bib` carries one hundred sixty-one entries as BibTeX. It is
+`notes/references.bib` carries one hundred eighty-nine entries as BibTeX. It is
 **generated**, not typed: each entry comes from `https://doi.org` under content
 negotiation for `application/x-bibtex`, so the two files cannot drift and no
 transcription step exists between the registry and the repository. Regenerate it
@@ -36,10 +37,15 @@ class of assertion this repository has twice found to be false elsewhere.
 `tests/test_references.py` asserts, without touching the network, that the DOIs
 in this file and the DOIs in the BibTeX are the same set.
 
-Two entries in this register are **not** in the BibTeX and cannot be. ISO
+Three entries in this register are **not** in the BibTeX and cannot be. ISO
 5807:1985 is a standard and Chaudhuri (2020) is a textbook; neither has a DOI,
 so no content negotiation produces them, and typing them by hand would break
 the only guarantee that file makes. Both are under *The diagram sources* below.
+**The third is new on 14 September 2026 and is a different case**: Zhang and
+others (2026) in *Scientia Agricultura Sinica* has a DOI that resolves, but the
+publisher answers a BibTeX content-negotiation request with HTML, so the
+generator cannot produce an entry for a work that does have an identifier. Its
+DOI is written without backticks so the generator does not claim it.
 
 This register does **not** include the 2023 thesis's own reference list, which
 is in `writeup/Duyst_Thesis.pdf` and belongs to that document. Where the errata
@@ -48,12 +54,12 @@ discusses a work the thesis cites, the work appears here and its role says so.
 ## What could not be verified
 
 Nothing in the register failed to verify **as a work**. All one hundred
-sixty-one cited DOIs resolved: one hundred forty-seven through Crossref and
-fourteen through DataCite, which is the registry that carries dataset and preprint DOIs
+eighty-nine cited DOIs resolved: one hundred seventy-two through Crossref and
+seventeen through DataCite, which is the registry that carries dataset and preprint DOIs
 and the reason a Crossref-only lookup returns "not found" for them. **The
 register now holds one preprint**, marked as one where it is cited; Copernicus
 registers its discussion papers with Crossref, so it is not among the DataCite
-fourteen.
+seventeen.
 
 **Five further DOIs appear in this register and are not citations.** They are
 named to warn against them, and `scripts/build_references_bib.py` holds them in
@@ -66,6 +72,19 @@ something misleading, which is the safer of the two failures. **A resolving DOI 
 citation**, and it is now the register's best-documented failure mode: three of
 the four differ from the correct DOI only in the last digits of an identifier in
 the same journal and year.
+
+**A third failure mode was found on 14 September 2026 and it is the worst of the
+three, because it is already committed.** Two entries written during the methods
+grounding carry author lists and page ranges that do not match the registry:
+Zhong and others (2026), whose author list read "Zhong, and others", and
+Sicsik-Paré and others (2026), whose list put the fourth author third and dropped
+the third entirely. Both were drafted from search phrasing rather than from
+content negotiation, and **both were found only because a later pass happened to
+need the same paper for something else.** The register should therefore be
+assumed to hold more of them, and a systematic re-negotiation of the methods-pass
+entries is worth a pass of its own. Neither is counted among the failures below,
+because both are real citations of real papers that were written down wrongly
+rather than sources that did not survive.
 
 A second failure mode was met on 11 September 2026 and is recorded because it
 nearly reached a commit. **Six author attributions drafted from search-result
@@ -1249,16 +1268,37 @@ albedo ceiling of 0.75 outside summer and a SWIR albedo floor of 0.05 preserve
 to 21 percent. This project has 166 cells below that floor and below zero.
 Cited in `notes/grounding-methods.md`.
 
-**Sicsik-Paré, A., Fortems-Cheiney, A., Broquet, G., and others (2026).**
-Assessment of the differences in European CH4 emission estimates from three
-TROPOMI products. *Atmospheric Chemistry and Physics* 26, 10423–10450.
+**Sicsik-Paré, A., Fortems-Cheiney, A., Pison, I., Broquet, G., Opler, A.,
+Potier, E., Martinez, A., Schneising, O., Buchwitz, M., Maasakkers, J. D.,
+Borsdorff, T., and Berchet, A. (2026).** Assessment of the differences in
+European CH4 emission estimates from three TROPOMI products. *Atmospheric
+Chemistry and Physics* 26, 10423–10454.
 `10.5194/acp-26-10423-2026` — peer-reviewed paper; a finding relied on, and the
 source of a hard constraint. "A destriping procedure (Borsdorff et al., 2024) is
 applied to new XCH4 data from 2024/09/07 (v2.07), but older orbits have not been
 reprocessed." This project's 2018 granules are processor version 020400, so the
 official destriping cannot be inherited and only a self-implemented one is
 available.
-Cited in `notes/grounding-methods.md`.
+
+**Two defects in this entry were found on 14 September 2026 and are fixed above**,
+the second instance of the same failure in an entry committed during the methods
+pass. The author list read "Sicsik-Paré, A., Fortems-Cheiney, A., Broquet, G., and
+others", which puts the fourth author third and drops Pison entirely; and the page
+range read 10423–10450 where the registry gives 10423–10454.
+
+**And the same paper is the methane grounding's retrieval-choice section.**
+Assimilating three TROPOMI products into one variational inversion for 2019 over
+Europe gives emission budgets of "+2 %" for SRON, "−1 %" for the blended product
+and "−33 %" for WFMD against the prior, with a surface-based inversion at "−9 %" —
+a 35-point spread from the choice of retrieval alone. "Machine learning
+predictions of XCH4 differences point to aerosol scattering and albedo
+sensitivity as the largest contributors to the differences." And the mechanism is
+structural: TROPOMI "uses the full-physics algorithm RemoTeC and simultaneously
+retrieves XCH4, surface albedo and atmospheric scattering properties", so albedo
+is a co-retrieved parameter rather than an external contaminant — which is a more
+precise statement of this project's own bias-correction limit than "the
+correction is incomplete".
+Cited in `notes/grounding-methods.md`, `notes/grounding-methane.md`.
 
 ### Model class and resolution
 
@@ -2255,6 +2295,457 @@ irrigation maps with no deposit route; this is a second, published, irrigation
 layer at the same resolution, and it assimilates statistics, which is the same
 care its neighbour entry needs.
 Cited in `notes/dataset-leads.md`.
+
+---
+
+## The rice second block, the methane layer and the synthesis, added 14 September 2026
+
+The largest single addition the register has taken: twenty-nine entries from
+fifteen rice rounds, eleven methane rounds and three cross-layer searches, of
+which twenty-eight are in the BibTeX and one cannot be.
+
+**The balance was expected to shift back toward method and did not.** Under one
+consistent classification of the role lines, methods fall from 32.7 to 28.9
+percent, findings rise from 45.3 to 48.7, and datasets hold at about 22. The
+prediction was that a record about an instrument and a modelling chain would be
+method-heavy; what the methane pass actually produced was mostly *findings about*
+that chain — a boundary sensitivity, a transport bias, an OSSE limit, a retrieval
+spread — rather than methods to apply. Only three of the twenty-nine are methods
+not applied. **The register's method share has now fallen in three consecutive
+passes**, which is the right direction for a project whose remaining gap is
+subject knowledge rather than technique, and it happened for a different reason
+than the one predicted.
+
+**A second already-committed entry was found defective and is fixed rather than
+duplicated.** Sicsik-Paré and others (2026) carried an author list that put the
+fourth author third and dropped the third entirely, and a page range four pages
+short. With the Zhong entry fixed in the previous pass, that is two of the
+entries drafted during the methods grounding found to have been written from
+search phrasing rather than from content negotiation. **Both were found only
+because a later pass happened to need the same paper for something else**, which
+means the register should be assumed to hold more of them and a systematic
+re-negotiation of the methods-pass entries is worth a pass of its own.
+
+**One entry is a Chinese-language journal** and is carried as the registry gives
+it, in the journal's own English title and transliterated author names.
+
+**Two entries are deposits whose papers are also registered**, which the register
+has done before for GloRice and CCD-Rice: the MUSICA fused product and WetCHARTs
+v1.3.1. In both cases the deposit is the thing that would be fetched and the
+paper is the thing that documents it.
+
+### Aquaculture, the unrepresented source
+
+**Zhang, L., Wang, X., Huang, L., Wang, C., Gao, Y., Peng, S., Canadell, J. G.,
+and Piao, S. (2024).** Inventory of methane and nitrous oxide emissions from
+freshwater aquaculture in China. *Communications Earth & Environment* 5.
+`10.1038/s43247-024-01699-8` — peer-reviewed paper; **a finding relied on, and
+the largest omission any grounding pass has found.** "Total CH4 and N2O emissions
+were 2.5 (0.6-4.2) Tg CH4 yr-1 and 18.3 (3.8-32.2) Gg N2O yr-1, respectively,
+with 75% coming from ponds and paddy fields", effluxes "5 and 2 times higher than
+the average from other inland water bodies", and the framing sentence: the
+contribution "remains highly uncertain because **the source has been neglected in
+global and national greenhouse gas inventories**". Aquaculture "accounts for half
+of the national inland water emissions, and outweighs the land soil methane
+sink".
+Cited in `notes/grounding-rice.md`, `notes/dataset-leads.md`.
+
+**Dong, B., Xi, Y., Cui, Y., and Peng, S. (2023).** Quantifying Methane Emissions
+from Aquaculture Ponds in China. *Environmental Science & Technology* 57,
+1576–1583.
+`10.1021/acs.est.2c05218` — peer-reviewed paper; a finding relied on, and the
+independent bracket on the entry above. From "a database of 55 field
+observations", "the total CH4 emission from aquaculture ponds is 1.60 ± 0.62 Tg
+CH4 yr–1, with an average growth rate of ~0.03 Tg CH4 yr–2 during the period
+2008–2019", and aquaculture species show "a lower (63%) emission intensity" per
+unit of animal protein than major livestock. Two estimates by different methods
+bracket the source at 1.6 to 2.5 Tg per year.
+Cited in `notes/grounding-rice.md`.
+
+**Zhao, J., Zhang, M., Xiao, W., Jia, L., Zhang, X., Wang, J., Zhang, Z.,
+Xie, Y., Pu, Y., Liu, S., Feng, Z., and Lee, X. (2021).** Large methane emission
+from freshwater aquaculture ponds revealed by long-term eddy covariance
+observation. *Agricultural and Forest Meteorology* 308–309, 108600.
+`10.1016/j.agrformet.2021.108600` — peer-reviewed paper; **a finding relied on,
+and in-domain.** "CH4 flux was measured continuously for four years with eddy
+covariance (EC) in an aquaculture pond complex in the Yangtze River Delta,
+China": daily flux "0.1 to 16.7 μg m−2 s−1, with an average value of 4.10 ± 3.08
+µg m−2 s−1", water temperature the primary driver at every timescale, and
+ebullition "the main transport way accounting for 70% ± 4% of the total CH4
+flux". Four years of flux tower measurement inside this study region, for a
+source neither predictor represents.
+Cited in `notes/grounding-rice.md`, `notes/dataset-leads.md`.
+
+**Zhao, J., Zhang, M., Pu, Y., Jia, L., Xiao, W., Zhang, Z., Ge, P., Shi, J., and
+Xiao, Q. (2025).** Dynamic and high methane emission flux in pond and lake
+aquaculture. *Journal of Hydrology* 653, 132765.
+`10.1016/j.jhydrol.2025.132765` — peer-reviewed paper; a finding relied on, for
+regional scale. The Yangtze River Delta "accounts for 26% of China's total
+aquaculture area", with both pond and lake aquaculture practised, and pond flux
+running well above lake flux.
+Cited in `notes/grounding-rice.md`.
+
+**Li, Y., Wang, H., Zeng, Q., Jeppesen, E., Gu, X., and Yan, J. (2026).** Insight
+into greenhouse gas emission in freshwater aquaculture ponds in Jiangsu Province:
+Variation due to species used and ponds management practice. *Journal of
+Environmental Sciences* 160, 732–744.
+`10.1016/j.jes.2025.03.042` — peer-reviewed paper; **a finding relied on, and one
+of the two largest within-class ratios in this repository.** "The highest CH4 and
+N2O fluxes were found in the Crucian carp (Carassius auratus) pond with up to
+16,512 ± 3015 µmol/(m2·h)"; "CH4 was the primary contributor to the global
+warming potential in traditional earthen ponds, accounting for an average
+contribution rate of 87.7" percent; and "the GHG emission intensity per unit of
+fish production in traditional earthen ponds was **197 times higher** than that
+in-pond raceway systems". All ponds are in Jiangsu, one of this project's four
+provinces.
+Cited in `notes/grounding-rice.md`, `notes/paper-target.md`.
+
+**Sun, Z., Luo, J., Cao, Z., Shen, M., Qi, T., Gu, X., Yuan, W., and Duan, H.
+(2025).** Nationwide spatial distribution of aquaculture ponds in China: Inland
+surpassing coastal areas revealed by Satellite remote sensing. *International
+Journal of Applied Earth Observation and Geoinformation* 145, 104958.
+`10.1016/j.jag.2025.104958` — peer-reviewed paper; **describes a dataset not
+used, and the one that would settle the rice–aquaculture confound.** China_AP,
+the first 10 m annual aquaculture pond dataset for China for 2016 to 2023, from
+119,882 Sentinel-1 and 579,436 Sentinel-2 scenes with individual-pond extraction
+accuracy above 90 percent. It covers 2018. **Its 2023 area total and inland share
+could not be verified and are not written**; the inland-surpassing-coastal
+direction is the paper's own title.
+Cited in `notes/grounding-rice.md`, `notes/dataset-leads.md`.
+
+**Chen, J., Lin, C., Xue, K., Cao, Z., Ma, R., Ma, D., and Tong, Y. (2025).**
+Mapping China Aquaculture Ponds: Integrating a New Aquaculture Index With Machine
+Learning. *Earth's Future* 13.
+`10.1029/2024EF005637` — peer-reviewed paper; describes a dataset not used. A
+second national aquaculture pond mapping, registered as the pair China_AP would
+need under the GAIA–GISA rule that two products with different errors are worth
+more than one better product. It is also the clearest source in this group for
+the classification confound, naming misclassification against salt fields and
+rice paddies at national scale; **no sentence from it is quoted, because the
+article could not be fetched and the confound is recorded as a direction
+only**.
+Cited in `notes/dataset-leads.md`.
+
+### Straw, the fallow season, and paddy as wetland
+
+**Bossio, D. A., Horwath, W. R., Mutters, R. G., and van Kessel, C. (1999).**
+Methane pool and flux dynamics in a rice field following straw incorporation.
+*Soil Biology and Biochemistry* 31, 1313–1322.
+`10.1016/S0038-0717(99)00050-4` — peer-reviewed paper; **a finding relied on, and
+the best-fitting candidate any pass has found for an unexplained trend.** "A
+5-fold increase in total CH4 emissions over the rice growing season was observed
+in plots in which rice straw had been incorporated each fall for 4 yr. Total
+cumulative CH4 flux, 1 May–1 October 1997, was 8.87 g C m−2 in incorporated,
+winter flooded plots ... 1.63 g C m−2 in burned, winter flooded plots". Two
+further details matter: "rice yields in this study have not been affected by
+straw incorporation", so the effect has no yield signature; and "methane
+emissions peaked between 22.00 and 23.00 h", a nocturnal diurnal peak. The site
+is in California. **Crossref returns the author list as "Bossio, D" alone**; the
+full list is taken from the article's own title page and is recorded here for
+that reason.
+Cited in `notes/grounding-rice.md`, `notes/paper-target.md`.
+
+**Jiang, Y., Qian, H., Huang, S., Zhang, X., Wang, L., Zhang, L., Shen, M.,
+Xiao, X., Chen, F., Zhang, H., and six others (2019).** Acclimation of methane
+emissions from rice paddy fields to straw addition. *Science Advances* 5.
+`10.1126/sciadv.aau9038` — peer-reviewed paper; a finding relied on, and the
+qualification on the entry above. "On average, the IPCC Tier 1 methodology
+estimated a 193% increase in CH4 emissions due to long-term straw incorporation
+for the studies in our dataset. Yet, long-term straw incorporation stimulated the
+CH4 emissions by only 101%" — 48 percent lower than the IPCC estimate — because
+"long-term straw incorporation increased soil methanotrophic abundance and rice
+root size, suggesting an increase in CH4 oxidation rates through improved O2
+transport into the rhizosphere". Its first two authors are the last and first
+authors of the rice review already in the register.
+Cited in `notes/grounding-rice.md`.
+
+**Martínez-Eixarch, M., Alcaraz, C., Viñas, M., Noguerol, J., Aranda, X.,
+Prenafeta-Boldú, F. X., Saldaña-De la Vega, J. A., Català, M. del M., and
+Ibáñez, C. (2018).** Neglecting the fallow season can significantly underestimate
+annual methane emissions in Mediterranean rice fields. *PLOS ONE* 13, e0198081.
+`10.1371/journal.pone.0198081` — peer-reviewed paper; **a finding relied on, and
+the one that corrects a committed record.** "Estimated cumulative CH4 emissions
+from May to December were 314.1 kg CH4 ha−1", "of which *ca.* 70% were emitted
+during the fallow season", following "a bimodal distribution pattern with the
+first peak in August (5.0 ± 0.7 mg C-CH4 m−2 h−1) and the second one in October
+(20.2 ± 4.2 mg C-CH4 m−2 h−1)" — **the October peak four times the August one.**
+Ebre Delta, Catalonia; Mediterranean water management, so it disqualifies the
+region record's dilution framing without establishing a Chinese value.
+Cited in `notes/grounding-rice.md`, `notes/grounding-yrd.md`.
+
+**Martínez-Eixarch, M., Alcaraz, C., Viñas, M., Noguerol, J., Aranda, X.,
+Prenafeta-Boldú, F.-X., Català-Forner, M., Fennessy, M. S., and Ibáñez, C.
+(2021).** The main drivers of methane emissions differ in the growing and flooded
+fallow seasons in Mediterranean rice fields. *Plant and Soil* 460, 211–227.
+`10.1007/s11104-020-04809-5` — peer-reviewed paper; a finding relied on, and the
+same group's independent confirmation. "Two thirds of the CH4 is emitted in the
+fallow season. Edaphic factors exert more influence during the growing season
+whereas agronomic factors have a higher impact in the fallow." **The seasonal
+sign reversals carried into this pass are not in the abstract and are not
+written.**
+Cited in `notes/grounding-rice.md`, `notes/grounding-yrd.md`.
+
+**Zhang, W., Yan, S., Shang, Z., Tang, Z., Wu, L., Li, J., Chen, H., Deng, A.,
+Zhang, J., Zhang, X., Zheng, C., and Song, Z. (2026).** Methane Emissions from
+Paddy Fields: Not Entirely Attributable to Rice Cultivation. *Scientia
+Agricultura Sinica* 59, 824–833, doi:10.3864/j.issn.0578-1752.2026.04.009.
+**The DOI is written here without backticks, and that is deliberate.** It
+resolves, but the publisher serves HTML in answer to
+`Accept: application/x-bibtex`, so content negotiation cannot produce an entry
+and `scripts/build_references_bib.py` records it in `EXCLUDED` for the same
+reason it records the standard and the textbook. It is the register's first
+citation that has a DOI and still cannot be generated. Peer-reviewed paper; **a finding relied
+on, and the one that undercuts the attribution itself.** "Paddy CH₄ emissions
+were found to be approximately 72.2% to 123.6% of those from their adjacent
+natural wetlands"; "estimates based on machine learning models suggest that
+natural emissions constitute more than 36% of total paddy CH₄ fluxes"; and yet
+"in compiling paddy CH₄ emission inventories, the entirety of CH₄ emitted from
+rice paddies is currently accounted for as anthropogenic contribution from rice
+cultivation". Two of its authors are co-authors of the rice review in this
+register. The journal is Chinese-language and the citation is carried in its own
+English title.
+Cited in `notes/grounding-rice.md`.
+
+### The methane layer's target and observing chain
+
+**Shahzadi, K., Schneider, M., Lo, N. Y., Hase, F., Meyer, J., Cayoglu, U.,
+Borsdorff, T., and Martinez-Velarte, M. C. (2026).** A multi-year global methane
+data set obtained by merging observations from TROPOMI and IASI. *Earth System
+Science Data* 18, 2153–2177.
+`10.5194/essd-18-2153-2026` — peer-reviewed paper; **describes a dataset not
+used, and the only finding in any pass that could raise an association rather
+than explain it.** Three variables where this project has one: "we define the
+lowermost 50 % of the atmosphere as the troposphere and the uppermost 50 % of the
+atmosphere as the upper troposphere/stratosphere", giving a total column, a
+`tro_XCH4` and a `uts_XCH4`, combined "by means of a Kalman filter that uses the
+MUSICA IASI data as the background and the TROPOMI data as the new observation"
+over "42 months (from January 2018 to June 2021)", from "about 444 million
+individual and high-quality TROPOMI observations" yielding "about 289 million
+individual data points". **The information content is smaller than this pass was
+briefed to expect**: for the combined tropospheric product "DOFS values are
+weakly above 1.0 for almost all locations around the globe", not about 2.4. The
+TROPOMI input is a "beta version of the operational S5P product", not this
+project's 020400.
+Cited in `notes/grounding-methane.md`, `notes/dataset-leads.md`.
+
+**Shahzadi, K., Schneider, M., Lo, N. Y., and Borsdorff, T. (2026).** MUSICA
+IASI / TROPOMI RemoTeC fused CH4 data set (version 4.1). Karlsruhe Institute of
+Technology.
+`10.35097/wq583rnzpmd83m5g` — the deposit, not fetched; the dataset the entry
+above documents, on KIT's RADAR repository. Registered because it is the object a
+fetch would target and because the tropospheric-column item in the queue depends
+on it.
+Cited in `notes/grounding-methane.md`, `notes/dataset-leads.md`.
+
+**Liang, R., Zhang, Y., Chen, W., Zhang, P., Liu, J., Chen, C., Mao, H.,
+Shen, G., Qu, Z., Chen, Z., Zhou, M., Wang, P., Parker, R. J., Boesch, H.,
+Lorente, A., Maasakkers, J. D., and Aben, I. (2023).** East Asian methane
+emissions inferred from high-resolution inversions of GOSAT and TROPOMI
+observations: a comparative and evaluative analysis. *Atmospheric Chemistry and
+Physics* 23, 8039–8057.
+`10.5194/acp-23-8039-2023` — peer-reviewed paper; **a finding relied on, and the
+one structural feature of this region that is favourable.** A positive boundary
+bias of 10 ppbv "would result in a reduction of annual methane emissions by
+3.3 Tg a−1 (∼2 %) over the East Asia domain, 1.8 Tg a−1 (∼2 %) over China, and
+0.75 Tg a−1 (∼3 %) over eastern China (EC), the most affected region", with the
+small effects "as expected from prevailing westerlies in midlatitudes". So this
+study area is the worst case in East Asia and the worst case is about 3 percent.
+Its first two authors are the first two of the Heilongjiang rice inversion
+already in the register.
+Cited in `notes/grounding-methane.md`.
+
+**Nesser, H., Bowman, K. W., Thill, M. D., Varon, D. J., Randles, C. A.,
+Tewari, A., Cardoso-Saldaña, F. J., Reidy, E., Maasakkers, J. D., and
+Jacob, D. J. (2025).** Predicting and correcting the influence of boundary
+conditions in regional inverse analyses. *Geoscientific Model Development* 18,
+9279–9291.
+`10.5194/gmd-18-9279-2025` — peer-reviewed paper; a method not applied. A
+predictive metric for boundary-induced error to support domain specification
+before an inversion, and a diagnostic metric to assess it afterwards. It puts the
+boundary question in the same class as the IMI preview's DOFS estimate: a cheap
+gate rather than a result.
+Cited in `notes/grounding-methane.md`.
+
+**Stanevich, I., Jones, D. B. A., Strong, K., Parker, R. J., Boesch, H.,
+Wunch, D., Notholt, J., Petri, C., Warneke, T., Sussmann, R., Schneider, M.,
+Hase, F., Kivi, R., Deutscher, N. M., Velazco, V. A., Walker, K. A., and
+Deng, F. (2020).** Characterizing model errors in chemical transport modeling of
+methane: impact of model resolution in versions v9-02 of GEOS-Chem and v35j of
+its adjoint model. *Geoscientific Model Development* 13, 3839–3862.
+`10.5194/gmd-13-3839-2020` — peer-reviewed paper; **a finding relied on, and the
+one that makes transport error worse here than generically.** "The model bias
+over China, we argue, was caused by weakened vertical advective transport as a
+result of a combination of regridding the winds and the strong surface emissions
+in China that resulted in CH4 being partly trapped in the boundary layer over the
+continent" — so strong emissions are a *precondition* of the bias, which puts it
+where the signal is. "At 4°×5° there is up to a 40 % reduction in the tracer
+concentrations in the middle and upper troposphere relative to 2°×2.5°, with a
+noticeable increase in the tracer concentrations in the lower troposphere ranging
+from 10 % to 25 %." **The comparison is between two coarse grids**, not between a
+coarse grid and IMI's operating resolution, which is how it was carried into this
+pass.
+Cited in `notes/grounding-methane.md`.
+
+**Wang, X., Sulprizio, M. P., Zhuge, Y., Martin, R. V., and Jacob, D. J.
+(2026).** Technical note: 12 km resolution capability for the global GEOS-Chem
+model of atmospheric composition. *Atmospheric Chemistry and Physics* 26,
+6857–6867.
+`10.5194/acp-26-6857-2026` — peer-reviewed paper; **a method not applied, and
+demonstrated over a domain containing this one.** "0.125° × 0.15625° (≈12 km ×
+12 km) resolution by exploiting a new GEOS advection data archive (grid-scale
+winds)", with "nested-grid simulations ... over eastern China (100–125° E,
+17–45° N)" and "application to the Integrated Methane Inversion (IMI) show[ing]
+regional-scale results consistent with a 25 km inversion but higher information
+content and greater spatial detail". This project's lattice sits entirely inside
+that nested domain.
+Cited in `notes/grounding-methane.md`.
+
+**Yu, X., Millet, D. B., and Henze, D. K. (2021).** How well can inverse analyses
+of high-resolution satellite data resolve heterogeneous methane fluxes? Observing
+system simulation experiments with the GEOS-Chem adjoint model (v35).
+*Geoscientific Model Development* 14, 7775–7793.
+`10.5194/gmd-14-7775-2021` — peer-reviewed paper; **a finding relied on, and the
+sharpest bound on the emissions route.** "4D-Var analysis of the TROPOMI data can
+improve monthly emission estimates at 25 km even with a spatially biased prior or
+model transport errors (42 %–93 % domain-wide bias reduction; R increases from
+0.51 up to 0.73). However, when both errors are present, no single inversion
+framework can successfully improve both the overall bias and spatial distribution
+of fluxes relative to the prior on the 25 km model grid." **This project's
+situation has both errors.** The experiment is over North America.
+Cited in `notes/grounding-methane.md`.
+
+**Penn, E., Jacob, D. J., Chen, Z., East, J. D., Sulprizio, M. P., Bruhwiler, L.,
+Maasakkers, J. D., Nesser, H., Qu, Z., Zhang, Y., and Worden, J. (2025).** What
+can we learn about tropospheric OH from satellite observations of methane?
+*Atmospheric Chemistry and Physics* 25, 2947–2965.
+`10.5194/acp-25-2947-2025` — peer-reviewed paper; a finding relied on, for the
+sink. "From the methyl chloroform proxy, one infers a tropospheric lifetime of
+methane of τCH4OH = 11.2 ± 1.3 years for 2000" while "atmospheric chemistry
+models find a methane lifetime of τCH4OH = 9.7 ± 1.5 years". **Three claims
+attributed to this paper are not in it** and are named in the methane record's
+closing section; the two lifetime figures written anywhere in this repository are
+these.
+Cited in `notes/grounding-methane.md`.
+
+**Bloom, A. A., Bowman, K. W., Lee, M., Turner, A. J., Schroeder, R.,
+Worden, J. R., Weidner, R., McDonald, K. C., and Jacob, D. J. (2017).** A global
+wetland methane emissions and uncertainty dataset for atmospheric chemical
+transport models (WetCHARTs version 1.0). *Geoscientific Model Development* 10,
+2141–2156.
+`10.5194/gmd-10-2141-2017` — peer-reviewed paper; **describes a dataset not used,
+and states this project's central confound in its own discussion, in 2017.**
+"Rice paddies likely amount to < 20 % of wetland CH4 emissions, and the majority
+of rice paddy areas are implicitly excluded from our analysis ... GLWD explicitly
+excludes rice paddy extents in China ... However, satellite-based inundation
+fraction retrievals are unable to distinguish the temporal variability in
+co-located agriculture and natural wetland inundation extent ... The inadvertent
+inclusion of co-located rice CH4 emissions is therefore a potential source of
+bias in our approach. We note that the distinction between wetland and rice CH4
+emissions has yet to be consistently addressed." The same passage names "very
+small ponds" among unresolved non-wetland freshwater sources — the aquaculture
+source above, identified as a resolution problem nine years earlier.
+Cited in `notes/grounding-methane.md`, `notes/dataset-leads.md`.
+
+**Bloom, A. A., Bowman, K. W., Lee, M., Turner, A. J., Schroeder, R.,
+Worden, J. R., Weidner, R. J., McDonald, K. C., and Jacob, D. J. (2021).** CMS:
+Global 0.5-deg Wetland Methane Emissions and Uncertainty (WetCHARTs v1.3.1).
+ORNL DAAC.
+`10.3334/ORNLDAAC/1915` — the deposit, not fetched; the version IMI uses as its
+wetland default, where the paper above documents version 1.0. Registered because
+it is the object a fetch would target and because the wetland prior overlaps the
+rice prior in this project's cells.
+Cited in `notes/grounding-methane.md`, `notes/dataset-leads.md`.
+
+**Chen, Z., Jacob, D. J., Lin, H., Balasus, N., Hancock, S. E., Estrada, L. A.,
+East, J. D., Zhang, Y., Wang, X., He, M., Liu, M., and Varon, D. J. (2026).**
+Tropical Wetland Methane Emissions and Trends (2004–2023) Inferred from
+Landsat-Based Inundated Vegetation Data. *Environmental Science & Technology* 60,
+21159–21167.
+`10.1021/acs.est.6c05412` — peer-reviewed paper; a finding relied on, for the
+co-location warning generalised: "tropical wetlands are co-located with other
+sectors such as livestock and oil and gas production in Africa and South America,
+and rice paddies in South Asia, which means inverse analyses are subject to
+source misattribution". **Its first author is GRPI's first author**, so the same
+group built the Landsat-inundation rice inventory and the Landsat-inundation
+wetland inventory and states the co-location problem in both.
+Cited in `notes/grounding-methane.md`.
+
+### The cross-layer synthesis
+
+**Desjardins, R. L., Worth, D. E., Pattey, E., VanderZaag, A., Srinivasan, R.,
+Mauder, M., Worthy, D., Sweeney, C., and Metzger, S. (2018).** The challenge of
+reconciling bottom-up agricultural methane emissions inventories with top-down
+measurements. *Agricultural and Forest Meteorology* 248, 48–59.
+`10.1016/j.agrformet.2017.09.003` — peer-reviewed paper; **a finding relied on,
+and the synthesis in one sentence.** "Inversion modelling is not capable of
+distinguishing interspersed sources from different sectors. Overlapping grid
+level sources from different sectors are typically grouped and treated as a
+single source." Crossref dates it 2018 in volume 248; **it was carried into this
+pass as 2017**, which is its online-first year.
+Cited in `notes/paper-target.md`.
+
+**France, J. L., Fisher, R. E., Lowry, D., Allen, G., Andrade, M. F.,
+Bauguitte, S. J.-B., Bower, K., Broderick, T. J., Daly, M. C., Forster, G., and
+fourteen others (2021).** δ13C methane source signatures from tropical wetland
+and rice field emissions. *Philosophical Transactions of the Royal Society A*
+380.
+`10.1098/rsta.2020.0449` — peer-reviewed paper; a finding relied on, for the
+isotopic overlap. "Biogenic sources are depleted in 13C, with δ13CCH4 signatures
+in the −70 to −50‰ range for sources such as ruminants, wetlands and rice
+fields", against thermogenic and pyrogenic sources "as enriched as −15‰", and
+pooled literature giving "an average signature of approximately −61 ± 4‰ for all
+rice fields". **The ranges carried into this pass — −65 to −55 overall and −63 to
+−58 for Asian rice fields — are not this paper's figures and are not written.**
+Cited in `notes/paper-target.md`.
+
+**Bakkaloglu, S., Lowry, D., Fisher, R. E., Menoud, M., Lanoisellé, M., Chen, H.,
+Röckmann, T., and Nisbet, E. G. (2022).** Stable isotopic signatures of methane
+from waste sources through atmospheric measurements. *Atmospheric Environment*
+276, 119021.
+`10.1016/j.atmosenv.2022.119021` — peer-reviewed paper; a finding relied on, and
+the other half of the overlap. The weighted average δ13C for waste sources is
+−56.1 ± 2.4‰, measured atmospherically, predominantly in the UK. Against rice at
+−61 ± 4‰ the two overlap within one standard deviation, which is why isotopes
+separate microbial from thermogenic rather than rice from landfill.
+Cited in `notes/paper-target.md`.
+
+**Sherwood, O. A., Schwietzke, S., and Lan, X. (2020).** Global d13C CH4 source
+signature inventory 2020. NOAA GML.
+`10.15138/qn55-e011` — the deposit, not fetched; **describes a dataset not used,
+and the data gap lands on this project's two sectors.** Spatially resolved source
+signatures exist for oil and natural gas, coal, biomass and biofuel burning,
+ruminants and wild animals, with geological seeps and wetlands from other work;
+"for other CH4 sources, the current measurement sample sizes are insufficient to
+develop spatial distributions", the sources named being waste and landfills,
+termites, and rice. **Two readings of the record's sample counts disagreed and no
+count is written.**
+Cited in `notes/paper-target.md`.
+
+**Lan, X., Basu, S., Schwietzke, S., Bruhwiler, L. M. P., Dlugokencky, E. J.,
+Michel, S. E., Sherwood, O. A., Tans, P. P., Thoning, K., Etiope, G., Zhuang, Q.,
+Liu, L., Oh, Y., Miller, J. B., and three others (2021).** Improved Constraints
+on Global Methane Emissions and Sinks Using δ13C-CH4. *Global Biogeochemical
+Cycles* 35.
+`10.1029/2021GB007000` — peer-reviewed paper; describes the dataset above and is
+the citation the NOAA record itself asks for. Registered for that reason rather
+than for a figure of its own.
+Cited in `notes/paper-target.md`.
+
+**Yao, P., Belec, K., Holmstrand, H., Balacky, J., Salam, A., Budhavant, K.,
+Manoj, M. R., Joy, K. S., Hossain, Md. A., Singh, A., and six others (2026).**
+Distinct dual-isotopic signatures of major methane sources in South Asia.
+*Atmospheric Chemistry and Physics* 26, 7765–7787.
+`10.5194/acp-26-7765-2026` — peer-reviewed paper; **a finding relied on, and the
+one genuine research opening in the synthesis.** South Asian rice paddy methane
+is "notably more enriched in δ13C compared to the global mean", with Miller–Tans
+values of "−53.8±0.8‰ and −311±6‰", the enrichment in both suggesting "multiple
+sources and/or pre-emission oxidation", and the conclusion that "region-specific
+isotopic endmembers are therefore critical for accurate source apportionment". A
+rice signature at −53.8 is enriched past the waste average of −56.1, so regional
+dual-isotope work can separate what global means cannot. **The equivalent
+campaign for China has not been done**, and this domain is where it would be
+worth doing.
+Cited in `notes/paper-target.md`.
 
 ---
 
