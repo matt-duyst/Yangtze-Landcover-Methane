@@ -4220,6 +4220,48 @@ One thing both share: they need the same Landsat access, the same sensor-boundar
 care, and they meet the same cloud limit. The constraint is a property of the
 imagery over this region, not of either algorithm.
 
+### The maps already exist, which changes what a reimplementation is for
+
+Added 14 September 2026, from the rice grounding pass. The section above was
+written as though the PPPM maps for this region were something only a
+reimplementation could produce. **They are not. Zhu et al. (2021) generated
+them and says so.** Verbatim, the authors "generated annual maps of SCR and DCR
+in southern China with image collection of Landsat 5, 7, and 8 from 1999 to 2019
+using the Google Earth Engine platform", with overall accuracies from 81.0 to
+98.1 percent depending on the area of interest, and a total rice area falling
+from 208,614.6 km squared in 2000 to 171,474.3 km squared in 2019. Single- and
+double-cropping rice, annually, twenty-one years, by the thesis's own algorithm,
+covering all three of its years.
+
+That does not make the reimplementation pointless, and it changes what it would
+be for. The experiment framed above — establishing whether the method could have
+been right given fewer than eight cloud-free observations a year — is unaffected,
+because it needs the algorithm run rather than its output read. What it removes
+is the *coverage* argument. A reimplementation was listed above as the only route
+to a single-method layer spanning 2000, 2010 and 2018; if these maps are
+obtainable, reading them is that route, and it costs a download rather than a
+reimplementation.
+
+**Two questions were carried into the rice grounding as open. One is now
+answered and one is not.**
+
+The answered one was whether "southern China" includes the northern parts of
+Anhui and Jiangsu, which matters because the Huainan-Huaibei coalfield sits in
+northern Anhui and the committed NESDC raster stops classifying there. **It
+does.** The paper reports that "relatively stable SCR mainly distributed in
+Anhui, Hubei, and Jiangsu provinces whereas DCR occurred in Guangdong, Hunan and
+Jiangxi provinces", which names Anhui and Jiangsu as the core of the stable
+single-cropping region rather than as its margin. This project's own regional
+table agrees on the cropping system: both provinces are almost entirely
+single-cropped.
+
+The open one is whether the maps are distributed. It could not be settled. The
+article is paywalled, OpenAlex records no open version, and the DOAJ record's
+only full-text link is the publisher DOI, so no data availability statement was
+readable. **That is now the gating question for the whole PPPM route** and it is
+one email or one library request away, which is why it is queued in
+`notes/paper-target.md` rather than left here.
+
 ## What the grounding superseded, marked rather than rewritten
 
 Four grounding records were written between 10 and 11 September 2026. Several

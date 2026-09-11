@@ -59,7 +59,7 @@ SCANNED = ("README.md", "ERRATA.md", "data/processed/README.md",
            "data/reference/README.md", "figures/README_fragments.md",
            "notes/repository-architecture.md", "notes/grounding-yrd.md",
            "notes/grounding-methods.md", "notes/grounding-urban.md",
-           "notes/paper-target.md")
+           "notes/grounding-rice.md", "notes/paper-target.md")
 
 #: number, then optional space, then the marker naming what it is
 CLAIM = re.compile(r"(-?[\d][\d,]*(?:\.\d+)?)\s*<!--#([a-zA-Z0-9_.]+)-->")
@@ -278,6 +278,10 @@ def _rice() -> dict:
                 100.0 * shares["Shanghai"]["impervious"],
             "urban_share_jiangsu_percent":
                 100.0 * shares["Jiangsu"]["impervious"],
+            **{f"double_share_{name.lower()}_percent":
+               (100.0 * v["double"] / (v["single"] + v["double"])
+                if (v["single"] + v["double"]) else 0.0)
+               for name, v in provincial.items()},
         }
     return _cache["rice"]
 
@@ -573,6 +577,17 @@ QUANTITIES = {
         lambda: _rice()["urban_share_shanghai_percent"],
     "urban.share_jiangsu_percent":
         lambda: _rice()["urban_share_jiangsu_percent"],
+    # Double-cropped share of each province's paddy area. `notes/grounding-rice.md`
+    # turns on these: the sown-against-planted definitional gap can only exist
+    # where a field is cropped twice, so a province at zero cannot have it.
+    "rice.double_share_shanghai_percent":
+        lambda: _rice()["double_share_shanghai_percent"],
+    "rice.double_share_jiangsu_percent":
+        lambda: _rice()["double_share_jiangsu_percent"],
+    "rice.double_share_anhui_percent":
+        lambda: _rice()["double_share_anhui_percent"],
+    "rice.double_share_zhejiang_percent":
+        lambda: _rice()["double_share_zhejiang_percent"],
     "baseline.constant_r2": lambda: _baseline()["constant_r2"],
     "baseline.impervious_r2": lambda: _baseline()["impervious_r2"],
     "baseline.impervious_rmse": lambda: _baseline()["impervious_rmse"],
@@ -664,6 +679,22 @@ QUANTITIES = {
     "grid.rice_combined_median":
         lambda: float(np.nanmedian(_column("rice_fraction_combined"))),
     "grid.rice_coverage_median": lambda: float(np.nanmedian(_column("rice_coverage"))),
+    # The threshold the paddy-rice-and-XCH4 exchange settled on, applied to this
+    # lattice. The condition is stated at 0.5 degrees and is untested at 0.25.
+    "grid.rice_above_ten_percent":
+        lambda: int((_column("rice_fraction_single")[
+            np.isfinite(_column("rice_fraction_single"))] > 0.10).sum()),
+    "grid.rice_above_ten_of_rice_percent":
+        lambda: 100.0 * (_column("rice_fraction_single")[
+            np.isfinite(_column("rice_fraction_single"))] > 0.10).sum()
+        / int(np.isfinite(_column("rice_fraction_single")).sum()),
+    "grid.rice_above_ten_of_lattice_percent":
+        lambda: 100.0 * (_column("rice_fraction_single")[
+            np.isfinite(_column("rice_fraction_single"))] > 0.10).sum()
+        / len(_grid()),
+    "grid.rice_zero_rows":
+        lambda: int((_column("rice_fraction_single")[
+            np.isfinite(_column("rice_fraction_single"))] == 0).sum()),
     "grid.rice_coverage_below_99":
         lambda: int((_column("rice_coverage") < 0.99).sum()),
     "grid.straddling_cells":
