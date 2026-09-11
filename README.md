@@ -235,6 +235,7 @@ In outline:
 | baselines | `run_baselines.py --covariates data/processed/methane_covariates_2018.csv --write` | under a second | continuously |
 | baselines, deseasonalised | `run_baselines.py --target ch4_deseasonalised_ppb --target-from data/processed/methane_deseasonalised_2018.csv --covariates data/processed/methane_covariates_2018.csv --out data/processed/baseline_results_deseasonalised_2018.csv --write` | under a second | continuously |
 | deseasonalisation test | `test_deseasonalisation.py --write` | under a second | continuously |
+| expected inversion DOFS | `estimate_inversion_dofs.py --write` | about ten seconds | on local |
 | albedo confounder test | `test_albedo_confounder.py --write` | under a second | continuously |
 | albedo correction test | `test_albedo_correction.py --write` | under a second | continuously |
 | predictor robustness | `test_alternative_predictors.py --write` | a second, over four prebuilt grids | on local |

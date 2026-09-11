@@ -1,0 +1,21 @@
+quantity,value,unit,note
+cells with at least one observation day,926,cells,"the maximum DOFS attainable, since a tends to 1"
+"observation days per covered cell, median",23.0,days,IMI m_super: days with at least one retrieval
+"observation days per covered cell, mean",24.51,days,
+"observation days per covered cell, max",65,days,
+"retrievals per superobservation, median",4.40,retrievals,IMI P
+k,1.25903,kg-1 m2 s,IMI preview scale factor
+"emission for a = 0.5, median cell",0.0862,Tg/y per cell,prior-free: the source size this observing system could see
+"emission for a = 0.5, best-observed cell",0.0492,Tg/y per cell,the cell with 65 observation days
+"emission for a = 0.5, summed over covered cells",116.74,Tg/y,domain total at which a typical cell reaches a = 0.5
+expected DOFS at 0.1 Tg/y domain prior,0.002,DOFS,mean a = 0.00000; cells with a > 0.5: 0
+expected DOFS at 0.3 Tg/y domain prior,0.014,DOFS,mean a = 0.00002; cells with a > 0.5: 0
+expected DOFS at 1 Tg/y domain prior,0.160,DOFS,mean a = 0.00017; cells with a > 0.5: 0
+expected DOFS at 2 Tg/y domain prior,0.640,DOFS,mean a = 0.00069; cells with a > 0.5: 0
+expected DOFS at 3 Tg/y domain prior,1.439,DOFS,mean a = 0.00155; cells with a > 0.5: 0
+expected DOFS at 5 Tg/y domain prior,3.979,DOFS,mean a = 0.00430; cells with a > 0.5: 0
+expected DOFS at 7 Tg/y domain prior,7.749,DOFS,mean a = 0.00837; cells with a > 0.5: 0
+expected DOFS at 10 Tg/y domain prior,15.604,DOFS,mean a = 0.01685; cells with a > 0.5: 0
+expected DOFS at 12 Tg/y domain prior,22.214,DOFS,mean a = 0.02399; cells with a > 0.5: 0
+expected DOFS at 20 Tg/y domain prior,57.923,DOFS,mean a = 0.06255; cells with a > 0.5: 0
+expected DOFS at 30 Tg/y domain prior,116.727,DOFS,mean a = 0.12605; cells with a > 0.5: 0

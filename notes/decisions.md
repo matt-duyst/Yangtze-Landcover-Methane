@@ -4346,3 +4346,120 @@ correction "the cheapest of the four and the most clearly missing". Still true
 of the implementation. The methods grounding adds that the *official* correction
 will never arrive for 2018 data, which removes the option of waiting rather than
 changing the assessment of the option that exists.
+
+## Queue item 1: the inversion feasibility question, answered by arithmetic
+
+`notes/paper-target.md` put the IMI preview first in the queue because it gates
+the paper's framing and costs nothing. **It could not be run, and the question
+it would answer has been answered anyway.**
+
+### Why it could not be run
+
+Three access routes are documented and all three need an account this session
+must not create. The free IMI product on the AWS Marketplace needs an AWS
+account, which needs a payment method even where the product is free. The source
+route from GitHub can be built locally in a container, but the IMI is a
+GEOS-Chem driver: a local run needs the meteorological archive, the prior
+inventory stack and the TROPOMI collection, which is the input volume the cloud
+route exists to avoid moving. And the Integral Earth web interface is by
+request. **The preview specifically is not a lighter path around this**, because
+it reads the same prior and observation inputs as the full run; setting
+`DoPreview: true` stops the pipeline after the preview rather than shrinking what
+it needs.
+
+### What was done instead
+
+**The preview's DOFS estimate is closed-form and its inputs are almost all held
+here.** `src/inversion_scripts/imi_preview.py` in
+`geoschem/integrated_methane_inversion` computes an estimated averaging kernel
+sensitivity per state vector element as
+
+    a = sA^2 / (sA^2 + (s_superO / k)^2 / m_super)
+
+with `k = alpha (M_air L g) / (M_CH4 U p)`, the superobservation error from
+Chen et al. (2023), `sA` the prior error in kg m-2 s-1, and `m_super` the number
+of days on which the cell carried at least one successful retrieval. The DOFS is
+the sum of `a` over elements. `scripts/estimate_inversion_dofs.py` evaluates
+that expression over this lattice with IMI's own defaults —
+`PriorError = 0.5`, `ObsError = 15` ppb, `Res = "0.25x0.3125"` so `L = 25` km,
+`alpha = 0.4`, `U = 5` km/h, `r_retrieval = 0.55`, `s_transport = 4.5` ppb — and
+writes `data/processed/inversion_dofs_2018.csv`.
+
+**This is a reimplementation of the preview's formula and not a preview run**,
+and it is labelled that way in the script, the recipe note and the artefact.
+The distinction matters because IMI's preview also reports observation maps, a
+dollar cost and a SWIR albedo panel, none of which this reproduces, and because
+a real preview would use a gridded prior where this uses an assumed total.
+
+One input had to be derived. `m_super` is the count of observation *days* per
+cell, and no committed artefact holds it: the composite records sounding counts,
+not the number of distinct dates they came from. The checkpoint's per-granule
+cell bitmaps do, one packed bitmap per granule over the flat grid, and
+unpacking them against the granules' acquisition dates gives the count directly.
+Over the 926 covered cells it is a **median of 23 observation days, mean 24.51,
+maximum 65**, with a median of 4.40 retrievals per observation day. That is the
+first time this repository has had that number.
+
+### What it says
+
+`k` is 1.25903 kg-1 m2 s for this resolution. Two results follow.
+
+**The prior-free one, which is the one to quote.** Setting `a = 0.5` and solving
+for emission needs no prior at all, because it depends only on the observation
+counts. A median cell in this composite would need **0.0862 Tg a-1 — about 86 Gg
+a-1 from a single 625 km2 cell — for the inversion to constrain it half
+independently of the prior.** The best-observed cell, with 65 observation days,
+needs 0.0492 Tg a-1. For scale, a large municipal landfill emits on the order of
+10 to 50 Gg a-1, so **individual large point sources in this domain sit below
+`a = 0.5` and above zero**: visible to an inversion as a partial constraint, not
+as an independent measurement.
+
+**The domain total, swept because the prior is not held here.** Expected DOFS
+crosses the Permian work's practical minimum of 0.5 at about 2 Tg a-1, IMI's own
+minimum viability of 1 at about 3 Tg a-1, and its marginal ceiling of 2 at about
+5 Tg a-1. Against the band the literature already in `notes/references.md`
+supports for this domain — 5 to 12 Tg a-1, from Huang et al.'s 2018 Yangtze
+River Delta inversion implying about 11.7 Tg a-1 for its domain and Duan et al.'s
+seven-province agricultural share implying less than that for four provinces —
+**expected DOFS runs 3.98 to 22.21.**
+
+**And that band is a lower bound.** The sweep spreads each total uniformly over
+926 cells. At small `a` the sensitivity goes as the square of a cell's emission,
+so concentrating the same total into fewer cells raises the sum, and real
+emissions are concentrated. A uniform prior is the least favourable arrangement
+of any given total.
+
+### What this implies, which is the first of the three outcomes and not the third
+
+`notes/paper-target.md` set out three outcomes. This is the first: **an emissions
+inversion over this domain is feasible, comfortably above threshold, and the
+paper's framing is not forced to the reproduction reading.** The expected DOFS
+at a defensible prior is between two and twenty times IMI's marginal ceiling.
+
+Three qualifications belong with that, and none of them reverses it.
+
+**Feasible is not free.** The DOFS says an inversion would extract information;
+it says nothing about the 28.9 GB re-grid, the prior that would have to be built,
+or the transport model. The methods grounding's transport-error ceiling of 12 ppb
+against this field's 14.9 ppb spread is unchanged by this result.
+
+**Feasible at the domain scale is not feasible per cell.** No cell in the swept
+range reaches `a > 0.5`. The DOFS accumulates from 926 cells each weakly
+constrained, which is what a domain-total inversion needs and not what a
+per-cell attribution needs. So an inversion here could constrain the region's
+emission; it could not attribute it to land cover cell by cell, which is the
+question this project actually asked.
+
+**And this is the preview's arithmetic, not the preview.** The number that would
+settle it is one free run by someone with an AWS account, and
+`notes/paper-target.md` keeps that as the item rather than marking it done.
+
+### The correction this makes to the record
+
+`notes/decisions.md` records the flux-divergence conversion as gated, and the
+supersession section above records that the gate's reasoning was never written
+down and that the IMI preview offered a cheaper route to the same question. **The
+cheaper route turned out to be cheaper still than that**: not a preview run but
+the preview's published formula, evaluated locally in about ten seconds against
+observation counts this repository already had. The question was answerable
+without an account, without a download, and without the gate.

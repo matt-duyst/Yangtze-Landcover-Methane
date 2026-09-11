@@ -189,6 +189,18 @@ recipes:
   compare: bytes
   verified: continuously
   note: null
+- artefact: data/processed/inversion_dofs_2018.csv
+  command: python scripts/estimate_inversion_dofs.py --write
+  label: expected inversion DOFS
+  cost: about ten seconds
+  seconds: 20
+  inputs: local
+  compare: bytes
+  verified: on_local
+  note: Needs data/interim/extent_2018.npz for the per-granule cell bitmaps, which are the
+    only source of observation days per cell and are not in any committed artefact. This is
+    a reimplementation of the IMI preview's published DOFS formula over this domain, not an
+    IMI preview run; the script's docstring says so and so does notes/decisions.md.
 - artefact: data/processed/albedo_confounder_2018.csv
   command: python scripts/test_albedo_confounder.py --write
   label: albedo confounder test
