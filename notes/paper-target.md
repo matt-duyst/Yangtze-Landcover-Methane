@@ -1183,6 +1183,83 @@ that moves every number downstream of the baselines. Item 20 is last by
 construction. Items 6, 7, 8 and 19 sit off the critical path and can be done
 whenever.
 
+## The honest state of the grounding, 14 September 2026
+
+The last of the planned passes is done, so this records what the whole exercise
+came to, including the two things it got systematically wrong.
+
+### What was built
+
+Five records, written between 10 and 14 September 2026, from round counts as the
+commissioning briefs stated them: nineteen rounds on the region, fifteen on the
+urban layer, eleven on methods, fourteen on rice across two blocks, eleven on the
+methane layer, three cross-layer searches and three reviewer rounds. **Round
+count and value turn out to be unrelated**, and the clearest evidence is the
+register: the twelve commits that touched it introduced 14, 12, 1, 10, 3, 23, 40,
+25, 1, 15, 22 and 28 citations, and the three-round reviewer pass — the smallest
+of them, five entries — is the one that changed what the paper is.
+
+What each pass changed, in one line apiece:
+
+* **The region** established that this is the right place to ask, and later that
+  Southeast China is one of three sub-national regions carrying 60 percent of
+  China's emissions on under a third of its land.
+* **Methods** established that the field's method for this problem is Bayesian
+  inversion and that a free tool exists, which reframed the whole project from a
+  regression exercise into a capability question without anyone noticing at the
+  time.
+* **Urban** established that an impervious fraction is the wrong instrument for
+  the dominant sector, and that it is nonetheless the best available proxy for
+  the thing the thesis used it for.
+* **Rice** established that extent is a weak predictor by the field's own
+  explicit account, and found aquaculture — an unrepresented source in the same
+  cells as the predictor.
+* **Methane** established that there is no processing step from a column to a
+  flux, which is the boundary the thesis's title implies away.
+* **The synthesis** established that the three layers are not three predictors
+  but overlapping sources the field's own method groups together.
+* **The reviewer pass** established that all of that is a capability assessment
+  rather than a null result, and that capability assessment is a paper type.
+
+### The two systematic weaknesses the passes exposed about themselves
+
+**Citations written from search phrasing were defective at about one in eight,
+and adopting content negotiation fixed only what it checked.** The audit of
+13–14 September re-negotiated all 189 entries and found 23 wrong in 31 fields,
+with four more found while writing the guard. The split is the finding: twelve of
+the defective entries were in the hundred written before negotiation was adopted
+and eleven were in the eighty-nine written after — **the same rate either side.**
+
+What changed was the *kind*. Every substituted name — a name belonging to a
+different paper, including one whole author list grafted from a companion study
+where every other field checked out — is in the pre-negotiation population. The
+negotiated population's author defects are omissions rather than substitutions, a
+transcription slip rather than a mis-binding. And its other defects are page
+ranges, truncation counts and publication years: **fields nobody was checking,
+because the practice adopted was "negotiate the author list" rather than
+"negotiate the record".** The lesson generalises past citations. A verification
+habit protects exactly the field it names and creates the impression of
+protecting the record.
+
+**And findings held only in conversation are where the premises failed.** Every
+brief that commissioned these passes carried figures from earlier conversation
+rather than from a file, and every pass reported several that did not survive:
+the region pass several, the methods pass eleven premises of roughly sixty
+figures, the urban amendment eight, the rice blocks eight and nine, the methane
+record nine, this pass two of four. **The pattern is not carelessness in the
+briefs.** It is that a number which has been repeated across sessions acquires
+the texture of something checked, and nothing in a conversation distinguishes a
+figure that was verified once from a figure that was asserted once. The
+repository's answer is mechanical and partial — `scripts/verify_claims.py` for
+its own artefacts, `tests/test_register_authors.py` for its citations — and
+covers only what someone thought to mark.
+
+**The honest summary of the grounding is therefore two-sided.** It established
+the paper's frame, its contribution, its limits and most of its literature, and
+it did so at a defect rate in its own records of roughly one in eight until that
+was measured and fixed. Both halves belong in the account, because the second is
+what makes the first believable.
+
 ## What is still ungrounded
 
 Recorded so that the gap is visible rather than assumed closed.
@@ -1217,28 +1294,44 @@ than by layer.
 
 ### What remains ungrounded after four records, 14 September 2026
 
-**Two methane threads were not touched by the eleven rounds.** The first is
-future instruments — MethaneSAT, GOSAT-GW, CO2M and the Chinese missions — which
-bear directly on whether this project's question becomes answerable later rather
-than on whether it is answerable now. [`notes/grounding-methane.md`](grounding-methane.md)
+**Two methane threads were not touched by the eleven rounds, and both stay open
+deliberately.** Updated 14 September 2026, after the capability framing, which
+changes what each is worth.
+
+The first is future instruments — MethaneSAT, GOSAT-GW, CO2M and the Chinese
+missions — which bear directly on whether this project's question becomes
+answerable later rather than on whether it is answerable now. **Under the
+capability framing this becomes more interesting and no more urgent.** A paper
+whose contribution is what a 25 km column record can constrain invites the
+question of what a finer or denser record would constrain, and the transfer
+argument already answers its structure: more observations move the
+information-content limit and leave the identifiability limit untouched. So the
+thread belongs in a discussion paragraph — one that names the instruments and
+says which limit each would and would not move — rather than in the analysis. It
+is a paragraph to write, not a pass to run. [`notes/grounding-methane.md`](grounding-methane.md)
 establishes that the degrees of freedom scale with observation density, so a
 denser instrument moves the capability finding, and no pass has asked by how
 much or when. The second is fetching the WFMD product and comparing it against
 this project's own field. The European three-product comparison now covers that
-question in principle — it puts WFMD 33 points below the other two in an
-inversion budget, with albedo and aerosol scattering named as the cause — so the
-value of doing it here is lower than it was, and it is no longer a gap so much as
-a deferred check.
+question in principle — [`notes/grounding-methane.md`](grounding-methane.md)
+records budgets of plus 2 percent for SRON, minus 1 for the blended product and
+minus 33 for WFMD from three retrievals of the same quantity, with albedo and
+aerosol scattering named as the largest contributors — so **the question is
+answered in structure and only the local magnitude is unmeasured.** That is why
+it stays open rather than closing: a 35-point spread from retrieval choice is
+worth knowing the local size of, and it is worth less than it was when the
+spread itself was unknown. It is a deferred check, not a gap.
 
-**And one framing has never been applied to any round.** No pass has asked what a
-reviewer of this paper would object to. Every round followed what was
-interesting, which is a different and more generous filter: it surfaces findings
-that enrich the record and does not systematically surface the objections that
-would sink a submission. **The two filters produce different reading lists**, and
-the difference is the reason this is recorded as an open pass rather than as a
-finished one. A reviewer-objection pass would start from the claims this file
-says the paper may make and look for the literature that contradicts each, which
-is the opposite of how the four grounding records were built.
+**The reviewer pass was run on 14 September 2026 and is closed.** It is recorded
+above, under *What a reviewer would object to, and the answer*. The prediction
+that the two filters would produce different reading lists held: three rounds
+produced five register entries, none of which any earlier round had found, and
+one of them — capability assessment as a named paper type with its own
+vocabulary — reframed the contribution. **It also found that the worry those
+rounds were expected to confirm was unfounded**: publication bias against null
+results is weaker than assumed, and the obstacle is the novelty framing instead.
+The pass cost three rounds and changed what the paper is. It should have been run
+first.
 
 **The satellite question has not been asked at all.** Whether other instruments
 or validation sources have been overlooked — GOSAT and GOSAT-2 in their own

@@ -85,7 +85,16 @@ map frame rather than over Zhejiang's coast, and draws Natural Earth's admin-0
 land boundary lines unfiltered, with no country named, filled or excluded; six
 of the 59 lines in its extent are classed "Disputed (please verify)" by Natural
 Earth itself, which also ships 33 per-country viewpoint fields, and this
-repository takes no position on any of them.
+repository takes no position on any of them. A formal disclaimer belongs in
+this caption and not as a figure element, and the wording to use is the one
+Elsevier asks for across its journals: **map lines delineate study areas and do
+not necessarily depict accepted national boundaries.** That is adopted here as a
+convention rather than as a venue requirement — it appears in the author guides
+of several Elsevier remote-sensing journals, and *Remote Sensing of
+Environment*'s own guide could not be read to confirm it, which
+`notes/references.md` records. It codifies a decision already made carefully
+rather than changing anything drawn, and it costs one sentence regardless of
+where the figure is submitted.
 
 The terrain is the finding, thin as a reference map's finding must be. The 97<!--#composite.uncovered_cells-->
 cells of the lattice that received no qualifying sounding in 2018 are not
