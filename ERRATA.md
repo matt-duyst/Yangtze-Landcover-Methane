@@ -522,10 +522,11 @@ auxiliary datasets named in Section 1.3; only the sown area of rice appears.
 
 ### 6.5 No classification accuracy is reported
 
-The study reports no classification accuracy metric for either the
-GAIA-derived urban layer or the PPPM-derived paddied rice layer. No confusion
-matrix, kappa coefficient, overall accuracy or per-class accuracy appears in
-the thesis, in the notebook, or in any committed figure.
+The study reports no accuracy assessment of any kind for either the GAIA-derived
+urban layer or the PPPM-derived paddied rice layer. No error matrix, overall
+accuracy, per-class accuracy, or agreement statistic of any sort appears in the
+thesis, in the notebook, or in any committed figure. **That is the substantive
+point and it stands.**
 
 Section 5.1 is titled "Accuracy Assessment: Remotely sensed estimations versus
 China's recorded estimations", but what it performs is not an accuracy
@@ -533,19 +534,72 @@ assessment. It sets the study's own remotely sensed areas beside China's
 recorded agricultural statistics and compares the two totals. Both are
 independent estimates of the same quantity, and neither is reference data for
 the other, so agreement between them constrains nothing about how often a pixel
-was classified correctly. A classification accuracy assessment requires labelled
-reference samples the classifier did not see, and none were collected.
+was classified correctly. An accuracy assessment requires reference data more
+accurate than the map, which the field states as essential (Stehman and Foody,
+2019, Remote Sensing of Environment 231, 111199,
+doi:10.1016/j.rse.2019.05.018), and none was collected.
 
 `legacy/figures/Accuracy_Assessment.png` compounds the confusion. It is a
 rendered image of Table 1, listing urban extent, PPPM-derived paddied rice and
 recorded sown area of rice by province and year. It carries no accuracy metric
 of any kind, despite its filename.
 
+**What should have been reported depends on what the layer is, and this item
+previously got that wrong in two ways.**
+
+For the thesis's own layers, which are categorical, the field's good-practice
+standard asks for a probability sampling design, a response design using
+reference data more accurate than the map, consistent analysis, and an error
+matrix expressed as proportions of area with overall, user's and producer's
+accuracy (Olofsson et al., 2014, Remote Sensing of Environment 148, 42-57,
+doi:10.1016/j.rse.2014.02.015). None of the four is present. Where two products
+are compared rather than a product against reference data, the informative
+decomposition is quantity disagreement against allocation disagreement (Pontius
+and Millones, 2011, International Journal of Remote Sensing 32, 4407-4429,
+doi:10.1080/01431161.2011.552923), because a layer can have the right totals and
+the wrong locations and only the second kind of error attenuates a regression
+coefficient.
+
+**A correction to an earlier version of this item.** Until 11 September 2026
+this section listed the "kappa coefficient" among the missing metrics. **The
+field's own guidance names correction for chance agreement as bad practice**,
+and does so twice over. Stehman and Foody (2019) identify "three examples of
+bad practice that are widespread": "the universal application of 85% target
+accuracy, normalization of the error matrix, and correction for chance
+agreement". Pontius and Millones (2011) is titled "Death to Kappa" and its two
+recommendations are to stop using kappa and to use disagreement components
+instead. So this document was faulting the thesis for omitting a statistic the
+field discourages, which is the third instance recorded here of the errata
+importing an assumption it had not tested -- after 5.3's waste-dominance claim
+and 5.4's superseded global warming potentials. The request is removed and the
+substantive point, that no accuracy assessment of any kind was reported, is
+unchanged.
+
+**A note on what this reproduction does and does not owe.** The reproduction
+reports no accuracy assessment either, and the asymmetry is worth stating
+because it is not hypocrisy. The thesis classified imagery and so produced a map
+whose accuracy is a property of its own work. The reproduction classifies
+nothing: it consumes published products whose accuracies are published, and
+aggregates them to a fraction per 0.25-degree cell. For a fractional layer the
+error-matrix machinery does not apply -- Olofsson et al. contains no treatment
+of fractional cover, and the appropriate frame is mean deviation, mean absolute
+deviation and regression against a more accurate reference fraction (Wickham et
+al., 2020, International Journal of Applied Earth Observation and Geoinformation
+84, 101955, doi:10.1016/j.jag.2019.101955; Riemann et al., 2010, Remote Sensing
+of Environment 114, 2337-2352, doi:10.1016/j.rse.2010.05.010). What the
+reproduction owes, and has not paid, is the first three of Olofsson's five
+recommendations rather than the last two. `notes/grounding-methods.md` sets out
+the distinction and `notes/dataset-leads.md` records the reference data that
+would make it payable.
+
 *Verified by:* full-text search of the thesis PDF for confusion matrix, kappa,
 overall accuracy, producer's and user's accuracy, precision, recall, F1 and
 IoU, returning no standalone occurrence of any; the same search across the
-notebook's source and stored outputs, returning none; and visual inspection of
-the rendered Accuracy_Assessment.png.
+notebook's source and stored outputs, returning none; visual inspection of the
+rendered Accuracy_Assessment.png; the three bad practices read from Stehman and
+Foody's published highlights, which cite the DOI directly; and a full-text
+search of Olofsson et al. for "fraction", "sub-pixel" and "subpixel", returning
+zero occurrences of each.
 
 ---
 
