@@ -147,6 +147,169 @@ inventory placed wrongly.** Since the US work establishes that misplaced and
 under-reported landfills are the dominant urban error, the sector the layer can
 help with is not the sector that needs help most.
 
+## How the proxies actually compare, which favours this layer
+
+The section above stands: impervious fraction is another population-like surface
+and joins the degeneracy rather than resolving it. What it did not record is
+**how the candidate proxies compare to one another**, and that comparison comes
+out in the layer's favour. Each of the three fails differently, which is an
+argument for combining them rather than for choosing one.
+
+**Read this as a statement about the proxies' properties and not as support for
+an association this repository can still claim.** Tier 0 changed the stakes. Of
+seventy-two reported correlations, twenty-seven no longer reach significance
+once degrees of freedom are corrected for spatial dependence, including **every
+weighted land-cover association and every partial controlling for albedo on the
+operational field**. So the argument below is that impervious fraction carries
+information population grids do not. It is not an argument that this project
+detected an urban methane signal.
+
+### Population grids fail at change, which is what a historical series needs
+
+Six time-series gridded population datasets — CnPop, GHS-POP, GlobPop, GPWv4,
+LandScan and WorldPop — were evaluated against Chinese township-level census
+data for 2010 and 2020. Most showed high cross-sectional accuracy, with
+Pearson's r against census above 0.8, but **their ability to represent decadal
+population change was severely limited**, with substantial inaccuracies in
+identifying decline trends and weak performance on change magnitude (Li et al.,
+2026, *Humanities and Social Sciences Communications*,
+doi:10.1057/s41599-026-07688-w). The paper's own framing is that cross-sectional
+accuracy does not imply reliability of change.
+
+That is the property a 2000-to-2018 series needs and the one these products
+lack. A prior allocated on a population grid for 2000 and again for 2018 would
+carry the difference between two independently unreliable change estimates.
+
+### And they underrepresent rural population systematically
+
+Validated against reported resettlement from 307 large dam construction
+projects in 35 countries, all the datasets examined showed significant negative
+biases: **−53 percent for WorldPop, −65 for GWP, −67 for GRUMP, −68 for
+LandScan and −84 percent for GHS-POP** (Láng-Ritter, Keskinen and Tenkanen,
+2025, *Nature Communications*, doi:10.1038/s41467-025-56906-7). Even the most
+accurate underestimates rural population by half.
+
+**This finding is contested and the record should say so.** WorldPop's team
+published a public rebuttal disputing the claim of systematic rural
+underrepresentation. That is a live disagreement rather than a settled result,
+and it is recorded the way this register records the rice-paddy exchange — both
+sides named — rather than by picking the side that suits the argument.
+
+Why it matters here even so: much of this study area is rural, and a prior
+allocated on a surface that may underestimate rural population by half would
+misplace emissions systematically, in the direction of under-attributing them to
+the paddy landscape.
+
+### But impervious alone fails in dense cores
+
+A model estimating Chinese residential population from impervious surfaces
+found Shanghai's downtown census at **6,008,068** persons against model
+estimates ranging from **1,435,820 to 1,065,729** across fourteen grid
+resolutions, and states that the population "was greatly underestimated in the
+model without taking the vertical building information into consideration" (Wei
+et al., 2020, *International Journal of Remote Sensing* 42, 2303–2326,
+doi:10.1080/01431161.2020.1841322).
+
+So the layer's failure mode is the opposite of the population grids': they lose
+the countryside, it loses the vertical dimension of the city. A factor of four
+to six in Shanghai's downtown is not a small correction, and Shanghai is one of
+this project's four provinces.
+
+### And nighttime lights, the incumbent proxy, fail across these years
+
+DMSP-OLS covers 1992 to 2013 and VIIRS begins in 2013, so **an allocation across
+2000, 2010 and 2018 crosses a sensor boundary**. The older instrument lacks
+onboard calibration, carries 6-bit quantisation and coarse resolution, and
+suffers saturation in bright cores and blooming into their surroundings; VIIRS
+has onboard calibration and a much broader dynamic range. An intercalibration is
+therefore required for any series spanning the boundary, which is a step this
+project's years cannot avoid.
+
+**One premise about the intercalibration products could not be verified** — that
+one overestimates in urban cores while another underestimates there — and no
+number is written for it. What is verified is that the coarse resolution of both
+instruments cannot separate impervious surface from other features in the
+transition between urban and suburban, which is the same peri-urban zone where
+this study's land-cover gradients live.
+
+### The synthesis, which is the argument for combining
+
+Each proxy fails somewhere different: population grids at change and in the
+countryside, impervious surface in the vertical, nighttime lights at the sensor
+boundary and in the peri-urban transition. **That is an argument for using them
+together rather than choosing between them**, and it is what the Southeast Asian
+downscaling recorded above actually did — nighttime lights, impervious surface
+information and urban–rural settlement distributions integrated in one
+allocation (Chen and Ba, 2026, doi:10.1038/s41597-026-07320-1).
+
+For this project the practical form of that conclusion is narrow: impervious
+fraction is the right proxy for *where built surface changed between 2000 and
+2018*, which is the question the thesis asked of it and the one the population
+grids demonstrably cannot answer. It is the wrong proxy for how much methane
+that built surface emits, for the reasons the separability section gives.
+
+## Building volume, the dimension the layer does not have
+
+The Shanghai underestimate above names the missing variable explicitly:
+vertical building information. It exists, at this project's resolution, for all
+three of its years.
+
+**A 30 m annual building height dataset for China covering 1990 to 2019** was
+published as Zhang et al. (2026), *Mapping three decades of urban growth in
+China: a 30 m annual building height dataset (1990–2019)*, *Earth System Science
+Data* 18, 5329, doi:10.5194/essd-18-5329-2026. Annual, 30 m, and its span
+contains 2000, 2010 and 2018 — which no other building-height product manages.
+
+The alternatives trade coverage against detail:
+
+* **3D-GloBFP**, the first global three-dimensional building footprint dataset,
+  covering 1.66 billion buildings and validated in China against CNBH (Che et
+  al., 2024, *Earth System Science Data* 16, 5357,
+  doi:10.5194/essd-16-5357-2024).
+* **CNBH-10m**, Chinese building height at 10 m for 2020, with a root mean
+  square error of **4.65 m** validated across **63 cities** (Wu et al., 2023,
+  *Remote Sensing of Environment* 291, 113578, doi:10.1016/j.rse.2023.113578).
+  One year only.
+* **CMAB**, a national multi-attribute building dataset at building-instance
+  level (Zhang, Zhao and Long, 2025, *Scientific Data* 12,
+  doi:10.1038/s41597-025-04730-5).
+
+**The trade-off they state is this project's own**: fine-granularity products
+are cross-sectional, and the longitudinal ones are coarse. The annual 30 m
+height dataset is the only candidate that resolves the study's three years, and
+it carries height rather than the richer attributes.
+
+### They disagree with each other, which is the GAIA–GISA problem again
+
+CNBH is reported to underestimate heights in central business districts and
+overestimate low-rise buildings in old urban areas, and a comparison found
+another product misidentifying contiguous 20-to-36 m buildings as high-rise.
+**Neither direction could be verified to a primary source in this pass** and so
+neither is written as a number; what is recorded is that the products disagree
+and that the disagreement is structured by urban form rather than random.
+
+That is the same shape as the impervious problem this repository already has.
+`ERRATA.md` 7.5 and `data/processed/README.md` record GAIA and GISA crossing
+over — GISA finding 19.9 percent less impervious surface here in 2018 and 20.7
+percent more in 2000 — and the lesson taken from it was that a second product
+with different errors is worth more than a better single product. The same
+lesson applies before any height layer is adopted: two of them, or none.
+
+### Why volume matters for methane rather than for urban form
+
+A residential tower and a single-storey industrial shed have **identical
+impervious footprints and different gas connections and waste generation**. That
+is the whole argument, and it is about composition rather than about density: the
+sectors the urban bundle contains — downstream gas to households, municipal
+waste, wastewater — scale with residents and their consumption, not with paved
+area.
+
+Height is an indirect route to that and **CMAB carries building function
+directly**, which would separate residential from industrial without inferring
+it from volume. For the specific question this project's second hypothesis asks
+— whether urban methane tracks gas use — a function layer is closer to the
+mechanism than either footprint or height.
+
 ## China's waste sector, where this project's years bracket the arc
 
 The timing is unusually favourable to this project and unusually awkward for its
@@ -293,10 +456,30 @@ says, but that the bundle is dominated by a sector whose spatial structure a
 fraction cannot represent. That is a stronger and more specific statement than
 "impervious surface is a crude proxy", and it is the one the literature supports.
 
+**Four things were added on 13 September 2026 and two of them change the
+summary.** Impervious fraction turns out to be the *best available* proxy for
+where built surface changed across these years, because population grids fail at
+exactly that and nighttime lights cross a sensor boundary inside the study
+period — so the layer is better than its alternatives at the thing it was used
+for, while remaining wrong for the thing it was asked to predict. And the
+detectability question has a number: a single large landfill sits below the
+threshold at which this composite could constrain it independently of the prior,
+so the dominant urban sector is not merely spatially unrepresentable by a
+fraction but individually invisible to this field.
+
+The other two are a missing dimension and a caution. Building height exists
+annually at 30 m for all three of this project's years, and building *function*
+exists at instance level, which is closer to the gas-and-waste mechanism than
+either footprint or height. And the gas share of urban methane is
+method-dependent by a factor of two to four, with the ethane-tracer method that
+produces the highest shares being the one with the narrowest spatial scope —
+which is the method behind this region's own 3.5 percent leakage figure.
+
 ## What could not be verified
 
 Eight premises carried into this record did not survive checking, in addition to
-the seven recorded in the methods grounding's own amendment section.
+the seven recorded in the methods grounding's own amendment section. **Three
+more failed in the 13 September 2026 amendment and are listed at the end.**
 
 **The sector composition of an average US city** — landfills 40 percent, gas
 distribution 9 percent including 4 percent post-meter, wastewater 6 percent —
@@ -351,3 +534,33 @@ population-density disaggregation all were. And the GHGSat waste survey covers
 observations of 151 sites, of which the Shanghai wastewater plume is verified as
 present — but it was "filtered from the analysis", so it is an example in the
 dataset rather than a quantified emission.
+
+### The 13 September 2026 amendment's own failures
+
+**A fifth bad DOI, and a new failure mode.** The population-change evaluation
+was carried as `10.1038/s41599-026-07688-w`. That does not resolve at all: the
+article number is right and the **prefix is wrong**, since *Humanities and
+Social Sciences Communications* registers under 10.1057 rather than 10.1038.
+The correct DOI is `10.1057/s41599-026-07688-w`. Four earlier bad DOIs resolved
+confidently to the wrong paper; this one resolves to nothing, which is the safer
+of the two failures and still a failure.
+
+**The nighttime-light intercalibration disagreement could not be verified.**
+That one intercalibration product overestimates in urban cores while another
+underestimates there is not written. The sensor discontinuity, the older
+instrument's saturation and blooming, and both instruments' inability to
+separate impervious surface in the peri-urban transition are verified and
+written.
+
+**The building-height products' disagreement could not be verified to a primary
+source.** That CNBH underestimates in central business districts and
+overestimates low-rise buildings in old urban areas, and that another product
+misidentified contiguous 20-to-36 m buildings as high-rise, are recorded as
+directions without numbers. What is written is that the products disagree and
+that the disagreement is structured by urban form.
+
+Two further items were verified and are recorded with a qualification rather
+than as settled. The rural-underrepresentation finding is **contested**: WorldPop
+published a rebuttal disputing it, and both sides are named above. And *Evolving
+Cityscape*, offered as a building dataset covering 106 Chinese cities for 2018 to
+2023, could not be located at all and is not recorded anywhere.
