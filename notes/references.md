@@ -1,8 +1,10 @@
 # Reference register
 
 Every source this repository cites, verified against the DOI registries on
-3 September 2026, and extended on 9 September 2026 when the figure set gained
-its first diagrams. The register exists because citations here were scattered
+3 September 2026, extended on 9 September 2026 when the figure set gained its
+first diagrams, and again on 10 September 2026 when nineteen literature
+searches over the study region were recorded. The register exists because
+citations here were scattered
 across `config/sources.yml`, `data/manifest.json`, `notes/decisions.md`,
 `ERRATA.md` and three READMEs, in four different formats, so nobody could say
 how many sources the work rested on without grepping for them.
@@ -13,13 +15,24 @@ errors, both recorded in `notes/decisions.md`. GloRice was cited as "Zhang et
 al. (2025)" for a paper whose first author is Xie, read off a figshare record
 listing two of six authors in reverse order. And a benchmark was attributed to
 the TROPOMI/WFMD v2.0 paper, whose abstract describes quality filtering rather
-than the albedo correction the benchmark was said to come from.
+than the albedo correction the benchmark was said to come from. A third
+instance was met on 10 September 2026 and not acted on: the ChinaRiceCalendar
+deposit's author field gives two of eleven authors with their given and family
+names run together, and the paper's citation is carried instead.
 
-`notes/references.bib` carries forty entries as BibTeX. It is **generated**,
-not typed: each entry comes from `https://doi.org` under content negotiation for
-`application/x-bibtex`, so the two files cannot drift and no transcription step
-exists between the registry and the repository. Regenerate it rather than
-editing it.
+`notes/references.bib` carries sixty-three entries as BibTeX. It is
+**generated**, not typed: each entry comes from `https://doi.org` under content
+negotiation for `application/x-bibtex`, so the two files cannot drift and no
+transcription step exists between the registry and the repository. Regenerate it
+rather than editing it, with
+
+    python scripts/build_references_bib.py --write
+
+which was written on 10 September 2026. Until then the claim that the file was
+generated rested on whoever last ran the negotiation by hand, which is the same
+class of assertion this repository has twice found to be false elsewhere.
+`tests/test_references.py` asserts, without touching the network, that the DOIs
+in this file and the DOIs in the BibTeX are the same set.
 
 Two entries in this register are **not** in the BibTeX and cannot be. ISO
 5807:1985 is a standard and Chaudhuri (2020) is a textbook; neither has a DOI,
@@ -32,13 +45,17 @@ discusses a work the thesis cites, the work appears here and its role says so.
 
 ## What could not be verified
 
-Nothing in the register failed to verify **as a work**. All forty DOIs resolved:
-thirty-two through Crossref and six through DataCite, which is the registry that
-carries dataset DOIs and the reason a Crossref-only lookup returns "not found"
-for the deposits. Two entries have no DOI to resolve and are verified by other
-means, which the entries themselves state.
+Nothing in the register failed to verify **as a work**. All sixty-three DOIs
+resolved: fifty-five through Crossref and eight through DataCite, which is the
+registry that carries dataset DOIs and the reason a Crossref-only lookup returns
+"not found" for the deposits. Two entries have no DOI to resolve and are
+verified by other means, which the entries themselves state.
 
-One source did not survive verification for the thing it was cited for.
+**Two sources did not survive verification for the thing they were cited for.**
+The second is Zhu and Li (2024) and is set out under the region grounding below;
+it is a real paper, it resolves, and none of the four figures attributed to it
+could be confirmed from any accessible source, so none is written anywhere in
+this repository. The first follows.
 **Lodemann, T., Akçalı, E., and Fernandez, R. (2022)**, Process Modeling of
 ABCDE Primary Survey in Trauma Resuscitations, *Simulation in Healthcare* 17,
 425–432, `10.1097/SIH.0000000000000622`, is a real paper and resolves. It was
@@ -63,12 +80,20 @@ a trial registration document rather than a citable work, and appears only in
 the provenance note it belongs to. The Copernicus author
 guidelines, which recommend Scientific colour maps and are the route by which
 that recommendation reaches this field, are a web page rather than a citable
-work; they are recorded beside the Crameri entry instead. And `ERRATA.md` 5.3's
+work; they are recorded beside the Crameri entry instead. `ERRATA.md` 5.3's
 claim that waste treatment is the dominant anthropogenic methane source at city
-scale in China could not be sourced: repeated searches returned landfill and
-wastewater studies for other regions but nothing supporting the claim as the
-errata states it, for Chinese cities. What that section can support is narrower
-and is set out under Zhao et al. below.
+scale in China could not be sourced on 3 September 2026, and was withdrawn.
+
+**That withdrawal has since been partly reversed, which is worth recording as a
+pattern.** On 10 September 2026 a city-scale source-resolved inventory supplied
+the claim in a narrower and more relevant form: waste-related emissions are the
+majority of total methane in 38 Chinese cities, and the examples named include
+Shanghai and Suzhou, both inside this study's domain (Zhang et al., 2026,
+`10.1021/acs.est.5c18654`). So the original claim was not wrong about the
+mechanism; it was wrong about the scope, and stating it nationally made it
+unsourceable while stating it for developed coastal cities makes it verifiable.
+Withdrawing an unsourced claim was still the right action at the time, because
+the narrower version was not in hand and could not have been assumed.
 
 ## Ordering
 
@@ -78,9 +103,11 @@ the work rests on, and the question a reader arrives with is what kind of weight
 each source bears. Within each group, alphabetical by first author.
 
 The groups are: datasets used, methods applied, findings relied on, findings
-contested, and the rice-paddy exchange, which is kept together because its three
-parts are a single argument and splitting them across the other groups would
-misrepresent all three.
+contested, the rice-paddy exchange, the Yangtze River Delta grounding, and
+accuracy assessment. The last three are kept together for the same reason: each
+is a single argument, and splitting its parts across the role groups would
+misrepresent all of them. The grounding group is the largest in the register and
+is the material a paper's introduction and discussion would draw on.
 
 ---
 
@@ -523,6 +550,309 @@ long-term paddy rice distribution dataset in China at 30 m resolution.
 *Earth System Science Data* 17, 2193–2216.
 `10.5194/essd-17-2193-2025` — peer-reviewed paper; describes a dataset not used.
 Covers 1990 to 2016 at 30 m.
+
+---
+
+## The Yangtze River Delta grounding, added 10 September 2026
+
+Nineteen literature searches over the region produced findings that existed
+only in a conversation. [`notes/grounding-yrd.md`](grounding-yrd.md) records
+them and these are its sources. The group is kept together for the same reason
+*The rice-paddy exchange* is: it is one argument, and splitting it across the
+role groups above would hide that the region grounding is a single body of
+evidence rather than nineteen unrelated facts.
+
+**Five figures quoted from these works in a search snippet did not survive
+checking against the works themselves**, which is recorded in the grounding
+document's own closing section and is the reason this group exists as a
+verified register rather than as notes.
+
+### The regional budget
+
+**Duan, Y., Gao, Y., Zhao, J., Xue, Y., Zhang, W., Wu, W., Jiang, H., and
+Cao, D. (2023).** Agricultural Methane Emissions in China: Inventories, Driving
+Forces and Mitigation Strategies. *Environmental Science & Technology* 57,
+13292–13303.
+`10.1021/acs.est.3c04209` — peer-reviewed paper; a finding relied on, and the
+single most load-bearing citation in the grounding. It supplies the 38.4 percent
+share of national agricultural methane for the middle and lower Yangtze, the
+seven-province definition of that region, and the livestock decoupling in
+Jiangsu and Zhejiang. The article is paywalled; its figures were verified
+through two independent searches returning the same wording, not by reading the
+text, and the grounding says so.
+Cited in `notes/grounding-yrd.md`.
+
+**Zhang, L., Chen, Y., Wang, K., Guo, J., Liang, S., Wu, P., Zhang, H., Wu, J.,
+Cui, Y., Lyu, C., Xu, H., Wang, Q., Cai, B., Wang, J., and Li, L. (2026).**
+City-Scale, Source-Resolved Methane Inventories Reveal Drivers and Mitigation
+Pathways Across China's Cities. *Environmental Science & Technology* 60,
+22323–22334.
+`10.1021/acs.est.5c18654` — peer-reviewed paper; a finding relied on, and
+describes a dataset not used. Covers 339 prefecture-level cities from 2018 to
+2024. It is the source of the verified 2024 national sectoral split that
+replaces an unsourceable one, and of the statement that waste-related emissions
+are the majority of total methane in 38 cities including Shanghai and Suzhou,
+which is what `ERRATA.md` 5.3 now rests on. Open access through PubMed Central,
+read directly.
+Cited in `notes/grounding-yrd.md`, `ERRATA.md`, `notes/dataset-leads.md`.
+
+### The rice calendar
+
+**Li, H., Wang, X., Wang, S., Liu, J., Liu, Y., Liu, Z., Chen, S., Wang, Q.,
+Zhu, T., Wang, L., and Wang, L. (2024).** ChinaRiceCalendar – seasonal crop
+calendars for early-, middle-, and late-season rice in China. *Earth System
+Science Data* 16, 1689–1701.
+`10.5194/essd-16-1689-2024` — peer-reviewed paper; describes a dataset not used,
+and a finding relied on. Supplies the Middle-Lower Yangtze transplanting and
+maturity means the calendar-mismatch finding is measured against. **A premise
+failed here**: its validated agreement for late-season rice is R² 0.90, not
+0.96, and it gives no province-level calendar for Anhui in its text.
+Cited in `notes/grounding-yrd.md`, `notes/dataset-leads.md`.
+
+**Liu, J., Li, H., Wang, X., Wang, S., Liu, Y., Liu, Z., Chen, S., Wang, Q.,
+Zhu, T., Wang, L., and Wang, L. (2023).** ChinaRiceCalendar. Harvard Dataverse.
+`10.7910/DVN/EUP8EY` — dataset record; the deposit, not fetched. Its author
+field reads "Jinyuan Liu, Hui Li", two of eleven authors with the given and
+family names run together, which is the third instance of the platform-metadata
+name hazard this register's preamble warns about. The citation above is the
+paper's, not the deposit's.
+Cited in `notes/grounding-yrd.md`, `notes/dataset-leads.md`.
+
+### Water management, which is the mechanism the study has no layer for
+
+**Wu, X., Wang, W., Xie, X., Yin, C., Hou, H., Yan, W., and Wang, G. (2018).**
+Net global warming potential and greenhouse gas intensity as affected by
+different water management strategies in Chinese double rice-cropping systems.
+*Scientific Reports* 8, article 779.
+`10.1038/s41598-017-19110-2` — peer-reviewed paper; a finding relied on. The
+field experiment giving net global warming potentials of 22,497, 8,895 and
+1,646 kg CO2-equivalent per hectare per year across three water regimes, a
+factor of 13.7 on one soil under one crop. Cited with the print year 2018;
+Crossref's `issued` gives January 2018 and the volume agrees.
+Cited in `notes/grounding-yrd.md`.
+
+**Minamikawa, K. (2025).** Climate-smart water management in rice paddies: a
+meta-synthesis on greenhouse gas emissions and yield impacts. *Paddy and Water
+Environment* 23, 525–532.
+`10.1007/s10333-025-01045-4` — peer-reviewed paper; a finding relied on. A
+review of eleven meta-analyses. The per-outcome counts matter and are carried:
+the CH4 range of −31 to −62 percent rests on ten of them, the N2O range of +37
+to +445 percent on seven, and the yield range on eight.
+Cited in `notes/grounding-yrd.md`.
+
+**Jiang, Y., Carrijo, D., Huang, S., Chen, J., Balaine, N., Zhang, W., van
+Groenigen, K. J., and Linquist, B. (2019).** Water management to mitigate the
+global warming potential of rice systems: A global meta-analysis. *Field Crops
+Research* 234, 47–54.
+`10.1016/j.fcr.2019.02.010` — peer-reviewed paper; a finding relied on. The
+201-paired-observation meta-analysis underlying the synthesis above, and the
+one that quantifies the net effect: a 44 percent reduction in combined global
+warming potential, because N2O contributes only about 12 percent of it. First
+author Yu Jiang, who is not the Min Jiang of the cropping-system paper below.
+Cited in `notes/grounding-yrd.md`.
+
+**Vo, T. B. T., Wassmann, R., Tirol-Padre, A., Cao, V. P., MacDonald, B.,
+Espaldon, M. V. O., and Sander, B. O. (2018).** Methane emission from rice
+cultivation in different agro-ecological zones of the Mekong river delta:
+seasonal patterns and emission factors for baseline water management. *Soil
+Science and Plant Nutrition* 64, 47–58.
+`10.1080/00380768.2017.1413926` — peer-reviewed paper; a finding relied on. The
+source for the statement that deltaic rice systems have hydrological conditions
+specific enough that default emission factors may be erroneous, and for the
+0.31 to 9.14 kg CH4 per hectare per day spread across four agro-ecological
+zones of one delta. Cited with the print year 2018 matching volume 64 issue 1;
+Crossref's `issued` gives December 2017, the online date, which is the same
+convention taken for Valavi et al. above.
+Cited in `notes/grounding-yrd.md`.
+
+**Wang, Y., Tao, F., Chen, Y., and Yin, L. (2024).** Mapping irrigation regimes
+in Chinese paddy lands through multi-source data assimilation. *Agricultural
+Water Management* 304, 109083.
+`10.1016/j.agwat.2024.109083` — peer-reviewed paper; describes a dataset not
+used. The nearest thing found to the missing water-regime covariate: water-saving
+against flooding irrigation at 500 m, by province-wise random forest over MODIS
+and Sentinel-1, with an overall accuracy near 0.73 against ground samples and an
+R² above 0.92 against city and provincial census area. The census assimilation
+is the reason it needs care rather than adoption.
+Cited in `notes/dataset-leads.md`.
+
+**Huang, Y., Sass, R. L., and Fisher, F. M. Jr. (1998).** A semi-empirical model
+of methane emission from flooded rice paddy soils. *Global Change Biology* 4,
+247–268.
+`10.1046/j.1365-2486.1998.00129.x` — peer-reviewed paper; a method not applied.
+The origin of CH4MOD, which is the model the cropping-system study below runs
+and the obvious route from a rice layer plus a water regime to an emission
+estimate. Recorded because the route exists and this reproduction has not taken
+it.
+Cited in `notes/grounding-yrd.md`, `notes/dataset-leads.md`.
+
+### The two transitions the thesis does not frame
+
+**Jiang, M., Li, X., Xin, L., Tan, M., and Zhang, W. (2023).** Impacts of Rice
+Cropping System Changes on Paddy Methane Emissions in Southern China. *Land* 12,
+270.
+`10.3390/land12020270` — peer-reviewed paper; a finding relied on. Double-crop
+to single-crop conversion of 253.64 × 10⁴ hectares between 1990 and 2015,
+reducing CH4 by 451.94 Gg or 8.4 percent of the Chinese paddy total, largest in
+the Middle-Lower Yangtze plain. **A premise was refined here**: the projected
+further reduction under urbanisation is 17.1 percent in the extreme scenario and
+9.2 percent in the most likely, not 9.2 percent alone.
+Cited in `notes/grounding-yrd.md`.
+
+**Yuan, Y., Dai, X., Wang, H., Xu, M., Fu, X., and Yang, F. (2016).** Effects of
+Land-Use Conversion from Double Rice Cropping to Vegetables on Methane and
+Nitrous Oxide Fluxes in Southern China. *PLoS ONE* 11, e0155926.
+`10.1371/journal.pone.0155926` — peer-reviewed paper; a finding relied on. The
+measurement that paddy-to-vegetable conversion takes cumulative CH4 from 348.9
+and 321.0 kg C per hectare per year to −0.4 and 1.4, which is a collapse to
+approximately zero rather than a reduction, while N2O rises by an order of
+magnitude.
+Cited in `notes/grounding-yrd.md`.
+
+**Li, C., Zhou, Z., Chen, X., Tang, Q., Zhang, Q., and Tang, J. (2026).**
+Shifted microbial network characteristics govern soil N2O emission following
+paddy-to-vegetable land conversion. *Frontiers in Microbiology* 17.
+`10.3389/fmicb.2026.1750894` — peer-reviewed paper; a finding relied on, and
+narrowly. It is cited for two things only: that the conversion is becoming
+increasingly widespread, and that it has been studied in the Yangtze River Delta
+specifically. Its own subject is soil microbial networks and N2O, which this
+study does not address.
+Cited in `notes/grounding-yrd.md`.
+
+### Wetlands, urban gas and transport
+
+**Yang, B., Li, X., Lin, S., Jiang, C., Xue, L., Wang, J., Liu, X., and
+Espenberg, M. (2021).** Invasive Spartina alterniflora changes the Yangtze
+Estuary salt marsh from CH4 sink to source. *Estuarine, Coastal and Shelf
+Science* 252, 107258.
+`10.1016/j.ecss.2021.107258` — peer-reviewed paper; a finding relied on. The
+wetland term in this region does not have a fixed sign, which is a stronger
+statement than that its magnitude is unknown, and it is the reason the
+grounding treats wetlands as untestable here rather than as merely omitted.
+Cited in `notes/grounding-yrd.md`.
+
+**Zhao, Y., Zhang, Y., Zhang, Y., Xu, Z., Pei, X., Wang, Z., Xu, B., Xia, Z.,
+Zou, Q., Zhao, W., Sun, Y., Wang, Q., Gao, Y., Wang, H., Huang, C., Wang, X.,
+Wang, R., Qiu, B., Zhao, S., Wang, X., Zhou, Y., Shen, H., and Shen, G.
+(2026).** Underestimated methane emissions from natural gas consumption in the
+Yangtze River Delta cities of China. *Nature Cities*.
+`10.1038/s44284-026-00504-1` — peer-reviewed paper; a finding relied on **for
+its direction and its region only**. The work exists, resolves, and is about
+this study's own domain, which is why it matters. Its numerical results are not
+relied on: the article is paywalled, its abstract is not indexed by Crossref or
+OpenAlex, and the leakage figures circulating for it come from a press summary.
+`ERRATA.md` 5.3 and the grounding both say so at the point of use. One of its
+authors, Youwen Sun, is also a Hefei TCCON principal investigator, which is
+worth knowing if the leakage estimate is ever pursued.
+Cited in `notes/grounding-yrd.md`, `ERRATA.md`.
+
+**Shan, M., Xu, H., Han, L., Pang, Y., Ma, J., and Zhang, C. (2022).** Temporal
+Variation and Source Analysis of Atmospheric CH4 at Different Altitudes in the
+Background Area of Yangtze River Delta. *Atmosphere* 13, 1206.
+`10.3390/atmos13081206` — peer-reviewed paper; a finding relied on. The
+published analysis of the regional background methane record inside this study's
+domain.
+Cited in `notes/grounding-yrd.md`, `notes/dataset-leads.md`.
+
+**Guo, N., Lin, H., Lin, Y., Wei, F., Zang, K., and Fang, S. (2023).** Temporal
+patterns and determinants of atmospheric methane in Suzhou, the Yangtze River
+Delta. *Atmospheric Pollution Research* 14, 101830.
+`10.1016/j.apr.2023.101830` — peer-reviewed paper; a finding relied on. Three
+stations inside the domain, an annual mean of 2,132.25 ppb at the northern one,
+and a surface seasonal peak in mid-July and late August. It is the in-domain
+measurement the composite's October sounding peak has to be read against.
+Cited in `notes/grounding-yrd.md`, `notes/dataset-leads.md`.
+
+**Wang, Y., Yuan, X., Yuan, T., Zhang, J., Tai, A. P. K., and Feng, Z. (2026).**
+Impacts of land use/cover changes on local meteorology and air quality in the
+Yangtze River Delta region of China (2001–2021). *Journal of Environmental
+Sciences* 161, 707–717.
+`10.1016/j.jes.2025.07.021` — peer-reviewed paper; a finding relied on. The
+fourth confound on the urban association, and the only one that is physical
+rather than statistical: impervious fraction is correlated with boundary-layer
+depth and wind speed through a mechanism, in a direction this study cannot sign.
+Cited in `notes/grounding-yrd.md`.
+
+**Sun, C., Liu, Y., Ciais, P., Broquet, G., Zheng, B., Wang, H., and Chen, H.
+(2026).** Measurement-based assessment reveals key drivers and mitigation
+potential of methane emissions from China's wastewater treatment. *Science
+Advances* 12, issue 15.
+`10.1126/sciadv.aec0536` — peer-reviewed paper; describes a dataset not used.
+Facility-level emission factors from atmospheric measurements at 105 wastewater
+treatment plants, including thirteen in Nanjing measured in three seasons. It is
+the sector `ERRATA.md` 5.3 records the thesis as omitting entirely, now with a
+measurement behind it.
+Cited in `notes/dataset-leads.md`.
+
+### One work cited and not relied on
+
+**Zhu, Y., and Li, H. (2024).** Methane emissions from rice paddies in the
+Yangtze River Delta region of China: synthesis of new estimates. *International
+Journal of Environmental Science and Technology* 22, 11011–11016.
+`10.1007/s13762-024-06050-4` — peer-reviewed paper; **a source that could not
+be verified for the thing it was cited for.** It is a real work and resolves. A
+per-hectare emission factor rising from 146.02 to 252.17 kg per hectare between
+the 2000s and the 2010s over 416 samples was attributed to it, and none of those
+figures could be confirmed: the article is paywalled, no abstract is indexed by
+Crossref or OpenAlex, and no accessible copy was found. It is recorded here and
+its figures are not written anywhere in this repository. This is the second
+entry in this register in that category, after Lodemann et al. (2022) above.
+Named in `notes/grounding-yrd.md`.
+
+---
+
+## Accuracy assessment and the fractional-cover frame, added 10 September 2026
+
+Two entries that close a gap `ERRATA.md` 6.5 leaves open. The errata faults the
+thesis for reporting no classification accuracy; the reproduction reports none
+either, and the reason is not symmetric, which needs the standard in the
+register before it can be argued.
+
+**Olofsson, P., Foody, G. M., Herold, M., Stehman, S. V., Woodcock, C. E., and
+Wulder, M. A. (2014).** Good practices for estimating area and assessing
+accuracy of land change. *Remote Sensing of Environment* 148, 42–57.
+`10.1016/j.rse.2014.02.015` — peer-reviewed paper; a method **not** applied, and
+the standard a reviewer will check this work against. Its five recommendations
+are a probability sampling design, a response design using reference data more
+accurate than the map, consistent analysis, an error matrix expressed as
+proportions of area, and error-adjusted area estimates with confidence
+intervals. **The first three apply to this study and are unmet; the last two do
+not apply at all.** The paper contains no treatment of fractional cover: the
+strings "fraction", "sub-pixel" and "subpixel" do not occur in it, and its
+"proportion of area" always means the share of a region a discrete class
+occupies. This study's layers are per-cell fractions, for which the next entry
+is the frame.
+Cited in `notes/dataset-leads.md`.
+
+**Wickham, J., Stehman, S. V., Neale, A., and Mehaffey, M. (2020).** Accuracy
+assessment of NLCD 2011 percent impervious cover for selected USA metropolitan
+areas. *International Journal of Applied Earth Observation and Geoinformation*
+84, 101955.
+`10.1016/j.jag.2019.101955` — peer-reviewed paper; a method applicable and not
+yet applied. **Borrowed method literature, from land-cover accuracy
+assessment.** The frame for a continuous field rather than a categorical map:
+mean deviation, mean absolute deviation and ordinary least squares regression
+against a more accurate reference fraction, explicitly in contrast to techniques
+for nominal class data that build an error matrix. It also measures the
+aggregation effect this study depends on, across seven lattice cell sizes from
+1 to 200 hectares, with mean absolute deviation at or below 5 percent for six of
+the seven. This study's cells are 62,500 hectares.
+Cited in `notes/dataset-leads.md`.
+
+**Huang, X., Song, Y., Yang, J., Wang, W., Ren, H., Dong, M., Feng, Y., Yin, H.,
+and Li, J. (2022).** Toward accurate mapping of 30-m time-series global
+impervious surface area (GISA). *International Journal of Applied Earth
+Observation and Geoinformation* 109, 102787.
+`10.1016/j.jag.2022.102787` — peer-reviewed paper; a finding relied on, and the
+correction of a misattribution. **This, not the 2021 GISA paper, is the source
+of the 28.35 percent producer's-accuracy difference between GISA and GAIA**
+that `README.md`, `data/processed/README.md` and `notes/decisions.md` quoted
+against `10.1007/s11430-020-9797-9`. The string "28.35" does not occur in the
+2021 paper. GISA 2.0 validates against 118,822 ZY-3 test samples and reports F1
+scores of 0.935 for itself against 0.721 for GAIA. The sample count of 124,190
+that accompanied the figure in this repository matches no published number in
+either paper and has been removed rather than re-sourced.
+Cited in `README.md`, `data/processed/README.md`, `notes/decisions.md`.
 
 ---
 

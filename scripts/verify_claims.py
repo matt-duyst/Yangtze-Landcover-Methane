@@ -57,7 +57,7 @@ PROCESSED = REPO / "data" / "processed"
 #: that corrected them would destroy what it records.
 SCANNED = ("README.md", "ERRATA.md", "data/processed/README.md",
            "data/reference/README.md", "figures/README_fragments.md",
-           "notes/repository-architecture.md")
+           "notes/repository-architecture.md", "notes/grounding-yrd.md")
 
 #: number, then optional space, then the marker naming what it is
 CLAIM = re.compile(r"(-?[\d][\d,]*(?:\.\d+)?)\s*<!--#([a-zA-Z0-9_.]+)-->")
@@ -152,6 +152,48 @@ def _absent_on_land() -> int:
                 total += 1
         _cache["absent_land"] = total
     return _cache["absent_land"]
+
+
+def _sea_fraction() -> "np.ndarray":
+    """Per-cell sea fraction, from the committed land layer and the lattice.
+
+    Read once and cached, because the land union is the expensive part and two
+    quantities want it. `_absent_on_land` above computes a land fraction for a
+    subset of cells with the same geometry; this is the whole grid, and the
+    complement, because the statements it serves are about coastlines.
+    """
+    if "sea" not in _cache:
+        from shapely.geometry import box
+
+        from src.figures import geo
+
+        spec = geo.study_spec()
+        land = geo.read_layer(geo.LAND).union_all()
+        res = spec.resolution
+        out = np.zeros(_composite()[2].shape, dtype="float64")
+        for row in range(out.shape[0]):
+            for col in range(out.shape[1]):
+                west = spec.west + col * res
+                south = spec.north - (row + 1) * res
+                cell = box(west, south, west + res, south + res)
+                out[row, col] = 1.0 - land.intersection(cell).area / cell.area
+        _cache["sea"] = out
+    return _cache["sea"]
+
+
+def _median_soundings(where: "np.ndarray") -> float:
+    """Median sounding count over covered cells satisfying `where`.
+
+    Covered cells only, and that restriction is the whole difference between
+    the pair of figures this repository quotes. Over all 1,023 cells, with the
+    uncovered counted as zero, the coastline's median is 2 to 3 and pure land's
+    is about 108, which is what `data/processed/README.md` states. Over the 926
+    covered cells the same two populations give 6 and 133. Both are true of the
+    same composite; neither is wrong; they answer different questions, and a
+    sentence quoting one has to say which.
+    """
+    counts = _composite()[2]
+    return float(np.median(counts[where & (counts > 0)]))
 
 
 def _urban_series() -> dict:
@@ -479,6 +521,11 @@ QUANTITIES = {
         lambda: int((_cell_elevation()[_composite()[2] == 0] > 500).sum()),
     "composite.covered_above_500m":
         lambda: int((_cell_elevation()[_composite()[2] > 0] > 500).sum()),
+    "composite.coast_median_soundings":
+        lambda: _median_soundings((_sea_fraction() >= 0.25)
+                                  & (_sea_fraction() <= 0.99)),
+    "composite.land_median_soundings":
+        lambda: _median_soundings(_sea_fraction() < 0.01),
     "urban.gaia_2000": lambda: _urban("gaia", 2000),
     "urban.gaia_2010": lambda: _urban("gaia", 2010),
     "urban.gaia_2018": lambda: _urban("gaia", 2018),
