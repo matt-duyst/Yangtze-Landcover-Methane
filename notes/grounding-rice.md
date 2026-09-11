@@ -86,8 +86,14 @@ section establishes, because each had been recorded as a lead.
   `10.5281/zenodo.5555721`, CC-BY-4.0, twenty-eight files holding one GeoTIFF
   archive per year from 2000 to 2020 plus three-year composites, each about
   1.7 MB; the API returns the file listing and a request for
-  `paddyRice2018.zip` returns HTTP 200. It covers all three of the thesis's
-  years, which no product committed to this repository does.
+  `paddyRice2018.zip` returns HTTP 200. **It covers all three of the thesis's
+  years, and it would be the only *observed* product to do so.** GloRice covers
+  them and is committed, but `data/processed/README.md` records that it "must
+  not be read as an independent observation of rice extent" because its annual
+  maps allocate national and subnational statistics to grid cells within each
+  administrative unit. NESDC reaches only 2017 onward and CCD-Rice stops at
+  2016, so APRA500 is the only satellite classification on this list that spans
+  2000, 2010 and 2018.
 * **EFSP**, single and double paddy rice and cropping intensity for China at
   30 m from 2014 to 2019 (Wei, J., Cui, Y., Luo, W., and Luo, Y., 2022,
   *Remote Sensing* 14, 759, doi:10.3390/rs14030759). **In domain, and it
