@@ -60,13 +60,19 @@ SCANNED = ("README.md", "ERRATA.md", "data/processed/README.md",
            "notes/repository-architecture.md", "notes/grounding-yrd.md",
            "notes/grounding-methods.md", "notes/grounding-urban.md",
            "notes/grounding-rice.md", "notes/grounding-methane.md",
-           "notes/paper-target.md")
+           "notes/paper-target.md", "notes/draft-methods.md")
 
 #: number, then optional space, then the marker naming what it is
 CLAIM = re.compile(r"(-?[\d][\d,]*(?:\.\d+)?)\s*<!--#([a-zA-Z0-9_.]+)-->")
 
 #: Every marker in the prose must name one of these.
 _cache: dict = {}
+
+
+def _read_csv(path) -> list[dict]:
+    """Every row of a committed CSV as a dict. Used by the Tier 0 resolvers."""
+    with path.open(newline="") as handle:
+        return list(csv.DictReader(handle))
 
 
 def _grid() -> list[dict]:
@@ -285,6 +291,90 @@ def _rice() -> dict:
                for name, v in provincial.items()},
         }
     return _cache["rice"]
+
+
+def _dof() -> dict:
+    """The effective-degrees-of-freedom table, which had no resolver until now.
+
+    Tier 0 committed four artefacts and none of them was reachable from prose.
+    The methods draft quotes all four, so they are resolved here: a capability
+    claim whose numbers cannot be checked is the drift this mechanism exists to
+    prevent, and these are the numbers the paper rests on.
+    """
+    if "dof" not in _cache:
+        rows = _read_csv(PROCESSED / "correlation_dof_2018.csv")
+        shrink = [float(r["shrinkage"]) for r in rows]
+        eff = [float(r["effective_n"]) for r in rows]
+        _cache["dof"] = {
+            "rows": float(len(rows)),
+            "shrinkage_min": min(shrink),
+            "shrinkage_max": max(shrink),
+            "effective_n_min": min(eff),
+            "effective_n_max": max(eff),
+            "verdict_changed": float(sum(
+                1 for r in rows if r["verdict"] == "was significant, now is not")),
+        }
+    return _cache["dof"]
+
+
+def _range() -> dict:
+    """Residual semivariogram ranges against the cross-validation block size."""
+    if "range" not in _cache:
+        rows = _read_csv(PROCESSED / "residual_range_2018.csv")
+        by = {(r["field"], r["model"]): r for r in rows}
+        _cache["range"] = {
+            "block_ns_km": float(rows[0]["block_ns_km"]),
+            "block_ew_km": float(rows[0]["block_ew_km"]),
+            "operational_impervious_km":
+                float(by[("operational", "OLS impervious fraction")]
+                      ["half_sill_range_km"]),
+            "blended_impervious_km":
+                float(by[("blended", "OLS impervious fraction")]
+                      ["half_sill_range_km"]),
+            "operational_full_km":
+                float(by[("operational",
+                          "OLS full covariates (albedo SWIR, NIR, SZA)")]
+                      ["half_sill_range_km"]),
+            "too_small": float(sum(1 for r in rows
+                                   if r["verdict"].startswith("residual still"))),
+            "models": float(len(rows)),
+        }
+    return _cache["range"]
+
+
+def _loo(model: str, radius: str, column: str = "r2_above_constant") -> float:
+    if "loo" not in _cache:
+        _cache["loo"] = _read_csv(PROCESSED / "buffered_loo_2018.csv")
+    for r in _cache["loo"]:
+        if (r["field"] == "operational" and r["model"].startswith(model)
+                and r["radius_km"] == radius):
+            return float(r[column])
+    raise KeyError((model, radius))
+
+
+def _dofs(quantity: str) -> float:
+    """One row of the inversion DOFS table, by its `quantity` label."""
+    if "dofs" not in _cache:
+        _cache["dofs"] = {r["quantity"]: r
+                          for r in _read_csv(PROCESSED / "inversion_dofs_2018.csv")}
+    return float(_cache["dofs"][quantity]["value"])
+
+
+def _dofs_cells_above_half() -> float:
+    """How many cells reach an averaging-kernel sensitivity above 0.5.
+
+    Every row of the sweep records this in its own note, and every row records
+    zero. The claim the paper makes is about the whole sweep, so the resolver
+    reads every row rather than one.
+    """
+    if "dofs" not in _cache:
+        _dofs("k")
+    counts = {r["note"].split("cells with a > 0.5:")[1].strip()
+              for r in _cache["dofs"].values()
+              if "cells with a > 0.5:" in r["note"]}
+    if len(counts) != 1:
+        raise ValueError(f"the sweep disagrees with itself: {counts}")
+    return float(counts.pop())
 
 
 def _baseline() -> dict:
@@ -571,6 +661,10 @@ QUANTITIES = {
     "rice.double_anhui_km2": lambda: _rice()["double_anhui_km2"],
     "rice.double_zhejiang_km2": lambda: _rice()["double_zhejiang_km2"],
     "rice.anhui_coverage": lambda: _rice()["anhui_coverage"],
+    # The prose speaks in percent where the table stores a fraction, and a
+    # marked claim must name the quantity it is rather than one a reader
+    # rescales; the same pair exists for the window figures above.
+    "rice.anhui_coverage_percent": lambda: 100.0 * _rice()["anhui_coverage"],
     "rice.drawn_over_true": lambda: _rice()["drawn_over_true"],
     "rice.share_shanghai_percent": lambda: _rice()["share_shanghai_percent"],
     "rice.share_jiangsu_percent": lambda: _rice()["share_jiangsu_percent"],
@@ -670,6 +764,33 @@ QUANTITIES = {
     "albedo.slope_corrected": lambda: _albedo_slope("bias corrected"),
     "albedo.slope_raw": lambda: _albedo_slope("raw retrieval"),
 
+    "dof.rows": lambda: _dof()["rows"],
+    "dof.shrinkage_min": lambda: _dof()["shrinkage_min"],
+    "dof.shrinkage_max": lambda: _dof()["shrinkage_max"],
+    "dof.effective_n_min": lambda: _dof()["effective_n_min"],
+    "dof.effective_n_max": lambda: _dof()["effective_n_max"],
+    "dof.verdict_changed": lambda: _dof()["verdict_changed"],
+    "range.block_ns_km": lambda: _range()["block_ns_km"],
+    "range.block_ew_km": lambda: _range()["block_ew_km"],
+    "range.operational_impervious_km":
+        lambda: _range()["operational_impervious_km"],
+    "range.blended_impervious_km": lambda: _range()["blended_impervious_km"],
+    "range.operational_full_km": lambda: _range()["operational_full_km"],
+    "range.too_small": lambda: _range()["too_small"],
+    "range.models": lambda: _range()["models"],
+    "loo.null_0km": lambda: _loo("spatial null", "0"),
+    "loo.null_50km": lambda: _loo("spatial null", "50"),
+    "loo.impervious_0km": lambda: _loo("OLS impervious", "0"),
+    "loo.impervious_100km": lambda: _loo("OLS impervious", "100"),
+    "loo.impervious_300km": lambda: _loo("OLS impervious", "300"),
+    "dofs.days_median":
+        lambda: _dofs("observation days per covered cell, median"),
+    "dofs.retrievals_median":
+        lambda: _dofs("retrievals per superobservation, median"),
+    "dofs.at_5tg": lambda: _dofs("expected DOFS at 5 Tg/y domain prior"),
+    "dofs.at_12tg": lambda: _dofs("expected DOFS at 12 Tg/y domain prior"),
+    "dofs.at_3tg": lambda: _dofs("expected DOFS at 3 Tg/y domain prior"),
+    "dofs.cells_above_half": _dofs_cells_above_half,
     "grid.rows": lambda: len(_grid()),
     "grid.rice_rows": lambda: int(np.isfinite(_column("rice_fraction_single")).sum()),
     "grid.rows_without_rice":
