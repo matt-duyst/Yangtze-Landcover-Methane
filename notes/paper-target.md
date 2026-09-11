@@ -585,14 +585,22 @@ buys is spatial distribution rather than magnitude. **All three layers are now
 recorded to the same standard**, and the same pass gave each a review-level
 synthesis anchor, which is what an introduction can be written from.
 
-**The methane layer is the one that remains.** The composite's own properties are documented at
+**The methane layer's record was written on 14 September 2026 and this entry is
+kept as a closed gap too.** The composite's own properties are documented at
 length in `data/processed/README.md`, and the methods record holds the
 retrieval's uncertainty, the preprocessing chain and the representativeness
-problem. But there is no single record that says what the literature establishes
-about this instrument over this kind of domain, in the way the region record does
-for the region. Also in the planned sequence, also not done — and **it now starts
-clean**, in the sense that nothing of it is scattered elsewhere waiting to be
-collected, which was not true of the rice layer.
+problem. What none of them held was the target variable as a subject.
+[`notes/grounding-methane.md`](grounding-methane.md) now does, and its conclusion
+is the boundary a paper has to state in its own voice: **there is no processing
+step from a column to a flux**, so the distance between what this project
+measured and what the 2023 thesis's title implies is a difference of method
+rather than of rigour. It also carries the one finding in any pass that could
+raise an association rather than explain it — a tropospheric partial column from
+a fused TROPOMI–IASI product, which removes stratospheric variance no land-cover
+predictor could explain.
+
+**All four records now exist.** What remains ungrounded is listed below rather
+than by layer.
 
 **The satellite question has not been asked at all.** Whether other instruments
 or validation sources have been overlooked — GOSAT and GOSAT-2 in their own

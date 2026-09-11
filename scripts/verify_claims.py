@@ -59,7 +59,8 @@ SCANNED = ("README.md", "ERRATA.md", "data/processed/README.md",
            "data/reference/README.md", "figures/README_fragments.md",
            "notes/repository-architecture.md", "notes/grounding-yrd.md",
            "notes/grounding-methods.md", "notes/grounding-urban.md",
-           "notes/grounding-rice.md", "notes/paper-target.md")
+           "notes/grounding-rice.md", "notes/grounding-methane.md",
+           "notes/paper-target.md")
 
 #: number, then optional space, then the marker naming what it is
 CLAIM = re.compile(r"(-?[\d][\d,]*(?:\.\d+)?)\s*<!--#([a-zA-Z0-9_.]+)-->")
