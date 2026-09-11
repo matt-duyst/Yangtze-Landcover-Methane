@@ -20,7 +20,7 @@ instance was met on 10 September 2026 and not acted on: the ChinaRiceCalendar
 deposit's author field gives two of eleven authors with their given and family
 names run together, and the paper's citation is carried instead.
 
-`notes/references.bib` carries one hundred entries as BibTeX. It is
+`notes/references.bib` carries one hundred twenty-four entries as BibTeX. It is
 **generated**, not typed: each entry comes from `https://doi.org` under content
 negotiation for `application/x-bibtex`, so the two files cannot drift and no
 transcription step exists between the registry and the repository. Regenerate it
@@ -45,18 +45,29 @@ discusses a work the thesis cites, the work appears here and its role says so.
 
 ## What could not be verified
 
-Nothing in the register failed to verify **as a work**. All one hundred cited
-DOIs resolved: eighty-eight through Crossref and twelve through DataCite, which
-is the registry that carries dataset and preprint DOIs and the reason a
-Crossref-only lookup returns "not found" for them.
+Nothing in the register failed to verify **as a work**. All one hundred
+twenty-four cited DOIs resolved: one hundred twelve through Crossref and twelve
+through DataCite, which is the registry that carries dataset and preprint DOIs
+and the reason a Crossref-only lookup returns "not found" for them.
 
-**Three further DOIs appear in this register and are not citations.** They are
+**Four further DOIs appear in this register and are not citations.** They are
 named to warn against them, and `scripts/build_references_bib.py` holds them in
 a `NOT_CITATIONS` set with the reason for each, so they cannot acquire a BibTeX
-entry by accident. Two resolve confidently to the wrong paper and one does not
-resolve at all; all three were carried into the methods pass as real citations.
-**A resolving DOI is not a verified citation**, and this is the register's
-newest failure mode. Two entries have no DOI to resolve and are
+entry by accident. Three resolve confidently to the wrong paper and one does
+not resolve at all; all four were carried in as real citations, three in the
+methods pass and one in the pass after it. **A resolving DOI is not a verified
+citation**, and it is now the register's best-documented failure mode: three of
+the four differ from the correct DOI only in the last digits of an identifier in
+the same journal and year.
+
+A second failure mode was met on 11 September 2026 and is recorded because it
+nearly reached a commit. **Six author attributions drafted from search-result
+phrasing named the wrong first author**, including a *Science Advances* paper
+attributed to a mid-list author's surname and three where a later name was taken
+for the first. All six were caught by content-negotiating every DOI for its
+author list before writing the citation, which is the practice the preamble above
+should be read as requiring and which no earlier pass performed
+systematically. Two entries have no DOI to resolve and are
 verified by other means, which the entries themselves state.
 
 **Two sources did not survive verification for the thing they were cited for.**
@@ -114,16 +125,20 @@ The groups are: datasets used, methods applied, findings relied on — split
 into the retrieval and the region, because two groups carried that heading until
 11 September 2026 and a duplicate heading is not navigable — findings contested,
 the rice-paddy exchange, the Yangtze River Delta grounding, accuracy assessment,
-and the methods grounding. The last four are kept together for the same reason:
+the methods grounding, and the inversion frame with the urban layer. The last
+five are kept together for the same reason:
 each is a single argument, and splitting its parts across the role groups would
 misrepresent all of them.
 
-The two grounding groups are the largest in the register and they pull in
-opposite directions. The region grounding is nineteen findings and datasets
+The three grounding groups are the largest in the register and they pull in
+different directions. The region grounding is nineteen findings and datasets
 against three methods. The methods grounding is almost entirely method
-literature, most of it borrowed from outside the earth sciences. Together they
-are what a paper's introduction, methods and discussion would draw on, and
-neither share is a drift from the other.
+literature, most of it borrowed from outside the earth sciences, and it moved the
+register's method share from 18 to 34 percent. The inversion-and-urban group was
+expected to move it back and moved it to 36 percent instead, because correcting a
+methods record requires more method literature. Together the three are what a
+paper's introduction, methods and discussion would draw on, and no one share is a
+drift from the others.
 
 ---
 
@@ -1338,6 +1353,318 @@ right predictors**, and that RMSE is comparable to this project's entire
 between-cell spread.
 
 All four cited in `notes/grounding-methods.md`.
+
+---
+
+## The inversion frame and the urban layer, added 11 September 2026
+
+Twelve literature rounds after the methods grounding was written. Seven changed
+that record's central claim and five are the urban layer's grounding, which had
+existed nowhere.
+
+**This group was expected to move the register's balance back toward subject
+literature, and it does not.** Of its nineteen role lines, nine are methods,
+eight are findings and two are datasets, so the register's method share rises
+from 34 to 36 percent rather than falling. The reason is that the correction to
+the methods record is itself method literature: the inversion frame, the
+information metric, the inversion tool, the emission-factor model and the four
+alternatives to prediction-powered inference are nine method entries, and the
+urban layer's eight findings do not outweigh them. The expectation was reasonable
+and the count settles it the other way.
+
+**A fourth DOI that resolves to the wrong paper.**
+`10.1016/j.jclepro.2023.137100` is "Accuracy design optimization of a CNC
+grinding machine towards low-carbon manufacturing". The rice emission-factor
+paper is `10.1016/j.jclepro.2023.137245` — 145 apart, same journal, same year.
+It joins the three found in the methods pass in `NOT_CITATIONS`.
+
+**Six author attributions in the drafts of this pass were wrong before they were
+committed**, all of them first-author slips from search-result phrasing rather
+than from a registry. They were caught by content-negotiating every DOI for its
+author list before writing the citations, which is now the practice this
+register's preamble should be read as requiring.
+
+### The inference frame
+
+**Chen, Z., Jacob, D. J., Nesser, H., Sulprizio, M. P., Lorente, A.,
+Varon, D. J., Lu, X., Shen, L., Qu, Z., Penn, E., and 10 others (2022).**
+Methane emissions from China: a high-resolution inversion of TROPOMI satellite
+observations. *Atmospheric Chemistry and Physics* 22, 10809–10826.
+`10.5194/acp-22-10809-2022` — peer-reviewed paper; a method **not** applied, and
+the work that corrects this repository's methodological framing. It optimises
+emissions analytically with a Gaussian mixture model at up to 0.25° × 0.3125° —
+this project's own lattice — with log-normal prior errors and information content
+obtained from the analytical solution. Its total for China is 65.0 (57.7–68.4)
+Tg a⁻¹ with rice paddies at 11.9 (10.7–12.7). **A premise failed here**: the 600
+is a state vector size, not a mixture-model member count, and the inversion's
+DOFS is 167.
+Cited in `notes/grounding-methods.md`.
+
+**Feng, S., and 9 others (2025).** High-resolution regional inversion reveals
+overestimation of anthropogenic methane emissions in China. *Atmospheric
+Chemistry and Physics* 25, 15121–15141.
+`10.5194/acp-25-15121-2025` — peer-reviewed paper; a method not applied, and a
+finding relied on twice. RegGCAS-CH4, built on WRF-CMAQ with an ensemble Kalman
+filter, giving 45.1 ± 3.8 Tg a⁻¹, 36.5 percent below EDGAR. It also supplies the
+regional rice finding: emissions in **Zhejiang**, Fujian and Jiangxi increased,
+attributed mainly to rice paddies, with EDGAR faulted for "outdated rice paddy
+maps" that "incorrectly overspread rice emissions across non-rice agricultural
+grids".
+Cited in `notes/grounding-methods.md`.
+
+**Xia, and others (2026).** High-resolution inversion of urban methane emissions
+in the Chengdu–Chongqing economic circle using ground-based observations and a
+dynamic error Bayesian framework. *Journal of Cleaner Production* 557, 148229.
+`10.1016/j.jclepro.2026.148229` — peer-reviewed paper; a method not applied,
+**cited for its existence and design only**. It inverts urban methane at 10 km
+and daily resolution. The improvement figures attributed to its dynamic error
+weighting could not be verified — the article is paywalled and no abstract
+carrying them is indexed — and no number from it is written anywhere here.
+Cited in `notes/grounding-methods.md`.
+
+### Information content
+
+**Estrada, L. A., Varon, D. J., Sulprizio, M., Nesser, H., Chen, Z.,
+Balasus, N., Hancock, S. E., and 14 others (2025).** Integrated Methane
+Inversion (IMI) 2.0: an improved research and stakeholder tool for monitoring
+total methane emissions with high resolution worldwide using TROPOMI satellite
+observations. *Geoscientific Model Development* 18, 3311–3331.
+`10.5194/gmd-18-3311-2025` — peer-reviewed paper; **describes a tool not used,
+and it is the most consequential entry added in this pass.** A free open-access
+inversion facility at exactly this project's resolution which already ingests the
+blended TROPOMI+GOSAT field committed here, whose preview "has no significant
+costs" and reports the expected degrees of freedom for signal over a
+user-selected domain. It answers for free the feasibility question
+`notes/decisions.md` records as gated. It is also the source for the averaging
+kernel definition and for four cautions this project shares, including that
+"spatial error correlations in the prior estimate are also certainly present but
+difficult to define and have been ignored for now". **A premise failed here**:
+its default anthropogenic prior is EDGAR v8, not v6.
+Cited in `notes/grounding-methods.md`, `notes/dataset-leads.md`.
+
+**He, M., Jacob, D. J., and others (2026).** Attributing 2019–2024 methane
+growth using TROPOMI satellite observations. *Science Advances* 12.
+`10.1126/sciadv.adz9007` — peer-reviewed paper; a finding relied on. The source
+for a global inversion's degrees of freedom for signal of 295 in 2024, "ranging
+from 256 to 426 for individual years, reflecting changes in satellite coverage".
+Cited in `notes/grounding-methods.md`.
+
+**Shen, L., and others (2023).** National quantifications of methane emissions
+from fuel exploitation using high resolution inversions of satellite
+observations. *Nature Communications* 14.
+`10.1038/s41467-023-40671-6` — peer-reviewed paper; a finding relied on. "Our
+inversion can constrain 568 pieces of independent information in the global
+spatial distribution of methane emissions."
+Cited in `notes/grounding-methods.md`.
+
+**Zhong, and others (2026).** The added value of new ground-based observations in
+improving China's methane emission quantification. *Atmospheric Measurement
+Techniques* 19, 4759–4779.
+`10.5194/amt-19-4759-2026` — peer-reviewed paper; a finding relied on, and the
+most sobering figure in the methods record. TROPOMI alone constrains 113
+independent pieces of information over China; adding 17 ground-based sites —
+every available in-situ and column station in East Asia — raises that to 134, an
+increase of 19 percent.
+Cited in `notes/grounding-methods.md`.
+
+**Varon, D. J., and others (2023).** Continuous weekly monitoring of methane
+emissions from the Permian Basin by inversion of TROPOMI satellite observations.
+*Atmospheric Chemistry and Physics* 23, 7503–7520.
+`10.5194/acp-23-7503-2023` — peer-reviewed paper; a method not applied. The
+operational threshold: DOFS above 0.5 as "a practical minimum to estimate total
+basin methane emissions with 2σ error ≤ 30 %", met by 124 of 127 weekly
+inversions, with low-DOFS inversions "mainly constrained by the prior emission
+estimate".
+Cited in `notes/grounding-methods.md`.
+
+### The rice emission chain
+
+**Nikolaisen, M., Cornulier, T., Hillier, J., Smith, P., Albanito, F., and
+Nayak, D. (2023).** Methane emissions from rice paddies globally: A quantitative
+statistical review of controlling variables and modelling of emission factors.
+*Journal of Cleaner Production* 409, 137245.
+`10.1016/j.jclepro.2023.137245` — peer-reviewed paper; a method not applied.
+The generalised additive model over 2,301 field measurements that turns rice
+extent into an emission factor, as a function of soil texture, pre-season water
+status, growing-season water regime, planting method, cultivar, organic
+amendment and climate zone. **Every predictor in it is a mechanism
+`notes/grounding-yrd.md` identifies.** Its global mean emission factor is 1.97
+kg ha⁻¹ d⁻¹ against the IPCC 2006 Tier 1 value of 1.30.
+Cited in `notes/grounding-methods.md`, `notes/dataset-leads.md`.
+
+### The alternatives to prediction-powered inference
+
+**Lee, C. J., Symanski, E., Rammah, A., Kang, D. H., Hopke, P. K., and
+Park, E. S. (2024).** A scalable two-stage Bayesian approach accounting for
+exposure measurement error in environmental epidemiology. *Biostatistics* 26,
+article kxae038.
+`10.1093/biostatistics/kxae038` — peer-reviewed paper; a method not applied.
+**Borrowed method literature, from environmental epidemiology.** Bayesian
+hierarchical models "do not require decomposition of the measurement error into
+the classical- and Berkson-type errors", which both regression calibration and
+simulation-extrapolation do, and they handle measurement error and spatial
+misalignment in one structure — formally this project's problem.
+Cited in `notes/grounding-methods.md`.
+
+**VanderWeele, T. J., and Li, Y. (2019).** Simple Sensitivity Analysis for
+Differential Measurement Error. *American Journal of Epidemiology* 188,
+1823–1829.
+`10.1093/aje/kwz133` — peer-reviewed paper; a method **not applicable**, and
+recorded for why. **Borrowed method literature, from epidemiology.** It bounds
+how strong *differential* measurement error would have to be to explain away an
+estimate. This project's error is nondifferential — a land-cover product's
+classification error does not depend on the methane column — so the machinery
+does not apply, and what matters instead is the direction: nondifferential error
+biases toward the null.
+Cited in `notes/grounding-methods.md`.
+
+**Cinelli, C., and Hazlett, C. (2020).** Making Sense of Sensitivity: Extending
+Omitted Variable Bias. *Journal of the Royal Statistical Society Series B:
+Statistical Methodology* 82, 39–67.
+`10.1111/rssb.12348` — peer-reviewed paper; a method not applied. **Borrowed
+method literature, from econometrics.** The robustness value: how strongly an
+unobserved confounder must be associated with both treatment and outcome to
+overturn a conclusion.
+Cited in `notes/grounding-methods.md`.
+
+**Simonsohn, U., Simmons, J. P., and Nelson, L. D. (2020).** Specification curve
+analysis. *Nature Human Behaviour* 4, 1208–1214.
+`10.1038/s41562-020-0912-z` — peer-reviewed paper; a method not applied.
+**Borrowed method literature, from psychology's replication reform.** The
+reporting frame for a result that varies across defensible specifications. This
+project has three methane fields, four predictor pairs, two cross-validation
+schemes and two weightings, which is forty-eight specifications and therefore a
+curve rather than a table.
+Cited in `notes/grounding-methods.md`.
+
+### The urban layer
+
+**Wang, X., Jacob, D. J., Nesser, H., Balasus, N., Estrada, L. A.,
+Sulprizio, M. P., Cusworth, D. H., Scarpelli, T. R., Chen, Z., East, J. D., and
+Varon, D. J. (2026).** Quantifying urban and landfill methane emissions in the
+United States using TROPOMI satellite data. *Science Advances* 12.
+`10.1126/sciadv.adz9308` — peer-reviewed paper; **the load-bearing citation of
+the urban grounding.** Twelve US urban areas 80 percent above the EPA inventory,
+landfills the principal cause, gas collection efficiencies averaging 38 percent
+against a reported 70. And the separability finding that constrains what an
+impervious fraction can do: landfills mapped on facility coordinates correlate
+below 0.35 with other sectors, while the three sectors allocated on population
+correlate at 0.45 to 0.87 with one another and cannot be separated. **Two
+premises failed here**: it is in *Science Advances* rather than *Science*, and
+the sector composition attributed to it (landfills 40 percent, gas 9, wastewater
+6) is not its; it gives 59 / 25 / 9 / 7 in the inventory and 62 / 23 / 8 / 7 in
+the posterior.
+Cited in `notes/grounding-urban.md`, `notes/grounding-methods.md`.
+
+**Wang, Y., Fang, M., Lou, Z., He, H., Guo, Y., Pi, X., Wang, Y., Yin, K., and
+Fei, X. (2024).** Methane emissions from landfills differentially underestimated
+worldwide. *Nature Sustainability* 7.
+`10.1038/s41893-024-01307-9` — peer-reviewed paper; a finding relied on **for
+its direction only**. The magnitude attributed to it — up to 200 percent
+underestimation for individual landfills — was read from a citing paper rather
+than from this one, and is not written.
+Cited in `notes/grounding-urban.md`, `notes/grounding-methods.md`.
+
+**Luo, J., Wang, H., Li, H., and Zheng, B. (2025).** Structural shifts in
+China's oil and gas CH4 emissions with implications for mitigation efforts.
+*Nature Communications* 16.
+`10.1038/s41467-025-58237-z` — peer-reviewed paper; a finding relied on, and
+**the clearest evidence in any of the three grounding records that this
+project's impervious layer answers a question the field has posed.** It faults a
+global fuel-exploitation product for allocating gas distribution emissions "only
+based on population densities without using an urban land cover map", and
+records China's oil and gas methane rising about sevenfold from 0.5 to 4.0 Tg
+a⁻¹ between 1990 and 2022. Its claimed coverage of 347 prefecture-level cities
+could not be verified.
+Cited in `notes/grounding-urban.md`, `notes/dataset-leads.md`.
+
+**Chen, X., and Ba, Y. (2026).** City-level carbon emissions data in Southeast
+Asia from 2000 to 2020. *Scientific Data* 13.
+`10.1038/s41597-026-07320-1` — peer-reviewed paper; describes a dataset not
+used. The published precedent for downscaling administrative emission totals
+using impervious surface information alongside nighttime lights and urban–rural
+settlement distributions, across 4,413 admin-3 units. **It downscales CO₂, not
+methane**, and the grounding says so, because a proxy that tracks diffuse
+combustion need not track point-like methane sources.
+Cited in `notes/grounding-urban.md`.
+
+**Gao, Y., Duan, Y., Zhang, W., Zhao, N., Wang, Y., Ding, Z., Wu, W., Cao, D.,
+and Jiang, H. (2026).** Mitigating methane emissions from municipal solid waste
+in Chinese cities. *Journal of Environmental Management* 398, 128450.
+`10.1016/j.jenvman.2025.128450` — peer-reviewed paper; a finding relied on. The
+84.7 percent reduction in municipal solid waste methane in Chinese cities since
+2017, with megacities and large cities accounting for 80 percent of the gains.
+Shares a second author with the region grounding's agricultural methane paper.
+Cited in `notes/grounding-urban.md`.
+
+**Ma, S., Deng, N., Zhao, C., Wang, P., Zhou, C., Sun, C., Guan, D., Wang, Z.,
+and Meng, J. (2024).** Decreasing Greenhouse Gas Emissions from the Municipal
+Solid Waste Sector in Chinese Cities. *Environmental Science & Technology* 58,
+11316–11326.
+`10.1021/acs.est.4c00408` — peer-reviewed paper; a finding relied on, and the
+one that makes this project's analysis year the pivot. Greenhouse gas emissions
+from the sector peaked at 70.6 Tg CO₂-equivalent in **2018** and fell to 47.6 Tg
+by 2021.
+Cited in `notes/grounding-urban.md`.
+
+**Zhang, S., Huang, X., Lei, M., Zhou, Y., Fei, X., Zhan, L., Chen, Y., and
+Zhang, Y. (2026).** Integrating inventory models and satellite observations for
+site-level methane emission quantification from MSW landfills in China. *Journal
+of Environmental Management* 399, 128672.
+`10.1016/j.jenvman.2026.128672` — peer-reviewed paper; describes a dataset whose
+distribution is unknown, and **the highest-value urban candidate in
+`notes/dataset-leads.md`**. Site-specific information for more than 300 major
+landfills, IPCC first-order-decay emissions from 1.015 Mt in 2005 to a peak of
+2.161 Mt around 2015 and 1.98 Mt in 2023, and the finding that satellite-detected
+instantaneous emissions consistently exceed inventory averages. **A premise was
+corrected here**: the provincial series attributed to this work (1.0 Mt in 2003,
+1.8 in 2019, 1.6 in 2021) is not its series.
+Cited in `notes/grounding-urban.md`, `notes/dataset-leads.md`.
+
+**Dogniaux, M., Maasakkers, J. D., Girard, M., Jervis, D., McKeever, J.,
+Schuit, B. J., Sharma, S., Lopez-Noreña, A., Varon, D. J., and Aben, I.
+(2025).** Global satellite survey reveals uncertainty in landfill methane
+emissions. *Nature*.
+`10.1038/s41586-025-09683-8` — peer-reviewed paper; describes a dataset not
+used. 1,447 clear-sky GHGSat observations of 151 waste disposal sites across 130
+urban areas in 47 countries, 2021–2022, totalling 2.8 Mt CH4 a⁻¹. It includes an
+example plume from a wastewater treatment plant near Shanghai, **filtered from
+the analysis**, so an illustration rather than a quantified in-domain emission.
+Cited in `notes/grounding-urban.md`, `notes/dataset-leads.md`.
+
+**Wang, F., Maksyutov, S., Janardanan, R., Tsuruta, A., Ito, A., Morino, I.,
+Yoshida, Y., Tohjima, Y., Kaiser, J. W., Lan, X., Zhang, Y., Mammarella, I.,
+Lavric, J. V., and Matsunaga, T. (2022).** Atmospheric observations suggest
+methane emissions in north-eastern China growing with natural gas use.
+*Scientific Reports* 12.
+`10.1038/s41598-022-19462-4` — peer-reviewed paper; a finding relied on, and the
+source of the urban grounding's strongest statement about the gas sector's
+growth. Urban gas pipelines grew roughly threefold from 298.6 to 935.6 million
+metres between 2010 and 2019, "82 % in the city and 18 % in the county seat", and
+"the CH4 leakage from those pipelines is not actively monitored". Its inversion
+attributes 0.77 of China's 0.87 Tg CH4 yr⁻¹ growth rate to the north-east,
+"largely attributable to the growth in natural gas use".
+Cited in `notes/grounding-urban.md`.
+
+**Lu, H., Xi, D., Xiang, Y., Su, Z., and Cheng, Y. F. (2025).** Vehicle–canine
+collaboration for urban pipeline methane leak detection. *Nature Cities*.
+`10.1038/s44284-024-00183-w` — peer-reviewed paper; a finding relied on. Roughly
+4,000 km of distribution pipelines surveyed across 20 Chinese cities, with
+detection vehicles identifying 220 leak areas and canines pinpointing 432
+individual release sources; underground steel pipelines and aboveground risers
+were particularly prone, and leak density varied notably between cities.
+Cited in `notes/grounding-urban.md`.
+
+**Zhou, S., Gong, H., Chen, X., Wang, X., Wang, H., Zhang, Y., Zhu, D.,
+Cao, X., Li, S., and Dai, X. (2024).** A Dataset of Distribution and
+Characterization of Underground Wastewater Treatment Plants in China.
+*Scientific Data* 11.
+`10.1038/s41597-024-03815-x` — dataset paper; describes a dataset not used.
+Facility-level coverage of one of the three population-allocated sectors, in a
+class of plant noted as preferring southeastern coastal locations, which is this
+domain. **A premise was narrowed here**: the record's title names underground
+plants, and the aboveground count of 2,464 attributed to it is unverified.
+Cited in `notes/dataset-leads.md`.
 
 ---
 

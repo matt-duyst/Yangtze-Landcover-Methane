@@ -108,13 +108,16 @@ def test_the_register_states_the_number_of_entries_it_holds():
     this repository's drift mechanisms exist for, and this one is cheap.
     """
     word = spell(len(REGISTER_DOIS))
-    text = REGISTER.read_text(encoding="utf-8")
+    # Whitespace is collapsed before matching. An earlier version enumerated
+    # the places a line break might fall, and then failed when the register
+    # grew past a hundred and the break landed inside the spelled number
+    # itself -- a check that depended on line wrapping rather than on the
+    # claim, which is the brittleness this file exists to remove.
+    text = " ".join(REGISTER.read_text(encoding="utf-8").split())
 
     assert f"carries {word} entries as BibTeX" in text, \
         f"the register should say it carries {word} entries"
-    assert f"All {word} cited\nDOIs resolved" in text or \
-        f"All {word} cited DOIs resolved" in text or \
-        f"All {word} DOIs\nresolved" in text or \
+    assert f"All {word} cited DOIs resolved" in text or \
         f"All {word} DOIs resolved" in text, \
         f"the register should say all {word} resolved"
 

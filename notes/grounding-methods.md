@@ -12,6 +12,18 @@ rather than additions, and those are the ones that matter; they are flagged
 where they occur and collected in
 [`notes/decisions.md`](decisions.md) as work this implies.
 
+**Amended on 11 September 2026, and the amendment changes the frame rather than
+adding to it.** As first written this record presented prediction-powered
+inference as the methodological answer for this project. The field's answer is
+Bayesian inversion with closed-form posterior error characterisation, in which
+uncertainty quantification happens inside the inference; prediction-powered
+inference is a component for one sub-problem. The first five sections below are
+new and set that frame, including a purpose-built open tool that answers for
+free the question this project gated as infeasible. Every component in the
+later sections stands as written; what changed is what sits at the top. The
+companion [`notes/grounding-urban.md`](grounding-urban.md) was written on the
+same day.
+
 Every figure here was checked against its source before it was written, and
 where a figure could not be verified it is named as unverified and the number is
 not repeated. The closing section lists every such case. **Fifteen of the
@@ -21,6 +33,243 @@ unrelated papers, so the closing section is long by construction and is the
 honest part of the document. Numbers from this repository's own artefacts are marked for
 [`scripts/verify_claims.py`](../scripts/verify_claims.py) where a resolver
 exists; where one does not, the source file is named at the point of use.
+
+## The field's method is Bayesian inversion, and this record first said otherwise
+
+**This section was added on 11 September 2026 and it corrects the frame of
+everything below it.** The record as first written presented prediction-powered
+inference as the methodological answer for this project. It is not. It is a
+component for one sub-problem — the accuracy assessment of a land-cover layer.
+**The field's own method for turning satellite methane columns into statements
+about emissions is Bayesian inference with closed-form posterior error
+characterisation, in which uncertainty quantification happens inside the
+inference rather than as a set of corrections applied afterwards.**
+
+The in-region literature makes this unambiguous. An inversion of 2019 TROPOMI
+observations over China optimises emissions "with a Gaussian mixture model (GMM)
+at up to 0.25° × 0.3125° resolution", where "the optimization is done
+analytically assuming log-normally distributed errors on prior emissions" and
+"errors and information content on the optimized estimates are obtained directly
+from the analytical solution and also through a 36-member inversion ensemble".
+Its best estimate for total anthropogenic emissions in China is 65.0 (57.7–68.4)
+Tg a⁻¹, of which rice paddies are 11.9 (10.7–12.7) Tg a⁻¹ (Chen et al., 2022,
+*Atmospheric Chemistry and Physics* 22, 10809–10826,
+doi:10.5194/acp-22-10809-2022). Note the resolution: **0.25° × 0.3125° is this
+project's own lattice**, so the comparison is not between a coarse method and a
+fine one.
+
+A second regional system takes the ensemble route rather than the analytical
+one. RegGCAS-CH4 is built on WRF-CMAQ with an ensemble Kalman filter,
+assimilating TROPOMI XCH4 to produce daily emissions across China; posterior
+national emissions are 45.1 ± 3.8 Tg a⁻¹, 36.5 percent below EDGAR, with the
+largest reductions in coal and waste (Feng et al., 2025, *Atmospheric Chemistry
+and Physics* 25, 15121, doi:10.5194/acp-25-15121-2025). A third works at urban
+scale, inverting methane over the Chengdu–Chongqing economic circle at 10 km and
+daily resolution using ground-based observations and a dynamic error Bayesian
+framework (Xia et al., 2026, *Journal of Cleaner Production* 557, 148229,
+doi:10.1016/j.jclepro.2026.148229). Its reported improvement in correlation and
+RMSE from dynamic error weighting could not be verified and is not quoted here.
+
+**What follows from this for the paper.** Every component recorded in the
+sections below remains what it is: the accuracy-assessment frame for a
+fractional layer, the attenuation correction, the effective degrees of freedom,
+the preprocessing chain, the representativeness problem. They are not
+superseded. What changes is what sits at the top. This project asked a
+different question from an inversion — whether a static land-cover fraction
+correlates with an annual column field — and answered it with a regression
+whose uncertainty is characterised afterwards, correction by correction. That is
+a legitimate design for that question, and it is **not** the design the field
+would recognise as quantifying methane emissions. A paper should say which
+question it asked, and should not present a correction-by-correction treatment
+as the field's uncertainty framework.
+
+## Degrees of freedom for signal, the field's information metric
+
+The metric the field reports is not R squared. The averaging kernel matrix **A**
+describes the sensitivity of the posterior estimate to the true state; its
+diagonal elements measure the ability of the inversion to quantify each state
+vector element independently of the prior, "fully if a_ii = 1, not at all if
+a_ii = 0"; and the trace of **A** is the degrees of freedom for signal,
+"representing the number of independent pieces of information on the state vector
+obtained from the inversion" (Estrada et al., 2025, doi:10.5194/gmd-18-3311-2025,
+following Rodgers, 2000, already in this register for the prior-alignment work).
+
+Reported values span two orders of magnitude and are not comparable across
+studies, because each is a count out of a different state vector. Recorded with
+that caveat: **295 for a global inversion of 2024, ranging from 256 to 426
+across individual years "reflecting changes in satellite coverage"** (He et al.,
+2026, *Science Advances* 12, doi:10.1126/sciadv.adz9007); **568** independent
+pieces of information in a global fuel-exploitation inversion (Shen et al.,
+2023, *Nature Communications* 14, doi:10.1038/s41467-023-40671-6); **151** for a
+global TROPOMI inversion against **232** for GOSAT, which is the non-wetland
+partition of totals of 155 and 238, as the resolution section below records;
+**167 out of 600 Gaussian state vector elements** for the China inversion above;
+and **134** for China when TROPOMI is combined with 17 ground-based sites, which
+is only 19 percent above the 113 that TROPOMI constrains alone (Zhong et al.,
+2026, *Atmospheric Measurement Techniques* 19, 4759,
+doi:10.5194/amt-19-4759-2026). **That last figure is the most sobering of the
+five**: adding every available ground station in East Asia buys a fifth more
+information.
+
+The metric also has an operational threshold. Weekly Permian Basin inversions
+adopted DOFS above 0.5 as "a practical minimum to estimate total basin methane
+emissions with 2σ error ≤ 30 %", met by 124 of 127 weekly inversions, and noted
+that "inversions with low DOFS are mainly constrained by the prior emission
+estimate and may introduce smoothing error" (Varon et al., 2023, *Atmospheric
+Chemistry and Physics* 23, 7503, doi:10.5194/acp-23-7503-2023).
+
+**This project reports held-out R squared against a spatial null. The field
+reports degrees of freedom for signal, uncertainty reduction and information
+content.** A reviewer in this field would expect the latter, and the honest
+position is that they measure different things: R squared measures how much of a
+field a predictor reproduces, and DOFS measures how much the observations tell
+you about emissions independently of what you assumed. A paper that reports only
+the first should say so rather than letting the second be assumed.
+
+## A purpose-built open tool exists for the question the thesis asked
+
+The Integrated Methane Inversion is "an open-access cloud computing tool
+designed for researchers and non-expert users to obtain total sector-resolved
+methane emissions worldwide at up to 0.25° × 0.3125° (≈ 25 × 25 km²) resolution
+by analytical inversion of TROPOMI satellite observations with closed-form error
+characterization" (Estrada et al., 2025, *Geoscientific Model Development* 18,
+3311–3331, doi:10.5194/gmd-18-3311-2025). It runs on Amazon Web Services, "where
+both TROPOMI data and the atmospheric transport model (GEOS-Chem) reside, thus
+avoiding the need for local computing resources and instead bringing the
+computing to the data".
+
+**Three of its thirteen version-2 developments are this project's own
+situation.** It offers the blended TROPOMI+GOSAT dataset of Balasus et al.,
+"removing most artifacts from the operational product", kept current on the AWS
+cloud for the full TROPOMI record — the same field that is a committed band of
+`methane_composite_2018.tif` here. It gives "improved error characterization
+through use of super-observations that also better account for observational
+error correlation", which is the correlated-error problem this record's
+representativeness section identifies. And it achieves an order-of-magnitude
+speed-up in Jacobian construction: "a 5-fold speed-up ... traded against a 60 %
+increase in wall time", plus "an additional 2-fold speed-up" from precompiling
+emissions, "for an overall 10-fold decrease in CPU cost".
+
+**Access is free and the decisive step is cheap.** The documented routes are the
+free IMI product on the AWS Marketplace, the source code from GitHub for running
+on a local cluster, and the Integral Earth web interface. And the preview is
+where this matters: "The IMI Preview has no significant costs, and we strongly
+recommend using it to ensure that the proposed IMI configuration will lead to a
+successful inversion." It reports the expected degrees of freedom for signal,
+the dollar cost of the full run, and maps of mean concentrations, observation
+density, prior emissions, estimated averaging kernel sensitivities and **SWIR
+albedo** — the last being an artefact indicator, and this project has
+166<!--#cov.albedo_negative--> cells with a negative annual mean SWIR albedo.
+
+**State the consequence plainly.** Whether TROPOMI can constrain methane
+emissions over this study area is answerable for free, by a preview run, in a
+tool that already ingests the exact product this repository committed. That is
+the question the flux-divergence gate recorded in `notes/decisions.md` could not
+answer, and it has been answerable throughout.
+
+The tool states its own cautions and they are this project's cautions too.
+"Errors in the prior distribution of emissions propagate to bias in the
+inversion results, and errors in the contributions from different sectors
+propagate to errors in sectoral attribution." "Inversion results are sensitive
+to the choice of prior error estimates and whether a normal or lognormal error
+PDF is assumed." "Regional inversions require unbiased boundary conditions, as
+biases in boundary conditions would propagate to the optimized emissions in the
+inversion domain." And, most pointedly: **"Spatial error correlations in the
+prior estimate are also certainly present but difficult to define and have been
+ignored for now."** That is the same unresolved correlated-error problem this
+project has met twice — once in the composite's sigma-over-root-n assumption and
+once in the effective-degrees-of-freedom gap — and the field has not solved it
+either.
+
+## The prior inventory, which is where a land-cover layer has a legitimate role
+
+An inversion needs a prior, and the prior is where a rice map or an impervious
+map enters the field's own workflow. IMI 2.0's default global anthropogenic
+prior is **EDGAR v8**, with fuel exploitation from the Global Fuel Exploitation
+Inventory, monthly wetlands from the mean of the WetCHARTs ensemble, and daily
+open fires from GFED4 (Estrada et al., 2025).
+
+**EDGAR's rice representation is documented as wrong in three specific ways**,
+and all three matter here. Verbatim: "EDGARv8 spreads emissions over all
+agricultural land for many countries in South Asia (India, Bangladesh),
+Southeast Asia (Thailand, Vietnam), and East Asia (China, Korea, Japan)". "The
+seasonality in EDGARv8 is also uniform within individual countries. For example,
+rice emissions in EDGARv8 peak in June everywhere over China". And its Chinese
+total is "double the GRPI values for China and half for South Asia", because
+"EDGARv8 used an outdated rice map for 2000, ignoring the changes in irrigation,
+organic manure use, and rotational patterns, as well as the northward shift of
+rice agriculture in China in the recent two decades" (Chen et al., 2025,
+doi:10.1029/2024EF005479, already in the register). **The outdated map is for
+2000, which is one of this project's own three years.** And the consequence for
+attribution is stated directly: errors in the spatial distribution "compromise
+the ability to separate rice emissions from other sectors such as coal in
+southern China" — this study area.
+
+The gain from fixing it has been measured twice, both times in or near this
+region. Substituting an updated rice distribution over Heilongjiang gave 0.85 Tg
+against EDGAR's 0.43, with large upward corrections in June to August and
+model-observation mean biases reduced by 40 percent (Liang et al., 2024,
+doi:10.1021/acs.est.4c09822, already in the register). And RegGCAS-CH4 found
+that "emissions in Zhejiang, Fujian, and Jiangxi Provinces increased, mainly
+attributed to emissions from rice paddies", naming EDGAR's reliance on "outdated
+rice paddy maps" that "incorrectly overspread rice emissions across non-rice
+agricultural grids" as the cause, and reporting that "rice paddy CH4 emissions
+serve as the dominant emission source in East China" (Feng et al., 2025).
+**Zhejiang is one of this project's four provinces.**
+
+So the legitimate role for a rice layer in this field is not as a regression
+predictor against a column field. It is as a spatial prior for an inversion,
+where a better map demonstrably moves the answer and reduces model-observation
+bias. That is a use this project's layers are fit for and have not been put to.
+
+## From a rice map to an emissions estimate, which is a solved chain
+
+The route exists and is published end to end. The Global Rice Paddy Inventory
+uses Landsat at 30 m to map the global monthly distribution of rice paddy
+fractional areas on a 0.1° grid "by optimizing an algorithm for flooded
+vegetation and combining it with a 30-m global cropland database and
+rice-specific data", then combines that map "with an extensive global dataset of
+emission factors (EFs) per unit of rice paddy area". The result is 39.3 ± 4.7 Tg
+a⁻¹ globally for 2022, with China at 8.2 ± 1.0 Tg a⁻¹, agreeing with the Global
+Carbon Project mean and the UNFCCC report and a factor of two below EDGARv8.
+Validation against an independent US rice database and FLUXNET-CH4 eddy flux
+measurements gives "errors on rice area fraction of 31 % on the 0.1° × 0.1° grid
+and 10 % regionally" (Chen et al., 2025).
+
+Two properties of it bear on this project's years. The inventory is for 2022,
+but the authors state the methods "can be readily applied to other years", and
+that "interannual variability of emissions in Asia is found to be less than
+8 %", while "decadal trends can be more important". This project's years are
+2000, 2010 and 2018 — a span over which the decadal caveat, not the interannual
+one, is the binding consideration.
+
+The emission factors are themselves a published product. A global compilation of
+**2,301 rice paddy field measurements** was used to fit a generalised additive
+model estimating mean growing-season emission factors as a function of soil
+texture, pre-season water status, growing-season water regime, planting method,
+rice cultivar, organic amendment and climate zone; its global mean emission
+factor is 1.97 kg ha⁻¹ d⁻¹ against the IPCC 2006 Tier 1 recommendation of 1.30.
+Its conclusions are that continuously flooded paddies emit most and rainfed dry
+season least, that soil texture, water and organic amendment strongly affect
+emissions, and that a country-specific pre-season water baseline is vital
+(Nikolaisen et al., 2023, *Journal of Cleaner Production* 409, 137245,
+doi:10.1016/j.jclepro.2023.137245).
+
+**Every variable in that model is a mechanism [`notes/grounding-yrd.md`](grounding-yrd.md)
+already identifies**, and the model is the thing that turns extent into
+emission. The region record establishes that water regime spans a factor of 13.7
+at constant area; this is the published function that consumes it.
+
+GRPI's uncertainty treatment is also the propagation framework this problem
+needs, and it is simple enough to copy. Area-fraction error is handled
+separately from emission-factor error. The first is "one standard deviation of
+residuals between our product and the" reference; the second is "one standard
+deviation of residuals between their generalized additive model and individual"
+observations. Both are converted to relative uncertainties and assumed to apply
+uniformly within a country. **That last assumption is the weak point for this
+study area**, because the region record establishes that deltaic rice systems
+have hydrological conditions specific enough that default emission factors may
+be erroneous, and a country-uniform relative uncertainty cannot represent that.
 
 ## The accuracy assessment frame, and why Olofsson is the wrong standard here
 
@@ -89,7 +338,12 @@ error near 8 percent is a good one, and a categorical layer at 77.5 percent
 overall accuracy is a normal one. Neither is the near-perfect input a reader
 unfamiliar with the field might assume.
 
-## Prediction-powered inference, the route to an assessment with the data we have
+## Prediction-powered inference, one component and not the route
+
+**Read this section as being about the accuracy assessment of a land-cover
+layer, which is the sub-problem it solves.** An earlier version of this record
+presented it as the methodological answer for the project as a whole; the
+section above corrects that.
 
 Prediction-powered inference computes an estimate from a large set of model
 predictions and then uses a small labelled subset to measure and correct the
@@ -214,6 +468,70 @@ association toward zero, and it is the only mechanism that could manufacture
 this project's headline result out of nothing. The repository has answered it by
 building second predictors with different errors and finding the null survives,
 which is good evidence and not the same thing as measuring the attenuation.
+
+## The alternatives to prediction-powered inference, which were not examined
+
+The first version of this record over-indexed on prediction-powered inference
+because the alternatives had not been looked at. Three families exist and they
+do different jobs.
+
+**Bayesian hierarchical models** handle measurement error and spatial
+misalignment in one structure. They "offer a coherent probabilistic framework
+for evaluating associations between environmental exposures and health effects,
+which take into account exposure measurement errors introduced by uncertainty in
+the estimated exposure as well as spatial misalignment between the exposure and
+health outcome data", and — the property that matters against the corrections
+recorded below — they "do not require decomposition of the measurement error
+into the classical- and Berkson-type errors", which both regression calibration
+and simulation-extrapolation do (Lee et al., 2024, *Biostatistics* 26,
+kxae038, doi:10.1093/biostatistics/kxae038). That paper's own contribution is a
+scalable two-stage version for when fully joint estimation is infeasible, which
+is the practical case here. **Borrowed from environmental epidemiology**, where
+the structure of the problem — an exposure field estimated with error,
+misaligned with an outcome measured on a different support — is formally the same
+as a land-cover fraction against a column field.
+
+**Sensitivity analysis** asks how strong the error would have to be rather than
+correcting for it. VanderWeele and Li (2019, *American Journal of Epidemiology*
+188, 1823–1829, doi:10.1093/aje/kwz133) give formulas under which "the true
+effect ... must be at least as large as the observed association between the
+mis-measured exposure measurement and the outcome divided by the maximum
+strength of differential measurement error", so that a reader can judge whether
+error could explain away an estimate without the analyst committing to its
+magnitude in advance. **But it is for *differential* error and this project's
+error is not differential.** A land-cover product's classification error does not
+depend on the methane column, so the error here is nondifferential, and
+nondifferential error biases toward the null. That asymmetry is the important
+one: **a null cannot be manufactured from a real positive by any other
+direction, but a real positive can be attenuated into a null by this
+mechanism.** It is why the errors-in-variables section below is the most
+consequential remaining test, and it is also why the differential-error
+sensitivity machinery does not apply and is recorded here rather than adopted.
+
+For robustness to omitted variables rather than to measurement error, the
+robustness value of Cinelli and Hazlett (2020, *Journal of the Royal Statistical
+Society Series B* 82, 39–67, doi:10.1111/rssb.12348) reports how strongly an
+unobserved confounder would have to be associated with both treatment and
+outcome to overturn a conclusion. **Borrowed from econometrics.**
+
+**Specification curve analysis** is the reporting frame, not a correction
+(Simonsohn, Simmons and Nelson, 2020, *Nature Human Behaviour* 4, 1208–1214,
+doi:10.1038/s41562-020-0912-z). **Borrowed from psychology's replication
+literature.** It visualises how a result varies across every defensible
+analytical specification rather than across the one the analyst chose. This
+project has three methane fields, four predictor pairs, two cross-validation
+schemes and two weightings. **That is forty-eight specifications, which is a
+specification curve and not a table**, and the repository currently reports it
+as a table with the exceptions described in prose.
+
+**So the methods answer is not one method.** Prediction-powered inference for
+the accuracy assessment of a layer against reference polygons; a Bayesian
+hierarchical model or regression calibration for the association itself;
+sensitivity analysis for robustness where a correction is not available; and
+specification curve analysis as the frame in which all of it is reported. Each
+addresses a different one of this project's four open problems, and presenting
+any one of them as the answer — as this record first did with the first of them
+— misdescribes the shape of what is missing.
 
 ## Reliability estimation, and three bad practices
 
@@ -794,3 +1112,55 @@ And the destriping approach the super-emitter study follows is attributed there
 to Borsdorff et al. (2018), while the operational procedure applied from
 September 2024 is Borsdorff et al. (2024) — two different references a year and a
 method apart.
+
+### The 11 September amendment's own failures
+
+Seven more premises failed when the inversion frame was added, and they are kept
+separate from the fifteen above because they belong to a different pass.
+
+**A fourth bad DOI.** `10.1016/j.jclepro.2023.137100` resolves to "Accuracy
+design optimization of a CNC grinding machine towards low-carbon manufacturing".
+The rice emission-factor paper is `10.1016/j.jclepro.2023.137245`, 145 apart in
+the same journal and year. That makes four DOIs in this register that resolve
+confidently to the wrong paper, and `scripts/build_references_bib.py` now holds
+all four.
+
+**IMI 2.0's default anthropogenic prior is EDGAR v8, not v6.** Verbatim from the
+paper: "updated global anthropogenic emissions from EDGAR v8". Version 6 was
+IMI 1.0's default. Getting this wrong would misdate every criticism of the
+prior by two releases.
+
+**The China inversion's 600 is a state vector size, not a mixture-model member
+count, and its DOFS is 167.** Verbatim: "167 independent pieces of information
+(DOFS) out of the 600 Gaussian state vector elements". The figure of 134 is a
+different paper entirely — Zhong et al. (2026) on the value of ground stations —
+and the two are not comparable because each counts out of a different state
+vector.
+
+**The Chengdu–Chongqing improvement figures could not be verified.** A
+correlation rising from 0.41 to 0.62 and an RMSE falling from 127.51 to 78.80
+ppb under dynamic error weighting are not confirmed: the article is paywalled and
+no abstract carrying them is indexed. The paper, its method and its resolution
+are verified and written; the numbers are not.
+
+**The US urban paper is in *Science Advances*, not *Science*.** Its DOI is
+`10.1126/sciadv.adz9308`.
+
+**The urban sector composition figures do not match that paper.** A composition
+of landfills 40 percent, gas distribution 9 percent including 4 percent
+post-meter, and wastewater 6 percent was carried into the urban pass. The paper
+gives, for the 12 urban areas together, 59 percent landfills, 25 percent
+downstream gas, 9 percent wastewater and 7 percent other anthropogenic in the
+inventory, and 62 / 23 / 8 / 7 in the posterior. **The direction is the same and
+stronger**: landfills dominate by more than the premise claimed.
+[`notes/grounding-urban.md`](grounding-urban.md) uses the verified figures.
+
+**The "up to 200 percent" landfill underestimate belongs to a different
+paper.** It is the finding of Wang, Y., and others (2024, *Nature Sustainability* 7,
+doi:10.1038/s41893-024-01307-9), cited by the US urban paper rather than found
+by it.
+
+Two premises were refined. The Southeast Asian downscaling that uses impervious
+surface downscales **CO₂**, not methane, which matters because a proxy that works
+for diffuse combustion need not work for point-like methane sources. And
+Nikolaisen et al.'s volume is 409, not 406.

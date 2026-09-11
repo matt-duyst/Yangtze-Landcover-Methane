@@ -72,6 +72,10 @@ NOT_CITATIONS = {
     "10.1016/j.rse.2019.111199":
         "does not resolve; 111199 is Stehman and Foody's article number and "
         "their DOI is 10.1016/j.rse.2019.05.018",
+    "10.1016/j.jclepro.2023.137100":
+        "resolves to 'Accuracy design optimization of a CNC grinding machine "
+        "towards low-carbon manufacturing'; the rice emission-factor paper is "
+        "10.1016/j.jclepro.2023.137245, same journal and year, 145 apart",
 }
 
 #: doi -> citation key. Keys are lowercase, first author plus year plus a short
@@ -180,6 +184,31 @@ KEYS = {
     "10.1016/j.atmosres.2024.107542": "xco2deepfusion2024",
     "10.1016/j.apr.2026.102918": "xch4gapfill2026",
     "10.1038/s41598-024-84593-9": "arabianpeninsula2025",
+    # the inversion frame and the urban layer, 11 September 2026
+    "10.5194/acp-22-10809-2022": "chen2022chinainversion",
+    "10.5194/acp-25-15121-2025": "feng2025reggcas",
+    "10.1016/j.jclepro.2026.148229": "xia2026chengdu",
+    "10.5194/gmd-18-3311-2025": "estrada2025imi2",
+    "10.1126/sciadv.adz9007": "he2026attribution",
+    "10.1038/s41467-023-40671-6": "shen2023fuelexploitation",
+    "10.5194/amt-19-4759-2026": "zhong2026groundvalue",
+    "10.5194/acp-23-7503-2023": "varon2023permian",
+    "10.1016/j.jclepro.2023.137245": "nikolaisen2023riceef",
+    "10.1093/biostatistics/kxae038": "lee2024twostagebayes",
+    "10.1093/aje/kwz133": "vanderweele2019differential",
+    "10.1111/rssb.12348": "cinelli2020sensitivity",
+    "10.1038/s41562-020-0912-z": "simonsohn2020speccurve",
+    "10.1126/sciadv.adz9308": "wang2026usurban",
+    "10.1038/s41893-024-01307-9": "wang2024landfills",
+    "10.1038/s41467-025-58237-z": "luo2025oilgas",
+    "10.1038/s41597-026-07320-1": "chen2026seasia",
+    "10.1016/j.jenvman.2025.128450": "gao2026mswmitigation",
+    "10.1021/acs.est.4c00408": "ma2024mswdecrease",
+    "10.1016/j.jenvman.2026.128672": "zhang2026landfillsites",
+    "10.1038/s41586-025-09683-8": "dogniaux2025ghgsat",
+    "10.1038/s41598-022-19462-4": "wang2022nechina",
+    "10.1038/s44284-024-00183-w": "lu2025canine",
+    "10.1038/s41597-024-03815-x": "zhou2024wwtp",
 }
 
 HEADER = """% Verified reference register for Yangtze-Landcover-Methane.
@@ -193,7 +222,7 @@ HEADER = """% Verified reference register for Yangtze-Landcover-Methane.
 % because a DOI may be named more than once there: the two Sentinel-5P
 % registrations, the GISA 2021 paper and the city-scale inventory each are, and
 % the register explains why in each case.
-% Three further DOIs appear in the register and are deliberately absent here:
+% Four further DOIs appear in the register and are deliberately absent here:
 % the register names them to warn against them, not to cite them. See
 % NOT_CITATIONS in scripts/build_references_bib.py for each and why.
 % TWO REGISTER ENTRIES ARE NOT HERE AND CANNOT BE. ISO 5807:1985 and
