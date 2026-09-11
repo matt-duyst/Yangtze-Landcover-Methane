@@ -475,6 +475,159 @@ method-dependent by a factor of two to four, with the ethane-tracer method that
 produces the highest shares being the one with the narrowest spatial scope —
 which is the method behind this region's own 3.5 percent leakage figure.
 
+## The synthesis anchor, which is the field's own statement of its state
+
+Added 14 September 2026. Everything above this point is built from primary
+studies, which is the right way to build it and leaves one thing missing: **a
+review-level statement of where the field is**, of the kind a paper's
+introduction needs and cannot assemble from twelve individual inversions. This
+section is that statement, and it says three things — that the field's central
+problem is credibility rather than measurement, that urban methane is
+underestimated by a factor rather than a percentage, and that the underestimate
+is growing.
+
+### The credibility problem, which is named as such
+
+The framing statement is eight years old and has not been superseded. Reviewing
+approaches to measuring, monitoring and inventorying anthropogenic methane in
+the United States at the request of four federal agencies, the National Academies
+concluded that "**verifiability is the bedrock upon which inventories should be
+built if they are to be widely applicable to policy needs**", and that as
+constructed the national inventory does not have it: "it is very challenging to
+test the GHGI against top-down estimates (i.e., verify the GHGI) owing to its
+high degree of spatial (national) and temporal (annual) aggregation" (National
+Academies of Sciences, Engineering, and Medicine, 2018, *Improving
+Characterization of Anthropogenic Methane Emissions in the United States*,
+National Academies Press, doi:10.17226/24987). The report also records that "in
+some cases, top-down estimates of emissions and bottom-up inventories have
+significantly differed, leading to reexamination of estimates from both
+approaches".
+
+**Read that as the reason this whole class of work exists.** The problem is not
+that nobody has measured urban methane; it is that an inventory aggregated to a
+nation and a year cannot be checked against the atmosphere at all, so a
+disagreement cannot be localised to a sector or a city. Every finding in this
+record — the twelve-city inversion, the gas-collection efficiencies, the
+separability coefficients — is an instance of the verification the 2018 report
+said was missing, arriving at city scale because that is the scale at which the
+check becomes possible.
+
+The current state of that verification has a number. A review of city-scale
+top-down methane inversion covering inventories, observations, transport models
+and assimilation methods "highlights the significant discrepancy between top-down
+inversion results and bottom-up inventory estimates at the city scale, with
+**inversion uncertainties ranging from 11% to 28%**" (Li, X., Zhang, Y.,
+de Leeuw, G., Yao, X., He, Z., Wu, H., and Yang, Z., 2025, *A Review of
+City-Scale Methane Flux Inversion Based on Top-Down Methods*, *Remote Sensing*
+17, 3152, doi:10.3390/rs17183152). **Eleven to twenty-eight percent is the
+inversion's own uncertainty**, not the discrepancy it measures, so it is the
+floor below which a city-scale disagreement cannot be resolved by this method.
+
+Two framing statements from the same review bear on findings already in this
+record. The first: the top-down approach "enables higher spatiotemporal
+resolution and the evaluation of prior inventories **but struggles to attribute
+emissions to specific categories**". That is the separability finding stated as a
+general property of the method rather than as a result of one US inversion, and
+the review's proposed remedy — "applying isotopic analysis to distinguish CH4
+sources" — is a measurement this project has no access to and which no
+fractional proxy substitutes for. The second: **agricultural soil activity, with
+its seasonal and monthly variability, is the largest source of uncertainty in
+anthropogenic methane inversions.** For a project whose two predictors are urban
+extent and rice extent, the review names the agricultural half as the larger
+uncertainty, which is the opposite of the ordering the urban record's own
+prior-error comparison suggested.
+
+### The inventory gap, which runs opposite to rice
+
+**Field studies of urban methane find inventories low by a factor, and the
+factor is consistent across studies.** "Field studies quantifying methane
+emissions in urban areas have found that official bottom-up inventories can
+**underestimate methane emissions by a factor of 2 to 3**", with three separate
+campaigns cited for it, and the implication drawn is that "there are substantial
+unexplained urban sources of methane" (Long, H., Tsivlidou, M., Ricketts, H.,
+and Allen, G., 2026, *Satellite-based global monitoring of urban-scale methane
+emissions*, EGUsphere preprint, doi:10.5194/egusphere-2026-2570).
+
+**That source is a preprint and is recorded as one.** Discussion opened 20 May
+2026; it is CC-BY-4.0 and not peer-reviewed. It is used here because the factor
+of two to three is a summary of three cited field campaigns rather than the
+preprint's own result, and because the preprint's own result qualifies it
+usefully. Testing an advanced mass-balance approach on three megacities for 2021
+to 2023, the authors find satellite-derived emissions "corresponding to factors
+of approximately 0.1-2.0, 0.3-2.1, and 5.1-9.2 times the inventory estimates" for
+London, Los Angeles and New York respectively. **The ratio is not even
+consistently above one.** So "two to three times" is the field's central
+tendency and not a property of any particular city, which is the same lesson the
+twelve-city composition figures teach: the discrepancy is a city-level property.
+
+**The direction is the contrast with rice, and it is the sharpest single reason
+to treat this project's two predictors asymmetrically.**
+[`notes/grounding-rice.md`](grounding-rice.md) establishes that EDGAR's Chinese
+rice total is double GRPI's — too high, not too low — and that the two Chinese
+sub-regional inversions correct rice in opposite directions depending on where
+the prior's map put the paddy. Urban has no such ambiguity: every campaign
+summarised above finds the inventory low, the twelve-city inversion finds it 80
+percent low in aggregate, and the cause is identified as missing and
+under-reported landfill emissions. **So the urban prior is biased and the rice
+prior is misplaced**, and those are different defects needing different
+remedies. A better rice map fixes allocation; nothing about an urban extent map
+fixes a missing source.
+
+### And the gap is growing, measured over this project's own satellite record
+
+The most recent and most directly comparable result tracks the discrepancy in
+time rather than at one moment. Using a tracer–tracer approach on TROPOMI
+methane and carbon monoxide, Whiting, E., Plant, G., Kort, E. A., Aben, I.,
+Biener, K. J., Leguijt, G., and Maasakkers, J. D. (2026), *Space-based
+observation of global increase in urban methane emissions from 2019–2023*,
+*Proceedings of the National Academy of Sciences* 123(16),
+doi:10.1073/pnas.2504211123, measure "methane emissions of 92 global cities,
+including their broader metropolitan area", finding "aggregate emissions of 31.2
+Tg CH4/y (95%CI: 22.3, 40.4 Tg CH4/y) in 2023, equivalent to ~10% of the global
+anthropogenic methane budget".
+
+**Seventy-two of those cities have enough data to track**, 51 in the C40 network
+and 21 outside it. Their emissions "weakly declined in 2020 followed by steady
+growth, with a 2.3 Tg aggregate increase over 4 y", and the growth from 2020 to
+2023 is 10 percent (95 percent CI 2 to 17) for C40 cities against 12 percent (CI
+−1.5 to 25) for non-C40 cities — **statistically indistinguishable, in a set of
+cities that "have largely pledged 34% reductions by 2030"**. The authors'
+conclusion is the one this section exists to record: "**Inventories fail to
+capture observed growth, suggesting urban emissions are not well characterized,
+and mitigation approaches may not be optimally designed.**"
+
+Two qualifications belong with it, both from the paper itself. The growth
+"contributes minimally to the recent atmospheric methane surge", so this is a
+policy-relevant finding rather than a global-budget one. And the detectability
+claim is explicit: "Emission reductions of this magnitude would be detectable
+with the space-based approach used in this work" — reductions of 34 percent, at
+city scale, by the tracer–tracer method. Read against this record's own
+detectability finding, that a single large landfill sits below the threshold at
+which this composite could constrain it, the two are consistent: a whole city's
+third is detectable where one facility is not.
+
+**The observational geography is the last piece, and it is unfavourable to this
+domain.** The same preprint that supplies the factor of two to three states that
+"in poorly observed regions (e.g. India, China), where most of the global
+population resides, measurement-led validation of national emissions is even
+more challenging" (Long et al., 2026). The field's verification effort has
+happened where the observations are, which is North America and Western Europe;
+the cities where most people live are the ones least checked. **This project's
+domain is in the second group**, which is an argument for the work and a warning
+about what can be claimed from it in the same sentence.
+
+### What the anchor adds to the layer's conclusion
+
+Nothing above changes the separability finding or the conclusion that an
+impervious fraction is the wrong instrument for the dominant sector. What it adds
+is the reason the question is worth asking at all, in the field's own words: an
+inventory that cannot be verified is the acknowledged problem, city scale is
+where verification becomes possible, urban methane is low in inventories by a
+factor of two to three, the gap is growing at about 10 percent over four years
+against pledges of 34 percent reductions, and the regions where most people live
+are the least observed. **A paper's introduction can be written from those five
+sentences**, and this record could not previously supply them.
+
 ## What could not be verified
 
 Eight premises carried into this record did not survive checking, in addition to
@@ -564,3 +717,37 @@ than as settled. The rural-underrepresentation finding is **contested**: WorldPo
 published a rebuttal disputing it, and both sides are named above. And *Evolving
 Cityscape*, offered as a building dataset covering 106 Chinese cities for 2018 to
 2023, could not be located at all and is not recorded anywhere.
+
+### The 14 September 2026 synthesis anchor's own corrections
+
+Nothing in the anchor failed outright, and three things needed correcting before
+they could be written.
+
+**The credibility report is 2018, not 2024.** It was carried as a recent
+National Academies statement. The report is *Improving Characterization of
+Anthropogenic Methane Emissions in the United States*, published July 2018,
+`10.17226/24987`. Its framing has not been superseded and the age is recorded
+rather than hidden, because an eight-year-old statement that the inventory cannot
+be verified is a stronger claim about the field than a fresh one would be.
+
+**The city-scale inversion review is 2025, not 2026**, which an earlier pass had
+already found and this one confirms: `10.3390/rs17183152` is *Remote Sensing* 17,
+3152, dated 2025.
+
+**Two different papers were conflated in the search results and both are now
+separated.** The 92-city measurement and the 72-city trend belong to Whiting et
+al. (2026) in *PNAS*; the factor of two to three and the poorly-observed-regions
+statement belong to Long et al. (2026), a Copernicus preprint on three megacities.
+A search for the trend returned the preprint's text as though it were the *PNAS*
+paper's, which would have attributed a three-city mass-balance study's figures to
+a 92-city tracer–tracer study. Both are cited, separately, with the preprint
+marked as a preprint.
+
+**One figure from the trend paper is not written.** That 2023 urban emissions
+were 6 percent above 2019 and 10 percent above 2020 while inventories rose only
+1.7 to 3.7 percent since 2020 appears in the university's press release and in
+secondary coverage, not in the paper's abstract, which gives the 2020-to-2023
+growth as 10 percent for C40 cities and 12 percent for non-C40. **The abstract's
+figures are written and the press release's are not**, which is the same rule
+this record applied to the sector-composition premise that turned out not to be
+in its paper.
