@@ -353,8 +353,15 @@ e2021GL094151.
 `10.1029/2021GL094151` — peer-reviewed paper; a method **not** applied, recorded
 because it is the standard route from column concentration to emissions and the
 reproduction never took it. It is also in the 2023 thesis's own bibliography,
-uncited in its text. `notes/decisions.md` records the gate that established why
-the conversion is not feasible on this composite.
+uncited in its text.
+
+**A correction to this entry, made 12 September 2026.** Until then it said
+`notes/decisions.md` "records the gate that established why the conversion is
+not feasible on this composite". **It did not.** That file held one clause
+mentioning the gate in passing and no section recording its reasoning, and two
+later files inherited the claim and cross-referenced a section that was never
+there. The gate is now recorded, marked as a reconstruction from conversation
+rather than as a verified computation, under *What the grounding superseded*.
 
 ### The diagram sources, added 9 September 2026
 

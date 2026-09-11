@@ -147,8 +147,9 @@ neither has a known route.
 full run, ingests the exact blended product this repository committed, and
 reports the expected degrees of freedom for signal over a user-chosen domain. It
 answers whether TROPOMI can constrain methane emissions over these four
-provinces at all — a question `notes/decisions.md` records as gated by a
-flux-divergence feasibility test that could not answer it. It is the cheapest
+provinces at all — a question that was gated on a flux-divergence feasibility
+test which could not answer it, and whose reasoning `notes/decisions.md` records
+only from 12 September 2026 and only as a reconstruction. It is the cheapest
 unverified item in this file and the one with the largest consequence for what
 the project can claim.
 

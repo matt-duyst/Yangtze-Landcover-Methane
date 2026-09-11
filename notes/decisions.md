@@ -4220,3 +4220,129 @@ One thing both share: they need the same Landsat access, the same sensor-boundar
 care, and they meet the same cloud limit. The constraint is a property of the
 imagery over this region, not of either algorithm.
 
+## What the grounding superseded, marked rather than rewritten
+
+Four grounding records were written between 10 and 11 September 2026. Several
+statements taken before them are now **superseded rather than wrong**: the
+reasoning that produced them stands, and a cheaper or better route has since
+appeared. This file's standing convention is to state both rather than falsify
+the record, and these are the instances found.
+
+### The flux-divergence gate, which was never actually written down
+
+**This is the most awkward finding of the pass, because the gap is of this
+repository's own making.** `notes/references.md` says of Liu et al. (2021),
+`10.1029/2021GL094151`, that "`notes/decisions.md` records the gate that
+established why the conversion is not feasible on this composite." It does not.
+The only trace in this file is one clause in the uncited-methods section, which
+lists "the flux-divergence conversion that was gated and declined" among methods
+applied without a citation. **There is no section recording the gate's
+reasoning.**
+
+Worse, two files written in the last two passes —
+`notes/grounding-methods.md` and `notes/dataset-leads.md` — refer three times to
+"the flux-divergence gate recorded in `notes/decisions.md`". Those are
+cross-references to something that was never here, added by work that assumed
+the register's own description of this file was accurate. That is the same
+failure mode the register records for citations: an assertion about a source
+that was never checked against it.
+
+What the gate's reasoning was, as far as it can be recovered: the conversion was
+declined because the divergence method needs daily wind and concentration fields
+at the cell scale, the daily fields are not recoverable from the committed
+checkpoint, and both the concentration term and the wind term carry the sampling
+artefact that `ERRATA.md` 7.4 records — so the quotient would inherit it twice.
+**That account is recorded here as a reconstruction from conversation, not as a
+verified computation**, and it is marked as such because nothing in the
+repository demonstrates it.
+
+**The gate is not reopened by the grounding and the reasoning still stands.**
+What changed is that the question has a cheaper route. `notes/grounding-methods.md`
+records that the IMI preview reports the expected degrees of freedom for signal
+over a user-selected domain, costs nothing, and runs at this project's exact
+resolution on the blended field already committed here. So the question "can
+TROPOMI constrain methane emissions over these four provinces" no longer needs a
+flux-divergence feasibility test to answer it, and `notes/paper-target.md` puts
+that preview first in the queue.
+
+### No accuracy assessment is possible
+
+`notes/grounding-methods.md` states, of Olofsson's first three recommendations,
+that this project "has no probability sample, **no reference data more accurate
+than the map**, and so no analysis to be consistent about". That was written on
+10 September 2026 and was true when written.
+
+**It was superseded the next day by this repository's own inventory.** The
+CCD-Rice validation polygons are published, openly licensed, 1.9 MB, verified
+accessible, and carry 777 polygons inside the four provinces across six cover
+classes — reference data visually interpreted from very-high-resolution imagery
+and checked by three experts, which is more accurate than any map here. Together
+with prediction-powered inference, which makes a small reference set usable
+against a large map, an accuracy assessment of the rice layer is possible. The
+statement in the methods record should be read as describing the position before
+the polygons were found, and `notes/paper-target.md` records the assessment as
+queue item 9 with the polygons as its prerequisite.
+
+One qualification survives and is not superseded: the polygons are clean for the
+NESDC and GISA layers and **contaminated for CCD-Rice itself**, whose thresholds
+were re-determined against filtered rice areas. So the assessment is possible for
+the layers this project uses and not for the product the polygons came from.
+
+### Sounding count as the composite's quality metric
+
+`data/processed/README.md` argues that "a cell's value is the mean of between 1
+and 410 soundings, so its variance is roughly sigma squared over n and the
+inverse-variance weight is the sounding count itself; on that argument the
+weighted numbers are the ones to fit on", and then qualifies it: "sounding count
+is not random over the study area, and the well-observed cells are
+systematically the flat bright ones the instrument retrieves from, so weighting
+also tilts every fit towards that terrain."
+
+**That qualification is real and it is not the objection the grounding
+raises.** `notes/grounding-methods.md` records a stronger one: coverage "is not
+an effective metric to limit representation errors", and "even after substantial
+averaging of data significant representation errors may remain, larger than
+typical measurement errors" (Schutgens et al., 2017,
+`10.5194/acp-17-9761-2017`). The repository's own objection is that count-based
+weighting tilts the fit toward particular terrain. The literature's objection is
+that count does not bound the error that matters at all, whichever terrain it
+comes from.
+
+Both stand and they are different. The implementable alternative — weighting by
+within-cell spread scaled by the uncovered fraction, following the Level 3
+formulation the methods record cites — is queue item 17, and it is gated by a
+re-gridding pass because the checkpoint holds sums and counts without variance.
+
+### Two smaller ones
+
+**`notes/repository-architecture.md` step 6 says "one figure exists so far, of
+nine planned".** Eleven exist and fourteen are planned, and
+`figures/README.md` records the reconstruction of that count and why "nine" was
+never backed by a list. The architecture note is a plan taken at a point in
+time and its other steps carry struck-through text with the outcome beside them;
+this one was not updated when the figure set grew. Left as it stands with the
+correction recorded here, consistent with how the rest of that file treats its
+own superseded plan.
+
+**`notes/repository-architecture.md` step 3 says the rice reimplementation is
+"not done, and deliberately".** That remains accurate, and it is now
+accompanied: the section above on the PPPM route records what the displaced
+alternative was, what it would need, and the cloud constraint that makes its
+most likely outcome a finding rather than a failure. The decision is unchanged;
+what was missing was the record of what it decided against.
+
+### What was checked and found not to be superseded
+
+The TM5 a priori departure gate, which was declined on the grounds that the
+departure inherits the albedo bias intact while removing only 3.5 percent of the
+variance. Nothing in the grounding changes that arithmetic.
+
+`ERRATA.md` 5.1, which names four post-2023 reference products against the
+thesis's claim that none existed. The grounding added a fifth route and
+strengthened the item rather than superseding it.
+
+The destriping entry in this file, which calls a self-implemented per-row
+correction "the cheapest of the four and the most clearly missing". Still true
+of the implementation. The methods grounding adds that the *official* correction
+will never arrive for 2018 data, which removes the option of waiting rather than
+changing the assessment of the option that exists.

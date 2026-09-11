@@ -164,8 +164,11 @@ albedo** — the last being an artefact indicator, and this project has
 **State the consequence plainly.** Whether TROPOMI can constrain methane
 emissions over this study area is answerable for free, by a preview run, in a
 tool that already ingests the exact product this repository committed. That is
-the question the flux-divergence gate recorded in `notes/decisions.md` could not
-answer, and it has been answerable throughout.
+the question the flux-divergence gate could not answer, and it has been
+answerable throughout. **That gate's reasoning was not in fact written down when
+this sentence was first drafted** — this was a cross-reference to a section that
+did not exist, which `notes/decisions.md` now records along with the gate itself
+and the fact that its reasoning is a reconstruction.
 
 The tool states its own cautions and they are this project's cautions too.
 "Errors in the prior distribution of emissions propagate to bias in the
