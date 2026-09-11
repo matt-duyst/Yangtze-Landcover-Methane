@@ -44,8 +44,43 @@ BIBTEX = REPO / "notes" / "references.bib"
 #: like as BibTeX.
 DOI_IN_PROSE = re.compile(r"`(10\.\d{4,9}/[^`\s]+)`")
 
-#: Works in the register that have no DOI, with the reason. A count that does
-#: not reconcile is then a real problem rather than one of these two.
+#: **EXCLUDED holds real citations of this project that cannot be generated.**
+#:
+#: The distinction from `NOT_CITATIONS` below is the one a reader must not have
+#: to guess at, so it is stated rather than implied.
+#:
+#: * `EXCLUDED` is a set of *works this repository cites*. Each is a real source
+#:   used for a real claim. What they have in common is that content negotiation
+#:   cannot produce a BibTeX entry for them, so the generator's guarantee -- that
+#:   every entry is what `https://doi.org` returned -- cannot be met, and typing
+#:   one by hand would silently break that guarantee for the whole file. They are
+#:   therefore named here, kept out of the BibTeX, and their DOIs (where they
+#:   have one) are written in the register *without backticks* so `DOI_IN_PROSE`
+#:   does not claim them.
+#: * `NOT_CITATIONS` is a set of *strings that look like DOIs and are not
+#:   citations at all*. Each was carried into a pass as a real reference and
+#:   turned out to resolve to the wrong paper or to nothing. They are named so a
+#:   future reader who meets one in a search result knows it was tested.
+#:
+#: **What EXCLUDED does not mean.** It is not a doubt about the work: an excluded
+#: entry is as much a citation as any other, and its claims are relied on
+#: normally. It is not a statement that the DOI is wrong -- two of the three have
+#: no DOI and the third's resolves correctly. And it is not a backlog: nothing
+#: here is waiting to be moved into the BibTeX, because nothing about these
+#: sources will change.
+#:
+#: **How each one's metadata was established**, since not by negotiation: the
+#: standard from the ISO catalogue, the textbook from its title page, and the
+#: Chinese-language paper from the publisher's own English-language article page.
+#: `PROVENANCE` below records the same thing for entries that do negotiate but
+#: whose registry record cannot supply the whole citation.
+#:
+#: **What a future pass should do with one.** Re-check nothing routinely. Revisit
+#: only if the publisher begins honouring `Accept: application/x-bibtex`, in
+#: which case the entry moves into `KEYS`, gains backticks in the register, and
+#: leaves this set. A new candidate belongs here only after a negotiation
+#: attempt has actually been made and failed; a DOI that was never tried is an
+#: unverified entry, not an excluded one.
 EXCLUDED = {
     "ISO 5807:1985": "a standard, not a paper; no DOI exists",
     "Chaudhuri (2020)": "a textbook; no DOI exists",
@@ -87,6 +122,60 @@ NOT_CITATIONS = {
         "wrong, since Humanities and Social Sciences Communications registers "
         "under 10.1057. The correct DOI is 10.1057/s41599-026-07688-w. This is "
         "the register's first prefix error rather than a wrong-paper error",
+}
+
+#: **The date the whole register was negotiated**, which is the cheap form of
+#: per-entry provenance. On this date every one of the register's DOIs was
+#: content-negotiated and its author list, title, container, volume, pages and
+#: year compared against the prose; `notes/decisions.md` records the audit and
+#: what it found. So the register's default provenance is "negotiated on this
+#: date" and only the exceptions below need marking -- 20 lines instead of 189.
+NEGOTIATED = "2026-09-14"
+
+#: doi -> why the register's text for this entry could not come from negotiation
+#: alone. These are the entries a future audit will flag and should not: the
+#: registry record is incomplete, institutional, or mis-cased, and the register
+#: deliberately carries something better. Anything *not* in this dict was taken
+#: from the registry as-is on `NEGOTIATED`.
+PROVENANCE = {
+    "10.1017/9781009157896.009":
+        "Crossref returns no author list for the chapter; the twelve named "
+        "authors and the year are from the AR6 report itself",
+    "10.1017/CBO9781107415324.018":
+        "Crossref returns no author list; the authors are from the AR5 report, "
+        "and the 2013 year is the report's rather than the volume's 2014",
+    "10.5270/S5P-3p6lnwd":
+        "no author list in the registry; the depositor is the European Space "
+        "Agency and is written as such",
+    "10.5270/S5P-3lcdqiv": "the author arrives as one literal institutional string",
+    "10.17226/24987":
+        "eight literal strings naming committees and boards; the register uses "
+        "the standard corporate form of the authoring body",
+    "10.7910/DVN/A50I2T": "one literal institutional string",
+    "10.7910/DVN/PRFF8V": "one literal institutional string, with '(IFPRI)' appended",
+    "10.7910/DVN/EUP8EY":
+        "the deposit runs given and family names together in two fields; the "
+        "paper's own eleven-author citation is carried instead",
+    "10.5281/zenodo.5555721":
+        "four of eight authors arrive as single braced strings with given and "
+        "family names run together",
+    "10.57760/sciencedb.06963":
+        "six of nine authors arrive as literal strings; the deposit's own "
+        "version year is used rather than the 2022 first-registration year",
+    "10.6084/m9.figshare.28407710": "three given names are lower-cased in the deposit",
+    "10.6084/m9.figshare.27245775.v1":
+        "family and given names are transposed in the deposit, which is the "
+        "error that produced this register's first documented misattribution",
+    "10.6084/m9.figshare.27965832.v2":
+        "the deposit lists two of six authors; the paper's citation is carried",
+    "10.1038/s41467-020-18141-0":
+        "Crossref stores the first author as the literal 'Da Pan' with no given "
+        "name, and the register carries it as returned",
+    "10.1016/S0038-0717(99)00050-4":
+        "Crossref returns 'Bossio, D' alone for a four-author paper; the full "
+        "list is from the article's own title page",
+    "10.2307/2532039": "Crossref carries a start page only; the range is from the article",
+    "10.2307/2532625": "Crossref carries a start page only; the range is from the article",
 }
 
 #: doi -> citation key. Keys are lowercase, first author plus year plus a short

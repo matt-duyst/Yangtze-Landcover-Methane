@@ -141,6 +141,76 @@ def test_the_warned_against_dois_are_in_the_register_and_not_the_bibtex():
         assert doi not in KEYS, f"{doi} must not have a citation key"
 
 
+# --------------------------------------------------------------------------
+# the three categories stay distinct and the provenance list stays honest
+# --------------------------------------------------------------------------
+
+def test_the_three_categories_are_disjoint():
+    """EXCLUDED, NOT_CITATIONS and the keyed entries must not overlap.
+
+    Each means something different -- a citation that cannot be generated, a
+    string that is not a citation, and a generated entry -- and an entry in two
+    of them at once would make the register's own definitions unreadable.
+    """
+    from scripts.build_references_bib import NOT_CITATIONS
+
+    warned = {d.lower() for d in NOT_CITATIONS}
+    keyed = {d.lower() for d in KEYS}
+
+    assert warned & keyed == set()
+    # EXCLUDED is keyed by human-readable name rather than DOI, so the check
+    # there is that none of its names is also a citation key.
+    assert set(EXCLUDED) & set(KEYS.values()) == set()
+
+
+def test_every_provenance_exception_names_a_register_doi():
+    """A provenance note for a DOI the register dropped is stale machinery.
+
+    `PROVENANCE` records the entries whose text could not come from content
+    negotiation alone, and the register says that everything absent from it was
+    negotiated on one date. That claim is only true while the dict's keys are
+    all real.
+    """
+    from scripts.build_references_bib import PROVENANCE
+
+    unknown = {d for d in PROVENANCE if d.lower() not in REGISTER_DOIS}
+
+    assert unknown == set(), f"provenance notes for non-entries: {unknown}"
+    assert all(reason for reason in PROVENANCE.values())
+
+
+def test_the_register_states_the_date_it_was_negotiated():
+    """The default provenance is a date in the prose and a constant in code.
+
+    Recording provenance per entry would repeat one value for all but seventeen
+    of them, so the register states the default once. If the two disagree the
+    default is unverifiable, which is the state this audit found the whole
+    register in.
+    """
+    from scripts.build_references_bib import NEGOTIATED
+
+    assert re.fullmatch(r"\d{4}-\d{2}-\d{2}", NEGOTIATED)
+    assert NEGOTIATED in REGISTER.read_text(encoding="utf-8")
+
+
+def test_excluded_dois_are_not_claimed_by_the_generator():
+    """An excluded entry's DOI must not be backticked in the register.
+
+    `DOI_IN_PROSE` treats a backticked DOI as a work the BibTeX must carry, so
+    backticking one of these would make the register demand an entry the
+    generator cannot produce. The Chinese-language paper is the only excluded
+    entry with a DOI, and this pins the convention for the next one.
+    """
+    from scripts.build_references_bib import DOI_IN_PROSE
+
+    text = REGISTER.read_text(encoding="utf-8")
+    backticked = {d.lower() for d in DOI_IN_PROSE.findall(text)}
+
+    assert "10.3864/j.issn.0578-1752.2026.04.009" not in backticked
+    assert "10.3864/j.issn.0578-1752.2026.04.009" in text, \
+        "the excluded DOI must still be named, just not backticked"
+
+
 def test_no_duplicate_section_headings():
     """Two groups carried the heading "Findings relied on" until 11 September.
 
