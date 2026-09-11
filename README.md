@@ -237,6 +237,7 @@ In outline:
 | deseasonalisation test | `test_deseasonalisation.py --write` | under a second | continuously |
 | expected inversion DOFS | `estimate_inversion_dofs.py --write` | about ten seconds | on local |
 | albedo confounder test | `test_albedo_confounder.py --write` | under a second | continuously |
+| correlations corrected for spatial dependence | `correct_correlation_dof.py --write` | about twenty seconds | continuously |
 | albedo correction test | `test_albedo_correction.py --write` | under a second | continuously |
 | predictor robustness | `test_alternative_predictors.py --write` | a second, over four prebuilt grids | on local |
 | predictor comparison | `test_alternative_predictors.py --write` | a second, over four prebuilt grids | on local |

@@ -1,0 +1,73 @@
+field,weighting,relationship,controlling_for,method,n,effective_n,shrinkage,coefficient,p_nominal,p_corrected,verdict,correction,coefficient_reported,p_reported,coefficient_recomputed
+operational,unweighted,methane ~ surface_albedo_SWIR,,pearson,926,22.9,0.0247,+0.6999,3.357e-137,2.079e-04,significant,exact,+0.6999,3.381e-137,+0.6999
+operational,unweighted,methane ~ surface_albedo_SWIR,,spearman,926,28.2,0.0304,+0.4609,6.911e-50,1.322e-02,significant,approximate,+0.4609,6.857e-50,+0.4609
+operational,unweighted,methane ~ surface_albedo_NIR,,pearson,926,22.9,0.0247,+0.7461,2.167e-165,4.633e-05,significant,exact,+0.7461,2.006e-165,+0.7461
+operational,unweighted,methane ~ surface_albedo_NIR,,spearman,926,25.9,0.0279,+0.4597,1.324e-49,1.844e-02,significant,approximate,+0.4597,1.330e-49,+0.4597
+operational,unweighted,methane ~ solar_zenith_angle,,pearson,926,27.5,0.0297,+0.6950,1.583e-134,4.801e-05,significant,exact,+0.6950,1.644e-134,+0.6950
+operational,unweighted,methane ~ solar_zenith_angle,,spearman,926,51.6,0.0557,+0.3098,4.772e-22,2.608e-02,significant,approximate,+0.3098,4.802e-22,+0.3098
+operational,unweighted,surface_albedo_SWIR ~ impervious_fraction,,pearson,926,40.1,0.0433,+0.4746,3.427e-53,1.945e-03,significant,exact,+0.4746,3.408e-53,+0.4746
+operational,unweighted,surface_albedo_SWIR ~ impervious_fraction,,spearman,926,27.5,0.0297,+0.7609,9.344e-176,3.206e-06,significant,approximate,+0.7609,9.827e-176,+0.7609
+operational,unweighted,surface_albedo_SWIR ~ rice_fraction_single,,pearson,531,22.3,0.0419,+0.3215,3.113e-14,1.420e-01,"was significant, now is not",exact,+0.3215,3.127e-14,+0.3215
+operational,unweighted,surface_albedo_SWIR ~ rice_fraction_single,,spearman,531,13.4,0.0252,+0.3859,2.669e-20,1.850e-01,"was significant, now is not",approximate,+0.3859,2.642e-20,+0.3859
+operational,unweighted,surface_albedo_NIR ~ impervious_fraction,,pearson,926,42.8,0.0462,+0.3393,2.210e-26,2.645e-02,significant,exact,+0.3393,2.245e-26,+0.3393
+operational,unweighted,surface_albedo_NIR ~ impervious_fraction,,spearman,926,29.1,0.0315,+0.5434,2.920e-72,2.253e-03,significant,approximate,+0.5434,2.931e-72,+0.5434
+operational,unweighted,surface_albedo_NIR ~ rice_fraction_single,,pearson,531,22.1,0.0416,+0.5021,2.936e-35,1.700e-02,significant,exact,+0.5021,2.922e-35,+0.5021
+operational,unweighted,surface_albedo_NIR ~ rice_fraction_single,,spearman,531,11.4,0.0215,+0.5991,4.889e-53,4.580e-02,significant,approximate,+0.5991,4.981e-53,+0.5991
+operational,unweighted,methane ~ impervious_fraction,,pearson,926,56.4,0.0609,+0.3452,2.626e-27,8.934e-03,significant,exact,+0.3452,2.639e-27,+0.3452
+operational,unweighted,methane ~ impervious_fraction,,spearman,926,49.7,0.0536,+0.5055,3.216e-61,1.902e-04,significant,approximate,+0.5055,3.116e-61,+0.5055
+operational,unweighted,methane ~ rice_fraction_single,,pearson,531,122.3,0.2302,+0.0960,2.696e-02,2.923e-01,"was significant, now is not",exact,+0.0960,2.700e-02,+0.0960
+operational,unweighted,methane ~ rice_fraction_single,,spearman,531,74.7,0.1406,+0.0718,9.838e-02,5.414e-01,not significant either way,approximate,+0.0718,9.816e-02,+0.0718
+operational,unweighted,methane ~ impervious_fraction,surface_albedo_SWIR,pearson,926,61.8,0.0667,+0.0207,5.293e-01,8.734e-01,not significant either way,exact,+0.0207,5.296e-01,+0.0207
+operational,unweighted,methane ~ impervious_fraction,surface_albedo_SWIR,spearman,926,67.2,0.0726,+0.1282,9.152e-05,3.003e-01,"was significant, now is not",approximate,+0.1282,9.232e-05,+0.2689
+operational,unweighted,methane ~ rice_fraction_single,surface_albedo_SWIR,pearson,531,84.2,0.1586,-0.0073,8.667e-01,9.474e-01,not significant either way,exact,-0.0073,8.664e-01,-0.0073
+operational,unweighted,methane ~ rice_fraction_single,surface_albedo_SWIR,spearman,531,60.5,0.1139,-0.0103,8.128e-01,9.375e-01,not significant either way,approximate,-0.0103,8.122e-01,+0.0132
+operational,unweighted,methane ~ impervious_fraction,"surface_albedo_SWIR, surface_albedo_NIR, solar_zenith_angle",pearson,926,124.9,0.1349,+0.1413,1.591e-05,1.161e-01,"was significant, now is not",exact,+0.1413,1.649e-05,+0.1413
+operational,unweighted,methane ~ impervious_fraction,"surface_albedo_SWIR, surface_albedo_NIR, solar_zenith_angle",spearman,926,87.9,0.0949,+0.1835,1.863e-08,8.729e-02,"was significant, now is not",approximate,+0.1835,1.952e-08,+0.2750
+operational,unweighted,methane ~ rice_fraction_single,"surface_albedo_SWIR, surface_albedo_NIR, solar_zenith_angle",pearson,531,96.0,0.1807,-0.0530,2.227e-01,6.081e-01,not significant either way,exact,-0.0530,2.242e-01,-0.0530
+operational,unweighted,methane ~ rice_fraction_single,"surface_albedo_SWIR, surface_albedo_NIR, solar_zenith_angle",spearman,531,63.6,0.1197,-0.0081,8.523e-01,9.495e-01,not significant either way,approximate,-0.0081,8.525e-01,+0.0503
+operational,by sounding count,methane ~ surface_albedo_SWIR,,pearson,926,22.9,0.0247,+0.5919,1.274e-88,2.992e-03,significant,approximate,+0.5919,1.253e-88,+0.5919
+operational,by sounding count,methane ~ surface_albedo_SWIR,,spearman,926,28.2,0.0304,+0.2534,4.928e-15,1.915e-01,"was significant, now is not",approximate,+0.2534,4.989e-15,+0.2534
+operational,by sounding count,methane ~ surface_albedo_NIR,,pearson,926,22.9,0.0247,+0.7049,5.509e-140,1.820e-04,significant,approximate,+0.7049,5.473e-140,+0.7049
+operational,by sounding count,methane ~ surface_albedo_NIR,,spearman,926,25.9,0.0279,+0.2670,1.404e-16,1.884e-01,"was significant, now is not",approximate,+0.2670,1.394e-16,+0.2670
+operational,by sounding count,methane ~ solar_zenith_angle,,pearson,926,27.5,0.0297,+0.7026,1.070e-138,3.649e-05,significant,approximate,+0.7026,1.101e-138,+0.7026
+operational,by sounding count,methane ~ solar_zenith_angle,,spearman,926,51.6,0.0557,+0.1136,5.333e-04,4.247e-01,"was significant, now is not",approximate,+0.1136,5.313e-04,+0.1136
+operational,by sounding count,surface_albedo_SWIR ~ impervious_fraction,,pearson,926,40.1,0.0433,+0.3169,4.776e-23,4.603e-02,significant,approximate,+0.3169,4.764e-23,+0.3169
+operational,by sounding count,surface_albedo_SWIR ~ impervious_fraction,,spearman,926,27.5,0.0297,+0.6070,2.653e-94,6.904e-04,significant,approximate,+0.6070,2.677e-94,+0.6070
+operational,by sounding count,surface_albedo_SWIR ~ rice_fraction_single,,pearson,531,22.3,0.0419,-0.1819,2.476e-05,4.148e-01,"was significant, now is not",approximate,-0.1819,2.468e-05,-0.1819
+operational,by sounding count,surface_albedo_SWIR ~ rice_fraction_single,,spearman,531,13.4,0.0252,-0.1091,1.188e-02,7.180e-01,"was significant, now is not",approximate,-0.1091,1.185e-02,-0.1091
+operational,by sounding count,surface_albedo_NIR ~ impervious_fraction,,pearson,926,42.8,0.0462,+0.1928,3.327e-09,2.168e-01,"was significant, now is not",approximate,+0.1928,3.307e-09,+0.1928
+operational,by sounding count,surface_albedo_NIR ~ impervious_fraction,,spearman,926,29.1,0.0315,+0.4286,1.148e-42,2.001e-02,significant,approximate,+0.4286,1.171e-42,+0.4286
+operational,by sounding count,surface_albedo_NIR ~ rice_fraction_single,,pearson,531,22.1,0.0416,+0.2989,2.023e-12,1.756e-01,"was significant, now is not",approximate,+0.2989,2.019e-12,+0.2989
+operational,by sounding count,surface_albedo_NIR ~ rice_fraction_single,,spearman,531,11.4,0.0215,+0.2646,5.879e-10,4.201e-01,"was significant, now is not",approximate,+0.2646,5.907e-10,+0.2646
+operational,by sounding count,methane ~ impervious_fraction,,pearson,926,56.4,0.0609,+0.2124,6.608e-11,1.148e-01,"was significant, now is not",approximate,+0.2124,6.648e-11,+0.2124
+operational,by sounding count,methane ~ impervious_fraction,,spearman,926,49.7,0.0536,+0.2202,1.244e-11,1.257e-01,"was significant, now is not",approximate,+0.2202,1.238e-11,+0.2202
+operational,by sounding count,methane ~ rice_fraction_single,,pearson,531,122.3,0.2302,-0.0882,4.219e-02,3.335e-01,"was significant, now is not",approximate,-0.0882,4.213e-02,-0.0882
+operational,by sounding count,methane ~ rice_fraction_single,,spearman,531,74.7,0.1406,-0.1346,1.880e-03,2.507e-01,"was significant, now is not",approximate,-0.1346,1.884e-03,-0.1346
+operational,by sounding count,methane ~ impervious_fraction,surface_albedo_SWIR,pearson,926,66.1,0.0714,+0.0324,3.247e-01,7.961e-01,not significant either way,approximate,+0.0324,3.246e-01,+0.0324
+operational,by sounding count,methane ~ impervious_fraction,surface_albedo_SWIR,spearman,926,88.5,0.0956,-0.0051,8.768e-01,9.623e-01,not significant either way,approximate,-0.0051,8.769e-01,+0.0864
+operational,by sounding count,methane ~ rice_fraction_single,surface_albedo_SWIR,pearson,531,120.2,0.2264,-0.0657,1.305e-01,4.755e-01,not significant either way,approximate,-0.0657,1.310e-01,-0.0657
+operational,by sounding count,methane ~ rice_fraction_single,surface_albedo_SWIR,spearman,531,68.7,0.1293,-0.1133,8.973e-03,3.552e-01,"was significant, now is not",approximate,-0.1133,9.015e-03,-0.1285
+operational,by sounding count,methane ~ impervious_fraction,"surface_albedo_SWIR, surface_albedo_NIR, solar_zenith_angle",pearson,926,172.8,0.1866,+0.0614,6.181e-02,4.225e-01,not significant either way,approximate,+0.0614,6.242e-02,+0.0614
+operational,by sounding count,methane ~ impervious_fraction,"surface_albedo_SWIR, surface_albedo_NIR, solar_zenith_angle",spearman,926,92.2,0.0996,-0.0218,5.076e-01,8.364e-01,not significant either way,approximate,-0.0218,5.081e-01,+0.0683
+operational,by sounding count,methane ~ rice_fraction_single,"surface_albedo_SWIR, surface_albedo_NIR, solar_zenith_angle",pearson,531,133.7,0.2517,-0.0176,6.857e-01,8.402e-01,not significant either way,approximate,-0.0176,6.858e-01,-0.0176
+operational,by sounding count,methane ~ rice_fraction_single,"surface_albedo_SWIR, surface_albedo_NIR, solar_zenith_angle",spearman,531,98.5,0.1855,-0.0146,7.371e-01,8.862e-01,not significant either way,approximate,-0.0146,7.380e-01,-0.0646
+blended,unweighted,methane_blended ~ impervious_fraction,,pearson,926,48.1,0.0520,+0.3154,7.806e-23,2.879e-02,significant,exact,,,+0.3154
+blended,unweighted,methane_blended ~ rice_fraction_single,,pearson,531,78.8,0.1484,+0.1449,8.132e-04,2.034e-01,"was significant, now is not",exact,,,+0.1449
+blended,unweighted,methane_blended ~ surface_albedo_SWIR,,pearson,926,18.5,0.0200,+0.7624,7.698e-177,1.828e-04,significant,exact,,,+0.7624
+blended,unweighted,methane_blended ~ impervious_fraction,surface_albedo_SWIR,pearson,926,58.7,0.0634,-0.0815,1.308e-02,5.405e-01,"was significant, now is not",exact,,,-0.0815
+blended,unweighted,methane_blended ~ rice_fraction_single,surface_albedo_SWIR,pearson,531,89.8,0.1691,+0.0303,4.864e-01,7.773e-01,not significant either way,exact,,,+0.0303
+blended,by sounding count,methane_blended ~ impervious_fraction,,pearson,926,48.1,0.0520,+0.1359,3.352e-05,3.566e-01,"was significant, now is not",approximate,,,+0.1359
+blended,by sounding count,methane_blended ~ rice_fraction_single,,pearson,531,78.8,0.1484,-0.0967,2.589e-02,3.973e-01,"was significant, now is not",approximate,,,-0.0967
+blended,by sounding count,methane_blended ~ surface_albedo_SWIR,,pearson,926,18.5,0.0200,+0.6605,3.976e-117,2.405e-03,significant,approximate,,,+0.6605
+blended,by sounding count,methane_blended ~ impervious_fraction,surface_albedo_SWIR,pearson,926,55.2,0.0596,-0.1031,1.674e-03,4.529e-01,"was significant, now is not",approximate,,,-0.1031
+blended,by sounding count,methane_blended ~ rice_fraction_single,surface_albedo_SWIR,pearson,531,77.1,0.1453,-0.0658,1.302e-01,5.696e-01,not significant either way,approximate,,,-0.0658
+raw,unweighted,methane_raw ~ impervious_fraction,,pearson,926,58.6,0.0633,+0.4398,4.505e-45,5.127e-04,significant,exact,,,+0.4398
+raw,unweighted,methane_raw ~ rice_fraction_single,,pearson,531,80.5,0.1515,+0.1891,1.147e-05,9.194e-02,"was significant, now is not",exact,,,+0.1891
+raw,unweighted,methane_raw ~ surface_albedo_SWIR,,pearson,926,26.2,0.0283,+0.7375,1.081e-159,1.558e-05,significant,exact,,,+0.7375
+raw,unweighted,methane_raw ~ impervious_fraction,surface_albedo_SWIR,pearson,926,185.7,0.2006,+0.1510,3.955e-06,3.987e-02,significant,exact,,,+0.1510
+raw,unweighted,methane_raw ~ rice_fraction_single,surface_albedo_SWIR,pearson,531,108.5,0.2043,+0.0353,4.163e-01,7.158e-01,not significant either way,exact,,,+0.0353
+raw,by sounding count,methane_raw ~ impervious_fraction,,pearson,926,58.6,0.0633,+0.3259,2.386e-24,1.205e-02,significant,approximate,,,+0.3259
+raw,by sounding count,methane_raw ~ rice_fraction_single,,pearson,531,80.5,0.1515,-0.1287,2.973e-03,2.539e-01,"was significant, now is not",approximate,,,-0.1287
+raw,by sounding count,methane_raw ~ surface_albedo_SWIR,,pearson,926,26.2,0.0283,+0.8069,1.726e-213,5.596e-07,significant,approximate,,,+0.8069
+raw,by sounding count,methane_raw ~ impervious_fraction,surface_albedo_SWIR,pearson,926,179.7,0.1941,+0.1252,1.333e-04,9.420e-02,"was significant, now is not",approximate,,,+0.1252
+raw,by sounding count,methane_raw ~ rice_fraction_single,surface_albedo_SWIR,pearson,531,122.2,0.2301,-0.0200,6.460e-01,8.270e-01,not significant either way,approximate,,,-0.0200

@@ -242,6 +242,8 @@ def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--write", action="store_true",
                         help=f"write {OUT.relative_to(REPO)}")
+    parser.add_argument("--out", default=str(OUT),
+                        help="where to write; the recipe runner redirects it")
     args = parser.parse_args()
 
     if not CHECKPOINT.exists():
@@ -272,12 +274,14 @@ def main() -> int:
           "uniformly.")
 
     if args.write:
-        with OUT.open("w", newline="") as handle:
+        target = Path(args.out)
+        target.parent.mkdir(parents=True, exist_ok=True)
+        with target.open("w", newline="") as handle:
             writer = csv.DictWriter(
                 handle, fieldnames=["quantity", "value", "unit", "note"])
             writer.writeheader()
             writer.writerows(table)
-        print(f"\nwrote {OUT.relative_to(REPO)}")
+        print(f"\nwrote {target}")
     return 0
 
 

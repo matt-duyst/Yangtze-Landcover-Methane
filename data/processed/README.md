@@ -1161,10 +1161,19 @@ leave-one-province-out where both they and the null are negative.
 
 The zero-order association falls too, Pearson +0.345 to +0.315 unweighted and
 +0.212 to +0.136 weighted. And controlling for SWIR albedo now takes it
-**negative**: +0.021 (p 0.53) on the operational field becomes -0.082
-(p 0.013) unweighted and -0.103 (p 0.002) weighted. That is over-control, and
-it is what a field made more albedo-dependent would produce; it is not evidence
-of a negative urban effect.
+**negative**: +0.021 on the operational field becomes -0.082 unweighted and
+-0.103 weighted. That is over-control, and it is what a field made more
+albedo-dependent would produce; it is not evidence of a negative urban effect.
+
+**The p-values that accompanied those two figures have been withdrawn.** They
+were reported as 0.013 and 0.002, which is significant at any conventional
+level, and they were computed with `n` set to the number of cells. Correcting
+for spatial dependence puts them at **0.54 and 0.45**, so neither differs
+detectably from zero. `data/processed/correlation_dof_2018.csv` carries both
+tests for every correlation this repository reports, and the reading above does
+not change: it was already that over-control rather than a negative urban
+effect was the explanation, and the corrected test removes the need to explain
+a significant negative at all.
 
 ### Route, cost and terms
 

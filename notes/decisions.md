@@ -4463,3 +4463,119 @@ cheaper route turned out to be cheaper still than that**: not a preview run but
 the preview's published formula, evaluated locally in about ten seconds against
 observation counts this repository already had. The question was answerable
 without an account, without a download, and without the gate.
+
+## Queue item 2: twenty-seven of seventy-two correlations lose significance
+
+`notes/grounding-methods.md` recorded that every Pearson and partial
+correlation here is computed over 926 cells with `n` treated as 926, that both
+sides of every one is a strongly autocorrelated field, and that the p-values
+are therefore anti-conservative. **The correction has been applied and it is
+larger than expected.**
+
+### The choice of estimator, and why not the other one
+
+Two are in the register. Afyouni, Smith and Nichols (2019) correct the
+effective degrees of freedom of a correlation between two **time series**,
+accounting for autocorrelation in each and for cross-correlation at lags. That
+construction is ordered: it needs a lag index, and a two-dimensional lattice has
+no lag ordering to use without inventing one. Clifford, Richardson and Hémon
+(1989) and Dutilleul, Clifford, Richardson and Hémon (1993) correct the same
+quantity for two **spatial** processes, using distance instead of lag. So
+Dutilleul, and **the choice is about this data's geometry rather than about the
+two methods' quality.**
+
+`src/model/spatial_dof.py` implements it. Under the null the variance of the
+sample correlation is approximately `tr(R_X R_Y) / n^2`, so the effective sample
+size is `M = 1 + n^2 / tr(R_X R_Y)` and the modified t statistic runs on `M - 2`
+degrees of freedom. The two correlation matrices are estimated from binned
+empirical correlograms over great-circle distances — great-circle because the
+lattice spans eight degrees of latitude and a planar approximation would be
+wrong by percent at the edges.
+
+**Calibration, measured rather than assumed.** On two independent white-noise
+fields at 400 scattered locations the estimator returns `M` at about 0.87 of
+nominal rather than 1.0, because the binned correlogram carries sampling noise
+that inflates the trace. So the correction is mildly conservative even with
+nothing to correct, and a shrinkage near 0.87 means "no dependence detected".
+The estimator is also capped at `n + 1`: without the cap a noisy correlogram can
+return more information than the data contain, which would make a corrected
+p-value *smaller* than the nominal one and is the most misleading failure
+available.
+
+### How much independent information 926 cells carry
+
+**A median effective sample size of 45.5 out of 926**, a shrinkage of 0.049.
+Across all 72 correlations the median shrinkage is 0.0576 with a range of 0.0200
+to 0.2517. On the 531-cell rice subset the median effective `n` is 77.9 of 531.
+
+That is the finding in its own right and it deserves a sentence in the paper:
+**this lattice carries roughly the independent information of fifty
+observations, not of nine hundred.** Which is not a defect of the composite. It
+is what a smooth field on a fine grid is, and it is the same property that makes
+the spatial null hard to beat.
+
+### What changed
+
+`scripts/correct_correlation_dof.py` writes
+`data/processed/correlation_dof_2018.csv`: 72 correlations with the nominal and
+corrected tests side by side. It reads `albedo_confounder_2018.csv` and **carries
+its coefficients forward unchanged**, correcting only the degrees of freedom,
+because this exists to fix the significance of published numbers rather than to
+replace them. The Pearson coefficients it recomputes reproduce the reported ones
+to the last digit, over all 26 rows, and a test asserts it — without that the
+correction would be meaningless, since the dependence would have been estimated
+from different data than the coefficient.
+
+It also **extends the set to the blended and raw fields**, whose correlations
+existed only in prose and in no artefact.
+
+**27 of 72 lose significance. 28 remain significant. 17 were never
+significant.**
+
+What survives, and it is the pattern the grounding predicted: every
+albedo-to-methane relationship, at corrected p from 2.1e-04 to 2.6e-02;
+albedo against impervious fraction; and the zero-order methane-against-impervious
+association at +0.3452, corrected p 8.9e-03. The blended field's zero-order
+impervious association survives too, at +0.3154 and p 2.9e-02.
+
+What does not, and this is the consequential part:
+
+* **Every partial correlation of methane on impervious fraction controlling for
+  albedo**, on the operational field. The three-covariate partial of +0.1413
+  goes from p 1.6e-05 to **p 0.116**.
+* **Methane against rice fraction**, +0.0960, from p 0.027 to **p 0.293**.
+* **Every weighted land-cover association.** Methane against impervious
+  fraction weighted, +0.2124, from p 6.6e-11 to **p 0.115**.
+* And the one `data/processed/README.md` called **"negative and significant"**:
+  the blended field's partial of -0.0815 controlling for SWIR albedo, from p
+  0.013 to **p 0.54**, and its weighted counterpart of -0.1031 from p 0.0017 to
+  **p 0.45**.
+
+### Two corrections to committed prose
+
+`data/processed/README.md` reported that blended partial as significant at p
+0.013 and 0.002. **Those p-values are withdrawn** and the file now says so. The
+reading does not change — it was already over-control rather than a negative
+urban effect — and the corrected test removes the need to explain a significant
+negative at all.
+
+`figures/README_fragments.md` said of the raw retrieval that "the impervious
+association survives control, falling only from +0.440 to +0.151 at p 4.0e-06".
+**The survival is real and much thinner than that**: corrected, p is 0.040,
+still under 0.05 and no longer by a margin, while the weighted counterpart at
++0.125 goes from p 1.3e-04 to p 0.094 and does not survive. The caption now
+says so, and the second reading it offered is weaker than it looked.
+
+`notes/decisions.md`'s own earlier statements of these figures are left as
+written, which is this file's standing convention.
+
+### What it does not do
+
+It corrects significance, not size. **No coefficient changed.** A correlation
+that fell from significant to non-significant has not shrunk; the claim that it
+differs from zero has lost its support. And the study's central negative result
+is untouched in the direction that matters: the held-out R squared comparisons
+against the spatial null are not significance tests and this correction does not
+reach them. What it reaches is the supporting apparatus — the albedo confounder
+test's partials, and the blended field's negative — and in both the correction
+makes the repository's own cautious reading more clearly right rather than less.

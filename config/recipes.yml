@@ -210,6 +210,19 @@ recipes:
   compare: bytes
   verified: continuously
   note: null
+- artefact: data/processed/correlation_dof_2018.csv
+  command: python scripts/correct_correlation_dof.py --write
+  label: correlations corrected for spatial dependence
+  cost: about twenty seconds
+  seconds: 40
+  inputs: committed
+  compare: bytes
+  verified: continuously
+  note: Reads albedo_confounder_2018.csv and carries its coefficients forward unchanged,
+    correcting only the degrees of freedom. Adds the blended field's correlations, which
+    existed only in data/processed/README.md prose, and the raw field's, on which the
+    albedo figure's caption rests a survival claim. Twenty-seven of seventy-two
+    correlations lose significance under the correction.
 - artefact: data/processed/albedo_correction_2018.csv
   command: python scripts/test_albedo_correction.py --write
   label: albedo correction test

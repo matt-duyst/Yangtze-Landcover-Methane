@@ -542,8 +542,8 @@ downloads over four platforms — 5<!--#pipeline.fetch_routes--> parallelograms,
 ISO's symbol for data, against one bowed rectangle for the reference layers a
 clone already has. The distinction is carried by shape rather than by fill, so
 it costs no colour and survives a black and white print. Of the
-53<!--#pipeline.recipes--> registered regeneration recipes,
-27<!--#pipeline.recipes_committed--> rebuild their artefact from what a fresh
+54<!--#pipeline.recipes--> registered regeneration recipes,
+28<!--#pipeline.recipes_committed--> rebuild their artefact from what a fresh
 clone holds, 17<!--#pipeline.recipes_local--> need a fetched input and
 8<!--#pipeline.recipes_network--> need a network run.
 
@@ -704,7 +704,11 @@ from 203.9<!--#albedo.slope_raw--> to 199.7<!--#albedo.slope_corrected--> ppb
 per unit albedo. Panels (c) and (d): the association at issue, Pearson
 +0.345<!--#collinear.zero_order-->, and the same association with albedo
 removed from both variables, +0.021<!--#collinear.partial--> at p
-0.53<!--#collinear.partial_p-->.
+0.53<!--#collinear.partial_p-->. That p-value, like every other in this
+caption, is nominal: it treats 926 lattice cells as 926 independent
+observations. `data/processed/correlation_dof_2018.csv` carries the corrected
+test beside it, and for this partial the correction moves p from 0.53 to 0.87 —
+the same verdict, reached with less confidence in either direction.
 
 So there is a path from urban extent through surface brightness to retrieved
 methane that has nothing to do with emissions, and the two ends of it are too
@@ -721,8 +725,12 @@ carefully and the figure matches its care rather than exceeding it.
 readings and the second is visible in panel (e) rather than hidden. On the
 **raw** retrieval the impervious association survives control, falling only from
 +0.440<!--#collinear.zero_order_raw--> to
-+0.151<!--#collinear.partial_raw--> at p 4.0e-06, and the raw retrieval is the
-field carrying the *larger* uncorrected albedo bias. Incomplete control is at
++0.151<!--#collinear.partial_raw-->, and the raw retrieval is the field
+carrying the *larger* uncorrected albedo bias. **That survival is weaker than
+the nominal p-value of 4.0e-06 suggested**: corrected for spatial dependence it
+is p 0.040, still below 0.05 and no longer by a margin, and its weighted
+counterpart at +0.125 falls from p 1.3e-04 to p 0.094 and does not survive at
+all. So the second reading remains available and is thinner than it looked. Incomplete control is at
 least as available a reading of that survival as a real urban signal, so panel
 (e) draws all four field-by-weighting combinations and lets neither field stand
 for the answer.
