@@ -209,6 +209,8 @@ KEYS = {
     "10.1038/s41598-022-19462-4": "wang2022nechina",
     "10.1038/s44284-024-00183-w": "lu2025canine",
     "10.1038/s41597-024-03815-x": "zhou2024wwtp",
+    # the thesis's own rice method, added 12 September 2026
+    "10.1080/15481603.2021.1943214": "zhu2021pppm",
 }
 
 HEADER = """% Verified reference register for Yangtze-Landcover-Methane.

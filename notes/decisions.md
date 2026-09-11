@@ -4079,3 +4079,144 @@ independent authorities call correction for chance agreement bad practice
 (Stehman and Foody, 2019, doi:10.1016/j.rse.2019.05.018; Pontius and Millones,
 2011, doi:10.1080/01431161.2011.552923), and `ERRATA.md` 6.5 has been corrected
 accordingly rather than left asking for it.
+
+## The PPPM route, discussed repeatedly and recorded nowhere until now
+
+`notes/repository-architecture.md` step 3 records that the rice reimplementation
+was **not done, and deliberately**, with published products substituted for it.
+That is the decision and it is recorded. What was never recorded is the
+alternative it displaced, which has been discussed at length across sessions and
+existed only in conversation. This section is that record. **Nothing is
+implemented and no choice is made here.**
+
+### What the thesis did
+
+The 2023 thesis mapped paddy rice with the phenology- and pixel-based paddy rice
+mapping algorithm of **Zhu, L., Liu, X., Wu, L., Liu, M., Lin, Y., Meng, Y.,
+Ye, L., Zhang, Q., and Li, Y. (2021)**, *Detection of paddy rice cropping
+systems in southern China with time series Landsat images and phenology-based
+algorithms*, *GIScience & Remote Sensing* 58, 733–755,
+`10.1080/15481603.2021.1943214`. **That citation was not in
+`notes/references.md` and has been added.** Its absence is worth noting: the
+register held the thesis's other pillar method, GAIA, from the start, while the
+method that produced half the thesis's land-cover layers was missing.
+
+The paper's own contribution is to "improve the phenology- and pixel-based paddy
+rice mapping (PPPM) algorithm by simultaneously considering the phenology
+signatures in the rice transplanting and heading periods", and it generated
+**annual maps of single-cropping and double-cropping rice across southern China
+from Landsat 5, 7 and 8 for 1999 to 2019 on Google Earth Engine.** The thesis
+describes applying the algorithm with EVI, NDVI and LSWI, phenological windows
+from the Ministry of Agriculture of China, and validation against National
+Bureau of Statistics provincial sown area.
+
+The implementation ran in Earth Engine scripts behind a Yale account that is no
+longer accessible, so the code and outputs are unrecoverable. **One premise
+needs correcting here**: `ERRATA.md` 6.1 does *not* record the thesis's script
+links as dead. It records that "their current resolvability has not been
+established" and that "they were not dereferenced, which is why no claim is made
+about whether they still resolve." The inaccessibility is of the account, not a
+demonstrated 404.
+
+### Why a reimplementation would be worth doing
+
+Two reasons, and the first is the one that matters for a paper.
+
+**It would test the thesis's own method rather than replace it.** As things
+stand the reproduction substitutes published products for the thesis's
+algorithm, which closes the question of what rice extent is and leaves open the
+question of whether the thesis's method produced the extent it reported. Those
+are different claims, and the current arrangement reads as a substitution rather
+than a reproduction of the rice half. `ERRATA.md` and the architecture note both
+say so; neither says what the alternative would have been.
+
+**It would produce a rice layer for 2000 and 2010.** The committed NESDC product
+covers 2017 to 2022 and reaches none of the thesis's historical years. CCD-Rice
+reaches 1990 to 2016 and so covers 2000 and 2010 but not 2018. A PPPM
+reimplementation would cover all three from one method, which no combination of
+published products does.
+
+### What it needs, and what is established about each
+
+**Landsat Collection 2 Level-2 surface reflectance.** `notes/dataset-leads.md`
+records this as **verified accessible** through the Microsoft Planetary Computer
+STAC API, HTTP 200 anonymously with no key, with the licence recorded as it
+reads: the collection's `license` field says `proprietary`, which is the STAC
+convention for "see the link", and its licence link is titled *Public Domain*, pointing
+at the USGS data policy.
+
+**The sensors covering the three years.** Landsat 5 TM for 2000 and 2010, and
+Landsat 8 OLI for 2018. **A premise needs narrowing here**: Landsat 5 acquired
+imagery until **November 2011**, when the Thematic Mapper failed, and was
+decommissioned on 5 June 2013 — so "Landsat 5 TM to 2012" overstates the record
+by about a year. It is immaterial for 2000 and 2010 and would matter for any
+year after 2011. Landsat 8 launched 11 February 2013. Landsat 7 ETM+ spans all
+three years and carries scan-line-corrector striping from 2003, which is why the
+thesis's own description names TM, ETM+ and OLI together.
+
+**SWIR1**, which is band 5 on Landsat 5 TM and Landsat 7 ETM+ and **band 6 on
+Landsat 8 OLI** at 1.57 to 1.65 micrometres. The band index changes between
+sensors and a reimplementation spanning 2000 to 2018 crosses that boundary,
+which is the kind of detail that silently produces a wrong layer. LSWI, the
+index PPPM uses for the flooding signal, is computed from NIR and SWIR1, so the
+same boundary applies to NIR.
+
+**The QA band** for cloud masking, which is the next paragraph's subject.
+
+### The constraint, which is the finding rather than an obstacle
+
+Phenology-based rice mapping in southern China is limited by cloud, and the
+limit has been quantified. CCD-Rice states it directly: "in southern China,
+where rice is extensively cultivated, annual averages of cloud-free Landsat
+observations were **fewer than eight between 1984 and 2017**", and that "such
+sparse observations pose challenges to rice mapping studies, especially when
+employing phenology-based methods, for which the impact of clouds on the
+classification accuracy cannot be ignored" (Shen et al., 2025,
+`10.5194/essd-17-2193-2025`, already in the register). It also states that the
+limitation "hinders the application of both methods, especially for
+phenology-based methods that rely on irrigation signals during the transplanting
+period". **CCD-Rice attributes the count to Zhou et al. rather than measuring
+it**, so the primary source is one step further away and is not in the register.
+
+Fewer than eight cloud-free observations a year, against an algorithm that needs
+to catch a transplanting flood and a heading peak inside specific windows, is
+the mechanism. **So a faithful reimplementation would very likely reproduce the
+thesis's own Shanghai underestimate**, and demonstrating why is a stronger
+result than noting that it happened. That reframes the reimplementation from a
+repair into an experiment: the question it would answer is not whether the
+thesis's rice layer was right but whether its method could have been right given
+the imagery available.
+
+### The alternative the grounding surfaced, which may be better
+
+`notes/grounding-methods.md` records the GRPI method: Landsat at 30 m to
+identify flooded vegetation, combined with a 30 m global cropland database and
+country-specific emission factors, giving monthly emissions on a 0.1 degree
+grid, with the authors stating the method "can be readily applied to other
+years" and that interannual variability in Asia is under 8 percent while
+"decadal trends can be more important" (Chen et al., 2025,
+`10.1029/2024EF005479`, already in the register).
+
+**The two routes produce different things and that is the choice, not their
+relative quality.**
+
+* **A PPPM reimplementation tests the thesis's method.** Its output is an extent
+  map for 2000, 2010 and 2018 from one algorithm, directly comparable to the
+  thesis's Table 1, and its most likely finding is why the method underestimated
+  where it did.
+* **A GRPI-method inventory produces something usable as an inversion prior.**
+  Its output is emissions rather than extent, on the grid the field's inversions
+  use, and `notes/grounding-methods.md` establishes that a better rice prior
+  demonstrably moves an inversion's answer and cut model-observation bias by 40
+  percent when done for Heilongjiang.
+
+The second serves the emissions framing in `notes/paper-target.md` and the first
+serves the reproduction framing. **Neither is chosen here**, and the decision
+should wait on the IMI preview, because if TROPOMI cannot constrain emissions
+over this domain then the prior-building route has no destination and the
+method-testing route is the only one with a purpose.
+
+One thing both share: they need the same Landsat access, the same sensor-boundary
+care, and they meet the same cloud limit. The constraint is a property of the
+imagery over this region, not of either algorithm.
+

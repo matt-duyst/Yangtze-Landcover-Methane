@@ -20,7 +20,7 @@ instance was met on 10 September 2026 and not acted on: the ChinaRiceCalendar
 deposit's author field gives two of eleven authors with their given and family
 names run together, and the paper's citation is carried instead.
 
-`notes/references.bib` carries one hundred twenty-four entries as BibTeX. It is
+`notes/references.bib` carries one hundred twenty-five entries as BibTeX. It is
 **generated**, not typed: each entry comes from `https://doi.org` under content
 negotiation for `application/x-bibtex`, so the two files cannot drift and no
 transcription step exists between the registry and the repository. Regenerate it
@@ -46,7 +46,7 @@ discusses a work the thesis cites, the work appears here and its role says so.
 ## What could not be verified
 
 Nothing in the register failed to verify **as a work**. All one hundred
-twenty-four cited DOIs resolved: one hundred twelve through Crossref and twelve
+twenty-five cited DOIs resolved: one hundred thirteen through Crossref and twelve
 through DataCite, which is the registry that carries dataset and preprint DOIs
 and the reason a Crossref-only lookup returns "not found" for them.
 
@@ -185,6 +185,24 @@ Harvard Dataverse.
 `10.7910/DVN/PRFF8V` — dataset record; supplies four committed rice rows, not
 used in analysis.
 Cited in `data/processed/README.md`, `scripts/recon_rice_provincial_areas.py`.
+
+**Zhu, L., Liu, X., Wu, L., Liu, M., Lin, Y., Meng, Y., Ye, L., Zhang, Q., and
+Li, Y. (2021).** Detection of paddy rice cropping systems in southern China with
+time series Landsat images and phenology-based algorithms. *GIScience & Remote
+Sensing* 58, 733–755.
+`10.1080/15481603.2021.1943214` — peer-reviewed paper; **describes the method the
+2023 thesis used and this reproduction did not.** The phenology- and pixel-based
+paddy rice mapping algorithm, improved to use the transplanting and heading
+signatures together, with annual single- and double-cropping rice maps for
+southern China from Landsat 5, 7 and 8 over 1999 to 2019.
+
+**This entry closes a gap rather than adding a source.** It is one of the 2023
+thesis's two pillar methods and the origin of half its land-cover layers, and the
+register held the other pillar — GAIA — from the start while this was missing
+until 12 September 2026. `notes/decisions.md` records the reimplementation route
+it would support and why that route was displaced.
+Named in `legacy/Duyst-Yale-Thesis.md`; cited in `notes/decisions.md`,
+`notes/paper-target.md`.
 
 **Shen, R., Pan, B., Peng, Q., Dong, J., Chen, X., Zhang, X., Ye, T.,
 Huang, J., and Yuan, W. (2023).** High-resolution distribution maps of
