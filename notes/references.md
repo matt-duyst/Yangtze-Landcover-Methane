@@ -97,7 +97,7 @@ systematically. Two entries have no DOI to resolve and are
 verified by other means, which the entries themselves state.
 
 **Two sources did not survive verification for the thing they were cited for.**
-The second is Zhu and Li (2024) and is set out under the region grounding below;
+The second is Zhu and Li (2025) and is set out under the region grounding below;
 it is a real paper, it resolves, and none of the four figures attributed to it
 could be confirmed from any accessible source, so none is written anywhere in
 this repository. The first follows.
@@ -805,10 +805,10 @@ Cited in `notes/grounding-yrd.md`.
 
 ### Wetlands, urban gas and transport
 
-**Yang, B., Li, X., Lin, S., Jiang, C., Xue, L., Wang, J., Liu, X., and
-Espenberg, M. (2021).** Invasive Spartina alterniflora changes the Yangtze
-Estuary salt marsh from CH4 sink to source. *Estuarine, Coastal and Shelf
-Science* 252, 107258.
+**Yang, B., Li, X., Lin, S., Jiang, C., Xue, L., Wang, J., Liu, X.,
+Espenberg, M., Pärn, J., and Mander, Ü. (2021).** Invasive Spartina
+alterniflora changes the Yangtze Estuary salt marsh from CH4 sink to source.
+*Estuarine, Coastal and Shelf Science* 252, 107258.
 `10.1016/j.ecss.2021.107258` — peer-reviewed paper; a finding relied on. The
 wetland term in this region does not have a fixed sign, which is a stronger
 statement than that its magnitude is unknown, and it is the reason the
@@ -870,7 +870,7 @@ Cited in `notes/dataset-leads.md`.
 
 ### One work cited and not relied on
 
-**Zhu, Y., and Li, H. (2024).** Methane emissions from rice paddies in the
+**Zhu, Y., and Li, H. (2025).** Methane emissions from rice paddies in the
 Yangtze River Delta region of China: synthesis of new estimates. *International
 Journal of Environmental Science and Technology* 22, 11011–11016.
 `10.1007/s13762-024-06050-4` — peer-reviewed paper; **a source that could not
@@ -1131,7 +1131,7 @@ subject of controversy" is the honest way to introduce the question in a paper.
 Cited in `notes/grounding-methods.md`.
 
 **Ploton, P., Mortier, F., Réjou-Méchain, M., Barbier, N., Picard, N.,
-Rossi, V., Dauzat, J., Bedeau, C., Bénédet, F., Betrancourt, F., and 21 others
+Rossi, V., Dormann, C., Cornu, G., Viennois, G., Bayol, N., and 3 others
 (2020).** Spatial validation reveals poor predictive performance of large-scale
 ecological mapping models. *Nature Communications* 11, article 4540.
 `10.1038/s41467-020-18321-y` — peer-reviewed paper; a finding relied on. The
@@ -1226,10 +1226,10 @@ part does not. This project's composite assumes the whole error behaves like the
 first term.
 Cited in `notes/grounding-methods.md`.
 
-**Glissenaar, I. A., Boersma, K. F., Rijsdijk, P., van Geffen, J.,
-Eskes, H., and 4 others (2025).** TROPOMI Level 3 tropospheric NO2 dataset with
+**Glissenaar, I., Boersma, K. F., Anglou, I., Rijsdijk, P., Verhoelst, T., and
+5 others (2025).** TROPOMI Level 3 tropospheric NO2 dataset with
 advanced uncertainty analysis from the ESA CCI+ ECV precursor project. *Earth
-System Science Data* 17, 4627–4653.
+System Science Data* 17, 4627–4650.
 `10.5194/essd-17-4627-2025` — peer-reviewed paper; a method not applied, and the
 source of an implementable alternative to weighting by sounding count. It
 supplies a temporal error correlation of 30 percent in both the stratospheric
@@ -1244,7 +1244,7 @@ Cited in `notes/grounding-methods.md`.
 
 **Schuit, B. J., Maasakkers, J. D., Bijl, P., Mahapatra, G., van den Berg, A.-W.,
 Pandey, S., Lorente, A., Borsdorff, T., Houweling, S., Varon, D. J., and
-7 others (2023).** Automated detection and monitoring of methane super-emitters
+8 others (2023).** Automated detection and monitoring of methane super-emitters
 using satellite data. *Atmospheric Chemistry and Physics* 23, 9071–9098.
 `10.5194/acp-23-9071-2023` — peer-reviewed paper; a method not applied. The
 seven-filter preprocessing chain in publication order — albedo-bias-corrected
@@ -1257,7 +1257,7 @@ clouds or along coasts".
 Cited in `notes/grounding-methods.md`.
 
 **Nesser, H., Jacob, D. J., Maasakkers, J. D., Lorente, A., Chen, Z., Lu, X.,
-Shen, L., Qu, Z., Sulprizio, M. P., and 9 others (2024).** High-resolution US
+Shen, L., Qu, Z., Sulprizio, M. P., and 6 others (2024).** High-resolution US
 methane emissions inferred from an inversion of 2019 TROPOMI satellite data:
 contributions from individual states, urban areas, and landfills. *Atmospheric
 Chemistry and Physics* 24, 5069–5091.
@@ -1303,7 +1303,7 @@ Cited in `notes/grounding-methods.md`, `notes/grounding-methane.md`.
 ### Model class and resolution
 
 **Bourached, A., Bonkhoff, A. K., Schirmer, M. D., Regenhardt, R. W.,
-Bretzner, M., and 9 others (2023).** Scaling behaviours of deep learning and
+Bretzner, M., and 11 others (2023).** Scaling behaviours of deep learning and
 linear algorithms for the prediction of stroke severity. *Brain Communications*
 6, article fcae007.
 `10.1093/braincomms/fcae007` — peer-reviewed paper; a finding relied on.
@@ -1324,8 +1324,8 @@ the ten-times-the-number-of-weights rule of thumb as the most widely used one.
 successful applications had at least 70,000 observations, and it is not written.
 Cited in `notes/grounding-methods.md`.
 
-**Passafaro, T. L., Fragomeni, B. O., Lourenco, D. A. L., Rekaya, R., and
-Aguilar, I. and others (2020).** Would large dataset sample size unveil the
+**Passafaro, T. L., Lopes, F. B., Dórea, J. R. R., Craven, M., Breen, V., and
+2 others (2020).** Would large dataset sample size unveil the
 potential of deep neural networks for improved genome-enabled prediction of
 complex traits? The case for body weight in broilers. *BMC Genomics* 21, article
 905.
@@ -1336,8 +1336,9 @@ while having the lowest mean squared error of prediction and lower bias at every
 size. Recorded as mixed rather than as supporting one conclusion.
 Cited in `notes/grounding-methods.md`.
 
-**Kim, K., Lee, J., and others (2025).** MultiTab: A Comprehensive Benchmark
-Suite for Multi-Dimensional Evaluation in Tabular Domains. arXiv.
+**Lee, K., Eo, M., Cho, H.-S., Kim, D., and 4 others (2025).** MultiTab: A
+Comprehensive Benchmark Suite for Multi-Dimensional Evaluation in Tabular
+Domains. arXiv.
 `10.48550/arXiv.2505.14312` — preprint; **a finding that contests the convenient
 conclusion** about model class. In small-sample regimes most algorithms perform
 similarly within overlapping confidence intervals and high-capacity networks
@@ -1346,8 +1347,8 @@ require large datasets to be effective". It is cited because a methods section
 that quoted only the crossover evidence would be selective.
 Cited in `notes/grounding-methods.md`.
 
-**Sheng, J.-X., Jacob, D. J., Turner, A. J., Maasakkers, J. D., Sulprizio, M. P.,
-Bloom, A. A., Andrews, A. E., and Wunch, D. (2018).** Comparative analysis of
+**Sheng, J.-X., Jacob, D. J., Maasakkers, J. D., Zhang, Y., and
+Sulprizio, M. P. (2018).** Comparative analysis of
 low-Earth orbit (TROPOMI) and geostationary (GeoCARB, GEO-CAPE) satellite
 instruments for constraining methane emissions on fine regional scales:
 application to the Southeast US. *Atmospheric Measurement Techniques* 11,
@@ -1360,7 +1361,7 @@ between-cell spread of 14.9 ppb, at this project's resolution.
 Cited in `notes/grounding-methods.md`.
 
 **Qu, Z., Jacob, D. J., Shen, L., Lu, X., Zhang, Y., Scarpelli, T. R.,
-Nesser, H., Sulprizio, M. P., Maasakkers, J. D., and 5 others (2021).** Global
+Nesser, H., Sulprizio, M. P., Maasakkers, J. D., and 4 others (2021).** Global
 distribution of methane emissions: a comparative inverse analysis of
 observations from the TROPOMI and GOSAT satellite instruments. *Atmospheric
 Chemistry and Physics* 21, 14159–14175.
@@ -1397,26 +1398,29 @@ model prior or both as predictors. **None predicts a column from land cover.**
 That absence is the strongest available statement about the 2023 thesis's
 framing, and it needs the set rather than any one member.
 
-**Earth System Science Data 18, 4279–4301 (2026).** Reconstructing two-decade
-daily high-resolution seamless global land XCO2 records using a hybrid
-Transformer–BiLSTM model.
+**Qu, Y., Shi, X., Fan, Y., Wang, Z., and Wei, J. (2026).** Reconstructing
+two-decade daily high-resolution seamless global land XCO2 records using a hybrid
+Transformer–BiLSTM model. *Earth System Science Data* 18, 4279–4301.
 `10.5194/essd-18-4279-2026` — peer-reviewed paper; a method not applied.
 Predictors include precursor gases, meteorological reanalysis, surface features
 and spatiotemporal encodings.
 
-**Atmospheric Research 308, 107542 (2024).** Estimating high spatio-temporal
-resolution XCO2 using spatial features deep fusion model.
+**Cui, L., Yang, H., Qiao, Y., Huang, X., Feng, G., Lv, Q., and
+Fan, H. (2024).** Estimating high spatio-temporal resolution XCO2 using spatial
+features deep fusion model. *Atmospheric Research* 308, 107542.
 `10.1016/j.atmosres.2024.107542` — peer-reviewed paper; a method not applied.
 
-**Atmospheric Pollution Research 17, 102918 (2026).** Gap-filled spatiotemporal
-reconstruction of XCH4 data and analysis of methane emission patterns.
+**Xiao, Q., Wan, Y., Han, G., Liu, Y., Liu, Y., Li, X., and Zhou, H. (2026).**
+Gap-filled spatiotemporal reconstruction of XCH4 data and analysis of methane
+emission patterns. *Atmospheric Pollution Research* 17, 102918.
 `10.1016/j.apr.2026.102918` — peer-reviewed paper; a method not applied. The
 closest published analogue to anything this project might do with its 97 absent
 cells.
 
-**Scientific Reports 15 (2025).** Improved estimation of carbon dioxide and
-methane using machine learning with satellite observations over the Arabian
-Peninsula.
+**Alcibahy, M., Gafoor, F. A., Mustafa, F., El Fadel, M., Al Hashemi, H.,
+Al Hammadi, A., and Al Shehhi, M. R. (2025).** Improved estimation of carbon
+dioxide and methane using machine learning with satellite observations over the
+Arabian Peninsula. *Scientific Reports* 15.
 `10.1038/s41598-024-84593-9` — peer-reviewed paper; a finding relied on.
 Gradient boosting with CarbonTracker, MODIS Terra and ERA-5 inputs reached R²
 0.98 and RMSE 0.58 ppm for XCO2 but only R² 0.63 and RMSE 13.26 ppb for XCH4,
@@ -1459,7 +1463,7 @@ register's preamble should be read as requiring.
 ### The inference frame
 
 **Chen, Z., Jacob, D. J., Nesser, H., Sulprizio, M. P., Lorente, A.,
-Varon, D. J., Lu, X., Shen, L., Qu, Z., Penn, E., and 10 others (2022).**
+Varon, D. J., Lu, X., Shen, L., Qu, Z., Penn, E., and Yu, Z. (2022).**
 Methane emissions from China: a high-resolution inversion of TROPOMI satellite
 observations. *Atmospheric Chemistry and Physics* 22, 10809–10826.
 `10.5194/acp-22-10809-2022` — peer-reviewed paper; a method **not** applied, and
@@ -1472,9 +1476,10 @@ is a state vector size, not a mixture-model member count, and the inversion's
 DOFS is 167.
 Cited in `notes/grounding-methods.md`.
 
-**Feng, S., and 9 others (2025).** High-resolution regional inversion reveals
+**Feng, S., Jiang, F., Zhang, Y., Chen, H., Zhuang, H., and 4 others (2025).**
+High-resolution regional inversion reveals
 overestimation of anthropogenic methane emissions in China. *Atmospheric
-Chemistry and Physics* 25, 15121–15141.
+Chemistry and Physics* 25, 15121–15143.
 `10.5194/acp-25-15121-2025` — peer-reviewed paper; a method not applied, and a
 finding relied on twice. RegGCAS-CH4, built on WRF-CMAQ with an ensemble Kalman
 filter, giving 45.1 ± 3.8 Tg a⁻¹, 36.5 percent below EDGAR. It also supplies the
@@ -1484,7 +1489,8 @@ maps" that "incorrectly overspread rice emissions across non-rice agricultural
 grids".
 Cited in `notes/grounding-methods.md`.
 
-**Xia, and others (2026).** High-resolution inversion of urban methane emissions
+**Xia, Z., Zhao, W., Xu, Y., Li, C., Dong, R., and Yang, S. (2026).**
+High-resolution inversion of urban methane emissions
 in the Chengdu–Chongqing economic circle using ground-based observations and a
 dynamic error Bayesian framework. *Journal of Cleaner Production* 557, 148229.
 `10.1016/j.jclepro.2026.148229` — peer-reviewed paper; a method not applied,
@@ -1497,10 +1503,10 @@ Cited in `notes/grounding-methods.md`.
 ### Information content
 
 **Estrada, L. A., Varon, D. J., Sulprizio, M., Nesser, H., Chen, Z.,
-Balasus, N., Hancock, S. E., and 14 others (2025).** Integrated Methane
+Balasus, N., Hancock, S. E., and 12 others (2025).** Integrated Methane
 Inversion (IMI) 2.0: an improved research and stakeholder tool for monitoring
 total methane emissions with high resolution worldwide using TROPOMI satellite
-observations. *Geoscientific Model Development* 18, 3311–3331.
+observations. *Geoscientific Model Development* 18, 3311–3330.
 `10.5194/gmd-18-3311-2025` — peer-reviewed paper; **describes a tool not used,
 and it is the most consequential entry added in this pass.** A free open-access
 inversion facility at exactly this project's resolution which already ingests the
@@ -1701,7 +1707,7 @@ Cited in `notes/grounding-urban.md`.
 **Ma, S., Deng, N., Zhao, C., Wang, P., Zhou, C., Sun, C., Guan, D., Wang, Z.,
 and Meng, J. (2024).** Decreasing Greenhouse Gas Emissions from the Municipal
 Solid Waste Sector in Chinese Cities. *Environmental Science & Technology* 58,
-11316–11326.
+11342–11351.
 `10.1021/acs.est.4c00408` — peer-reviewed paper; a finding relied on, and the
 one that makes this project's analysis year the pivot. Greenhouse gas emissions
 from the sector peaked at 70.6 Tg CO₂-equivalent in **2018** and fell to 47.6 Tg
@@ -1861,7 +1867,7 @@ systematic rural underrepresentation, and the grounding names both sides rather
 than choosing — the same treatment this register gives the rice-paddy exchange.
 Cited in `notes/grounding-urban.md`.
 
-**Wei, S., Lin, Y., Zhang, H., Wan, L., Lin, H., and Wu, Z. (2020).** Estimating
+**Wei, S., Lin, Y., Zhang, H., Wan, L., Lin, H., and Wu, Z. (2021).** Estimating
 Chinese residential populations from analysis of impervious surfaces derived
 from satellite images. *International Journal of Remote Sensing* 42, 2303–2326.
 `10.1080/01431161.2020.1841322` — peer-reviewed paper; **a finding contested, in
@@ -1876,7 +1882,7 @@ Cited in `notes/grounding-urban.md`.
 
 **Zhang, Y., Wang, Y., Dong, Q., Chen, X.-J., Zhang, F., Li, X., and Liu, Y.
 (2026).** Mapping three decades of urban growth in China: a 30 m annual building
-height dataset (1990–2019). *Earth System Science Data* 18, 5329.
+height dataset (1990–2019). *Earth System Science Data* 18, 5329–5355.
 `10.5194/essd-18-5329-2026` — peer-reviewed paper; describes a dataset not used.
 **The only building-height product whose span contains 2000, 2010 and 2018**,
 annual and at 30 m.
@@ -1885,7 +1891,7 @@ Cited in `notes/grounding-urban.md`, `notes/dataset-leads.md`.
 **Che, Y., Li, X., Liu, X., Wang, Y., Liao, W., Zheng, X., Zhang, X., Xu, X.,
 Shi, Q., Zhu, J., Zhang, H., Yuan, H., and Dai, Y. (2024).** 3D-GloBFP: the
 first global three-dimensional building footprint dataset. *Earth System Science
-Data* 16, 5357.
+Data* 16, 5357–5374.
 `10.5194/essd-16-5357-2024` — peer-reviewed paper; describes a dataset not used.
 1.66 billion buildings, validated in China against CNBH.
 Cited in `notes/grounding-urban.md`.
@@ -1925,7 +1931,8 @@ cue**, and Tier 0 establishes that its own tip lacks the sensitivity to
 constrain a single large landfill independently of the prior.
 Cited in `notes/grounding-urban.md`.
 
-**Pang, and others (2025).** Study of spatiotemporal variation and annual
+**Pang, X., Shang, Q., Chen, L., Sun, S., Zhao, G., and 6 others (2025).**
+Study of spatiotemporal variation and annual
 emission of CH4 in Shaoxing Yangtze River Delta, China, using a portable CH4
 detector on the UAV. *Journal of Environmental Sciences* 151, 140–149.
 `10.1016/j.jes.2024.03.045` — peer-reviewed paper; describes a dataset not used.
@@ -1934,9 +1941,10 @@ detector on the UAV. *Journal of Environmental Sciences* 151, 140–149.
 cities worldwide. Its period does not overlap 2018.
 Cited in `notes/dataset-leads.md`.
 
-**Fu, and others (2026).** Observational insights into atmospheric CO2 and CO at
+**Fu, S., Qing, X., Zang, K., Lin, Y., Liu, S., and 5 others (2026).**
+Observational insights into atmospheric CO2 and CO at
 the urban canopy layer top in Metropolitan Shanghai, China. *Atmospheric
-Chemistry and Physics* 26, 5477.
+Chemistry and Physics* 26, 5477–5496.
 `10.5194/acp-26-5477-2026` — peer-reviewed paper; describes a dataset **not
 used and not usable for this question**, which is why it is registered. Nearly
 two years of continuous in-situ measurement from the 632 m Shanghai Tower inside
@@ -2088,7 +2096,7 @@ median.
 Cited in `notes/grounding-rice.md`.
 
 **Qian, H., Zhang, N., Chen, J., Chen, C., Hungate, B. A., Ruan, J., Huang, S.,
-Cheng, K., Song, Z., Hou, P., and eleven others (2022).** Unexpected Parabolic
+Cheng, K., Song, Z., Hou, P., and twelve others (2022).** Unexpected Parabolic
 Temperature Dependency of CH4 Emissions from Rice Paddies. *Environmental
 Science & Technology* 56, 4871–4881.
 `10.1021/acs.est.2c00738` — peer-reviewed paper; a finding relied on. Warming
@@ -2376,9 +2384,9 @@ flux". Four years of flux tower measurement inside this study region, for a
 source neither predictor represents.
 Cited in `notes/grounding-rice.md`, `notes/dataset-leads.md`.
 
-**Zhao, J., Zhang, M., Pu, Y., Jia, L., Xiao, W., Zhang, Z., Ge, P., Shi, J., and
-Xiao, Q. (2025).** Dynamic and high methane emission flux in pond and lake
-aquaculture. *Journal of Hydrology* 653, 132765.
+**Zhao, J., Zhang, M., Pu, Y., Jia, L., Xiao, W., Zhang, Z., Ge, P., Shi, J.,
+Xiao, Q., and Lee, X. (2025).** Dynamic and high methane emission flux in pond
+and lake aquaculture. *Journal of Hydrology* 653, 132765.
 `10.1016/j.jhydrol.2025.132765` — peer-reviewed paper; a finding relied on, for
 regional scale. The Yangtze River Delta "accounts for 26% of China's total
 aquaculture area", with both pond and lake aquaculture practised, and pond flux
@@ -2413,9 +2421,9 @@ could not be verified and are not written**; the inland-surpassing-coastal
 direction is the paper's own title.
 Cited in `notes/grounding-rice.md`, `notes/dataset-leads.md`.
 
-**Chen, J., Lin, C., Xue, K., Cao, Z., Ma, R., Ma, D., and Tong, Y. (2025).**
-Mapping China Aquaculture Ponds: Integrating a New Aquaculture Index With Machine
-Learning. *Earth's Future* 13.
+**Chen, J., Lin, C., Xue, K., Song, K., Cao, Z., Ma, R., Ma, D., and
+Tong, Y. (2025).** Mapping China Aquaculture Ponds: Integrating a New
+Aquaculture Index With Machine Learning. *Earth's Future* 13.
 `10.1029/2024EF005637` — peer-reviewed paper; describes a dataset not used. A
 second national aquaculture pond mapping, registered as the pair China_AP would
 need under the GAIA–GISA rule that two products with different errors are worth
@@ -2686,7 +2694,7 @@ Cited in `notes/paper-target.md`.
 
 **France, J. L., Fisher, R. E., Lowry, D., Allen, G., Andrade, M. F.,
 Bauguitte, S. J.-B., Bower, K., Broderick, T. J., Daly, M. C., Forster, G., and
-fourteen others (2021).** δ13C methane source signatures from tropical wetland
+fourteen others (2022).** δ13C methane source signatures from tropical wetland
 and rice field emissions. *Philosophical Transactions of the Royal Society A*
 380.
 `10.1098/rsta.2020.0449` — peer-reviewed paper; a finding relied on, for the

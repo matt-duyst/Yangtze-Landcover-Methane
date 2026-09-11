@@ -376,7 +376,7 @@ methane sources sit "in the −70 to −50‰ range for sources such as ruminant
 wetlands and rice fields", against thermogenic and pyrogenic sources "as
 enriched as −15‰", and pooled literature gives "an average signature of
 approximately **−61 ± 4‰** for all rice fields" (France, J. L., Fisher, R. E.,
-Lowry, D., Allen, G., and twenty others, 2021, *δ13C methane source signatures
+Lowry, D., Allen, G., and twenty others, 2022, *δ13C methane source signatures
 from tropical wetland and rice field emissions*, *Philosophical Transactions of
 the Royal Society A* 380, doi:10.1098/rsta.2020.0449). Waste sources measured
 atmospherically give a weighted average of **−56.1 ± 2.4‰** (Bakkaloglu, S.,

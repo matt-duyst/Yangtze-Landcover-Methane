@@ -207,7 +207,7 @@ found Shanghai's downtown census at **6,008,068** persons against model
 estimates ranging from **1,435,820 to 1,065,729** across fourteen grid
 resolutions, and states that the population "was greatly underestimated in the
 model without taking the vertical building information into consideration" (Wei
-et al., 2020, *International Journal of Remote Sensing* 42, 2303–2326,
+et al., 2021, *International Journal of Remote Sensing* 42, 2303–2326,
 doi:10.1080/01431161.2020.1841322).
 
 So the layer's failure mode is the opposite of the population grids': they lose

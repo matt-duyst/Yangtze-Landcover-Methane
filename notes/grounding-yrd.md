@@ -381,7 +381,7 @@ would be building on sand. **No equivalent agro-ecological zonation for the
 Yangtze River Delta was found.**
 
 A synthesis of new methane emission estimates for rice paddies in this region
-exists (Zhu and Li, 2024, *International Journal of Environmental Science and
+exists (Zhu and Li, 2025, *International Journal of Environmental Science and
 Technology* 22, 11011–11016, doi:10.1007/s13762-024-06050-4). Its figures could
 not be verified: the article is paywalled, no abstract is indexed by Crossref or
 OpenAlex, and no accessible copy was found. Its content is therefore not quoted
@@ -798,7 +798,7 @@ Jiang et al. (2023) project a **17.1 to 9.2 percent** reduction from further
 conversion under urbanisation, in extreme and most likely scenarios. The single
 figure of 9.2 percent is the most likely scenario, not the only projection.
 
-Zhu and Li (2024) exists and resolves but **none of its figures could be
+Zhu and Li (2025) exists and resolves but **none of its figures could be
 verified**: 416 samples, 252.17 against 146.02 kg per hectare, and a factor of
 1.52 are all unconfirmed and none is written above.
 

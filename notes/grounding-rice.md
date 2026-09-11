@@ -945,7 +945,7 @@ principal drivers are not built expansion.
 
 ## What could not be verified
 
-**Zhu and Li (2024) still does not close, and this pass tried hardest.** The
+**Zhu and Li (2025) still does not close, and this pass tried hardest.** The
 four figures attributed to it — 416 samples, a 2010–2018 mean of 252.17 kg ha⁻¹
 against 146.02 for 2000–2009, a ratio of 1.52 and p < 0.01 — were retrieved this
 pass from the publisher's abstract page as read by a search engine, matching on
