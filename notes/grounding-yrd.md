@@ -174,7 +174,30 @@ computed from the per-granule acquisition times retained in
 **The seasonality of the observations and the seasonality of the emissions are
 anticorrelated, and this is independent of transport, retrieval bias and
 sampling composition.** It is a property of when the instrument returned usable
-soundings over this box, nothing more. Yield is strongly seasonal here and runs
+soundings over this box, nothing more.
+
+**Superseded on 14 September 2026, and the superseding is the point rather than a
+tidy-up.** The sentence above rests on an assumption it does not state: that
+emissions outside the transplanting-to-maturity window are small, so soundings
+falling there are dilution. [`notes/grounding-rice.md`](grounding-rice.md)'s
+second literature block breaks that assumption. Two measurement campaigns in a
+Mediterranean rice system put **two thirds to seventy percent of cumulative paddy
+CH4 in the *fallow* season**, in a bimodal pattern whose October peak is four
+times its August one (Martínez-Eixarch et al., 2018, doi:10.1371/journal.pone.0198081;
+2021, doi:10.1007/s11104-020-04809-5). Those are not Chinese figures and the
+water management differs — the Ebre Delta re-inundates after harvest to decompose
+straw — so they do not establish a Chinese fallow fraction. **They do disqualify
+the inference.** A sounding distribution weighted towards October is not
+self-evidently sampling a quiet season; it may be sampling the larger of two
+maxima.
+
+The reasoning above stands as written and is left standing: the observation
+distribution *is* uneven, it *is* a property of the instrument rather than of the
+atmosphere, and 82.4 percent of soundings *do* fall outside the middle-rice
+window. What does not stand is reading that as anticorrelation with emission.
+**Whether the sampling is badly placed or well placed for rice is now an open
+question rather than a settled one**, and settling it needs a Chinese
+fallow-season emission profile that no pass has found. Yield is strongly seasonal here and runs
 against granule availability, which `data/processed/README.md` already records
 for the coverage statistics; the consequence for the rice question had not been
 drawn.
@@ -194,6 +217,16 @@ estimate of the region's annual XCH4 cycle, for the reason
 `data/processed/README.md` gives: there are no soundings before day 120, so the
 fit extrapolates across a third of the year. The phase sits mid-window and is
 the part of it that the sampling supports.
+
+**And the fitted phase now reads differently too.** Day of year 245.8 is
+2 September, which sits **between** the Ebre study's August and October peaks. A
+record that treats the out-of-window soundings as dilution reads that as a peak
+in the wrong place. A record that carries the fallow-season finding can read it
+as the trough between two maxima, or as the leading edge of the larger one. Those
+are different claims about the same number and the second is the one consistent
+with the literature. Nothing in this repository distinguishes them, because the
+accumulator holds no monthly resolution — which is the same limitation the next
+paragraph describes, now with a second reason to want it lifted.
 
 **This is not fixable from the existing checkpoint, and an earlier version of
 this note said it was.** The accumulator holds one running sum and one count

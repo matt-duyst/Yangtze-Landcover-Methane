@@ -530,6 +530,321 @@ mapped hectare of paddy and none of which a fraction represents. That makes the
 than a defect of its method**, which is a considerably stronger thing for a
 paper to be able to say than that the association was not detected.
 
+## Aquaculture, which is an unrepresented source in the same cells as paddy
+
+Added 14 September 2026 with the second block of rice literature. **This is the
+largest single omission any grounding pass has found**, and it is a source in the
+same flooded landscape as the predictor, not beside it.
+
+**The magnitude is national and the inventories do not carry it.** An inventory
+of five freshwater aquaculture systems in China — which "accounted for more than
+half of global freshwater aquaculture production during 2000-2020" — puts total
+emissions at "**2.5 (0.6-4.2) Tg CH4 yr-1**" with "**75% coming from ponds and
+paddy fields**", and reports that "CH4 and N2O effluxes from freshwater
+aquaculture were **5 and 2 times higher** than the average from other inland
+water bodies". Its framing sentence is the one that matters: aquaculture's
+"contribution remains highly uncertain because **the source has been neglected in
+global and national greenhouse gas inventories**". And the comparison it draws is
+stark — "aquaculture accounts for half of the national inland water emissions,
+and outweighs the land soil methane sink" (Zhang, L., Wang, X., Huang, L.,
+Wang, C., Gao, Y., Peng, S., Canadell, J. G., and Piao, S., 2024, *Communications
+Earth & Environment* 5, doi:10.1038/s43247-024-01699-8).
+
+A second, independent estimate narrows the pond component. From "a database of
+**55 field observations**", "the total CH4 emission from aquaculture ponds is
+**1.60 ± 0.62 Tg CH4 yr–1**, with an average growth rate of ~0.03 Tg CH4 yr–2
+during the period 2008–2019", and aquaculture species have "a lower (63%)
+emission intensity ... per unit of animal proteins" than major livestock (Dong,
+B., Xi, Y., Cui, Y., and Peng, S., 2023, *Environmental Science & Technology* 57,
+1576–1583, doi:10.1021/acs.est.2c05218). **Two estimates by different methods
+bracket the pond source at between 1.6 and 2.5 Tg per year for China**, against
+the 13.7 Tg the national prior assembled in
+[`notes/grounding-yrd.md`](grounding-yrd.md) assigns to rice paddies. An
+unrepresented source at an eighth of the rice sector is not a rounding error.
+
+**And this region is where it concentrates.** The Yangtze River Delta "accounts
+for 26% of China's total aquaculture area", with both pond and lake aquaculture
+practised (Zhao, J., Zhang, M., Pu, Y., Jia, L., Xiao, W., Zhang, Z., Ge, P.,
+Shi, J., and Xiao, Q., 2025, *Dynamic and high methane emission flux in pond and
+lake aquaculture*, *Journal of Hydrology* 653, 132765,
+doi:10.1016/j.jhydrol.2025.132765). The same group measured "CH4 flux
+continuously for four years with eddy covariance (EC) in an aquaculture pond
+complex in the Yangtze River Delta, China", finding "the daily CH4 flux ranged
+from **0.1 to 16.7 μg m−2 s−1**, with an average value of **4.10 ± 3.08 µg m−2
+s−1**", water temperature the primary driver across half-hourly, daily and
+monthly scales, and ebullition "the main transport way accounting for 70% ± 4%
+of the total CH4 flux" (Zhao, J., Zhang, M., Xiao, W., Jia, L., Zhang, X.,
+Wang, J., Zhang, Z., Xie, Y., Pu, Y., Liu, S., Feng, Z., and Lee, X., 2021,
+*Agricultural and Forest Meteorology* 308–309, 108600,
+doi:10.1016/j.agrformet.2021.108600). **Four years of in-domain flux tower
+measurement exists for a source this project's predictor set does not contain.**
+
+**Pond-scale measurements in Jiangsu put the per-area flux above anything in the
+rice literature.** Across ponds in Jiangsu Province with different fish and
+management, "the highest CH4 and N2O fluxes were found in the Crucian carp
+(Carassius auratus) pond with up to **16,512 ± 3015 µmol/(m2·h)**"; "CH4 was the
+primary contributor to the global warming potential in traditional earthen
+ponds, accounting for an average contribution rate of **87.7**" percent; and "the
+GHG emission intensity per unit of fish production in traditional earthen ponds
+was **197 times higher** than that in-pond raceway systems", with sediment–water
+interface diffusion in bass and carp ponds more than twenty times the
+water–air interface flux (Li, Y., Wang, H., Zeng, Q., Jeppesen, E., Gu, X., and
+Yan, J., 2026, *Journal of Environmental Sciences* 160, 732–744,
+doi:10.1016/j.jes.2025.03.042). Jiangsu is one of this project's four provinces.
+
+**Two consequences follow and they are different in kind.**
+
+*An unrepresented source.* EDGAR carries no aquaculture sector. An inversion
+prior over this region is therefore missing a source that the national inventory
+literature puts at 1.6 to 2.5 Tg per year, concentrated in the region holding a
+quarter of China's aquaculture area. **An inversion cannot leave an enhancement
+unexplained**: it distributes the correction across the sectors the prior does
+carry, in proportion to their prior spatial distribution. Since aquaculture ponds
+sit in the same flooded lowland as paddy, the sector most likely to absorb the
+correction is rice. That is a mechanism by which a rice prior could be revised
+*upward* for reasons that have nothing to do with rice — and it is the exact
+mirror of the Pearl River Estuary correction recorded above, where rice absorbed
+a downward revision because the prior put paddy where the satellite saw none.
+
+*A predictor confound.* Rice and aquaculture are both flooded land, spectrally
+similar and spatially interleaved. **So a rice-fraction signal in this project's
+regression could be an aquaculture signal**, and a rice classification could be
+counting ponds as paddy. That is not a confound the association analysis can
+control for, because the two are not separately measured here at all.
+
+### The classification confound is a documented hard problem
+
+The confusion is named in the aquaculture-mapping literature rather than
+inferred. Spectral confusion with flooded paddy fields is identified as a
+principal challenge in large-scale aquaculture extraction; machine-learning
+approaches at national scale misclassify ponds against salt fields and rice
+paddies, which share both morphology and spectral character; and water bodies of
+similar morphology — saltworks, rice fields, small reservoirs — produce omission
+and commission errors where land use is complex. The documented workarounds are
+seasonal screening, shape and geometry features, water-quality parameters, and
+optical–SAR fusion. **Individual verbatim sentences could not be pinned to single
+primary sources and none is quoted**; what is recorded is the direction, which
+recurs across the product literature, and the workarounds, which are the same
+four in every account.
+
+**Whether the committed NESDC rice layer excludes ponds is unestablished.** It is
+built by time-weighted dynamic time warping on Sentinel-1 and Sentinel-2, so it
+has the temporal information the workarounds rely on in principle: a paddy is
+flooded, transplanted, green and drained on a schedule, and a pond is flooded all
+year. Whether that information was used to exclude ponds is a question about the
+product's method, not about its output, and it has not been asked of it.
+
+**And the dataset that would settle the confound exists and covers 2018.**
+China_AP is the first 10 m annual aquaculture pond dataset for China, 2016 to
+2023, derived from 119,882 Sentinel-1 and 579,436 Sentinel-2 scenes with
+individual-pond extraction accuracy above 90 percent, and its headline finding is
+that inland systems now surpass coastal ones (Sun, Z., Luo, J., Cao, Z.,
+Shen, M., Qi, T., Gu, X., Yuan, W., and Duan, H., 2025, *International Journal of
+Applied Earth Observation and Geoinformation* 145, 104958,
+doi:10.1016/j.jag.2025.104958). Overlaying it on the committed rice layer would
+measure the overlap directly, per cell, for the analysis year. That is queued in
+[`notes/paper-target.md`](paper-target.md) and it is the cheapest test of the
+largest omission this record contains.
+
+## Straw return, which fits a trend the region record cannot explain
+
+**The effect size is large, old and measured.** In a four-year experiment, "a
+5-fold increase in total CH4 emissions over the rice growing season was observed
+in plots in which rice straw had been incorporated each fall for 4 yr", with
+"total cumulative CH4 flux, 1 May–1 October 1997 ... **8.87 g C m−2** in
+incorporated, winter flooded plots; 9.52 g C m−2 in incorporated, non-winter
+flooded plots; **1.63 g C m−2** in burned, winter flooded plots; and 2.25 g C m−2
+in burned, non-winter flooded plots" (Bossio, D. A., Horwath, W. R.,
+Mutters, R. G., and van Kessel, C., 1999, *Soil Biology and Biochemistry* 31,
+1313–1322, doi:10.1016/S0038-0717(99)00050-4). The site is in California, which
+is a limit on transfer.
+
+Two details from the same paper matter beyond the headline. "Rice yields in this
+study have not been affected by straw incorporation" — **so a five-fold emission
+change carries no yield signature**, and nothing in an agricultural statistic
+would record it. And "methane emissions peaked between 22.00 and 23.00 h on two
+different diurnal sampling dates", which is a *nocturnal* peak and belongs beside
+the diurnal section above rather than contradicting it: the diurnal shape is
+itself management-dependent.
+
+**The policy change is dated and national.** China banned illicit crop residue
+burning in 2008, with straw return becoming the standard alternative, though
+satellite detection still identified burning sites during harvest seasons in the
+years after. **The specific count of over 20,000 sites between 2013 and 2017
+could not be verified to a primary source and is not written.**
+
+### The hypothesis, stated as a hypothesis
+
+[`notes/grounding-yrd.md`](grounding-yrd.md) records a Yangtze River Delta
+synthesis finding per-hectare rice emissions 1.52 times higher in 2010–2018 than
+in 2000–2009, and stating explicitly that air temperature and water-saving
+practices were not likely the cause. That record also notes the figures
+themselves remain unverified to an accessible source. **A nationwide shift from
+residue burning to straw incorporation, beginning in 2008, with a measured
+five-fold effect on growing-season emissions and no effect on yield, sits exactly
+at that break and in the right direction.**
+
+That is recorded as the best-fitting candidate any pass has found for that trend
+and **not as an established cause**. What would test it is a straw-management
+covariate, which does not exist as a gridded product anywhere in
+[`notes/dataset-leads.md`](dataset-leads.md); what would weaken it is the
+acclimation finding below.
+
+### The IPCC treatment, and the way it is quantifiably wrong
+
+The correction factor an inventory applies for organic amendments is the
+mechanism by which a straw-management change would reach an emissions estimate.
+**The default figures carried into this pass — a seasonally integrated 20 g per
+square metre for irrigated continuously flooded rice without organic amendments,
+and a scaling factor of 2 with a range of 2 to 5 for soils with organic
+amendments — could not be verified to a primary source and are not written.**
+What is verified is that the IPCC methodology's treatment of long-term straw
+application is too high, and by how much.
+
+"On average, the IPCC Tier 1 methodology estimated a 193% increase in CH4
+emissions due to long-term straw incorporation for the studies in our dataset.
+Yet, long-term straw incorporation stimulated the CH4 emissions by only 101%" —
+an effect the paper's abstract states as **48 percent lower than IPCC estimates**
+— and the mechanism is biological acclimation: "long-term straw incorporation
+increased soil methanotrophic abundance and rice root size, suggesting an
+increase in CH4 oxidation rates through improved O2 transport into the
+rhizosphere" (Jiang, Y., Qian, H., Huang, S., Zhang, X., Wang, L., Zhang, L.,
+Shen, M., Xiao, X., Chen, F., Zhang, H., and six others, 2019, *Science Advances*
+5, doi:10.1126/sciadv.aau9038).
+
+**Read the two findings together, because they pull in opposite directions and
+both are needed.** Bossio et al. measure a five-fold increase after four years of
+incorporation; Jiang et al. measure the effect decaying with duration, to about
+half what the IPCC factor implies. So a 2008 policy shift would produce a step
+increase that then partly subsides — which is a *shape*, not a level, and a
+shape that a 2000-against-2018 comparison would sample at two different points
+of. **That is a better-specified hypothesis than a monotonic step**, and it is
+why the item belongs in a queue rather than in a conclusion.
+
+## The fallow season, which corrects a framing in the region record
+
+`notes/grounding-yrd.md` records that 82.4 percent of this composite's soundings
+fall outside the transplanting-to-maturity window, and frames that as dilution by
+months in which paddy does not emit. **That framing does not survive this
+block's literature and the region record is corrected accordingly.**
+
+In a Mediterranean rice system, "estimated cumulative CH4 emissions from May to
+December were **314.1 kg CH4 ha−1**", "of which *ca.* **70%** were emitted during
+the fallow season", and "the temporal pattern of the monthly mean emission rates
+followed a **bimodal** distribution pattern with the first peak in **August**
+(5.0 ± 0.7 mg C-CH4 m−2 h−1) and the second one in **October** (20.2 ± 4.2 mg
+C-CH4 m−2 h−1)" (Martínez-Eixarch, M., Alcaraz, C., Viñas, M., Noguerol, J.,
+Aranda, X., Prenafeta-Boldú, F. X., Saldaña-De la Vega, J. A., Català, M. del M.,
+and Ibáñez, C., 2018, *PLOS ONE* 13, e0198081,
+doi:10.1371/journal.pone.0198081). **The October peak is four times the August
+one.** The larger of the two maxima falls after the crop is harvested.
+
+The same group's companion study finds the controls differ by season: "two
+thirds of the CH4 is emitted in the fallow season. Edaphic factors exert more
+influence during the growing season whereas agronomic factors have a higher
+impact in the fallow" (Martínez-Eixarch, M., Alcaraz, C., Viñas, M.,
+Noguerol, J., Aranda, X., Prenafeta-Boldú, F.-X., Català-Forner, M.,
+Fennessy, M. S., and Ibáñez, C., 2021, *Plant and Soil* 460, 211–227,
+doi:10.1007/s11104-020-04809-5). Two independent measurement campaigns by the
+same group put the fallow share at two thirds and at seventy percent.
+**The directional detail carried into this pass — water level positively related
+to emissions in the growing season and negatively in the fallow, with straw input
+and soil temperature positive in the fallow — is stated in the abstract only for
+straw and nitrogen rates and is not written as a set of signs.**
+
+**This is Mediterranean, not Chinese**, and the water management differs: the
+Ebre Delta re-inundates after harvest specifically to decompose straw. So it
+disqualifies the region record's framing without establishing a Chinese
+fallow-season fraction. The Chinese analogue exists and is smaller in extent:
+winter-flooded paddy, where soil is kept flooded through the fallow to conserve
+water, is described in the Chinese literature as a practice typical of
+mountainous areas without irrigation and as accounting for roughly a tenth of
+China's paddy area. **That share could not be pinned to a primary source in this
+pass and the figure is not written**; the practice's existence and its
+characterisation as non-irrigated upland are what the record carries.
+
+**And the connection to this project's own artefact is the reason the correction
+matters rather than merely being a tidy-up.** The fitted seasonal peak in this
+composite's XCH4 field is at day of year 245.8, which is 2 September — **between
+the Ebre study's August and October peaks**. A record that treats the
+out-of-window soundings as dilution reads that peak as mistimed. A record that
+carries the fallow-season finding reads it as possibly the trough between two
+maxima, or the leading edge of the larger one. Those are different claims about
+the same number, and only the second is consistent with the literature. The
+correction is made in the region record with the repository's convention for
+superseded statements: the earlier reasoning is left standing and marked.
+
+## Paddy as wetland, which undercuts the attribution itself
+
+The sharpest finding in this block is not about extent or management but about
+what fraction of paddy methane is anthropogenic at all.
+
+Synthesising empirical work, meta-analysis and model simulation for China,
+"**paddy CH₄ emissions were found to be approximately 72.2% to 123.6% of those
+from their adjacent natural wetlands**", so converting low-lying land and marsh
+to rice does not necessarily increase emissions; "estimates based on machine
+learning models suggest that **natural emissions constitute more than 36% of
+total paddy CH₄ fluxes**"; and yet "in compiling paddy CH₄ emission inventories,
+**the entirety of CH₄ emitted from rice paddies is currently accounted for as
+anthropogenic contribution from rice cultivation**" (Zhang, W., Yan, S.,
+Shang, Z., Tang, Z., Wu, L., Li, J., Chen, H., Deng, A., Zhang, J., Zhang, X.,
+Zheng, C., and Song, Z., 2026, *Scientia Agricultura Sinica* 59, 824–833,
+doi:10.3864/j.issn.0578-1752.2026.04.009). Two of its authors are co-authors of
+the rice review this record already relies on.
+
+**State the consequence for this project's framing precisely, because it is easy
+to overstate.** It does not mean rice extent predicts less than a third of paddy
+methane. It means that a third or more of what an inventory attributes to rice
+cultivation would be emitted by the same land under no cultivation at all — so
+the *anthropogenic increment* attributable to the rice layer is smaller than the
+layer's total, and the comparison an inventory makes between paddy and
+non-paddy land is not a comparison between a source and a non-source.
+
+## The northward shift, which reframes why rice declined here
+
+The 2023 thesis frames rice loss in this region as urban encroachment. The
+national picture is a relocation, and the urban term in it has been measured and
+is small.
+
+**The relocation is large and well documented.** Over 1980 to 2022 China's rice
+sown area moved substantially northward, with the northeast's share of national
+sown area rising from about 2.6 to about 17 percent, and the decreases
+concentrated in the rapidly urbanising south — Guangdong, Fujian and Zhejiang
+among them. **The specific provincial rates carried into this pass — Guangdong
+losing half its rice area between 1979 and 2005 at about 85,000 hectares a year
+against Heilongjiang gaining 64,000 — recur across the literature but could not
+be traced to a peer-reviewed primary source in this pass**, appearing in an
+institute magazine article; they are not written as figures. The named drivers
+are farmland occupation during urbanisation and industrialisation, the
+comparative advantage of alternative crops, and the rising opportunity cost of
+agricultural labour.
+
+**The urbanisation elasticity is the part that bears directly on the thesis, and
+it could not be verified.** The claim that each one percent increase in
+urbanisation decreased rice production by almost 0.05 percent, partly through
+paddy being converted to suburban vegetable production, is not written. The
+qualitative point that alternative land uses rather than impervious expansion
+carry much of the decline **is** supported by this record's existing entry on
+paddy-to-vegetable conversion in `notes/grounding-yrd.md`.
+
+**And the Getis-Ord finding could not be verified either.** That Zhejiang is a
+hotspot of the increase in single-season proportion from 2000 to 2020 by
+Getis-Ord analysis — which would be notable because Getis-Ord is the statistic
+the thesis's own third objective used — is not written. What this project's own
+grid says independently is consistent with the direction: Zhejiang carries the
+highest double-cropped share of the four provinces at
+16.27<!--#rice.double_share_zhejiang_percent--> percent, so it is the province
+with the most double cropping left to lose.
+
+**State the consequence for the thesis's framing plainly.** Rice decline in the
+Yangtze River Delta is one region's share of a national relocation driven by
+labour cost, crop choice and policy as much as by built-up expansion. An
+impervious-against-rice framing attributes to urban growth a change whose
+principal named drivers are economic and which shows up nationally as rice moving
+to Heilongjiang. That does not make the thesis's correlation spurious; it means
+the causal story the thesis tells around it is one term of several, and not the
+largest.
+
 ## What the rice grounding establishes
 
 **Extent is the wrong variable and the field says so.** A review of rice
@@ -580,6 +895,54 @@ The nocturnal-to-daily R² of 0.8419 is the mitigating fact: a fixed-hour
 overpass samples a cycle whose integral is largely predictable from any part of
 it, which makes it a systematic offset rather than noise.
 
+### What the second block adds, recorded separately because it changes the layer
+
+**There is an unrepresented flooded methane source in the same cells as the
+predictor.** Freshwater aquaculture is 1.6 to 2.5 Tg per year in China by two
+independent estimates, against 13.7 Tg for rice paddies in a national prior, and
+it "has been neglected in global and national greenhouse gas inventories". This
+region holds 26 percent of China's aquaculture area, four years of in-domain flux
+tower measurement exist for it, and per-area pond fluxes measured in Jiangsu
+exceed anything in the rice literature. **An inversion cannot leave that
+enhancement unexplained and the sector most likely to absorb it is rice**, since
+ponds and paddy share the same flooded lowland. The confusion runs the other way
+too: the aquaculture-mapping literature names spectral confusion with flooded
+paddy as a principal challenge, and whether the committed rice layer excludes
+ponds has never been asked. China_AP would settle it at 10 m for 2018.
+
+**A candidate has appeared for a trend the region record could not explain.**
+Four years of autumn straw incorporation produced a five-fold increase in
+growing-season CH4 with no effect on yield; China banned residue burning in 2008;
+and the region record holds a 1.52-fold rise in per-hectare emissions between
+2000–2009 and 2010–2018 that its own source says temperature and water saving do
+not explain. **This is recorded as the best-fitting candidate found in any pass
+and not as a cause**, and the acclimation finding — long-term incorporation
+raising emissions about half as much as the IPCC factor implies, through
+increased methanotroph abundance and root oxygen transport — makes the expected
+signature a step that partly subsides rather than a monotonic shift.
+
+**The out-of-window soundings are not necessarily dilution.** Two campaigns in a
+Mediterranean system put two thirds to seventy percent of annual paddy CH4 in the
+*fallow* season, with a bimodal pattern whose October peak is four times its
+August one. This composite's fitted seasonal maximum at day of year 245.8 sits
+between those two peaks. The region record's framing is corrected; the Chinese
+fallow fraction remains unestablished, and the Chinese analogue — winter-flooded
+paddy — is characterised as a non-irrigated upland practice rather than a
+lowland one.
+
+**A third or more of paddy methane may not be anthropogenic at all.** Paddy
+emissions run 72.2 to 123.6 percent of adjacent natural wetlands, machine
+learning puts the natural share above 36 percent, and inventories attribute the
+whole of it to rice cultivation. So the anthropogenic increment the rice layer
+could ever explain is smaller than the layer's own total.
+
+**And the region's rice decline is one term of a national relocation.** Rice
+moved north between 1980 and 2022, the northeast's share of sown area rising
+from about 2.6 to about 17 percent, with the named drivers economic — farmland
+occupation, crop comparative advantage, labour opportunity cost. An
+impervious-against-rice framing assigns to built expansion a change whose
+principal drivers are not built expansion.
+
 ## What could not be verified
 
 **Zhu and Li (2024) still does not close, and this pass tried hardest.** The
@@ -627,6 +990,66 @@ paper is Jiang et al. **2018**, in *Remote Sensing* volume 11, despite the
 **greenhouse gas** reductions attached to **cultivar selection, non-continuous
 flooding and straw removal** specifically, not the practices they had been
 attributed to.
+
+### The second block's own failures, 14 September 2026
+
+Eight figures did not survive and are not written.
+
+**Aquaculture's share of China's terrestrial methane**, carried as 15 percent,
+is not in the paper it was attributed to. That paper's abstract gives a different
+and verified comparison — half of national inland water emissions, and more than
+the land soil methane sink — and those are written instead. The 15 percent could
+not be found in any accessible part of the source.
+
+**China_AP's 2023 inventory total of 19,919.52 square kilometres and its 55.56
+percent inland share** are not written. The dataset's resolution, years, scene
+counts and above-90-percent individual-pond accuracy are verified, and the
+paper's own title states the inland-surpassing-coastal direction, so the
+direction is written and the figures are not.
+
+**The satellite count of over 20,000 residue-burning sites between 2013 and
+2017** could not be traced to a source. The 2008 ban and the shift to straw
+return are written; the count is not.
+
+**The IPCC defaults for rice** — a seasonally integrated 20 g per square metre
+for irrigated continuously flooded rice without organic amendments, and a
+correction factor of 2 with a range of 2 to 5 for organic amendments — could not
+be verified. They are not in the acclimation paper that quantifies the IPCC
+method's error, and no accessible primary source was found. The quantified error
+itself is verified and written.
+
+**The fallow-season driver signs** — water level positive in the growing season
+and negative in the fallow, straw incorporation and soil temperature positive in
+the fallow — are stated in the companion paper's abstract only for straw and
+nitrogen rates. The seasonal split of influence, edaphic against agronomic, is
+verified and written; the signs are not.
+
+**The Chinese winter-flooded share of 10 percent of paddy area** could not be
+pinned to a primary source. The practice and its characterisation as typical of
+non-irrigated mountainous areas are recorded without the figure.
+
+**The provincial rates of the northward shift** — Guangdong losing half its rice
+area at about 85,000 hectares a year between 1979 and 2005 against Heilongjiang
+gaining 64,000, and four northern provinces going from 2.7 to 11.5 percent of
+national rice area over the same period — recur across secondary literature and
+trace to an institute magazine article rather than a peer-reviewed source. The
+1980-to-2022 shift and the northeast's share rising from about 2.6 to about 17
+percent are written; the provincial rates are not. **The two framings are also
+not the same measurement**, spanning different periods and different groupings of
+provinces, which is part of why neither could be substituted for the other.
+
+**The urbanisation elasticity** — each one percent of urbanisation reducing rice
+production by almost 0.05 percent — and **the Getis-Ord hotspot finding for
+Zhejiang** could not be verified. Neither is written. The qualitative claim each
+would have supported is separately supported: paddy-to-vegetable conversion is
+already in the region record, and this project's own grid independently makes
+Zhejiang the province with the most double cropping to lose.
+
+**One verbatim set was deliberately not quoted.** The aquaculture–paddy
+classification confusion is real and recurs in every mapping paper read, but the
+specific sentences carried into this pass belong to several different papers and
+none was read in its own source. The direction and the four workarounds are
+written; no sentence is quoted.
 
 **Two of this record's own computed figures corrected numbers produced earlier in
 the same pass.** Provincial double-cropped shares were first computed from the
