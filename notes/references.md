@@ -2,8 +2,10 @@
 
 Every source this repository cites, verified against the DOI registries on
 3 September 2026, extended on 9 September 2026 when the figure set gained its
-first diagrams, and again on 10 September 2026 when nineteen literature
-searches over the study region were recorded. The register exists because
+first diagrams, again on 10 September 2026 when nineteen literature
+searches over the study region were recorded, and again on 14 September 2026
+when the rice layer was given a grounding record and all three layers were given
+review-level anchors. The register exists because
 citations here were scattered
 across `config/sources.yml`, `data/manifest.json`, `notes/decisions.md`,
 `ERRATA.md` and three READMEs, in four different formats, so nobody could say
@@ -20,7 +22,7 @@ instance was met on 10 September 2026 and not acted on: the ChinaRiceCalendar
 deposit's author field gives two of eleven authors with their given and family
 names run together, and the paper's citation is carried instead.
 
-`notes/references.bib` carries one hundred thirty-nine entries as BibTeX. It is
+`notes/references.bib` carries one hundred sixty-one entries as BibTeX. It is
 **generated**, not typed: each entry comes from `https://doi.org` under content
 negotiation for `application/x-bibtex`, so the two files cannot drift and no
 transcription step exists between the registry and the repository. Regenerate it
@@ -46,9 +48,12 @@ discusses a work the thesis cites, the work appears here and its role says so.
 ## What could not be verified
 
 Nothing in the register failed to verify **as a work**. All one hundred
-thirty-nine cited DOIs resolved: one hundred twenty-seven through Crossref and
-twelve through DataCite, which is the registry that carries dataset and preprint DOIs
-and the reason a Crossref-only lookup returns "not found" for them.
+sixty-one cited DOIs resolved: one hundred forty-seven through Crossref and
+fourteen through DataCite, which is the registry that carries dataset and preprint DOIs
+and the reason a Crossref-only lookup returns "not found" for them. **The
+register now holds one preprint**, marked as one where it is cited; Copernicus
+registers its discussion papers with Crossref, so it is not among the DataCite
+fourteen.
 
 **Five further DOIs appear in this register and are not citations.** They are
 named to warn against them, and `scripts/build_references_bib.py` holds them in
@@ -1484,15 +1489,44 @@ inversion can constrain 568 pieces of independent information in the global
 spatial distribution of methane emissions."
 Cited in `notes/grounding-methods.md`.
 
-**Zhong, and others (2026).** The added value of new ground-based observations in
-improving China's methane emission quantification. *Atmospheric Measurement
-Techniques* 19, 4759–4779.
+**Zhong, H., Shen, L., Wan, F., Qu, M., and Qin, K. (2026).** The added value of
+new ground-based observations in improving China's methane emission
+quantification. *Atmospheric Measurement Techniques* 19, 4759–4778.
 `10.5194/amt-19-4759-2026` — peer-reviewed paper; a finding relied on, and the
 most sobering figure in the methods record. TROPOMI alone constrains 113
 independent pieces of information over China; adding 17 ground-based sites —
 every available in-situ and column station in East Asia — raises that to 134, an
 increase of 19 percent.
-Cited in `notes/grounding-methods.md`.
+
+**Two defects in this entry were found on 14 September 2026 and are fixed above.**
+The author list read "Zhong, and others", which is not a citation, and the page
+range read 4759–4779 where the registry gives 4759–4778. The paper had been
+carried through the methods pass on a search-phrasing citation rather than a
+content-negotiated one, which is the failure the register's preamble now warns
+against, and it is the first instance found in an entry already committed rather
+than in one being drafted.
+
+**And the same paper supplies the region grounding's synthesis anchor**, which is
+why it is extended here rather than entered twice. It records that SWIR sensors
+"suffer from frequent data gaps due to cloud cover (particularly in southern
+China during the monsoon season)" and that "sectoral emission estimates for rice
+paddies, lakes, and wetlands – predominantly located in southern China – exhibit
+large posterior uncertainties (53 %–69 %), coinciding with low satellite data
+availability driven by monsoon-related cloudiness" — the latter attributed to the
+authors' own earlier paper, which is not registered because it was not read. It
+supplies China's share of the global budget, "nearly 14 % (53 [34–66] Tg a⁻¹ out
+of 369 [350–391] Tg a⁻¹)", attributed to the Global Methane Budget and likewise
+not registered; the bottom-up disagreement, "at least 30 % ... (e.g., 63 Tg a⁻¹
+in EDGARv6 ... versus 48 Tg a⁻¹ from Peking University CH4 version 2
+inventory)"; and a national sectoral prior with "coal mining 21.0 Tg a⁻¹ ... rice
+paddies 13.7 Tg a⁻¹". **Two alignments with this repository are worth naming**:
+the capability statement it reaches for the whole country, that TROPOMI "can
+effectively constrain China's total methane emissions" while "estimating
+individual sources remains challenging", is this project's own Tier 0 finding at
+national scale; and it reads the blended TROPOMI+GOSAT product, which is the
+composite's own third band.
+Cited in `notes/grounding-methods.md`, `notes/grounding-yrd.md`,
+`notes/dataset-leads.md`.
 
 **Varon, D. J., and others (2023).** Continuous weekly monitoring of methane
 emissions from the Permian Basin by inversion of TROPOMI satellite observations.
@@ -1869,6 +1903,357 @@ two years of continuous in-situ measurement from the 632 m Shanghai Tower inside
 the lattice, by cavity ring-down spectrometer — of CO2 and CO, not methane. It
 is recorded because the platform exists in the right place and a methane channel
 on it would be the in-domain urban observation this project lacks.
+Cited in `notes/dataset-leads.md`.
+
+---
+
+## The rice grounding and the three synthesis anchors, added 14 September 2026
+
+Eight rounds of literature on rice and three review-level searches, one for each
+layer. **This group is almost entirely subject literature**, which is what the
+pass was for: of twenty-three new entries, six describe datasets, one describes
+a body of methods, and sixteen are findings relied on. That continues the move
+back toward subject literature that the coal-and-urban pass began.
+
+**One entry is a preprint and is marked as one.** Long and others (2026) is an
+EGUsphere discussion paper, not peer-reviewed, and it is cited for a figure it
+summarises from three other studies rather than for its own result. The register
+has not held a preprint before; this one is kept because the figure it supplies —
+urban inventories low by a factor of two to three — could not be sourced anywhere
+peer-reviewed and because the preprint's own three-city result usefully qualifies
+it.
+
+**Two deposits carry mangled author metadata and it comes through unaltered.**
+The APRA500 Zenodo record gives four of eight authors as single braced strings
+with given and family names run together, and the figshare Northeastern China
+record lower-cases three given names and mis-cases a fourth. Both are what the
+registry returns and both are carried as returned, which is the same treatment
+`scripts/build_references_bib.py` documents for the "Da Pan" string and the
+authorless AR6 chapter. The ChinaRiceCalendar precedent applies: where a deposit
+and a paper disagree about authorship, the paper's citation is the one used in
+prose.
+
+**Two figures attributed to registered works are one citation step from their
+primary sources**, and the entries say so. Zhong and others (2026) attribute
+China's share of the global budget to the Global Methane Budget and the 53-to-69
+percent posterior uncertainties to their own earlier paper; neither primary source
+is registered, because neither was read.
+
+### The rice products
+
+**Han, J., Zhang, Z., Luo, Y., Cao, J., Zhang, L., Cheng, F., Zhuang, H.,
+Zhang, J., and Tao, F. (2021).** NESEA-Rice10: high-resolution annual paddy rice
+maps for Northeast and Southeast Asia from 2017 to 2019. *Earth System Science
+Data* 13, 5969–5986.
+`10.5194/essd-13-5969-2021` — peer-reviewed paper; **describes a dataset not
+used, and the entry exists to record why.** 10 m, annual, 2017 to 2019, which
+would have made it the best-resolved product covering this project's analysis
+year. Its "Northeast Asia" is Liaoning, Jilin and Heilongjiang with Korea and
+Japan, and its "Southeast Asia" is Indonesia, Thailand, Vietnam, Myanmar, the
+Philippines and Malaysia. **The Yangtze River Delta is in neither.** Reported
+against subnational statistics at R² 0.80 to 0.97.
+Cited in `notes/grounding-rice.md`, `notes/dataset-leads.md`.
+
+**Han, J., Zhang, Z., Luo, Y., Cao, J., Zhang, L., Cheng, F., Zhuang, H., and
+Zhang, J. (2021).** APRA500: a 500 m annual paddy rice dataset for monsoon Asia
+using multisource remote sensing data. Zenodo.
+`10.5281/zenodo.5555721` — the deposit, fetched. CC-BY-4.0, twenty-eight files:
+one GeoTIFF archive per year from 2000 to 2020 plus three-year composites, about
+1.7 MB each. The API returns the file listing and a request for
+`paddyRice2018.zip` returns HTTP 200 from this machine, so the status in
+`notes/dataset-leads.md` is **verified accessible**. It is the deposit for Han
+and others (2022), already in the register, and it is the only rice product of
+any kind that covers all three of the thesis's years.
+Cited in `notes/grounding-rice.md`, `notes/dataset-leads.md`.
+
+**Wei, J., Cui, Y., Luo, W., and Luo, Y. (2022).** Mapping Paddy Rice
+Distribution and Cropping Intensity in China from 2014 to 2019 with Landsat
+Images, Effective Flood Signals, and Google Earth Engine. *Remote Sensing* 14,
+759.
+`10.3390/rs14030759` — peer-reviewed paper; **describes a dataset not used, and
+in domain.** The EFSP method: single and double paddy rice and cropping intensity
+for China at 30 m, 2014 to 2019, from more than 684,000 Landsat scenes on Earth
+Engine. Its accuracies are "producer (user) accuracy and kappa coefficients
+ranging from 0.92 to 0.96 (0.76–0.87) and 0.67–0.80, respectively", with
+determination coefficients against statistics "higher than 0.88". **Producer's
+accuracy exceeding user's by that margin is over-detection**, which is the
+damaging direction for a per-cell fraction.
+Cited in `notes/grounding-rice.md`, `notes/dataset-leads.md`.
+
+**Fang, H., Liang, S., Chen, Y., Ma, H., Li, W., He, T., Tian, F., and
+Zhang, F. (2024).** A comprehensive review of rice mapping from satellite data:
+Algorithms, product characteristics and consistency assessment. *Science of
+Remote Sensing* 10, 100172.
+`10.1016/j.srs.2024.100172` — peer-reviewed review; **describes a body of methods
+and twenty-five products, and supplies three findings relied on.** It assesses
+consistency among 3 global and 22 regional products for China, Heilongjiang and
+Vietnam, and concludes that "different products share low consistency in
+fragmented rice fields", that subtropical and tropical cloud and complex cropping
+patterns challenge accurate mapping, that "currently it still lacks paddy rice
+maps with both large spatial coverage, high spatial resolution, and long time
+series", and that "deficiency of ground-truth samples impedes product development
+and validation". The last of those is the conclusion this repository reached
+independently about its own accuracy assessment.
+Cited in `notes/grounding-rice.md`, `notes/dataset-leads.md`.
+
+**Hou, D., Chen, J., Feng, J., Ji, C., Dong, J., Du, G., and Yang, L. (2025).**
+A 30-m annual paddy rice dataset in Northeastern China during period 2000-2023.
+figshare.
+`10.6084/m9.figshare.28407710` — the deposit, not fetched; **describes a dataset
+not used, and out of domain.** Registered so that the reason is on record: the
+title names *Northeastern* China. Its deposit metadata lower-cases three given
+names and mis-cases a fourth, and the BibTeX carries that unaltered.
+Cited in `notes/grounding-rice.md`, `notes/dataset-leads.md`.
+
+**Zhao, Z., Zhang, G., Dong, J., Yang, J., Fan, C., Liu, R., and Xiao, X.
+(2026).** Mapping paddy rice distribution and cropping intensity in South and
+Southeast Asia (1995–2024) at 30 m resolution. *Earth System Science Data* 18,
+5583–5599.
+`10.5194/essd-18-5583-2026` — peer-reviewed paper; **describes a dataset not
+used, and out of domain.** Kept because of its authorship: Zhang and Xiao are
+the first and second authors of the paddy-rice-and-XCH4 Reply below, so the group
+that established the 0.5-degree correlation has since built the high-resolution
+map that correlation called for — for South and Southeast Asia rather than for
+China.
+Cited in `notes/grounding-rice.md`, `notes/dataset-leads.md`.
+
+### Water regime, temperature and the diurnal cycle
+
+**Runkle, B. R. K., Suvočarev, K., Reba, M. L., Reavis, C. W., Smith, S. F.,
+Chiu, Y.-L., and Fong, B. (2019).** Methane Emission Reductions from the
+Alternate Wetting and Drying of Rice Fields Detected Using the Eddy Covariance
+Method. *Environmental Science & Technology* 53, 671–681.
+`10.1021/acs.est.8b05535` — peer-reviewed paper; a finding relied on. The
+water-regime effect measured by flux tower rather than chamber: "cumulative CH4
+emissions in the production season were in the range of 7.1 to 31.7 kg CH4-C
+ha⁻¹ for the AWD treatment and in the range of 75.7–141.6 kg CH4-C ha⁻¹ for the
+DF (delayed flood) treatments", over two fields and three years. **Both ranges
+are quoted rather than a single ratio**, because the ratio between them runs from
+2.4 to 20 depending on which ends are taken. The site is in Arkansas, which is
+recorded as a limit on transfer.
+Cited in `notes/grounding-rice.md`.
+
+**Sun, H., Zhou, S., Fu, Z., Chen, G., Zou, G., and Song, X. (2016).** A two-year
+field measurement of methane and nitrous oxide fluxes from rice paddies under
+contrasting climate conditions. *Scientific Reports* 6.
+`10.1038/srep28255` — peer-reviewed paper; **a finding relied on, and the only
+in-domain flux measurement in any of the three grounding records.** At the
+Zhuanghang Experimental Station, 30°53′N 121°23′E, "CH4 emissions ... increased
+by 93% and 161% in the 'warm and dry' season of 2013 ... compared to the normal
+season of 2014" for two cultivars, with mean seasonal air temperature 2.3 °C
+higher, while yield fell 13 to 19 and 7 to 12 percent. The site's nearest cell
+centre in this project's lattice is 30.825°N, 121.425°E, a covered cell with 34
+soundings whose single-season rice fraction is within a thousandth of the lattice
+median.
+Cited in `notes/grounding-rice.md`.
+
+**Qian, H., Zhang, N., Chen, J., Chen, C., Hungate, B. A., Ruan, J., Huang, S.,
+Cheng, K., Song, Z., Hou, P., and eleven others (2022).** Unexpected Parabolic
+Temperature Dependency of CH4 Emissions from Rice Paddies. *Environmental
+Science & Technology* 56, 4871–4881.
+`10.1021/acs.est.2c00738` — peer-reviewed paper; a finding relied on. Warming
+stimulates paddy CH4 most strongly at a background flooded-stage air temperature
+near 26 °C and less both below and above, explained by divergent responses of
+plant growth, methanogens and methanotrophs; 1 °C of warming is estimated to
+raise Chinese paddy emissions by 12.6 percent, more than leading ecosystem models
+give. **A parabolic response is why no single temperature covariate would carry
+the effect either**, which is the argument's second step.
+Cited in `notes/grounding-rice.md`.
+
+**Wassmann, R., Alberto, M. C., Tirol-Padre, A., Hoang, N. T., Romasanta, R.,
+Centeno, C. A., and Sander, B. O. (2018).** Increasing sensitivity of methane
+emission measurements in rice through deployment of 'closed chambers' at
+nighttime. *PLOS ONE* 13, e0191352.
+`10.1371/journal.pone.0191352` — peer-reviewed paper; **a finding relied on, and
+the one this pass was asked to report first.** Over four cropping seasons of eddy
+covariance, "CH4 fluxes were very low from 0000-0630H and started to increase at
+around 0700H - 0830H, reached a peak at around 1330H - 1530H, and then decreased
+to low values again after 1900H", with "a very strong linear relationship between
+nocturnal emissions (12-h periods) and the full 24-h periods resulting in an
+R2-value of 0.8419". **The hours are the paper's and not the ones carried into
+this pass**, which had them as 0800H and 1300–1500H.
+Cited in `notes/grounding-rice.md`.
+
+**Li, H., Peng, C., Helbig, M., Zhao, M., Guo, H., and Zhao, B. (2024).**
+Nocturnal peak methane flux diel patterns in rice paddy fields. *Agricultural and
+Forest Meteorology* 358, 110238.
+`10.1016/j.agrformet.2024.110238` — peer-reviewed paper; a finding relied on, and
+one that complicates the finding above rather than confirming it. A pronounced
+single daytime peak at 13:30–14:30 in the early rice stage, but daytime emissions
+with no peak and below night-time levels during the reproductive stage under water
+limitation and high temperature. **So the sign of the diurnal misalignment with a
+13:30 overpass changes within a season at one site.**
+Cited in `notes/grounding-rice.md`.
+
+### The cropping-system transition, measured as extent
+
+**Jiang, M., Xin, L., Li, X., Tan, M., and Wang, R. (2018).** Decreasing Rice
+Cropping Intensity in Southern China from 1990 to 2015. *Remote Sensing* 11, 35.
+`10.3390/rs11010035` — peer-reviewed paper; a finding relied on. From 1990 to
+2015 the sown area of double-cropping rice in southern China "decreased by
+61054.5 km2", single-cropping "increased by 20,110.7 km2", the multiple cropping
+index fell "from 148.3% to 129.3%", the double-cropping proportion fell by 20
+percent, and "the most dramatic changes occurred in the Middle-Lower Yangtze
+Plain" — this project's domain. **The quantities are sown area**, which is the
+distinction the rice record draws from planted area, and a nineteen-point fall in
+croppings per field is an emission reduction invisible to any measurement of
+extent. Volume 11 with a 2018 issue date; it had been carried as 2019.
+Cited in `notes/grounding-rice.md`.
+
+### The inversion precedents, in two directions
+
+**He, C., Lu, X., Li, S., Huang, X., Xiao, H., Song, C., Li, T., Yuan, W., and
+Fan, S. (2026).** Reconciling Bottom–Up and Top–Down Approaches to Quantify
+Sub-Regional Methane Emissions with Improved Inventory and Three-Year
+High-Resolution Satellite Measurements. *ACS ES&T Air* 3, 1097–1109.
+`10.1021/acsestair.5c00446` — peer-reviewed paper; **a finding relied on, and the
+counterweight to the Heilongjiang inversion already in the register.** Over the
+Greater Bay Area at 0.25° × 0.3125°, the same resolution as this project's
+lattice, it reduces the posterior total's uncertainty by 57 percent — from a prior
+range of 1.77 to 3.04 Tg a⁻¹, or 72 percent, to 2.43 to 2.80, or 15 percent —
+and puts waste treatment at 1.13 Tg a⁻¹ as the largest anthropogenic source. It
+"corrects the overestimated rice emissions over the Pearl River Estuary, where
+satellite observations reveal limited rice paddies". **A Chinese sub-regional
+inversion revising rice emissions downward, where the Heilongjiang one revised
+them up**, and both for spatial rather than magnitude reasons.
+Cited in `notes/grounding-rice.md`.
+
+### The rice layer's synthesis anchor
+
+**Mehla, M. K., Singh, A., Jeong, J., and Ran, L. (2026).** Global methane
+emissions from rice paddies are now increasingly quantifiable. *Communications
+Earth & Environment* 7.
+`10.1038/s43247-026-03902-4` — peer-reviewed review; a finding relied on, for
+scale. Global estimates made between 1963 and 2025 range from 10 to 280 Tg per
+year, recent estimates differ by about 4 Tg with a coefficient of variation of 13
+percent, and roughly 67 percent of available global estimates are bottom-up
+against 33 percent top-down, with both still depending largely on emission factors
+and census data. **A 13 percent coefficient of variation is the ceiling on how
+well any single predictor can be expected to do.**
+Cited in `notes/grounding-rice.md`.
+
+**Qian, H., Zhu, X., Huang, S., Linquist, B., Kuzyakov, Y., Wassmann, R.,
+Minamikawa, K., Martinez-Eixarch, M., Yan, X., Zhou, F., and eleven others
+(2023).** Greenhouse gas emissions and mitigation in rice agriculture. *Nature
+Reviews Earth & Environment* 4, 716–732.
+`10.1038/s43017-023-00482-1` — peer-reviewed review; **a finding relied on, and
+the load-bearing citation for this project's first hypothesis.** Its abstract
+states that emissions "vary markedly, primarily reflecting the impact of
+management practices", naming organic matter additions and continuous flooding
+for CH4; that "new rice variety selection, non-continuous flooding and straw
+removal strategies reduce GHG emissions by 24%, 44% and 46% on average,
+respectively" — cultivar, water and residue, none of which changes extent; and
+that "the effect of N input on CH4 emissions is generally positive at low N
+rates, but decreases and becomes negative with increasing N rate". It also gives
+the global means the figures scale against, 283 kg CH4 ha⁻¹, and 22, 23 and 24 Tg
+per year for the 1980s, 2000s and 2010s against a 38 to 55 percent fall in
+yield-scaled emissions. **The 24, 44 and 46 percent had been attributed to
+different practices when carried into this pass.**
+Cited in `notes/grounding-rice.md`, `notes/grounding-yrd.md`.
+
+### The urban layer's synthesis anchor
+
+**National Academies of Sciences, Engineering, and Medicine (2018).** Improving
+Characterization of Anthropogenic Methane Emissions in the United States.
+National Academies Press.
+`10.17226/24987` — consensus study report; a finding relied on, for framing.
+"Verifiability is the bedrock upon which inventories should be built if they are
+to be widely applicable to policy needs", and "it is very challenging to test the
+GHGI against top-down estimates (i.e., verify the GHGI) owing to its high degree
+of spatial (national) and temporal (annual) aggregation". **It is 2018, not
+recent**, and the age is recorded because an eight-year-old unsuperseded statement
+that the inventory cannot be verified is a stronger claim about the field than a
+new one. Crossref returns no author list for it, as for the AR6 chapter, and the
+BibTeX carries that unaltered.
+Cited in `notes/grounding-urban.md`.
+
+**Li, X., Zhang, Y., de Leeuw, G., Yao, X., He, Z., Wu, H., and Yang, Z.
+(2025).** A Review of City-Scale Methane Flux Inversion Based on Top-Down
+Methods. *Remote Sensing* 17, 3152.
+`10.3390/rs17183152` — peer-reviewed review; a finding relied on. It "highlights
+the significant discrepancy between top-down inversion results and bottom-up
+inventory estimates at the city scale, with inversion uncertainties ranging from
+11% to 28%", states that the top-down approach "struggles to attribute emissions
+to specific categories", names agricultural soil activity as the largest source
+of uncertainty in anthropogenic methane inversions, and proposes isotopic analysis
+among four advancements. **It is 2025; it had been carried as 2026.**
+Cited in `notes/grounding-urban.md`.
+
+**Whiting, E., Plant, G., Kort, E. A., Aben, I., Biener, K. J., Leguijt, G., and
+Maasakkers, J. D. (2026).** Space-based observation of global increase in urban
+methane emissions from 2019–2023. *Proceedings of the National Academy of
+Sciences* 123, issue 16.
+`10.1073/pnas.2504211123` — peer-reviewed paper; a finding relied on. A
+tracer–tracer approach on TROPOMI methane and carbon monoxide over 92 global
+cities gives "aggregate emissions of 31.2 Tg CH4/y (95%CI: 22.3, 40.4 Tg CH4/y)
+in 2023, equivalent to ~10% of the global anthropogenic methane budget"; 72
+cities are tracked from 2019, with growth of 10 percent (CI 2 to 17) for C40
+cities and 12 percent (CI −1.5 to 25) for others against pledged 34 percent
+reductions, and "inventories fail to capture observed growth". **The widely
+reported figures of 6 percent above 2019 and inventories at 1.7 to 3.7 percent
+are from a press release rather than the paper and are not written.**
+Cited in `notes/grounding-urban.md`.
+
+**Long, H., Tsivlidou, M., Ricketts, H., and Allen, G. (2026).** Satellite-based
+global monitoring of urban-scale methane emissions. EGUsphere preprint.
+`10.5194/egusphere-2026-2570` — **preprint, not peer-reviewed**; a finding relied
+on, and the register's first preprint. Discussion opened 20 May 2026, CC-BY-4.0.
+It supplies two statements not found peer-reviewed anywhere: that "field studies
+quantifying methane emissions in urban areas have found that official bottom-up
+inventories can underestimate methane emissions by a factor of 2 to 3", citing
+three campaigns; and that "in poorly observed regions (e.g. India, China), where
+most of the global population resides, measurement-led validation of national
+emissions is even more challenging". Its own result qualifies the first: for
+London, Los Angeles and New York it finds "factors of approximately 0.1-2.0,
+0.3-2.1, and 5.1-9.2 times the inventory estimates", so the ratio is not
+consistently above one.
+Cited in `notes/grounding-urban.md`.
+
+### The region's synthesis anchor
+
+**Zhao, P., Zhang, Z., Huang, G., Wang, Z., Canadell, J. G., Ciais, P., Chen, H.,
+Chen, S., Cohen, J. B., Dai, F., Gong, P., Jackson, R. B., and fourteen others
+(2026).** Two decades of methane budgets at the sub-national scale in China.
+*Science Bulletin* 71, 3731–3741.
+`10.1016/j.scib.2026.06.019` — peer-reviewed paper; **a finding relied on, and
+the hotspot statement this project's domain needed.** Inversion ensembles and
+process-based models, both contributed through the Global Carbon Project, for
+2000 to 2019: "approximately 60% of national CH4 emissions come from three of the
+nine sub-national regions (North China, Southeast China, and Southwest China),
+which together account for <30% of China's land area", "dominated by the energy
+and agricultural sectors"; "natural sources contribute 9%–16% of the total CH4
+budget, but they have the largest relative uncertainties, reaching approximately
+150%–170% of their estimated magnitudes"; and decadal anthropogenic increases of
+"10.4 [2.7–16.9] Tg CH4 a⁻¹ (BU) and 6.1 [−2.6–10.7] Tg CH4 a⁻¹ (TD)". **This
+study area is in Southeast China**, one of the three named regions.
+Cited in `notes/grounding-yrd.md`.
+
+**Khanna, N., Lin, J., Liu, X., and Wang, W. (2024).** An assessment of China's
+methane mitigation potential and costs and uncertainties through 2060. *Nature
+Communications* 15.
+`10.1038/s41467-024-54038-y` — peer-reviewed paper; a finding relied on. It names
+the sectors whose 2017 emissions are most uncertain as **coal mining, rice
+cultivation, wastewater, and enteric fermentation**, and carries "uncertainties
+about the coal mine methane emission factor in the range of ±80%", an IPCC range
+of "−40% to +70% for the emission factor for rice cultivation", and for industrial
+wastewater "−56% to +103% ... in activity data, with 30% uncertainty in maximum
+methane-producing capacity and −50% to +100% uncertainty in methane correction
+factor". **It does not quantify the spread between inventories**, which is what it
+had been carried as supplying.
+Cited in `notes/grounding-yrd.md`.
+
+### One dataset for the inventory
+
+**Zhang, C., Dong, J., and Ge, Q. (2022).** Mapping 20 years of irrigated
+croplands in China using MODIS and statistics and existing irrigation products.
+*Scientific Data* 9.
+`10.1038/s41597-022-01522-z` — peer-reviewed paper; describes a dataset not used.
+Irrigated cropland for China at 500 m across twenty years. Recorded because the
+rice record establishes water regime as the dominant control and
+`notes/dataset-leads.md` already carries the water-saving-against-flooding
+irrigation maps with no deposit route; this is a second, published, irrigation
+layer at the same resolution, and it assimilates statistics, which is the same
+care its neighbour entry needs.
 Cited in `notes/dataset-leads.md`.
 
 ---

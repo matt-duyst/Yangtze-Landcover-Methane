@@ -61,10 +61,25 @@ station's existence and its figures are not the uncertainty; the data route is.
 | **CCD-Rice validation polygons** | Sample polygons visually interpreted from very-high-resolution Google Earth imagery, in GeoParquet, with `covertype`, `region` and `year` fields and six classes: non-cropland, single-season rice certain, double-season rice certain, rice of uncertain season, other crops, non-rice | figshare `10.6084/m9.figshare.25515019.v3`, a single 1.9 MB file on the route `src/fetch/figshare.py` already handles; MD5 `927e517583c1999650b90a087db19ffb` confirmed against the deposit | **CC-BY-4.0** | 3,619 polygons nationally over 2002 to 2016; **777 in the four provinces** — Shanghai 338, Jiangsu 167, Zhejiang 159, Anhui 113 — in the years 2003, 2004, 2011, 2013 and 2014 | **The best reference-data lead found anywhere in this work**: independent, published, openly licensed, in-domain, and more accurate than any map here | **verified accessible** |
 | CCD-Rice code | The product's own processing code | Zenodo `10.5281/zenodo.15468566` | MIT | — | Reading how the thresholds were set, which matters because they were re-determined against statistical areas | documented only |
 | ChinaRiceCalendar | Transplanting, heading and maturity dates for early-, middle- and late-season rice, as raster at 250 m, 1 km and 10 km | Harvard Dataverse `10.7910/DVN/EUP8EY` | Dataverse terms, not checked | 2003 to 2022, with five period means | The calendar the growing-season argument rests on, and the input to any seasonal recompositing | documented only |
-| Irrigation regime maps | Water-saving against flooding irrigation across Chinese paddy lands at 500 m, from province-wise random forests over 123 MODIS and Sentinel-1 features | no deposit named in Wang et al. (2024) | unknown | annual, to 2022 | **The missing water-regime covariate**, which is the mechanism the grounding identifies as having a larger dynamic range than extent. Overall accuracy near 0.73, and an R² above 0.92 against city and provincial census area — the census assimilation is why it needs care rather than adoption | unverified |
+| Irrigation regime maps | Water-saving against flooding irrigation across Chinese paddy lands at 500 m, from province-wise random forests over 123 MODIS and Sentinel-1 features | no deposit named in Wang et al. (2024) | unknown | **annual, and the start year is unestablished**; the end is 2022, so whether it reaches 2018 is not in doubt but whether it reaches 2000 or 2010 is | **The missing water-regime covariate**, which is the mechanism the grounding identifies as having a larger dynamic range than extent. Overall accuracy near 0.73, and an R² above 0.92 against city and provincial census area — the census assimilation is why it needs care rather than adoption | unverified |
 | CH4MOD | The semi-empirical paddy methane model, as used by the cropping-system study | model, not data | — | — | The route from a rice layer plus a water regime to an emission estimate, which this reproduction has not taken | known, not applied |
 | NESDC single-season rice | The rice layer the analysis grid carries | committed | — | 2017–2022 | in use | in use |
 | GloRice | The second rice layer, at 5 arcmin | committed | — | 1961–2021 | in use | in use |
+| **APRA500** | Annual paddy rice planting area and cropping intensity for the Asian monsoon region at 500 m, from MODIS and a phenology-based method | Zenodo `10.5281/zenodo.5555721`, twenty-eight files of about 1.7 MB each — one GeoTIFF archive per year plus three-year composites. The API returns the file listing and a `paddyRice2018.zip` request returns HTTP 200 from this machine | **CC-BY-4.0** | 2000 to 2020 — **the only rice product of any kind that covers all three thesis years** | The historical-years gap, filled by one product and one method instead of NESDC plus CCD-Rice. At 500 m it is the coarsest candidate, and the rice-mapping review's finding that products lose consistency in fragmented fields bites hardest here | **verified accessible** |
+| **EFSP** | Single and double paddy rice and cropping intensity for China at 30 m, from more than 684,000 Landsat scenes on Earth Engine | no deposit named in Wei et al. (2022) | unknown | 2014 to 2019; **reaches 2018** | A 30 m in-domain alternative to the committed NESDC layer for the analysis year, with a published accuracy: producer 0.92–0.96 against user 0.76–0.87, kappa 0.67–0.80, R² above 0.88 against statistics. **Producer exceeding user by that margin is over-detection**, which inflates a per-cell fraction rather than thinning it, so it would need the GAIA–GISA treatment rather than substitution | unverified |
+| Zhu et al. PPPM maps | Annual single- and double-cropping rice for southern China at 30 m by the algorithm the 2023 thesis used, from Landsat 5, 7 and 8 | **not established.** The article is paywalled, OpenAlex records no open version, and the DOAJ record's only full-text link is the publisher DOI, so no data availability statement was readable | unknown | 1999 to 2019; covers 2000, 2010 and 2018 | **The gating lead for the whole PPPM route.** If obtainable it supplies a single-method layer for all three thesis years and removes the coverage argument for a reimplementation. Its "southern China" explicitly includes Anhui and Jiangsu | unverified |
+| 500 m irrigated cropland maps | Irrigated cropland for China at 500 m over twenty years, from MODIS plus statistics and existing irrigation products | no deposit route established from Zhang, Dong and Ge (2022), `10.1038/s41597-022-01522-z` | unknown | twenty years to about 2020 | A second irrigation layer beside the water-saving-against-flooding maps above, at the same resolution. **It assimilates statistics**, which is the same reason its neighbour needs care rather than adoption, and the two together would be the pair the GAIA–GISA lesson calls for | unverified |
+| NESEA-Rice10 | Annual paddy rice at 10 m for Northeast and Southeast Asia | Zenodo `10.5281/zenodo.5645344`, not tried | — | 2017 to 2019 | **Ruled out on extent.** Its "Northeast Asia" is Liaoning, Jilin and Heilongjiang with Korea and Japan; its "Southeast Asia" is six countries to the south. The Yangtze River Delta is in neither, despite 10 m and 2018 having made it the most attractive product on the list | considered and excluded |
+| 30 m Northeastern China rice | Annual paddy rice at 30 m, 2000 to 2023 | figshare `10.6084/m9.figshare.28407710` | CC-BY-4.0 | 2000 to 2023 | **Ruled out on extent**: Northeastern China. Recorded so the reason is on file, because the resolution and the twenty-four-year span would otherwise make it the best candidate here | considered and excluded |
+| 30 m South and Southeast Asia rice | Paddy rice distribution and cropping intensity at 30 m, 1995 to 2024 | not established, from Zhao et al. (2026), `10.5194/essd-18-5583-2026` | unknown | 1995 to 2024 | **Ruled out on extent.** Kept because its first two authors are the authors of the paddy-rice-and-XCH4 Reply, so the group that established the 0.5-degree correlation built the high-resolution map it called for — for another continent | considered and excluded |
+| Rice mapping product review | A consistency assessment of twenty-five rice products, three global and twenty-two regional, over China, Heilongjiang and Vietnam | `10.1016/j.srs.2024.100172`, open access | CC-BY | published 2024 | **The map of this table's own territory.** It finds products losing consistency in fragmented fields, cloud and complex cropping challenging subtropical mapping, no product combining wide coverage with fine resolution and a long series, and ground-truth deficiency impeding validation — the last of which is this repository's own accuracy-assessment conclusion, reached independently | **verified accessible** |
+
+Three of the four products this pass examined for the first time turned out to be
+out of domain, which is the most useful thing the pass established for this file.
+**A product's resolution and year coverage are the attributes a lead is recorded
+on, and its spatial extent is the one that disqualifies it**, so extent should be
+checked before either. All three were recorded as leads on the strength of
+resolution and years.
 
 ## Urban
 
@@ -85,6 +100,28 @@ station's existence and its figures are not the uncertainty; the data route is.
 | Very-high-resolution imagery for visual interpretation | The standard response design in this literature | — | **An open question, not an assumption.** Every product here interpreted Google Earth imagery; none of the papers read addresses whether its terms permit publishing a derived accuracy assessment | — | Constructing reference data where none is distributed | unresolved |
 | Olofsson et al. (2014) | The good-practice standard for area estimation and accuracy assessment | in the register | — | — | The standard a reviewer will check against. **Its first three recommendations apply here and are unmet; its last two do not apply at all**, because it contains no treatment of fractional cover | in the register |
 | NLCD percent-impervious assessment | Mean deviation, mean absolute deviation and OLS regression against a more accurate reference fraction | in the register | — | — | **The correct frame for this study's layers**, which are per-cell fractions rather than a categorical map, and the measurement of how error falls as the aggregation unit grows | in the register |
+
+## The region's observing constraint, added 14 September 2026
+
+One entry rather than a table, because it is a finding about every methane row
+above rather than a candidate.
+
+[`notes/grounding-yrd.md`](grounding-yrd.md) now records that SWIR sensors
+"suffer from frequent data gaps due to cloud cover (particularly in southern
+China during the monsoon season)", and that rice paddies, lakes and wetlands in
+southern China consequently carry posterior emission uncertainties of 53 to 69
+percent (Zhong et al., 2026, `10.5194/amt-19-4759-2026`). **That is the same
+physical cause that limits rice mapping here to fewer than eight clear Landsat
+observations a year**, which this file's rice rows are all constrained by, acting
+on the other end of the same inference chain.
+
+The practical consequence for this inventory is that **a ground-based row is
+worth more here than its resolution suggests**. The same paper puts current
+TROPOMI plus every in-situ and ground-column site in East Asia at a DOFS of 134
+for China, against 113 for TROPOMI alone — a fifth of the information from
+seventeen stations. The Hefei TCCON and Lin'an GAW rows above are the in-domain
+instances of that, and the Lin'an route remains the one unresolved lead among
+them.
 
 ## The inversion route, added 11 September 2026
 

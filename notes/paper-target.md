@@ -490,6 +490,59 @@ would import an unquantified error the way a single impervious product would
 have. This sits beside item 6 rather than above it, because it is a new
 covariate rather than a correction to an existing one.
 
+### Added 14 September 2026, from the rice grounding
+
+**0c. Test the published ten-percent condition on the subset that satisfies it.**
+*Gated by nothing.* [`notes/grounding-rice.md`](grounding-rice.md) establishes
+that the strongest published claim of a rice–XCH4 association states its own
+domain of validity — "the 0.5° gridcells with moderate to high proportions of
+rice paddy (area percentage >10% within gridcells)" — and that
+304<!--#grid.rice_above_ten_percent--> of this lattice's cells satisfy it,
+57.3<!--#grid.rice_above_ten_of_rice_percent--> percent of the rice-bearing cells
+and 32.8<!--#grid.rice_above_ten_of_lattice_percent--> percent of the whole
+field. **Every association this repository reports is computed over all
+926<!--#composite.covered_cells--> cells, which is precisely the ROI dilution the
+Reply warns against.** The test is a subset and a recomputation of the existing
+correlations and baselines, with the degrees-of-freedom correction applied on the
+subset's own geometry. It belongs with the free items and it is the cheapest
+remaining item in the queue after 0a.
+
+Two things make it more than a robustness check. This project's cells are
+0.25 degrees, *finer* than the 0.5 at which the condition was established, so a
+null on the subset is a stronger negative result than a null on the whole field.
+And if the association does appear there, the published condition is the reason
+to expect it, which converts a post-hoc subset into a pre-registered one.
+
+**0d. Redo the thesis's rice validation against planted area for Zhejiang.**
+*Gated by nothing.* The rice record establishes that the thesis compared its PPPM
+extents to **sown** area and treated the statistics as truth, that the
+definitional gap requires double cropping, and that Shanghai and Jiangsu are
+0.00<!--#rice.double_share_shanghai_percent--> percent double-cropped in the
+committed table — so the gap cannot explain the thesis's largest discrepancy and
+the thesis's own explanation, urban density confusing the classifier, survives.
+**Zhejiang at 16.27<!--#rice.double_share_zhejiang_percent--> percent is where
+the definitional gap can contribute**, and Anhui at
+8.36<!--#rice.double_share_anhui_percent--> percent to a lesser degree. The item
+is to divide the reported sown area by the cropping index implied by the
+committed single-and-double split and re-compare. **It cannot produce a
+correction to the thesis**, which is submitted; it produces a sentence in a paper
+about how much of a published discrepancy is definitional rather than
+methodological.
+
+**1a. Establish whether Zhu et al.'s PPPM maps are obtainable.** *Gated by
+nothing but network access, and it is the gating question for a whole route.*
+`notes/decisions.md` now records that the maps the thesis's own algorithm
+produces already exist — annual single- and double-cropping rice for southern
+China from Landsat 5, 7 and 8, 1999 to 2019, over a southern China that
+explicitly includes Anhui and Jiangsu. Whether they are distributed could not be
+settled: the article is paywalled, OpenAlex records no open version, and no data
+availability statement was readable. **If they are obtainable, reading them
+replaces the coverage argument for a PPPM reimplementation entirely** and
+supplies a single-method rice layer for all three thesis years, which no
+combination of committed products does. It sits in Tier 1 because it is one
+request rather than a computation, and it should be first in that tier because
+of what it gates.
+
 ### What gates what, in one paragraph
 
 **As of 13 September 2026 Tier 0 is complete and three items sit above or beside
@@ -521,20 +574,25 @@ whenever.
 
 Recorded so that the gap is visible rather than assumed closed.
 
-**The rice layer has no grounding record of its own.** Its findings are
-scattered through the region record — the calendar, the water regime, the
-cropping-system transitions — and through the methods record, which holds the
-emission-factor chain and the reference polygons. The urban layer got a record
-on 11 September 2026 precisely because that scattering was judged a gap; the
-rice layer has the same gap and has not been given the same treatment. It is in
-the planned sequence and has not been done.
+**The rice layer's record was written on 14 September 2026 and this entry is
+kept as a closed gap rather than deleted.** Its findings had been scattered
+through the region record — the calendar, the water regime, the cropping-system
+transitions — and through the methods record, which holds the emission-factor
+chain and the reference polygons. [`notes/grounding-rice.md`](grounding-rice.md)
+now holds them, together with the layer's own conclusion: extent is a weak
+predictor of rice methane by the field's explicit account, and what a better map
+buys is spatial distribution rather than magnitude. **All three layers are now
+recorded to the same standard**, and the same pass gave each a review-level
+synthesis anchor, which is what an introduction can be written from.
 
-**The methane layer likewise.** The composite's own properties are documented at
+**The methane layer is the one that remains.** The composite's own properties are documented at
 length in `data/processed/README.md`, and the methods record holds the
 retrieval's uncertainty, the preprocessing chain and the representativeness
 problem. But there is no single record that says what the literature establishes
 about this instrument over this kind of domain, in the way the region record does
-for the region. Also in the planned sequence, also not done.
+for the region. Also in the planned sequence, also not done — and **it now starts
+clean**, in the sense that nothing of it is scattered elsewhere waiting to be
+collected, which was not true of the rice layer.
 
 **The satellite question has not been asked at all.** Whether other instruments
 or validation sources have been overlooked — GOSAT and GOSAT-2 in their own
