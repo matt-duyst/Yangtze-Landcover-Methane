@@ -3911,3 +3911,57 @@ That is the same method the qa census used and it has now paid for itself
 twice. The general point: for any question that needs one variable out of many
 granules, the transfer cost is a property of how the file is read rather than
 of how large it is.
+
+## The GISA accuracy figure was attributed to the wrong paper for seven days
+
+Three sections above quote GAIA as having a producer's accuracy 28.35 percent
+worse than GISA, and the last of them records that figure as *sourced*, to the
+2021 GISA paper at `doi:10.1007/s11430-020-9797-9`. **It is not in that paper.**
+The string "28.35" does not occur in it. The figure comes from the 2022 paper
+describing GISA 2.0, `doi:10.1016/j.jag.2022.102787`, which validates against
+118,822 ZY-3 test samples and reports F1 scores of 0.935 for GISA 2.0 against
+0.721 for GAIA.
+
+The sample count that travelled with the figure is worse. "124,190 global
+validation samples" **matches no published number in either paper.** GISA 1.0
+reports 120,777 sites from 270 cities and a second set of 88,822 ZY-3 samples
+from 45 cities; GISA 2.0 reports 118,822. Nothing in the literature gives
+124,190, and repeated searches did not find it. It has been removed from
+`README.md` and `data/processed/README.md` rather than re-sourced, because a
+figure that cannot be traced to a source should not be carried on the assumption
+that one exists.
+
+**The three mentions above are left as they were written**, which is this file's
+standing convention: its figures are as-measured-at-the-time and rewriting them
+destroys the record of what was believed when a decision was taken. The
+correction lives here, at the point in the sequence where it was found, and the
+two live claims in the READMEs are the ones that were changed.
+
+### Why this is the same failure the twelve uncited claims were
+
+The section above on the twelve uncited claims lists this figure under "three
+have a source in the register but no citation at the point of claim", and closes
+it by naming the GISA paper. That closure was itself a background assertion:
+the register held a GISA paper, the figure was about GISA, and the two were
+joined without checking that the paper contained the figure. The pattern the
+twelve-claims section identifies — an assertion that reads as common knowledge
+and was never tested — reproduced itself inside the mechanism built to catch it,
+one level up.
+
+What would have caught it is cheap and was not done: a full-text search of the
+paper for the number. That is now the standard for any figure attributed to a
+work in this repository, and it is why the region grounding recorded on the same
+day names five of its own premises as failed rather than presenting forty
+verified ones.
+
+### A second attribution hazard, met and not acted on
+
+`notes/references.md` warns twice that a citation must come from the registry
+and not from the depositing platform, and gives two instances. A third was met
+while recording the region grounding: the ChinaRiceCalendar deposit at
+`doi:10.7910/DVN/EUP8EY` lists its author field as "Jinyuan Liu, Hui Li", which
+is two of the paper's eleven authors with their given and family names run
+together. The paper's citation is carried instead and the deposit's is recorded
+beside it. Three instances of one hazard, from three different platforms —
+figshare, figshare again and Harvard Dataverse — is enough to treat reading an
+author list off a deposit as a defect rather than a shortcut.

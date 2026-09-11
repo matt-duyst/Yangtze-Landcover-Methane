@@ -434,8 +434,10 @@ finding that contests the thesis. Mobile measurements in a Yangtze River Delta
 megacity find the natural gas distribution system to be a low emitter, which
 bears directly on `ERRATA.md` 5.3: the thesis attributes urban methane to
 natural gas vehicles, and this is the measurement in this region that the
-attribution has to answer to. It is what section 5.3 can actually be supported
-by, in place of the unsourced waste-dominance claim.
+attribution has to answer to. From 3 to 10 September 2026 it was the whole of
+what section 5.3 could be supported by. It is now one of three measurements
+there, and the one that locates the leakage in end use and transportation rather
+than in distribution pipelines.
 
 ## The rice-paddy exchange
 

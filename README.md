@@ -9,8 +9,10 @@ pipeline and does not reach the same conclusion.
 
 The thesis itself is unchanged and preserved as submitted. It was never
 published or submitted for publication. What is new here is the pipeline, the
-reproduced data, an audit of the original document in [`ERRATA.md`](ERRATA.md), and a
-reasoning record in [`notes/decisions.md`](notes/decisions.md).
+reproduced data, an audit of the original document in [`ERRATA.md`](ERRATA.md) —
+an *errata* being the list of a document's errors published alongside it, which
+is what that file is and why nothing in the thesis was edited to match it — and
+a reasoning record in [`notes/decisions.md`](notes/decisions.md).
 
 ## What the reproduction found
 
@@ -69,9 +71,10 @@ predictor does something specific: it attenuates the association toward zero. So
 predictor error, and only predictor error, is the failure mode that could
 manufacture this result out of nothing, and both predictors carry documented
 error. GAIA is reported to omit impervious surface relative to GISA, with a
-producer's accuracy worse by 28.35 percent, in the paper describing GISA
-(Huang et al., 2021, doi:10.1007/s11430-020-9797-9) — though our own regional
-measurement runs the other way, with GISA finding about 20 percent *less*
+producer's accuracy worse by 28.35 percent, in the paper describing the second
+version of GISA (Huang et al., 2022, doi:10.1016/j.jag.2022.102787) — though our
+own regional measurement runs the other way, with GISA finding about 20 percent
+*less*
 impervious surface than GAIA in 2018, in every province. That comparison holds
 for the analysis year and not for the record: in 2000 GISA finds 20.7 percent
 *more*, so the two products cross over and disagree about the history rather

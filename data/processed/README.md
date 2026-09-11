@@ -878,10 +878,23 @@ provinces **in 2018**, but not uniformly: Jiangsu is 26.4 percent lower, Shangha
 Zhejiang 21.5, while Anhui is only 4.8 percent lower. The direction is the
 opposite of what the global validation predicts. GAIA is reported to omit
 impervious surface relative to GISA, with a producer's accuracy worse by 28.35
-percent over 124,190 global validation samples, in the paper describing GISA
-itself (Huang et al., 2021, Science China Earth Sciences 64, 1922-1933,
-doi:10.1007/s11430-020-9797-9); that would make GISA the larger here. It is the smaller in every
-province. Whatever holds globally does not transfer to this region, and the
+percent, in the paper describing the second version of GISA (Huang et al., 2022,
+International Journal of Applied Earth Observation and Geoinformation 109,
+102787, doi:10.1016/j.jag.2022.102787), which validates against 118,822 ZY-3
+test samples and reports F1 scores of 0.935 for GISA against 0.721 for GAIA;
+that would make GISA the larger here. It is the smaller in every
+province.
+
+**Two corrections to this paragraph, both made on 10 September 2026.** Until
+then it attributed the 28.35 percent figure to the 2021 GISA paper
+(doi:10.1007/s11430-020-9797-9), which does not contain it: the string "28.35"
+does not occur in that paper, and the figure is from the 2022 paper describing
+GISA 2.0. And it quoted the difference as holding "over 124,190 global
+validation samples", a count that matches no published figure in either paper --
+GISA 1.0 reports 120,777 sites from 270 cities and a second set of 88,822 ZY-3
+samples from 45 cities, and GISA 2.0 reports 118,822 -- so it has been removed
+rather than re-sourced. Neither correction touches the direction of the finding
+this paragraph reports, which is our own measurement and unaffected. Whatever holds globally does not transfer to this region, and the
 attenuation argument that motivated fetching GISA does not apply in the
 direction assumed.
 
