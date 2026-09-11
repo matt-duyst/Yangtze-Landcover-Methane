@@ -192,6 +192,98 @@ emissions framing, which is the right way round.
 because what was run was the preview's arithmetic and not the preview, and one
 free run by someone with an AWS account would still be worth having.
 
+## The finding the three grounding records share
+
+**Five independent instances of one pattern are now established and no file
+stated it as a single finding.** It goes here rather than in a grounding record
+because its consequence is a claim the paper may make, and this is the file that
+governs those.
+
+In every sector this project's domain contains, **the emission is determined by
+something extent cannot see**:
+
+* **Landfill methane** is determined by gas collection efficiency and the
+  landfill-versus-incineration split, not by the area of the site. Measured
+  collection efficiency averages 38 percent against a reported 70, and Los
+  Angeles achieves 85 — a factor of two in emission at constant footprint.
+  *Established by* [`notes/grounding-urban.md`](grounding-urban.md).
+* **Gas distribution** is determined by pipeline age and material, not by the
+  extent of the served area. Underground steel pipelines and aboveground risers
+  are the leak-prone components, and leak density varies notably between cities.
+  *Established by* the urban record.
+* **Rice** is determined by water regime, not by area. Three water regimes on
+  one soil under one crop span a factor of 13.7 in net global warming potential.
+  *Established by* [`notes/grounding-yrd.md`](grounding-yrd.md).
+* **Coal** is determined by gas content and seam depth, not by mine area.
+  In-place gas content across one coalfield runs 8 to 30 m³ per tonne.
+  *Established by* the region record.
+* **Urban land** is determined by its residential-industrial composition, not by
+  its paved area. A residential tower and a single-storey industrial shed have
+  identical impervious footprints and different gas connections and waste
+  generation. *Established by* the urban record.
+
+Stated once: **extent is a proxy for the presence of a source and not for its
+management, and in every sector here it is management that sets the emission
+rate.** That is why a land-cover fraction can be an accurate map and still fail
+to predict a methane field — the two are measuring different things, and the
+failure is structural rather than a matter of map quality.
+
+### The methodological consequence, with the qualification Tier 0 supplies
+
+**The inversion route is appropriate for a reason that follows directly from
+that finding.** An inversion estimates emission from the atmosphere and uses
+extent only to place the prior. It never asks extent to predict emission; it
+asks the observations what the emission was and uses extent to say where to look.
+So the structural failure above is not a failure of the inversion route, which
+is the method the field uses and which
+[`notes/grounding-methods.md`](grounding-methods.md) records this project did
+not take.
+
+And [`notes/decisions.md`](decisions.md) now records that an inversion over this
+domain is **feasible**. Expected degrees of freedom for signal run **3.98 to
+22.21** over the 5 to 12 Tg a⁻¹ band the literature supports for this domain,
+crossing IMI's minimum viability of 1 at about 3 Tg a⁻¹ and its marginal ceiling
+of 2 at about 5, and that range is a **lower bound** because the sweep spreads
+emissions uniformly while real concentration raises the sum. Those figures come
+from a reimplementation of the Integrated Methane Inversion's own closed-form
+DOFS estimate rather than from a preview run, which the script, the recipe note
+and the record all state.
+
+**But the qualification is the part that matters, and without it this
+overclaims.** No cell in the swept range reaches a sensitivity above 0.5. The
+DOFS accumulates from 926 cells each weakly constrained, which is what a
+domain-total inversion needs and not what a per-cell attribution needs. **An
+inversion here could constrain the region's total emission. It could not
+attribute that total to land cover cell by cell.**
+
+### What that means for the 2023 thesis's question
+
+This is the sharpest statement this project can make and it should be stated
+carefully.
+
+The thesis asked **where methane comes from within this region, at cell
+resolution, from land cover.** The field's own best method — analytical Bayesian
+inversion with closed-form error characterisation, applied to the best available
+observations for this domain — **can constrain the regional total and cannot
+constrain the cell-level attribution.**
+
+So the question is not answerable at the resolution it was asked, by any method
+currently available for this domain. **That is a capability finding about the
+observing system, not a limitation of the thesis's approach.** The thesis chose a
+method that could not answer its question; the finding here is that no method
+could, which is a different and more useful thing to report. It converts an
+apparent methodological error into a statement about what a 25 km column record
+over a 750-by-900 km domain can and cannot support — and that statement is
+publishable in its own right, which is the second of the three framings this
+file records.
+
+Two boundaries on it, so it is not read as more than it is. It is a statement
+about *this* domain, *this* instrument and *these* years, and the degrees of
+freedom scale with observation density, so a longer record or a denser instrument
+would move it. And the estimate is IMI's approximation evaluated locally rather
+than an inversion actually run, so the number that would settle it is still one
+free preview run by someone with an account.
+
 ## The work queue
 
 Drawn from all four grounding records rather than from any brief, and **ordered
@@ -368,12 +460,52 @@ specifications, which is a curve and not a table. *Established by* the methods
 record. **Necessarily last**, because it reports the final specification set and
 every item above changes what that set contains.
 
+### Added 13 September 2026, from the coal and urban amendments
+
+**0a. Whether the coalfield's cells behave differently in the decay curve, and
+whether excluding them changes the association.** *Gated by nothing* — the
+decay curve and the per-cell predictions already exist as committed artefacts,
+and northern Anhui is identifiable from the lattice geometry. [`notes/grounding-yrd.md`](grounding-yrd.md)
+establishes that the Huainan–Huaibei coalfield sits inside the lattice in the
+province a national gridded inventory names as the largest eastern emitter, that
+neither predictor represents it, and that its cells coincide with the region
+where the rice raster stops classifying. Item 4 established that the impervious
+coefficient is not stable across the domain. **This is the cheapest item in the
+whole queue and it tests a specific hypothesis about where the instability comes
+from.** It belongs with Tier 0's free items rather than below them.
+
+**0b. Re-block at six cells and re-run the baselines, if the paper uses the
+blended field.** Already recorded above as the highest-value cheap item; noted
+again here because it and 0a are the two items that need only what is committed.
+`notes/decisions.md` records the residual half-sill range at 134.5 km on the
+blended field against a block 95.0 km at its narrowest.
+
+**6a. Two building-volume or building-function layers, or none.** *Gated by*
+verifying the datasets in [`notes/dataset-leads.md`](dataset-leads.md). The 30 m
+annual building height dataset is the only candidate resolving 2000, 2010 and
+2018; CMAB carries building function, which is closer to the gas-and-waste
+mechanism than height. **The GAIA–GISA lesson applies before either is adopted**:
+the height products disagree in ways structured by urban form, so a single one
+would import an unquantified error the way a single impervious product would
+have. This sits beside item 6 rather than above it, because it is a new
+covariate rather than a correction to an existing one.
+
 ### What gates what, in one paragraph
 
-**As of 12 September 2026 Tier 0 is complete and one item has been added above
-it**: re-blocking at six cells and re-running the baselines, which item 3's
-measurement makes the highest-value cheap item in the queue. The paragraph below
-describes the original structure and still holds for items 5 to 20.
+**As of 13 September 2026 Tier 0 is complete and three items sit above or beside
+it.** Item 0b, re-blocking at six cells, is the highest-value cheap item. Item
+0a, testing the coalfield's cells against the decay curve, is the cheapest and
+needs only committed artefacts. Item 6a, a building-volume or building-function
+covariate, is gated on verification rather than on any other item. The paragraph
+below describes the original structure and still holds for items 5 to 20.
+
+**And one thing the 13 September amendments reorder.** The region record now
+carries an omission rather than only confounds: part of the domain has an
+unrepresented major source and a missing predictor in the same cells. That makes
+item 0a a prerequisite for interpreting items 9 and 11 rather than an aside — an
+accuracy assessment and a de-attenuation computed over a domain containing cells
+whose emission neither predictor represents would attribute to measurement error
+what is actually omitted-variable bias.
 
 
 Item 1 gates the paper's framing and costs nothing, so it is first on both
