@@ -1156,6 +1156,37 @@ are the two priors whose substitution would most change a rice answer**, and an
 inversion reported without that ensemble would be reporting a number whose
 sensitivity to its own assumptions was never tested.
 
+### Added 15 September 2026, from drafting the methods section
+
+**0g. Record a pre-filter sounding count in the composite accumulator.** *Gated
+by nothing;* one additional counter in a streaming loop, and a re-run of a
+recipe that already regenerates from a fresh clone.
+[`notes/draft-methods.md`](draft-methods.md) cannot write the standard
+formulation — *N soundings were read, of which M passed quality control* —
+because the accumulator retains counts only after filtering. Every sounding count
+in this repository is post-filter, so the quality filter's rejection rate over
+this domain is unknown. **This is the cheapest item in the queue and the only one
+that a reviewer would certainly ask about**, since a methods section that reports
+a quality threshold without reporting what it removed is reporting half a filter.
+
+**0h. Name the primary target field, or justify reporting three.** *Gated by
+nothing*, because it is a decision rather than a computation. Four fields are
+carried and three have complete baseline suites; no record chose between them,
+and the draft chose the operationally bias-corrected field for a stated reason
+while noting that the choice was made at the keyboard. Either that choice gets
+ratified in the record, or the paper reports all three as co-primary and says
+why. **What it cannot do is leave the question implicit**, which is what six
+grounding passes did.
+
+**The draft also reorders one item already in the queue.** The IMI preview run
+was ranked most valuable by the capability reframing. Drafting sharpens the
+reason: the paper's central number — expected degrees of freedom for signal over
+this lattice — is now the only major figure in the methods section that no
+external tool has confirmed. Everything else is either a committed artefact with
+a resolver or a quotation from the literature. **That asymmetry is visible in the
+draft in a way it was not visible in the records**, and it is the strongest
+argument yet for spending the one free run.
+
 ### What gates what, in one paragraph
 
 **As of 13 September 2026 Tier 0 is complete and three items sit above or beside

@@ -86,23 +86,42 @@ read from each variable's own `_FillValue` attribute rather than assumed.
 The retained soundings number 110,920<!--#composite.soundings--> within the
 domain.
 
-### 2.4 Three methane fields, not one
+### 2.4 Four methane fields, not one
 
-Three column fields were carried through the analysis rather than one, and every
-result is reported against at least two of them:
+Four column fields were carried through the analysis rather than one:
 
-1. **The raw retrieval**, `methane_mixing_ratio`.
+1. **The raw retrieval**, `methane_mixing_ratio`. Gridded and reported, but not
+   used as a regression target.
 2. **The operationally bias-corrected retrieval**,
    `methane_mixing_ratio_bias_corrected`, which is the product's own destriping-
    and albedo-corrected field. Over this domain it exceeds the raw field by a
-   mean of 11.64<!--#composite.bias_mean--> ppb.
+   mean of 11.64<!--#composite.bias_mean--> ppb. This is the primary target.
 3. **The blended TROPOMI+GOSAT product** of Balasus et al. (2023), in which a
    machine-learning correction trained against GOSAT removes the bulk of the
    operational product's artefacts. This field is restricted to `qa_value ≥ 0.5`
    by its authors, a restriction that costs nothing here for the reason given in
    §2.3.
+4. **A deseasonalised field**, in which a region-wide seasonal cycle is removed
+   *at the sounding level* rather than from the cell means. The cycle is fitted
+   to every sounding individually as a fixed-effects model with one offset per
+   cell and harmonic coefficients shared across the domain, in a single streaming
+   pass. This is not the composite mean minus a cycle: once a cell mean exists,
+   the information about which days contributed has been averaged away, and
+   subtracting a cycle evaluated at the cell's mean sampling date does not
+   recover it, because the mean of a nonlinear function is not the function of
+   the mean. The field is accompanied by per-cell sampling-date diagnostics — mean
+   day of year, its standard deviation, and a flag for cells whose sampling dates
+   span under fifteen days — which state how far each value can be trusted.
 
-Carrying three fields rather than one is a deliberate design choice and not
+**The full baseline suite of §5 was run independently against fields 2, 3 and
+4**, giving three complete sets of 88 model-scheme-weighting results. Field 2 is
+reported as the primary target and the other two as tests of whether the result
+depends on the correction applied; the deseasonalised field specifically tests
+whether the association is an artefact of uneven sampling through the year, since
+sounding yield over this domain is strongly seasonal and runs against the rice
+growing season.
+
+Carrying four fields rather than one is a deliberate design choice and not
 redundancy. The choice of retrieval is not neutral: assimilating three TROPOMI
 methane products into one variational inversion over Europe for 2019 produced
 emission budgets of +2 %, −1 % and −33 % relative to the same prior, with machine
@@ -248,10 +267,12 @@ classification is a property of the product, not of the landscape.
 
 Both land-cover classes enter the analysis as per-cell fractions rather than as
 categories. For each cell, the fraction is the assessed impervious or rice area
-divided by the area actually assessed within that cell, computed on an
-equal-area basis; a separate coverage column records what share of each cell was
-assessed, so that a fraction is never formed against a denominator the product
-does not cover.
+divided by the area actually assessed within that cell. Areas are measured in an
+Albers Equal Area projection with standard parallels at 25° and 47° north and a
+central meridian at 105° east, rather than by counting pixels, because pixel
+count is not proportional to ground area across eight degrees of latitude. A
+separate coverage column records what share of each cell was assessed, so that a
+fraction is never formed against a denominator the product does not cover.
 
 Across the 926 covered cells the median impervious fraction is
 0.0595<!--#grid.impervious_median--> with
@@ -511,7 +532,7 @@ The association analysis of §5 is the empirical counterpart of §6.1 rather tha
 separate result. A record whose DOFS accumulates from uniformly weak per-cell
 sensitivity is a record in which per-cell predictors should fail, and §5 reports
 that they do, on two urban products, two rice products, two cross-validation
-schemes, two weightings and three methane fields. The negative result is
+schemes, two weightings and three target fields. The negative result is
 evidence that the information-content limit binds in practice and not only in
 arithmetic.
 

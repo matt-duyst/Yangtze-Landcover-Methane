@@ -4262,6 +4262,114 @@ readable. **That is now the gating question for the whole PPPM route** and it is
 one email or one library request away, which is why it is queued in
 `notes/paper-target.md` rather than left here.
 
+## What drafting the methods section exposed, 15 September 2026
+
+`notes/paper-target.md` recorded the absence of prose as the largest single gap.
+Writing [`notes/draft-methods.md`](draft-methods.md) closed part of it and, as
+the figure work did with the study extent, **drafting turned out to be a
+different test from recording.** A methods section has to be continuous: every
+sentence has to follow the last, every quantity has to have a value, and every
+step has to be described in an order. Six grounding passes never required any of
+those things, and what follows is what the requirement surfaced.
+
+### Decisions the records left open, which a continuous section cannot leave open
+
+**Which field is the primary target was never decided.** Four methane fields are
+carried — raw, operationally bias-corrected, blended, and deseasonalised — and
+three of them have complete 88-row baseline suites. No record states which one a
+paper's headline number comes from, because no record ever had to write a single
+sentence containing one. The draft names the operationally bias-corrected field
+as primary and the other two as tests of whether the result depends on the
+correction. **That is a decision made while drafting, not one recovered from the
+record**, and it is defensible for a stated reason — it is the product's own
+recommended field — rather than because anything here chose it.
+
+**The number of methane fields was wrong in the brief and in my own first
+draft.** Both said three. There are four. The deseasonalised field has its own
+composite, its own five-band raster, its own 88-row baseline suite and its own
+22-row diagnostic table, and it is the only one of the four that tests whether
+the association is an artefact of the sampling calendar — which, given that
+sounding yield over this domain runs against the rice growing season, is the
+single most relevant robustness check in the set. **It was omitted from a draft
+written by someone who had read every record in this repository**, which says
+something about how a fourth item in a list of three survives six passes.
+
+**The covariates have no recorded roles.** Seven are gridded and every record
+treats albedo as an artefact axis and wind as an alternative explanation. None
+says what solar zenith angle, surface altitude or surface pressure are *for*. A
+methods table needs a role column, so the draft assigns one to each — light-path
+length, column length, column mass — and those three assignments are inferences
+made at the keyboard. They are defensible and they are not sourced.
+
+**The cell size in kilometres is stated nowhere at the domain centre.**
+`figures/README_fragments.md` gives 24 by 28 km at 31.7° north, which is the
+latitude of the detail box over the Yangtze mouth rather than of the domain,
+whose centre is 31.075° north. Both latitudes round to the same figure, so
+nothing is wrong; but the number a methods section needs had to be recomputed
+rather than quoted.
+
+**Neither the model count nor the fit count is recorded anywhere.** The baseline
+suite holds 22 model specifications and 88 fitted model-scheme-weighting
+combinations per target field. Both had to be counted from the artefact. A
+methods section states both in its first sentence about the analysis.
+
+### Things the draft could not state because the work was not done
+
+These are distinct from the above: not undecided, but absent.
+
+**The composite records no pre-filter sounding count.** The accumulator retains
+per-cell sums and counts after filtering, so the number of soundings *read* from
+the 223 productive granules, and the number rejected by the quality filter, are
+not recoverable from any artefact. The standard methods formulation — "N
+soundings were read, of which M passed quality control" — **cannot be written.**
+Every count in the draft is post-filter. This is a queue item and it is cheap:
+the accumulator would need one more counter.
+
+**No accuracy assessment exists for either land-cover product**, which the draft
+states as a limitation on effect-size claims rather than on the capability
+claims. Already queued.
+
+**No prior-profile alignment exists for the TCCON comparison**, so the nine
+coincident days support a feasibility statement and nothing else. Already queued.
+
+**No inversion has been run**, so the capability section reports a
+reimplementation of a published closed-form estimate rather than a tool's own
+output. Already queued as the IMI preview, and `notes/paper-target.md` now ranks
+it the most valuable outstanding item precisely because the draft made the
+dependence visible: the paper's central number is currently the only major figure
+in it that no external tool has confirmed.
+
+### The mechanical gap drafting exposed, which was the largest
+
+**Tier 0 committed four artefacts and none of them could be quoted from prose.**
+The effective-degrees-of-freedom table, the residual range table, the buffered
+decay curve and the DOFS sweep had no resolvers in
+`scripts/verify_claims.py`, so every number the capability section rests on would
+have entered the draft unchecked and stayed unchecked. Under the earlier framing
+that was tolerable, because those artefacts supported a robustness argument.
+Under the capability framing they *are* the argument. Twenty-four resolvers were
+added for them.
+
+**The general point is about when a verification mechanism gets extended.** This
+repository's claim checker covers what someone thought to mark, and what gets
+marked is what gets written about. The Tier 0 artefacts were recorded, tested for
+reproducibility, and discussed at length in three files — and none of that
+required quoting a number from them in scanned prose, so none of it exposed the
+gap. **Drafting did, immediately, because a methods section cannot describe a
+computation without stating its result.**
+
+### Three errors of my own, caught before the commit
+
+Recorded because their detection method differs and that is the useful part. A
+fraction written as a percent was caught by the claim checker on the first run.
+Two negative R-squared values written with a Unicode minus sign were caught by
+the same run, because the marker's number pattern matches an ASCII hyphen and
+silently captured the digits without the sign — **a marked claim can be wrong in
+a way the marker does not see, if the character before the digits is not the one
+the pattern expects.** And the GAIA and GISA year-of-change directions were
+stated backwards, caught only by reading `config/sources.yml` before committing;
+the claim checker cannot see a prose statement with no number in it.
+
 ## The register audit of 14 September 2026, and the general point it makes
 
 Two defects in committed register entries were found on 13 September, both by
