@@ -84,6 +84,11 @@ DOI_IN_PROSE = re.compile(r"`(10\.\d{4,9}/[^`\s]+)`")
 EXCLUDED = {
     "ISO 5807:1985": "a standard, not a paper; no DOI exists",
     "Chaudhuri (2020)": "a textbook; no DOI exists",
+    "Atmospheric Chemistry and Physics (2026), review criteria":
+        "a journal policy page rather than a work; there is no identifier to "
+        "negotiate. Its text was fetched from the journal's own site on "
+        "NEGOTIATED and it is cited for the novelty criterion the paper's "
+        "framing has to pass",
     "Zhang, W., and others (2026), Scientia Agricultura Sinica":
         "the DOI 10.3864/j.issn.0578-1752.2026.04.009 resolves, but the "
         "publisher serves HTML rather than honouring Accept: "
@@ -377,6 +382,12 @@ KEYS = {
     "10.15138/qn55-e011": "sherwood2020signatures",
     "10.1029/2021GB007000": "lan2021d13c",
     "10.5194/acp-26-7765-2026": "yao2026southasia",
+    # the reviewer pass, 14 September 2026
+    "10.5194/acp-18-8265-2018": "turner2018capability",
+    "10.5194/acp-22-9617-2022": "jacob2022quantifying",
+    "10.5194/egusphere-2025-5923": "montenegro2025capability",
+    "10.1371/journal.pone.0282839": "chong2023publicationbias",
+    "10.48550/arXiv.1208.2651": "boulesteix2012plea",
 }
 
 HEADER = """% Verified reference register for Yangtze-Landcover-Methane.

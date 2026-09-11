@@ -23,7 +23,7 @@ instance was met on 10 September 2026 and not acted on: the ChinaRiceCalendar
 deposit's author field gives two of eleven authors with their given and family
 names run together, and the paper's citation is carried instead.
 
-`notes/references.bib` carries one hundred eighty-nine entries as BibTeX. It is
+`notes/references.bib` carries one hundred ninety-four entries as BibTeX. It is
 **generated**, not typed: each entry comes from `https://doi.org` under content
 negotiation for `application/x-bibtex`, so the two files cannot drift and no
 transcription step exists between the registry and the repository. Regenerate it
@@ -37,7 +37,7 @@ class of assertion this repository has twice found to be false elsewhere.
 `tests/test_references.py` asserts, without touching the network, that the DOIs
 in this file and the DOIs in the BibTeX are the same set.
 
-Three entries in this register are **not** in the BibTeX and cannot be. ISO
+Four entries in this register are **not** in the BibTeX and cannot be. ISO
 5807:1985 is a standard and Chaudhuri (2020) is a textbook; neither has a DOI,
 so no content negotiation produces them, and typing them by hand would break
 the only guarantee that file makes. Both are under *The diagram sources* below.
@@ -45,7 +45,10 @@ the only guarantee that file makes. Both are under *The diagram sources* below.
 others (2026) in *Scientia Agricultura Sinica* has a DOI that resolves, but the
 publisher answers a BibTeX content-negotiation request with HTML, so the
 generator cannot produce an entry for a work that does have an identifier. Its
-DOI is written without backticks so the generator does not claim it.
+DOI is written without backticks so the generator does not claim it. **The
+fourth, added 14 September 2026, has no identifier at all**: *Atmospheric
+Chemistry and Physics*'s review criteria page, cited for the novelty criterion
+the paper's framing must pass, is a journal policy rather than a work.
 
 This register does **not** include the 2023 thesis's own reference list, which
 is in `writeup/Duyst_Thesis.pdf` and belongs to that document. Where the errata
@@ -54,12 +57,20 @@ discusses a work the thesis cites, the work appears here and its role says so.
 ## What could not be verified
 
 Nothing in the register failed to verify **as a work**. All one hundred
-eighty-nine cited DOIs resolved: one hundred seventy-two through Crossref and
-seventeen through DataCite, which is the registry that carries dataset and preprint DOIs
-and the reason a Crossref-only lookup returns "not found" for them. **The
-register now holds one preprint**, marked as one where it is cited; Copernicus
-registers its discussion papers with Crossref, so it is not among the DataCite
-seventeen.
+ninety-four cited DOIs resolved: one hundred seventy-six through Crossref and
+eighteen through DataCite, which is the registry that carries dataset and preprint DOIs
+and the reason a Crossref-only lookup returns "not found" for them.
+
+**A correction about preprints, which was wrong when first written.** A sentence
+added on 13 September said "the register now holds one preprint". It held six at
+the time — six arXiv entries, each correctly labelled *preprint* in its own role
+line — and the sentence was counting Copernicus discussion papers while saying
+something broader. **The register holds nine preprints**, six on arXiv and three
+as Copernicus discussion papers, and every one of them says so in its role. Two
+of the nine are relied on for findings available nowhere peer-reviewed and are
+flagged as such where they are cited; the rest are borrowed-method or contested
+entries. Copernicus registers its discussion papers with Crossref, so none of
+the three is among the DataCite eighteen.
 
 **Five further DOIs appear in this register and are not citations.** They are
 named to warn against them, and `scripts/build_references_bib.py` holds them in
@@ -2839,6 +2850,138 @@ rice signature at −53.8 is enriched past the waste average of −56.1, so regi
 dual-isotope work can separate what global means cannot. **The equivalent
 campaign for China has not been done**, and this domain is where it would be
 worth doing.
+Cited in `notes/paper-target.md`.
+
+---
+
+## The reviewer pass, added 14 September 2026
+
+Five entries from three rounds that asked what a reviewer would object to, which
+`notes/paper-target.md` had recorded as a pass never run. **It is the smallest
+group the register has taken and it changed the paper's framing**, which is a
+reminder that round count and value are unrelated.
+
+**Two of its four premises did not survive and are recorded here rather than
+only in the pass.** The *Journal of Remote Sensing*'s reviewer guidelines were
+offered as the source of the novelty criterion. The page exists and is the
+journal's own, at `spj.science.org/page/remotesensing/for-reviewers`, and it
+could not be read: the host returns 403 to every route tried, and a
+neutrally-phrased search — one that did not contain the sentences being looked
+for — returned different content from the same pages. So the quotation could not
+be distinguished from an echo of the query and **is not written anywhere**. The
+criterion is instead taken from *Atmospheric Chemistry and Physics*, whose review
+criteria page was fetched successfully and which is a likelier venue for this
+work.
+
+And two claims about *Remote Sensing of Environment* — that it rejects
+algorithm-development papers lacking an environmental application, and that it
+requires a map disclaimer — reached the pass from a commercial pre-submission
+review service. **Neither could be verified against RSE's own author
+guidelines**, which are on hosts that refuse automated requests. The first is not
+recorded at all. The second is recorded against the study-area figure as an
+Elsevier-wide convention rather than as an RSE requirement, and
+`figures/README_fragments.md` says so.
+
+### The novelty criterion, from a journal's own page
+
+**Atmospheric Chemistry and Physics (2026).** Manuscript review criteria.
+Copernicus Publications.
+No DOI — a journal policy page rather than a work, at
+`atmospheric-chemistry-and-physics.net/peer_review/review_criteria.html`, fetched
+14 September 2026. **A finding relied on, and the test the paper's framing has to
+pass.** Its first principal criterion is "Scientific significance — Does the
+manuscript represent a substantial contribution to scientific progress within
+the scope of Atmospheric Chemistry and Physics (substantial new concepts, ideas,
+methods, or data)?"; reviewers are asked whether a paper "present[s] novel
+concepts, ideas, tools, or data"; authors must "clearly indicate their own
+new/original contribution"; and a revised manuscript must be rated "good to
+outstanding" on every principal criterion to be accepted. **It is named in
+`EXCLUDED` for the same reason as the standard and the textbook**: there is no
+identifier to negotiate, so no entry can be generated.
+Cited in `notes/paper-target.md`.
+
+### Capability assessment as a paper type
+
+**Turner, A. J., Jacob, D. J., Benmergui, J., Brandman, J., White, L., and
+Randles, C. A. (2018).** Assessing the capability of different satellite
+observing configurations to resolve the distribution of methane emissions at
+kilometer scales. *Atmospheric Chemistry and Physics* 18, 8265–8278.
+`10.5194/acp-18-8265-2018` — peer-reviewed paper; **a finding relied on, and the
+precedent that makes this project's framing a contribution rather than an
+assertion.** It frames the question as one of "limitations from instrument
+precision, pixel resolution, and measurement frequency" and states that "the
+extent to which [dense observations] can provide fine-scale information on
+methane sources has yet to be explored". **It is an observing system simulation
+experiment** — five configurations against a WRF-STILT truth field, not real
+observations — which is the distinction this project's version turns on.
+Cited in `notes/paper-target.md`.
+
+**Jacob, D. J., Varon, D. J., Cusworth, D. H., Dennison, P. E.,
+Frankenberg, C., Gautam, R., Guanter, L., Kelley, J., McKeever, J., Ott, L. E.,
+Poulter, B., Qu, Z., Thorpe, A. K., Worden, J. R., and Duren, R. M. (2022).**
+Quantifying methane emissions from the global scale down to point sources using
+satellite observations of atmospheric methane. *Atmospheric Chemistry and
+Physics* 22, 9617–9646.
+`10.5194/acp-22-9617-2022` — peer-reviewed review; **a finding relied on, and
+the source of the vocabulary that places this paper in an existing
+conversation.** "We cover retrieval methods, precision and accuracy
+requirements, inverse and mass balance methods for inferring emissions, source
+detection thresholds, and observing system completeness." **Completeness is
+defined twice, once per instrument class**, and the second definition is the one
+that applies here: for point-source imagers it is the interplay of "detection
+threshold, spatial coverage, and return time"; for **area flux mappers**, which
+is what TROPOMI on a 25 km grid is, it is the interplay of "pixel size, retrieval
+precision, observation density, fraction of successful retrievals, and return
+times" — item for item this project's own measured quantities.
+Cited in `notes/paper-target.md`.
+
+**Montenegro, N., Berchet, A., Martinez, A., Thanwerdas, J., Bousquet, P.,
+Pison, I., and Saunois, M. (2025).** Capability of current observing systems to
+monitor CH4 emissions from the regional to the global scales. EGUsphere
+preprint.
+`10.5194/egusphere-2025-5923` — **preprint, not peer-reviewed**; a finding
+relied on, and the register's second preprint. Discussion opened 23 December
+2025. "Global-scale uncertainties in total CH4 emissions are relatively small
+(±5%), they increase significantly at regional scales exceeding ±20% for high
+latitudes"; "differences in satellite and in situ measurement uncertainties, as
+well as variations in data density, further influence the precision of CH4 flux
+estimates"; and the benefits of sectoral disaggregation "are amplified in
+high-emission regions due to larger absolute uncertainties and more complex
+source mixtures". **The last phrase describes this project's domain from the
+outside**, which is why the entry is kept despite its status.
+Cited in `notes/paper-target.md`.
+
+### Publication bias, which turned out to be the weaker worry
+
+**Chong, S. W., Imberger, G., Karahalios, A., Wang, A., Burggraf, M., Louis, M.,
+Liskaser, G. M., Bianco, A., and Peyton, P. J. (2023).** The relationship between
+study findings and publication outcome in anesthesia research following
+implementation of mandatory trial registration: A systematic review of
+publication bias. *PLOS ONE* 18, e0282839.
+`10.1371/journal.pone.0282839` — peer-reviewed paper; a finding relied on, and
+**the one that dissolved a worry several passes had carried.** The odds ratio for
+abstracts with positive results proceeding to publication over those with null
+results was "2.01 [95% confidence interval (CI): 1.52, 2.66; P < 0.001]" before
+mandatory trial registration and "1.28 [95% confidence interval (CI): 0.97,
+1.67; P = 0.076]" after, becoming significant only under adjustment for sample
+size and abstract quality, at "OR 1.34; 95% CI: 1.02 to 1.76; P = 0.037". It is
+anesthesia rather than atmospheric science, which is a limit on transfer and the
+reason it is the *only* field where the before-and-after comparison exists.
+Cited in `notes/paper-target.md`.
+
+**Boulesteix, A.-L., and Eugster, M. J. A. (2012).** A Plea for Neutral
+Comparison Studies in Computational Sciences. arXiv.
+`10.48550/arXiv.1208.2651` — **preprint, not peer-reviewed**; a finding relied
+on, and the source that arrived at this project's framing from a different
+direction. "Comparison studies can be a good vehicle for negative research
+findings", and "the systematic exclusion of negative results from publication
+might in some cases be misleading". **Its qualification is the more useful
+half**: it is "impossible (and uninteresting anyway) to publish all negative
+results", and the recommendation is that "the publication of negative findings
+within large well-designed comparison studies would be a sensible compromise in
+order to diffuse negative findings without congesting the literature with
+negative papers" — which is the capability framing, reached from publication
+ethics rather than from remote sensing.
 Cited in `notes/paper-target.md`.
 
 ---

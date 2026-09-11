@@ -56,6 +56,228 @@ include".** A paper either does the thing or explains why it cannot be done.
 That is why the emissions feasibility question matters, and why the first item
 in the queue below is the free preview that answers it.
 
+### What a reviewer would object to, and the answer
+
+Added 14 September 2026, from the reviewer pass this file recorded as never
+having been run. **Every earlier round followed what was interesting, which is a
+more generous filter than a reviewer's and surfaces different literature.** Three
+rounds asked instead what someone assigned to reject this paper would say. They
+found one serious objection, two secondary ones, one unfounded worry, and — not
+expected — the answer to the serious objection.
+
+#### The serious objection: every component already exists
+
+The novelty criterion is universal and it is written down. *Atmospheric Chemistry
+and Physics*, the venue most of this project's methane literature sits in, gives
+as its first principal review criterion **"Scientific significance — Does the
+manuscript represent a substantial contribution to scientific progress within the
+scope of Atmospheric Chemistry and Physics (substantial new concepts, ideas,
+methods, or data)?"**, asks reviewers whether a paper "present[s] novel concepts,
+ideas, tools, or data", requires authors to "clearly indicate their own
+new/original contribution", and requires a revised manuscript to be rated "good
+to outstanding" on every principal criterion to be accepted (ACP review
+criteria, journal's own page, fetched 14 September 2026).
+
+**Now apply it honestly, component by component.** Every part of this project's
+central finding is already published somewhere:
+
+* That local XCH4 variation over **Southeast China specifically** is driven more
+  by advected than by locally emitted methane is Zeng et al. (2021), and
+  [`notes/grounding-rice.md`](grounding-rice.md) records it as an adverse finding
+  naming this region.
+* The albedo dependence of the TROPOMI retrieval is documented by Lorente et al.
+  and is the reason the blended product Balasus et al. built exists, both already
+  in the register.
+* A transport error of 12 ppb at 25 km with a 6-hour error correlation is
+  Sheng et al. (2018), and [`notes/grounding-methods.md`](grounding-methods.md)
+  carries it as the ceiling on the whole enterprise.
+* That inversion cannot separate interspersed sources is Desjardins et al.
+  (2018), quoted in this file's synthesis section.
+* And that degrees of freedom for signal bound what an observing system can
+  resolve is standard Rodgers optimal-estimation theory, which
+  `notes/grounding-methods.md` records as the field's own information metric.
+
+**So a reviewer can say, correctly, that the paper confirms known limitations in
+a new place.** "We reproduced a null in a new region" does not survive the
+criterion above, and it should not: a substantial contribution has to be more
+than a fifth instance of a documented effect. **This is the objection to prepare
+for, not a fatal problem**, and the section after next supplies what answers it.
+
+#### Two secondary objections, both already in the queue
+
+**One year of one instrument.** The comparable studies in this register use
+multi-year records — three years for the Greater Bay Area inversion, four for
+the urban-trend paper, two decades for the sub-national budget. A reviewer will
+ask why not extend, and the answer has to be given rather than avoided: 2018 is
+the first year of the TROPOMI record, it is the 2023 thesis's own analysis year,
+and IMI's invertible archive begins one month before this project's first
+granule. None of that is a reason not to extend; all of it is a reason the
+single year is where the work started. **The paper must answer this question in
+its own voice.**
+
+**No validation and no accuracy assessment.** The Hefei TCCON comparison is nine
+coincident days with no prior alignment, and no land-cover layer here has an
+accuracy assessment at all. Both are already queued, and both are honest
+limitations rather than oversights — `notes/grounding-methods.md` records that
+Olofsson's first three recommendations apply and are unmet, and that no
+distributed reference data exists for the impervious products.
+
+#### The unfounded worry: publication bias against null results
+
+This was carried as a background concern across several passes and it is weaker
+than assumed, which is worth knowing rather than worrying about.
+
+Mandatory trial registration cut the effect sharply in the one field where it has
+been measured before and after. In anesthesia research, the odds ratio for
+abstracts with positive results proceeding to publication over those with null
+results was **"2.01 [95% confidence interval (CI): 1.52, 2.66; P < 0.001]"**
+before mandatory registration and **"1.28 [95% confidence interval (CI): 0.97,
+1.67; P = 0.076]"** after — not significant — becoming significant only under
+adjustment for sample size and abstract quality, at **"OR 1.34; 95% CI: 1.02 to
+1.76; P = 0.037"** (Chong, S. W., Imberger, G., Karahalios, A., Wang, A.,
+Burggraf, M., Louis, M., Liskaser, G. M., Bianco, A., and Peyton, P. J., 2023,
+*PLOS ONE* 18, e0282839, doi:10.1371/journal.pone.0282839).
+
+And the computational-sciences literature argues the opposite way about vehicles
+for negative findings. **"Comparison studies can be a good vehicle for negative
+research findings"**, and **"the systematic exclusion of negative results from
+publication might in some cases be misleading"** (Boulesteix, A.-L. and
+Eugster, M. J. A., 2012, *A plea for neutral comparison studies in computational
+sciences*, arXiv, doi:10.48550/arXiv.1208.2651). **That paper also supplies the
+qualification, which is the more useful half**: it is "impossible (and
+uninteresting anyway) to publish all negative results", and the authors'
+recommendation is that "the publication of negative findings within large
+well-designed comparison studies would be a sensible compromise in order to
+diffuse negative findings without congesting the literature with negative
+papers."
+
+**State the conclusion, because it redirects the worry.** A null result is not
+the obstacle; the novelty framing is. And the remedy the second source
+recommends — carry the negative finding inside a larger, well-designed
+assessment rather than as a paper of its own — is the framing the next section
+adopts, arrived at from a completely different direction.
+
+### Capability assessment is an established contribution with its own vocabulary
+
+The answer to the objection is that this project's finding is not a null result
+about land cover. It is a capability assessment, and capability assessment is a
+recognised paper type in exactly the venues this work would go to.
+
+**The type exists and is cited.** Turner, A. J., Jacob, D. J., Benmergui, J.,
+Brandman, J., White, L., and Randles, C. A. (2018), *Assessing the capability of
+different satellite observing configurations to resolve the distribution of
+methane emissions at kilometer scales*, *Atmospheric Chemistry and Physics* 18,
+8265–8278, doi:10.5194/acp-18-8265-2018, frames the question as one of
+"limitations from instrument precision, pixel resolution, and measurement
+frequency", and states that "the extent to which [dense observations] can provide
+fine-scale information on methane sources has yet to be explored". It assesses
+five configurations — TROPOMI at 7 × 7 km² and 11 ppb daily, three GeoCARB
+variants, and a hypothetical 1.3 × 1.3 km² 1 ppb hourly instrument — **through an
+observing system simulation experiment with WRF-STILT, not against real
+observations.**
+
+**And the type has a review that supplies the vocabulary.** Jacob, D. J.,
+Varon, D. J., Cusworth, D. H., Dennison, P. E., Frankenberg, C., Gautam, R.,
+Guanter, L., Kelley, J., McKeever, J., Ott, L. E., Poulter, B., Qu, Z.,
+Thorpe, A. K., Worden, J. R., and Duren, R. M. (2022), *Atmospheric Chemistry
+and Physics* 22, 9617–9646, doi:10.5194/acp-22-9617-2022: "We cover retrieval
+methods, precision and accuracy requirements, inverse and mass balance methods
+for inferring emissions, source detection thresholds, and **observing system
+completeness**."
+
+**The term and its content are worth quoting exactly, because the brief that
+commissioned this pass had the wrong half of it.** Observing system completeness
+is defined twice in that review, once per instrument class. For point-source
+imagers it is the interplay of "detection threshold, spatial coverage, and return
+time". For **area flux mappers**, which is what TROPOMI on a 25 km grid is, it is
+the interplay of "pixel size, retrieval precision, observation density, fraction
+of successful retrievals, and return times". **The second list is this project's
+own measured quantities**, item for item: 0.25 degrees, the retrieval's
+uncertainty, 110,920<!--#composite.soundings--> soundings over
+926<!--#composite.covered_cells--> cells, and a coverage fraction that
+`data/processed/README.md` documents. So the paper is not inventing a frame; it
+is filling in one the field has already named for instruments of this class.
+
+A third source is a preprint and is recorded as one. Montenegro, N.,
+Berchet, A., Martinez, A., Thanwerdas, J., Bousquet, P., Pison, I., and
+Saunois, M. (2025), *Capability of current observing systems to monitor CH4
+emissions from the regional to the global scales*, EGUsphere,
+doi:10.5194/egusphere-2025-5923, discussion opened 23 December 2025. It reports
+that while "global-scale uncertainties in total CH4 emissions are relatively
+small (±5%), they increase significantly at regional scales exceeding ±20% for
+high latitudes", that "differences in satellite and in situ measurement
+uncertainties, as well as variations in data density, further influence the
+precision of CH4 flux estimates", and that the benefits of sectoral
+disaggregation "are amplified in high-emission regions due to larger absolute
+uncertainties and **more complex source mixtures**". That last phrase is this
+project's domain described from the outside.
+
+### What distinguishes this project's version, which is the novelty claim
+
+This is what the paper rests on and it should be written carefully.
+
+**The existing capability literature is simulations and surveys.** Turner et al.
+is an OSSE: an observing system posited, a truth field posited, and the
+recoverability of the second from the first computed. Jacob et al. is a review of
+what instruments could do in principle. The Montenegro preprint works at
+regional-to-global scale across an ensemble. **None of them is a capability
+assessment of a real, sparse column record over one region whose sources
+overlap.**
+
+**And this project's assessment carries two limits where the literature's carry
+one.** An OSSE measures information content: whether the observations can resolve
+a posited flux field. It does not measure whether the resolved field could be
+attributed to a sector, because in an OSSE the sectors are separate by
+construction.
+
+*The information-content limit.* Expected degrees of freedom for signal accrue
+across many weakly constrained cells rather than a few well constrained ones, so
+a regional total is constrainable and cell-level attribution is not.
+[`notes/decisions.md`](decisions.md) holds the figures — 3.98 to 22.21 over the
+5 to 12 Tg a⁻¹ band the literature supports for this domain — together with the
+qualification that must travel with them: **they are a reimplementation of IMI's
+own closed-form estimate evaluated locally, not an inversion run**, and no cell
+in the swept range reaches an averaging-kernel sensitivity above 0.5.
+
+*The identifiability limit.* Even where a total is constrained, sectoral
+attribution comes from the prior's spatial distinctness rather than from the
+observations — the synthesis section below establishes that from one inversion's
+posterior error correlations, below 0.35 for coordinate-mapped landfills against
+0.45 to 0.87 for three population-allocated sectors — and this domain's sources
+are interspersed in every direction at once.
+
+**The relation between them is the sharpest form of the claim.** Either limit
+alone says the question is not answerable as asked. **Together they say why no
+refinement of the same design would fix it**: more observations raise the degrees
+of freedom and do nothing to the identifiability, and a better prior sharpens
+attribution without adding information the observations do not carry. That
+conjunction is what is new here, and it is new because it requires a real domain
+with overlapping sources — which is precisely what an OSSE abstracts away.
+
+### The transfer argument, because a single-region study has to earn its lesson
+
+The standing objection to a one-region study is that the general lesson is
+asserted rather than derived. Here it can be derived, and the reason is worth
+stating plainly: **neither limit comes from anything particular to the Yangtze
+River Delta.**
+
+The degrees-of-freedom estimate uses IMI's own published formula with IMI's own
+default parameters, and `notes/decisions.md` records the reimplementation and its
+inputs. The transport-error ceiling, the interspersed-source limit and the
+identifiability mechanism are general results taken from the literature rather
+than measured here. **The region supplied the numbers; it did not supply the
+structure.**
+
+So the claim that travels is this: **any mixed-source region observed at 25 km
+with comparable observation density faces both limits, and the region's
+particulars set the magnitudes rather than the structure.** A region with denser
+coverage moves the degrees of freedom and leaves the identifiability untouched. A
+region whose sources are spatially separate moves the identifiability and leaves
+the information content untouched. The Yangtze River Delta is unusual only in
+having both problems at their most acute — three of nine Chinese sub-national
+regions' worth of emissions on under a third of the land, with rice, aquaculture,
+wetland, coal, waste and gas distribution interleaved across the same cells.
+
 ### The candidate framings, in the order they are currently defensible
 
 **A reproduction paper.** Land cover does not explain the observed methane field
