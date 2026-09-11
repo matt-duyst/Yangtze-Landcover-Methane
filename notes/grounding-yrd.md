@@ -129,8 +129,10 @@ peak at day of year 245.8, which is 2 September 2018, and its trough at day
 144.7, 24 May. The peak sits **inside** the middle-rice window, three weeks
 before maturity. So it is not the case that the column field carries no seasonal
 signature timed like rice; it carries one. What the annual composite does is
-average that signature against a sounding distribution weighted two to one
-towards the months after it. The amplitude of that fit must not be quoted as an
+average that signature against a sounding distribution weighted three to one
+towards the days after it: 83,773 soundings, 75.5 percent of the total, fall
+after day 245.8, against 27,147 on or before it. The amplitude of that fit must
+not be quoted as an
 estimate of the region's annual XCH4 cycle, for the reason
 `data/processed/README.md` gives: there are no soundings before day 120, so the
 fit extrapolates across a third of the year. The phase sits mid-window and is
@@ -376,7 +378,8 @@ when the modelled crop is flooded, while the field's own fitted cycle peaks
 inside it, so the annual mean averages a real seasonal signature against a
 sounding distribution weighted against it. And the **meteorological feedback**
 makes impervious fraction a proxy for boundary-layer depth and wind speed as
-well as for emission, in a direction this study cannot sign.
+well as for emission, in a direction this study cannot sign. Three quarters of
+the composite's soundings fall after the field's own seasonal peak.
 
 A negative result explained by three mechanisms is a different kind of finding
 from a negative result left unexplained, and it is the form the paper should
@@ -427,6 +430,12 @@ verified**: 416 samples, 252.17 against 146.02 kg per hectare, and a factor of
 Zhao et al. (2026) exists and resolves, and its **numerical results could not be
 verified**: a leakage rate of 3.5 percent with a range of 2.5 to 4.3, against
 0.2 percent in inventories, comes from a press summary and not from the paper.
+
+One figure in this note's own first draft understated itself and is corrected
+here rather than silently: the sounding distribution is weighted **three** to
+one towards the days after the field's fitted seasonal peak, not two to one.
+75.5 percent of the soundings fall after day 245.8. The error was in the
+direction of weakening the finding.
 
 One premise was verified and is recorded here because the repository states it
 two ways. The coastline's median sounding count against pure land's is 6 against
