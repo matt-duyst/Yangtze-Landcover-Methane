@@ -86,6 +86,38 @@ station's existence and its figures are not the uncertainty; the data route is.
 | Olofsson et al. (2014) | The good-practice standard for area estimation and accuracy assessment | in the register | — | — | The standard a reviewer will check against. **Its first three recommendations apply here and are unmet; its last two do not apply at all**, because it contains no treatment of fractional cover | in the register |
 | NLCD percent-impervious assessment | Mean deviation, mean absolute deviation and OLS regression against a more accurate reference fraction | in the register | — | — | **The correct frame for this study's layers**, which are per-cell fractions rather than a categorical map, and the measurement of how error falls as the aggregation unit grows | in the register |
 
+## The inversion route, added 11 September 2026
+
+[`notes/grounding-methods.md`](grounding-methods.md) establishes that the field
+solves this class of problem by Bayesian inversion rather than by regression with
+corrections, and that a purpose-built open tool exists. These are the candidates
+that route implies. **The layer pass that should verify them is a new one**, an
+inversion feasibility pass, because none of them belongs to the rice or urban
+layer.
+
+| Candidate | What it is | Route | Licence | Coverage | What it serves | Status |
+|---|---|---|---|---|---|---|
+| **IMI 2.0** | Open-access cloud tool giving sector-resolved methane emissions at up to 0.25° × 0.3125° by analytical inversion of TROPOMI with closed-form error characterisation — the same resolution as this project's lattice, and it ingests the blended TROPOMI+GOSAT field already committed here | Three documented routes: the free IMI product on the AWS Marketplace, the source from GitHub for a local cluster, and the Integral Earth web interface | open access; the paper is CC-BY | TROPOMI record from 2018, with the blended dataset kept current on AWS | **The preview answers, for free, whether TROPOMI can constrain emissions over this domain** — the question the flux-divergence gate could not answer. "The IMI Preview has no significant costs, and we strongly recommend using it." It reports expected DOFS, the dollar cost of a full run, and SWIR albedo as an artefact indicator | documented only |
+| GRPI emission factors | The global compilation of 2,301 rice paddy field measurements behind a generalised additive model of growing-season emission factors, as a function of soil texture, pre-season water status, water regime, planting method, cultivar, organic amendment and climate zone | deposit route not established; the paper is paywalled | unknown | global, by country | **The function that turns a rice map into an emission estimate.** Every predictor in the model is a mechanism `notes/grounding-yrd.md` already identifies | unverified |
+| 30 m global cropland database | The cropland layer GRPI combines with its flooded-vegetation algorithm | not established | unknown | global, 30 m | The second half of GRPI's rice-area method, and a possible independent check on the NESDC layer | unverified |
+
+## Urban and waste facilities, added 11 September 2026
+
+[`notes/grounding-urban.md`](grounding-urban.md) establishes that the dominant
+urban methane sector is landfills, that landfills are quantifiable because they
+are mapped on facility coordinates, and that population-like fractional proxies
+cannot separate the sectors allocated by them. **These are therefore the
+candidates that matter for the urban layer, and the urban layer pass should
+verify them.** None is a raster; all are facility inventories, which is the
+point.
+
+| Candidate | What it is | Route | Licence | Coverage | What it serves | Status |
+|---|---|---|---|---|---|---|
+| Underground wastewater treatment plants | A dataset of the distribution and characterisation of underground wastewater treatment plants in China, with spatial distribution, process and discharge standards; underground plants are noted as preferring southeastern coastal locations, which is this domain | Scientific Data record, `10.1038/s41597-024-03815-x` | article licence, deposit terms not checked | published 2024 | Facility coordinates for one of the three population-allocated sectors, in the region where they concentrate. **The premise carried into this entry said 201 underground and 2,464 aboveground plants; the record's title names underground plants only** and the aboveground count is unverified | documented only |
+| MSW landfill site database | Site-specific information for more than 300 major municipal solid waste landfills in China, with emissions by IPCC first-order decay from 1.015 Mt in 2005 to a peak of 2.161 Mt around 2015 and 1.98 Mt in 2023, compared against hyperspectral satellite observations at three sites | no deposit named in the paper, `10.1016/j.jenvman.2026.128672` | unknown | 2005–2023 | **The highest-value urban candidate.** Facility coordinates for the sector that dominates urban methane and that the separability finding says is the only one quantifiable. Whether the database is distributed is the thing to establish | unverified |
+| China oil and gas CH4 database | Methane emissions from China's oil and gas systems 1990–2022, about sevenfold growth from 0.5 to 4.0 Tg per year, with 80 percent of emissions tracked as refineries, facilities, pipelines and field sources, and city-level distribution pipeline lengths | Nature Communications, `10.1038/s41467-025-58237-z`; deposit route not established | article licence | 1990–2022, annual | City totals for gas distribution, which is the sector whose published global product is faulted for allocating "only based on population densities without using an urban land cover map". **That named deficiency is what this project's impervious layer is.** The claim that pipeline lengths cover 347 prefecture-level cities is unverified | documented only |
+| GHGSat global waste survey | 1,447 clear-sky observations from GHGSat C1–C5 of 151 waste disposal sites across 130 urban areas in 47 countries over six continents, 2021–2022, totalling 2.8 Mt CH4 per year | Nature, `10.1038/s41586-025-09683-8` | article licence | 2021–2022 | Point-source quantification of the dominant sector. It includes an example plume from a wastewater treatment plant near Shanghai, **which was filtered from the analysis** and so is an illustration rather than a quantified emission. TROPOMI plumes were detected for 46 of the 130 urban areas | documented only |
+
 ## The highest-value unverified items
 
 The brief that produced this file named three: the CCD-Rice polygons for rice
@@ -109,6 +141,21 @@ restrictive here, so the constraint needs establishing before work depends on
 it; and the **in-domain surface records** at Lin'an and Suzhou, because they are
 the only independent measurements of this region's methane seasonality and
 neither has a known route.
+
+**On 11 September 2026 a fourth joined them and it outranks all three.** The
+**IMI 2.0 preview** is free, is documented as strongly recommended before any
+full run, ingests the exact blended product this repository committed, and
+reports the expected degrees of freedom for signal over a user-chosen domain. It
+answers whether TROPOMI can constrain methane emissions over these four
+provinces at all — a question `notes/decisions.md` records as gated by a
+flux-divergence feasibility test that could not answer it. It is the cheapest
+unverified item in this file and the one with the largest consequence for what
+the project can claim.
+
+Behind it, the **MSW landfill site database** is the highest-value urban
+candidate, because the urban grounding establishes that landfills dominate urban
+methane and that they are quantifiable only through facility coordinates, which
+is the one thing a fractional layer cannot supply.
 
 ## What this file is for
 
