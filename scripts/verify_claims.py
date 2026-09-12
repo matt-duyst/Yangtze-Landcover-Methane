@@ -347,6 +347,17 @@ def _albedo_series_slope(series: str) -> float:
     raise KeyError(series)
 
 
+def _albedo_series_pearson(series: str) -> float:
+    """Unweighted SWIR albedo Pearson correlation, for one series."""
+    if "albedo_corr" not in _cache:
+        _cache["albedo_corr"] = _read_csv(PROCESSED / "albedo_correction_2018.csv")
+    for r in _cache["albedo_corr"]:
+        if (r["albedo"] == "surface_albedo_SWIR" and r["series"] == series
+                and r["weighting"] == "unweighted"):
+            return float(r["pearson"])
+    raise KeyError(series)
+
+
 def _deseason(predictor: str, column: str) -> float:
     """One cell of the deseasonalisation comparison, unweighted."""
     if "deseason" not in _cache:
@@ -840,6 +851,18 @@ QUANTITIES = {
     "field.sd_blended": lambda: _field_sd("blended"),
     "field.sd_deseasonalised": lambda: _field_sd("deseasonalised"),
     "albedo.slope_deseasonalised": lambda: _albedo_series_slope("deseasonalised"),
+    # Added 16 September 2026, when the blended series was added to the
+    # artefact. The measurement already existed in `notes/decisions.md` under
+    # *The albedo dependence rose*; what it lacked was a row anything could
+    # resolve, which is why the results draft could not quote it.
+    "albedo.slope_blended": lambda: _albedo_series_slope("blended"),
+    "albedo.pearson_blended":
+        lambda: _albedo_series_pearson("blended"),
+    "albedo.pearson_corrected":
+        lambda: _albedo_series_pearson("bias corrected"),
+    "albedo.blended_over_corrected_percent":
+        lambda: 100.0 * (_albedo_series_slope("blended")
+                         / _albedo_series_slope("bias corrected") - 1.0),
     "albedo.slope_correction": lambda: _albedo_series_slope("the correction itself"),
     # The land-cover models and the spatial null on each field, under the
     # scheme and weighting the draft reports as primary.

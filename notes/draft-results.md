@@ -32,11 +32,17 @@ covered cells are 14.40<!--#field.sd_raw--> ppb for the raw retrieval,
 13.26<!--#field.sd_deseasonalised--> ppb deseasonalised. The unweighted
 regression slope of the field on shortwave-infrared albedo is
 203.9<!--#albedo.slope_raw--> ppb per unit albedo raw,
-199.7<!--#albedo.slope_corrected--> ppb operationally corrected and
-172.5<!--#albedo.slope_deseasonalised--> ppb deseasonalised; **the operational
+199.7<!--#albedo.slope_corrected--> ppb operationally corrected,
+172.5<!--#albedo.slope_deseasonalised--> ppb deseasonalised and
+232.8<!--#albedo.slope_blended--> ppb blended; **the operational
 correction itself carries a slope of only
 -4.2<!--#albedo.slope_correction--> ppb per unit albedo**, so it removes
-almost none of the field's albedo dependence. And held-out R² for impervious
+almost none of the field's albedo dependence, and **the blended field's slope is
+the steepest of the four**, 16.6<!--#albedo.blended_over_corrected_percent--> %
+above the operationally corrected field's, with Pearson rising from
+0.700<!--#albedo.pearson_corrected--> to
+0.762<!--#albedo.pearson_blended-->. §4.1 reports that comparison and what it
+does and does not mean. And held-out R² for impervious
 fraction under the block scheme is 0.085<!--#suite.impervious_operational-->
 operationally corrected, 0.065<!--#suite.impervious_blended--> blended and
 0.095<!--#suite.impervious_deseasonalised--> deseasonalised, against a spatial
@@ -44,22 +50,37 @@ null of 0.332<!--#suite.null_operational-->,
 0.414<!--#suite.null_blended--> and
 0.337<!--#suite.null_deseasonalised--> respectively.
 
-The operational field was chosen for three reasons. It is the product's own
+The operational field was chosen for two reasons. It is the product's own
 recommended variable, so a reader comparing this work with any other TROPOMI
-study is comparing like with like. It is the only one of the four for which
-every diagnostic in this work exists — the blended field has no measured albedo
-slope, because the correction artefact computes that quantity for the raw,
-operationally corrected and deseasonalised series only. And the land-cover
-result is not sensitive to the choice: the three suites bracket the impervious
-figure within 0.03 of R², and the sign and the ordering against the spatial null
-are identical on all three.
+study is comparing like with like. And the land-cover result is not sensitive to
+the choice: the three suites bracket the impervious figure within 0.03 of R², and
+the sign and the ordering against the spatial null are identical on all three.
+
+**A third reason was offered in an earlier draft and is withdrawn.** It held
+that the operational field was the only one for which every diagnostic exists,
+the blended field having no measured albedo slope. That was an argument from a
+gap in this work rather than from the fields, and it was also wrong: the
+measurement existed and was simply absent from the artefact that would have
+made it quotable. It is now in the artefact, it is reported above and in §4.1,
+and it does not favour the operational field — it goes the other way, as the next
+paragraph records.
 
 **What a reader loses under this choice** is that the blended field is the better
 field by its authors' own measurement — single-retrieval precision of 11.9 ppb
-against the operational product's 14.5 ppb — and reporting it second understates
-that. The mitigation is that it is reported everywhere the operational field is,
-with the same models and the same schemes, so the comparison is available in
-every table rather than inferable from one.
+against the operational product's 14.5 ppb, and a reduction in spatially variable
+bias against GOSAT from 14.3 to 10.4 ppb at 0.25 × 0.3125° — and reporting it
+second understates that. The mitigation is that it is reported everywhere the
+operational field is, with the same models and the same schemes, so the
+comparison is available in every table rather than inferable from one.
+
+**What a reader gains is the opposite of what was expected**, and it is the
+reason the choice survives. On this composite the blended correction does not
+reduce albedo-correlated structure; it increases it, on both albedo bands and at
+both weightings. Those two statements are about different quantities — the
+published reduction is measured against GOSAT as a reference, and the slope here
+is fitted across an annual mean in which albedo is confounded with geography,
+land cover and sampling season — so neither contradicts the other. §4.1 carries
+the comparison and the caveat.
 
 **One further consideration bears on how much this choice matters, and it cuts
 toward "less than it appears."** This work's contribution is the
@@ -270,6 +291,27 @@ it reduces the field's albedo dependence by
 2.1<!--#collinear.reduction_percent--> % unweighted and
 31.3<!--#collinear.reduction_weighted_percent--> % weighted by sounding
 count.
+
+**Applying the blended correction to this composite increases the dependence
+rather than reducing it.** Its shortwave-infrared slope is
+232.8<!--#albedo.slope_blended--> ppb per unit albedo unweighted, which is
+16.6<!--#albedo.blended_over_corrected_percent--> % above the operationally
+corrected field's, with Pearson rising from
+0.700<!--#albedo.pearson_corrected--> to
+0.762<!--#albedo.pearson_blended-->; the near-infrared band behaves the same way
+and both weightings agree in sign. The association survives correction for
+spatial dependence, at an effective sample size of 18.5 cells of 926.
+
+**That is a statement about this composite and not about the product, and the
+distinction has to be held.** The published claim for the blended dataset is a
+reduction in spatially variable bias measured against GOSAT as a reference, which
+is a different quantity from a slope fitted across an annual mean in which albedo
+is confounded with geography, land cover and sampling season. The slope reported
+here absorbs everything that varies spatially with albedo and is an upper bound
+on residual albedo sensitivity rather than a measurement of it. What can be said
+without qualification is narrower: a per-sounding correction referenced to a
+sparse instrument is not obliged to reduce the between-cell variance of an annual
+composite, and on this composite it does the opposite.
 166<!--#cov.albedo_negative--> cells, 17.9<!--#collinear.negative_percent--> % of
 the covered lattice, carry a negative annual-mean shortwave-infrared albedo,
 which is unphysical.
@@ -513,8 +555,9 @@ they are not the same measurement; the claim checker caught the substitution
 because the value it resolved to was two orders of magnitude from the one
 written.
 
-**One resolver was attempted and removed.** The blended field has no measured
-albedo slope: `albedo_correction_2018.csv` computes that quantity for the raw,
-operationally corrected and deseasonalised series and not for the blended one. So
-the field that addresses albedo by construction is the one field whose residual
-albedo dependence this work has not measured.
+**One resolver was attempted, removed, and then added on 16 September 2026**,
+after the blended series was added to `albedo_correction_2018.csv`. The
+measurement had existed in the decision log throughout; what was missing was a
+row in the artefact, so nothing could resolve it. That distinction matters
+because a first draft of §0 mistook the second for the first and built a
+primary-field justification on it, which is now withdrawn.

@@ -4311,15 +4311,23 @@ artefact that already exists.
 
 ### Work not done, as distinct from not decided
 
-**The blended field has no measured albedo slope.** `albedo_correction_2018.csv`
-computes the slope on shortwave-infrared and near-infrared albedo for the raw
-retrieval, the operationally corrected field, the correction itself and the
-deseasonalised field — and not for the blended field. So **the one field that
-addresses albedo dependence by construction is the one field whose residual
-albedo dependence this project has never measured.** That is the single most
-pointed gap the results draft found, and it is why the primary-field
-justification has to rest partly on diagnostic availability rather than only on
-field quality.
+**The blended field has no measured albedo slope *in the artefact*.**
+`albedo_correction_2018.csv` computes the slope on shortwave-infrared and
+near-infrared albedo for the raw retrieval, the operationally corrected field,
+the correction itself and the deseasonalised field — and not for the blended
+field. So nothing could resolve it, and the results draft could not quote it.
+
+**This paragraph was wrong when first written on 15 September 2026 and is
+corrected here rather than deleted.** It said the project "has never measured"
+the blended field's albedo dependence. It had. The measurement is recorded in
+this file under *The albedo dependence rose* and in `data/processed/README.md`,
+with the same figures a re-run produced on 16 September: a shortwave-infrared
+slope of 232.78 ppb per unit albedo unweighted against the operationally
+corrected field's 199.66, and Pearson rising from +0.700 to +0.762. **The gap
+was between the decision log and the artefact, not in the work.** That is a
+smaller defect and a different one, and mistaking the second for the first
+produced a false justification in the results draft, which
+`notes/draft-results.md` now no longer carries.
 
 **No representativeness-error estimate exists for the composite.** The methods
 record carries the literature's statement that observational coverage is not an

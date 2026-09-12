@@ -24,7 +24,7 @@ RESULTS = REPO / "data" / "processed" / "albedo_correction_2018.csv"
 GRID = REPO / "data" / "processed" / "analysis_grid_2018.csv"
 
 SERIES = {"raw retrieval", "bias corrected", "the correction itself",
-          "deseasonalised"}
+          "deseasonalised", "blended"}
 ALBEDOS = {"surface_albedo_SWIR", "surface_albedo_NIR"}
 WEIGHTINGS = {"unweighted", "by sounding count"}
 
@@ -43,7 +43,7 @@ def find(albedo, series, weighting):
 
 def test_every_series_is_reported_against_both_bands_at_both_weightings():
     records = rows()
-    assert len(records) == len(SERIES) * len(ALBEDOS) * len(WEIGHTINGS) == 16
+    assert len(records) == len(SERIES) * len(ALBEDOS) * len(WEIGHTINGS) == 20
     seen = {(r["albedo"], r["series"], r["weighting"]) for r in records}
     assert seen == {(a, s, w) for a in ALBEDOS for s in SERIES for w in WEIGHTINGS}
     for record in records:
@@ -104,3 +104,23 @@ def test_the_correction_is_clearly_related_to_swir_albedo_when_weighted():
     assert float(record["slope_ppb_per_unit_albedo"]) < -20.0, \
         "larger correction over darker surfaces, the documented direction"
     assert float(record["r2"]) > 0.2
+
+
+def test_the_blended_field_is_not_less_albedo_dependent():
+    """The outcome nobody expected, pinned so a re-run cannot lose it.
+
+    The blended TROPOMI+GOSAT product corrects albedo dependence by
+    construction, so the expectation was a shallower slope on this composite.
+    It is steeper: the blended series' SWIR slope exceeds the operationally
+    corrected field's at both weightings. `notes/decisions.md` under *The
+    albedo dependence rose* records why that is a statement about this annual
+    composite rather than about the product, and this test exists so the sign
+    of the comparison cannot silently flip.
+    """
+    for weighting in WEIGHTINGS:
+        operational = find("surface_albedo_SWIR", "bias corrected", weighting)
+        blended = find("surface_albedo_SWIR", "blended", weighting)
+
+        assert (float(blended["slope_ppb_per_unit_albedo"])
+                > float(operational["slope_ppb_per_unit_albedo"])), weighting
+        assert float(blended["pearson"]) > float(operational["pearson"]), weighting

@@ -100,7 +100,10 @@ Four column fields were carried through the analysis rather than one:
    machine-learning correction trained against GOSAT removes the bulk of the
    operational product's artefacts. This field is restricted to `qa_value ≥ 0.5`
    by its authors, a restriction that costs nothing here for the reason given in
-   §2.3.
+   §2.3. Its published improvements over the operational product are a
+   single-retrieval precision of 11.9 against 14.5 ppb and a reduction in
+   spatially variable bias against GOSAT from 14.3 to 10.4 ppb at 0.25 ×
+   0.3125°.
 4. **A deseasonalised field**, in which a region-wide seasonal cycle is removed
    *at the sounding level* rather than from the cell means. The cycle is fitted
    to every sounding individually as a fixed-effects model with one offset per

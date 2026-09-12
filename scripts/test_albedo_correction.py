@@ -62,6 +62,9 @@ def main(argv=None) -> int:
     parser.add_argument("--deseasonalised",
                         default=str(REPO / "data" / "processed" /
                                     "methane_deseasonalised_2018.csv"))
+    parser.add_argument("--blended",
+                        default=str(REPO / "data" / "processed" /
+                                    "methane_blended_2018.csv"))
     parser.add_argument("--out", default=str(REPO / "data" / "processed" /
                                              "albedo_correction_2018.csv"))
     parser.add_argument("--write", action="store_true")
@@ -75,11 +78,20 @@ def main(argv=None) -> int:
     companion = list(csv.DictReader(open(args.deseasonalised, newline="")))
     mu = join_column(companion, table.columns["centre_lat"],
                      table.columns["centre_lon"], "ch4_deseasonalised_ppb")
+    blended_rows = list(csv.DictReader(open(args.blended, newline="")))
+    blended = join_column(blended_rows, table.columns["centre_lat"],
+                          table.columns["centre_lon"], "ch4_blended_ppb")
 
+    # The blended series was added on 16 September 2026. Drafting the results
+    # section found that the one field which addresses albedo dependence by
+    # construction was the one field whose residual albedo dependence had never
+    # been measured, which left the primary-field justification resting partly
+    # on a gap in this project's own work rather than on the fields themselves.
     series = (("raw retrieval", raw),
               ("bias corrected", corrected),
               ("the correction itself", correction),
-              ("deseasonalised", mu))
+              ("deseasonalised", mu),
+              ("blended", blended))
 
     print("=== the correction ===")
     print(f"  cells {table.n}, all of which differ: "
@@ -151,6 +163,21 @@ def _verdict(rows) -> None:
                   f"{after['slope_ppb_per_unit_albedo']:8.2f} ppb/albedo "
                   f"({change:+.1f}%), Pearson {before['pearson']:+.3f} -> "
                   f"{after['pearson']:+.3f}")
+    print("\n=== and the blended product, which corrects albedo by "
+          "construction ===")
+    for albedo in ALBEDOS:
+        for weighting in ("unweighted", "by sounding count"):
+            op = _find(rows, albedo, "bias corrected", weighting)
+            bl = _find(rows, albedo, "blended", weighting)
+            change = ((bl["slope_ppb_per_unit_albedo"]
+                       - op["slope_ppb_per_unit_albedo"])
+                      / abs(op["slope_ppb_per_unit_albedo"]) * 100)
+            print(f"  {albedo:<20}{weighting:<18}"
+                  f"{op['slope_ppb_per_unit_albedo']:8.2f} -> "
+                  f"{bl['slope_ppb_per_unit_albedo']:8.2f} ppb/albedo "
+                  f"({change:+.1f}%), Pearson {op['pearson']:+.3f} -> "
+                  f"{bl['pearson']:+.3f}")
+
     residual = _find(rows, "surface_albedo_SWIR", "bias corrected", "unweighted")
     print(f"\n  residual sensitivity of the corrected variable: "
           f"{residual['slope_ppb_per_unit_albedo']:.2f} "
