@@ -1187,6 +1187,44 @@ a resolver or a quotation from the literature. **That asymmetry is visible in th
 draft in a way it was not visible in the records**, and it is the strongest
 argument yet for spending the one free run.
 
+### Added 15 September 2026, from drafting the results section
+
+**0i. Name the reported scheme and weighting, or report all four.** *Gated by
+nothing*, because it is a decision. Held-out R² for impervious fraction on the
+primary field is +0.085 under spatial blocks unweighted, +0.024 under blocks
+weighted, −0.117 under leave-one-province-out unweighted and −0.162 under
+leave-one-province-out weighted. **Every grounding record quotes the first and
+none says so where the number appears.** The results draft reports all four in a
+table and names the combination in every sentence quoting one, which is the safe
+option; if a headline figure is wanted instead, the choice needs the same kind of
+justification the primary field got. **This is the most consequential open
+decision in the queue**, because the same model spans a quarter of an R² across
+the four and a bare figure is the most misleading number this project could
+publish.
+
+**0j. Compute the blended field's albedo slope.** *Gated by nothing;* one series
+added to a script that already computes the same quantity for four others.
+`albedo_correction_2018.csv` covers the raw retrieval, the operationally
+corrected field, the correction itself and the deseasonalised field. **The
+blended field — the one that addresses albedo by construction — is the one whose
+residual albedo dependence has never been measured**, which is why the
+primary-field justification currently rests partly on diagnostic availability
+rather than only on field quality. Fixing it may change that justification, which
+is the point of doing it.
+
+**0k. Summarise the coverage saturation curve as a scalar.** *Gated by nothing.*
+The figure holds the shape and nothing records the number a results section asks
+for — after how many granules coverage reached a stated fraction of its final
+value. One line against a committed artefact.
+
+**And two figures move to the front of the figure queue.** The buffered decay
+curve and the DOFS sweep are the two results the capability framing makes
+central, and neither has a figure or was planned to have one; both exist only as
+small tables, both are line plots over a swept parameter, and neither needs new
+data. `notes/decisions.md` records the audit. They rank ahead of the three
+planned figures — predictor maps, fold map, sampling-artefact map — which answer
+to the 2023 thesis's figure set rather than to this paper's results.
+
 ### What gates what, in one paragraph
 
 **As of 13 September 2026 Tier 0 is complete and three items sit above or beside

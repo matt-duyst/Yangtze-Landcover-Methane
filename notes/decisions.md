@@ -4262,6 +4262,116 @@ readable. **That is now the gating question for the whole PPPM route** and it is
 one email or one library request away, which is why it is queued in
 `notes/paper-target.md` rather than left here.
 
+## What drafting the results section exposed, 15 September 2026
+
+The methods draft's return was a fourth field found inside a list of three and
+twenty-four unreachable artefact numbers. The results draft's return is smaller
+in count and sharper in kind: **the decisions it forced are all about scope**,
+because a results section has to say not only what a number is but under which
+conditions it holds.
+
+### The decisions the records left open
+
+**Which scheme and weighting the reported figure comes from was never decided,
+and it is the most consequential open decision this project has had.** Held-out
+R² for impervious fraction on the primary field is +0.085 under spatial blocks
+with no weighting, +0.024 under blocks weighted by sounding count, −0.117 under
+leave-one-province-out unweighted and −0.162 under leave-one-province-out
+weighted. **The same model on the same field spans a quarter of an R² across the
+four combinations, and no record states which one a paper reports.** Every
+grounding record quotes 0.085 or a figure near it, because that is the
+combination the diagnostic figure uses, and none of them says so where the number
+appears. Writing a results table put all four in one place for the first time and
+made the omission unmissable. The draft reports all four in a table and names the
+combination in every sentence that quotes one.
+
+**The negative result's scope was never stated either.** The records say "no
+evidence that land cover explains the field", which is the right *form* — a failed
+detection rather than a claim in favour of the null — and it is silent on extent.
+The honest scope, now written, is that land cover's held-out skill is positive in
+one of four scheme-weighting combinations and negative in three, and that where
+positive it is a quarter of the spatial null's and an eighth of wind's.
+
+**The zero-order-to-partial attenuation had no number anywhere.** A resolver
+existed named `collinear.reduction_percent` and it measures something else: how
+much the operational bias correction reduces the field's albedo slope, which is
+2.1 % unweighted. The obvious sentence in a results section — how much of the
+impervious association survives control for albedo — needed a quantity nothing
+had computed, which is 94.0 %. **Both numbers belong in the section and they were
+one resolver away from being confused for each other**, and a first draft did
+confuse them. The claim checker caught it only because the two values differ by
+two orders of magnitude; had the correction removed 90 % of the albedo slope
+rather than 2 %, the substitution would have passed.
+
+**The coverage saturation curve has no scalar summary.** The figure holds the
+shape and the draft describes it qualitatively, because nothing records the answer
+to the question a results section asks: after how many granules did coverage
+reach, say, 95 % of its final value. That is a one-line computation against an
+artefact that already exists.
+
+### Work not done, as distinct from not decided
+
+**The blended field has no measured albedo slope.** `albedo_correction_2018.csv`
+computes the slope on shortwave-infrared and near-infrared albedo for the raw
+retrieval, the operationally corrected field, the correction itself and the
+deseasonalised field — and not for the blended field. So **the one field that
+addresses albedo dependence by construction is the one field whose residual
+albedo dependence this project has never measured.** That is the single most
+pointed gap the results draft found, and it is why the primary-field
+justification has to rest partly on diagnostic availability rather than only on
+field quality.
+
+**No representativeness-error estimate exists for the composite.** The methods
+record carries the literature's statement that observational coverage is not an
+effective metric for representation error, and this project measured coverage.
+Nothing measured the error. Queue item 17 proposes representativeness weighting
+in place of sounding-count weighting, and `notes/paper-target.md` records that the
+per-cell spread such an estimate needs is not recoverable from the current
+accumulator — so this is blocked behind the same change as queue item 0g rather
+than merely unstarted.
+
+**Equivalence bounds remain unset**, which is why §3.4 of the draft reports a
+failed detection and not an absence. Already queued as item 18.
+
+### Two figures the contribution needs and nobody planned
+
+`figures/README.md` records eleven figures built and three planned. The results
+draft cites six of the eleven and neither of two results that are now central:
+
+* **The buffered decay curve**, which is the direct measurement of the impervious
+  coefficient's spatial instability, and which exists only as a ten-row table per
+  field.
+* **The DOFS sweep and the prior-free threshold**, which are the capability claim
+  itself, and which exist only as a twenty-row table.
+
+Under the framing in place when the figure set was planned neither was a
+headline. Under the capability framing both are, and **a reader of the two
+sections the paper rests on has nothing to look at.** Both are line plots over a
+swept parameter and neither needs new data, which puts them ahead of the three
+planned figures on value and level with them on cost.
+
+**And five of the eleven existing figures have no place in a results section.**
+Three — the native-resolution land cover, the urban change series and the
+provincial breakdown — document the predictors' provenance and their
+disagreements, which is methods and errata material. Two document the pipeline
+and the reproduction's structure and belong in neither. That is not an argument
+for removing any of them; it is an argument for knowing, before the remaining
+three are drawn, that the figure set was built to answer the 2023 thesis's
+figures rather than this paper's results.
+
+### The general point, which differs from the methods draft's
+
+The methods draft exposed **unreachable numbers**: artefacts committed with no way
+to quote them. The results draft exposed **unscoped numbers**: quantities quoted
+throughout the records without the conditions under which they hold. Those are
+different failures with the same cause — a record can state a number in
+isolation, and a continuous section has to place it among its alternatives.
+
+**Six grounding passes quoted 0.085 and none reported that the same model gives
+−0.162 under a different scheme.** Nothing was hidden and nothing was wrong; the
+figure simply never had to sit next to its siblings. That is what a results table
+does and what a record does not.
+
 ## What drafting the methods section exposed, 15 September 2026
 
 `notes/paper-target.md` recorded the absence of prose as the largest single gap.
