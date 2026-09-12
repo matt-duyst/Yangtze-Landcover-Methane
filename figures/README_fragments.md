@@ -392,10 +392,14 @@ figure is about the distance between them; `ERRATA.md` 7.1 records that land
 cover does not explain the observed field and this is the demonstration of
 that.
 
-Panel (a) is a constant, which has no information and reaches held-out R
-squared -0.008<!--#baseline.constant_r2-->. Panel (b) is impervious fraction,
-the thesis's own predictor, at 0.085<!--#baseline.impervious_r2--> and an RMSE
-of 14.21<!--#baseline.impervious_rmse--> ppb; its cloud is a thickened version
+**Every figure in the four panels is held out by spatial blocks without
+weighting**, which is one of four defensible scheme-weighting combinations and
+the optimistic end of the bracket `notes/decisions.md` records; the summary
+inset carries all four. Panel (a) is a constant, which has no information and
+reaches held-out R squared -0.008<!--#baseline.constant_r2-->. Panel (b) is
+impervious fraction, the thesis's own predictor, at
+0.085<!--#baseline.impervious_r2--> and an RMSE of
+14.21<!--#baseline.impervious_rmse--> ppb; its cloud is a thickened version
 of the constant's rather than a rotated one. Panel (c) is the spatial null,
 which predicts each cell from the mean of its eight neighbours and knows
 nothing about the surface, at 0.332<!--#baseline.null_r2-->. Panel (d) is wind,
@@ -436,7 +440,8 @@ All four models run on the 926<!--#composite.covered_cells--> cells that carry
 a methane value. The rice models are absent because they run on 531 cells and
 the table's own rule is that results on different samples must not be compared
 without saying so; four panels side by side is a comparison whatever a caption
-says. Their numbers, on the same scheme and weighting: rice alone reaches
+says. Their numbers, also under spatial blocks without weighting: rice alone
+reaches
 -0.031<!--#baseline.rice_alone_r2-->, impervious on that same sample reaches
 0.018<!--#baseline.impervious_rice_sample_r2-->, and adding rice to impervious
 moves it to 0.017<!--#baseline.rice_plus_impervious_r2-->, which is down rather

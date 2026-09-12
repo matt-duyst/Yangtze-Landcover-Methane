@@ -43,8 +43,9 @@ above the operationally corrected field's, with Pearson rising from
 0.700<!--#albedo.pearson_corrected--> to
 0.762<!--#albedo.pearson_blended-->. §4.1 reports that comparison and what it
 does and does not mean. And held-out R² for impervious
-fraction under the block scheme is 0.085<!--#suite.impervious_operational-->
-operationally corrected, 0.065<!--#suite.impervious_blended--> blended and
+fraction, under spatial blocks without weighting, is
+0.085<!--#suite.impervious_operational--> operationally corrected,
+0.065<!--#suite.impervious_blended--> blended and
 0.095<!--#suite.impervious_deseasonalised--> deseasonalised, against a spatial
 null of 0.332<!--#suite.null_operational-->,
 0.414<!--#suite.null_blended--> and
@@ -242,14 +243,39 @@ Held-out R² for the operationally corrected field, by scheme and weighting:
 | Wind (u, v, speed) | 0.653<!--#baseline.wind_r2--> | 0.563 | 0.633 | 0.311 |
 | Global-mean constant | -0.008<!--#baseline.constant_r2--> | −0.003 | −0.172 | −0.085 |
 
-**Land cover's held-out skill is positive in one of the four scheme-weighting
-combinations and negative in three.** Where it is positive it is below the
-spatial null by a factor of four and below wind by a factor of eight. Adding rice
+**The result is reported as the range across those four combinations rather
+than as any one of them**, because the spread is a property of the evaluation:
+impervious fraction's four-way range is
+0.247<!--#spread.impervious--> of R², the smallest of any predictor in the
+suite, against 0.342<!--#spread.wind--> for wind,
+0.410<!--#spread.albedo--> for albedo,
+0.605<!--#spread.null--> for the spatial null and
+0.708<!--#spread.sampling--> for sampling composition. Where a single figure is
+quoted it is the spatial-blocks unweighted combination, which §5.1 establishes is
+the optimistic end of the bracket.
+
+**So land cover's held-out skill on the primary field lies between
+-0.162 and +0.085 across four defensible evaluation designs.** Raw held-out R² is
+positive in one of the four; above a constant fitted on the same training data it
+is positive in three, at
++0.093<!--#above.impervious_bu-->, +0.028<!--#above.impervious_bw-->,
++0.055<!--#above.impervious_pu--> and
+-0.077<!--#above.impervious_pw-->, the difference being that
+leave-one-province-out penalises the constant itself by −0.172. Adding rice
 fraction to impervious fraction lowers held-out skill in every combination.
 Root mean squared error for the impervious model is
 14.2<!--#baseline.impervious_rmse--> ppb against a field spread of
 106.1<!--#baseline.observed_span_ppb--> ppb, and its predictions span
 42.7<!--#baseline.impervious_span_ppb--> ppb.
+
+**No land-cover model achieves positive held-out skill where the spatial null
+also does**, on any of the three fields under any of the four combinations.
+Three of the twelve field-scheme-weighting combinations show a land-cover model
+above the null on the above-constant metric, all three under
+leave-one-province-out without weighting, and in all three both models are
+negative in raw held-out R²: on the primary field rice fraction combined reaches
+-0.059<!--#suite.rice_combined_pu--> against the null's
+-0.091<!--#suite.null_operational_pu-->.
 
 The same pattern holds on the other two fields (§0): impervious fraction reaches
 0.065<!--#suite.impervious_blended--> on the blended field and
@@ -259,8 +285,8 @@ blocks and no weighting, in both cases well below that field's spatial null.
 ### 3.4 The form of the negative result
 
 **No association between land cover and the methane field was detected that
-survives correction for spatial dependence, control for albedo, or held-out
-evaluation under more than one scheme.** That is a statement about a failed
+survives correction for spatial dependence, control for albedo, or evaluation
+under more than one held-out design.** That is a statement about a failed
 detection and it is the strongest form the evidence supports.
 
 It is not a statement that no association exists. A claim in favour of a null
@@ -396,6 +422,17 @@ are therefore reported separately throughout and neither is preferred; the
 difference between them is a measurement of the model's spatial instability
 rather than a disagreement about its skill.
 
+**Which end of the bracket is which is decidable from §5.1.** The impervious
+model's residual half-sill range is
+96.1<!--#range.operational_impervious_km--> km against a block
+95.0<!--#range.block_ew_km--> km at its narrowest, so residual structure
+persists across a block boundary and the block scheme's figures are the
+optimistic end. Leave-one-province-out, the most extrapolative design available
+on this lattice, is the pessimistic end. Neither weighting is correct either:
+sounding count is not a bound on the error that matters, and leaving cells
+unweighted treats a cell resting on one sounding as equal to a cell resting on
+410<!--#composite.max_soundings-->.
+
 ## 6. Capability of the observing system
 
 ### 6.1 Expected degrees of freedom for signal
@@ -530,16 +567,20 @@ planned ones.
   the solar-zenith correlation (0.695), which are in
   `albedo_confounder_2018.csv` and have no resolver.
 * Six cells of the §3.3 table, being the weighted and leave-one-province-out
-  figures for rice and for both fractions; the eleven marked cells cover the
-  reported claims and the rest are read from the artefact.
+  figures for rice and for both fractions; the marked cells cover every reported
+  claim and the rest are read from the artefact. **The table's column headers
+  name all four scheme-weighting combinations**, which is the rule
+  `notes/decisions.md` records: no land-cover R² appears here without its
+  combination.
 * The blended field's single-retrieval precision figures, 11.9 against 14.5 ppb,
   which come from the product's paper rather than from this work.
 * All literature figures in §6.3, and the 10-to-50 Gg landfill scale in §6.2.
 
 ### Resolvers added for this draft
 
-**Thirty**, for artefacts whose numbers the results section needs and which had
-none: the four fields' between-cell spreads; the albedo slopes for the
+**Thirty for the first draft and twenty more on 16 September 2026**, when the
+primary-field and cross-validation decisions settled. The first thirty were for
+artefacts whose numbers the results section needs and which had none: the four fields' between-cell spreads; the albedo slopes for the
 deseasonalised series and for the correction itself; ten cells of the
 three-suite baseline comparison; the seven deseasonalisation comparisons; the
 median effective sample size and the two shrinkage bounds as percentages; the
@@ -561,3 +602,9 @@ measurement had existed in the decision log throughout; what was missing was a
 row in the artefact, so nothing could resolve it. That distinction matters
 because a first draft of §0 mistook the second for the first and built a
 primary-field justification on it, which is now withdrawn.
+
+**The twenty added later** cover the blended field's albedo slope and Pearson
+correlation and their ratio to the operational field's; the four-way
+above-constant grid for impervious fraction, plus the null and rice-combined
+values under leave-one-province-out; and the eight four-way spreads that settle
+whether the spread belongs to the predictor or to the evaluation design.

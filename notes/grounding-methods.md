@@ -894,8 +894,11 @@ arXiv:2505.14312). So the defensible statement is **not** that a network could
 not have been fitted at this sample size. It is that at this sample size a
 network would be expected to perform comparably to the linear baselines, which
 reach held-out R squared 0.085<!--#baseline.impervious_r2--> against the spatial
-null's 0.332<!--#baseline.null_r2-->, and that a comparable performance to a
-model that explains nothing is not a reason to build one.
+null's 0.332<!--#baseline.null_r2--> **under spatial blocks without weighting**,
+and that a comparable performance to a model that explains nothing is not a
+reason to build one. Those two figures are the optimistic end of a four-way
+bracket; `notes/decisions.md` records the grid and why one combination may not be
+quoted bare.
 
 ## What the field actually builds for this class of problem
 

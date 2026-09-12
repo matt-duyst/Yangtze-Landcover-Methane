@@ -334,7 +334,16 @@ the albedo covariates; each land-cover fraction alone; the two fractions
 together, with and without an interaction; and combinations of wind and trend
 surface with the fractions. Twenty-two model specifications were fitted in total.
 
-On the operationally corrected field, held-out R² is
+**No held-out figure in this work is reported without the scheme and weighting
+it was produced under**, because the four combinations of two schemes and two
+weightings give materially different answers for the same model: impervious
+fraction on the primary field ranges over
+0.247<!--#spread.impervious--> of R² across them. Where one figure is quoted it
+is the spatial-blocks unweighted combination, which is the optimistic end of the
+bracket for the reason §5.4 gives.
+
+Under spatial blocks without weighting, on the operationally corrected field,
+held-out R² is
 0.0847<!--#baseline.impervious_r2--> for impervious fraction alone,
 -0.0314<!--#baseline.rice_alone_r2--> for rice fraction alone and
 0.0169<!--#baseline.rice_plus_impervious_r2--> for the two together, against
