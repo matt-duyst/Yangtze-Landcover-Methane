@@ -60,7 +60,8 @@ SCANNED = ("README.md", "ERRATA.md", "data/processed/README.md",
            "notes/repository-architecture.md", "notes/grounding-yrd.md",
            "notes/grounding-methods.md", "notes/grounding-urban.md",
            "notes/grounding-rice.md", "notes/grounding-methane.md",
-           "notes/paper-target.md", "notes/draft-methods.md")
+           "notes/paper-target.md", "notes/draft-methods.md",
+           "notes/draft-results.md")
 
 #: number, then optional space, then the marker naming what it is
 CLAIM = re.compile(r"(-?[\d][\d,]*(?:\.\d+)?)\s*<!--#([a-zA-Z0-9_.]+)-->")
@@ -293,6 +294,69 @@ def _rice() -> dict:
     return _cache["rice"]
 
 
+#: The four methane fields, as (artefact, column) pairs. The results draft
+#: reports every field's spread and every field's baseline performance, and
+#: before this pass only the operational field had resolvers.
+FIELDS = {
+    "raw": ("analysis_grid_2018.csv", "ch4_raw_ppb"),
+    "operational": ("analysis_grid_2018.csv", "ch4_bias_corrected_ppb"),
+    "blended": ("methane_blended_2018.csv", "ch4_blended_ppb"),
+    "deseasonalised": ("methane_deseasonalised_2018.csv",
+                       "ch4_deseasonalised_ppb"),
+}
+
+
+def _field_sd(name: str) -> float:
+    """Between-cell standard deviation of one methane field, in ppb."""
+    artefact, column = FIELDS[name]
+    rows = _read_csv(PROCESSED / artefact)
+    values = np.asarray([float(r[column]) for r in rows
+                         if r[column] not in ("", None)], dtype="float64")
+    return float(values.std())
+
+
+def _suite(field: str, model: str, scheme: str, weighting: str) -> float:
+    """One held-out R squared from one of the three baseline suites.
+
+    The suites are separate artefacts with identical shape, so the results
+    draft's field comparison is a lookup across three files rather than a
+    column in one.
+    """
+    artefact = {"operational": "baseline_results_2018.csv",
+                "blended": "baseline_results_blended_2018.csv",
+                "deseasonalised": "baseline_results_deseasonalised_2018.csv",
+                }[field]
+    key = f"suite:{artefact}"
+    if key not in _cache:
+        _cache[key] = _read_csv(PROCESSED / artefact)
+    for r in _cache[key]:
+        if (r["model"] == model and r["scheme"] == scheme
+                and r["weighting"] == weighting):
+            return float(r["held_out_r2"])
+    raise KeyError((field, model, scheme, weighting))
+
+
+def _albedo_series_slope(series: str) -> float:
+    """Unweighted SWIR albedo slope in ppb per unit albedo, for one series."""
+    if "albedo_corr" not in _cache:
+        _cache["albedo_corr"] = _read_csv(PROCESSED / "albedo_correction_2018.csv")
+    for r in _cache["albedo_corr"]:
+        if (r["albedo"] == "surface_albedo_SWIR" and r["series"] == series
+                and r["weighting"] == "unweighted"):
+            return float(r["slope_ppb_per_unit_albedo"])
+    raise KeyError(series)
+
+
+def _deseason(predictor: str, column: str) -> float:
+    """One cell of the deseasonalisation comparison, unweighted."""
+    if "deseason" not in _cache:
+        _cache["deseason"] = _read_csv(PROCESSED / "deseasonalisation_2018.csv")
+    for r in _cache["deseason"]:
+        if r["predictor"] == predictor and r["weighting"] == "unweighted":
+            return float(r[column])
+    raise KeyError(predictor)
+
+
 def _dof() -> dict:
     """The effective-degrees-of-freedom table, which had no resolver until now.
 
@@ -313,6 +377,7 @@ def _dof() -> dict:
             "effective_n_max": max(eff),
             "verdict_changed": float(sum(
                 1 for r in rows if r["verdict"] == "was significant, now is not")),
+            "effective_n_median": float(np.median(eff)),
         }
     return _cache["dof"]
 
@@ -330,6 +395,12 @@ def _range() -> dict:
                       ["half_sill_range_km"]),
             "blended_impervious_km":
                 float(by[("blended", "OLS impervious fraction")]
+                      ["half_sill_range_km"]),
+            "operational_field_km":
+                float(by[("operational", "the field itself (no model)")]
+                      ["half_sill_range_km"]),
+            "blended_field_km":
+                float(by[("blended", "the field itself (no model)")]
                       ["half_sill_range_km"]),
             "operational_full_km":
                 float(by[("operational",
@@ -764,6 +835,71 @@ QUANTITIES = {
     "albedo.slope_corrected": lambda: _albedo_slope("bias corrected"),
     "albedo.slope_raw": lambda: _albedo_slope("raw retrieval"),
 
+    "field.sd_raw": lambda: _field_sd("raw"),
+    "field.sd_operational": lambda: _field_sd("operational"),
+    "field.sd_blended": lambda: _field_sd("blended"),
+    "field.sd_deseasonalised": lambda: _field_sd("deseasonalised"),
+    "albedo.slope_deseasonalised": lambda: _albedo_series_slope("deseasonalised"),
+    "albedo.slope_correction": lambda: _albedo_series_slope("the correction itself"),
+    # The land-cover models and the spatial null on each field, under the
+    # scheme and weighting the draft reports as primary.
+    "suite.impervious_operational":
+        lambda: _suite("operational", "OLS impervious_fraction",
+                       "spatial blocks", "unweighted"),
+    "suite.impervious_blended":
+        lambda: _suite("blended", "OLS impervious_fraction",
+                       "spatial blocks", "unweighted"),
+    "suite.impervious_deseasonalised":
+        lambda: _suite("deseasonalised", "OLS impervious_fraction",
+                       "spatial blocks", "unweighted"),
+    "suite.null_operational":
+        lambda: _suite("operational", "spatial null (queen neighbour mean)",
+                       "spatial blocks", "unweighted"),
+    "suite.null_blended":
+        lambda: _suite("blended", "spatial null (queen neighbour mean)",
+                       "spatial blocks", "unweighted"),
+    "suite.null_deseasonalised":
+        lambda: _suite("deseasonalised", "spatial null (queen neighbour mean)",
+                       "spatial blocks", "unweighted"),
+    "suite.impervious_operational_lopo":
+        lambda: _suite("operational", "OLS impervious_fraction",
+                       "leave-one-province-out", "unweighted"),
+    "suite.impervious_operational_weighted":
+        lambda: _suite("operational", "OLS impervious_fraction",
+                       "spatial blocks", "by sounding count"),
+    "suite.both_operational_lopo_weighted":
+        lambda: _suite("operational",
+                       "OLS impervious_fraction + rice_fraction_single",
+                       "leave-one-province-out", "by sounding count"),
+    "suite.albedo_operational":
+        lambda: _suite("operational", "OLS albedo (SWIR)",
+                       "spatial blocks", "unweighted"),
+    # Whether removing the seasonal cycle at the sounding level changes the
+    # land-cover association. This is the fourth field's whole purpose.
+    "deseason.impervious_raw": lambda: _deseason("impervious_fraction", "raw_pearson"),
+    "deseason.impervious_mu": lambda: _deseason("impervious_fraction", "mu_pearson"),
+    "deseason.impervious_change":
+        lambda: _deseason("impervious_fraction", "pearson_change"),
+    "deseason.rice_raw": lambda: _deseason("rice_fraction_single", "raw_pearson"),
+    "deseason.rice_change":
+        lambda: _deseason("rice_fraction_single", "pearson_change"),
+    "deseason.doy_raw": lambda: _deseason("mean_day_of_year", "raw_pearson"),
+    "deseason.doy_mu": lambda: _deseason("mean_day_of_year", "mu_pearson"),
+    "dofs.prior_free_median":
+        lambda: _dofs("emission for a = 0.5, median cell"),
+    "dofs.prior_free_best":
+        lambda: _dofs("emission for a = 0.5, best-observed cell"),
+    "dof.effective_n_median": lambda: _dof()["effective_n_median"],
+    # The prose speaks in percent where the table stores a fraction.
+    "dof.shrinkage_min_percent": lambda: 100.0 * _dof()["shrinkage_min"],
+    "dof.shrinkage_max_percent": lambda: 100.0 * _dof()["shrinkage_max"],
+    # How much of the zero-order impervious association survives control for
+    # albedo. `collinear.reduction_percent` is a different quantity -- how much
+    # the operational bias correction reduced the field's albedo slope -- and
+    # the two were conflated in a first draft of the results section.
+    "collinear.partial_attenuation_percent":
+        lambda: 100.0 * (1.0 - _collinear()["partial"]
+                         / _collinear()["zero_order"]),
     "dof.rows": lambda: _dof()["rows"],
     "dof.shrinkage_min": lambda: _dof()["shrinkage_min"],
     "dof.shrinkage_max": lambda: _dof()["shrinkage_max"],
@@ -776,6 +912,8 @@ QUANTITIES = {
         lambda: _range()["operational_impervious_km"],
     "range.blended_impervious_km": lambda: _range()["blended_impervious_km"],
     "range.operational_full_km": lambda: _range()["operational_full_km"],
+    "range.operational_field_km": lambda: _range()["operational_field_km"],
+    "range.blended_field_km": lambda: _range()["blended_field_km"],
     "range.too_small": lambda: _range()["too_small"],
     "range.models": lambda: _range()["models"],
     "loo.null_0km": lambda: _loo("spatial null", "0"),
