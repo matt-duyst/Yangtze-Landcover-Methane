@@ -1189,18 +1189,27 @@ argument yet for spending the one free run.
 
 ### Added 15 September 2026, from drafting the results section
 
-**0i. Name the reported scheme and weighting, or report all four.** *Gated by
-nothing*, because it is a decision. Held-out R² for impervious fraction on the
-primary field is +0.085 under spatial blocks unweighted, +0.024 under blocks
-weighted, −0.117 under leave-one-province-out unweighted and −0.162 under
-leave-one-province-out weighted. **Every grounding record quotes the first and
-none says so where the number appears.** The results draft reports all four in a
-table and names the combination in every sentence quoting one, which is the safe
-option; if a headline figure is wanted instead, the choice needs the same kind of
-justification the primary field got. **This is the most consequential open
-decision in the queue**, because the same model spans a quarter of an R² across
-the four and a bare figure is the most misleading number this project could
-publish.
+**0i is decided, 16 September 2026, and this entry records the outcome.** The
+land-cover result is reported as a **range across the four scheme-weighting
+combinations**, with all four tabulated and spatial blocks unweighted named as
+the reference point wherever one figure is needed — labelled as the optimistic
+end of the bracket rather than as the answer.
+[`notes/decisions.md`](decisions.md) carries the grid and the reasoning. The
+deciding fact is that the four-way spread belongs to the evaluation and not to
+land cover: impervious fraction's spread is
+0.247<!--#spread.impervious--> of R², against
+0.342<!--#spread.wind--> for wind,
+0.410<!--#spread.albedo--> for albedo,
+0.544<!--#spread.trend--> for the trend surface,
+0.605<!--#spread.null--> for the spatial null and
+0.708<!--#spread.sampling--> for sampling composition. **Land cover has the
+smallest four-way spread of any predictor in the suite**, so quoting one
+combination as characterising the model would attribute the design's variance to
+the predictor.
+
+Two rules follow and apply repository-wide: no land-cover R² is written without
+its scheme and weighting, and no figure showing one combination omits which. The
+sweep for unscoped figures is queue item 0l below.
 
 **0j. Compute the blended field's albedo slope.** *Gated by nothing;* one series
 added to a script that already computes the same quantity for four others.
@@ -1224,6 +1233,36 @@ small tables, both are line plots over a swept parameter, and neither needs new
 data. `notes/decisions.md` records the audit. They rank ahead of the three
 planned figures — predictor maps, fold map, sampling-artefact map — which answer
 to the 2023 thesis's figure set rather than to this paper's results.
+
+### Added 16 September 2026, from settling 0i and 0j
+
+**0j is done.** The blended field's albedo slope is computed and in the
+artefact, and the answer reversed a justification rather than supporting it: the
+blended field's slope is the steepest of the four,
+232.8<!--#albedo.slope_blended--> ppb per unit albedo against the operationally
+corrected field's 199.7<!--#albedo.slope_corrected-->. The results draft's
+primary-field argument from diagnostic availability is withdrawn, and
+`notes/decisions.md` records that the measurement had existed in the decision log
+all along and was missing only from the artefact.
+
+**0l. Sweep the repository for land-cover figures written without their scheme
+and weighting.** *Gated by nothing.* Four places carry one: the methods record's
+sample-size argument, the observed-predicted figure's panel descriptions and the
+sentence that refers back to them, and the methods draft's baseline paragraph.
+`README.md`, `data/processed/README.md` and the results draft's table are already
+scoped. **This is the same class as the prose-claim audit** — a number that is
+correct and unscoped is not checkable — and it is why the two rules above are
+recorded as rules rather than as a one-off fix.
+
+**And one thing 0i's grid settled that was not asked.** The claim that no
+land-cover model beats the spatial null holds under all twelve field-scheme-weighting
+combinations in the sense that matters, and the three apparent exceptions are all
+leave-one-province-out unweighted, where both models score below zero: on the
+primary field rice-combined reaches
+-0.059<!--#suite.rice_combined_pu--> against the null's
+-0.091<!--#suite.null_operational_pu-->. **Land cover never beats the null where
+the null has positive skill**, which is a stronger statement than the records
+previously made and should replace the unscoped version wherever it appears.
 
 ### What gates what, in one paragraph
 

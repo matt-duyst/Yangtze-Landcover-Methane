@@ -4262,6 +4262,141 @@ readable. **That is now the gating question for the whole PPPM route** and it is
 one email or one library request away, which is why it is queued in
 `notes/paper-target.md` rather than left here.
 
+## The reported cross-validation combination, decided 16 September 2026
+
+Queue item 0i. Four combinations of two schemes and two weightings give four
+answers for the same model on the same data, and every record in this repository
+quoted one of them without saying which, because that is the combination the
+diagnostic figure uses. This records the grid, the reasoning and the decision.
+
+### The grid, which no record held
+
+Held-out R squared, and in parentheses the same figure above that combination's
+own constant. B = spatial blocks, P = leave-one-province-out, u = unweighted,
+w = weighted by sounding count. Operationally corrected field.
+
+| model | B/u | B/w | P/u | P/w |
+|---|---|---|---|---|
+| impervious fraction | +0.085 (+0.093) | +0.024 (+0.028) | −0.117 (+0.055) | −0.162 (−0.077) |
+| rice, single | −0.031 (−0.023) | −0.092 (−0.089) | −0.067 (+0.105) | −0.414 (−0.329) |
+| rice, combined | −0.032 (−0.024) | −0.092 (−0.089) | −0.059 (+0.114) | −0.406 (−0.320) |
+| both fractions | +0.017 (+0.025) | −0.077 (−0.074) | −0.129 (+0.043) | −0.845 (−0.760) |
+| both plus interaction | +0.033 (+0.041) | −0.042 (−0.039) | −0.077 (+0.095) | −0.796 (−0.711) |
+| spatial null | +0.332 (+0.341) | +0.514 (+0.517) | −0.091 (+0.081) | +0.003 (+0.088) |
+| albedo, SWIR | +0.476 (+0.485) | +0.316 (+0.319) | +0.290 (+0.462) | +0.066 (+0.151) |
+| wind | +0.653 (+0.661) | +0.563 (+0.566) | +0.633 (+0.806) | +0.311 (+0.396) |
+| sampling composition | +0.463 (+0.472) | +0.418 (+0.421) | +0.265 (+0.437) | −0.244 (−0.159) |
+| trend surface | +0.240 (+0.248) | +0.258 (+0.261) | −0.286 (−0.114) | −0.077 (+0.008) |
+| constant, global mean | −0.008 | −0.003 | −0.172 | −0.085 |
+| constant, per province | +0.103 (+0.111) | +0.056 (+0.059) | −0.172 (+0.000) | −0.085 (+0.000) |
+
+**The above-constant column changes the picture and nothing had computed it
+across all four.** On raw held-out R squared impervious fraction is positive in
+one combination of four. Above a constant fitted on the same training data it is
+positive in three, because under leave-one-province-out the constant itself
+scores −0.172: a province's mean differs from the domain's, so withholding a
+whole province penalises every model including the one that has no predictors.
+Reporting "positive in one of four" is true of the raw metric and misleading
+about the model.
+
+### What is known about each scheme, and the connection nobody had drawn
+
+`notes/grounding-methods.md` records the relevant properties and they are not
+restated here. Three bear on this decision.
+
+Neither scheme buffers and the literature's variants do. Leave-one-province-out
+is the most extrapolative design available on this lattice, which is where the
+pessimism Wadoux and others document bites hardest. And the buffered decay curve
+indicates the two schemes bracket rather than disagree, with the spatial null's
+province-out value matching its buffered value at a radius comparable to a
+province's width.
+
+**The connection that had not been made is between the residual range and which
+end of the bracket is which.** The impervious model's residual half-sill range is
+96.1 km on the operational field; the block is 95.0 km at its narrowest. **The
+block is marginal against the residual range by about one percent**, so residual
+structure persists across a block boundary and the block scheme's figures are the
+optimistic end of the bracket rather than a neutral midpoint. Province-out is the
+pessimistic end. That ordering is now established rather than assumed, and it is
+what makes a range reportable: the two ends are known-imperfect in known and
+opposite directions.
+
+### What is known about the weighting, which is that neither is right
+
+`notes/grounding-methods.md` records two distinct objections to sounding-count
+weighting: this repository's own, that it tilts fits toward flat bright terrain
+because that is where the retrieval succeeds, and the literature's, that count
+does not bound the error that actually matters. The implementable alternative,
+representativeness weighting, is queued and blocked behind the accumulator change
+that queue item 0g also needs.
+
+**So the choice is between two known-imperfect options and not between a right
+and a wrong one**, and whatever the paper reports has to say so. Unweighted
+treats a cell resting on one sounding as equal to a cell resting on 410;
+count-weighted treats count as a proxy for reliability that the literature says
+it is not.
+
+### The decision: report the range, with a named reference point
+
+**The land-cover result is reported as a range across the four combinations, with
+all four tabulated, and with spatial blocks unweighted named as the reference
+point wherever a single figure is needed — labelled as the optimistic end of the
+bracket rather than as the answer.**
+
+Three reasons, in order of weight.
+
+**First, the spread is a property of the evaluation and not of land cover**, which
+Part 3b of this pass established and which no record had. Across the four
+combinations on the operational field the range for impervious fraction is 0.247
+of R squared. For wind it is 0.342, for albedo 0.410, for the trend surface 0.544,
+for the spatial null 0.605, for sampling composition 0.708, and for the two
+fractions together 0.862. **Land cover has the smallest four-way spread of any
+predictor in the suite.** Attributing that spread to land cover, by quoting one
+combination as though it characterised the model, would assign to the predictor
+something that belongs to the design.
+
+**Second, the two ends are known-imperfect in opposite directions and the decay
+curve says they bracket.** A range between a design that is marginally too
+optimistic and one that is structurally too pessimistic is a more accurate report
+of what was measured than either end alone.
+
+**Third, the range is itself the result.** That a model's apparent skill moves by
+a quarter of an R squared under defensible changes to the evaluation is a
+statement about how weakly the association is constrained, and it is the
+statement the capability framing predicts. Collapsing it to one number discards
+the finding.
+
+**What the paper loses** is a single quotable number, which makes the result
+harder to state in a sentence and harder to compare against papers that quote
+one. The mitigation is the named reference point: block/unweighted is quoted
+where one figure is needed, always with its label, so a reader comparing against
+another study has a defined figure rather than a range they must collapse
+themselves.
+
+**And two rules follow that apply everywhere in this repository.** No land-cover
+R squared is written without its scheme and weighting. No figure showing one
+combination omits which combination it shows.
+
+### What the decision does not change
+
+**The central conclusion holds under all four combinations and is strengthened by
+saying so.** No land-cover model achieves positive held-out skill where the
+spatial null also achieves it — on any of the three fields, under any of the four
+combinations.
+
+There are three combinations of twelve in which a land-cover model scores above
+the null on the above-constant metric, and all three are leave-one-province-out
+unweighted, one per field. **In all three, both models are negative in raw
+held-out R squared**: on the operational field rice-combined is −0.059 against
+the null's −0.091, on the blended field −0.065 against −0.125, and on the
+deseasonalised field the two fractions together give −0.077 against −0.110. So
+the exception is "everything fails and land cover fails slightly less", not "land
+cover wins". Stated precisely: **land cover never beats the null where the null
+has positive skill, and beats it only where neither does.**
+
+The claim about where the exceptions fall is unaffected: `README.md` already
+scopes its exception count to spatial blocks at both weightings.
+
 ## What drafting the results section exposed, 15 September 2026
 
 The methods draft's return was a fourth field found inside a list of three and

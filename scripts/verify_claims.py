@@ -347,6 +347,32 @@ def _albedo_series_slope(series: str) -> float:
     raise KeyError(series)
 
 
+def _above_constant(field: str, model: str, scheme: str, weighting: str) -> float:
+    """Held-out R squared above a constant fitted on the same training data.
+
+    The interpretable column when the constant itself scores badly, which it
+    does under leave-one-province-out: a province's mean differs from the
+    domain's, so withholding a whole province penalises every model including
+    the one with no predictors. `notes/decisions.md` records why nothing had
+    computed this across all four combinations until 16 September 2026.
+    """
+    return (_suite(field, model, scheme, weighting)
+            - _suite(field, "constant (global mean)", scheme, weighting))
+
+
+def _suite_spread(field: str, model: str) -> float:
+    """Range of held-out R squared across the four scheme-weighting combinations.
+
+    The quantity that decides whether the four-way spread is a property of the
+    predictor or of the evaluation. It is the latter: land cover has the
+    smallest spread of any predictor in the suite.
+    """
+    values = [_suite(field, model, scheme, weighting)
+              for scheme in ("spatial blocks", "leave-one-province-out")
+              for weighting in ("unweighted", "by sounding count")]
+    return max(values) - min(values)
+
+
 def _albedo_series_pearson(series: str) -> float:
     """Unweighted SWIR albedo Pearson correlation, for one series."""
     if "albedo_corr" not in _cache:
@@ -894,6 +920,49 @@ QUANTITIES = {
         lambda: _suite("operational",
                        "OLS impervious_fraction + rice_fraction_single",
                        "leave-one-province-out", "by sounding count"),
+    # The four-way grid, above a constant on the same training data.
+    "above.impervious_bu":
+        lambda: _above_constant("operational", "OLS impervious_fraction",
+                                "spatial blocks", "unweighted"),
+    "above.impervious_bw":
+        lambda: _above_constant("operational", "OLS impervious_fraction",
+                                "spatial blocks", "by sounding count"),
+    "above.impervious_pu":
+        lambda: _above_constant("operational", "OLS impervious_fraction",
+                                "leave-one-province-out", "unweighted"),
+    "above.impervious_pw":
+        lambda: _above_constant("operational", "OLS impervious_fraction",
+                                "leave-one-province-out", "by sounding count"),
+    "above.null_pu":
+        lambda: _above_constant("operational",
+                                "spatial null (queen neighbour mean)",
+                                "leave-one-province-out", "unweighted"),
+    "above.rice_combined_pu":
+        lambda: _above_constant("operational", "OLS rice_fraction_combined",
+                                "leave-one-province-out", "unweighted"),
+    # Four-way spreads. The comparison that settles whether the spread belongs
+    # to land cover or to the evaluation design.
+    "spread.impervious": lambda: _suite_spread("operational",
+                                               "OLS impervious_fraction"),
+    "spread.rice": lambda: _suite_spread("operational",
+                                         "OLS rice_fraction_single"),
+    "spread.both": lambda: _suite_spread(
+        "operational", "OLS impervious_fraction + rice_fraction_single"),
+    "spread.wind": lambda: _suite_spread("operational",
+                                         "OLS wind (u, v, speed)"),
+    "spread.albedo": lambda: _suite_spread("operational", "OLS albedo (SWIR)"),
+    "spread.null": lambda: _suite_spread(
+        "operational", "spatial null (queen neighbour mean)"),
+    "spread.sampling": lambda: _suite_spread(
+        "operational", "OLS sampling composition (when observed)"),
+    "spread.trend": lambda: _suite_spread("operational",
+                                          "OLS trend surface (lat, lon)"),
+    "suite.rice_combined_pu":
+        lambda: _suite("operational", "OLS rice_fraction_combined",
+                       "leave-one-province-out", "unweighted"),
+    "suite.null_operational_pu":
+        lambda: _suite("operational", "spatial null (queen neighbour mean)",
+                       "leave-one-province-out", "unweighted"),
     "suite.albedo_operational":
         lambda: _suite("operational", "OLS albedo (SWIR)",
                        "spatial blocks", "unweighted"),
