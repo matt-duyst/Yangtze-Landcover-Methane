@@ -264,6 +264,8 @@ In outline:
 | regional land cover figure | `make_landcover_regional_figure.py` | about a second | continuously |
 | regional land cover figure, vector | `make_landcover_regional_figure.py` | about a second | continuously |
 | held-out baseline predictions | `compute_baseline_predictions.py --write` | about ten seconds over the committed grid and covariates | continuously |
+| buffered decay curve figure | `make_buffered_decay_figure.py` | about two seconds | continuously |
+| buffered decay curve figure, vector | `make_buffered_decay_figure.py` | about two seconds | continuously |
 | observed against predicted figure | `make_observed_predicted_figure.py` | about two seconds | continuously |
 | observed against predicted figure, vector | `make_observed_predicted_figure.py` | about two seconds | continuously |
 | model field and residual figure | `make_residual_field_figure.py` | about eight seconds | continuously |
@@ -418,7 +420,7 @@ the ArcGIS figure exports, whose provenance is documented but which no code in
 this repository produces.
 
 [`figures/`](figures/) holds the generated figures, committed as a PDF and PNG pair each,
-with their captions in [`figures/README_fragments.md`](figures/README_fragments.md). Eleven of a planned fourteen
+with their captions in [`figures/README_fragments.md`](figures/README_fragments.md). Twelve of a planned fifteen
 exist, inventoried in [`figures/README.md`](figures/README.md) against the 2023 thesis's own eighteen. Every colour any of them draws is a named role in
 [`src/figures/style.py`](src/figures/style.py), checked once over the whole role set for greyscale and
 colour-vision separation; a figure module may not name a colour, and a test

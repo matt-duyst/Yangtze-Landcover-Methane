@@ -556,8 +556,8 @@ downloads over four platforms — 5<!--#pipeline.fetch_routes--> parallelograms,
 ISO's symbol for data, against one bowed rectangle for the reference layers a
 clone already has. The distinction is carried by shape rather than by fill, so
 it costs no colour and survives a black and white print. Of the
-56<!--#pipeline.recipes--> registered regeneration recipes,
-30<!--#pipeline.recipes_committed--> rebuild their artefact from what a fresh
+58<!--#pipeline.recipes--> registered regeneration recipes,
+32<!--#pipeline.recipes_committed--> rebuild their artefact from what a fresh
 clone holds, 17<!--#pipeline.recipes_local--> need a fetched input and
 8<!--#pipeline.recipes_network--> need a network run.
 
@@ -785,3 +785,91 @@ committed `albedo_confounder_2018.csv`. The two slopes are read from
 `albedo_correction_2018.csv` rather than refitted.
 
 Regenerate with `python scripts/make_albedo_collinearity_figure.py`.
+
+![Held-out R squared against the buffer radius excluded from training, for a spatial null, impervious fraction and a constant, with the same null's leave-one-province-out value marked; and the skill of the two models above a constant fitted on the same data, on two methane fields, against the block width and residual range](buffered_decay.png)
+
+**A cross-validation scheme is a claim about how far a model has to extrapolate,
+and this figure measures that claim rather than asserting it.** Each point
+withholds one cell *and* every cell within the stated radius, refits, and
+predicts the withheld cell. At zero radius it is ordinary leave-one-out; at 500
+km a model is predicting the far side of the domain from what is left. Neither
+committed scheme buffers, so no number here is one of the reported results.
+The figure exists to say what the reported results are measuring.
+
+**Panel (a) is the raw metric and is here because the baseline moves.** A
+constant fitted on the training data is itself a model, and its held-out skill
+falls from -0.002<!--#loo.constant_0km_raw--> at no buffer to
+-0.407<!--#loo.constant_500km_raw--> at 500 km: the training mean drifts away
+from the withheld cell's neighbourhood. So every curve on this panel slopes
+down, whether or not the model is degrading, and a reader who took the slope
+for degradation would be reading the baseline. The spatial null is the
+exception that proves the buffer works. Its only predictor is its neighbours,
+so excluding them must destroy it, and it does:
+0.685<!--#loo.null_0km_raw--> at no buffer,
+0.664<!--#loo.null_25km_raw--> at 25 km, and
+-0.015<!--#loo.null_50km_raw--> at 50 km, which is the point where the
+neighbours are gone. Beyond it the null is numerically identical to the
+constant.
+
+**The dashed line is the same spatial null evaluated under the other committed
+scheme**, leave-one-province-out, at
+-0.091<!--#suite.null_operational_pu-->. It is drawn on this panel and not the
+next because a leave-one-province-out fold reports a raw held-out R squared and
+has no buffer radius to sit at. The shaded band is the interval within which
+the buffered curve reaches that value: the buffered null is
+-0.084<!--#loo.null_150km_raw--> at 150 km and
+-0.112<!--#loo.null_200km_raw--> at 200 km, so **the province-out value falls
+between two adjacent points of the null's own buffered curve.** The
+province-out fold is therefore somewhere on the buffered continuum rather than
+off it, which is what licenses reporting a range across the two schemes instead
+of choosing one.
+
+**The band is read off the table and is not a claim about fold geometry.** It
+would be natural to read it as the distance a held-out province's interior sits
+from the nearest training cell, and an earlier version of this figure did. That
+distance has never been measured in this repository. A scratch calculation
+against the committed fold assignment puts the median cell about 56 km from its
+nearest training cell, with roughly 4 percent of cells in the 150-to-200 km
+range, so the bracketing interval is much wider than the typical fold distance
+and the natural reading would have been wrong. **Leave-one-province-out is
+therefore more extrapolative than its geometry alone accounts for**, which is
+an open question rather than a result: withholding a province withholds a
+region of the predictor and response distribution as well as a neighbourhood.
+The planned fold map is the figure that would settle it, and no number from
+that calculation is quoted anywhere in the repository, because it has no
+registered script behind it.
+
+**Panel (b) is the difference, and it is where the conclusions are**, because
+subtracting the constant removes the drift that makes panel (a) unreadable as
+degradation. Land cover ought to be a horizontal line here: a model that uses
+no spatial information cannot care how far its training data lie from the cell
+it is predicting. It is not horizontal. Its advantage over a constant declines
+steadily, +0.118<!--#loo.impervious_0km--> at no buffer,
++0.089<!--#loo.impervious_100km--> at 100 km,
++0.063<!--#loo.impervious_150km--> at 150 km,
++0.041<!--#loo.impervious_200km--> at 200 km and
++0.007<!--#loo.impervious_300km--> at 300 km, crossing zero before 400. **The
+impervious coefficient is not one number over this domain.** The small skill
+land cover has is local, which is a stronger statement about why the
+reproduction finds so little than the headline figures alone support. The null
+is flat at exactly zero past 50 km for the reason panel (a) gives, so its line
+here carries no information after that point and is drawn only so the two
+models can be compared on one scale.
+
+**The vertical line is at 95.6 km, and it stands for two numbers 1.1 km
+apart**: the cross-validation block's east-west width,
+95.0<!--#range.block_ew_km--> km, and the half-sill range of the residual from
+an impervious-fraction fit, 96.1<!--#range.operational_impervious_km--> km.
+They are what a block scheme has to exceed and does not, which is why
+`data/processed/residual_range_2018.csv` records the verdict *block is too
+small* for this model. They are drawn as one line rather than a band because
+1.1 km on a 500 km axis is two pixels, and a band a reader cannot see as a band
+would claim a visible distinction the measurement does not support.
+
+Every plotted value is read from `data/processed/buffered_loo_2018.csv`, and
+the province-out line from `data/processed/baseline_results_2018.csv`. Nothing
+in the figure module refits a fold;
+`tests/test_figures_capability_curves.py` asserts each drawn line against its
+artefact column elementwise.
+
+Regenerate with `python scripts/make_buffered_decay_figure.py`.

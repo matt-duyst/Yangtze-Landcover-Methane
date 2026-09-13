@@ -1013,6 +1013,24 @@ QUANTITIES = {
     "loo.impervious_0km": lambda: _loo("OLS impervious", "0"),
     "loo.impervious_100km": lambda: _loo("OLS impervious", "100"),
     "loo.impervious_300km": lambda: _loo("OLS impervious", "300"),
+    # Added for figures/buffered_decay. The held-out column rather than the
+    # difference, for the three curves panel (a) draws: the null collapsing
+    # and the constant's own baseline sliding away beneath it.
+    "loo.null_0km_raw": lambda: _loo("spatial null", "0", "held_out_r2"),
+    "loo.null_25km_raw": lambda: _loo("spatial null", "25", "held_out_r2"),
+    "loo.null_50km_raw": lambda: _loo("spatial null", "50", "held_out_r2"),
+    "loo.constant_0km_raw": lambda: _loo("constant", "0", "held_out_r2"),
+    "loo.constant_500km_raw": lambda: _loo("constant", "500", "held_out_r2"),
+    # Two keys per radius on purpose. The above-constant column is exactly
+    # zero here -- beyond one cell the null *is* the constant -- so the
+    # bracketing comparison against leave-one-province-out can only be made on
+    # the raw column, which is the scale panel (a) draws.
+    "loo.null_150km": lambda: _loo("spatial null", "150"),
+    "loo.null_200km": lambda: _loo("spatial null", "200"),
+    "loo.null_150km_raw": lambda: _loo("spatial null", "150", "held_out_r2"),
+    "loo.null_200km_raw": lambda: _loo("spatial null", "200", "held_out_r2"),
+    "loo.impervious_150km": lambda: _loo("OLS impervious", "150"),
+    "loo.impervious_200km": lambda: _loo("OLS impervious", "200"),
     "dofs.days_median":
         lambda: _dofs("observation days per covered cell, median"),
     "dofs.retrievals_median":

@@ -31,6 +31,8 @@ and a convention loses to a deadline.
 
 from __future__ import annotations
 
+import numpy as np
+
 import ast
 import re
 from pathlib import Path
@@ -187,3 +189,71 @@ def test_the_colour_scan_would_catch_a_colour_if_one_were_added(tmp_path):
              or value.lower() in _NAMED]
 
     assert found == ["#ff00ff", "white", "0.88"]
+
+
+def test_the_scientific_colour_maps_are_actually_installed():
+    """The palette's luminance guarantees are void without `cmcrameri`.
+
+    `style.sequential` falls back to a matplotlib map when the package is
+    absent, and the fallback is silent. Under it `style.series(3)` returns
+    three colours separated by 0.004 in luminance where `MIN_LUMINANCE_GAP`
+    promises 0.15, so a line figure built in that environment is illegible in
+    greyscale and no existing check notices: the greyscale report covers
+    `ROLES`, whose values are declared hex, and not `SERIES`, which is derived.
+
+    This was found on 16 September 2026 by running a figure script under the
+    wrong interpreter -- `python3` rather than `.venv/bin/python` -- which
+    recoloured a committed figure. The recipe check would have caught the
+    recoloured bytes; nothing would have explained why.
+    """
+    from src.figures import style
+
+    assert style._crameri is not None, (
+        "cmcrameri is not importable, so every colour map in style.py is a "
+        "silent matplotlib substitute and the declared luminance separations "
+        "do not hold")
+
+
+def test_the_categorical_series_separates_by_the_declared_gap():
+    """`SERIES` is derived, so unlike `ROLES` nothing had checked it.
+
+    The greyscale report walks the declared role palette. The categorical keys
+    a line figure draws from are built at import time from a colour map, and
+    the property the docstring claims for them -- that consecutive entries
+    separate by at least `MIN_LUMINANCE_GAP` -- was never asserted.
+    """
+    from src.figures import style
+
+    luminances = [style._luminance(c) for c in style.SERIES]
+    gaps = [b - a for a, b in zip(luminances, luminances[1:])]
+
+    assert luminances == sorted(luminances), "series must be ordered by tone"
+    assert min(gaps) >= style.MIN_LUMINANCE_GAP, (
+        f"consecutive series colours separate by {min(gaps):.3f}, below the "
+        f"declared {style.MIN_LUMINANCE_GAP}")
+
+
+def test_the_categorical_series_survives_colour_vision_deficiency():
+    """`cvd_report` walks the role set; the line colours are not in it.
+
+    The greyscale and CVD reports `scripts/verify_figure.py` prints cover
+    `ROLES`, whose members are declared hex values with declared adjacencies.
+    A line plot's series colours come from `SERIES`, which is derived at import
+    time, and nothing simulated them. The two figures added on 16 September
+    2026 are both line plots, so the gap became load-bearing.
+
+    The threshold is the one `cvd_report` uses for roles, applied to every pair
+    of series colours rather than to declared adjacencies, because every pair
+    of lines in a plot is adjacent: a reader compares any curve with any other.
+    """
+    from src.figures import style
+
+    floor = style.MIN_CVD_DISTANCE
+    for kind in ("protanopia", "deuteranopia", "tritanopia"):
+        simulated = [style.simulate_cvd(c, kind) for c in style.SERIES]
+        for i, a in enumerate(simulated):
+            for b in simulated[i + 1:]:
+                distance = float(np.linalg.norm(style._lab(a) - style._lab(b)))
+                assert distance >= floor, (
+                    f"under {kind} two series colours are {distance:.1f} apart, "
+                    f"below the {floor} the role set is held to")

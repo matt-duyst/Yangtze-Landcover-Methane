@@ -68,6 +68,12 @@ def _urban_change():
     return urban_change_figure()
 
 
+def _buffered_decay():
+    from src.figures.buffered_decay import decay_figure, from_artefact
+    return decay_figure(from_artefact())
+
+
+
 BUILDERS["study_area"] = _study_area
 BUILDERS["methane_composite_2018"] = _composite
 def _landcover_regional():
@@ -106,6 +112,7 @@ BUILDERS["albedo_collinearity"] = _albedo_collinearity
 BUILDERS["framework_pipeline"] = _framework_pipeline
 BUILDERS["framework_reproduction"] = _framework_reproduction
 BUILDERS["landcover_regional"] = _landcover_regional
+BUILDERS["buffered_decay"] = _buffered_decay
 BUILDERS["observed_predicted"] = _observed_predicted
 BUILDERS["residual_field"] = _residual_field
 BUILDERS["urban_change"] = _urban_change
@@ -444,7 +451,7 @@ def _native_residual_field():
 #: number for these, it is not a number: a diagram has no source pixels. Saying
 #: so is better than printing a ratio a reader would take for a measurement.
 VECTOR_ONLY = ("albedo_collinearity", "framework_pipeline",
-               "framework_reproduction")
+               "framework_reproduction", "buffered_decay")
 
 
 def report_native(stem: str) -> None:

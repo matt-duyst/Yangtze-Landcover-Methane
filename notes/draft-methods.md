@@ -571,8 +571,8 @@ land-cover effect and not on the capability statements of §6.
 
 Every derived artefact is registered in a machine-readable recipe register giving
 the command that produces it and the verification tier it belongs to.
-56<!--#pipeline.recipes--> artefacts are registered across four tiers:
-30<!--#pipeline.recipes_committed--> regenerate from a fresh clone with no
+58<!--#pipeline.recipes--> artefacts are registered across four tiers:
+32<!--#pipeline.recipes_committed--> regenerate from a fresh clone with no
 network and no local data and are verified on every test run;
 17<!--#pipeline.recipes_local--> require local raw data and are verified where it
 exists; 8<!--#pipeline.recipes_network--> require a network fetch and are verified

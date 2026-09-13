@@ -515,6 +515,29 @@ recipes:
   note: One row per cell per model for the four models the diagnostic figures draw, every value out of
     fold. The script refuses to write unless the metrics recomputed from the pooled predictions reproduce
     baseline_results_2018.csv, which is what says the figures and the table describe one fit.
+- artefact: figures/buffered_decay.png
+  command: python scripts/make_buffered_decay_figure.py
+  label: buffered decay curve figure
+  cost: about two seconds
+  seconds: 3
+  inputs: committed
+  compare: bytes
+  verified: continuously
+  note: >-
+    Reads data/processed/buffered_loo_2018.csv and the spatial null's
+    leave-one-province-out row from data/processed/baseline_results_2018.csv.
+    Both are committed, so this regenerates from a fresh clone. Nothing in the
+    figure module recomputes a fold; tests/test_figures_capability_curves.py
+    asserts every drawn line against its artefact column elementwise.
+- artefact: figures/buffered_decay.pdf
+  command: python scripts/make_buffered_decay_figure.py
+  label: buffered decay curve figure, vector
+  cost: about two seconds
+  seconds: 3
+  inputs: committed
+  compare: bytes
+  verified: continuously
+  note: null
 - artefact: figures/observed_predicted.png
   command: python scripts/make_observed_predicted_figure.py
   label: observed against predicted figure
