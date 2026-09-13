@@ -6212,3 +6212,85 @@ the two framework diagrams and the land-cover provenance figures. It does not:
 the diagrams are repository documentation rather than argument, and the
 provenance figures belong to methods and errata. **The five-figure count stands
 and the reason is now established rather than assumed.**
+
+## The stale cross-reference class, surveyed and partly guarded, 14 September 2026
+
+The previous pass found `notes/paper-target.md` citing
+`notes/grounding-methods.md` as holding two claims superseded three passes
+earlier, and named the failure mode: the correction was applied to the cited
+record and not to the citing one. **That is a fourth drift class.** The other
+three have mechanisms — recipes against artefacts, prose numbers against
+artefacts, the figure inventory against the files it names. This one had none.
+
+### The survey, which changes the verdict
+
+**133 places where one record characterises another's content**, across
+thirteen files: `notes/decisions.md` 33, `notes/paper-target.md` 27,
+`notes/grounding-methane.md` 14, `README.md` 12, and the rest in single digits.
+`notes/references.md` is excluded from the count; its several hundred file
+mentions are "Cited in" pointers rather than characterisations, and a pointer
+cannot go stale in this way.
+
+**127 of the 133 paraphrase and 6 quote.** That split is the whole finding,
+because **a paraphrase cannot be checked mechanically**: prose about prose has
+no artefact to compare against, and deciding whether a paraphrase is faithful is
+what a reader does. A quotation is a substring.
+
+**Of the 6 quotable claims, 0 are genuinely stale.** One fails a literal match —
+the Olofsson claim in `notes/paper-target.md` — and it fails because the
+correction made last pass **quotes the superseded text beside the correction**,
+which is this repository's convention. The words are meant to be absent from the
+target. A hand sample of 14 of the 127 paraphrases found no errors either;
+six were verified in depth and all six hold.
+
+**So on today's evidence this is one historical instance, already corrected, and
+not a live defect.** The brief asked whether that warrants a guard or a note.
+The answer taken is: a note on the 127, and a guard on the 6, because the guard
+also establishes the convention that makes the class checkable at all.
+
+### What was built, and what it costs
+
+`tests/test_cross_references.py`. Where a cross-file claim quotes its target,
+the quotation must still be present in the file named. Three tests: the
+quotation check, a guard that the survey pattern still matches anything at all,
+and a guard that the historical exemption is exercised rather than being dead
+code.
+
+**The convention it establishes:** where a cross-file claim *can* quote, it
+should, because a quotation is the only form of this claim a test can verify.
+That is the cheaper of the two designs considered.
+
+**The design rejected, and why.** A marker naming the target section with a
+content hash would cover paraphrases too. It was rejected on the rule this
+repository already records about checks: a hash over prose fires on **every**
+edit to the target file, including edits nowhere near the claim, and a check
+that fires on things that are fine gets suppressed and then catches nothing. A
+quotation check fires only when the quoted words are gone.
+
+**What it does not do**, so nobody reads more into it: nothing for the 127
+paraphrases, no judgement about whether a quotation is used in the sense the
+source intended, and it binds new claims only when they quote.
+
+### Three false-positive classes, and the reason they are worth recording
+
+The first three versions of the check reported 6 of 6 stale, then 2 of 6, then
+1 of 6. **Every one of those was the check's fault.** Had the first version
+shipped it would have fired on everything and been suppressed within a day,
+which is the exact failure the rejected design was rejected for — and it would
+have been suppressed on the evidence of its own output rather than on a
+judgement about prose.
+
+* **Hard-wrapped prose.** Both records wrap near 80 columns, so a quoted phrase
+  crosses a line break at a different position in the quote than in the source.
+  Whitespace is normalised on both sides.
+* **Sentence case.** A quotation dropped mid-sentence is lower-cased where the
+  source capitalises: "one figure exists so far" against "One figure exists so
+  far", which is `notes/decisions.md` citing
+  `notes/repository-architecture.md` and is **accurate**.
+* **Deliberate historical quotation.** The correction convention means a
+  corrected passage contains a quotation legitimately absent from its target.
+  Exempted by a superseded marker near the claim.
+
+**The guard was verified by mutation** rather than by passing: altering the
+quoted sentence in `notes/grounding-methods.md` makes it fail with the citing
+file, line and quotation named, and restoring the sentence makes it pass.
