@@ -1281,6 +1281,17 @@ amplitude, phase or peak. *Needs* only a row or two added to an existing script,
 since the cycle is already fitted in order to remove it. **Found by drafting the
 discussion, 14 September 2026.**
 
+**12b. The three sections that do not exist.** Four narrative sections are
+drafted and `paper-target.md` names five; the conclusion is missing, so nothing
+states what the paper establishes in its own voice at the end. **And two
+apparatus sections exist nowhere.** No abstract — the section a reviewer reads
+first, and the one this file's own publication-bias material identifies as where
+null results get filtered. No data availability statement, which the target
+venue requires and which this repository could write almost mechanically from
+64 registered recipes, a byte-comparison runner and per-artefact provenance.
+*Needs* no new analysis. **Found by looking at the drafts as a set,
+14 September 2026.**
+
 ### Tier 3 — one re-gridding pass over the granules, shared by five items
 
 **These five share a single 28.9 GB transfer and should be done together or not

@@ -6299,3 +6299,62 @@ judgement about prose.
 **The guard was verified by mutation** rather than by passing: altering the
 quoted sentence in `notes/grounding-methods.md` makes it fail with the citing
 file, line and quotation named, and restoring the sentence makes it pass.
+
+## The four drafts as a set, 14 September 2026
+
+With the introduction written, all four sections `notes/paper-target.md` names
+exist in draft: introduction, methods, results, discussion. This is the first
+look at them as a set.
+
+### Consistency across the drafts
+
+**No claim appears in inconsistent form.** 73 resolvers are quoted in more than
+one draft, and every one agrees. Five appear at **different precision**, which
+is not the same thing and is worth recording because a copy-editor will flag it:
+`baseline.constant_r2` as −0.0084 in methods and −0.008 in results,
+`baseline.rice_alone_r2` as −0.0314 against −0.031,
+`baseline.rice_plus_impervious_r2` as 0.0169 against 0.017,
+`baseline.wind_r2` as 0.6527 against 0.653, and `dofs.cell_max_12tg` as 0.0649
+in results against 0.065 in the discussion. The claim checker verifies each at
+its own written precision, so all ten are correct; a paper would normally use
+one precision per quantity. **Left as they stand**, because methods reports to
+four places throughout and results to three, and the difference is a per-section
+convention rather than an error.
+
+**And two findings are stated at deliberately different strength**, which was
+checked rather than assumed. The land-cover result is a "failed detection" in
+all three sections that mention it, never an absence. The capability estimate
+carries "not an inversion" in methods, results, discussion and introduction —
+four times, which is the intended redundancy rather than an oversight.
+
+### What the set does not cover
+
+Four sections exist. **`notes/paper-target.md` names five**, and the missing one
+is the conclusion: the discussion closes on §8 Limitations, so there is nothing
+that states what the paper establishes in its own voice at the end.
+
+**And two required sections exist nowhere.** No abstract, which is the section a
+reviewer reads first and the one the publication-bias literature this file
+already records identifies as where null results are filtered. No data
+availability statement, which the target venue requires and which is the one
+section this repository could write almost mechanically — 64 registered
+recipes, a byte-comparison runner, and every artefact's provenance recorded.
+
+So the honest state is **four of five narrative sections drafted, plus two
+apparatus sections absent**. Recorded rather than assumed complete, and queued.
+
+### Claim counts
+
+277 marked claims across the four drafts and 680 unmarked: methods 80 and 287,
+results 165 and 193, discussion 24 and 140, introduction 8 and 60. The unmarked
+majority is literature figures, which resolve by citation rather than by
+artefact, and each draft's own notes list its exemptions.
+
+**All four are now in the claim checker's scanned set, and that is a test rather
+than a habit.** `tests/test_drafts_are_scanned.py` asserts that every
+`notes/draft-*.md` is in `verify_claims.SCANNED`, because a draft outside it
+carries markers that are never evaluated — the checker passes, reports a count
+excluding the file, and every number in it is unverified while looking verified.
+The discussion draft spent a day in that state. A third test asserts each
+scanned draft actually carries markers, since being in the tuple is necessary
+and not sufficient.
