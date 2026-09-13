@@ -450,6 +450,14 @@ def _range() -> dict:
     return _cache["range"]
 
 
+def _atten(quantity: str) -> float:
+    """One row of the attenuation bound table, by its `quantity` label."""
+    if "atten" not in _cache:
+        _cache["atten"] = {r["quantity"]: r for r
+                           in _read_csv(PROCESSED / "attenuation_bound_2018.csv")}
+    return float(_cache["atten"][quantity]["value"])
+
+
 def _disagree(year: str, resolution: str, column: str) -> float:
     """One cell of the GAIA-GISA disagreement decomposition."""
     if "disagree" not in _cache:
@@ -1008,6 +1016,27 @@ QUANTITIES = {
     "dof.effective_n_min": lambda: _dof()["effective_n_min"],
     "dof.effective_n_max": lambda: _dof()["effective_n_max"],
     "dof.verdict_changed": lambda: _dof()["verdict_changed"],
+    # Added for queue item 11, the attenuation bound. Every one of these is a
+    # bound or a sensitivity value; none is an estimate.
+    "atten.var_x": lambda: _atten("Var(X), the GAIA cell fraction in use"),
+    "atten.var_d": lambda: _atten("Var(D), GAIA minus GISA on the same cells"),
+    "atten.corr": lambda: _atten("correlation of the two cell fractions"),
+    "atten.var_share": lambda: _atten("Var(D) as a share of Var(X)"),
+    # The prose speaks in percent where the artefact stores a share.
+    "atten.var_share_pct": lambda: 100.0 * _atten("Var(D) as a share of Var(X)"),
+    "atten.lambda_min": lambda: _atten("reliability ratio lower bound"),
+    "atten.factor_max": lambda: _atten("maximum de-attenuation factor"),
+    "atten.lambda_equal": lambda: _atten("reliability ratio, equal independent errors"),
+    "atten.r2_bound_bu":
+        lambda: _atten("held-out R2 upper bound, operational, spatial blocks, unweighted"),
+    "atten.r2_bound_bw":
+        lambda: _atten("held-out R2 upper bound, operational, spatial blocks, by sounding count"),
+    "atten.r2_bound_blended_bu":
+        lambda: _atten("held-out R2 upper bound, blended, spatial blocks, unweighted"),
+    "atten.coef_bound":
+        lambda: _atten("coefficient upper bound, operational, unweighted"),
+    "atten.coef_bound_blended":
+        lambda: _atten("coefficient upper bound, blended, unweighted"),
     # Added for queue item 10, the GAIA-GISA disagreement decomposition.
     "disagree.alloc_share_2018_cell":
         lambda: _disagree("2018", "0.25 degree cell", "allocation_share"),

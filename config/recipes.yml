@@ -45,6 +45,18 @@ recipes:
   last_verified: '2026-09-04'
   last_verified_by: the extent re-run, which executed compute_methane_composite.py --run end
     to end over all 578 granules and exported from the result
+- artefact: data/processed/attenuation_bound_2018.csv
+  command: python scripts/bound_attenuation.py --write
+  label: attenuation bound on the land-cover coefficient
+  cost: about ten seconds
+  seconds: 12
+  inputs: committed
+  compare: bytes
+  verified: continuously
+  note: >-
+    Reads the committed GISA extent raster, the analysis grid and the two
+    baseline suites. Every figure it reports is a bound or a sensitivity value
+    rather than an estimate, and the quantity column says which.
 - artefact: data/processed/urban_disagreement_2018.csv
   command: python scripts/decompose_urban_disagreement.py --write
   label: GAIA-GISA quantity and allocation disagreement

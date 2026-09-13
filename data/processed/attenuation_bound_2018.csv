@@ -1,0 +1,26 @@
+quantity,value,unit,note
+"Var(X), the GAIA cell fraction in use",0.015631,fraction squared,the predictor the association regresses on
+"Var(D), GAIA minus GISA on the same cells",0.002066,fraction squared,upper bound on Var(e_GAIA) if the two errors are independent
+correlation of the two cell fractions,0.9379,Pearson r,high correlation is why the disagreement variance is small
+Var(D) as a share of Var(X),0.1322,share,"the most error the disagreement can support, under independence"
+reliability ratio lower bound,0.8678,lambda,"lambda >= 1 - Var(D)/Var(X); a bound, not an estimate"
+maximum de-attenuation factor,1.1523,multiplier,"1/lambda_min, applied to a coefficient or to an R squared"
+"reliability ratio, equal independent errors",0.9339,lambda,"the conventional two-replicate point estimate, Var(e)=Var(D)/2"
+"held-out R2 upper bound, operational, spatial blocks, unweighted",0.0976,R squared,observed +0.0847; spatial null +0.3324; reaching the null needs Var(e) = 5.6 x Var(D)
+"held-out R2 upper bound, operational, spatial blocks, by sounding count",0.0281,R squared,observed +0.0244; spatial null +0.5136; reaching the null needs Var(e) = 7.2 x Var(D)
+"held-out R2 upper bound, operational, leave-one-province-out, unweighted",-0.1174,R squared,"observed -0.1174; spatial null -0.0912; negative held-out R2, so de-attenuation does not apply"
+"held-out R2 upper bound, operational, leave-one-province-out, by sounding count",-0.1620,R squared,"observed -0.1620; spatial null +0.0028; negative held-out R2, so de-attenuation does not apply"
+"coefficient upper bound, operational, unweighted",47.29,ppb per unit fraction,observed +41.04; in-sample R2 0.1192
+"held-out R2 upper bound, blended, spatial blocks, unweighted",0.0752,R squared,observed +0.0653; spatial null +0.4141; reaching the null needs Var(e) = 6.4 x Var(D)
+"held-out R2 upper bound, blended, spatial blocks, by sounding count",-0.0053,R squared,"observed -0.0053; spatial null +0.5619; negative held-out R2, so de-attenuation does not apply"
+"held-out R2 upper bound, blended, leave-one-province-out, unweighted",-0.2110,R squared,"observed -0.2110; spatial null -0.1254; negative held-out R2, so de-attenuation does not apply"
+"held-out R2 upper bound, blended, leave-one-province-out, by sounding count",-0.2602,R squared,"observed -0.2602; spatial null +0.0138; negative held-out R2, so de-attenuation does not apply"
+"coefficient upper bound, blended, unweighted",46.25,ppb per unit fraction,observed +40.14; in-sample R2 0.0995
+reliability at Var(e) = 0.5 x Var(D),0.9339,lambda,"sensitivity sweep; k=0.5 equal-error estimate, k=1 the bound"
+reliability at Var(e) = 1 x Var(D),0.8678,lambda,"sensitivity sweep; k=0.5 equal-error estimate, k=1 the bound"
+reliability at Var(e) = 1.5 x Var(D),0.8017,lambda,"sensitivity sweep; k=0.5 equal-error estimate, k=1 the bound"
+reliability at Var(e) = 2 x Var(D),0.7357,lambda,"sensitivity sweep; k=0.5 equal-error estimate, k=1 the bound"
+reliability at Var(e) = 3 x Var(D),0.6035,lambda,"sensitivity sweep; k=0.5 equal-error estimate, k=1 the bound"
+reliability at Var(e) = 4 x Var(D),0.4713,lambda,"sensitivity sweep; k=0.5 equal-error estimate, k=1 the bound"
+reliability at Var(e) = 5 x Var(D),0.3392,lambda,"sensitivity sweep; k=0.5 equal-error estimate, k=1 the bound"
+reliability at Var(e) = 6 x Var(D),0.2070,lambda,"sensitivity sweep; k=0.5 equal-error estimate, k=1 the bound"

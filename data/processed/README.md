@@ -1312,3 +1312,57 @@ disagreement about where.
 The native 30 m products are not used: only small windows are committed and the
 full products are a 1-to-2 GB refetch. Areas are computed per raster row with a
 cosine-of-latitude term rather than assumed constant.
+
+## attenuation_bound_2018.csv
+
+How much of the land-cover coefficient could be measurement-error attenuation,
+as a bound. Written by `scripts/bound_attenuation.py --write`.
+
+**Every value in this file is a bound or a sensitivity figure, not an estimate**,
+and the `quantity` column says which. That distinction is the one this artefact
+is most likely to be misread on.
+
+**The derivation, because it is the step a reviewer will check.** With `T` the
+true impervious fraction, `X = T + e` the GAIA fraction the regression uses and
+`Z` the GISA fraction, classical error gives `beta_obs = lambda · beta_true` and
+`R2_obs = lambda · R2_true`, where `lambda = Var(T)/Var(X)`. **To bound
+`beta_true` from above, `lambda` must be bounded from below, so `Var(e)` must be
+bounded from above.** With `D = X - Z` and errors independent of each other,
+`Var(D) = Var(e_X) + Var(e_Z) >= Var(e_X)`, so `Var(e_X) <= Var(D)` and
+`lambda >= 1 - Var(D)/Var(X)`.
+
+Measured on the 926 cells: `Var(X) = 0.015631`, `Var(D) = 0.002067`, the two
+fractions correlate at r = 0.938, so `Var(D)` is **13.2 percent** of `Var(X)`
+and
+
+* `lambda >= 0.8678`, giving a **maximum de-attenuation factor of 1.152**;
+* under the conventional two-replicate assumption of equal independent errors,
+  `Var(e) = Var(D)/2` and `lambda = 0.9339`, a factor of 1.071.
+
+**What that does to the reported result.** The impervious model's best held-out
+R² is +0.0847 (operational field, spatial blocks, unweighted). Its upper bound
+is **+0.0976**, against the spatial null's **+0.3324** on the same combination.
+The coefficient's upper bound is 47.29 ppb per unit fraction against an observed
+41.04. Under leave-one-province-out the impervious held-out R² is negative and
+de-attenuation does not apply, since a negative held-out R² is not a squared
+correlation.
+
+**The inverse question is the informative one.** For the de-attenuated
+impervious R² to reach the spatial null, `Var(e)` would have to be **5.6 times
+`Var(D)`** on the unweighted combination and 7.2 times on the sounding-weighted
+one — that is, 74.5 percent of the variance in the GAIA fraction would have to
+be error, against the 13.2 percent the two products' disagreement supports. The
+file carries the sensitivity sweep from 0.5 to 6 times `Var(D)` so the margin is
+visible rather than asserted.
+
+**Two assumptions are load-bearing and neither is testable here.** The bound
+needs the two products' errors to be **independent**; GAIA and GISA are built
+from the same Landsat archive by similar algorithms, so a positive correlation
+is plausible and would make `Var(D)` understate the joint error. And classical
+correction assumes **homoscedastic non-differential** error, while the measured
+disagreement is strongly heteroscedastic — the standard deviation of `D` rises
+from 0.0021 in the lowest quartile of the GAIA fraction to 0.0650 in the
+highest, a factor of 31 — and mildly differential, with a partial correlation of
+−0.118 between the signed error and methane given the fraction. Both violations
+push toward more attenuation than the bound allows, which is why the sweep
+matters: the margin is a factor of 5.6, and neither violation is of that size.
