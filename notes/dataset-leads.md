@@ -171,8 +171,8 @@ resolution and years.
 | Landsat Collection 2 Level-2 | Surface-reflectance scenes at 30 m | Planetary Computer STAC API, `collections/landsat-c2-l2`, **HTTP 200 anonymously with no key, re-verified 13 September 2026** | The collection's `license` field reads `proprietary`, which is the STAC convention for "see the link"; its licence **link** is titled *Public Domain* and points at the USGS data policy. Cite `10.5066/P9IAXOVV`, `10.5066/P9C7I13B` or `10.5066/P9OGBGM6` by sensor | 1982-08-22 onward | Reimplementing the thesis's per-pixel proxy method from imagery rather than from a product, which is the only route to a reproduction that does not inherit a product's errors | **verified accessible** |
 | Very-high-resolution imagery for visual interpretation | The standard response design in this literature | — | **An open question, not an assumption.** Every product here interpreted Google Earth imagery; none of the papers read addresses whether its terms permit publishing a derived accuracy assessment | — | Constructing reference data where none is distributed | unresolved |
 | Olofsson et al. (2014) | The good-practice standard for area estimation and accuracy assessment | in the register | — | — | The standard a reviewer will check against. **Its first three recommendations apply here and are unmet; its last two do not apply at all**, because it contains no treatment of fractional cover | in the register |
-| **Global land cover validation samples** | 44,043 visually interpreted validation points for 24 fine land-cover types, global, from the group behind GLC_FCS30 | Zenodo `10.5281/zenodo.3551995` (version) under concept `10.5281/zenodo.3551994`. **Blocked by the Zenodo block**, so the deposit was not opened. **The DOI and citation were verified first and both are correct**: DataCite returns *A Dataset of Global Land Cover Validation Samples* by Liangyun Liu, Yuan Gao, Xiao Zhang, Xidong Chen and Shuai Xie, Zenodo 2019, v1, type Dataset. No mirror found; the ESSD paper's own data availability statement names this Zenodo DOI and no other | **CC BY per OpenAIRE's harvested record**, which also reports Open Access. DataCite's `rights` field is empty. **Not read from the deposit**, so this is corroboration and not verification | 44,043 samples, nominal year 2015, read from the GLC_FCS30 paper rather than the files. **The count inside the four provinces is unknown and cannot be obtained while the block holds**; if the sample were uniform on land, 350,000 km² of 148.9 million would expect about **103 points over 926 cells, 0.11 per cell** | **Class labels only, not fractional cover**, in three nested schemes: level-0 with 9 basic types, UN-LCCS level-1 with 16, UN-LCCS level-2 with 24. This is the binding limitation for this project independent of the block: a class-label point validates a categorical map and these layers are fractional | documented only, route blocked |
-| **Globe230k** | 232,819 densely annotated image tiles of 512 × 512 at 1 m with 10 first-level categories, RGB plus NDVI, DEM, VV and VH | Zenodo, concept `10.5281/zenodo.8429199` with **three versions** — `8429200` (the one this task named), `10279734` and `10435661`. **Blocked by the Zenodo block.** DOI and citation verified: DataCite returns *Globe230k: A Benchmark Dense-Pixel Annotation Dataset for Global Land Cover Mapping* by Qian Shi, Da He, Zhengyu Liu, Xiaoping Liu and Jingqian Xue, Zenodo 2023 | not established. The paper is open access in *Journal of Remote Sensing*, `10.34133/remotesensing.0078`, indexed in DOAJ, but `spj.science.org` returns 403 to this network so the licence and the data availability statement were not read | 232,819 tiles, **total coverage over 60,000 km²** — the abstract's own figure, which 232,819 × 0.2621 km² reproduces at 61,032 km². That is **0.041 percent of global land** | **Dense annotation cannot yield a per-cell fraction at this lattice, and the arithmetic settles it.** One tile is 0.2621 km²; one 0.25-degree cell is about 625 km², so a tile is 0.042 percent of a cell and **tiling one cell would need 2,384 tiles**. Uniform on land, the four provinces would receive about **547 tiles, 0.59 per cell, covering 0.025 percent of each cell's area**. Dense annotation gives an exact fraction *within a tile footprint*, which is a sample of the cell and not the cell's value — so it returns to the probability-sampling problem it was meant to solve, at under one tile per cell. **The screening question could not be answered**: the record and abstract do not say how many candidate regions were rejected or on what basis, and a screened uniform sample is not a probability sample unless the screening is independent of the target | documented only, route blocked |
+| **Global land cover validation samples** | **44,514 point samples** carrying one of 24 fine land-cover labels, global, from the group behind GLC_FCS30 | Zenodo `10.5281/zenodo.3551995` (version) under concept `10.5281/zenodo.3551994`. **Fetched 13 September 2026 during an open window in the Zenodo filter**: two files, 945,869 B total, `GLC_ValidationSampleSet_v1.rar` at 928,968 B with MD5 `9b83f28f35ead5893cbd796041a73df9` verified, plus a `Data description.docx`. **DOI and citation verified before anything else and both are correct**: *A Dataset of Global Land Cover Validation Samples*, Liangyun Liu, Yuan Gao, Xiao Zhang, Xidong Chen and Shuai Xie, Zenodo 2019, v1 | **CC-BY-4.0, read from the deposit's own `license` field**, with `access: open`. *This row briefly recorded the licence as OpenAIRE-harvested corroboration; it is now read from the record itself* | **44,514 samples in the file against 44,043 in the GLC_FCS30 paper, a difference of 471 that neither source explains.** Nominal year 2015 per the paper; **the file carries no year field**, so per-sample timing is not recoverable. **124 samples fall inside the four provinces** — Jiangsu 112, Zhejiang 7, Anhui 4, Shanghai 1 — reaching **20 of the 926 analysis cells** | **The design is a stratified allocation over a non-probability frame, and the deposit confirms the frame.** The paper gives the Cochran sample-size formula with `W_i` the global per-class area proportion, which is a textbook stratified allocation; the description document lists the frame as **eight donor datasets** — GLCNMO 2008, VIIRS, STEP, FROM_GLC, croplands.org, GLWD and two NDVI/NDSI time series — with points "randomly collected from each polygon". Randomisation inside donor polygons is not a probability sample of this domain and the first-stage inclusion probability of a donor polygon is unknown. **The shapefile has three fields only — `sample_lab`, `lon`, `lat` — so the per-sample source code the description describes is not in the file and provenance is not recoverable.** Points, EPSG:4326, so **class labels and no fractional cover**. For this project's two layers the counts are decisive: 107 irrigated cropland and 1 rainfed against a rice layer, and **12 impervious-surface points across all four provinces** against an impervious layer | **verified accessible**, open anonymous |
+| **Globe230k** | 232,819 densely annotated image tiles of 512 × 512 at 1 m in 10 first-level categories, RGB plus NDVI, DEM, VV and VH | Zenodo, concept `10.5281/zenodo.8429199` with **three versions** — `8429200` (the one this task named), `10279734` and `10435661`, the last from 2024-01-04. **The record and its small files were fetched during the open window**: the 716,079 B user guide and the 1,877,447 B training split were taken; the imagery was not, because `image_patch.zip` is **11,503,450,247 B** and the deposit totals **12.23 GB**, four times this task's budget. The multimodal DEM, NDVI and VVVH layers are not on Zenodo at all but on Baidu Wangpan, at 1.91 GB, 164 GB and 372 GB. DOI and citation verified: Qian Shi, Da He, Zhengyu Liu, Xiaoping Liu and Jingqian Xue | **CC-BY-4.0, read from the deposit's own `license` field**, `access: open` | 232,819 tiles, **total coverage over 60,000 km²** — the abstract's own figure, which 232,819 × 0.2621 km² reproduces at 61,032 km². That is **0.041 percent of global land** | **Dense annotation cannot yield a per-cell fraction at this lattice, and the arithmetic settles it.** One tile is 0.2621 km²; one 0.25-degree cell is about 625 km², so a tile is 0.042 percent of a cell and **tiling one cell would need 2,384 tiles**. Uniform on land, the four provinces would receive about **547 tiles, 0.59 per cell, covering 0.025 percent of each cell's area**. Dense annotation gives an exact fraction *within a tile footprint*, which is a sample of the cell and not the cell's value — so it returns to the probability-sampling problem it was meant to solve, at under one tile per cell. **The sampling is not uniform and the user guide says so outright**, which is a different and larger departure than the quality-screening this task described: *"in order to ensure the category balance, we intentionally give more chance to the rare categories to be sampled, such as wetland, ice/snow, etc."* That is a deliberate disproportionate design with **no stated selection probabilities, so inclusion probabilities are not recoverable**. The guide still does not say how many candidate regions were rejected or on what basis. **And the geographic distribution cannot be determined at any sane cost**: the split files name tiles `data_3`, `data_5`, `data_6` and so on, carrying no georeference, so locating tiles would mean downloading 11.5 GB of imagery or the 164-to-372 GB modality layers. The class scheme is 10 values, 1 cropland through 10 ice/snow, with 8 impervious; the split is 7:1:2 | **verified accessible**, open anonymous; the imagery is out of budget |
 | **LCMAP CONUS reference data** | 25,000 plots across the conterminous United States, each carrying annual land use, land cover and change-process attributes for every year 1984–2018 | **USGS ScienceBase, `10.5066/P9ZWOXJ7`, fetched anonymously with no credential.** Item `5e42e54be4b0edb47be84535`, four files; the data are `LCMAP_CU_20211117_V01_REF.zip`, 29,903,304 B, which unpacks to a plot shapefile, a 66.6 MB CSV and a 31.2 MB XLSX of the same content, plus FGDC metadata. Version 1.2, November 2021 | **Use constraints, verbatim from the FGDC metadata: "None. Users are advised to read the dataset's metadata thoroughly to understand appropriate use and data limitations."** Access constraints likewise "None." A US federal work | **1984-01-01 to 2018-12-31, read from the FGDC `begdate` and `enddate` rather than the landing page.** 874,836 rows over 25,000 distinct plot ids, which is 35 years per plot less a few gaps | **US-only, so it cannot serve as reference data here**, and it is recorded because it is the published model for how such a product is structured and because `notes/grounding-methods.md` cites its interpreter-agreement results. Encoding: 13 columns — `plotid`, `x`, `y`, `image_year`, dominant and secondary land use with notes, dominant and second land cover, change process with notes, and `LCMAP`; coordinates in the CONUS Albers projected system. **Class labels only, no fractional cover** | **verified accessible**, open anonymous |
 | NLCD percent-impervious assessment | Mean deviation, mean absolute deviation and OLS regression against a more accurate reference fraction | in the register | — | — | **The correct frame for this study's layers**, which are per-cell fractions rather than a categorical map, and the measurement of how error falls as the aggregation unit grows | in the register |
 
@@ -387,15 +387,17 @@ that could in principle yield a fraction, Globe230k, covers 0.59 tiles per cell.
 | | Probability sampling design | Reference more accurate than the map | Consistent analysis |
 |---|---|---|---|
 | CCD-Rice polygons | **No.** Purposive; the paper selected "only 2 to 4 years in each provincial administrative region" on imagery availability | Yes, very-high-resolution visual interpretation | Not reachable, because 1 fails |
-| Global LC validation samples | **Partly, and not in the sense required.** The *allocation* is a textbook stratified design — the paper gives the Cochran sample-size formula with `W_i` the global area proportion per class — but the *frame* is a pool of other people's reference datasets (croplands.org, GOFC-GOLD, FROM_GLC, GLCNMO, VIIRS, STEP) with points "randomly collected from each polygon". Randomisation within donor polygons is not a probability sample of this domain, and the first-stage inclusion probability of a donor polygon is unknown | Yes | No, for two reasons: the frame, and class labels against a fractional map |
-| Globe230k | **Unknown and probably not.** Described as uniform on the ellipsoid with manual screening for image quality; the record does not say how many candidates were screened out or on what basis, and screening that depends on image quality is not obviously independent of land cover | Yes, 1 m dense annotation | No. 0.59 tiles per cell cannot form a cell fraction |
+| Global LC validation samples | **Partly, and not in the sense required.** The *allocation* is a textbook stratified design — the Cochran sample-size formula with `W_i` the global area proportion per class — but the *frame* is eight donor reference datasets with points "randomly collected from each polygon". Randomisation inside donor polygons is not a probability sample of this domain and the donor polygons' inclusion probability is unknown. **The file also drops the per-sample source code, so which donor a point came from cannot be recovered** | Yes | No, and now on measured grounds: **124 points in the four provinces over 20 of 926 cells, of which 12 are impervious surface**, carrying class labels against a fractional map |
+| Globe230k | **No.** The user guide states the sampling deliberately favours rare classes — "we intentionally give more chance to the rare categories to be sampled" — with no stated probabilities, so it is a disproportionate design whose inclusion probabilities are not recoverable. It still does not report how many candidates were rejected | Yes, 1 m dense annotation | No. 0.59 tiles per cell cannot form a cell fraction, and the tile names carry no georeference so even locating them costs 11.5 GB |
 | LCMAP | **Yes** — and it is the only one here that is. But US-only | Yes | Not applicable outside CONUS |
 | SinoLC-1 | Its own validation used "over 100 000 random samples", not distributed separately | **No. 73.61 percent overall accuracy fails recommendation 2** against the 30 m products it would validate | No |
 
-**So no deposited sample set satisfies all three over this domain.** LCMAP
-satisfies them and is in the wrong country; the global validation samples come
-closest and fail on the frame and on carrying labels rather than fractions;
-Globe230k fails on density; SinoLC-1 fails on accuracy. That is the finding, and
+**So no deposited sample set satisfies all three over this domain, and this is
+now measured rather than inferred.** LCMAP satisfies them and is in the wrong
+country; the global validation samples come closest and fail on the frame, on
+carrying labels rather than fractions, and on a four-province count of 124 that
+includes only 12 impervious points; Globe230k fails on a deliberately
+disproportionate design and on density; SinoLC-1 fails on accuracy. That is the finding, and
 it is what makes the two routes in `notes/grounding-methods.md` necessary rather
 than optional.
 
@@ -421,14 +423,33 @@ the DNS half of that is right. Measured layer by layer:
   under half a second, on every path tried: `/`, `/records/<id>`,
   `/record/<id>`, `/api/records/<id>`, `/api/records/<id>/files` and `/oai2d`.
 
-**The 403 body says what it is**, and it is worth quoting because it removes
-the guesswork: *"Access to this resource has been restricted due to unusual
-traffic from your network. If you believe this is a mistake, please contact our
-support line and we will look into your request."* It carries a reference id
-and a timestamp. So this is a deliberate, Zenodo-side restriction keyed to this
-egress network, applied at the application layer, with a stated remediation
-path that is neither a credential nor a workaround: contact Zenodo support and
-quote the reference.
+**The 403 body says what it is**, and it is worth quoting: *"Access to this
+resource has been restricted due to unusual traffic from your network. If you
+believe this is a mistake, please contact our support line and we will look
+into your request."* It carries a reference id and a timestamp.
+
+### It is transient and keyed to the request, not a standing ban on this network
+
+**Retested 90 minutes later, as this task required, and the result reversed.**
+At 16:53 UTC a default-`curl` request to `zenodo.org/` returned **200** and
+`api/records/3551995` returned **the full record JSON**, while the browser
+User-Agent that had worked before now returned the 403. The landing page that
+came back explains it in Zenodo's own words: *"Zenodo is currently experiencing
+slowness and intermittent outages due to heavy automated traffic from bots and
+AI crawlers. We are aware of the pro[blem]"*.
+
+So the correct characterisation is **an aggressive and fluctuating
+bot-mitigation filter, keyed on request signature and changing over time**, not
+a durable per-network block. The "unusual traffic from your network" wording is
+the filter's generic message and should not be read as a standing ban. Two
+consequences, and the second is the one that matters:
+
+* **Which User-Agent works is not stable.** A browser string worked at 16:32
+  and was refused at 16:53; the default `curl` string was dropped at 15:50 and
+  served at 16:53. Retrying with a different UA, and retrying later, are both
+  worth doing before concluding anything is unreachable.
+* **The window was used.** Both blocked sample sets were fetched during it and
+  are verified below from their files. The rows no longer rest on their papers.
 
 **Why it looked like a timeout.** The filter treats a default `curl`
 User-Agent differently from a browser one. With `curl`'s own UA the request is
@@ -470,8 +491,9 @@ the REST API and OAI-PMH are all 403; and `data.zenodo.org` and
 `files.zenodo.org` do not resolve, so there is no separate file host to try. No
 mirror was found for any of the six records.
 
-**This was established without a VPN and without any credential**, which is
-what was asked: it describes what is reachable as configured.
+**This was established without a VPN and without any credential.** The
+metadata routes above remain the reliable fallback when the filter is closed;
+during an open window the REST API serves records and files normally.
 
 ### The six entries it blocks, as distinct from entries blocked for other reasons
 
@@ -486,7 +508,10 @@ what was asked: it describes what is reachable as configured.
 | Globe230k | Reference data and method | **the Zenodo block** |
 
 That is seven, not the six the task assumed, because SinoLC-1's product deposit
-is on Zenodo as well and this file had not recorded where it lived.
+is on Zenodo as well and this file had not recorded where it lived. **Three of
+the seven were fetched during the 16:53 window** — the two validation sample
+sets and Globe230k's small files — so "blocked" describes the filter's state at
+a moment and not the deposits.
 
 **Entries blocked for other reasons, which this obstacle does not explain:**
 China_AP and the aquaculture-index mapping are blocked by publishers returning

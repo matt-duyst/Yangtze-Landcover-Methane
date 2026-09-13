@@ -5566,3 +5566,134 @@ holds **two example netCDF days and a ReadMe describing how to obtain the
 complete 1,241-file set**, not the series. Its licence being CC BY 4.0 rather
 than "not established" is the good news; that the deposit is a sample is the
 bad.
+
+## The accuracy assessment route, and the Zenodo block behind it, 13 September 2026
+
+Tier 1 left the accuracy assessment blocked: the CCD-Rice polygons are a
+purposive sample with no inclusion probabilities, which forecloses the
+design-based inference the route depended on. This pass settled what is
+possible instead, and diagnosed the network obstacle sitting in front of six
+candidate reference sets.
+
+### The Zenodo block is an application-layer refusal, and the Tier 1 diagnosis was wrong
+
+Tier 1 recorded "zenodo.org times out at the TCP level over IPv4 with DNS
+resolving normally, on every endpoint". Only the DNS half survives. DNS returns
+six A and six AAAA records; **TCP connects to every one of them in under a
+second**; **TLS completes**, negotiating TLSv1.3 with a valid `CN=*.zenodo.org`
+certificate over IPv6; and then nginx returns **403 Forbidden in under half a
+second** on every path including the REST API and OAI-PMH.
+
+The 403 body names the cause: *"Access to this resource has been restricted due
+to unusual traffic from your network"*, with a reference id and a timestamp. So
+it is a deliberate Zenodo-side restriction keyed to this egress network, and the
+remedy is an email quoting the reference rather than anything technical.
+
+**The reusable lesson is about how the wrong diagnosis happened.** The filter
+drops a default-`curl` User-Agent silently *after* the TLS handshake, so the
+connection hangs and the client reports a timeout; a browser User-Agent gets the
+403 in 0.47 seconds. Tier 1 used the default UA. **A hang after a successful
+connection is an application-layer refusal until proven otherwise, and the
+User-Agent is the first variable to try.** `notes/dataset-leads.md` carries the
+full layer-by-layer measurement, the class test that shows
+`sandbox.zenodo.org`, `cern.ch` and `home.cern` all respond normally, and the
+seven entries it blocks as distinct from the entries blocked by paywalls,
+publisher 403s, an Earthdata login and a terms click.
+
+### A finer-resolution product is not automatically a better reference
+
+This is the finding most likely to be assumed away by a later pass, so it is
+stated as a rule. **Reference quality is accuracy against the thing being
+measured, not pixel size.** SinoLC-1 is the counter-example and the numbers are
+verified from its ESSD paper: 1 m resolution, **overall accuracy 73.61 percent
+and kappa 0.6595** on 106,344 counted validation points. That is below
+GLC_FCS30's 82.5 percent at 30 m and below NLCD 2019's 77.5 percent. A 1 m
+product with 73.61 percent overall accuracy cannot serve as reference data
+"more accurate than the map" for the 30 m products it would validate, which is
+Olofsson's second recommendation, and using it would import more error than it
+measured.
+
+### No deposited sample set satisfies the recommendations over this domain
+
+Three were verified. **LCMAP** (`10.5066/P9ZWOXJ7`, USGS ScienceBase, anonymous,
+use constraints "None.") is the only probability sample among them and is
+US-only; 25,000 plots, 874,836 annual rows, 1984 to 2018 read from its FGDC
+metadata, class labels and no fractions. **The global land cover validation
+samples** were fetched during an open window in the Zenodo filter and hold
+**44,514 points for 24 classes, against the 44,043 the GLC_FCS30 paper reports**
+— a 471-point difference neither source explains. Their *allocation* is a
+textbook stratified design, the Cochran formula with `W_i` the global per-class
+area proportion, but their *frame* is eight donor reference datasets with points
+"randomly collected from each polygon", so the first-stage inclusion probability
+is unknown. The shapefile carries three fields — label, longitude, latitude — so
+the per-sample source code its own description document describes is absent and
+provenance cannot be recovered. They are points, so class labels and not
+fractions.
+
+**And the four-province count is the number that ends the discussion: 124.**
+Jiangsu 112, Zhejiang 7, Anhui 4, Shanghai 1, reaching 20 of 926 cells, of
+which **107 are irrigated cropland and 12 are impervious surface**. Twelve
+points cannot assess an impervious fraction over this domain, and this is the
+best deposited candidate there is. **Globe230k** fails on density: 232,819 tiles of 512 × 512 at 1 m
+is 61,032 km², 0.041 percent of global land, and against a 625 km² cell one tile
+is 0.042 percent of a cell, so tiling one cell needs 2,384 tiles and the four
+provinces would receive about **0.59 tiles per cell**. Dense annotation gives a
+fraction within a tile footprint, which is a sample of the cell rather than the
+cell's value, and so returns to the sampling problem it was supposed to solve.
+
+### The route was already in the record and was not recognised
+
+`notes/grounding-methods.md` had established, before this pass, that the correct
+frame for a fractional layer is the continuous-field protocol of Riemann et al.
+(2010) as used by the NLCD percent-impervious assessment, and that the NLCD work
+used **complete-coverage reference data**: "we do not estimate agreement from a
+sample, but rather calculate agreement directly from the full coverage data".
+
+**A complete-coverage comparison has no sampling design to be valid about**, so
+Olofsson's first recommendation does not apply to it — for the same reason, and
+with the same force, as the record's existing finding that his fourth and fifth
+do not apply to a fractional layer. That reframes the problem from "obtain a
+probability sample", which is foreclosed, to "obtain a reference layer over the
+domain more accurate than the product", which is not foreclosed but is currently
+blocked.
+
+**The two routes fail differently and that is the useful part.** Route A, the
+certainty-stratum framework, keeps the purposive polygons as a fully observed
+stratum over the 62 cells they reach and draws a probability sample from the
+other 864; it is blocked on the very-high-resolution imagery terms question this
+repository already lists as unresolved, and it carries a response-design burden
+larger than the categorical literature's because a fraction per cell needs many
+points or a delineation rather than one label. Route B, a finer reference
+product, is blocked on **year**: SinoLC-1 is 2021, CISC is 2020 and 2022,
+EcoVision is 2025, the 1 m Yangtze River Economic Belt product is 2026, and this
+project's layers are 2000, 2010 and 2018. In a region that urbanised as fast as
+this one over exactly that span, a 2021 reference against a 2018 map confounds
+map error with real change, and `figures/urban_change.png` exists because that
+change is large.
+
+Route B would become viable if the project added a 2020-or-later analysis year.
+That is a change to the paper rather than to the code, and it is the cheapest
+path to an assessment that this pass found.
+
+### The interpreter problem is smaller than the record held it
+
+Three verifications moved it from an open limitation to a variance component.
+Pengra et al. (2020) report **88 percent overall interpreter agreement, 46
+percent for Disturbed to 94 percent for Water** — and, more usefully, they
+computed it on a **simple random subsample of 2,952** of their 11,900
+interpreted pixels, excluding purposively chosen duplicates, "thus ensuring that
+these estimates were produced from a probability sample". That separation is
+exactly the discipline this project's reference data lack and exactly the model
+for reporting an agreement figure honestly. Powell et al. (2004) give the
+pessimistic end, five interpreters disagreeing on almost 30 percent of samples.
+And Stehman et al. (doi:10.1016/j.rse.2021.112806) publish a method for
+incorporating interpreter variability into the total variance, so the
+disagreement is propagatable rather than disqualifying.
+
+**And the field admits it usually ignores this.** Reference data are typically
+assumed error-free and the process of obtaining them is seldom discussed (Sun,
+Chen and Zhou, 2017; Foody, 2010). **So stating this project's reference error
+explicitly puts it ahead of the norm rather than behind it.** An assessment that
+says "the reference is a purposive sample of 777 polygons reaching 62 of 926
+cells, interpreted once, and here is what that does to the interval" is more
+honest than most published assessments, which say nothing.

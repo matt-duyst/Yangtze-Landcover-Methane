@@ -948,6 +948,41 @@ this item no longer waits on a download. Three things it did not know:
   clustered sample with unknown selection, and saying so is the honest form of
   this item rather than a reason to drop it.
 
+**The route is settled and the item is blocked on an input, not on a method**,
+as of 13 September 2026. `notes/grounding-methods.md` records the reasoning.
+PPI is not the route; the route is the continuous-field, complete-coverage
+comparison that record already contained — mean deviation, mean absolute
+deviation and regression at a stated aggregation scale, after Riemann et al.
+(2010) and Wickham et al. (2020) — which has **no sampling design to be valid
+about** and so does not need recommendation 1 at all. What it needs is a
+reference layer over the domain more accurate than the product, and neither
+route to one is currently open:
+
+* **Route A**, a certainty stratum of the 62 cells the polygons reach plus a
+  probability sample of the remaining 864, is blocked on the very-high-resolution
+  imagery terms question this repository already records as unresolved, and
+  carries a response-design burden larger than the categorical literature's
+  because the target is a fraction per cell rather than a label.
+* **Route B**, a finer and more accurate reference product over the whole
+  domain, is blocked on **year**. Every candidate is 2020 or later against
+  layers for 2000, 2010 and 2018, in a region whose urban extent changed
+  substantially over exactly that span.
+
+**No deposited sample set rescues it either, and this is now measured.** Of the
+three verified, LCMAP is a probability sample and US-only; the global land cover
+validation samples are a stratified allocation over a non-probability frame and
+put **124 points in the four provinces across 20 of 926 cells, of which 12 are
+impervious surface**; and Globe230k is a deliberately disproportionate sample
+covering about 0.59 annotated tiles per cell. See `notes/dataset-leads.md`.
+
+**What would unblock it**, in order of cost: a reading of Google Earth's terms
+that settles whether a derived assessment may be published; or adding a
+2020-or-later analysis year, which would make Route B viable against SinoLC-1
+or the 1 m Yangtze River Economic Belt product and is a larger change to the
+paper than to the code; or an email to Zenodo support quoting the 403 reference,
+which would open the two blocked sample sets without changing either verdict,
+since neither satisfies the recommendations anyway.
+
 **And the contamination clause above was wrong about the mechanism.** CCD-Rice's
 thresholds were re-determined against filtered agricultural statistics, not
 against the polygons, so the polygons are clean for CCD-Rice too. What is not

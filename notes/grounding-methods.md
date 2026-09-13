@@ -341,12 +341,114 @@ error near 8 percent is a good one, and a categorical layer at 77.5 percent
 overall accuracy is a normal one. Neither is the near-perfect input a reader
 unfamiliar with the field might assume.
 
+## The accuracy assessment route, settled 13 September 2026
+
+**This section supersedes the two below it on the question of what the route
+is.** They are kept because their content is still correct about what PPI does
+and what errors-in-variables threatens; what changed is that PPI is no longer
+the route for the accuracy assessment, and the reason is a property of this
+project's reference data rather than a property of PPI.
+
+**The blocking fact.** The CCD-Rice validation polygons, the only in-domain
+reference data this project has, are a **purposive sample**. The paper selected
+"only 2 to 4 years in each provincial administrative region" because Google
+Earth's historical very-high-resolution coverage of China is sparse and "early
+images tend to be for urban areas rather than for rural areas". There are
+therefore **no inclusion probabilities**, and both forms of PPI need them:
+canonical PPI assumes i.i.d. labelling, and the design-based extension needs a
+known sampling design to derive its design variances from. Neither applies.
+`notes/decisions.md` records this and `notes/paper-target.md` item 9 carries it.
+
+**And no deposited sample set rescues it.** `notes/dataset-leads.md` now
+records the verification: LCMAP is a probability sample and is US-only; the
+global land cover validation samples are a stratified *allocation* over a frame
+pooled from other people's reference datasets, so the first-stage inclusion
+probability is unknown, and they carry class labels rather than fractions;
+Globe230k's dense annotation covers about 0.59 tiles per 0.25-degree cell,
+which cannot form a cell fraction; and SinoLC-1, at 1 m, has an overall
+accuracy of 73.61 percent, which fails the "more accurate than the map" test
+against the 30 m products it would validate.
+
+**A finer-resolution product is not automatically a better reference.** That is
+worth stating as a rule because it is the assumption a later pass would make.
+Reference quality is accuracy against the thing being measured, not pixel size,
+and SinoLC-1 is the counter-example: 1 m and less accurate than GLC_FCS30 at
+30 m (82.5 percent) and than NLCD 2019 (77.5 percent).
+
+### The route that remains, and it was already in this record
+
+The section above on the assessment frame already establishes it and it was not
+recognised as the answer. Riemann et al. (2010) and the NLCD percent-impervious
+assessment (Wickham et al., 2020) assess a **continuous field** using
+**complete-coverage reference data**, writing that "we do not estimate agreement
+from a sample, but rather calculate agreement directly from the full coverage
+data". **A complete-coverage comparison has no sampling design to be valid
+about**, so Olofsson's first recommendation — a probability sampling design —
+does not apply to it, in the same way and for the same reason that his fourth
+and fifth do not apply to a fractional layer. The metrics are mean deviation,
+mean absolute deviation and regression, at a stated aggregation scale.
+
+That reframes the problem from "obtain a probability sample" to "obtain a
+reference layer over the domain that is more accurate than the product", and
+two routes to that were assessed on 13 September 2026.
+
+**Route A, the certainty stratum.** Treat the 777 CCD-Rice polygons as a fully
+observed certainty stratum covering the 62 cells they reach, and draw a
+probability sample from the 864 cells they do not. This is a real framework and
+it makes the purposive sample usable rather than discarding it. What it needs:
+a probability sample over 864 cells, a response design of visual interpretation
+on very-high-resolution imagery, and imagery whose terms permit publishing a
+derived assessment. **The third is the obstacle and it is already recorded in
+this repository as unresolved**: every product in `notes/dataset-leads.md`
+interpreted Google Earth imagery and none of the papers read addresses whether
+its terms permit that. **The sizing is not the obstacle and is worth
+recording**, computed from the committed layers' own spread, which is a standard
+deviation of 0.125 for both the impervious and the single-season rice fraction.
+With a finite-population correction on the 864 unsampled cells, a target
+standard error on the mean fraction of 0.02 needs **37 cells**, 0.01 needs
+**132**, and 0.005 needs **363**.
+
+**The burden is the response design, not the sample size.** Each sampled cell
+needs a *fraction*, not a label, and a fraction estimated by interpreting points
+inside a 625 km² cell needs about `p(1-p)/SE²` of them: at a typical fraction of
+0.10, roughly **36 points per cell for a within-cell standard error of 0.05**,
+100 for 0.03 and 225 for 0.02. So the 132-cell design costs about **4,750
+interpreted points**, and the 363-cell design about 13,000. For scale, LCMAP
+interpreted 11,900 pixels over the whole conterminous United States and
+CCD-Rice interpreted 3,619 polygons over the whole of China. **A 4,750-point
+interpretation over four provinces is therefore a larger effort per unit area
+than either published product**, which is the real cost of this route and the
+reason it cannot be treated as a small addition.
+
+**Route B, the finer product.** Use a finer, more accurate product as the
+reference layer over the whole domain, which is what the NLCD assessment did.
+Candidates over this domain and their verdicts are in
+`notes/dataset-leads.md`. The binding problem is not resolution and not
+accuracy but **year**: SinoLC-1 is 2021, CISC is 2020 and 2022, EcoVision is
+2025, and the 1 m Yangtze River Economic Belt product is 2026. This project's
+layers are **2000, 2010 and 2018**. A region that urbanised as fast as this one
+did over exactly that period cannot have a 2021 reference stand in for a 2018
+map without the difference being confounded with real change, and
+`figures/urban_change.png` exists precisely because that change is large.
+
+**Neither route is currently viable and they fail differently, which is the
+useful part.** Route A fails on an imagery-terms question that one reading of
+Google Earth's terms would settle, and on a response-design burden that is
+larger than the literature's because the target is a fraction. Route B fails on
+a four-to-eight-year gap between every candidate reference and every product
+year. **Route B would become viable for a 2020-or-later analysis year**, which
+this project does not have and could in principle add; Route A would become
+viable on a licence answer plus interpretation labour. Neither is blocked by
+anything this repository can compute.
+
 ## Prediction-powered inference, one component and not the route
 
 **Read this section as being about the accuracy assessment of a land-cover
 layer, which is the sub-problem it solves.** An earlier version of this record
 presented it as the methodological answer for the project as a whole; the
-section above corrects that.
+section above corrects that, and **the section two above now supersedes this
+one on whether PPI is the route at all: it is not, because this project's
+reference data carry no inclusion probabilities.**
 
 Prediction-powered inference computes an estimate from a large set of model
 predictions and then uses a small labelled subset to measure and correct the
@@ -384,14 +486,22 @@ region of interest, and it must be separate from the training dataset used to
 train the machine learning model", and elsewhere that "the criterion for this
 holdout set is that the model, including during hyperparameter tuning, was not
 trained on it". The CCD-Rice validation polygons recorded in
-[`notes/dataset-leads.md`](dataset-leads.md) validated CCD-Rice, and
-`notes/grounding-yrd.md` records that CCD-Rice re-determined its thresholds
-against filtered rice areas, so those polygons may have entered CCD-Rice's own
-calibration. **They are therefore contaminated for validating CCD-Rice and clean
-for validating the NESDC rice layer and the GISA impervious layer that this
-project actually uses**, neither of which has ever seen them. That is the whole
-case, and it depends on not confusing the product whose samples they are with
-the products they would be used on.
+[`notes/dataset-leads.md`](dataset-leads.md) validated CCD-Rice. **They are
+clean for validating the NESDC rice layer and the GISA impervious layer that
+this project actually uses**, neither of which has ever seen them, and the case
+depends on not confusing the product whose samples they are with the products
+they would be used on.
+
+*Corrected 13 September 2026.* This paragraph said the polygons "may have
+entered CCD-Rice's own calibration" because CCD-Rice "re-determined its
+thresholds against filtered rice areas". The mechanism was misread. CCD-Rice
+§2.3.3 re-determines the threshold from *filtered agricultural statistical
+areas*, and §2.3.4 uses the polygons only to validate, so **the polygons are
+clean for CCD-Rice too on the separation condition.** What is not independent is
+CCD-Rice and NESDC: CCD-Rice §2.2.2 took its training samples from the
+single-season rice map at `10.57760/sciencedb.06963`, which is this project's
+own rice layer. See `notes/decisions.md`. That bears on using CCD-Rice as a
+second product, not on using the polygons.
 
 The assumption problem is real and its treatment is thin. Canonical PPI theory
 "starts from i.i.d. labelling, whereas spatial labels arrive through survey
@@ -1170,3 +1280,76 @@ Two premises were refined. The Southeast Asian downscaling that uses impervious
 surface downscales **CO₂**, not methane, which matters because a proxy that works
 for diffuse combustion need not work for point-like methane sources. And
 Nikolaisen et al.'s volume is 409, not 406.
+
+## The interpreter question is smaller than this record holds it, 13 September 2026
+
+This record has carried interpreter reliability as an open limitation. It is a
+quantified and propagatable one, and three things establish that.
+
+**Single interpreters are accepted practice in large-area assessments**, though
+multiple interpreters are more common. What matters is not the count but whether
+the disagreement is measured and reported.
+
+**Disagreement is quantified, and by the product this project would cite as its
+model.** Pengra, Stehman, Horton, Dockter, Schroeder and others (2020, *Remote
+Sensing of Environment* 238, 111261, doi:10.1016/j.rse.2019.111261) report,
+verbatim: "Overall agreement between interpreters was 88%. Class-specific
+agreement ranged from 46% for Disturbed to 94% for Water, with more prevalent
+classes (Tree Cover, Grass/Shrub and Cropland) generally having greater
+agreement than rare classes (Developed, Barren and Wetland)."
+
+**One detail of how they did it is directly instructive here and is worth more
+than the headline.** 11,900 sample pixels had been interpreted, constituting a
+simple random sample of CONUS, and the agreement estimate used a **subsample of
+2,952** selected for duplicate interpretation *by simple random sampling*:
+"Only these randomly selected duplicated pixels were used to estimate
+interpreter agreement, thus ensuring that these estimates were produced from a
+probability sample. Other pixels selected for a second interpretation were
+purposively chosen based on QA/QC goals". **They separated the probability
+subsample from the purposive one and reported only the former.** That is exactly
+the discipline this project's purposive reference data lacks, and it is also the
+model for how to report an agreement figure honestly.
+
+A second and older benchmark gives the pessimistic end. Powell, Matzke, de
+Souza, Clark, Numata and others (2004, *Remote Sensing of Environment* 90,
+221–234, doi:10.1016/j.rse.2003.12.007) compared five trained interpreters on a
+Rondônia land-cover map and found they "disagreed on the classification of
+almost 30% of the total samples", with mixed pixels accounting for a large
+share of it and two-interpreter agreement averaging under 50 percent for second
+growth forest. *The count of interpreters and the 30 percent are verified; the
+"790 pixels across five classes" figure this task carried was not confirmed from
+a source and should not be quoted until it is.*
+
+**And there is a published method for propagating interpreter variability rather
+than eliminating it.** Stehman, Mousoupetros, McRoberts, Næsset and Pengra,
+*Incorporating interpreter variability into estimation of the total variance of
+land cover area estimates under simple random sampling*, *Remote Sensing of
+Environment*, doi:10.1016/j.rse.2021.112806. *Note the year: the DOI carries
+2021 and Crossref dates publication to 2022.* It is not open access and its
+text was not read, so what is recorded here is its existence and its subject,
+which is enough to establish that interpreter variance is a variance component
+and not a reason to abandon an assessment.
+
+### The field's own admission, and why it favours this project
+
+**Validation methods typically assume reference data are error-free.** Sun, Chen
+and Zhou (2017, *Analyzing the Uncertainties of Ground Validation for Remote
+Sensing Land Cover Mapping in the Era of Big Geographic Data*,
+doi:10.1007/978-981-10-4424-3_3) state that ground reference datasets used to
+evaluate land-cover products "are typically assumed to be correct or
+error-free, despite the fact that ground reference, which is often regarded as
+'ground truth', contains errors". Foody (2010, *Remote Sensing of Environment*
+114, doi:10.1016/j.rse.2010.05.003) shows the consequence: even small amounts
+of reference error can introduce large error into land-cover change estimates,
+and he argues for avoiding the phrase "ground truth" because it implies a gold
+standard the data are not. Xing, Stehman, Foody and Pengra (2021, *Land* 10,
+35, doi:10.3390/land10010035) compare estimators for area under reference
+error.
+
+**The consequence for how this project reports whatever it does.** Stating the
+reference data's own error explicitly, and propagating it, puts this work ahead
+of the norm rather than behind it. The norm is silence. An assessment that says
+"the reference is a purposive sample of 777 polygons reaching 62 of 926 cells,
+interpreted once, and here is what that does to the interval" is more honest
+than the large majority of published assessments, which assume the reference is
+right and do not discuss how it was obtained.
