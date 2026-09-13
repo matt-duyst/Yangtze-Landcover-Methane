@@ -839,8 +839,19 @@ break the comparison the script performs before it writes.
 The route is the direct bundle from Wuhan University at
 http://irsip.whu.edu.cn/resv2/GISA_tif.zip, 882,324,389 bytes, sha256
 0f5476e39ec7762cea39dbcfd0ccdbd9474db32dc83666e12d284e1227da9a82. GISA's
-documented per-tile links go through Zenodo, which returns 403 at the network
-level from this host, so the whole 882 MB bundle is the only reachable route.
+documented per-tile links go through Zenodo, which is unreachable from this
+host — it returned 403 when this was written and now times out at the TCP
+level for every endpoint, landing page and API alike.
+
+*Corrected on 13 September 2026.* This paragraph continued "so the whole 882 MB
+bundle is the only reachable route", and that was wrong. The same Wuhan
+University server that serves the bundle also serves the tiles individually:
+`http://irsip.whu.edu.cn/resv2/GISA_tif/` is a browsable Apache index of all
+257 tiles, `urban_1.tif` through `urban_257.tif`, about 8.7 MB each, and a
+`HEAD` on one returns 200 with `Content-Type: image/tiff`. The four tiles this
+study needs are about 35 MB, so the bundle was 25 times more download than the
+work required. The 882 MB route is what was used and the digest above describes
+it; the cheaper route is recorded so a re-run does not repeat the cost.
 
 Nothing in the archive says which release it is. It holds 257 tiles named
 urban_1.tif through urban_257.tif inside a GISA_tif/ directory, and no filename
