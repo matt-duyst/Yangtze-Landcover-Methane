@@ -556,8 +556,8 @@ downloads over four platforms — 5<!--#pipeline.fetch_routes--> parallelograms,
 ISO's symbol for data, against one bowed rectangle for the reference layers a
 clone already has. The distinction is carried by shape rather than by fill, so
 it costs no colour and survives a black and white print. Of the
-58<!--#pipeline.recipes--> registered regeneration recipes,
-32<!--#pipeline.recipes_committed--> rebuild their artefact from what a fresh
+60<!--#pipeline.recipes--> registered regeneration recipes,
+34<!--#pipeline.recipes_committed--> rebuild their artefact from what a fresh
 clone holds, 17<!--#pipeline.recipes_local--> need a fetched input and
 8<!--#pipeline.recipes_network--> need a network run.
 
@@ -873,3 +873,72 @@ in the figure module refits a fold;
 artefact column elementwise.
 
 Regenerate with `python scripts/make_buffered_decay_figure.py`.
+
+![Expected degrees of freedom for signal against the assumed domain total on log axes, with three operational thresholds and their crossings marked and the literature range for the domain total shaded; the distribution of per-cell sensitivities at both ends of that range against the half-constrained threshold; and the emission a cell would need for half-independent constraint against the range a large municipal landfill emits](capability.png)
+
+**This is the capability assessment the reproduction's negative result turns
+into a contribution, and its risk is that the headline number travels without
+its qualifications. So the qualifications are in the figure.** Panel (a) sweeps
+the expected degrees of freedom for signal against the domain total, using the
+closed-form averaging-kernel expression the Integrated Methane Inversion
+applies to TROPOMI, evaluated on this work's own observation counts.
+**No transport model was run and no emissions were optimised**, which the axis
+label says where the number is and not only here.
+
+**The three horizontal lines are labelled by value and named here**, because
+no name is short enough to sit beside a line without the rising curve clipping
+it. They are the practical minimum a per-inversion basin estimate needs
+(0.5), IMI's stated minimum viability (1) and its marginal ceiling (2), and
+the estimate crosses them at 1.77<!--#dofs.cross_half-->,
+2.50<!--#dofs.cross_one--> and 3.54<!--#dofs.cross_two--> Tg a-1, marked on the
+curve. Those are bisected on the sensitivity
+expression rather than read off the nearest swept point: sensitivity is very
+nearly quadratic in emission at these magnitudes, so both interpolation and
+next-point-above overstate a crossing, and an earlier record in
+`notes/decisions.md` did. Over the shaded band the sweep runs from
+3.98<!--#dofs.at_5tg--> to 22.21<!--#dofs.at_12tg-->. **The band is an input to
+the sweep and not an output of it.** It is the range the literature supports
+for this domain's total; this work did not estimate the region's emissions, and
+the panel is annotated so that a reader cannot take the band for a result.
+**The sweep is also a lower bound**, because it spreads the assumed total
+uniformly over covered cells while real emissions concentrate, and sensitivity
+rises faster than linearly in a cell's own emission.
+
+**Panel (b) is the finding rather than a caveat.** A total says how many
+independent pieces of information the observations carry; it does not say that
+any individual cell is constrained. For this record none is. At 5 Tg a-1 the
+median cell's averaging-kernel sensitivity is
+0.0039<!--#dofs.cell_median_5tg--> and the best-observed cell reaches
+0.0119<!--#dofs.cell_max_5tg-->. At 12 Tg a-1, the top of the literature band,
+the median is 0.0221<!--#dofs.cell_median_12tg--> and the best cell
+0.0649<!--#dofs.cell_max_12tg--> -- **an order of magnitude below the 0.5 at
+which a cell is half constrained by the observations rather than by the
+prior**, in the most favourable cell of the domain under the most favourable
+assumed total. The sweep alone cannot carry this: a DOFS of 22 is a large
+number and reads as capability until the distribution behind it is visible.
+The axis is logarithmic because a linear one would put all six points on the
+floor.
+
+**Panel (c) is the same statement in the unit a reader remembers.** Inverting
+the sensitivity expression at a = 0.5 needs no prior at all, because at fixed
+sensitivity the result depends only on the observation counts, so this is the
+one number here that does not inherit the band's uncertainty. A median cell
+would have to emit 86<!--#dofs.prior_free_median_gg--> Gg a-1 for the
+observations to constrain it half independently, and the best-observed cell
+49<!--#dofs.prior_free_best_gg--> Gg a-1. A large municipal landfill emits on
+the order of 10 to 50 Gg a-1, a literature scale rather than a measurement
+from this work. **So a median cell's threshold sits above that whole range**:
+no single landfill would half-constrain a typical cell. The best-observed cell
+is the exception the panel shows, its threshold falling inside the range rather
+than above it, so a landfill at the top of the range would just reach half
+constraint in the one cell of the domain with the most observation days.
+Panels (b) and (c) are both here because they fail differently: the
+sensitivity panel is exact and abstract, the emission panel concrete but
+dependent on a literature figure for the landfill.
+
+Every plotted value is read from `data/processed/inversion_dofs_2018.csv`. The
+sensitivity expression is not evaluated in the figure module, and
+`tests/test_figures_capability_curves.py` asserts the drawn sweep, the
+crossings, the six sensitivity points and the two thresholds against that file.
+
+Regenerate with `python scripts/make_capability_figure.py`.

@@ -10,12 +10,33 @@ k,1.25903,kg-1 m2 s,IMI preview scale factor
 "emission for a = 0.5, summed over covered cells",116.74,Tg/y,domain total at which a typical cell reaches a = 0.5
 expected DOFS at 0.1 Tg/y domain prior,0.002,DOFS,mean a = 0.00000; cells with a > 0.5: 0
 expected DOFS at 0.3 Tg/y domain prior,0.014,DOFS,mean a = 0.00002; cells with a > 0.5: 0
+expected DOFS at 0.5 Tg/y domain prior,0.040,DOFS,mean a = 0.00004; cells with a > 0.5: 0
+expected DOFS at 0.7 Tg/y domain prior,0.079,DOFS,mean a = 0.00008; cells with a > 0.5: 0
 expected DOFS at 1 Tg/y domain prior,0.160,DOFS,mean a = 0.00017; cells with a > 0.5: 0
+expected DOFS at 1.25 Tg/y domain prior,0.250,DOFS,mean a = 0.00027; cells with a > 0.5: 0
+expected DOFS at 1.5 Tg/y domain prior,0.360,DOFS,mean a = 0.00039; cells with a > 0.5: 0
+expected DOFS at 1.75 Tg/y domain prior,0.490,DOFS,mean a = 0.00053; cells with a > 0.5: 0
 expected DOFS at 2 Tg/y domain prior,0.640,DOFS,mean a = 0.00069; cells with a > 0.5: 0
+expected DOFS at 2.5 Tg/y domain prior,1.000,DOFS,mean a = 0.00108; cells with a > 0.5: 0
 expected DOFS at 3 Tg/y domain prior,1.439,DOFS,mean a = 0.00155; cells with a > 0.5: 0
+expected DOFS at 3.5 Tg/y domain prior,1.957,DOFS,mean a = 0.00211; cells with a > 0.5: 0
+expected DOFS at 4 Tg/y domain prior,2.553,DOFS,mean a = 0.00276; cells with a > 0.5: 0
 expected DOFS at 5 Tg/y domain prior,3.979,DOFS,mean a = 0.00430; cells with a > 0.5: 0
+expected DOFS at 6 Tg/y domain prior,5.713,DOFS,mean a = 0.00617; cells with a > 0.5: 0
 expected DOFS at 7 Tg/y domain prior,7.749,DOFS,mean a = 0.00837; cells with a > 0.5: 0
+expected DOFS at 8.5 Tg/y domain prior,11.356,DOFS,mean a = 0.01226; cells with a > 0.5: 0
 expected DOFS at 10 Tg/y domain prior,15.604,DOFS,mean a = 0.01685; cells with a > 0.5: 0
 expected DOFS at 12 Tg/y domain prior,22.214,DOFS,mean a = 0.02399; cells with a > 0.5: 0
+expected DOFS at 15 Tg/y domain prior,34.002,DOFS,mean a = 0.03672; cells with a > 0.5: 0
 expected DOFS at 20 Tg/y domain prior,57.923,DOFS,mean a = 0.06255; cells with a > 0.5: 0
+expected DOFS at 25 Tg/y domain prior,85.957,DOFS,mean a = 0.09283; cells with a > 0.5: 0
 expected DOFS at 30 Tg/y domain prior,116.727,DOFS,mean a = 0.12605; cells with a > 0.5: 0
+domain prior at which DOFS reaches 0.5,1.767,Tg/y,"by bisection on the sensitivity expression, not interpolated between sweep points"
+domain prior at which DOFS reaches 1,2.500,Tg/y,"by bisection on the sensitivity expression, not interpolated between sweep points"
+domain prior at which DOFS reaches 2,3.539,Tg/y,"by bisection on the sensitivity expression, not interpolated between sweep points"
+per-cell sensitivity median at 5 Tg/y,0.00391,a,1.0 would be fully constrained by the observations; 0.0 entirely by the prior
+per-cell sensitivity 90th percentile at 5 Tg/y,0.00909,a,1.0 would be fully constrained by the observations; 0.0 entirely by the prior
+per-cell sensitivity maximum at 5 Tg/y,0.01190,a,1.0 would be fully constrained by the observations; 0.0 entirely by the prior
+per-cell sensitivity median at 12 Tg/y,0.02208,a,1.0 would be fully constrained by the observations; 0.0 entirely by the prior
+per-cell sensitivity 90th percentile at 12 Tg/y,0.05019,a,1.0 would be fully constrained by the observations; 0.0 entirely by the prior
+per-cell sensitivity maximum at 12 Tg/y,0.06486,a,1.0 would be fully constrained by the observations; 0.0 entirely by the prior

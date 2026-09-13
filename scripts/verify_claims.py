@@ -1038,6 +1038,30 @@ QUANTITIES = {
     "dofs.at_5tg": lambda: _dofs("expected DOFS at 5 Tg/y domain prior"),
     "dofs.at_12tg": lambda: _dofs("expected DOFS at 12 Tg/y domain prior"),
     "dofs.at_3tg": lambda: _dofs("expected DOFS at 3 Tg/y domain prior"),
+    # Added for figures/capability. Bisected on the sensitivity expression, not
+    # interpolated between sweep points and not the next swept point above the
+    # threshold, which is what an earlier record reported.
+    "dofs.cross_half":
+        lambda: _dofs("domain prior at which DOFS reaches 0.5"),
+    "dofs.cross_one": lambda: _dofs("domain prior at which DOFS reaches 1"),
+    "dofs.cross_two": lambda: _dofs("domain prior at which DOFS reaches 2"),
+    "dofs.cell_median_5tg":
+        lambda: _dofs("per-cell sensitivity median at 5 Tg/y"),
+    "dofs.cell_max_5tg":
+        lambda: _dofs("per-cell sensitivity maximum at 5 Tg/y"),
+    "dofs.cell_median_12tg":
+        lambda: _dofs("per-cell sensitivity median at 12 Tg/y"),
+    "dofs.cell_p90_12tg":
+        lambda: _dofs("per-cell sensitivity 90th percentile at 12 Tg/y"),
+    "dofs.cell_max_12tg":
+        lambda: _dofs("per-cell sensitivity maximum at 12 Tg/y"),
+    # The same two prior-free thresholds the Tg resolvers above carry, in the
+    # unit the figure draws them in: a cell-scale emission in Tg is three
+    # leading zeros, so the caption and the panel both speak in Gg.
+    "dofs.prior_free_median_gg":
+        lambda: 1000.0 * _dofs("emission for a = 0.5, median cell"),
+    "dofs.prior_free_best_gg":
+        lambda: 1000.0 * _dofs("emission for a = 0.5, best-observed cell"),
     "dofs.cells_above_half": _dofs_cells_above_half,
     "grid.rows": lambda: len(_grid()),
     "grid.rice_rows": lambda: int(np.isfinite(_column("rice_fraction_single")).sum()),

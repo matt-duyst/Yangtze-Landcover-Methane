@@ -88,7 +88,23 @@ CONV = 1e9                 # ppb per mole fraction
 #: China's entire anthropogenic total, so the answer is bracketed rather than
 #: assumed. Values near 1 to 3 Tg are where a regional share of China's 65.0
 #: Tg a-1 would fall for four provinces.
-SWEEP = (0.1, 0.3, 1.0, 2.0, 3.0, 5.0, 7.0, 10.0, 12.0, 20.0, 30.0)
+#:
+#: **Densified from eleven points to twenty-three**, because the sparse sweep
+#: made the threshold crossings unreadable and they were misread. Sensitivity
+#: is very nearly quadratic in a cell's emission in this regime -- the sum is
+#: 0.160 at 1 Tg, 0.640 at 2, 1.439 at 3 and 3.979 at 5, all of them 0.16 times
+#: the square -- so reading a crossing off the nearest swept point above a
+#: threshold overstates it badly, and so does interpolating linearly between
+#: sparse points. The crossings below are bisected rather than read off this
+#: tuple; the extra points are here so that a reader plotting the sweep sees a
+#: curve rather than a polyline that cuts its own corners.
+SWEEP = (0.1, 0.3, 0.5, 0.7, 1.0, 1.25, 1.5, 1.75, 2.0, 2.5, 3.0, 3.5, 4.0,
+         5.0, 6.0, 7.0, 8.5, 10.0, 12.0, 15.0, 20.0, 25.0, 30.0)
+
+#: The operational thresholds to bisect for. 0.5 is the per-inversion practical
+#: minimum the Permian weekly-monitoring work adopts; 1 and 2 are IMI's own
+#: stated minimum viability and marginal ceiling.
+CROSSINGS = (0.5, 1.0, 2.0)
 
 #: Where the literature already in `notes/references.md` puts this domain's
 #: total, so the sweep can be read against something. Huang et al. (2021)
@@ -227,14 +243,57 @@ def rows() -> list[dict]:
         "value": f"{np.nansum(half):.2f}", "unit": "Tg/y",
         "note": "domain total at which a typical cell reaches a = 0.5"})
 
-    for total in SWEEP:
+    def kernel(total: float) -> np.ndarray:
+        """Per-cell sensitivity for a domain total spread uniformly."""
         per_cell_kgs = (total * 1e9 / (3600 * 24 * 365)) / max(int(covered.sum()), 1)
-        a = sensitivity(np.where(covered, per_cell_kgs, 0.0), num_obs, m_super)
+        return sensitivity(np.where(covered, per_cell_kgs, 0.0), num_obs, m_super)
+
+    for total in SWEEP:
+        a = kernel(total)
         out.append({
             "quantity": f"expected DOFS at {total:g} Tg/y domain prior",
             "value": f"{a.sum():.3f}", "unit": "DOFS",
             "note": f"mean a = {a[covered].mean():.5f}; "
                     f"cells with a > 0.5: {int((a > 0.5).sum())}"})
+
+    # **Bisected, not interpolated.** The quantity is monotone in the total and
+    # nearly quadratic, so bisection on the expression itself is both cheap and
+    # exact to the tolerance below, while any reading taken off the swept points
+    # -- the nearest point above, or a linear interpolation between two --
+    # overstates the crossing. An earlier record in notes/decisions.md reported
+    # the nearest points above as the crossings; this row is why it no longer
+    # has to.
+    for threshold in CROSSINGS:
+        lo, hi = 0.0, max(SWEEP)
+        if kernel(hi).sum() < threshold:
+            continue
+        for _ in range(80):
+            mid = 0.5 * (lo + hi)
+            if kernel(mid).sum() < threshold:
+                lo = mid
+            else:
+                hi = mid
+        out.append({
+            "quantity": f"domain prior at which DOFS reaches {threshold:g}",
+            "value": f"{hi:.3f}", "unit": "Tg/y",
+            "note": "by bisection on the sensitivity expression, not "
+                    "interpolated between sweep points"})
+
+    # **The distribution behind the total, which the total conceals.** A DOFS
+    # sum says how many independent pieces of information the observations
+    # carry; it does not say that any one cell is constrained. The count above
+    # a = 0.5 is zero everywhere and so says nothing about how far below. These
+    # rows say how far.
+    for total in ANCHOR:
+        a = kernel(total)[covered]
+        for label, value in (("median", np.median(a)),
+                             ("90th percentile", np.percentile(a, 90)),
+                             ("maximum", a.max())):
+            out.append({
+                "quantity": f"per-cell sensitivity {label} at {total:g} Tg/y",
+                "value": f"{value:.5f}", "unit": "a",
+                "note": "1.0 would be fully constrained by the observations; "
+                        "0.0 entirely by the prior"})
     return out
 
 
@@ -260,10 +319,16 @@ def main() -> int:
     print()
     swept = [(float(r["quantity"].split()[3]), float(r["value"])) for r in table
              if r["quantity"].startswith("expected DOFS")]
+    # The bisected crossing, printed as the crossing. This used to print the
+    # nearest swept point above the threshold under the label "crossed at or
+    # below", and that line was then recorded as the crossing itself, which
+    # overstated all three by 13 to 41 percent.
+    crossed = {float(r["quantity"].rsplit(None, 1)[1]): float(r["value"])
+               for r in table
+               if r["quantity"].startswith("domain prior at which DOFS")}
     for label, threshold in THRESHOLDS.items():
-        above = [tg for tg, dofs in swept if dofs >= threshold]
-        if above:
-            print(f"  {label}: crossed at or below {min(above):g} Tg/y")
+        if threshold in crossed:
+            print(f"  {label}: crossed at {crossed[threshold]:.3f} Tg/y")
         else:
             print(f"  {label}: NOT reached in the swept range")
     lo, hi = ANCHOR

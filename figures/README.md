@@ -51,11 +51,12 @@ twelve.
 | `framework_reproduction` | `framework_reproduction.py` | continuously | thesis Figure 3.1's place in the document, not its content |
 | `albedo_collinearity` | `albedo_collinearity.py` | continuously | nothing — it answers the objection to a finding the thesis did not make |
 | `buffered_decay` | `buffered_decay.py` | continuously | nothing — it measures what the two cross-validation schemes do, which the thesis reports no diagnostic for |
+| `capability` | `capability.py` | continuously | nothing — it is the observing-system assessment the capability framing makes the contribution |
 
-Twelve. The recipe tier is what `tests/test_recipes.py` does with it:
+Thirteen. The recipe tier is what `tests/test_recipes.py` does with it:
 *continuously* means the artefact is rebuilt and compared byte for byte in the
 default suite, *on local* means it needs an input that is not committed and
-runs only in the slow tier. Eleven of the twelve are in the default suite; only `coverage_saturation_2018`
+runs only in the slow tier. Twelve of the thirteen are in the default suite; only `coverage_saturation_2018`
 needs an uncommitted input, because it counts granules rather than reading a
 derived table.
 
@@ -77,7 +78,7 @@ which is the only place any of them was ever written down.
 | fold map | which cells fall in which spatial block and which province, for both evaluation schemes | not started; it is the figure that would show why a held-out province's interior has no training neighbour, which is currently a sentence in three captions |
 | sampling artefact map | where the composite's cell means rest on few soundings, and where the observation days differ most | not started; `ERRATA.md` 7.4 is why it matters — a cell's annual mean is taken over whichever days it was observed on, and those differ by up to 228 days |
 
-Three, so the set is a planned fifteen and twelve of them exist.
+Three, so the set is a planned sixteen and thirteen of them exist.
 
 **The README's "nine" could not be reconciled with any of this**, which is the
 clearest evidence that the number was never backed by a list. Seven built plus
