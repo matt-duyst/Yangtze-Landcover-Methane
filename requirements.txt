@@ -11,6 +11,7 @@
 # torch and torchvision are deliberately absent. The model comes later and its
 # requirements depend on decisions not yet made.
 
+pyarrow==21.0.0
 PyYAML==6.0.3
 Pygments==2.21.0
 affine==3.0.1

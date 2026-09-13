@@ -1212,3 +1212,48 @@ Balasus et al. (2023).
         --target-from data/processed/methane_blended_2018.csv \
         --covariates data/processed/methane_covariates_2018.csv \
         --out data/processed/baseline_results_blended_2018.csv --write
+
+## ccdrice_polygons_yrd_2026.csv
+
+Counts of the CCD-Rice validation polygons that fall in the four provinces, by
+province, year and cover class, written by
+`scripts/summarise_ccdrice_polygons.py --download`.
+
+**The polygons are not committed and the counts are**, because the deposit is
+CC-BY and 1.9 MB, so a Tier 2 task can fetch it in a second; what it needs
+before deciding whether to is the shape of the sample. figshare
+`10.6084/m9.figshare.25515019.v3`, one GeoParquet file, MD5
+`927e517583c1999650b90a087db19ffb`, which the script verifies before reading
+and after which it deletes the parquet.
+
+**777 polygons in the four provinces** — Shanghai 338, Jiangsu 167, Zhejiang
+159, Anhui 113 — in the years 2003, 2004, 2011, 2013 and 2014, under six
+classes. The national deposit holds 3,619.
+
+Three facts in the table bound what an accuracy assessment could do, and none
+of them is visible from the deposit's landing page.
+
+**They reach 62 of the 926 analysis cells.** Visual interpretation was done in
+clusters, not spread over the domain, so 6.7 percent of the lattice carries all
+the reference data there is. Shanghai's 338 polygons fall in six cells. The
+per-province rows sum to 63 because one cell is reached from two provinces; 62
+is the distinct count and the row-wise sum is not it.
+
+**50 of the Jiangsu polygons sit north of 33.3462 N**, where the committed
+NESDC rice raster stops, so 727 of the 777 are usable against the rice layer
+this repository actually carries.
+
+**The sample is purposive, not probabilistic.** The CCD-Rice paper records that
+"instead of collecting validation samples across all study years, this study
+selected data from only 2 to 4 years in each provincial administrative region",
+because Google Earth's historical very-high-resolution coverage of China is
+sparse and "early images tend to be for urban areas rather than for rural
+areas". There are therefore no inclusion probabilities, which is what a
+design-based estimator would need.
+
+Two encoding traps, both found by reading the file rather than its description.
+Every `region` value carries a **trailing space**, so a match on `"Anhui"`
+returns nothing. And 296 of the 777 geometries are **MultiPolygon** where the
+deposit's own description says the geometries are polygons — 281 of those hold
+one part and 15 hold up to 24, so `.exterior` raises on more than a third of
+the sample.

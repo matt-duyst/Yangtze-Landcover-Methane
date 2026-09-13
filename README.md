@@ -223,6 +223,7 @@ In outline:
 | result | command | cost | verified |
 |---|---|---|---|
 | 2018 methane composite | `compute_methane_composite.py --checkpoint data/interim/extent_2018.npz --export data/processed/methane_composite_2018 --export-csv data/processed/methane_coverage_2018.csv` | 28.9 GB and about two hours to build the checkpoint; seconds to export from it | on demand |
+| CCD-Rice validation polygon counts for the four provinces | `summarise_ccdrice_polygons.py --download` | a 1.9 MB download and a parquet read, a few seconds | on demand |
 | composite coverage table | `compute_methane_composite.py --checkpoint data/interim/extent_2018.npz --export data/processed/methane_composite_2018 --export-csv data/processed/methane_coverage_2018.csv` | seconds from the checkpoint | on demand |
 | covariate companion | `compute_methane_composite.py --checkpoint data/interim/extent_2018.npz --export-covariates data/processed/methane_covariates_2018` | seconds from the checkpoint | on demand |
 | covariate table | `compute_methane_composite.py --checkpoint data/interim/extent_2018.npz --export-covariates data/processed/methane_covariates_2018` | seconds from the checkpoint | on demand |

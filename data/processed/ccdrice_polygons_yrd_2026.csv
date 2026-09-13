@@ -1,0 +1,52 @@
+province,year,covertype,covertype_label,polygons
+Anhui,2003,0,non-cropland,8
+Anhui,2003,1,"single-season rice, certain",15
+Anhui,2003,2,"double-season rice, certain",17
+Anhui,2003,3,"rice, season uncertain",6
+Anhui,2003,4,other crops,16
+Anhui,2013,0,non-cropland,5
+Anhui,2013,1,"single-season rice, certain",22
+Anhui,2013,2,"double-season rice, certain",14
+Anhui,2013,4,other crops,9
+Anhui,2013,5,non-rice,1
+Jiangsu,2004,0,non-cropland,4
+Jiangsu,2004,1,"single-season rice, certain",17
+Jiangsu,2004,4,other crops,9
+Jiangsu,2011,0,non-cropland,6
+Jiangsu,2011,1,"single-season rice, certain",15
+Jiangsu,2011,4,other crops,7
+Jiangsu,2013,0,non-cropland,11
+Jiangsu,2013,1,"single-season rice, certain",34
+Jiangsu,2013,4,other crops,12
+Jiangsu,2014,0,non-cropland,12
+Jiangsu,2014,1,"single-season rice, certain",32
+Jiangsu,2014,4,other crops,8
+Shanghai,2004,0,non-cropland,3
+Shanghai,2004,1,"single-season rice, certain",284
+Shanghai,2004,4,other crops,8
+Shanghai,2004,5,non-rice,1
+Shanghai,2014,0,non-cropland,2
+Shanghai,2014,1,"single-season rice, certain",33
+Shanghai,2014,4,other crops,7
+Zhejiang,2003,0,non-cropland,7
+Zhejiang,2003,1,"single-season rice, certain",41
+Zhejiang,2003,2,"double-season rice, certain",14
+Zhejiang,2003,4,other crops,14
+Zhejiang,2013,0,non-cropland,9
+Zhejiang,2013,1,"single-season rice, certain",9
+Zhejiang,2013,2,"double-season rice, certain",21
+Zhejiang,2013,3,"rice, season uncertain",29
+Zhejiang,2013,4,other crops,15
+Anhui,all,all,all classes,113
+Anhui,all,cells_reached,distinct 0.25-degree analysis cells reached,9
+Anhui,all,north_of_nesdc_limit,"north of 33.3462 N, unusable for the NESDC layer",0
+Jiangsu,all,all,all classes,167
+Jiangsu,all,cells_reached,distinct 0.25-degree analysis cells reached,25
+Jiangsu,all,north_of_nesdc_limit,"north of 33.3462 N, unusable for the NESDC layer",50
+Shanghai,all,all,all classes,338
+Shanghai,all,cells_reached,distinct 0.25-degree analysis cells reached,6
+Shanghai,all,north_of_nesdc_limit,"north of 33.3462 N, unusable for the NESDC layer",0
+Zhejiang,all,all,all classes,159
+Zhejiang,all,cells_reached,distinct 0.25-degree analysis cells reached,23
+Zhejiang,all,north_of_nesdc_limit,"north of 33.3462 N, unusable for the NESDC layer",0
+four provinces,all,cells_reached_distinct,"distinct 0.25-degree analysis cells reached, counted once",62

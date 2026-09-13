@@ -45,6 +45,24 @@ recipes:
   last_verified: '2026-09-04'
   last_verified_by: the extent re-run, which executed compute_methane_composite.py --run end
     to end over all 578 granules and exported from the result
+- artefact: data/processed/ccdrice_polygons_yrd_2026.csv
+  command: python scripts/summarise_ccdrice_polygons.py --download
+  label: CCD-Rice validation polygon counts for the four provinces
+  cost: a 1.9 MB download and a parquet read, a few seconds
+  seconds: 6
+  inputs: network
+  compare: bytes
+  verified: on_demand
+  note: >-
+    Counts only. The polygons themselves are not committed: the deposit is
+    CC-BY and 1.9 MB, so a Tier 2 task can fetch them, and what it needs first
+    is the shape of the sample. The script verifies the deposit's published MD5
+    before reading and deletes the parquet afterwards. Network tier because the
+    input is a figshare deposit rather than a committed file.
+  last_verified: '2026-09-13'
+  last_verified_by: the dataset inventory verification pass, which ran the recipe
+    end to end and compared the result byte for byte
+  sha256: 9486490755344e24dd90c61f84760ee146f50d52476771c2d219e22a2d8b2166
 - artefact: data/processed/methane_coverage_2018.csv
   command: python scripts/compute_methane_composite.py --checkpoint data/interim/extent_2018.npz
     --export data/processed/methane_composite_2018 --export-csv data/processed/methane_coverage_2018.csv
