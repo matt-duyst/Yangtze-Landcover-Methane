@@ -919,7 +919,7 @@ record's seasonality argument against an independent sectoral series.
 
 ### Tier 2 — gated by Tier 1
 
-**9. The accuracy assessment.** Mean deviation, mean absolute deviation and
+**9. The accuracy assessment — BLOCKED, no reference layer exists.** Mean deviation, mean absolute deviation and
 regression of the mapped fraction against a reference fraction built from the
 polygons, which is the correct frame for a continuous field rather than an error
 matrix. Prediction-powered inference is the route that makes a small reference
@@ -1047,7 +1047,29 @@ methods record. *Gated by* items 9 and 10, which supply the error variances: the
 polygons for rice, the allocation disagreement for impervious surface as a lower
 bound.
 
-**One of those two inputs is weaker than recorded**, found 13 September 2026.
+**Neither input comes from the accuracy assessment, and one is weaker than
+recorded.** Found 13 September 2026. Item 9 is blocked, but **this item was
+never gated on it for the urban half**: its impervious input was always item
+10's allocation disagreement, which needs only the two committed products and is
+unaffected. What the blocking does change is what that input can be. Allocation
+disagreement is a **lower bound** on the pair's error variance — where GAIA and
+GISA differ at least one is wrong, where they agree nothing is constrained — so
+**de-attenuation here can produce a bound on the de-attenuated coefficient and
+not a point estimate.** That is a weaker claim than this item was written for and
+it is still the claim that matters, because a lower bound on the error variance
+gives an upper bound on attenuation, and an upper bound on attenuation is
+exactly what is needed to ask whether measurement error could manufacture the
+null. **If the bound does not reach the observed coefficient, the null survives
+the objection.**
+
+For the rice half the polygons remain available and are not affected by item 9's
+blocking: the assessment is blocked for want of a reference *layer*, and the
+CCD-Rice polygons are reference *points*, still usable over the 62 cells they
+reach, with the purposive-sample caveat that they carry no inclusion
+probabilities and so support an estimate without a design-based interval.
+
+**So item 11 is not blocked. It is reduced from estimation to bounding**, and its
+gate is item 10 alone.
 The rice error variance was to come from a CCD-Rice-against-NESDC comparison in
 the role GAIA and GISA play for impervious surface. GAIA and GISA were produced
 independently; **CCD-Rice was trained on NESDC**, so their disagreement
@@ -1057,26 +1079,39 @@ test. The rice error variance should come from the polygons, which are
 independent of both, and the 62-cell reach recorded under item 9 is therefore a
 constraint on this item too.
 
-### The second-year question, which was a decision and is now answered
+### The second-year question, a decision awaiting a choice
 
 It was queued as a possible scope change: add a 2020-or-later analysis year so
 that a year-matched finer product could serve as reference. **The measurements
 that decision was waiting on were taken on 13 September 2026 and they settle it
 in the negative for that purpose.** No candidate product at any year clears the
-accuracy bar, so a second year does not deliver the assessment.
+accuracy bar, so a second year does not deliver the assessment. **Item 9 is
+therefore blocked rather than pending**, and the assessment-only option below is
+eliminated outright.
 
-**Two things it would still buy, and they are recorded because they are
-independent of the assessment.**
+**The question survives on a justification independent of the assessment, and
+that justification is the stronger of the two it now has.**
 
-* **It answers the single-year objection this file already anticipates.** A
-  reviewer's standing complaint about a one-year association is that the year
-  might be atypical; running the whole analysis in a second year and reporting
-  whether the null holds in both is the direct answer, and it does not depend on
-  any reference product.
-* **It would give the capability estimate two years.** `figures/capability.png`
-  reports expected DOFS for 2018 alone. Computed for a second year it would show
-  whether observation density and therefore information content changed, which
-  bears on the paper's central claim rather than on its error bars.
+* **A two-year capability estimate bears on the paper's central claim.**
+  `figures/capability.png` reports expected DOFS for 2018 alone, and the whole
+  capability argument is about what a column record can constrain. **That answer
+  is a function of observation density, which is not constant across years** —
+  the 2018 record is an eight-month record beginning 30 April, and a full year
+  would carry more observation days per cell, which is the exact input the
+  sensitivity expression takes. Computing it for a second year would show
+  whether the conclusion is a property of the instrument over this domain or a
+  property of 2018's coverage. **That is a claim about the contribution, not an
+  error bar on it**, and it is the reason to take Option 3 if any reason is.
+* **It answers the single-year objection this file already anticipates**, which
+  is the weaker reason because it is defensive. A reviewer's standing complaint
+  about a one-year association is that the year might be atypical; running the
+  analysis in a second year and reporting whether the null holds in both answers
+  it with evidence rather than argument, and depends on no reference product.
+
+**The order matters.** The capability comparison is a positive result the paper
+would not otherwise have; the replicated null is an answer to an objection.
+Raised under the assessment, this question was about error bars. It survives as
+a question about the contribution.
 
 **What a second year costs in this repository**, so the trade is visible:
 
@@ -1102,14 +1137,74 @@ independent of the assessment.**
   recipes are byte-compared, so each would regenerate rather than need
   rewriting.
 
-**Two options, neither chosen here.** An *assessment-only year* composites a
-later year and assesses its land-cover layers, then applies the resulting error
-estimate to 2018 on the stated assumption that product accuracy is stable across
-years — which is an assumption this repository cannot test and would have to
-declare. A *full second analysis year* runs everything twice and tests the null
-in both, which costs the composite twice and answers the reviewer objection
-directly. **The measurements above remove the assessment as a reason for either;
-what remains is the reviewer objection and the two-year capability estimate.**
+### The decision, in the form a decision needs
+
+**This is a choice awaiting a decision, not a task awaiting execution**, and it
+is recorded here in that form because the measurements it was waiting on are in.
+
+**Option 1 — no second year.** Costs nothing. The single-year objection is
+answered in prose: the year is defended as representative by argument rather
+than by evidence. Buys nothing. **This is the status quo and it is defensible**,
+because the paper's claim is about what a column record can constrain over one
+year and it does not assert that 2018 is typical.
+
+**Option 2 — an assessment-only year.** Composite a later year, assess its
+land-cover layers against a reference, apply the resulting error estimate to the
+2018 layers on the stated assumption that product accuracy is stable across
+years. **This option is eliminated by the 13 September 2026 measurements**, and
+its elimination is a real simplification rather than a loss: no reference layer
+exists over this domain at any year, so there is nothing to assess the later
+year against. It was the only option whose value depended on the accuracy
+assessment, and it is gone.
+
+**Option 3 — a full second analysis year, justified by capability.** Run
+everything twice and test the null in both.
+
+*Costs*, all of them already measured: **28.9 GB and about two hours** to build
+a second composite checkpoint, on the network tier; a second
+`data/interim/extent_YYYY.npz`; and a regeneration of the composite,
+observed-predicted, residual-field and capability figures, every baseline suite
+artefact, and results §1 to §3. **The redraw is recipe-driven and byte-compared,
+so it regenerates rather than needing rewriting** — the cost is machine time,
+not authorship.
+
+*Buys*: a two-year capability estimate and a replicated null. See below for why
+the first is the stronger reason.
+
+*And it carries one cost that cuts against it, recorded here rather than
+discovered later.* **The rice half of a second year would be weaker than the
+first.** NESDC covers 2017 to 2025, but `notes/decisions.md` records that
+**Shanghai's single-season total is pinned across 2019 to 2025** — stable to
+0.03 percent while 8.6 million pixels changed class, Jaccard 0.3577 — and
+**Jiangsu's shows the same signature from 2020 onward**. In 2018 Shanghai sits
+outside the pinned window and Jiangsu's 2018-to-2020 transitions move freely.
+**So a 2021 or 2022 year would have both Shanghai and Jiangsu pinned where 2018
+has neither.** A replicated null would be replicated on a weaker rice layer, and
+a reader entitled to ask whether the replication tested the analysis or the
+product would be right to ask.
+
+**What makes the options different** is not cost but what they are evidence
+about. Option 1 asserts representativeness; Option 3 measures it. Option 2
+measured something that cannot be measured.
+
+### Which year, if Option 3 is taken
+
+**Undetermined, and what would determine it is which property matters more.**
+
+* **2021** aligns with GISA-new, the only impervious product reaching that year,
+  and with SinoLC-1's and ISA-1's reference year — which matters not at all for
+  the assessment, since neither can serve as reference, but would matter if
+  EcoVision's full text or CISC's validation points later changed that.
+* **2022** aligns with CISC, which covers 2020 and 2022 at 30 m and is the
+  strongest-accuracy impervious product found anywhere in this work at F1 above
+  0.93, and it carries more TROPOMI record, so its capability estimate rests on
+  more observation days — which is the whole point of the comparison.
+
+**On the capability argument alone, 2022 is the better year**, because the
+capability estimate is a function of observation density and a later year has
+more of it, and because CISC gives the impervious layer its best available
+product for that year. On rice, both years are pinned in two provinces and
+neither is better. **No decision is taken here.**
 
 ### Tier 3 — one re-gridding pass over the granules, shared by five items
 
