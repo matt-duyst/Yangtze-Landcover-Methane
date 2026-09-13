@@ -164,6 +164,21 @@ def rows_for() -> list[dict]:
                          + (f"reaching the null needs Var(e) = {need:.1f} x Var(D)"
                             if np.isfinite(need) else
                             "negative held-out R2, so de-attenuation does not apply")))
+                if np.isfinite(need):
+                    # The same thing as a share and as a multiple, because the
+                    # prose quotes both and a note column carries no resolver.
+                    out.append(dict(
+                        quantity=f"error share needed to reach the null, {field}, "
+                                 f"{scheme}, {weighting}",
+                        value=f"{1 - r2 / nr2:.4f}", unit="share of Var(X)",
+                        note="the fraction of the predictor's variance that would have "
+                             "to be error; a requirement, not a measurement"))
+                    out.append(dict(
+                        quantity=f"multiple of Var(D) needed to reach the null, {field}, "
+                                 f"{scheme}, {weighting}",
+                        value=f"{need:.2f}", unit="multiplier",
+                        note="how many times the observed product disagreement that "
+                             "error share would be"))
         coef = s.get((MODEL, "spatial blocks", "unweighted"))
         if coef and "impervious_fraction" in coef.get("detail", ""):
             beta = float(coef["detail"].split("impervious_fraction")[1].split(";")[0])

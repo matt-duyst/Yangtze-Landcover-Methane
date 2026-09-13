@@ -7,11 +7,17 @@ reliability ratio lower bound,0.8678,lambda,"lambda >= 1 - Var(D)/Var(X); a boun
 maximum de-attenuation factor,1.1523,multiplier,"1/lambda_min, applied to a coefficient or to an R squared"
 "reliability ratio, equal independent errors",0.9339,lambda,"the conventional two-replicate point estimate, Var(e)=Var(D)/2"
 "held-out R2 upper bound, operational, spatial blocks, unweighted",0.0976,R squared,observed +0.0847; spatial null +0.3324; reaching the null needs Var(e) = 5.6 x Var(D)
+"error share needed to reach the null, operational, spatial blocks, unweighted",0.7452,share of Var(X),"the fraction of the predictor's variance that would have to be error; a requirement, not a measurement"
+"multiple of Var(D) needed to reach the null, operational, spatial blocks, unweighted",5.64,multiplier,how many times the observed product disagreement that error share would be
 "held-out R2 upper bound, operational, spatial blocks, by sounding count",0.0281,R squared,observed +0.0244; spatial null +0.5136; reaching the null needs Var(e) = 7.2 x Var(D)
+"error share needed to reach the null, operational, spatial blocks, by sounding count",0.9525,share of Var(X),"the fraction of the predictor's variance that would have to be error; a requirement, not a measurement"
+"multiple of Var(D) needed to reach the null, operational, spatial blocks, by sounding count",7.21,multiplier,how many times the observed product disagreement that error share would be
 "held-out R2 upper bound, operational, leave-one-province-out, unweighted",-0.1174,R squared,"observed -0.1174; spatial null -0.0912; negative held-out R2, so de-attenuation does not apply"
 "held-out R2 upper bound, operational, leave-one-province-out, by sounding count",-0.1620,R squared,"observed -0.1620; spatial null +0.0028; negative held-out R2, so de-attenuation does not apply"
 "coefficient upper bound, operational, unweighted",47.29,ppb per unit fraction,observed +41.04; in-sample R2 0.1192
 "held-out R2 upper bound, blended, spatial blocks, unweighted",0.0752,R squared,observed +0.0653; spatial null +0.4141; reaching the null needs Var(e) = 6.4 x Var(D)
+"error share needed to reach the null, blended, spatial blocks, unweighted",0.8423,share of Var(X),"the fraction of the predictor's variance that would have to be error; a requirement, not a measurement"
+"multiple of Var(D) needed to reach the null, blended, spatial blocks, unweighted",6.37,multiplier,how many times the observed product disagreement that error share would be
 "held-out R2 upper bound, blended, spatial blocks, by sounding count",-0.0053,R squared,"observed -0.0053; spatial null +0.5619; negative held-out R2, so de-attenuation does not apply"
 "held-out R2 upper bound, blended, leave-one-province-out, unweighted",-0.2110,R squared,"observed -0.2110; spatial null -0.1254; negative held-out R2, so de-attenuation does not apply"
 "held-out R2 upper bound, blended, leave-one-province-out, by sounding count",-0.2602,R squared,"observed -0.2602; spatial null +0.0138; negative held-out R2, so de-attenuation does not apply"

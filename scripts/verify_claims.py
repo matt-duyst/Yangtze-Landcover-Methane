@@ -61,7 +61,7 @@ SCANNED = ("README.md", "ERRATA.md", "data/processed/README.md",
            "notes/grounding-methods.md", "notes/grounding-urban.md",
            "notes/grounding-rice.md", "notes/grounding-methane.md",
            "notes/paper-target.md", "notes/draft-methods.md",
-           "notes/draft-results.md")
+           "notes/draft-results.md", "notes/draft-discussion.md")
 
 #: number, then optional space, then the marker naming what it is
 CLAIM = re.compile(r"(-?[\d][\d,]*(?:\.\d+)?)\s*<!--#([a-zA-Z0-9_.]+)-->")
@@ -1037,6 +1037,17 @@ QUANTITIES = {
         lambda: _atten("coefficient upper bound, operational, unweighted"),
     "atten.coef_bound_blended":
         lambda: _atten("coefficient upper bound, blended, unweighted"),
+    # What the bound would have to be beaten by. Requirements, not measurements.
+    "atten.need_share_bu": lambda: _atten(
+        "error share needed to reach the null, operational, spatial blocks, unweighted"),
+    "atten.need_share_bu_pct": lambda: 100.0 * _atten(
+        "error share needed to reach the null, operational, spatial blocks, unweighted"),
+    "atten.need_multiple_bu": lambda: _atten(
+        "multiple of Var(D) needed to reach the null, operational, spatial blocks, unweighted"),
+    "atten.need_multiple_bw": lambda: _atten(
+        "multiple of Var(D) needed to reach the null, operational, spatial blocks, by sounding count"),
+    "atten.need_multiple_blended_bu": lambda: _atten(
+        "multiple of Var(D) needed to reach the null, blended, spatial blocks, unweighted"),
     # Added for queue item 10, the GAIA-GISA disagreement decomposition.
     "disagree.alloc_share_2018_cell":
         lambda: _disagree("2018", "0.25 degree cell", "allocation_share"),
