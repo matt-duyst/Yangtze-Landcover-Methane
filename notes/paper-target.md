@@ -926,8 +926,35 @@ matrix. Prediction-powered inference is the route that makes a small reference
 set usable. *Established by* the methods record. *Gated by* item 5, and by one
 condition that must not be forgotten: the calibration set "must be separate from
 the training dataset used to train the machine learning model", so **the
-polygons are clean for the NESDC and GISA layers and contaminated for CCD-Rice
-itself**, whose thresholds were re-determined against filtered rice areas.
+polygons are clean for the NESDC and GISA layers**.
+
+**Unblocked and re-scoped on 13 September 2026**, when the deposit was opened
+and read. The polygons are fetched, verified against their published MD5, and
+their shape is committed as `data/processed/ccdrice_polygons_yrd_2026.csv`, so
+this item no longer waits on a download. Three things it did not know:
+
+* **777 polygons reach only 62 of the 926 cells**, Shanghai's 338 falling in
+  six. Any per-cell assessment rests on 6.7 percent of the lattice, and a
+  domain-wide claim from it is a claim about those 62 cells.
+* **50 Jiangsu polygons sit north of 33.3462 N**, where the committed NESDC
+  raster stops, leaving 727 usable against the rice layer this project carries.
+* **The sample is purposive, not probabilistic.** The paper selected "only 2 to
+  4 years in each provincial administrative region" because Google Earth's
+  historical Chinese coverage is sparse and "early images tend to be for urban
+  areas rather than for rural areas". So there are no inclusion probabilities,
+  and **the design-based PPI extension this item was going to rely on needs
+  sampling probabilities that do not exist.** Neither canonical i.i.d. PPI nor
+  its unequal-probability extension applies as written; what is available is a
+  clustered sample with unknown selection, and saying so is the honest form of
+  this item rather than a reason to drop it.
+
+**And the contamination clause above was wrong about the mechanism.** CCD-Rice's
+thresholds were re-determined against filtered agricultural statistics, not
+against the polygons, so the polygons are clean for CCD-Rice too. What is not
+independent is CCD-Rice and NESDC: CCD-Rice's training labels were taken from
+`10.57760/sciencedb.06963`, which is this project's own rice layer. See
+`notes/decisions.md`. That bears on item 10's rice analogue and on item 11, not
+on this item.
 
 **10. Quantity and allocation disagreement between GAIA and GISA.** The
 repository reports their difference as a single percentage of provincial area,
@@ -935,6 +962,20 @@ which is quantity disagreement alone and says nothing about whether the two put
 impervious surface in the same places. Only allocation disagreement attenuates a
 coefficient. *Established by* the methods record's reliability section. *Needs*
 only the two committed products.
+
+**10a. The paddy-pond confound, and it is blocked on one paywalled article.**
+Overlaying a mapped aquaculture-pond layer on the committed rice fraction would
+measure the overlap per cell for 2018, which is the largest single omission the
+rice record identifies. **This item cannot start.** Both candidate products,
+China_AP and the aquaculture-index mapping, name no deposit, and both articles
+are unreadable from this network — ScienceDirect and Wiley return 403 to every
+route tried, and neither registers a dataset relation in Crossref. China_AP's
+article is gold open access under CC BY 4.0, so the obstacle is a publisher
+block rather than a licence. *Needs* one email to a corresponding author, or
+institutional access to one PDF. It is recorded as a queue item rather than
+left as a dataset lead because the computation is already specified and only
+the input is missing: `src.landcover` reduces a 10 m raster to a per-cell
+fraction on this lattice, which is exactly the operation a pond layer needs.
 
 **11. De-attenuation.** Regression calibration, or SIMEX-WLS where non-constant
 residual variance matters — and it does, since a cell mean rests on between
@@ -945,6 +986,16 @@ evidence against that rather than a measurement of it. *Established by* the
 methods record. *Gated by* items 9 and 10, which supply the error variances: the
 polygons for rice, the allocation disagreement for impervious surface as a lower
 bound.
+
+**One of those two inputs is weaker than recorded**, found 13 September 2026.
+The rice error variance was to come from a CCD-Rice-against-NESDC comparison in
+the role GAIA and GISA play for impervious surface. GAIA and GISA were produced
+independently; **CCD-Rice was trained on NESDC**, so their disagreement
+understates the disagreement and an error variance from it understates the
+error variance — biasing de-attenuation toward the null this item exists to
+test. The rice error variance should come from the polygons, which are
+independent of both, and the 62-cell reach recorded under item 9 is therefore a
+constraint on this item too.
 
 ### Tier 3 — one re-gridding pass over the granules, shared by five items
 

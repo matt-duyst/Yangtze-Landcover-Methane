@@ -5428,3 +5428,141 @@ recorded in full under item 4 above. It was shaded as the distance from a
 held-out province's interior to the nearest training cell, a figure this file
 asserted and no script ever measured. It is now derived from the committed
 table by `buffered_decay._bracket()` and a test asserts the derivation.
+
+## Verifying the dataset inventory, 13 September 2026
+
+`notes/dataset-leads.md` was built across five grounding passes from search
+results and reading. This is the first time any of it was opened. Every entry
+whose status was *unverified* or *documented only* was attempted from this
+machine, under a 5 GB download budget of which about 48 MB was used, and
+everything fetched was deleted except the one committed artefact.
+
+The file itself carries the per-entry results. What belongs here is the pattern,
+because the pattern is the reusable finding and it is not the one an inventory
+built from reading would predict.
+
+### Twenty-seven entries attempted: the tally
+
+**Nine moved to verified accessible**, all of them open and anonymous: MMCP, the
+CCD-Rice validation polygons re-verified in depth, the CCD-Rice maps
+re-verified, ChinaRiceCalendar, the 500 m irrigated cropland maps, China's oil
+and gas CH4 inventory, the underground wastewater plants, the 30 m annual
+building heights, and CMAB. Two more were re-confirmed where they already stood,
+Landsat Collection 2 and the IMI input buckets.
+
+**Six were established as genuinely unreachable, with the obstacle named rather
+than assumed.** China_AP, the MSW landfill database, the Shaoxing UAV record and
+the gridded coal inventory are behind paywalls that block the article naming the
+route. WetCHARTs returns 401 to an anonymous data request, confirming its
+Earthdata requirement. The Lin'an WDCGG route was attempted and not found: the
+host is reachable and its station listing is JavaScript-driven, so a scripted
+fetch needs an API that could not be discovered from outside.
+
+**Four regressed**, all on one cause: zenodo.org is unreachable from this
+network, a TCP timeout on every endpoint with DNS resolving normally. That
+blocks GISA-new, APRA500, the CCD-Rice code and the GHGSat plume set. Two of the
+four had been recorded *verified accessible* on the strength of a request that
+succeeded when it was made.
+
+### What the pattern says
+
+**The routes were better than recorded and the licences more permissive.** That
+is the opposite of the usual direction of error and it has one cause: the
+inventory was built by reading landing pages and abstracts, and a landing page
+is the worst available description of a deposit. Five deposits exist for entries
+that recorded none, and **all five were named in the papers' own data
+availability or Data Records sections.** Four of those five entries were marked
+*documented only*, which in this file has meant "a source describes the route" —
+but the source had described the route and nobody had read that paragraph.
+
+This is the CCD-Rice polygon lesson a second time. That entry records it
+already: "a product's reference data and its product data need not live on the
+same platform, and checking one is not checking the other". The generalisation
+is simpler and should replace it: **read the article's data availability
+statement.** It is one paragraph, it is in the open-access HTML, and it is where
+the answer is.
+
+**Eight licences were verified as CC BY 4.0 or CC0 where the file held
+"unknown", "article licence" or "not established".** One moved the restrictive
+way: the rice-mapping review is CC-BY-NC-ND, not CC-BY. And **two entries
+deposit under a different licence than their article carries** — the underground
+wastewater plants and CMAB are both CC-BY-NC-ND as articles and CC BY 4.0 as
+data. Recording the article licence as the dataset's would have imposed a
+non-commercial no-derivatives constraint that does not exist. The inventory now
+states the distinction.
+
+**Both factual errors found were in the inventory, not in the products**, which
+is worth saying plainly because it is the same class as the CCD-Rice count error
+that motivated this pass, and that error had already been corrected in the file
+before this pass began. MMCP's licence was recorded as CC-BY-NC-ND 4.0 and
+described as constraining reuse "more than anything else in this inventory"; the
+deposit is CC BY 4.0, the least restrictive licence in the file. The IMI
+boundary archive was recorded as beginning "one day before this project's first
+granule"; it begins 1 April 2018 against a first granule of 30 April 2018, so
+29 days. Every other count, size, date and coverage figure checked against a
+file held — including all four CCD-Rice province counts, the 5.37 GB and 27-file
+CCD-Rice total, and the 201-and-2,464 wastewater premise the file had itself
+flagged as unverified.
+
+**One recorded obstacle was not real.** `data/processed/README.md` said GISA's
+per-tile links go through Zenodo and that "the whole 882 MB bundle is the only
+reachable route". The same Wuhan University server that serves the bundle serves
+all 257 tiles individually from a browsable index at about 8.7 MB each. The four
+this study needed are about 35 MB, so the bundle was 25 times more transfer than
+the work required. That record is corrected.
+
+### CCD-Rice was trained on the rice layer this project carries
+
+This is the finding with consequences beyond the inventory, and it came from
+reading the CCD-Rice paper rather than from any status.
+
+`notes/paper-target.md` item 9 carries a gating condition: the CCD-Rice polygons
+are "clean for the NESDC and GISA layers and contaminated for CCD-Rice itself,
+whose thresholds were re-determined against filtered rice areas". **The first
+half holds and the second half is wrong about which mechanism contaminates
+what.**
+
+The polygons did not calibrate CCD-Rice. Its §2.3.3 re-determines the
+rice-probability threshold from *filtered agricultural statistical areas*, and
+its §2.3.4 uses the polygons only to validate. So the polygons are clean for
+CCD-Rice too, on the separation condition as stated.
+
+**What is not independent is CCD-Rice and NESDC.** Its §2.2.2 states that "the
+training samples used in this study were extracted from two rice distribution
+maps for recent years: the distribution map of single-season rice in China from
+2017 to 2022 produced by Shen et al. (2023a, b)" and a double-season map from
+Pan et al. That first product is `10.57760/sciencedb.06963`, which
+`notes/references.md` records as "the source of the analysis grid's rice
+fractions". **CCD-Rice's labels came from this project's own rice layer.**
+
+The years do not overlap — CCD-Rice ends in 2016 and NESDC begins in 2017 — so
+the two are never compared in the same year, and the 2000 and 2010 maps this
+project would use are a model trained on 2017-to-2022 NESDC labels and
+transferred backwards. The dependence is therefore not a double-counting in one
+year; it is that the historical layer inherits the label characteristics of the
+layer it would be checked against.
+
+**The consequence is for the pairing rule, not for the accuracy assessment.**
+`notes/dataset-leads.md` describes CCD-Rice as "the second rice product for the
+historical years, the role GISA plays for impervious surface". GISA and GAIA
+were produced independently; CCD-Rice and NESDC were not. So a CCD-Rice-against-
+NESDC disagreement understates disagreement, and an error variance taken from it
+understates the error variance — which is exactly the input queue item 11 wants
+from queue item 10's analogue for rice. The GAIA–GISA rule this file applies
+repeatedly is "two products with different errors beat one better product", and
+the errors here are not different enough to assume.
+
+### The status vocabulary gained a fifth term
+
+**Open, terms-gated**, for MUSICA. Its landing page returns 200 and its rights
+statement reads CC BY 4.0, but the download is a JavaScript control carrying
+`data-terms-accepted` whose backend returns 401 without a browser session.
+Nothing is closed and no account exists to create. A reader of "open,
+registered" would go looking for a login there is none of, and a reader of
+"verified accessible" would expect a fetcher to work.
+
+MUSICA also turned out to be a smaller thing than recorded: the 181.7 MB deposit
+holds **two example netCDF days and a ReadMe describing how to obtain the
+complete 1,241-file set**, not the series. Its licence being CC BY 4.0 rather
+than "not established" is the good news; that the deposit is a sample is the
+bad.
