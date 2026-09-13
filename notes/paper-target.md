@@ -322,6 +322,35 @@ test rather than merely sound like it does:
   layer. The capability claim survives all three; a claim about the *size* of a
   land-cover effect would not.
 
+**Reassessed on 14 September 2026, against what is now committed, and the
+headline stands.** The statement was written before the attenuation bound
+existed, when measurement error was queued as the one mechanism that could
+manufacture the null rather than explain it. That mechanism is now excluded for
+the impervious predictor with a measured margin: the error variance would have
+to be 5.6 times the two products' disagreement to lift land cover to the spatial
+null. **That strengthens the supporting null and does not change what is new**,
+because the bound concerns the land-cover result and the contribution is the
+pairing of the two observing-system limits. Adding it to the headline would
+claim novelty for a standard errors-in-variables argument applied once.
+
+Two amendments follow from it rather than to it.
+
+* **The supporting null is now defended by measurement rather than by
+  construction**, and the introduction and discussion should say so in one
+  clause each. Before the bound, the answer to "could measurement error have
+  produced this?" was four predictor pairs with different errors, which is
+  evidence against the objection rather than a measurement of it. That is worth
+  stating because it is the difference between a null a reviewer can doubt and
+  one they have to argue with.
+* **The third bullet's "no accuracy assessment" has a sharper form and the
+  bullet is otherwise unchanged.** It is not an omission: no reference layer
+  exists over this domain that is more accurate than the products it would
+  assess, which four verified candidates establish. And the bullet's closing
+  clause survives the bound intact — bounding how much attenuation *could* be
+  present is not estimating the coefficient, so **a claim about the size of a
+  land-cover effect still would not survive**, and the introduction must not
+  imply otherwise.
+
 #### Why capability and not reproduction
 
 The reproduction framing is not wrong and it is not the headline. Its central
