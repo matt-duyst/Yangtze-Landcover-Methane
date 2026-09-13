@@ -223,6 +223,15 @@ s5p:
   # away 96.6 percent of the methane record. Each covariate is read on the
   # soundings methane already selected and accumulated into a count of its own.
   covariates:
+    # The retrieval's own random error from the spectral fit, in ppb. Gridded
+    # rather than filtered on: a published chain filters under 10 ppb, and
+    # gridding it leaves that threshold testable afterwards without another
+    # 28.9 GB transfer, where filtering now would change the composite while
+    # the appropriate threshold is still unsettled. Note that the cell mean
+    # this produces does NOT make the filter testable on its own -- that is
+    # what the binned accumulators in the compositing script are for.
+    - name: methane_mixing_ratio_precision
+      group: PRODUCT
     # Meteorology, co-located per sounding.
     - name: eastward_wind
       group: PRODUCT/SUPPORT_DATA/INPUT_DATA

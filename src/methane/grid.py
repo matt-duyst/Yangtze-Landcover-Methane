@@ -58,6 +58,12 @@ import numpy as np
 PRIMARY = "methane_mixing_ratio_bias_corrected"
 SECONDARY = "methane_mixing_ratio"
 
+#: The two covariates the published preprocessing filters are defined on. Named
+#: here so the filter machinery refers to them by constant rather than by a
+#: string literal repeated across two modules.
+PRECISION = "methane_mixing_ratio_precision"
+ALBEDO_SWIR = "surface_albedo_SWIR"
+
 
 class MethaneError(RuntimeError):
     """Base class for failures this package raises deliberately."""
@@ -168,6 +174,25 @@ class Soundings:
     #: pre-filtered, because dropping a sounding here would drop its methane.
     covariates: Mapping[str, np.ndarray] = field(default_factory=dict)
     covariate_valid: Mapping[str, np.ndarray] = field(default_factory=dict)
+    #: Per-cell counts of in-box soundings **before** any quality filtering,
+    #: and of those carrying a retrieval at all.
+    #:
+    #: Gridded here rather than carried as per-sounding indices because the
+    #: pre-filter set runs a few hundred times larger than the kept set -- on
+    #: the design granule, 12,179 against 31 -- and only the per-cell total is
+    #: wanted. They are counts, not sums: no value is averaged over them.
+    prefilter_counts: np.ndarray | None = None
+    retrieved_counts: np.ndarray | None = None
+    #: Across-track detector column of each kept sounding, 0 to 214.
+    #:
+    #: Derived from the flat index rather than read, because the variables are
+    #: shaped (time, scanline, ground_pixel) so the column is the flat index
+    #: modulo the ground-pixel count. It costs no extra variable read.
+    #:
+    #: This is the axis destriping corrects along. Retaining it is what makes
+    #: the one preprocessing omission this project called unrecoverable
+    #: testable later without a second 28.9 GB pass.
+    across_track: np.ndarray | None = None
 
     def __len__(self) -> int:
         return int(self.latitude.size)
@@ -201,6 +226,26 @@ class GranuleContribution:
     soundings_read: int
     soundings_valid: int
     soundings_in_box: int
+    #: Soundings inside the box **before any quality filtering**, and those of
+    #: them that carry a retrieval at all.
+    #:
+    #: These exist because ``soundings_in_box`` is post-filter, so a quality
+    #: threshold could be reported without reporting what it removed. Two
+    #: numbers rather than one because the domain has two different losses and
+    #: quoting a single "rejection rate" conflates them: most in-box soundings
+    #: carry **no retrieval** (cloud, geometry) and so are not rejected by the
+    #: threshold, there is simply nothing to reject; of those that do carry one,
+    #: the threshold removes a further share. On the granule used to design
+    #: this, 12,179 soundings were in box, 410 carried a retrieval, and 31
+    #: passed -- 96.6 percent lost to no-retrieval and 92.4 percent of the
+    #: remainder lost to the threshold.
+    soundings_in_box_total: int = 0
+    soundings_in_box_retrieved: int = 0
+    #: The granule's declared ground pixel size, verbatim from the file's
+    #: ``spatial_resolution`` global attribute. Recorded per granule rather
+    #: than assumed constant because the footprint changed in August 2019, so a
+    #: multi-year composite would mix two of them.
+    pixel_size: str | None = None
     #: In-box soundings carrying a valid value, per covariate. Far below
     #: ``soundings_in_box`` for albedo, which is the point of recording it.
     covariates_valid: Mapping[str, int] = field(default_factory=dict)
@@ -228,6 +273,9 @@ class GranuleContribution:
             "soundings_read": self.soundings_read,
             "soundings_valid": self.soundings_valid,
             "soundings_in_box": self.soundings_in_box,
+            "soundings_in_box_total": self.soundings_in_box_total,
+            "soundings_in_box_retrieved": self.soundings_in_box_retrieved,
+            "pixel_size": self.pixel_size,
             "covariates_valid": dict(self.covariates_valid),
             "covariates_missing": list(self.covariates_missing),
             "departure_mean": self.departure_mean,
@@ -442,7 +490,11 @@ def read_soundings(
 
         read_values = {}
         good = np.ones(lat.shape, dtype=bool)
+        across_track_width = None
         for name in variables:
+            raw = group.variables[name]
+            if raw.dimensions and raw.dimensions[-1] == "ground_pixel":
+                across_track_width = int(raw.shape[-1])
             value, valid = _scaled(*_read_variable(group, name))
             good &= valid
             read_values[name] = value
@@ -456,12 +508,27 @@ def read_soundings(
         if qa_fill is not None:
             good &= qa_raw != qa_fill
 
+        # Everything except the quality cut. Held separately so the threshold's
+        # effect over the domain is measurable rather than inferred: without
+        # this, the only in-box count is the post-filter one and "N read, M
+        # passed" cannot be written for this region. See
+        # `GranuleContribution.soundings_in_box_retrieved`.
+        retrieved = good.copy()
+
         cutoff = stored_threshold(qa_threshold, qa_scale, qa_offset)
         good &= qa_raw >= cutoff
         valid = int(good.sum())
 
         row, col, inside = spec.cell_of(lat, lon)
         keep = good & inside
+        in_box_total = int(inside.sum())
+        in_box_retrieved = int((inside & retrieved).sum())
+
+        prefilter_counts = np.zeros(spec.shape, dtype="int64")
+        retrieved_counts = np.zeros(spec.shape, dtype="int64")
+        np.add.at(prefilter_counts, (row[inside], col[inside]), 1)
+        in_retrieved = inside & retrieved
+        np.add.at(retrieved_counts, (row[in_retrieved], col[in_retrieved]), 1)
 
         # Covariates are read on `keep` and never fold into it.
         covariate_values, covariate_masks = {}, {}
@@ -487,6 +554,10 @@ def read_soundings(
                 covariate_values, covariate_masks, missing)
 
         acquired = _acquired_from(dataset, path)
+        # Verbatim from the file rather than from the mission documentation, so
+        # the record is a read value and not a recollection.
+        pixel_size = getattr(dataset, "spatial_resolution", None)
+        pixel_size = str(pixel_size) if pixel_size is not None else None
         soundings = Soundings(
             granule=path.name,
             acquired=acquired,
@@ -496,10 +567,18 @@ def read_soundings(
             qa_stored=np.asarray(qa_raw)[keep],
             covariates=covariate_values,
             covariate_valid=covariate_masks,
+            prefilter_counts=prefilter_counts,
+            retrieved_counts=retrieved_counts,
+            across_track=(
+                (np.arange(lat.size)[keep] % across_track_width).astype("int64")
+                if across_track_width else None),
         )
     contribution = GranuleContribution(
         granule=path.name, acquired=acquired, soundings_read=total,
         soundings_valid=valid, soundings_in_box=len(soundings),
+        soundings_in_box_total=in_box_total,
+        soundings_in_box_retrieved=in_box_retrieved,
+        pixel_size=pixel_size,
         covariates_valid={k: int(m.sum()) for k, m in covariate_masks.items()},
         covariates_missing=tuple(missing),
         departure_mean=departure_stats[0], departure_sd=departure_stats[1],

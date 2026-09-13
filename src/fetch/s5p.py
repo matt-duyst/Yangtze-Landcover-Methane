@@ -38,6 +38,7 @@ latitude and longitude arrays.
 from __future__ import annotations
 
 import re
+import time
 import xml.etree.ElementTree as ET
 from dataclasses import dataclass
 from datetime import date, datetime, timedelta
@@ -142,6 +143,40 @@ def parse_granule_name(name: str) -> dict | None:
     }
 
 
+#: Listing attempts per request, and the base of the backoff in seconds.
+#:
+#: A year's listing is one request per day, so about 245 of them, and a single
+#: transient failure used to end the whole run **before any granule was
+#: downloaded**: the listing happens before the loop that tolerates per-granule
+#: failures, so it had no protection at all. That happened -- an
+#: `SSL: UNEXPECTED_EOF_WHILE_READING` on one day's prefix killed a restarted
+#: two-hour pass in its first minute, and the same prefix answered HTTP 200 in
+#: half a second three times in a row immediately afterwards.
+#:
+#: Retries are bounded and the exception is re-raised on exhaustion. A listing
+#: that genuinely cannot be read must still fail loudly, because a short
+#: granule list silently produces a composite over fewer granules.
+LIST_ATTEMPTS = 5
+LIST_BACKOFF_SECONDS = 1.5
+
+
+def _get_with_retry(session: requests.Session, url: str, params: dict,
+                    timeout: float):
+    """One listing request, retried on transport failure with backoff."""
+    last: Exception | None = None
+    for attempt in range(LIST_ATTEMPTS):
+        try:
+            response = session.get(url, params=params, timeout=timeout)
+            response.raise_for_status()
+            return response
+        except (requests.exceptions.RequestException,) as exc:
+            last = exc
+            if attempt == LIST_ATTEMPTS - 1:
+                break
+            time.sleep(LIST_BACKOFF_SECONDS * (2 ** attempt))
+    raise last
+
+
 def list_prefix(
     prefix: str,
     *,
@@ -158,8 +193,7 @@ def list_prefix(
         params = {"list-type": "2", "prefix": prefix, "max-keys": str(max_keys)}
         if token:
             params["continuation-token"] = token
-        response = sess.get(base_url, params=params, timeout=timeout)
-        response.raise_for_status()
+        response = _get_with_retry(sess, base_url, params, timeout)
         root = ET.fromstring(response.text)
         for contents in root.findall(f"{_S3_NS}Contents"):
             key = contents.findtext(f"{_S3_NS}Key") or ""

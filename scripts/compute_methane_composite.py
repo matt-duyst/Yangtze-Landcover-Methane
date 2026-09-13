@@ -53,6 +53,52 @@ from src.methane import grid as mg  # noqa: E402
 from src.methane import seasonal as se  # noqa: E402
 from src.methane.grid import Composite, GranuleContribution, GridSpec  # noqa: E402
 
+#: Bin edges for the retained-quantity histograms, and the reason they are
+#: histograms rather than filters.
+#:
+#: A filter cannot be tested from a gridded covariate. ``cvsum::`` holds a
+#: cell's *mean* precision, which says nothing about what the cell's methane
+#: mean would become if the imprecise soundings were dropped -- that needs the
+#: sum of methane over the surviving subset, which is a conditional quantity no
+#: marginal sum can supply. So methane is accumulated **binned by** each filter
+#: variable, and any threshold falling on a bin edge is then exactly testable
+#: afterwards with no further granule read.
+#:
+#: The edges are chosen so the published thresholds are edges: 10 ppb for
+#: precision (Schuit et al., 2023) and 0.02 and 0.05 for SWIR albedo (the
+#: floor that accounts for most remaining unphysical observations). Zero is an
+#: albedo edge because 166 cells carry a negative mean SWIR albedo and negative
+#: albedo is unphysical, so that bin has to be separable.
+PRECISION_EDGES = (0.0, 5.0, 10.0, 15.0, 20.0, 30.0)
+ALBEDO_EDGES = (0.0, 0.02, 0.05, 0.10, 0.20, 0.40)
+
+#: One trailing slot in every binned array holds soundings whose bin variable
+#: is absent or invalid, so the bins sum back to the cell count exactly. A
+#: sounding with no albedo still contributes its methane to the composite, and
+#: dropping it from the histogram silently would break that reconciliation.
+MISSING_BIN = -1
+
+#: Months, for the partial sums. Monthly rather than a two-way growing/fallow
+#: split, decided on generality: twelve slots cost about 295 kB in memory
+#: against a checkpoint measured in hundreds of kilobytes, and monthly
+#: *contains* every two-way split while a two-way split contains nothing else.
+#: That matters here because the boundary is not known -- `notes/grounding-
+#: rice.md` records that the fallow season may carry most of a paddy's annual
+#: emission, which reframes the question from isolating a rice signal to
+#: comparing two periods and leaves the right cut date open. Monthly lets the
+#: cut be chosen after the pass instead of being guessed before it.
+MONTHS = 12
+
+#: TROPOMI across-track detector columns. 215 for this product and period; a
+#: granule declaring a different width would be a different instrument mode,
+#: and the accumulator asserts rather than silently truncating.
+ACROSS_TRACK = 215
+
+#: Download attempts per granule, and the backoff base in seconds. See the
+#: retry in the run loop for why a granule must not be lost quietly.
+DOWNLOAD_ATTEMPTS = 4
+DOWNLOAD_BACKOFF_SECONDS = 2.0
+
 #: Band order in the exported GeoTIFF. One file rather than three because the
 #: three arrays share one grid and must be read together: a mean without its
 #: count is exactly the thing src/methane exists to prevent, and separate files
@@ -141,6 +187,61 @@ class Accumulator:
         #: sounding level so the cycle can be removed before the cell mean is
         #: taken, in one pass and without holding a sounding twice.
         self.harmonics = se.HarmonicStats(spec.shape, se.HarmonicBasis(harmonics))
+        #: In-box soundings per cell before any quality filtering, and those
+        #: carrying a retrieval. The denominators the qa threshold's effect
+        #: over this domain is measured against.
+        self.prefilter_counts = np.zeros(spec.shape, dtype="int64")
+        self.retrieved_counts = np.zeros(spec.shape, dtype="int64")
+        #: Sum of squares per cell per variable, so a within-cell variance is
+        #: recoverable. `hs::sum_yy` already gives this for the primary field
+        #: as a by-product of the seasonal accumulator; these are explicit, and
+        #: cover the secondary field, which the harmonic block does not.
+        self.sum_squares = {v: np.zeros(spec.shape, dtype="float64")
+                            for v in self.variables}
+        #: Monthly partial sums and counts, so a mean over any set of months is
+        #: recoverable. An annual sum cannot give a subset mean, which is why
+        #: this needs the pass rather than a recomputation.
+        self.month_sums = {v: np.zeros((MONTHS, *spec.shape), dtype="float64")
+                           for v in self.variables}
+        self.month_counts = np.zeros((MONTHS, *spec.shape), dtype="int64")
+        #: Methane binned by each filter variable, plus the trailing missing
+        #: slot. See PRECISION_EDGES for why this is a histogram.
+        self.precision_sums = {
+            v: np.zeros((len(PRECISION_EDGES) + 2, *spec.shape), dtype="float64")
+            for v in self.variables}
+        self.precision_counts = np.zeros(
+            (len(PRECISION_EDGES) + 2, *spec.shape), dtype="int64")
+        self.albedo_sums = {
+            v: np.zeros((len(ALBEDO_EDGES) + 2, *spec.shape), dtype="float64")
+            for v in self.variables}
+        self.albedo_counts = np.zeros(
+            (len(ALBEDO_EDGES) + 2, *spec.shape), dtype="int64")
+        #: The two published filters jointly, at their published thresholds:
+        #: slots are (precision under 10, albedo at least 0.05) as
+        #: 0=neither 1=albedo only 2=precision only 3=both, 4=either missing.
+        #: Present because the marginal histograms cannot give the effect of
+        #: applying both filters together, and establishing that afterwards
+        #: would cost another 28.9 GB.
+        self.joint_sums = {v: np.zeros((5, *spec.shape), dtype="float64")
+                           for v in self.variables}
+        self.joint_counts = np.zeros((5, *spec.shape), dtype="int64")
+        #: Methane by across-track detector column, and the number of soundings
+        #: each cell drew from each column.
+        #:
+        #: This is the destriping axis. `notes/draft-methods.md` called that
+        #: omission unrecoverable, and it was, because nothing retained the
+        #: column. The sums and counts over the domain give the per-column
+        #: offset a stripe correction removes; the per-cell counts are what let
+        #: that correction be applied to a cell mean afterwards. **Counts alone
+        #: suffice for the second part** -- destriping subtracts a constant per
+        #: column, so a cell's corrected mean needs only how many of its
+        #: soundings came from each column, not their values. That is what
+        #: keeps this to about 880 kB instead of several megabytes.
+        self.across_track_sums = {v: np.zeros(ACROSS_TRACK, dtype="float64")
+                                  for v in self.variables}
+        self.across_track_counts = np.zeros(ACROSS_TRACK, dtype="int64")
+        self.across_track_cell_counts = np.zeros(
+            (ACROSS_TRACK, *spec.shape), dtype="int32")
 
     @property
     def covered(self) -> int:
@@ -154,10 +255,35 @@ class Accumulator:
             flat[np.asarray(row) * self.spec.n_cols + np.asarray(col)] = True
         return np.packbits(flat)
 
+    def _bin_of(self, soundings, name: str, edges) -> np.ndarray:
+        """Bin index per kept sounding for one filter variable.
+
+        Returns the trailing missing slot where the variable is absent from the
+        granule or invalid on that sounding, so the bins always reconcile with
+        the cell count.
+        """
+        missing = len(edges) + 1
+        value = soundings.covariates.get(name)
+        if value is None:
+            return np.full(len(soundings), missing, dtype="int64")
+        index = np.digitize(value, edges).astype("int64")
+        valid = soundings.covariate_valid.get(name)
+        if valid is not None:
+            index = np.where(valid, index, missing)
+        return np.where(np.isfinite(value), index, missing)
+
     def add(self, soundings, contribution: GranuleContribution) -> None:
         before = self.covered
         self.contributions.append(contribution)
         self.done.add(contribution.granule)
+        # Pre-filter counts do not depend on any sounding surviving, so they
+        # are added before the empty-granule branch: a granule that contributed
+        # no usable sounding still crossed the domain, and its denominator is
+        # exactly what the rejection rate needs.
+        if soundings.prefilter_counts is not None:
+            self.prefilter_counts += soundings.prefilter_counts
+        if soundings.retrieved_counts is not None:
+            self.retrieved_counts += soundings.retrieved_counts
         if not len(soundings):
             # An empty granule still gets a row, all zero, so that the cell
             # sets stay index-aligned with `contributions`. A shorter array
@@ -171,6 +297,62 @@ class Accumulator:
                 np.add.at(self.sums[name], (row, col), soundings.values[name])
             mg.accumulate_covariates(soundings, row, col,
                                      self.covariate_sums, self.covariate_counts)
+            for name in self.variables:
+                np.add.at(self.sum_squares[name], (row, col),
+                          soundings.values[name] ** 2)
+
+            # The granule's month. Constant within a granule, from its
+            # acquisition time, on the same grounds `day_of_year` is: a granule
+            # spans about fifty minutes, so no sounding in one falls in a
+            # different month except across a month boundary, where the error
+            # is one granule's worth of soundings in one of twelve slots.
+            if contribution.acquired is not None:
+                slot = contribution.acquired.month - 1
+                np.add.at(self.month_counts, (slot, row, col), 1)
+                for name in self.variables:
+                    np.add.at(self.month_sums[name], (slot, row, col),
+                              soundings.values[name])
+
+            precision_bin = self._bin_of(
+                soundings, mg.PRECISION, PRECISION_EDGES)
+            albedo_bin = self._bin_of(soundings, mg.ALBEDO_SWIR, ALBEDO_EDGES)
+            np.add.at(self.precision_counts, (precision_bin, row, col), 1)
+            np.add.at(self.albedo_counts, (albedo_bin, row, col), 1)
+            for name in self.variables:
+                np.add.at(self.precision_sums[name], (precision_bin, row, col),
+                          soundings.values[name])
+                np.add.at(self.albedo_sums[name], (albedo_bin, row, col),
+                          soundings.values[name])
+
+            # The joint slot at the published thresholds. Anything whose bin
+            # variable was missing goes to slot 4 rather than being counted as
+            # passing, so the joint accounting closes the same way.
+            p_missing = precision_bin == len(PRECISION_EDGES) + 1
+            a_missing = albedo_bin == len(ALBEDO_EDGES) + 1
+            p_ok = (precision_bin <= PRECISION_EDGES.index(10.0)) & ~p_missing
+            a_ok = (albedo_bin > ALBEDO_EDGES.index(0.05)) & ~a_missing
+            joint = np.where(p_missing | a_missing, 4,
+                             a_ok.astype("int64") + 2 * p_ok.astype("int64"))
+            np.add.at(self.joint_counts, (joint, row, col), 1)
+            for name in self.variables:
+                np.add.at(self.joint_sums[name], (joint, row, col),
+                          soundings.values[name])
+
+            column = soundings.across_track
+            if column is not None:
+                if int(column.max(initial=0)) >= ACROSS_TRACK:
+                    raise ValueError(
+                        f"{contribution.granule}: across-track column "
+                        f"{int(column.max())} exceeds the declared width "
+                        f"{ACROSS_TRACK}; this is a different instrument mode "
+                        f"and silently truncating it would corrupt the stripe "
+                        f"estimate")
+                np.add.at(self.across_track_counts, column, 1)
+                np.add.at(self.across_track_cell_counts, (column, row, col), 1)
+                for name in self.variables:
+                    np.add.at(self.across_track_sums[name], column,
+                              soundings.values[name])
+
             day = soundings.day_of_year
             if np.isfinite(day).all():
                 self.harmonics.add(row, col, soundings.values[mg.PRIMARY], day)
@@ -222,8 +404,24 @@ class Accumulator:
             "hs::sum_xx": self.harmonics.sum_xx,
             "hs::sum_yx": self.harmonics.sum_yx,
         }
+        payload["prefilter_counts"] = self.prefilter_counts
+        payload["retrieved_counts"] = self.retrieved_counts
+        payload["precision_edges"] = np.array(PRECISION_EDGES, dtype="float64")
+        payload["albedo_edges"] = np.array(ALBEDO_EDGES, dtype="float64")
+        payload["precision_counts"] = self.precision_counts
+        payload["albedo_counts"] = self.albedo_counts
+        payload["joint_counts"] = self.joint_counts
+        payload["month_counts"] = self.month_counts
+        payload["across_track_counts"] = self.across_track_counts
+        payload["across_track_cell_counts"] = self.across_track_cell_counts
         for name in self.variables:
             payload[f"sum::{name}"] = self.sums[name]
+            payload[f"sumsq::{name}"] = self.sum_squares[name]
+            payload[f"msum::{name}"] = self.month_sums[name]
+            payload[f"psum::{name}"] = self.precision_sums[name]
+            payload[f"asum::{name}"] = self.albedo_sums[name]
+            payload[f"jsum::{name}"] = self.joint_sums[name]
+            payload[f"atsum::{name}"] = self.across_track_sums[name]
         # A covariate's sum and its count are written and read as a pair. There
         # is no code path that restores one without the other.
         for name in self.covariate_sums:
@@ -246,8 +444,36 @@ class Accumulator:
                 if "covariates" in data.files else []
             acc = cls(spec, float(data["qa_threshold"]), variables, covariates)
             acc.counts = data["counts"].astype("int64")
+            # Every retained quantity added by the Tier 3 retention pass loads only if
+            # present. A checkpoint written before them cannot have them
+            # reconstructed from a finished grid, exactly as the saturation
+            # curve and the cell sets cannot, so an older checkpoint loads with
+            # zeros rather than with fabricated values -- and a resumed run
+            # would then be accumulating them over only the granules it read,
+            # which is why the extended pass starts from empty rather than
+            # resuming the committed checkpoint.
+            if "prefilter_counts" in data.files:
+                acc.prefilter_counts = data["prefilter_counts"].astype("int64")
+                acc.retrieved_counts = data["retrieved_counts"].astype("int64")
+                acc.precision_counts = data["precision_counts"].astype("int64")
+                acc.albedo_counts = data["albedo_counts"].astype("int64")
+                acc.joint_counts = data["joint_counts"].astype("int64")
+                acc.month_counts = data["month_counts"].astype("int64")
+            if "across_track_counts" in data.files:
+                acc.across_track_counts = data["across_track_counts"].astype("int64")
+                acc.across_track_cell_counts = (
+                    data["across_track_cell_counts"].astype("int32"))
             for name in variables:
                 acc.sums[name] = data[f"sum::{name}"].astype("float64")
+                if f"sumsq::{name}" in data.files:
+                    acc.sum_squares[name] = data[f"sumsq::{name}"].astype("float64")
+                    acc.month_sums[name] = data[f"msum::{name}"].astype("float64")
+                    acc.precision_sums[name] = data[f"psum::{name}"].astype("float64")
+                    acc.albedo_sums[name] = data[f"asum::{name}"].astype("float64")
+                    acc.joint_sums[name] = data[f"jsum::{name}"].astype("float64")
+                if f"atsum::{name}" in data.files:
+                    acc.across_track_sums[name] = (
+                        data[f"atsum::{name}"].astype("float64"))
             for covariate in covariates:
                 name = covariate.name
                 acc.covariate_sums[name] = data[f"cvsum::{name}"].astype("float64")
@@ -286,6 +512,10 @@ class Accumulator:
                 soundings_read=record["soundings_read"],
                 soundings_valid=record["soundings_valid"],
                 soundings_in_box=record["soundings_in_box"],
+                soundings_in_box_total=record.get("soundings_in_box_total", 0),
+                soundings_in_box_retrieved=record.get(
+                    "soundings_in_box_retrieved", 0),
+                pixel_size=record.get("pixel_size"),
                 covariates_valid=record.get("covariates_valid", {}),
                 covariates_missing=tuple(record.get("covariates_missing", ())),
                 departure_mean=record.get("departure_mean"),
@@ -839,8 +1069,28 @@ def main(argv=None) -> int:
         peak_disk = max(peak_disk, assert_disk_bound(work))
         target = work / granule.name
         try:
-            s5p.download_granule(granule, target, base_url=config["base_url"],
-                                 timeout=args.timeout)
+            # Retried, because a granule lost to a transient transport failure
+            # is not a neutral loss: the composite would then rest on a
+            # different sounding set from the committed one, and the
+            # reproduction check would report a difference whose cause was the
+            # network rather than the code. Bounded, and the exception still
+            # escapes to the handler below on exhaustion so a genuinely
+            # unreachable granule is reported rather than hidden.
+            for attempt in range(DOWNLOAD_ATTEMPTS):
+                try:
+                    s5p.download_granule(granule, target,
+                                         base_url=config["base_url"],
+                                         timeout=args.timeout)
+                    break
+                except Exception:                       # noqa: BLE001
+                    if target.exists():
+                        target.unlink()
+                    part = target.with_suffix(target.suffix + ".part")
+                    if part.exists():
+                        part.unlink()
+                    if attempt == DOWNLOAD_ATTEMPTS - 1:
+                        raise
+                    time.sleep(DOWNLOAD_BACKOFF_SECONDS * (2 ** attempt))
             fetched_bytes += granule.size
             soundings, contribution = mg.read_soundings(
                 target, spec, qa_threshold=accumulator.qa_threshold,

@@ -42,8 +42,8 @@ recipes:
     compute_methane_composite.py --run --max-hours 3, which streams 28.9 GB one granule at
     a time. The checkpoint is gitignored, so this cannot be verified on a fresh clone.'
   sha256: 393e365a8f26c7c142bea08b056a2290482b1401e4d8ff46d5b135a614da9b24
-  last_verified: '2026-09-04'
-  last_verified_by: the extent re-run, which executed compute_methane_composite.py --run end
+  last_verified: '2026-09-13'
+  last_verified_by: the Tier 3 retention pass, which re-ran the year end to end
     to end over all 578 granules and exported from the result
 - artefact: data/processed/attenuation_bound_2018.csv
   command: python scripts/bound_attenuation.py --write
@@ -130,8 +130,8 @@ recipes:
   verified: on_demand
   note: Written by the same command as the composite raster.
   sha256: 9df96581ebe96bbe0332ec7d3b0fe5c837fce5d40e1654677da29c156376dcc4
-  last_verified: '2026-09-04'
-  last_verified_by: the extent re-run, which executed compute_methane_composite.py --run end
+  last_verified: '2026-09-13'
+  last_verified_by: the Tier 3 retention pass, which re-ran the year end to end
     to end over all 578 granules and exported from the result
 - artefact: data/processed/methane_covariates_2018.tif
   command: python scripts/compute_methane_composite.py --checkpoint data/interim/extent_2018.npz
@@ -143,9 +143,9 @@ recipes:
   compare: bytes
   verified: on_demand
   note: Same pass as the composite; exporting costs nothing.
-  sha256: 0b58e81464bf05bb762e00f5dc6ea808deb0426002b64bd477f91403f31fb462
-  last_verified: '2026-09-04'
-  last_verified_by: the extent re-run, which executed compute_methane_composite.py --run end
+  sha256: 253e21de9bf650ef8563cc61218c97f3e73c7f69de41a9cc6e3788d2569c2984
+  last_verified: '2026-09-13'
+  last_verified_by: the Tier 3 retention pass, which re-ran the year end to end
     to end over all 578 granules and exported from the result
 - artefact: data/processed/methane_covariates_2018.csv
   command: python scripts/compute_methane_composite.py --checkpoint data/interim/extent_2018.npz
@@ -157,9 +157,9 @@ recipes:
   compare: bytes
   verified: on_demand
   note: null
-  sha256: a5e6d20de5785d14d6298ef061dd79c57449440436f73501e5e70d7e1a0d43b6
-  last_verified: '2026-09-04'
-  last_verified_by: the extent re-run, which executed compute_methane_composite.py --run end
+  sha256: b650027805a1a51268967f1cc54d23b0d87a9792af7e74c3fe0fe3bb7d20958c
+  last_verified: '2026-09-13'
+  last_verified_by: the Tier 3 retention pass, which re-ran the year end to end
     to end over all 578 granules and exported from the result
 - artefact: data/processed/methane_deseasonalised_2018.tif
   command: python scripts/compute_methane_composite.py --checkpoint data/interim/extent_2018.npz
@@ -172,8 +172,8 @@ recipes:
   verified: on_demand
   note: null
   sha256: 8e4049d9b5eed4b0eada65a8ac0518958986a33d2b54fdd6d99611527b43372b
-  last_verified: '2026-09-04'
-  last_verified_by: the extent re-run, which executed compute_methane_composite.py --run end
+  last_verified: '2026-09-13'
+  last_verified_by: the Tier 3 retention pass, which re-ran the year end to end
     to end over all 578 granules and exported from the result
 - artefact: data/processed/methane_deseasonalised_2018.csv
   command: python scripts/compute_methane_composite.py --checkpoint data/interim/extent_2018.npz
@@ -186,8 +186,8 @@ recipes:
   verified: on_demand
   note: null
   sha256: 05f10f3d4d63a95d63aa149dd6f912acba20bd55ff91a5bbfd2b781e6d092be9
-  last_verified: '2026-09-04'
-  last_verified_by: the extent re-run, which executed compute_methane_composite.py --run end
+  last_verified: '2026-09-13'
+  last_verified_by: the Tier 3 retention pass, which re-ran the year end to end
     to end over all 578 granules and exported from the result
 - artefact: data/processed/analysis_grid_2018.csv
   command: python scripts/build_analysis_grid.py --rice-source nesdc --write
