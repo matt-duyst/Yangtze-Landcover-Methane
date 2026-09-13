@@ -141,8 +141,7 @@ because they characterise the field a reader is about to see results from.
 * **No destriping was applied.** The operational destriping procedure was
   introduced for data from September 2024 onward and earlier orbits have not been
   reprocessed, so no official destriping exists for this processor version and
-  year. Only a self-implemented correction would have been available. **This
-  omission is not recoverable** without implementing one.
+  year. Only a self-implemented correction would have been available.
 * **No filter on retrieval precision** beyond the quality flag, and **no albedo
   floor**. Published chains variously require methane precision below 10 ppb, a
   shortwave-infrared aerosol optical thickness ceiling, and an albedo above a
@@ -156,6 +155,45 @@ across-track variability together, by construction rather than by filtering, and
 it is the reason the first three omissions are partly mitigated rather than
 simply absent. Every result reported on the blended field is therefore also a
 test of whether the omissions matter.
+
+**All four omissions have now been tested directly**, on quantities retained
+during a re-run of the granule pass, and each is reported as a sensitivity
+rather than adopted: the composite in §2.3 remains the primary field and
+reproduces byte-identically after the re-run. `notes/decisions.md` records the
+pass and `data/processed/preprocessing_sensitivity_2018.csv` holds the results,
+six variants across seven models and all four cross-validation designs.
+
+* **The precision filter is a no-op on this record.** Of the
+  110,920<!--#quality.in_box_passed--> soundings that pass quality control,
+  none has a retrieval precision above 10 ppb, so the published threshold would
+  remove nothing. The quality flag already enforces it.
+* **The albedo floor at 0.05 removes
+  11,707<!--#sens.albedo_removed--> soundings and empties
+  174<!--#sens.albedo_cells_lost--> of the 926 cells.** Compared on the
+  752<!--#sens.albedo_cells--> cells that survive, no land-cover model
+  overtakes the spatial null in any of the four designs.
+* **Destriping is recoverable and was tested at first order.** The across-track
+  detector column was retained during the re-run; the per-column offsets have a
+  standard deviation of 5.09<!--#sens.stripe_sd--> ppb. Applying them raises
+  every fit slightly and changes no ordering.
+* **Representativeness weighting is the one that moves a comparison.** It is
+  close to orthogonal to sounding-count weighting, correlation
+  -0.03<!--#sens.weight_correlation-->, because the spatial term carries
+  97.5<!--#sens.spatial_share_pct--> percent of the per-cell variance and does
+  not shrink with the number of soundings. Under it the **spatial null's
+  advantage disappears in the two weighted designs** — the null falls from
+  0.5137<!--#sens.null_committed_weighted--> to
+  -0.125<!--#sens.null_repweight--> under spatial blocks while impervious
+  barely moves, from 0.0244<!--#sens.impervious_committed_weighted--> to
+  0.0334<!--#sens.impervious_repweight-->. **The land-cover coefficient does
+  not improve; the benchmark weakens.** That is a caveat on how the null is
+  weighted, not evidence for a land-cover effect, and §5.2 states the
+  weighting the reported result uses.
+
+**One preprocessing step remains untested and it is not one of these four.**
+The aerosol optical thickness ceilings the same published chain applies were
+not retained, because they are separate variables rather than a threshold on
+something already read.
 
 ## 3. Compositing
 

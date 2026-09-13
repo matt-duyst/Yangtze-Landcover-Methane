@@ -6494,3 +6494,173 @@ ground pixel size, which is the quantity that would say how close 0.1 degrees
 comes to the native retrieval footprint — the point at which gridding stops
 averaging. It is worth recording, and it is not recorded here on the strength
 of recollection.
+## The Tier 3 retention pass, and what it settled
+
+The five Tier 3 items shared one granule read, and that read is transfer-bound:
+120 of its 122.7 minutes are download. So everything needing a granule was
+collected in one pass — 578 granules, 28.9 GB, 53.2 minutes at 9.3 MB/s, into
+`data/interim/extent_2018_extended.npz` rather than over the committed
+checkpoint.
+
+**The committed composite reproduces exactly.** `--verify-against` reports max
+absolute difference of 0 in the bias-corrected band, 0 in the raw band and 0 in
+the counts; `methane_composite_2018.tif` and `methane_coverage_2018.csv` both
+reproduce byte-identically from the new checkpoint; zero granules failed. The
+covariate artefacts do change, because a covariate was added — two columns
+appear, **no existing value moves in any of the 1023 rows**, and the GeoTIFF
+gains two bands. Nothing here reads that raster by band index and every
+covariate consumer joins the CSV by column name, so the band shift breaks
+nothing, but it is a real hazard for anything outside this repository.
+
+### Two of the six items were already satisfied, which the queue did not know
+
+**Within-cell variance was already recoverable.** Queue item 14 said the
+checkpoint "holds sums and counts only, so the spread a representativeness
+estimate needs is not recoverable from it". It was recoverable the whole time:
+the seasonal accumulator's `hs::sum_yy` with `hs::n`, and `hs::n` equals
+`counts` exactly. Tier 4's item 17 was recorded as gated by item 14 and was
+therefore never gated. The pass collected an explicit `sumsq::` anyway — it
+covers the secondary field, which the harmonic block does not, and it
+cross-checks the primary. **The two agree bit for bit**, which is the strongest
+validation available that the new accumulator is wired correctly.
+
+**The ground pixel size needed no pass at all.** It is a global attribute on
+every granule: `7.0x7.0 km2`. The previous pass recorded it as a gap and
+declined to state it from recollection, which was right, but it was one file
+read away rather than a 29 GB one.
+
+### The rejection rate over this domain is two numbers
+
+Of **2,098,671** soundings inside the box across the year, **221,686** carry a
+retrieval and **110,920** pass quality control. So **89.44 percent of in-box
+soundings are lost to no retrieval** — cloud, geometry — which the quality
+threshold does not reject because there is nothing there to reject, and
+**49.97 percent of the retrievals that do exist are removed by the threshold**,
+almost exactly half.
+
+Reporting a single "95 percent rejected" would attribute monsoon cloud to a
+quality decision. The brief asked for the rejection rate as though it were one
+number; it is two, and the distinction is the interesting part.
+
+**The threshold removes whole bins.** The year's `qa_value` takes four values —
+0, 0.16, 0.4 and 1.0 — so a cut at 0.75 keeps the 1.0 bin and discards the 0.4
+bin entire. Moving the threshold anywhere between 0.4 and 1.0 changes nothing.
+
+### A gridded covariate cannot test a filter, which the pass design turned on
+
+The instruction was to grid `methane_mixing_ratio_precision` as a covariate
+because "gridding it makes the filter testable afterwards". It does not. A
+covariate gives a cell's **mean** precision; the filter's effect needs the sum
+of methane over the **surviving soundings**, which is a conditional quantity no
+marginal sum can supply. The same was already true of albedo, which had been
+gridded for months without making its floor testable.
+
+So the pass accumulated methane **binned by** precision and by SWIR albedo with
+the published thresholds falling on bin edges, plus a joint slot for both
+filters together, which the marginal histograms cannot give. About 500 kB. Had
+the brief been followed literally, the pass would have cost 29 GB and left both
+filters exactly as untestable as before.
+
+### What the four omissions turn out to be worth
+
+**The precision filter is a no-op, provably rather than approximately.** Of the
+110,920 soundings passing quality control, 99.89 percent have precision under
+5 ppb and 0.11 percent fall between 5 and 10. **None exceeds 10 ppb.** The
+quality flag already enforces the published threshold.
+
+**The albedo floor at 0.05 removes 11,707 soundings and empties 174 of 926
+cells**, shifting the domain mean +0.78 ppb. Compared on the 752 surviving
+cells — the committed target re-run on exactly those cells, because an R
+squared on 752 is not comparable with one on 926 — **no land-cover model
+overtakes the spatial null in any of the four designs.**
+
+**Destriping is recoverable.** `notes/draft-methods.md` called it "not
+recoverable without implementing one", and the reason given was true of what
+had been kept rather than of what could be: nothing retained the across-track
+detector column. The column is the flat index modulo the ground-pixel count, so
+retaining it cost no extra variable read, and because destriping subtracts a
+constant per column the per-cell per-column **counts alone** suffice to apply
+it afterwards — about 880 kB instead of several megabytes. The offsets span
+-15.27 to +12.77 ppb with a standard deviation of 5.09 ppb over the 200 columns
+carrying soundings, which is a third of the between-cell signal. **Tested at
+first order only**: the accumulator holds each column's sum over the whole
+domain and year, so the offset is measured against the domain mean and absorbs
+any column-to-geography relationship. It bounds what destriping would remove.
+
+**Representativeness weighting is the one that moves a comparison**, and not in
+the direction that would help the land-cover hypothesis.
+
+### The one result that changes something, and what it does not change
+
+Under representativeness weighting, impervious cover overtakes the spatial null
+in **two of the four scheme-weighting combinations** — the two weighted ones,
+which are the only two the substitution can touch.
+
+**The reversal is the benchmark collapsing, not land cover improving.** Under
+spatial blocks the null falls from 0.5137 to -0.125 while impervious moves from
+0.0244 to 0.0334. The land-cover coefficient is essentially unchanged.
+
+The weighting is not a straw man. It is the Level 3 literature's own
+inverse-variance weight with the spatial term at its low-coverage limit; it is
+**better conditioned** than the weighting it replaces, spanning 69x against
+205x; it does not concentrate on sparse cells, which hold 8.7 percent of the
+weight while being 11.6 percent of the cells; and it is close to orthogonal to
+sounding count, correlation -0.03, because the spatial term carries 97.5
+percent of the per-cell variance and does not shrink with n.
+
+So the honest statement is: **the finding that no land-cover association
+survives is robust to all four omissions, and the strength of the spatial null
+it is reported against is weighting-dependent.** That is a caveat on the
+benchmark, and it belongs in the methods section beside the weighting choice
+rather than in the results as a positive finding.
+
+### What remains unresolvable without another read
+
+* **Destriping beyond first order.** A proper correction estimates the stripe
+  per orbit from a field with its spatial structure removed. That needs the
+  column retained alongside the residual, per granule, which this accumulator
+  does not hold.
+* **The aerosol optical thickness ceilings** the same published chain applies.
+  They are separate variables rather than thresholds on something already read,
+  and they were not on the list.
+* **A filter's effect on the covariates.** The sensitivities hold the
+  predictors at their unfiltered values, deliberately, so the target's change
+  is not confounded with the predictors'. The jointly filtered version would
+  need the covariates binned the same way.
+* **Anything at a threshold that is not a bin edge.** The histograms make
+  10 ppb, 0.02 and 0.05 exact and everything else interpolated.
+
+### Three failures worth recording
+
+**The mirror listing had no retry and it killed a two-hour run in its first
+minute.** One `SSL: UNEXPECTED_EOF_WHILE_READING` on a single day's prefix, out
+of about 245 listing requests, and the same prefix answered HTTP 200 in half a
+second three times immediately afterwards. The listing runs *before* the loop
+that tolerates per-granule failures, so it had no protection at all. Bounded
+retries were added there and to the download, the latter because a granule lost
+to a flaky socket would leave the composite resting on a different sounding set
+and the reproduction check would then report a difference whose cause was the
+network.
+
+**A latitude formula mirrored the grid and every join still succeeded.** The
+checkpoint's row 0 is the **north** edge, and the analysis scripts were written
+with `south + (row + 0.5) * res`. The lattice is symmetric in shape, so all 926
+cells matched and the values were attached to the wrong places. It was caught
+only by requiring the harness to reproduce the committed baseline results
+before trusting it, which it then did for 84 of 88 rows — the other four
+differing in the fourth decimal because six cells' 2 dp means round differently
+in `analysis_grid_2018.csv` than recomputing them from sums does.
+
+**A weight substitution silently did nothing.** The grid stores `35.075` and the
+lattice key is `35.0750`; comparing the raw strings matched almost nothing, so
+the representativeness variant was the committed run under another name and
+reported deltas of zero. It looked like a finding — "weighting changes nothing"
+— and was a formatting bug.
+
+### One count in this file was wrong
+
+This file records "Of 578 granules acquired, 356 returned no qualifying
+sounding", which gives 222 productive granules. Both the committed checkpoint
+and the re-run say **355 and 223**. The re-run reproduces the committed
+composite exactly, so this is an arithmetic slip in the record rather than a
+difference between the runs.

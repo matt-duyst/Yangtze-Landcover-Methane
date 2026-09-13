@@ -459,6 +459,45 @@ def _cycle(quantity: str) -> float:
     return float(_cache["cycle"][quantity]["value"])
 
 
+def _stripe():
+    """Across-track offset spread, low and high, in ppb.
+
+    Recomputed here from the checkpoint rather than read from a table, because
+    the stripe is a property of the accumulator and no committed artefact
+    carries the per-column offsets. Local-tier: returns NaN without the
+    checkpoint, which the claim checker reports as unresolvable rather than
+    passing silently.
+    """
+    if "stripe" not in _cache:
+        path = REPO / "data" / "interim" / "extent_2018_extended.npz"
+        if not path.exists():
+            _cache["stripe"] = (float("nan"),) * 3
+        else:
+            data = np.load(path, allow_pickle=False)
+            sums = data["atsum::methane_mixing_ratio_bias_corrected"]
+            counts = data["across_track_counts"].astype("int64")
+            used = counts > 0
+            means = sums[used] / counts[used]
+            offsets = means - float(sums.sum() / counts.sum())
+            _cache["stripe"] = (float(offsets.std()), float(offsets.min()),
+                                float(offsets.max()))
+    return _cache["stripe"]
+
+
+def _weighting():
+    """Correlation between the two weightings, and the spatial variance share."""
+    if "weighting" not in _cache:
+        rows = [r for r in _read_csv(PROCESSED / "cell_quality_2018.csv")
+                if r["weight_representativeness"]]
+        n = np.array([int(r["sounding_count"]) for r in rows], dtype="float64")
+        sd = np.array([float(r["within_cell_sd_ppb"]) for r in rows])
+        w = np.array([float(r["weight_representativeness"]) for r in rows])
+        share = sd ** 2 / (29.0 ** 2 / n + sd ** 2)
+        _cache["weighting"] = (float(np.corrcoef(n, w)[0, 1]),
+                               float(np.median(share) * 100.0))
+    return _cache["weighting"]
+
+
 def _quality_granules() -> list[dict]:
     """Per-granule quality accounting from the Tier 3 retention pass."""
     if "qgran" not in _cache:
@@ -1168,6 +1207,24 @@ QUANTITIES = {
     "sens.null_committed_weighted": lambda: _sensitivity(
         "committed (no filter)", "spatial null (queen neighbour mean)",
         "spatial blocks", "by sounding count"),
+    "sens.albedo_removed": lambda: int(
+        _sensitivity("committed (no filter)", "OLS impervious_fraction",
+                     "spatial blocks", "unweighted", "soundings")
+        - _sensitivity("SWIR albedo at least 0.05", "OLS impervious_fraction",
+                       "spatial blocks", "unweighted", "soundings")),
+    "sens.albedo_cells_lost": lambda: int(
+        _sensitivity("committed (no filter)", "OLS impervious_fraction",
+                     "spatial blocks", "unweighted", "n")
+        - _sensitivity("SWIR albedo at least 0.05", "OLS impervious_fraction",
+                       "spatial blocks", "unweighted", "n")),
+    "sens.impervious_committed_weighted": lambda: _sensitivity(
+        "committed (no filter)", "OLS impervious_fraction",
+        "spatial blocks", "by sounding count"),
+    "sens.stripe_sd": lambda: _stripe()[0],
+    "sens.stripe_low": lambda: _stripe()[1],
+    "sens.stripe_high": lambda: _stripe()[2],
+    "sens.weight_correlation": lambda: _weighting()[0],
+    "sens.spatial_share_pct": lambda: _weighting()[1],
     "sens.impervious_albedo": lambda: _sensitivity(
         "SWIR albedo at least 0.05", "OLS impervious_fraction",
         "spatial blocks", "unweighted"),

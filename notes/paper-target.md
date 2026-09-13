@@ -1298,6 +1298,47 @@ venue requires and which this repository could write almost mechanically from
 at all.** That is the whole reason for grouping them: each alone would cost the
 same as all five.
 
+**DONE. The pass ran and all five were collected together**, 578 granules and
+28.9 GB in 53 minutes. `notes/decisions.md` records it and three artefacts hold
+the results: `granule_quality_2018.csv`, `cell_quality_2018.csv` and
+`preprocessing_sensitivity_2018.csv`. The committed composite reproduces
+byte-identically, so nothing downstream of it moves.
+
+**What the pass reordered, which is more than it settled.**
+
+* **Item 14 was never a gate.** Within-cell variance was already recoverable
+  from the seasonal accumulator's `hs::sum_yy`, so **item 17 — representativeness
+  weighting, the widest-reaching item in the queue — was unblocked before this
+  pass began** and had been for as long as the harmonic statistics existed.
+  It is now not merely unblocked but tested, and the result is item 17's
+  answer rather than its precondition.
+* **Item 16 changes character.** Destriping was queued as an implementation
+  task on the grounds that the omission was unrecoverable. It is recoverable:
+  the across-track column was retained at no extra variable read, and a
+  first-order correction is already measured. What remains is a per-orbit
+  correction on de-meaned residuals, which is a smaller and better-specified
+  job than "implement destriping".
+* **Item 12 is closed rather than done.** The precision filter removes nothing:
+  no sounding passing quality control has a precision above 10 ppb. There is no
+  filter to apply and no decision to make.
+* **Item 15 is unblocked, not answered.** Monthly partial sums were accumulated
+  rather than a two-way growing/fallow split, because the record reframed the
+  question — the fallow season may carry most of a paddy's annual emission — and
+  monthly contains every two-way split while leaving the cut date to be chosen
+  after the fact. Forming and interpreting the seasonal contrast is still to do.
+
+**One item was added to the pass that was not in the queue**, on the queue's own
+logic that the marginal cost inside a transfer-bound pass is minutes and outside
+it is two hours: the across-track detector column, which is what made item 16
+tractable.
+
+*The result that needs a decision.* Under representativeness weighting the
+spatial null's advantage disappears in the two weighted designs, because the
+null collapses rather than because land cover improves. **This is a caveat on
+the benchmark, not evidence for a land-cover effect**, and the paper has to
+choose whether the reported null is the count-weighted one. §5.2 of the methods
+draft is where that choice is stated and it now needs to justify itself.
+
 **The pass produces 0.25 degrees only, decided 15 September 2026 by
 measurement.** This was an open question in the queue and it is now closed
 against the finer grid, which removes a branch from Tier 3's scope rather than
