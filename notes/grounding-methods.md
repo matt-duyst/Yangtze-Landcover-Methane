@@ -291,10 +291,21 @@ of "fraction", "sub-pixel" or "subpixel", and its "proportion of area" always
 means the share of a region that a discrete class occupies, never a per-pixel
 or per-cell value. The layers here feed a fractional cover per 0.25-degree
 cell. **Recommendations 4 and 5 are therefore the wrong standard to hold this
-work to, and citing them as unmet would be a category error.** Recommendations
-1 to 3 apply in full and are what this project lacks: it has no probability
-sample, no reference data more accurate than the map, and so no analysis to be
-consistent about.
+work to, and citing them as unmet would be a category error.**
+
+*Corrected on 13 September 2026, and the correction matters more than the thing
+corrected.* This paragraph continued: "Recommendations 1 to 3 apply in full and
+are what this project lacks: it has no probability sample, no reference data
+more accurate than the map, and so no analysis to be consistent about."
+**Recommendation 1 does not apply either**, and it does not apply for the same
+reason and by the same argument as 4 and 5. The protocol this project adopted
+for a continuous field, set out immediately below, assesses agreement against
+**complete-coverage** reference data and says so in its own words: "we do not
+estimate agreement from a sample, but rather calculate agreement directly from
+the full coverage data". **A complete-coverage comparison has no sampling design
+to be valid about.** So what this project owes is recommendations **2 and 3**:
+reference data more accurate than the map, and analysis consistent with it.
+What it lacks is recommendation 2, and 3 follows from it.
 
 The correct frame for a continuous field is stated explicitly, and by a paper
 that names Olofsson as the contrast. The NLCD percent-impervious assessment
@@ -430,6 +441,114 @@ layers are **2000, 2010 and 2018**. A region that urbanised as fast as this one
 did over exactly that period cannot have a 2021 reference stand in for a 2018
 map without the difference being confounded with real change, and
 `figures/urban_change.png` exists precisely because that change is large.
+
+## No reference layer exists for this domain, 13 September 2026
+
+**This is a finding about the region and the products available over it, not a
+gap in this project's work**, and it is stated that way because the difference
+decides how the paper reports it. Route B above is closed and the reason is not
+the one the previous pass recorded.
+
+**The requirement.** A continuous-field assessment needs a reference layer over
+the domain that is more accurate than the product it assesses. This project's
+impervious layers report **GISA at an F-score of 0.954** and **GISA-new at 93.12
+percent overall accuracy**. Anything serving as reference has to beat that.
+
+**Every candidate over this domain fails, and individually, because a later pass
+will otherwise reopen them one at a time.**
+
+| Candidate | Why it fails |
+|---|---|
+| **SinoLC-1**, 1.07 m | **73.61 percent overall accuracy, kappa 0.6595.** Twenty points below the product it would assess. It also has no single impervious class: its eleven classes split built-up into "Building" and "Traffic route", so any use means summing two classes and inheriting both their errors |
+| **ISA-1**, 1 m | **Impervious-class F1 75.53, recall 61.76** — it misses about two impervious pixels in five. Its headline 85.71 percent is the mean over impervious and non-impervious, carried by the easy majority class. And it is **super-resolved from 10 m Sentinel-2**, so it cannot carry more information than the imagery a direct interpretation would use. Its deposit is seven example cities, of which two are in domain, **fully containing 20 of 926 cells** |
+| **EcoVision**, 0.5 m | **83.6 percent overall accuracy**, still below the bar, and **urban areas of 42 cities only**, so it could never serve the rice layer and would serve the impervious layer only in city cells. Unread rather than disqualified: its full text is behind a publisher 403 and it is absent from its own authors' distribution server |
+| **CISC2020/2022**, 30 m | **Not a reference at all.** At 30 m it is the same resolution as the products it would assess, so it is a fourth alternative product in the GAIA and GISA role. Its impervious F1 above 0.93 is the one figure here comparable to GISA's 0.954, and it is below it |
+
+**And the year gap is a second obstacle rather than the first.** Every candidate
+is 2020 or later against layers for 2000, 2010 and 2018. The previous pass
+recorded the year as the binding constraint and that was wrong: **accuracy
+binds, at every year**, so a year-matched candidate would fail anyway. This
+project's own committed extents bound the gap — impervious area over the four
+provinces grew 2.03 percent (GAIA) and 2.33 percent (GISA) between 2018 and
+2019 — so a 2021 reference would be compared against a surface some six to
+seven percent larger, systematically and in one direction.
+
+### The sampling question never arose, and eight rounds went to it
+
+**This is the more transferable lesson and it is a research failure rather than
+a discovery.** Eight literature rounds went to the sampling-design question:
+probability samples, stratified prediction-powered inference, its design-based
+extension, certainty strata, and the deposited sample sets. All of it was
+addressed to Olofsson's first recommendation.
+
+**That recommendation does not apply to the protocol this project had already
+adopted.** The continuous-field frame recorded above — Riemann et al. (2010) as
+used by the NLCD percent-impervious assessment — compares a product against
+complete-coverage reference data and states that it does not estimate agreement
+from a sample. There is no sampling design in it to be valid about. The scope of
+the adopted protocol was in this record the whole time, in the same section that
+established the protocol, and it was not read carefully enough.
+
+So the problem was never *obtain a probability sample*. It was *obtain a
+reference layer more accurate than the product*, which is a harder problem, a
+different problem, and the one that turns out to have no solution over this
+domain. **The sampling literature was answering a question this project had
+already ruled out of scope for itself.**
+
+The practical rule worth keeping: **when a protocol is adopted, read what it
+does about sampling before searching for samples.** A protocol that assesses
+complete coverage and a protocol that assesses a sample ask for different
+things, and the difference is in the first paragraph of each.
+
+### What would change the answer, so this is revisitable and not closed
+
+Three specific things, each a file that could appear rather than a hope.
+
+* **ISA-1's biennial maps.** Its paper claims maps for 2017, 2019, 2021 and 2023
+  for "representative cities". **A 2017 or 2019 map over this domain would be
+  year-matched to within a year**, which no other candidate is. None is
+  deposited; the figshare record holds 2021 examples only. Its impervious F1 of
+  75.53 would still fail the accuracy bar, so this changes the year problem and
+  not the accuracy problem.
+* **EcoVision is unread rather than disqualified.** Its 83.6 percent is an
+  overall accuracy across eight classes; **an impervious-class F-score, if it
+  publishes one, could exceed 0.954 even at that overall figure**, because
+  built-up is among the easiest classes. One readable full text would settle it,
+  along with its reference year, its licence, its route and which of the 42
+  cities are in domain.
+* **CISC's validation points.** Its deposit description records "independent,
+  expert-interpreted validation points" produced by "entropy-guided stratified
+  sampling", and **those points would be reference data even though the product
+  is not**. Whether they exist as a file is unestablished, because Zenodo
+  refused this network throughout. This is the single most valuable unresolved
+  item in this section: expert-interpreted points on a stated stratified design
+  over China is what every other candidate lacks.
+
+### What can be said about the layers without a reference
+
+**Product-against-product disagreement, which this project already does**, and
+which the rice-mapping review independently reaches as the state of its own
+field: `notes/dataset-leads.md` records that review finding "ground-truth
+deficiency impeding validation" across twenty-five rice products.
+
+The tool is already in this record's reliability section below: Pontius and
+Millones's decomposition of disagreement into a **quantity** component, the
+mismatch in how much each class occupies, and an **allocation** component, the
+mismatch in where it is put.
+
+**What that supports.** A quantified statement about how far GAIA and GISA
+disagree over this domain, separated into quantity and allocation, replacing the
+single percentage of provincial area this repository currently reports. That is
+queue item 10 and it needs only the two committed products.
+
+**What it does not support, and this is the limit to state in the paper.**
+Disagreement between two products is not either product's error. Two layers can
+agree closely and both be wrong the same way, or disagree while one is right.
+**So cross-comparison yields no absolute accuracy for either layer**, and
+therefore no reliability ratio in the errors-in-variables sense. What allocation
+disagreement gives is a **lower bound** on the error variance of the pair: the
+locations where they differ are locations where at least one is wrong, while the
+locations where they agree are unconstrained.
 
 **Neither route is currently viable and they fail differently, which is the
 useful part.** Route A fails on an imagery-terms question that one reading of
