@@ -6080,3 +6080,135 @@ the crossing at 5.6 times visible as a distance rather than a number. That is
 the same shape as the capability figure's panel (a) and would make a third
 figure in that family. `figures/README.md` records the set; this is a candidate
 for it and was deliberately not built in this pass.
+
+## What drafting the discussion exposed, 14 September 2026
+
+`notes/draft-discussion.md` is written. Drafting has twice before surfaced things
+recording missed, and it did again. This is that list, and it is the task's most
+useful output.
+
+### Decisions the records left open, which continuous prose forced
+
+**Where the mechanism argument sits relative to the capability argument.** Both
+explain the null and the records keep them in separate files, so nothing had ever
+decided which comes first. Prose cannot defer it. **Mechanism first**: it explains
+the particular result, while the capability limits explain why no refinement of
+the same design would change it, and the second is only interesting once the
+first is established. Putting capability first would make the paper read as an
+instrument study that happens to contain a null, which is not the contribution
+statement `notes/paper-target.md` settled on.
+
+**Whether the seven mechanism instances are one argument or two.** The records
+list them together, and writing them out showed that two of the seven —
+aquaculture at 197 to one and rice straw at five to one — are *within-class*
+ratios: the same pond, the same paddy, the same area, a different practice. The
+other five compare across classes. **Only the within-class pair establishes that
+better mapping cannot help**, which is the claim the discussion actually needs,
+so the draft states the pattern once and then separates the two that carry it.
+The records had the instances and not that distinction.
+
+**Whether §3's absent sources are part of the mechanism argument or a separate
+one.** They are separate and the brief was right to insist on it: §2 says a
+perfectly measured extent predictor would still fail, §3 says part of the field
+was never being predicted. Merging them would have produced a single vaguer
+claim. Nothing in the records had drawn that line.
+
+**How to state the relation to the tower inversion.** `notes/grounding-yrd.md`
+says the reproduction's null "is not that rice does not matter" and that the two
+findings are compatible, but does not say what the paper should therefore claim.
+The draft states it as a boundary between two designs — the signal a tower
+inversion recovers is not recoverable from an annual column composite regressed
+on static extent — which is a positive statement rather than a disclaimer.
+
+### What could not be stated because it was never established
+
+**The fitted seasonal peak has no artefact.** Day of year 245.8 appears in
+`notes/decisions.md` and `notes/grounding-rice.md` as prose and in no committed
+table. It is load-bearing in the discussion's §7, because it is what makes
+EDGAR's uniform June peak "roughly ten weeks early here", and it is the one
+number in the section that could not be given a resolver.
+`deseasonalisation_2018.csv` holds the correlation table and not the fitted
+cycle's parameters. **Queued.**
+
+**Two corrections to `notes/paper-target.md`, both found by going to it for
+material.** Its reviewer-objection section still said the record holds that
+"Olofsson's first three recommendations apply and are unmet, and that no
+distributed reference data exists for the impervious products". Both halves were
+superseded on 13 September and that file was not updated with the record it
+cites: the reproduction owes recommendations **2 and 3**, and reference products
+do exist while being less accurate than what they would assess. **A cross-file
+citation went stale because the correction was applied to the cited record and
+not to the citing one.** Corrected in place with what it said.
+
+And its coal instance gave in-place gas content as "8 to 30 m³ per tonne across
+one coalfield", which compresses two mining areas' separate ranges — 8 to 16 in
+Huaibei and 10 to 30 in Huainan — into one span as though it were a single
+measurement. `notes/grounding-yrd.md` has them separately. Corrected.
+
+### Grounding findings that did not earn a place, and why that is informative
+
+Six passes produced more than a discussion can carry. What fell out says which
+findings were load-bearing and which were interesting.
+
+* **The whole MSW composition dispute** — 52 against 85 percent incineration,
+  kitchen waste at 52.8 to 65.3 percent of waste — which the urban record itself
+  could not verify to primary sources. The *qualitative* shift from landfill to
+  incineration is verified and is what the discussion uses; the shares are not
+  and are not written.
+* **The 84.7 percent reduction in Chinese municipal waste methane since 2017**,
+  with megacities carrying 80 percent of the gain. Verified and striking, and it
+  concerns a trend after this analysis year, so it bears on a second-year design
+  rather than on interpreting 2018.
+* **Building height and building function as the missing vertical dimension.**
+  The urban record's own conclusion is that a fractional layer lacks volume, and
+  two products now exist. But nothing here measured it, so it is a route rather
+  than a finding, and §7 has three routes with measured precedents already.
+* **The Shanghai Tower and Shaoxing UAV in-domain observations.** Both inside
+  the lattice, both outside the analysis year, and the first measures carbon
+  dioxide rather than methane. Recorded in the inventory, not in the argument.
+* **The pipeline length series** — threefold growth from 298.6 to 935.6 million
+  metres over 2010 to 2019 — which supports the gas-distribution mechanism but
+  adds nothing the age-and-material claim does not already carry.
+* **The Lin'an background station running 81 ppb above the national global
+  station.** It establishes that the domain is high-signal, which §1 needs in one
+  clause and which the results section already states.
+* **The coincidence that rice's sectoral total and the water-regime ratio are
+  both 13.7.** The region record flags it as a coincidence. Writing either number
+  beside the other would invite a reader to connect them, so the draft uses the
+  ratio and not the total.
+
+**The pattern in what fell out:** unverifiable shares, findings outside the
+analysis year, and routes without measured precedents. Every one of the seven
+mechanism instances earned its place, which is the clearest signal that the
+mechanism sections were the load-bearing part of six grounding passes.
+
+### What the section cannot state because the work was not done
+
+Three items, distinct from things not decided, and all three are queued already
+or added here.
+
+* **The paddy–pond overlap is not measured**, so §3 says aquaculture is
+  interleaved with paddy at the scale of the analysis cell and cannot say by how
+  much. Queue item 10a, blocked on a publisher refusing the article that names
+  the route.
+* **Equivalence bounds are not set**, so §1 cannot say the association is absent
+  and says a failed detection instead. Already queued.
+* **The rice half of the attenuation question is unbounded** for want of an
+  independent second rice product, so §4 is asymmetric between the two
+  predictors. Structural rather than pending.
+
+### A figure the discussion wants and does not have
+
+The attenuation sweep, recorded as a candidate last pass, belongs in the
+discussion rather than in results: §4's conclusion is a margin, and the
+de-attenuated coefficient against assumed error variance — with the observed
+product disagreement marked, the spatial null as a horizontal reference and the
+crossing at 5.6 times visible as a distance — would replace a paragraph with a
+distance. Not built.
+
+**And the figure audit's expectation was wrong.** It anticipated that a
+discussion would reach the five figures no results section cites, particularly
+the two framework diagrams and the land-cover provenance figures. It does not:
+the diagrams are repository documentation rather than argument, and the
+provenance figures belong to methods and errata. **The five-figure count stands
+and the reason is now established rather than assumed.**

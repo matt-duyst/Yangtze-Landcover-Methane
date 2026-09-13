@@ -118,9 +118,15 @@ its own voice.**
 **No validation and no accuracy assessment.** The Hefei TCCON comparison is nine
 coincident days with no prior alignment, and no land-cover layer here has an
 accuracy assessment at all. Both are already queued, and both are honest
-limitations rather than oversights — `notes/grounding-methods.md` records that
-Olofsson's first three recommendations apply and are unmet, and that no
-distributed reference data exists for the impervious products.
+limitations rather than oversights. *This passage previously said
+`notes/grounding-methods.md` records "Olofsson's first three recommendations
+apply and are unmet, and that no distributed reference data exists for the
+impervious products". Both halves are now superseded and the record was
+corrected on 13 September 2026 while this one was not.* Recommendation 1 does
+not apply to a complete-coverage continuous-field comparison, so the
+reproduction owes **2 and 3**; and reference products over this domain do exist
+— four were verified — but every one is less accurate than the products it would
+assess, so the debt is unpayable rather than unpaid.
 
 #### The unfounded worry: publication bias against null results
 
@@ -547,8 +553,10 @@ something extent cannot see**:
   one soil under one crop span a factor of 13.7 in net global warming potential.
   *Established by* [`notes/grounding-yrd.md`](grounding-yrd.md).
 * **Coal** is determined by gas content and seam depth, not by mine area.
-  In-place gas content across one coalfield runs 8 to 30 m³ per tonne.
-  *Established by* the region record.
+  In-place gas content across one coalfield runs 8 to 16 m³ per tonne in Huaibei
+  and 10 to 30 in Huainan. *Established by* the region record. *The "8 to 30"
+  this entry carried until 14 September 2026 spanned the two mining areas'
+  ranges as though they were one; the region record has them separately.*
 * **Urban land** is determined by its residential-industrial composition, not by
   its paved area. A residential tower and a single-storey industrial shed have
   identical impervious footprints and different gas connections and waste
@@ -1232,6 +1240,17 @@ capability estimate is a function of observation density and a later year has
 more of it, and because CISC gives the impervious layer its best available
 product for that year. On rice, both years are pinned in two provinces and
 neither is better. **No decision is taken here.**
+
+**12a. Commit the fitted seasonal cycle's parameters.** The column field's
+fitted seasonal peak at day of year 245.8 appears in `notes/decisions.md` and
+`notes/grounding-rice.md` as prose and in no committed artefact, so it cannot
+carry a resolver. It is load-bearing in the discussion — it is what makes
+EDGAR's uniform June peak roughly ten weeks early over this domain — and it is
+the only number in that section that could not be marked.
+`deseasonalisation_2018.csv` holds the correlation table and not the cycle's
+amplitude, phase or peak. *Needs* only a row or two added to an existing script,
+since the cycle is already fitted in order to remove it. **Found by drafting the
+discussion, 14 September 2026.**
 
 ### Tier 3 — one re-gridding pass over the granules, shared by five items
 
