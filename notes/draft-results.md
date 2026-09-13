@@ -297,18 +297,61 @@ such bounds is queued and not done, so no result here should be read as
 establishing the absence of an effect.
 
 **The one mechanism that could manufacture this result is measurement error in
-the predictors, and what can be said about it is a bound rather than a
-correction.** No accuracy assessment of either land-cover layer was performed,
-because no reference layer over this domain is more accurate than the products
-used (methods §7). So neither layer's error variance is known, and the
-de-attenuated coefficient cannot be estimated. What the two independently
-produced impervious products do give, through the quantity-and-allocation
-decomposition of their disagreement, is a **lower bound** on their joint error
-variance and therefore an **upper bound** on how much attenuation measurement
-error could be producing. That bound is queued and not computed. **Until it is,
-the honest statement is that measurement error has not been excluded as an
-explanation for the small coefficients reported in §3.3**, and the second
-predictors built here are evidence against it rather than a measurement of it.
+the predictors, and for the impervious layer it is now bounded and excluded.**
+Measurement error in a predictor attenuates its coefficient toward zero, so it
+is the only confound that could produce a null from a real association rather
+than explain the absence of one.
+
+No accuracy assessment of either layer was performed, because no reference layer
+over this domain is more accurate than the products used (methods §7), so
+neither layer's error variance is known directly. The two independently produced
+impervious products supply it as a bound instead. With the GAIA cell fraction as
+the predictor in use and the GISA fraction as a second measurement of the same
+quantity, their difference has variance
+0.002066<!--#atten.var_d-->, which is
+13.2<!--#atten.var_share_pct--> % of the predictor's own variance of
+0.015631<!--#atten.var_x-->; the two correlate at
+0.938<!--#atten.corr-->. If the two products' errors are independent of each
+other, that difference variance is an **upper bound** on the error variance of
+either, so the reliability ratio is at least
+0.868<!--#atten.lambda_min--> and **the largest factor by which measurement
+error could be deflating the coefficient is
+1.15<!--#atten.factor_max-->.**
+
+**That is not enough to reach the reference the result is judged against.** On
+the combination where land cover performs best — the operational field, spatial
+blocks, unweighted — the impervious model's held-out R² of
++0.085<!--#suite.impervious_operational--> bounds upward to
++0.098<!--#atten.r2_bound_bu-->, against the spatial null's
++0.332<!--#suite.null_operational--> on the same combination. The coefficient
+bounds from 41.0 ppb per unit fraction to
+47.3<!--#atten.coef_bound-->. On the blended field the bound is
++0.075<!--#atten.r2_bound_blended_bu--> against a null of
++0.414<!--#suite.null_blended-->. Under leave-one-province-out the impervious
+held-out R² is negative and de-attenuation does not apply at all, a negative
+held-out R² not being a squared correlation.
+
+**Put inversely, which is the form that shows the margin: for measurement error
+to lift the land-cover coefficient to the spatial null's performance, 74.5
+percent of the variance in the impervious fraction would have to be error** —
+5.6 times what the two products' disagreement supports, and 7.2 times on the
+sounding-weighted combination.
+
+So measurement error in the impervious layer is excluded as an explanation for
+the reported null, to within the assumptions stated in methods §4.3: that the
+two products' errors are independent of each other, and that the error is
+homoscedastic and non-differential. **The second and third are measurably
+violated and in the unfavourable direction**, the error's standard deviation
+rising thirty-one-fold from the lowest to the highest quartile of the fraction,
+with a partial correlation of −0.118 against methane given the fraction. Neither
+violation approaches the factor of 5.6 the margin provides.
+
+**The rice half is not bounded and the paper should not imply that it is.**
+There is no second rice product independent of the layer in use: CCD-Rice, the
+only candidate, took its training samples from the same NESDC map. What exists
+is 777 visually interpreted polygons reaching 62 of the 926 cells, which could
+support a local error estimate without a design-based interval and cannot
+support a domain-wide bound.
 
 ## 4. Confounds, each with its measurement
 

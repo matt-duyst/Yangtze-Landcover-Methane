@@ -695,9 +695,25 @@ opportunities. The two urban products agree at Spearman +0.956 across all 926<!-
 cells; the two rice products agree only at +0.654, so the rice test is a genuine
 one and gives the same answer.
 
+**Added 13 September 2026: the attenuation is now bounded rather than argued
+around.** Second products with different errors are evidence that measurement
+error is not producing the result; they are not a measurement of how much error
+there is. Treating GISA as a second *measurement* of the impervious fraction
+supplies that. The two cell fractions differ with a variance 13.2 percent of the
+predictor's own, so under independence of the two products' errors the
+reliability ratio is at least 0.868 and the largest possible de-attenuation
+factor is 1.15 — which lifts the best impervious held-out R² from +0.085 to
++0.098 against a spatial null of +0.332. **Reaching the null would require 5.6
+times the error variance the disagreement supports.** The bound's assumptions,
+two of which are measurably violated in the unfavourable direction, are stated
+in `data/processed/README.md`; the margin exceeds both violations.
+
 *Verified by:* `data/processed/alternative_predictors_2018.csv`, 352 rows;
 `predictor_comparison_2018.csv`. Regenerable by
-`scripts/test_alternative_predictors.py`.
+`scripts/test_alternative_predictors.py`. The bound is
+`data/processed/attenuation_bound_2018.csv`, regenerable by
+`scripts/bound_attenuation.py --write`; the Spearman +0.956 above recomputes to
+0.9558 in that script's cross-check.
 
 ### 7.3 The reference data Section 5.2 requires now exists and was used
 

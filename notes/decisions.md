@@ -5954,3 +5954,129 @@ though its product is not, and whose existence as a file is unestablished
 because Zenodo refused this network throughout the verification pass. **That
 third is the most valuable unresolved item**, because expert-interpreted points
 on a stated design over China is what every other candidate lacks.
+
+## The null survives the measurement-error objection, 13 September 2026
+
+Queue items 10 and 11. This is the critical path to the strongest statement the
+project can make about its central result, because measurement error in a
+predictor attenuates its coefficient toward zero and so is the one confound that
+could manufacture a null rather than explain one.
+
+**The answer: measurement error in the impervious layer is excluded, with a
+margin of 5.6.** For the de-attenuated land-cover coefficient to reach the
+spatial null's performance, 74.5 percent of the variance in the impervious
+fraction would have to be error, against the 13.2 percent the two products'
+disagreement supports.
+
+### The direction of the bound was wrong in this record and computing it exposed that
+
+This repository recorded the chain as: allocation disagreement bounds the pair's
+error variance from *below*, so the reliability ratio is bounded from above, so
+the de-attenuated coefficient is bounded from above. **The last step does not
+follow from the second.** With `beta_true = beta_obs / lambda`, bounding
+`lambda` from above bounds `beta_true` from **below**, which answers nothing:
+the question is whether measurement error *could* have manufactured the null,
+and that needs the largest true coefficient the data permit, not the smallest.
+
+The usable bound comes from a different reading of the second product. GISA as a
+second **reference** gives a lower bound on error — the locations where the two
+differ are locations where at least one is wrong. GISA as a second
+**measurement** gives an upper bound: `Var(D) = Var(e_1) + Var(e_2) >= Var(e_1)`
+when the two errors are independent of each other, so `Var(e_GAIA) <= Var(D)`
+and `lambda >= 1 - Var(D)/Var(X)`. **The same artefact, read two ways, bounds
+the quantity in opposite directions, and only one of them answers the
+question.**
+
+Had the error stood, the paper would have carried a limitation it does not have:
+that measurement error could not be excluded. It is excluded.
+
+### The decomposition, and what it says about the crossover
+
+`data/processed/urban_disagreement_2018.csv`. **The method needed a decision
+first**, because Pontius and Millones (2011) — in this register already, for the
+kappa correction — defines quantity and allocation disagreement on a
+cross-tabulation built with a Boolean operator over hard-classified pixels, and
+these layers are fractional. Its soft-classified companion, **Pontius and Cheuk
+(2006)**, is the correct citation and is closed access, so its Composite
+operator could not be read. What is computed is the two-class fractional
+specialisation, exact and needing no cross-tabulation: `D = Q + A` with
+`Q = |sum w·a − sum w·b|` and `A = D − Q`, both non-negative.
+
+**Unit of analysis: both, and the reason is the soft method's own point.** The
+committed 868 m percent grid describes the products; the 0.25 degree lattice
+describes what survives into the regression, because misallocation within a cell
+cancels when the cell mean is taken. **The native 30 m comparison the method was
+designed for is not available** — only windows are committed and the full
+products are a 1-to-2 GB refetch — which is a limit on this decomposition worth
+stating.
+
+Allocation is 69.2 percent of the disagreement in 2000 and 82.2 in 2010 at
+868 m, falling to 41.6 in 2018; at the lattice it is 44.8, 53.3 and 50.8
+percent. **So allocation is roughly half the disagreement at the scale that
+matters, in every year.**
+
+And it re-reads a finding this repository already had. GISA is 20.7 percent
+larger than GAIA in 2000 and 19.9 percent smaller in 2018, both verified against
+`urban_extent_totals.csv` to the decimal. **The crossover is a shift in the
+quantity component** — 3,421 km² in 2000 rising to 9,828 in 2018 — **sitting on
+top of a persistent disagreement about location** that stays between 7,000 and
+10,000 km² throughout. The products do not agree about extent in any year; what
+changes across the record is how much they disagree about the total.
+
+### What complicates the bound, and by how much
+
+`notes/paper-target.md` asked whether allocation disagreement correlates with
+anything already measured, and singled out albedo, because error correlated with
+the confound is not handled by the standard correction. It does, and the
+complication is smaller than the margin.
+
+* **The disagreement scales with the predictor.** `|D|` correlates with the GAIA
+  fraction at Pearson +0.730 and Spearman +0.856, and the standard deviation of
+  `D` rises from 0.0021 in the lowest quartile of the fraction to 0.0650 in the
+  highest — **a factor of 31.** The error is strongly heteroscedastic, which
+  classical regression calibration assumes away and which is why
+  `notes/grounding-methods.md` records SIMEX-WLS as the variant handling
+  non-constant variance.
+* **Albedo is implicated but mostly through the fraction.** `|D|` correlates
+  with SWIR albedo at +0.430 Pearson and +0.717 Spearman, but the **partial
+  correlation controlling for the impervious fraction is +0.139.** So the
+  measurement error is not independent of the albedo confound, weakly.
+* **The error is mildly differential.** The partial correlation of the signed
+  `D` with methane, given the fraction, is **−0.118**. Classical error assumes
+  zero. This is the assumption whose violation would most directly bias a
+  correction.
+* **Two of the checks that were asked for cannot be made.** Buffering
+  instability is a domain-level diagnostic in this repository, not a per-cell
+  quantity — `buffered_loo_2018.csv` is indexed by radius — so there is no
+  per-cell instability to correlate against. And there are no coalfield cells to
+  test: the gridded coal inventory was never obtained, being paywalled with two
+  refused open routes.
+
+**All three violations push toward more attenuation than the bound allows**, so
+the bound is reported with a sensitivity sweep over error variances up to six
+times the observed disagreement rather than as a single number. **None of the
+violations is of the size the margin requires.** A factor of 31 in
+heteroscedasticity and a partial correlation of −0.118 do not produce a
+five-and-a-half-fold understatement of total error variance, and the sweep shows
+the bound failing to reach the null at every multiple up to five.
+
+### What is not bounded
+
+**The rice half, structurally rather than pending.** A bound of this form needs a
+second product whose errors are independent of the first, and there is none:
+CCD-Rice, the only candidate, took its training samples from the same NESDC map
+this project uses, which the Tier 1 pass established. What exists is 777 visually
+interpreted polygons reaching 62 of the 926 cells, which could support a local
+error estimate without a design-based interval and cannot support a domain-wide
+bound. **The paper says so rather than implying symmetry between the two
+predictors.**
+
+### A figure would carry this better than a table, and is not built here
+
+The sensitivity sweep is the part a reader needs and a table hides: the useful
+image is the de-attenuated coefficient against the assumed error variance, with
+the observed disagreement marked, the spatial null as a horizontal reference and
+the crossing at 5.6 times visible as a distance rather than a number. That is
+the same shape as the capability figure's panel (a) and would make a third
+figure in that family. `figures/README.md` records the set; this is a candidate
+for it and was deliberately not built in this pass.

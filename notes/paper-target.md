@@ -1016,6 +1016,13 @@ independent is CCD-Rice and NESDC: CCD-Rice's training labels were taken from
 `notes/decisions.md`. That bears on item 10's rice analogue and on item 11, not
 on this item.
 
+**10. Quantity and allocation disagreement between GAIA and GISA — DONE, 13
+September 2026.** `data/processed/urban_disagreement_2018.csv`. Allocation is
+about half the disagreement at the lattice scale in every year, and the
+crossover this repository had recorded turns out to be a shift in the *quantity*
+component sitting on top of a persistent disagreement about location. The
+original statement of the item follows.
+
 **10. Quantity and allocation disagreement between GAIA and GISA.** The
 repository reports their difference as a single percentage of provincial area,
 which is quantity disagreement alone and says nothing about whether the two put
@@ -1036,6 +1043,15 @@ institutional access to one PDF. It is recorded as a queue item rather than
 left as a dataset lead because the computation is already specified and only
 the input is missing: `src.landcover` reduces a 10 m raster to a per-cell
 fraction on this lattice, which is exactly the operation a pond layer needs.
+
+**11. De-attenuation — DONE for the impervious layer, 13 September 2026, and
+the null survives.** `data/processed/attenuation_bound_2018.csv`. The maximum
+de-attenuation factor is 1.15, which lifts the best impervious held-out R² from
++0.085 to +0.098 against the spatial null's +0.332. **Reaching the null would
+need 5.6 times the error variance the two products' disagreement supports.** The
+rice half is structurally unbounded: no second rice product independent of NESDC
+exists. The original statement of the item follows, with the correction it
+needed.
 
 **11. De-attenuation.** Regression calibration, or SIMEX-WLS where non-constant
 residual variance matters — and it does, since a cell mean rests on between
@@ -1070,6 +1086,17 @@ probabilities and so support an estimate without a design-based interval.
 
 **So item 11 is not blocked. It is reduced from estimation to bounding**, and its
 gate is item 10 alone.
+
+**And the direction of the bound recorded above was wrong, which computing it
+exposed.** This passage said allocation disagreement gives a *lower* bound on
+the error variance and therefore an upper bound on the de-attenuated
+coefficient. Those do not follow from each other: a lower bound on the error
+variance bounds the reliability ratio from above and the de-attenuated
+coefficient from *below*. The usable bound comes from treating GISA as a second
+*measurement* rather than a second reference — `Var(D) >= Var(e_GAIA)` under
+independence — which bounds reliability from below and the coefficient from
+above, as the question requires. See `notes/grounding-methods.md` and
+`notes/decisions.md`.
 The rice error variance was to come from a CCD-Rice-against-NESDC comparison in
 the role GAIA and GISA play for impervious surface. GAIA and GISA were produced
 independently; **CCD-Rice was trained on NESDC**, so their disagreement

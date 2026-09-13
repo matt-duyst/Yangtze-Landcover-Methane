@@ -82,8 +82,18 @@ than about the extent. The NESDC
 rice rasters have pinned provincial totals, an unclassified region in northern
 and western Anhui, and no declared nodata.
 
-The answer had to be second products with different errors, so four predictor
-pairs were built and the whole baseline suite run over each: GAIA or GISA for
+**And the objection is now answered by measurement rather than only by
+construction.** Treating GISA as a second measurement of the same quantity
+bounds how much error the GAIA fraction can carry: the two disagree by 13.2
+percent of the predictor's variance, so the reliability ratio is at least 0.868
+and measurement error can be deflating the coefficient by at most a factor of
+1.15. That lifts the best impervious held-out R² from +0.085 to +0.098 against
+the spatial null's +0.332. **For measurement error to close that gap, 74.5
+percent of the variance in the impervious fraction would have to be error — 5.6
+times what the two products' disagreement supports.**
+
+The answer also had to be second products with different errors, so four
+predictor pairs were built and the whole baseline suite run over each: GAIA or GISA for
 impervious surface, NESDC or GloRice for rice. **Zero cases beat the spatial null
 under inverse-variance weighting**, across all four pairs, both cross-validation
 schemes and both sample sizes, out of 176 weighted opportunities. The two urban

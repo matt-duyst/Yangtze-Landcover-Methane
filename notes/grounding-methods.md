@@ -544,11 +544,29 @@ queue item 10 and it needs only the two committed products.
 **What it does not support, and this is the limit to state in the paper.**
 Disagreement between two products is not either product's error. Two layers can
 agree closely and both be wrong the same way, or disagree while one is right.
-**So cross-comparison yields no absolute accuracy for either layer**, and
-therefore no reliability ratio in the errors-in-variables sense. What allocation
-disagreement gives is a **lower bound** on the error variance of the pair: the
-locations where they differ are locations where at least one is wrong, while the
-locations where they agree are unconstrained.
+**So cross-comparison yields no absolute accuracy for either layer.**
+
+*Corrected on 13 September 2026, when the bound was computed.* This passage
+continued: "and therefore no reliability ratio in the errors-in-variables sense.
+What allocation disagreement gives is a **lower bound** on the error variance of
+the pair". **The direction was wrong and the conclusion was too pessimistic.**
+Treating the second product as a second *measurement* rather than as a second
+*reference* gives an upper bound, not a lower one:
+`Var(D) = Var(e_1) + Var(e_2) >= Var(e_1)` when the two errors are independent
+of each other, so `Var(e_1) <= Var(D)` and the reliability ratio is bounded from
+**below** at `1 - Var(D)/Var(X)`.
+
+That is the direction the question needs. Bounding `lambda` from below bounds
+the de-attenuated coefficient from **above**, and the question is whether
+measurement error *could* have manufactured the null — which needs the maximum
+possible true coefficient, not the minimum. A lower bound on the error variance,
+which is what this passage previously claimed, would have bounded the
+de-attenuated coefficient from below and answered nothing.
+
+**The cost of the error would have been a limitation the paper does not have.**
+On the previous reading, no reliability ratio was available and measurement
+error could not be excluded; on the corrected reading it is excluded with a
+margin of 5.6. `notes/decisions.md` records the computed result.
 
 **Neither route is currently viable and they fail differently, which is the
 useful part.** Route A fails on an imagery-terms question that one reading of

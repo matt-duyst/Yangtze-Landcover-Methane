@@ -589,12 +589,39 @@ what it would validate, and each is 2020 or later against analysis years of
 2000, 2010 and 2018.** So the absence is a property of the products available
 over this region, not of effort.
 
-What the layers' disagreement can support instead is stated in §4.3: the
-difference between two independently produced impervious products, decomposed
-into quantity and allocation components. That bounds the pair's error from below
-and gives neither product's error, so **no statement about the *size* of a
-land-cover effect is de-attenuated in this work**, and none of the capability
-statements of §6 depends on one.
+What the layers' disagreement supports instead is a bound, and for the
+impervious layer the bound is computed. The two products' difference is
+decomposed into quantity and allocation components following the two-class
+fractional specialisation of Pontius and Millones's decomposition, at the 868 m
+grid on which both are committed and at the 0.25 degree lattice the association
+consumes; allocation — the component that attenuates a coefficient — is about
+half the disagreement at the lattice scale in every year.
+
+**Treating the second product as a second measurement of the same quantity turns
+that into an upper bound on the predictor's error variance, under the assumption
+that the two products' errors are independent of each other.** The difference
+variance is 13.2<!--#atten.var_share_pct--> % of the predictor's own variance,
+so the reliability ratio is at least 0.868<!--#atten.lambda_min--> and the
+de-attenuation factor is at most 1.15<!--#atten.factor_max-->. Results §3.4
+reports what that does to the reported coefficients.
+
+**Three assumptions are stated because two of them are violated.** Independence
+of the two products' errors is not testable here and is questionable: both are
+built from the Landsat archive by related algorithms. Homoscedasticity fails
+measurably — the difference's standard deviation rises thirty-one-fold from the
+lowest to the highest quartile of the fraction. Non-differentiality fails mildly,
+the signed difference correlating at −0.118 with methane once the fraction is
+controlled. Both failures act in the direction of more attenuation than the bound
+allows, so the bound is reported alongside a sensitivity sweep over error
+variances up to six times the observed disagreement rather than as a single
+figure.
+
+**The rice layer has no equivalent and the absence is structural rather than
+pending.** A bound of this kind needs a second product whose errors are
+independent of the first, and no independent second rice product exists: the only
+candidate, CCD-Rice, took its training samples from the same NESDC map this work
+uses. So no statement about the *size* of a rice effect is de-attenuated or
+bounded. None of the capability statements of §6 depends on either.
 
 ## 8. Reproducibility
 
