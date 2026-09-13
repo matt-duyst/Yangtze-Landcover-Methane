@@ -975,13 +975,38 @@ put **124 points in the four provinces across 20 of 926 cells, of which 12 are
 impervious surface**; and Globe230k is a deliberately disproportionate sample
 covering about 0.59 annotated tiles per cell. See `notes/dataset-leads.md`.
 
-**What would unblock it**, in order of cost: a reading of Google Earth's terms
-that settles whether a derived assessment may be published; or adding a
-2020-or-later analysis year, which would make Route B viable against SinoLC-1
-or the 1 m Yangtze River Economic Belt product and is a larger change to the
-paper than to the code; or an email to Zenodo support quoting the 403 reference,
-which would open the two blocked sample sets without changing either verdict,
-since neither satisfies the recommendations anyway.
+**Both of the unblocking moves this item listed have now been tried and neither
+works**, as of 13 September 2026. They are recorded here because a later pass
+would otherwise attempt them again.
+
+**Adding a 2020-or-later analysis year does not unblock Route B.** This item
+recorded the year as the constraint. Opening the four candidate products
+established that **none of them is more accurate than the products it would
+validate** — SinoLC-1 at 73.61 percent overall, EcoVision at 83.6 percent,
+ISA-1's impervious class at F1 75.53 with recall 61.76, and CISC at above 0.93
+impervious F1 but at 30 m and so not finer — against GISA's impervious F-score
+of 0.954. A perfectly year-matched candidate would still fail Olofsson's second
+recommendation, so **the year was never the binding constraint** and a scope
+change to a second year would not buy the assessment. See
+`notes/dataset-leads.md`.
+
+**Reading Google's terms does not open Route A at fine resolution either.** The
+Geo Guidelines permit "research, education, film and nonprofit use without
+needing permission" and separately prohibit using Google Earth output "to create
+other content, products, or services", and do not say which governs a visually
+interpreted reference dataset. Earth Engine's terms *are* clear and permissive —
+§2.1(d) allows publishing derived data in research publications — but Earth
+Engine does not serve the very-high-resolution basemap this literature
+interprets. **Sentinel-2 is the finest imagery whose terms unambiguously permit
+publishing a derived dataset**, under Regulation (EU) 1159/2013, at 10 m against
+30 m products: a ratio of three where the NLCD model used thirty. See
+`notes/grounding-methods.md`.
+
+**So the state of the item is: Route B closed on accuracy, Route A open but
+thin.** A Sentinel-2 response design is licensable and defensible; whether a
+three-to-one resolution ratio supports a credible fractional reference is the
+open question, and it is a methodological one rather than a data-availability
+one. That is a change in the kind of obstacle, and it is progress.
 
 **And the contamination clause above was wrong about the mechanism.** CCD-Rice's
 thresholds were re-determined against filtered agricultural statistics, not
@@ -1031,6 +1056,60 @@ error variance — biasing de-attenuation toward the null this item exists to
 test. The rice error variance should come from the polygons, which are
 independent of both, and the 62-cell reach recorded under item 9 is therefore a
 constraint on this item too.
+
+### The second-year question, which was a decision and is now answered
+
+It was queued as a possible scope change: add a 2020-or-later analysis year so
+that a year-matched finer product could serve as reference. **The measurements
+that decision was waiting on were taken on 13 September 2026 and they settle it
+in the negative for that purpose.** No candidate product at any year clears the
+accuracy bar, so a second year does not deliver the assessment.
+
+**Two things it would still buy, and they are recorded because they are
+independent of the assessment.**
+
+* **It answers the single-year objection this file already anticipates.** A
+  reviewer's standing complaint about a one-year association is that the year
+  might be atypical; running the whole analysis in a second year and reporting
+  whether the null holds in both is the direct answer, and it does not depend on
+  any reference product.
+* **It would give the capability estimate two years.** `figures/capability.png`
+  reports expected DOFS for 2018 alone. Computed for a second year it would show
+  whether observation density and therefore information content changed, which
+  bears on the paper's central claim rather than on its error bars.
+
+**What a second year costs in this repository**, so the trade is visible:
+
+* **The composite is the dominant cost.** `config/recipes.yml` records the 2018
+  checkpoint as "28.9 GB and about two hours to build", network-tier and
+  on-demand. A second year is another 28.9 GB transfer and another two hours,
+  plus a second `data/interim/extent_YYYY.npz`.
+* **Impervious layers exist for the new year.** GISA runs to 2019 and GISA-new
+  to 2021; CISC covers 2020 and 2022 at 30 m. So the urban half is servable.
+* **The rice layer would be weaker in the new year than in 2018, and this is
+  the constraint that bites.** NESDC covers 2017 to 2025, but
+  `notes/decisions.md` records that **Shanghai's single-season total is pinned
+  across 2019 to 2025** — stable to 0.03 percent while 8.6 million pixels
+  changed class, Jaccard 0.3577 — and **Jiangsu's shows the same signature from
+  2020 onward**. In 2018 Shanghai is outside the pinned window and Jiangsu's
+  2018-to-2020 transitions move freely. **So a 2021 year would have both
+  Shanghai and Jiangsu pinned where 2018 has neither**, and the rice half of a
+  second year would rest on a weaker layer than the year it was meant to
+  corroborate.
+* **What would have to be redrawn or amended**: the composite figure, the
+  observed-predicted and residual-field figures, the capability figure, every
+  baseline suite artefact, and the results draft's §1 to §3. The figure module's
+  recipes are byte-compared, so each would regenerate rather than need
+  rewriting.
+
+**Two options, neither chosen here.** An *assessment-only year* composites a
+later year and assesses its land-cover layers, then applies the resulting error
+estimate to 2018 on the stated assumption that product accuracy is stable across
+years — which is an assumption this repository cannot test and would have to
+declare. A *full second analysis year* runs everything twice and tests the null
+in both, which costs the composite twice and answers the reviewer objection
+directly. **The measurements above remove the assessment as a reason for either;
+what remains is the reviewer objection and the two-year capability estimate.**
 
 ### Tier 3 — one re-gridding pass over the granules, shared by five items
 

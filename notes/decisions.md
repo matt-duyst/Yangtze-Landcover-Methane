@@ -5697,3 +5697,146 @@ explicitly puts it ahead of the norm rather than behind it.** An assessment that
 says "the reference is a purposive sample of 777 polygons reaching 62 of 926
 cells, interpreted once, and here is what that does to the interval" is more
 honest than most published assessments, which say nothing.
+
+## Route B is closed, and the reason is accuracy rather than year, 13 September 2026
+
+The previous pass recorded that Route B — using a finer-resolution product as
+the reference layer for a continuous-field assessment — was "blocked on year",
+because every candidate was 2020 or later against layers for 2000, 2010 and
+2018, and that the cheapest fix was a scope change to a second analysis year.
+**This pass opened the products and that conclusion was wrong about which
+constraint binds.**
+
+### None of the four candidates is more accurate than the products it would validate
+
+The bar is GISA's impervious F-score of **0.954** and GISA-new's **93.12
+percent** overall accuracy. Measured against it:
+
+| Candidate | Resolution | Accuracy | Verdict |
+|---|---|---|---|
+| SinoLC-1 | 1.07 m | 73.61 % overall, kappa 0.6595 | fails, widely |
+| EcoVision | ~0.5 m | 83.6 % overall, urban areas only | fails |
+| ISA-1 | 1 m | impervious F1 **75.53**, recall **61.76** | fails |
+| CISC2020/2022 | 30 m | impervious F1 > 0.93 | not clearly better, and not finer |
+
+**Three of the four are between two and sixty times finer than the products they
+would assess and every one of them is less accurate.** So a year-matched
+candidate would still fail Olofsson's second recommendation, and **the year gap
+is real but second in line**. Route B is closed on accuracy.
+
+`notes/dataset-leads.md` records where the four accuracy figures are not
+comparable, which is most of them: a multi-class overall accuracy is not a
+single-class impervious F-score, and the validation populations run from global
+to 42 urban cores. The two that *are* comparable to GISA are ISA-1 and CISC,
+and the finer of those two is the one that loses.
+
+**One number in that table is a trap worth keeping.** ISA-1's abstract reports
+85.71 percent, which is the mean over its two classes; the impervious class
+alone is F1 75.53 with **recall 61.76**, so it misses about two impervious
+pixels in five while the easy non-impervious majority class carries the mean to
+85.71. Quoting the headline would have overstated the best in-domain candidate
+by ten points.
+
+### A finer product is still not a better reference, now on four cases instead of one
+
+The previous pass recorded this rule from SinoLC-1 alone. It now has four
+instances and one of them is instructive in a new way: **ISA-1 is
+super-resolved from the same 10 m Sentinel-2 imagery that a Route A response
+design would interpret directly.** A 1 m product generated from 10 m inputs
+cannot carry more information than the 10 m inputs; it redistributes it. That is
+visible in its own numbers, and its paper says as much about a competitor in
+this project's own cities: 10 m ESA WorldCover "demonstrates relatively higher
+accuracy and provides more refined ISA delineation in developed urban areas such
+as Nanjing, Suzhou, and Nantong". **Resolution is not information.**
+
+### Distribution is a second, independent obstacle
+
+Of the four, only ISA-1's deposit could be opened at all. It holds one file,
+`ISA-1-Some-examples.rar`, and the name is accurate: **seven prefecture-city
+rasters, not the 2.2-million-square-kilometre product** its paper says "will be
+publicly available". Two of the seven are in domain, Nanjing and Shanghai, and
+they fully contain **20 of the 926 analysis cells**. EcoVision has no
+established route and is absent even from its own authors' distribution server.
+SinoLC-1 and CISC sit behind a Zenodo service that refused this network for the
+whole pass.
+
+**And `10.5281/zenodo.7707461`, the DOI SinoLC-1's own data availability
+statement gives, is the user-guide record rather than the data.** The data are in
+sibling version records, as provincial zips of city tiles. A data availability
+statement pointing at the wrong record of its own deposit is a new failure mode
+for this repository's register and worth remembering.
+
+### What the ISA-1 examples did establish, which is a real if narrow gain
+
+Verified from the rasters rather than the paper: 1 m exactly, EPSG:4326, uint8,
+one band, **binary 0 non-ISA and 1 ISA**. That makes it the only candidate whose
+encoding maps directly onto this project's target, because averaging a binary
+1 m ISA raster over a lattice cell *is* an impervious fraction — no class
+crosswalk, no fractional interpretation. **Nodata is undeclared and 0 means both
+non-impervious and outside the city**, which is the same trap CISC states for
+itself and the same class as the GAIA and GISA year directions and the NESDC
+silent zeros.
+
+So a 20-cell pilot comparison against the committed GISA and GAIA fractions is
+cheap and available. **It was deliberately not run in this pass**, because 20
+cells is 2.2 percent of the lattice and a number computed on it would be quoted
+as an assessment.
+
+### The imagery licence question is answered and it closes the fine-resolution half of Route A
+
+Carried as open since the region grounding. `notes/grounding-methods.md` now
+holds the terms as quoted. The short form:
+
+**Google's Geo Guidelines contain both a permission and a prohibition and do not
+say which governs.** Research use is allowed "without needing permission"; using
+Google Earth output "to create other content, products, or services" is
+prohibited. A visually interpreted reference dataset is both. Street View, by
+contrast, prohibits "digitizing or tracing information from the imagery" in
+those words — so Google writes the prohibition explicitly where it means it, and
+that sentence does not appear for the satellite basemap.
+
+**Earth Engine's terms are clear and permissive and do not cover the imagery in
+question.** §2.1(d) permits publishing "data, diagrams, charts, figures created
+by use of the Services in research or educational publications"; §4.1 gives the
+user ownership of Customer Data. But Earth Engine's catalogue is Landsat,
+Sentinel and similar — **it does not include the Google Earth
+very-high-resolution basemap** that CCD-Rice, SinoLC-1, Globe230k and the global
+land-cover evaluations all interpreted.
+
+**Sentinel-2 is the finest imagery whose terms unambiguously permit the whole
+chain.** The Copernicus Sentinel Data Legal Notice, under Regulation (EU) No
+377/2014 and Commission Delegated Regulation (EU) No 1159/2013, grants
+reproduction, distribution, communication to the public and adaptation, subject
+only to the notice "Contains modified Copernicus Sentinel data [Year]".
+
+**So Route A is licensable at 10 m and not clearly licensable at 1 m.** Against
+30 m products that is a ratio of three, where the NLCD assessment this project
+takes as its model used 1 m against 30 m, a ratio of thirty. **A factor of three
+is thin**, and the open question has changed character: it is no longer whether
+reference data can be obtained or licensed, but whether a 10 m interpretation
+can support a credible fractional reference for a 30 m product.
+
+**The field's position, recorded without resolving it.** Every product examined
+here interpreted Google Earth imagery and none of the papers cites a licence for
+doing so. Either the research-use sentence is what everyone relies on, or the
+practice is unexamined. This repository cannot resolve what Google has left
+open, and the useful consequence is a design choice rather than a legal opinion:
+a Sentinel-2 response design needs no such resolution.
+
+### Why recording a closed route is the point
+
+Route B took eight literature rounds and two verification passes, and it ends in
+a table of four numbers none of which clears 0.954. That is worth the same
+prominence as an open route. The specific saving is a scope change that was
+being seriously considered — a second analysis year, costing another 28.9 GB
+transfer and two hours of compositing, plus every figure and baseline artefact
+regenerated — **on the strength of an assumption about products nobody had
+opened.** The measurements cost one afternoon and one 1.16 GB download.
+
+The second-year question survives for two reasons that have nothing to do with
+the assessment, and `notes/paper-target.md` now records them there: it answers
+the single-year reviewer objection, and it would let the capability estimate be
+computed for two years. It also carries a cost this pass quantified: **the rice
+layer would be weaker in a 2021 year than in 2018**, because NESDC's totals are
+pinned for Shanghai from 2019 and for Jiangsu from 2020, so a 2021 year would
+have both provinces pinned where 2018 has neither.

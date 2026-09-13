@@ -1353,3 +1353,114 @@ of the norm rather than behind it. The norm is silence. An assessment that says
 interpreted once, and here is what that does to the interval" is more honest
 than the large majority of published assessments, which assume the reference is
 right and do not discuss how it was obtained.
+
+## The imagery licence question, answered 13 September 2026
+
+This has been carried as an open question since the region grounding and it
+blocks Route A, because Route A's response design is visual interpretation and
+visual interpretation needs imagery. **The terms were read rather than inferred
+from practice, and the answer is that the imagery the field actually uses sits
+under terms that do not clearly permit it, while the imagery whose terms clearly
+permit it is not fine enough.**
+
+### Google Earth: two passages in tension, and the guidelines do not resolve them
+
+Google's Geo Guidelines grant research use in one sentence and prohibit
+derivative creation in another.
+
+**The permission**, under *Google Earth*: "Google Earth or Earth Studio can be
+used for purposes such as **research, education, film and nonprofit use without
+needing permission**."
+
+**The prohibition**, under *Google Earth — Web and apps*: "You may not use
+output, or use third party tools to capture output, from Google Earth, Google
+Earth Pro, or Earth Studio to reconstruct 3D models or create similar content,
+**or to create other content, products, or services**."
+
+A visually interpreted reference dataset is research, which the first passage
+permits without permission. It is also "other content", which the second
+prohibits. **Both readings are available and the guidelines choose neither**, so
+this is recorded as ambiguous rather than resolved, which is what the terms
+support.
+
+Street View is stricter and unambiguous, and it is worth recording because it
+shows Google writing the prohibition explicitly where it means it. Under
+*Street View — Additional restrictions*, the listed prohibitions include
+"**Creating data from Street View images, such as digitizing or tracing
+information from the imagery**" and "Using applications to analyze and extract
+information from the Street View imagery". **No equivalent sentence appears for
+the satellite and aerial basemap**, which is the imagery this literature
+interprets. That asymmetry can be read either way too.
+
+### Earth Engine: clearly permissive, and it does not serve the imagery in question
+
+Earth Engine's terms are much clearer, and for a university they are favourable.
+
+* §2.1(a): "If you are an individual, a non-profit organization, or a public or
+  private academic institution (including its faculty members and students), you
+  can use the Services for non-commercial activities".
+* §4.1: "Customer owns all Intellectual Property Rights in Customer Data,
+  Customer Code, and Customer Application(s)" — an annotation a user draws is
+  Customer Data.
+* §2.1(d): "Customer can use data, diagrams, charts, figures created by use of
+  the Services **in research or educational publications it authors**."
+* §4.4: third-party dataset licences govern where they conflict with these
+  terms.
+
+**So Earth Engine explicitly permits publishing a derived dataset in a research
+publication.** The catch is what Earth Engine contains: its catalogue is
+Landsat, Sentinel, MODIS and similar, and **it does not include the Google Earth
+very-high-resolution basemap**. The ~1 m imagery that CCD-Rice, SinoLC-1,
+Globe230k and the global land-cover evaluations all interpreted is the Google
+Earth product, under the ambiguous terms above, not the Earth Engine catalogue
+under the clear ones.
+
+### What the alternatives permit, and at what resolution
+
+| Imagery | Resolution | Terms | Derived dataset publishable? |
+|---|---|---|---|
+| Google Earth basemap | ~0.5 to 1 m | Geo Guidelines, **ambiguous** as quoted above | **Unclear** |
+| **Sentinel-2** | **10 m** | Copernicus Sentinel Data Legal Notice, under Regulation (EU) No 377/2014 and Commission Delegated Regulation (EU) No 1159/2013 | **Yes, unambiguously** |
+| Landsat Collection 2 | 30 m | USGS public domain, already recorded in `notes/dataset-leads.md` | Yes, and useless here: same resolution as the map |
+| Planet NICFI basemaps | ~4.8 m | programme licence, registration, restricted uses | **No** — and moot: its coverage is the tropics, with a northern limit near 30 degrees, while this lattice runs 27.1 to 35.1 degrees north, so most of the domain is outside it |
+
+**Sentinel-2's grant is the clearest text found anywhere in this question.** The
+Legal Notice states that EU law grants free access "for the purpose of the
+following use in so far as it is lawful: (a) reproduction; (b) distribution;
+(c) communication to the public; (d) adaptation, modification and combination
+with other data and information; (e) any combination of points (a) to (d)". The
+only obligation is a notice: "'Copernicus Sentinel data [Year]'", and where the
+data have been adapted, "'**Contains modified Copernicus Sentinel data
+[Year]**'". A derived reference dataset is an adaptation distributed to the
+public, which is exactly what (b), (c) and (d) grant.
+
+### Is Route A licensable? At 10 m yes, at 1 m not clearly
+
+**The answer is a qualified no, and the qualification is the resolution.**
+
+Route A is licensable if it interprets Sentinel-2. That gives a reference at
+10 m against products at 30 m, **a ratio of three**. Best practice wants the
+interpretation imagery materially finer than the map, and the assessment this
+project takes as its model is the opposite case: the NLCD percent-impervious
+work used 1 m reference against a 30 m product, a ratio of thirty. **A factor of
+three is thin**, and a 10 m interpretation of a 30 m cell contains about nine
+Sentinel-2 pixels, several of which will be mixed at exactly the boundaries
+where the 30 m product's error lives.
+
+Route A is **not clearly licensable** if it interprets the ~1 m Google Earth
+basemap that every product in this literature used, because the Geo Guidelines
+permit research use and prohibit using output to create other content, and do
+not say which governs.
+
+**The field's position, stated plainly.** Every product this repository has
+examined interpreted Google Earth imagery and none of the papers read cites a
+licence or a permission for doing so. So either the research-use sentence is
+what everyone relies on, or the practice is unexamined. **This repository is not
+in a position to resolve a question Google has left open**, and the useful
+consequence is not a legal opinion but a design choice: a Sentinel-2-based
+response design is defensible without one, and a Google-Earth-based one is not.
+
+**And this matters less than it did**, because Part 1's verification established
+that Route B fails on accuracy rather than on year, which leaves Route A as the
+only live route and makes its thin resolution ratio the project's real
+constraint rather than an aside.
