@@ -129,13 +129,13 @@ station's existence and its figures are not the uncertainty; the data route is.
 |---|---|---|---|---|---|---|
 | CCD-Rice | Paddy rice distribution for China at 30 m, 27 annual GeoTIFFs totalling 5.37 GB | Science Data Bank `13e7fbb10ef343659ae4c91089584f12` through the Croissant route `src/fetch/scidb.py` already handles, with **MD5 on every file**. **Re-verified 13 September 2026**: the Croissant export returns 27 file records totalling **5,368,504,737 B**, MD5 on all 27, none with SHA-256, and the paper's own DOI `10.57760/sciencedb.15865` resolves to exactly this dataset id, so the hash recorded here and the DOI in the literature are one record | ODC-BY 1.0, read from the Croissant `license` field as `https://opendatacommons.org/licenses/by/1-0/` | 1990 to 2016, confirmed from the 27 filenames — **reaches 2000 and 2010, does not reach 2018** | The second rice product for the historical years, the role GISA plays for impervious surface | **verified accessible** |
 | **CCD-Rice validation polygons** | Sample polygons visually interpreted from very-high-resolution Google Earth imagery, in GeoParquet, with `covertype`, `region` and `year` fields and six classes: non-cropland, single-season rice certain, double-season rice certain, rice of uncertain season, other crops, non-rice | figshare `10.6084/m9.figshare.25515019.v3`, a single 1,908,665 B file on the route `src/fetch/figshare.py` already handles; MD5 `927e517583c1999650b90a087db19ffb` **downloaded and verified** | **CC BY 4.0**, from the figshare record's own licence object | 3,619 polygons nationally over 2002 to 2016; **777 in the four provinces** — Shanghai 338, Jiangsu 167, Zhejiang 159, Anhui 113 — in the years 2003, 2004, 2011, 2013 and 2014. **Every figure in this cell was confirmed against the file on 13 September 2026 and every one was right** | **The best reference-data lead found anywhere in this work**: independent, published, openly licensed, in-domain, and more accurate than any map here. **What opening it added**, all of it in `data/processed/ccdrice_polygons_yrd_2026.csv`: the 777 reach only **62 of the 926 analysis cells**, Shanghai's 338 falling in six; **50 Jiangsu polygons sit north of 33.3462 N** where the committed NESDC raster stops, leaving 727 usable against it; the sample is **purposive, not probabilistic**, the paper selecting "only 2 to 4 years in each provincial administrative region" because Google Earth's historical Chinese coverage is sparse and "early images tend to be for urban areas rather than for rural areas", so there are no inclusion probabilities for a design-based estimator; **the deposit holds 3,619 where the paper reports 3,449**, the 170 difference being exactly the `covertype 3` season-uncertain class the paper's breakdown omits (1,825 + 838 + 786 = 3,449); and two encoding traps — every `region` value carries a **trailing space**, and **296 of the 777 are MultiPolygon** against a description that says polygons | **verified accessible**, open anonymous |
-| CCD-Rice code | The product's own processing code | Zenodo `10.5281/zenodo.15468566`. **Unreachable 13 September 2026: zenodo.org times out at the TCP level from this network for every endpoint, landing page and API alike.** DataCite carries the metadata and confirms the record is `shenrq/CCD-Rice: First release` | MIT, from the register; **not re-read, because the deposit could not be opened** | — | Reading how the thresholds were set. **This is now answered from the paper instead and the deposit is no longer needed for it**: §2.3.3 re-determines the rice-probability threshold from *filtered agricultural statistical areas*, not from the validation polygons, and §2.3.4 uses the polygons only to validate. So the polygons are clean of CCD-Rice's own calibration | documented only, route blocked |
+| CCD-Rice code | The product's own processing code | Zenodo `10.5281/zenodo.15468566`. **Unreachable: zenodo.org refuses this network at the application layer — see *The Zenodo block* below, which corrects the TCP diagnosis first recorded here.** DataCite carries the metadata and confirms the record is `shenrq/CCD-Rice: First release` | MIT, from the register; **not re-read, because the deposit could not be opened** | — | Reading how the thresholds were set. **This is now answered from the paper instead and the deposit is no longer needed for it**: §2.3.3 re-determines the rice-probability threshold from *filtered agricultural statistical areas*, not from the validation polygons, and §2.3.4 uses the polygons only to validate. So the polygons are clean of CCD-Rice's own calibration | documented only, route blocked |
 | ChinaRiceCalendar | Transplanting, heading and maturity dates for early-, middle- and late-season rice | Harvard Dataverse `10.7910/DVN/EUP8EY`, **API 200 anonymously, version 9.0 released 2026-06-11, 91 files totalling 3,542,722,284 B, MD5 on every file, one file downloaded and opened** | **CC0 1.0** — public domain, the most permissive licence in this inventory. *This entry said "Dataverse terms, not checked"* | 2003 to 2022, confirmed from filenames: **five period means** (2003–2007, 2008–2012, 2013–2017, 2018–2022 and 2003–2022) across nine variables (early/middle/late rice × transplanting/heading/maturity), in two griddings — `rice_pixels` and `county_level`. **There are no annual rasters**; per-year data is only in `County-level Annual ChinaRiceCalendar.zip` | The calendar the growing-season argument rests on. **The resolutions in this entry were wrong**: a `rice_pixels` raster opened as 0.01° ≈ 1,113 m, EPSG:4326, float32, bounds 97.6–134.9 E and 18.3–53.1 N, so it covers all four provinces. There is no 250 m and no 10 km variant in the deposit; the `county_level` files are 70× larger and presumably finer, and 10 km appears nowhere | **verified accessible**, open anonymous |
 | Irrigation regime maps | Water-saving against flooding irrigation across Chinese paddy lands at 500 m, from province-wise random forests over 123 MODIS and Sentinel-1 features | no deposit named in Wang et al. (2024), `10.1016/j.agwat.2024.109083`, and **attempted 13 September 2026**: the DOI resolves to the right paper and the article is open under CC-BY-NC 4.0, but Elsevier served a 892-byte interstitial rather than the text, so the data availability statement is still unread. Crossref registers no dataset relation | **CC-BY-NC 4.0**, from Crossref; *this entry said "unknown"* | **annual, and the start year is unestablished**; the end is 2022, so whether it reaches 2018 is not in doubt but whether it reaches 2000 or 2010 is | **The missing water-regime covariate**, which is the mechanism the grounding identifies as having a larger dynamic range than extent. Overall accuracy near 0.73, and an R² above 0.92 against city and provincial census area — the census assimilation is why it needs care rather than adoption | unverified |
 | CH4MOD | The semi-empirical paddy methane model, as used by the cropping-system study | model, not data | — | — | The route from a rice layer plus a water regime to an emission estimate, which this reproduction has not taken | known, not applied |
 | NESDC single-season rice | The rice layer the analysis grid carries | committed | — | 2017–2022 | in use | in use |
 | GloRice | The second rice layer, at 5 arcmin | committed | — | 1961–2021 | in use | in use |
-| **APRA500** | Annual paddy rice planting area and cropping intensity for the Asian monsoon region at 500 m, from MODIS and a phenology-based method | Zenodo `10.5281/zenodo.5555721`, twenty-eight files of about 1.7 MB each — one GeoTIFF archive per year plus three-year composites. The API returned the file listing and a `paddyRice2018.zip` request returned HTTP 200 when this was written. **On 13 September 2026 it returns nothing: zenodo.org times out at the TCP level from this network, landing page and API alike, so the route recorded here no longer works from this machine.** DataCite still serves the metadata and confirms the record | **CC-BY-4.0** | 2000 to 2020 — **the only satellite-classified rice product that covers all three thesis years**. GloRice covers them and is committed, but this file's own note records it as statistics allocated to grid cells rather than an observation | The historical-years gap, filled by one product and one method instead of NESDC plus CCD-Rice. At 500 m it is the coarsest candidate, and the rice-mapping review's finding that products lose consistency in fragmented fields bites hardest here | **verified accessible** |
+| **APRA500** | Annual paddy rice planting area and cropping intensity for the Asian monsoon region at 500 m, from MODIS and a phenology-based method | Zenodo `10.5281/zenodo.5555721`, twenty-eight files of about 1.7 MB each — one GeoTIFF archive per year plus three-year composites. The API returned the file listing and a `paddyRice2018.zip` request returned HTTP 200 when this was written. **The route recorded here no longer works: zenodo.org refuses this network at the application layer — see *The Zenodo block* below.** DataCite still serves the metadata and confirms the record | **CC-BY-4.0** | 2000 to 2020 — **the only satellite-classified rice product that covers all three thesis years**. GloRice covers them and is committed, but this file's own note records it as statistics allocated to grid cells rather than an observation | The historical-years gap, filled by one product and one method instead of NESDC plus CCD-Rice. At 500 m it is the coarsest candidate, and the rice-mapping review's finding that products lose consistency in fragmented fields bites hardest here | **verified accessible** |
 | **EFSP** | Single and double paddy rice and cropping intensity for China at 30 m, from more than 684,000 Landsat scenes on Earth Engine | no deposit named in Wei et al. (2022), `10.3390/rs14030759`, and **attempted 13 September 2026**: MDPI returned 403 to this network, so the article text was not read. MDPI publishes everything CC BY 4.0, so the article is open and the obstacle is the block, not the licence | **CC BY 4.0** by MDPI's uniform policy, not read from the article | 2014 to 2019; **reaches 2018** | A 30 m in-domain alternative to the committed NESDC layer for the analysis year, with a published accuracy: producer 0.92–0.96 against user 0.76–0.87, kappa 0.67–0.80, R² above 0.88 against statistics. **Producer exceeding user by that margin is over-detection**, which inflates a per-cell fraction rather than thinning it, so it would need the GAIA–GISA treatment rather than substitution | unverified |
 | Zhu et al. PPPM maps | Annual single- and double-cropping rice for southern China at 30 m by the algorithm the 2023 thesis used, from Landsat 5, 7 and 8 | **not established.** The article is paywalled, OpenAlex records no open version, and the DOAJ record's only full-text link is the publisher DOI, so no data availability statement was readable | unknown | 1999 to 2019; covers 2000, 2010 and 2018 | **The gating lead for the whole PPPM route.** If obtainable it supplies a single-method layer for all three thesis years and removes the coverage argument for a reimplementation. Its "southern China" explicitly includes Anhui and Jiangsu | unverified |
 | 500 m irrigated cropland maps | Irrigated cropland for China at 500 m, from MODIS plus statistics and existing irrigation products | **Deposit found 13 September 2026 in the paper's own Data Records section, which this inventory had not read: figshare `10.6084/m9.figshare.19352501.v1`, 21 files totalling 86,930,189 B, MD5 on all, anonymous.** The files are `2000.tif` through `2019.tif` | **CC BY 4.0** (deposit and article both) | **2000 to 2019, confirmed from the 20 filenames — it reaches 2000, 2010 and 2018, all three thesis years.** Binary maps, 1 irrigated and 0 not, EPSG:4326 | A second irrigation layer beside the water-saving-against-flooding maps above, at the same resolution. **It assimilates statistics**, which is the same reason its neighbour needs care rather than adoption, and the two together would be the pair the GAIA–GISA lesson calls for. **This is now the reachable half of that pair**, and at 87 MB for all twenty years it is the cheapest covariate lead in this file | **verified accessible**, open anonymous |
@@ -157,7 +157,7 @@ resolution and years.
 
 | Candidate | What it is | Route | Licence | Coverage | What it serves | Status |
 |---|---|---|---|---|---|---|
-| GISA-new | Impervious surface as a first-year-of-imperviousness encoding in 20-degree tiles, 99 files totalling 5.82 GB with a `.vrt` mosaic index | Zenodo `10.5281/zenodo.14848113`. **The route recorded here no longer works. On 13 September 2026 zenodo.org times out at the TCP level from this network — landing page, API and file `HEAD` alike, over IPv4, with DNS resolving normally** — so the "API returns 200" this entry records is no longer true and nothing can be downloaded. Two alternatives were tried and neither serves it: the Wuhan University server that does serve GISA (`irsip.whu.edu.cn/resv2/`) has a browsable index carrying `GISA_tif.zip` and `GISA_tif/` but no GISA-new bundle under any obvious name, and its own resources page lists only GISA1 and GISA2. DataCite serves the metadata | **Unverified, and the claim in this cell is not supported by anything reachable.** DataCite's record for this DOI carries **no rights field at all**, so "CC-BY-4.0, open" cannot be confirmed while Zenodo is down. The GEE community catalog states CC BY 4.0 for the GISA family, which is corroboration and not verification | **The discrepancy is resolved and it was a conflation of two products.** There is no GISA product covering 1972 to 2021. GISA1 and GISA2 cover **1972 to 2019** — Wuhan University's own resources page says so for both — and **GISA-new covers 1985 to 2021**, which the authors' abstract on the deposit states in those words. The 1972 belongs to the older products, whose encoding `data/processed/README.md` already documents as values 1 to 37 over [1972, 1978, 1985, 1986, … 2019]; the 2021 belongs to GISA-new. The deposit is registered `IsVersionOf` the GISA 1.0 record, which is the likely route by which the older naming reached this entry. **GISA-new therefore reaches 2000, 2010 and 2019, but its year lookup table could not be read from the files** | A fourth impervious product covering all three thesis years, which no other candidate does. **Blocked on the Zenodo network block, which is the same block `data/processed/README.md` already records for GISA's per-tile links** | documented only, route blocked |
+| GISA-new | Impervious surface as a first-year-of-imperviousness encoding in 20-degree tiles, 99 files totalling 5.82 GB with a `.vrt` mosaic index | Zenodo `10.5281/zenodo.14848113`. **The route recorded here no longer works: zenodo.org refuses this network at the application layer — see *The Zenodo block* below** — so the "API returns 200" this entry records is no longer true and nothing can be downloaded. Two alternatives were tried and neither serves it: the Wuhan University server that does serve GISA (`irsip.whu.edu.cn/resv2/`) has a browsable index carrying `GISA_tif.zip` and `GISA_tif/` but no GISA-new bundle under any obvious name, and its own resources page lists only GISA1 and GISA2. DataCite serves the metadata | **Unverified, and the claim in this cell is not supported by anything reachable.** DataCite's record for this DOI carries **no rights field at all**, so "CC-BY-4.0, open" cannot be confirmed while Zenodo is down. The GEE community catalog states CC BY 4.0 for the GISA family, which is corroboration and not verification | **The discrepancy is resolved and it was a conflation of two products.** There is no GISA product covering 1972 to 2021. GISA1 and GISA2 cover **1972 to 2019** — Wuhan University's own resources page says so for both — and **GISA-new covers 1985 to 2021**, which the authors' abstract on the deposit states in those words. The 1972 belongs to the older products, whose encoding `data/processed/README.md` already documents as values 1 to 37 over [1972, 1978, 1985, 1986, … 2019]; the 2021 belongs to GISA-new. The deposit is registered `IsVersionOf` the GISA 1.0 record, which is the likely route by which the older naming reached this entry. **GISA-new therefore reaches 2000, 2010 and 2019, but its year lookup table could not be read from the files** | A fourth impervious product covering all three thesis years, which no other candidate does. **Blocked on the Zenodo network block, which is the same block `data/processed/README.md` already records for GISA's per-tile links** | documented only, route blocked |
 | GISA 1.0 and 2.0 validation samples | 120,777 sites from 270 cities, 88,822 ZY-3 samples from 45 cities, 118,822 ZY-3 test samples | **not distributed, re-checked 13 September 2026 and still not.** The `irsip.whu.edu.cn/resv2/` index is browsable and was read in full: 30 entries, of which the only GISA data are `GISA_tif.zip` and the `GISA_tif/` tile directory. Its two other data directories, `DATA_res/` and `GBD_data/`, hold shell scripts and two PNGs. No sample file under any name | — | — | Would have been urban reference data; is not available. **A useful by-product of looking**: the 257 GISA tiles are individually downloadable from that directory, which corrects a claim in `data/processed/README.md` | not distributed |
 | GAIA validation samples | 3,500 global samples | not distributed | — | — | — | not distributed |
 | GHSL | Global Human Settlement Layer built-up surface | — | — | — | **Rejected**: no layer consistent with 2018, so it cannot answer the analysis year | rejected |
@@ -320,9 +320,10 @@ genuinely not open**: the MSW landfill database and the Suzhou network register
 no Creative Commons licence at all. The inventory had described GRPI as
 paywalled; it is CC-BY-NC-ND and open, and only the fetch failed.
 
-**One route regressed.** zenodo.org is unreachable from this network — a TCP
-timeout on every endpoint, with DNS resolving normally — which blocks GISA-new,
-APRA500, the CCD-Rice code and the GHGSat plumes. Two of those four were
+**One route regressed.** zenodo.org refuses this network, which blocks
+GISA-new, APRA500, the CCD-Rice code and the GHGSat plumes. *The mechanism
+recorded here on 13 September — a TCP timeout — was wrong, and* The Zenodo
+block *below has the correct diagnosis.* Two of those four were
 recorded as *verified accessible* on the strength of a request that succeeded
 when it was made. `data/processed/README.md` already recorded the same host
 refusing GISA's per-tile links, so this is a standing condition of the network
@@ -356,6 +357,105 @@ this domain that neither predictor represents, and whether it is distributed
 could not be established because the paper is paywalled and two open routes
 refused. It is the second-highest-value unverified item and the one whose answer
 is a single successful request away.
+
+## The Zenodo block, diagnosed 13 September 2026
+
+Six entries in this file are blocked by one obstacle, so it is diagnosed here
+once rather than re-guessed per entry.
+
+**It is not a network failure and the earlier diagnosis in this file was
+wrong.** The Tier 1 pass recorded "zenodo.org times out at the TCP level from
+this network over IPv4 with DNS resolving normally, on every endpoint". Only
+the DNS half of that is right. Measured layer by layer:
+
+* **DNS resolves fully.** `zenodo.org` returns six A records
+  (137.138.153.219, 188.185.43.153, 188.184.103.118, 188.184.98.114,
+  188.185.48.75, 137.138.52.235) and six AAAA records in `2001:1458:d00::/48`.
+* **TCP connects immediately.** A connect to port 443 on each of those
+  addresses succeeds in under a second. There is no timeout at this layer.
+* **TLS completes.** An `openssl s_client` handshake negotiates TLSv1.3 with
+  `TLS_AES_256_GCM_SHA384` and presents a valid certificate for
+  `CN=*.zenodo.org`, over IPv6 by default.
+* **HTTP is refused.** The server answers **403 Forbidden** from `nginx`, in
+  under half a second, on every path tried: `/`, `/records/<id>`,
+  `/record/<id>`, `/api/records/<id>`, `/api/records/<id>/files` and `/oai2d`.
+
+**The 403 body says what it is**, and it is worth quoting because it removes
+the guesswork: *"Access to this resource has been restricted due to unusual
+traffic from your network. If you believe this is a mistake, please contact our
+support line and we will look into your request."* It carries a reference id
+and a timestamp. So this is a deliberate, Zenodo-side restriction keyed to this
+egress network, applied at the application layer, with a stated remediation
+path that is neither a credential nor a workaround: contact Zenodo support and
+quote the reference.
+
+**Why it looked like a timeout.** The filter treats a default `curl`
+User-Agent differently from a browser one. With `curl`'s own UA the request is
+**silently dropped after the TLS handshake** — the connection stays open and no
+bytes ever arrive, so a client with a 20-second timeout reports a timeout and
+nothing else. With a browser UA the same request returns the 403 above in 0.47
+seconds. The Tier 1 pass used the default UA, saw the hang, and attributed it
+to TCP. **The lesson generalises past Zenodo: a hang after a successful
+connection is an application-layer refusal until proven otherwise, and the UA
+is the first thing to vary.**
+
+### It is Zenodo specifically, not a class
+
+| Host | Result | What it rules out |
+|---|---|---|
+| `zenodo.org`, all paths | 403 | — |
+| `www.zenodo.org` | 301 to the above | — |
+| `sandbox.zenodo.org`, root and `/api/records` | **200** | Not Zenodo's software, not its certificate, not its CERN hosting |
+| `cern.ch` | 302 | Not CERN infrastructure |
+| `home.cern` | 200 | Not CERN infrastructure |
+| `api.openaire.eu` | responds (400 to a malformed query, 200 to a valid one) | Not the European research-infrastructure class |
+| `explore.openaire.eu` | 403 | An unrelated filter on a different host; its API works |
+| `api.figshare.com`, `api.datacite.org`, `doi.org` | 200, 200, 302 | Not this network's outbound HTTPS |
+
+Zenodo's own sandbox, on the same domain and the same wildcard certificate,
+serves this network normally. The restriction is scoped to the production
+service.
+
+### No route reaches a record's files
+
+Metadata is reachable and files are not. **DataCite** serves the full record
+metadata for any Zenodo DOI, but its `contentUrl`, `sizes` and `formats` fields
+are empty for the records checked, and its `rights` field is empty too, so it
+cannot substitute for reading a deposit's licence. **OpenAIRE** serves the
+harvested record including an access-rights and licence field, which is one
+step better and still second-hand. Everything else fails: the DOI resolver
+redirects to `zenodo.org` and lands on the 403; the legacy `/record/` path,
+the REST API and OAI-PMH are all 403; and `data.zenodo.org` and
+`files.zenodo.org` do not resolve, so there is no separate file host to try. No
+mirror was found for any of the six records.
+
+**This was established without a VPN and without any credential**, which is
+what was asked: it describes what is reachable as configured.
+
+### The six entries it blocks, as distinct from entries blocked for other reasons
+
+| Entry | Where it is | Blocked by |
+|---|---|---|
+| GISA-new | Urban table | **the Zenodo block** |
+| APRA500 | Rice table | **the Zenodo block** |
+| CCD-Rice code | Rice table | **the Zenodo block**, though the question it was wanted for is now answered from the paper |
+| GHGSat plume set | Urban and waste facilities | **the Zenodo block** |
+| SinoLC-1 | Reference data and method | **the Zenodo block** (`10.5281/zenodo.7707461`) |
+| Global land cover validation samples | Reference data and method | **the Zenodo block** |
+| Globe230k | Reference data and method | **the Zenodo block** |
+
+That is seven, not the six the task assumed, because SinoLC-1's product deposit
+is on Zenodo as well and this file had not recorded where it lived.
+
+**Entries blocked for other reasons, which this obstacle does not explain:**
+China_AP and the aquaculture-index mapping are blocked by publishers returning
+403 to the *articles* that name their routes; the MSW landfill database, the
+Suzhou network and the Shaoxing UAV record are behind paywalls with no
+Creative Commons licence at all; the gridded coal inventory is paywalled; the
+irrigation regime maps and EFSP are open-access articles whose text Elsevier
+and MDPI would not serve; WetCHARTs needs a NASA Earthdata login; MUSICA needs
+a terms click. **Confusing any of those with the Zenodo block would send a
+future pass to the wrong remedy.**
 
 ## What this file is for
 
