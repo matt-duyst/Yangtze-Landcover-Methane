@@ -794,7 +794,12 @@ computation costing 23 floats per cell. The derivation is in
 
 The cycle is real and strongly identified. Two harmonics beat one at
 F(2, 109,997) = 4,128, p below floating-point resolution, and the fitted range
-over the sampled days is 35.67 ppb with a peak on day 245.8, early September.
+over the sampled days is 35.77 ppb with a peak on day 245.8, early September.
+*Corrected from 35.67 on 14 September 2026, when queue item 12a computed the
+cycle into `data/processed/seasonal_cycle_2018.csv`: the range is 35.767, which
+rounds to 35.77, on the full period and on the sampled window alike. The digit
+was transposed, and this file is excluded from the claim checker so nothing
+would have caught it. The peak day reproduces exactly.*
 The correction was applied and the composite still reproduces the committed
 methane exactly.
 

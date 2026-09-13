@@ -1,0 +1,20 @@
+quantity,value,unit,note
+field the cycle is fitted on,methane_mixing_ratio_bias_corrected,field name,the only field the checkpoint carries harmonic accumulators for
+harmonics,2,count,two beat one; the comparison is in notes/decisions.md
+peak day of year,245.8,day,"the maximum of the summed harmonics, found on a grid"
+peak day 2.5th percentile,245.4,day,simulated from the coefficient covariance; a percentile interval
+peak day 97.5th percentile,246.2,day,simulated from the coefficient covariance; a percentile interval
+peak day standard deviation,0.20,days,spread of the simulated peak location
+trough day of year,144.7,day,
+peak to trough range,35.77,ppb,"the full seasonal range, which is twice the amplitude only for one harmonic"
+harmonic 1 amplitude,6.821,ppb,
+harmonic 1 phase,2.7360,radians,as A sin(theta + phi)
+harmonic 2 amplitude,12.958,ppb,
+harmonic 2 phase,-0.3950,radians,as A sin(theta + phi)
+variance explained within cells,0.2677,share,share of the within-cell variance the cycle accounts for
+residual standard deviation,16.595,ppb,
+soundings in the fit,110920,soundings,
+cells in the fit,926,cells,
+degrees of freedom,109990,count,soundings less cells less terms
+condition number,17.06,ratio,of the within-cell cross-product matrix
+poorly identified cells,34,cells,sampled over too little of the year to identify a cycle

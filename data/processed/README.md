@@ -1366,3 +1366,62 @@ highest, a factor of 31 — and mildly differential, with a partial correlation 
 −0.118 between the signed error and methane given the fraction. Both violations
 push toward more attenuation than the bound allows, which is why the sweep
 matters: the margin is a factor of 5.6, and neither violation is of that size.
+
+## seasonal_cycle_2018.csv
+
+The fitted seasonal cycle's parameters, written by
+`scripts/fit_seasonal_cycle.py --write`.
+
+**This exposes a computation the composite already performed.** The per-cell
+harmonic sufficient statistics are accumulated one sounding at a time during the
+granule pass and stored in the checkpoint under `hs::`; `src/methane/seasonal.py`
+already fits from them. Nothing here re-reads a granule, which is why the recipe
+is local-tier rather than network-tier: it needs the gitignored checkpoint and
+not the archive.
+
+**Why it exists.** The fitted peak at day of year
+245.8 had been quoted in three records and in the discussion draft and lived in
+no artefact, so it could carry no resolver. It is load-bearing: it is what makes
+EDGAR's uniform June rice peak roughly ten weeks early over this domain.
+
+**The peak is determined far better than the claim needs.** A percentile
+interval simulated from the coefficient covariance puts it between 245.4 and
+246.2, a standard deviation of 0.20 days. **That is the sampling uncertainty of
+the fitted maximum under a two-harmonic model, not an uncertainty on the true
+seasonal peak** — it takes the model as given and says nothing about whether two
+harmonics is the right number. Against a ten-week discrepancy, which is about
+70 days, the distinction does not matter; it would matter for a claim about days.
+
+| quantity | value |
+|---|---|
+| peak day of year | 245.8, interval 245.4 to 246.2 |
+| trough day of year | 144.7 |
+| peak to trough range | 35.77 ppb |
+| harmonic 1 amplitude | 6.821 ppb |
+| harmonic 2 amplitude | 12.958 ppb |
+| variance explained within cells | 0.2677 |
+| residual standard deviation | 16.595 ppb |
+| soundings, cells, degrees of freedom | 110,920; 926; 109,990 |
+| poorly identified cells | 34 |
+
+**Two things in that table are worth reading rather than filing.** The
+semi-annual harmonic is nearly twice the annual one, 12.958 ppb against 6.821,
+so the cycle is not a simple annual sinusoid and the peak's location depends on
+both terms — which is why the maximum is found on a grid rather than in closed
+form. And the cycle explains only
+26.8 percent of the within-cell variance, so most of what varies within a cell
+across the year is not seasonal.
+
+**One field, not four.** The checkpoint carries a single set of harmonic
+accumulators, built from the operationally bias-corrected retrieval, so
+`hs::sum_y` holds one `y`. The raw field is present only as a cell sum with no
+harmonic terms; the blended field is not in the checkpoint at all; and the
+deseasonalised field has no independent cycle because it is defined as the
+primary field with this one removed. A cycle for the raw or blended fields would
+need another pass over the 28.9 GB archive.
+
+*Correcting a record.* `notes/decisions.md` gave the fitted range as 35.67 ppb
+"over the sampled days". It is **35.77**, on the full period and on the sampled
+window alike and at every grid resolution tried. The 0.10 ppb difference is a
+transposition, and because that file is deliberately excluded from the claim
+checker nothing would have caught it.

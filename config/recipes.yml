@@ -57,6 +57,21 @@ recipes:
     Reads the committed GISA extent raster, the analysis grid and the two
     baseline suites. Every figure it reports is a bound or a sensitivity value
     rather than an estimate, and the quantity column says which.
+- artefact: data/processed/seasonal_cycle_2018.csv
+  command: python scripts/fit_seasonal_cycle.py --write
+  label: fitted seasonal cycle parameters
+  cost: seconds from the checkpoint
+  seconds: 8
+  inputs: local
+  compare: bytes
+  verified: on_local
+  note: >-
+    Exposes a computation the composite already performed. The harmonic
+    sufficient statistics live in the gitignored granule checkpoint under
+    `hs::`, so this is local-tier; nothing here re-reads a granule. The peak
+    day's interval is simulated from the coefficient covariance with a fixed
+    seed, so the artefact is reproducible.
+  sha256: 25616eef6d68e08c42f2b027660b72b66beabe3b1e01a9d096b26e84530fe34a
 - artefact: data/processed/urban_disagreement_2018.csv
   command: python scripts/decompose_urban_disagreement.py --write
   label: GAIA-GISA quantity and allocation disagreement

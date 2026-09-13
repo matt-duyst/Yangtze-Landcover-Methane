@@ -450,6 +450,14 @@ def _range() -> dict:
     return _cache["range"]
 
 
+def _cycle(quantity: str) -> float:
+    """One row of the fitted seasonal cycle table, by its `quantity` label."""
+    if "cycle" not in _cache:
+        _cache["cycle"] = {r["quantity"]: r for r
+                           in _read_csv(PROCESSED / "seasonal_cycle_2018.csv")}
+    return float(_cache["cycle"][quantity]["value"])
+
+
 def _atten(quantity: str) -> float:
     """One row of the attenuation bound table, by its `quantity` label."""
     if "atten" not in _cache:
@@ -1018,6 +1026,20 @@ QUANTITIES = {
     "dof.verdict_changed": lambda: _dof()["verdict_changed"],
     # Added for queue item 11, the attenuation bound. Every one of these is a
     # bound or a sensitivity value; none is an estimate.
+    # Queue item 12a: the fitted seasonal cycle, which existed only in prose.
+    "cycle.peak_day": lambda: _cycle("peak day of year"),
+    "cycle.peak_low": lambda: _cycle("peak day 2.5th percentile"),
+    "cycle.peak_high": lambda: _cycle("peak day 97.5th percentile"),
+    "cycle.peak_sd": lambda: _cycle("peak day standard deviation"),
+    "cycle.trough_day": lambda: _cycle("trough day of year"),
+    "cycle.range_ppb": lambda: _cycle("peak to trough range"),
+    "cycle.amp1": lambda: _cycle("harmonic 1 amplitude"),
+    "cycle.amp2": lambda: _cycle("harmonic 2 amplitude"),
+    "cycle.variance_explained": lambda: _cycle("variance explained within cells"),
+    "cycle.residual_sd": lambda: _cycle("residual standard deviation"),
+    "cycle.soundings": lambda: _cycle("soundings in the fit"),
+    "cycle.cells": lambda: _cycle("cells in the fit"),
+    "cycle.poorly_identified": lambda: _cycle("poorly identified cells"),
     "atten.var_x": lambda: _atten("Var(X), the GAIA cell fraction in use"),
     "atten.var_d": lambda: _atten("Var(D), GAIA minus GISA on the same cells"),
     "atten.corr": lambda: _atten("correlation of the two cell fractions"),
