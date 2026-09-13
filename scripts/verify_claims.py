@@ -450,6 +450,16 @@ def _range() -> dict:
     return _cache["range"]
 
 
+def _disagree(year: str, resolution: str, column: str) -> float:
+    """One cell of the GAIA-GISA disagreement decomposition."""
+    if "disagree" not in _cache:
+        _cache["disagree"] = _read_csv(PROCESSED / "urban_disagreement_2018.csv")
+    for row in _cache["disagree"]:
+        if row["year"] == year and row["resolution"] == resolution:
+            return float(row[column])
+    raise KeyError((year, resolution, column))
+
+
 def _loo(model: str, radius: str, column: str = "r2_above_constant") -> float:
     if "loo" not in _cache:
         _cache["loo"] = _read_csv(PROCESSED / "buffered_loo_2018.csv")
@@ -998,6 +1008,21 @@ QUANTITIES = {
     "dof.effective_n_min": lambda: _dof()["effective_n_min"],
     "dof.effective_n_max": lambda: _dof()["effective_n_max"],
     "dof.verdict_changed": lambda: _dof()["verdict_changed"],
+    # Added for queue item 10, the GAIA-GISA disagreement decomposition.
+    "disagree.alloc_share_2018_cell":
+        lambda: _disagree("2018", "0.25 degree cell", "allocation_share"),
+    "disagree.alloc_share_2018_pixel":
+        lambda: _disagree("2018", "868 m pixel", "allocation_share"),
+    "disagree.alloc_2018_pixel_km2":
+        lambda: _disagree("2018", "868 m pixel", "allocation_km2"),
+    "disagree.quantity_2018_pixel_km2":
+        lambda: _disagree("2018", "868 m pixel", "quantity_km2"),
+    "disagree.quantity_2000_pixel_km2":
+        lambda: _disagree("2000", "868 m pixel", "quantity_km2"),
+    "disagree.alloc_2010_pixel_km2":
+        lambda: _disagree("2010", "868 m pixel", "allocation_km2"),
+    "disagree.alloc_share_2010_pixel":
+        lambda: _disagree("2010", "868 m pixel", "allocation_share"),
     "range.block_ns_km": lambda: _range()["block_ns_km"],
     "range.block_ew_km": lambda: _range()["block_ew_km"],
     "range.operational_impervious_km":

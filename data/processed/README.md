@@ -1266,3 +1266,49 @@ returns nothing. And 296 of the 777 geometries are **MultiPolygon** where the
 deposit's own description says the geometries are polygons — 281 of those hold
 one part and 15 hold up to 24, so `.exterior` raises on more than a third of
 the sample.
+
+## urban_disagreement_2018.csv
+
+The GAIA-GISA disagreement split into quantity and allocation components, for
+all four years the two committed extent rasters share, at two resolutions.
+Written by `scripts/decompose_urban_disagreement.py --write`.
+
+**Why the split matters.** This repository has reported the two products'
+difference as a single percentage of provincial area. That is quantity
+disagreement alone, and it says nothing about whether the two put impervious
+surface in the same places. **Only the allocation component attenuates a
+regression coefficient**, because a layer can have the right total and the
+wrong locations.
+
+**The method is the two-class fractional specialisation and not Pontius and
+Millones as published.** That paper builds its cross-tabulation with a Boolean
+operator over hard-classified pixels; these layers are fractional. Its
+soft-classified companion, Pontius and Cheuk (2006), is closed access. What is
+computed is exact for two classes and needs no cross-tabulation:
+`D = sum w|a-b|`, `Q = |sum w·a - sum w·b|`, `A = D - Q`, so `D = Q + A`
+identically with `A >= 0`.
+
+**Both resolutions are reported because they answer different questions.** The
+868 m pixel rows are province-clipped and describe the products. The 0.25 degree
+rows are unclipped over the analysis lattice, which is the basis the committed
+`impervious_fraction` uses, and they describe what survives into the regression:
+misallocation *within* a cell cancels when the cell mean is taken.
+
+| year | 868 m allocation share | 0.25 degree allocation share |
+|---|---|---|
+| 2000 | 69.2 % | 44.8 % |
+| 2010 | 82.2 % | 53.3 % |
+| 2018 | 41.6 % | 50.8 % |
+| 2019 | 42.0 % | 51.7 % |
+
+**So allocation is about half the disagreement at the resolution that matters,
+in every year, and it never disappears.** The pattern the urban record noted —
+the products crossing over, GISA larger in 2000 and smaller in 2018 — turns out
+to be a shift in the *quantity* component: quantity rises from 3,421 km² in 2000
+to 9,828 km² in 2018 at 868 m while allocation stays between 7,000 and 10,000.
+The crossover is a disagreement about how much, on top of a persistent
+disagreement about where.
+
+The native 30 m products are not used: only small windows are committed and the
+full products are a 1-to-2 GB refetch. Areas are computed per raster row with a
+cosine-of-latitude term rather than assumed constant.

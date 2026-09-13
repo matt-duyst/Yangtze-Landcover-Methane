@@ -600,8 +600,8 @@ statements of §6 depends on one.
 
 Every derived artefact is registered in a machine-readable recipe register giving
 the command that produces it and the verification tier it belongs to.
-61<!--#pipeline.recipes--> artefacts are registered across four tiers:
-34<!--#pipeline.recipes_committed--> regenerate from a fresh clone with no
+62<!--#pipeline.recipes--> artefacts are registered across four tiers:
+35<!--#pipeline.recipes_committed--> regenerate from a fresh clone with no
 network and no local data and are verified on every test run;
 17<!--#pipeline.recipes_local--> require local raw data and are verified where it
 exists; 9<!--#pipeline.recipes_network--> require a network fetch and are verified

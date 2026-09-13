@@ -45,6 +45,20 @@ recipes:
   last_verified: '2026-09-04'
   last_verified_by: the extent re-run, which executed compute_methane_composite.py --run end
     to end over all 578 granules and exported from the result
+- artefact: data/processed/urban_disagreement_2018.csv
+  command: python scripts/decompose_urban_disagreement.py --write
+  label: GAIA-GISA quantity and allocation disagreement
+  cost: about ten seconds over two 992 by 1056 rasters
+  seconds: 12
+  inputs: committed
+  compare: bytes
+  verified: continuously
+  note: >-
+    Reads the two committed extent rasters, the province boundaries and the
+    analysis grid, all committed, so it regenerates from a fresh clone. Reports
+    both the 868 m pixel grid and the 0.25 degree lattice, because misallocation
+    within a lattice cell cancels when the cell mean is taken and only the
+    surviving part reaches the regression.
 - artefact: data/processed/ccdrice_polygons_yrd_2026.csv
   command: python scripts/summarise_ccdrice_polygons.py --download
   label: CCD-Rice validation polygon counts for the four provinces

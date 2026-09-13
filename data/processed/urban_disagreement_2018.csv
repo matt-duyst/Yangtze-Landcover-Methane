@@ -1,0 +1,9 @@
+year,resolution,domain,gaia_km2,gisa_km2,total_difference_km2,quantity_km2,allocation_km2,allocation_share
+2000,868 m pixel,four provinces,16363.8,19784.7,11118.3,3420.9,7697.4,0.6923
+2000,0.25 degree cell,analysis lattice,20059.7,26775.1,12157.1,6715.4,5441.7,0.4476
+2010,868 m pixel,four provinces,28570.3,30732.0,12163.8,2161.7,10002.2,0.8223
+2010,0.25 degree cell,analysis lattice,34202.6,40317.4,13081.9,6114.8,6967.2,0.5326
+2018,868 m pixel,four provinces,49394.0,39565.5,16830.8,9828.5,7002.3,0.4160
+2018,0.25 degree cell,analysis lattice,60174.2,52044.1,16521.4,8130.2,8391.2,0.5079
+2019,868 m pixel,four provinces,50397.5,40486.1,17103.8,9911.4,7192.4,0.4205
+2019,0.25 degree cell,analysis lattice,61458.9,53305.5,16878.2,8153.4,8724.7,0.5169
