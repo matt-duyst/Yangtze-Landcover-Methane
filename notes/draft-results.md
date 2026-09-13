@@ -593,9 +593,9 @@ correspondence is reported and its interpretation belongs in a discussion.
 
 ## 7. Reproducibility of the reported figures
 
-64<!--#pipeline.recipes--> derived artefacts are registered with the command that
+65<!--#pipeline.recipes--> derived artefacts are registered with the command that
 produces them and a verification tier.
-36<!--#pipeline.recipes_committed--> regenerate from a fresh clone with no network
+37<!--#pipeline.recipes_committed--> regenerate from a fresh clone with no network
 and no local data and are re-executed and compared byte for byte on every test
 run; 18<!--#pipeline.recipes_local--> require local raw data;
 9<!--#pipeline.recipes_network--> require a network fetch. Every numeric claim in

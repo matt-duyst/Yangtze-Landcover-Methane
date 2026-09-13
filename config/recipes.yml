@@ -72,6 +72,21 @@ recipes:
     day's interval is simulated from the coefficient covariance with a fixed
     seed, so the artefact is reproducible.
   sha256: 25616eef6d68e08c42f2b027660b72b66beabe3b1e01a9d096b26e84530fe34a
+- artefact: data/processed/grid_resolution_2018.csv
+  command: python scripts/measure_grid_resolution.py --write
+  label: coverage and precision across grid resolutions
+  cost: about twenty seconds, mostly the pairwise distance matrices
+  seconds: 30
+  inputs: committed
+  compare: bytes
+  verified: continuously
+  note: >-
+    Reads the committed analysis grid only. The 0.25 degree rows are measured;
+    the finer rows are projections that allocate each coarse cell's soundings to
+    fine cells by area overlap under a uniform-within-cell assumption, with a
+    fixed seed. Real swaths cluster, so every projected coverage figure is an
+    upper bound and every count-below-threshold figure a lower bound. The
+    `basis` column says which rows are which.
 - artefact: data/processed/urban_disagreement_2018.csv
   command: python scripts/decompose_urban_disagreement.py --write
   label: GAIA-GISA quantity and allocation disagreement

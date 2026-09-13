@@ -1425,3 +1425,58 @@ need another pass over the 28.9 GB archive.
 window alike and at every grid resolution tried. The 0.10 ppb difference is a
 transposition, and because that file is deliberately excluded from the claim
 checker nothing would have caught it.
+## grid_resolution_2018.csv
+
+Coverage, sounding density, per-cell precision and effective sample size across
+five candidate analysis-grid resolutions, written by
+`scripts/measure_grid_resolution.py --write`.
+
+**Why it exists.** `notes/decisions.md` had closed the 0.1 degree grid on a
+pilot coverage estimate of 32.91 percent and recorded in the same place that the
+estimate was understated and that reopening the question needed "a measured
+curve at each resolution, not another sample". This is that curve. It reads the
+committed analysis grid and nothing else, so the recipe is committed-tier.
+
+**Read the `basis` column before any figure here.** The 0.25 degree rows are
+measured. The finer rows are **projections**, because coverage at a finer
+resolution is a property of where individual soundings fell and this repository
+does not retain sounding coordinates: the checkpoint's `granule_cells` bitset is
+1024 bits per granule *over the 0.25 degree lattice*, so a cell set recorded at
+0.25 degrees cannot be subdivided, and `data/raw/s5p` retains one of the 578
+granules.
+
+**The projection's direction is known.** Each coarse cell's soundings are
+allocated to fine cells by area overlap — which is what makes resolutions that
+do not divide 0.25 degrees, the 0.1 degree case included, tractable — under an
+assumption of uniformity within the coarse cell. TROPOMI soundings arrive in
+along-track swaths, and clustering can only place the same soundings in fewer
+fine cells. **So every projected coverage figure is an upper bound and every
+count-below-threshold figure is a lower bound.**
+
+**The effective sample size is computed, not scaled by cell count.** Dutilleul's
+effective n is set by the domain's extent against the autocorrelation length,
+and regridding changes neither, so it barely moves across the table. It is
+computed on a spherical model correlogram at the measured operational half-sill
+of 103.2 km; the last row carries `src/model/spatial_dof.py`'s empirical
+estimator on the committed field at 0.25 degrees as the model's calibration
+check. The model is trustworthy only in the *fine* direction, where cells shrink
+further below the correlation length; it underpredicts the loss from coarsening,
+where averaging within cells changes the support.
+
+| resolution | cells | coverage | median soundings | median SE | SE as share of the 14.9 ppb signal | effective n |
+|---|---|---|---|---|---|---|
+| 0.25° (measured) | 1,023 | 90.5 % | 74 | 3.37 ppb | 23 % | 30.9 |
+| 0.2° | 1,558 | ≤ 93.3 % | 51 | 4.06 ppb | 27 % | 30.2 |
+| 0.15° | 2,805 | ≤ 90.4 % | 28 | 5.48 ppb | 37 % | 30.6 |
+| 0.125° | 4,092 | ≤ 85.9 % | 21 | 6.33 ppb | 43 % | 30.9 |
+| 0.1° | 6,314 | ≤ 84.7 % | 15 | 7.49 ppb | 50 % | 30.6 |
+
+Neither 7.75 nor 8.25 degrees divides by 0.1, so the 0.1 degree lattice is 77 by
+82 whole cells and ends 0.05 degrees short on both axes; the artefact reports the
+remainder rather than absorbing it. 0.125 degrees is the only candidate here that
+divides 0.25 degrees exactly, so it is the only one whose cells nest in the
+existing lattice.
+
+The verdict recorded in `notes/decisions.md` is that 0.1 degrees is not viable:
+six times the cells, no additional independent information, and twice the noise
+per cell.

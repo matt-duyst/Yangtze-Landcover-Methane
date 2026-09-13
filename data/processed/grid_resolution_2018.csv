@@ -1,0 +1,125 @@
+resolution_deg,quantity,value,unit,basis,note
+,per-sounding uncertainty,29.0,ppb,literature,14.5 ppb TCCON precision times the recommended factor 2
+,field between-cell sd,14.86,ppb,measured,the spatial signal a single cell has to resolve
+,autocorrelation half-sill,103.2,km,measured,the operational field's range; sets the effective sample size
+0.25,lattice columns by rows,31 x 33,cells,measured,exactly 31.00 x 33.00 cells fit the declared box
+0.25,cells,1023,cells,measured,
+0.25,divides the extent cleanly,yes,boolean,derived,
+0.25,extent covered by whole cells,"114.8..122.550, 26.95..35.200",degrees,derived,
+0.25,cell size at the domain centre,23.84 x 27.83,km,derived,east-west by north-south at 31.075 N
+0.25,covered cells,926,cells,measured,"an upper bound where projected: swaths cluster, which can only put the same soundings in fewer cells"
+0.25,annual coverage,90.5,percent,measured,
+0.25,"soundings per covered cell, minimum",1,soundings,measured,
+0.25,"soundings per covered cell, first quartile",21,soundings,measured,
+0.25,"soundings per covered cell, median",74,soundings,measured,
+0.25,"soundings per covered cell, third quartile",200,soundings,measured,
+0.25,"soundings per covered cell, maximum",410,soundings,measured,
+0.25,covered cells below 5 soundings,73,cells,measured,a lower bound where projected
+0.25,covered cells below 10 soundings,126,cells,measured,a lower bound where projected
+0.25,covered cells below 30 soundings,278,cells,measured,a lower bound where projected
+0.25,"per-cell standard error, median",3.37,ppb,measured,per-sounding uncertainty over the root of the count
+0.25,per-cell standard error as a share of the field spread,23,percent,measured,at 100 percent a cell's noise equals the whole spatial signal
+0.25,cells whose standard error exceeds the field spread,63,cells,measured,
+0.25,uncovered cells,97,cells,measured,
+0.25,uncovered connected components,28,components,measured,four-connectivity
+0.25,largest uncovered component,42,cells,measured,
+0.25,share of gaps in the largest component,43.3,percent,measured,falling with resolution means the gaps fragment rather than concentrate
+0.25,single-cell gaps,17,cells,measured,
+0.25,"effective sample size, full lattice",30.9,observations,modelled,Dutilleul on a spherical correlogram at the measured half-sill
+0.2,lattice columns by rows,38 x 41,cells,projected,exactly 38.75 x 41.25 cells fit the declared box
+0.2,cells,1558,cells,projected,
+0.2,divides the extent cleanly,no,boolean,derived,"whole cells taken from the southwest corner, leaving a remainder strip outside the lattice"
+0.2,extent covered by whole cells,"114.8..122.400, 26.95..35.150",degrees,derived,
+0.2,cell size at the domain centre,19.07 x 22.26,km,derived,east-west by north-south at 31.075 N
+0.2,covered cells,1453,cells,projected,"an upper bound where projected: swaths cluster, which can only put the same soundings in fewer cells"
+0.2,annual coverage,93.3,percent,projected,
+0.2,"soundings per covered cell, minimum",1,soundings,projected,
+0.2,"soundings per covered cell, first quartile",15,soundings,projected,
+0.2,"soundings per covered cell, median",51,soundings,projected,
+0.2,"soundings per covered cell, third quartile",123,soundings,projected,
+0.2,"soundings per covered cell, maximum",321,soundings,projected,
+0.2,covered cells below 5 soundings,128,cells,projected,a lower bound where projected
+0.2,covered cells below 10 soundings,242,cells,projected,a lower bound where projected
+0.2,covered cells below 30 soundings,546,cells,projected,a lower bound where projected
+0.2,"per-cell standard error, median",4.06,ppb,projected,per-sounding uncertainty over the root of the count
+0.2,per-cell standard error as a share of the field spread,27,percent,projected,at 100 percent a cell's noise equals the whole spatial signal
+0.2,cells whose standard error exceeds the field spread,103,cells,projected,
+0.2,uncovered cells,105,cells,projected,
+0.2,uncovered connected components,24,components,projected,four-connectivity
+0.2,largest uncovered component,50,cells,projected,
+0.2,share of gaps in the largest component,47.6,percent,projected,falling with resolution means the gaps fragment rather than concentrate
+0.2,single-cell gaps,14,cells,projected,
+0.2,"effective sample size, full lattice",30.2,observations,modelled,Dutilleul on a spherical correlogram at the measured half-sill
+0.15,lattice columns by rows,51 x 55,cells,projected,exactly 51.67 x 55.00 cells fit the declared box
+0.15,cells,2805,cells,projected,
+0.15,divides the extent cleanly,no,boolean,derived,"whole cells taken from the southwest corner, leaving a remainder strip outside the lattice"
+0.15,extent covered by whole cells,"114.8..122.450, 26.95..35.200",degrees,derived,
+0.15,cell size at the domain centre,14.30 x 16.70,km,derived,east-west by north-south at 31.075 N
+0.15,covered cells,2535,cells,projected,"an upper bound where projected: swaths cluster, which can only put the same soundings in fewer cells"
+0.15,annual coverage,90.4,percent,projected,
+0.15,"soundings per covered cell, minimum",1,soundings,projected,
+0.15,"soundings per covered cell, first quartile",10,soundings,projected,
+0.15,"soundings per covered cell, median",28,soundings,projected,
+0.15,"soundings per covered cell, third quartile",72,soundings,projected,
+0.15,"soundings per covered cell, maximum",161,soundings,projected,
+0.15,covered cells below 5 soundings,366,cells,projected,a lower bound where projected
+0.15,covered cells below 10 soundings,630,cells,projected,a lower bound where projected
+0.15,covered cells below 30 soundings,1289,cells,projected,a lower bound where projected
+0.15,"per-cell standard error, median",5.48,ppb,projected,per-sounding uncertainty over the root of the count
+0.15,per-cell standard error as a share of the field spread,37,percent,projected,at 100 percent a cell's noise equals the whole spatial signal
+0.15,cells whose standard error exceeds the field spread,293,cells,projected,
+0.15,uncovered cells,270,cells,projected,
+0.15,uncovered connected components,46,components,projected,four-connectivity
+0.15,largest uncovered component,111,cells,projected,
+0.15,share of gaps in the largest component,41.1,percent,projected,falling with resolution means the gaps fragment rather than concentrate
+0.15,single-cell gaps,27,cells,projected,
+0.15,"effective sample size, full lattice",30.6,observations,modelled,Dutilleul on a spherical correlogram at the measured half-sill
+0.125,lattice columns by rows,62 x 66,cells,projected,exactly 62.00 x 66.00 cells fit the declared box
+0.125,cells,4092,cells,projected,
+0.125,divides the extent cleanly,yes,boolean,derived,
+0.125,extent covered by whole cells,"114.8..122.550, 26.95..35.200",degrees,derived,
+0.125,cell size at the domain centre,11.92 x 13.91,km,derived,east-west by north-south at 31.075 N
+0.125,covered cells,3517,cells,projected,"an upper bound where projected: swaths cluster, which can only put the same soundings in fewer cells"
+0.125,annual coverage,85.9,percent,projected,
+0.125,"soundings per covered cell, minimum",1,soundings,projected,
+0.125,"soundings per covered cell, first quartile",7,soundings,projected,
+0.125,"soundings per covered cell, median",21,soundings,projected,
+0.125,"soundings per covered cell, third quartile",52,soundings,projected,
+0.125,"soundings per covered cell, maximum",123,soundings,projected,
+0.125,covered cells below 5 soundings,653,cells,projected,a lower bound where projected
+0.125,covered cells below 10 soundings,1106,cells,projected,a lower bound where projected
+0.125,covered cells below 30 soundings,2033,cells,projected,a lower bound where projected
+0.125,"per-cell standard error, median",6.33,ppb,projected,per-sounding uncertainty over the root of the count
+0.125,per-cell standard error as a share of the field spread,43,percent,projected,at 100 percent a cell's noise equals the whole spatial signal
+0.125,cells whose standard error exceeds the field spread,526,cells,projected,
+0.125,uncovered cells,575,cells,projected,
+0.125,uncovered connected components,68,components,projected,four-connectivity
+0.125,largest uncovered component,200,cells,projected,
+0.125,share of gaps in the largest component,34.8,percent,projected,falling with resolution means the gaps fragment rather than concentrate
+0.125,single-cell gaps,29,cells,projected,
+0.125,"effective sample size, full lattice",30.9,observations,modelled,Dutilleul on a spherical correlogram at the measured half-sill
+0.1,lattice columns by rows,77 x 82,cells,projected,exactly 77.50 x 82.50 cells fit the declared box
+0.1,cells,6314,cells,projected,
+0.1,divides the extent cleanly,no,boolean,derived,"whole cells taken from the southwest corner, leaving a remainder strip outside the lattice"
+0.1,extent covered by whole cells,"114.8..122.500, 26.95..35.150",degrees,derived,
+0.1,cell size at the domain centre,9.53 x 11.13,km,derived,east-west by north-south at 31.075 N
+0.1,covered cells,5348,cells,projected,"an upper bound where projected: swaths cluster, which can only put the same soundings in fewer cells"
+0.1,annual coverage,84.7,percent,projected,
+0.1,"soundings per covered cell, minimum",1,soundings,projected,
+0.1,"soundings per covered cell, first quartile",5,soundings,projected,
+0.1,"soundings per covered cell, median",15,soundings,projected,
+0.1,"soundings per covered cell, third quartile",33,soundings,projected,
+0.1,"soundings per covered cell, maximum",91,soundings,projected,
+0.1,covered cells below 5 soundings,1260,cells,projected,a lower bound where projected
+0.1,covered cells below 10 soundings,2141,cells,projected,a lower bound where projected
+0.1,covered cells below 30 soundings,3786,cells,projected,a lower bound where projected
+0.1,"per-cell standard error, median",7.49,ppb,projected,per-sounding uncertainty over the root of the count
+0.1,per-cell standard error as a share of the field spread,50,percent,projected,at 100 percent a cell's noise equals the whole spatial signal
+0.1,cells whose standard error exceeds the field spread,1015,cells,projected,
+0.1,uncovered cells,966,cells,projected,
+0.1,uncovered connected components,107,components,projected,four-connectivity
+0.1,largest uncovered component,349,cells,projected,
+0.1,share of gaps in the largest component,36.1,percent,projected,falling with resolution means the gaps fragment rather than concentrate
+0.1,single-cell gaps,62,cells,projected,
+0.1,"effective sample size, full lattice",30.6,observations,modelled,Dutilleul on a spherical correlogram at the measured half-sill
+,"effective sample size at 0.25 degree, empirical",32.8,observations,measured,"src/model/spatial_dof.py on the committed field, as the model's check"

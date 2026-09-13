@@ -459,6 +459,21 @@ def _cycle(quantity: str) -> float:
     return float(_cache["cycle"][quantity]["value"])
 
 
+def _resolution(resolution: str, quantity: str) -> float:
+    """One row of the grid-resolution table, by resolution and quantity label.
+
+    `resolution` is the column's literal text -- "0.1", "0.25", or "" for the
+    rows belonging to no single resolution. Named `_resolution` rather than
+    `_grid` because `_grid` is the analysis grid's reader and both the function
+    name and the cache key were already taken.
+    """
+    if "resolution" not in _cache:
+        _cache["resolution"] = {
+            (r["resolution_deg"], r["quantity"]): r for r
+            in _read_csv(PROCESSED / "grid_resolution_2018.csv")}
+    return float(_cache["resolution"][(resolution, quantity)]["value"])
+
+
 def _atten(quantity: str) -> float:
     """One row of the attenuation bound table, by its `quantity` label."""
     if "atten" not in _cache:
@@ -1028,6 +1043,57 @@ QUANTITIES = {
     # Added for queue item 11, the attenuation bound. Every one of these is a
     # bound or a sensitivity value; none is an estimate.
     # Queue item 12a: the fitted seasonal cycle, which existed only in prose.
+    # Coverage and precision across candidate grid resolutions. The 0.25
+    # degree rows are measured; the finer ones are projections whose
+    # direction the artefact's `basis` and `note` columns state.
+    "resolution.cells_025": lambda: _resolution("0.25", "cells"),
+    "resolution.coverage_025": lambda: _resolution("0.25", "annual coverage"),
+    "resolution.median_n_025": lambda: _resolution("0.25", "soundings per covered cell, median"),
+    "resolution.se_025": lambda: _resolution("0.25", "per-cell standard error, median"),
+    "resolution.se_share_025": lambda: _resolution("0.25", "per-cell standard error as a share of the field spread"),
+    "resolution.effective_n_025": lambda: _resolution("0.25", "effective sample size, full lattice"),
+    "resolution.cells_02": lambda: _resolution("0.2", "cells"),
+    "resolution.coverage_02": lambda: _resolution("0.2", "annual coverage"),
+    "resolution.median_n_02": lambda: _resolution("0.2", "soundings per covered cell, median"),
+    "resolution.se_02": lambda: _resolution("0.2", "per-cell standard error, median"),
+    "resolution.se_share_02": lambda: _resolution("0.2", "per-cell standard error as a share of the field spread"),
+    "resolution.effective_n_02": lambda: _resolution("0.2", "effective sample size, full lattice"),
+    "resolution.cells_015": lambda: _resolution("0.15", "cells"),
+    "resolution.coverage_015": lambda: _resolution("0.15", "annual coverage"),
+    "resolution.median_n_015": lambda: _resolution("0.15", "soundings per covered cell, median"),
+    "resolution.se_015": lambda: _resolution("0.15", "per-cell standard error, median"),
+    "resolution.se_share_015": lambda: _resolution("0.15", "per-cell standard error as a share of the field spread"),
+    "resolution.effective_n_015": lambda: _resolution("0.15", "effective sample size, full lattice"),
+    "resolution.cells_0125": lambda: _resolution("0.125", "cells"),
+    "resolution.coverage_0125": lambda: _resolution("0.125", "annual coverage"),
+    "resolution.median_n_0125": lambda: _resolution("0.125", "soundings per covered cell, median"),
+    "resolution.se_0125": lambda: _resolution("0.125", "per-cell standard error, median"),
+    "resolution.se_share_0125": lambda: _resolution("0.125", "per-cell standard error as a share of the field spread"),
+    "resolution.effective_n_0125": lambda: _resolution("0.125", "effective sample size, full lattice"),
+    "resolution.cells_01": lambda: _resolution("0.1", "cells"),
+    "resolution.coverage_01": lambda: _resolution("0.1", "annual coverage"),
+    "resolution.median_n_01": lambda: _resolution("0.1", "soundings per covered cell, median"),
+    "resolution.se_01": lambda: _resolution("0.1", "per-cell standard error, median"),
+    "resolution.se_share_01": lambda: _resolution("0.1", "per-cell standard error as a share of the field spread"),
+    "resolution.effective_n_01": lambda: _resolution("0.1", "effective sample size, full lattice"),
+    "resolution.below5_025": lambda: _resolution("0.25", "covered cells below 5 soundings"),
+    "resolution.below10_025": lambda: _resolution("0.25", "covered cells below 10 soundings"),
+    "resolution.below30_025": lambda: _resolution("0.25", "covered cells below 30 soundings"),
+    "resolution.over_spread_025": lambda: _resolution("0.25", "cells whose standard error exceeds the field spread"),
+    "resolution.uncovered_025": lambda: _resolution("0.25", "uncovered cells"),
+    "resolution.components_025": lambda: _resolution("0.25", "uncovered connected components"),
+    "resolution.largest_share_025": lambda: _resolution("0.25", "share of gaps in the largest component"),
+    "resolution.singletons_025": lambda: _resolution("0.25", "single-cell gaps"),
+    "resolution.below5_01": lambda: _resolution("0.1", "covered cells below 5 soundings"),
+    "resolution.below10_01": lambda: _resolution("0.1", "covered cells below 10 soundings"),
+    "resolution.below30_01": lambda: _resolution("0.1", "covered cells below 30 soundings"),
+    "resolution.over_spread_01": lambda: _resolution("0.1", "cells whose standard error exceeds the field spread"),
+    "resolution.uncovered_01": lambda: _resolution("0.1", "uncovered cells"),
+    "resolution.components_01": lambda: _resolution("0.1", "uncovered connected components"),
+    "resolution.largest_share_01": lambda: _resolution("0.1", "share of gaps in the largest component"),
+    "resolution.singletons_01": lambda: _resolution("0.1", "single-cell gaps"),
+    "resolution.effective_n_empirical": lambda: _resolution(
+        "", "effective sample size at 0.25 degree, empirical"),
     "cycle.peak_day": lambda: _cycle("peak day of year"),
     "cycle.peak_low": lambda: _cycle("peak day 2.5th percentile"),
     "cycle.peak_high": lambda: _cycle("peak day 97.5th percentile"),
