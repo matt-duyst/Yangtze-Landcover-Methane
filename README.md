@@ -235,6 +235,9 @@ In outline:
 | 2018 methane composite | `compute_methane_composite.py --checkpoint data/interim/extent_2018.npz --export data/processed/methane_composite_2018 --export-csv data/processed/methane_coverage_2018.csv` | 28.9 GB and about two hours to build the checkpoint; seconds to export from it | on demand |
 | attenuation bound on the land-cover coefficient | `bound_attenuation.py --write` | about ten seconds | continuously |
 | fitted seasonal cycle parameters | `fit_seasonal_cycle.py --write` | seconds from the checkpoint | on local |
+| per-granule quality accounting and declared footprint | `summarise_composite_quality.py --write` | seconds from the extended checkpoint | on local |
+| per-cell quality accounting, spread and candidate weightings | `summarise_composite_quality.py --write` | seconds from the extended checkpoint | on local |
+| the four preprocessing omissions tested as sensitivities | `test_preprocessing_omissions.py --write` | about four minutes; it refits the baseline suite once per variant | on local |
 | coverage and precision across grid resolutions | `measure_grid_resolution.py --write` | about twenty seconds, mostly the pairwise distance matrices | continuously |
 | GAIA-GISA quantity and allocation disagreement | `decompose_urban_disagreement.py --write` | about ten seconds over two 992 by 1056 rasters | continuously |
 | CCD-Rice validation polygon counts for the four provinces | `summarise_ccdrice_polygons.py --download` | a 1.9 MB download and a parquet read, a few seconds | on demand |

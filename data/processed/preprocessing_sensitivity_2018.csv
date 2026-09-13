@@ -1,0 +1,169 @@
+variant,model,scheme,weighting,n,held_out_r2,delta_vs_committed,delta_vs_matched,comparison,soundings,basis
+committed (no filter),constant (global mean),leave-one-province-out,unweighted,926,-0.1724,+0.0000,+0.0000,same cells as committed,110920,filter
+committed (no filter),constant (global mean),leave-one-province-out,by sounding count,926,-0.0853,+0.0000,+0.0000,same cells as committed,110920,filter
+committed (no filter),constant (global mean),spatial blocks,unweighted,926,-0.0084,+0.0000,+0.0000,same cells as committed,110920,filter
+committed (no filter),constant (global mean),spatial blocks,by sounding count,926,-0.0031,+0.0000,+0.0000,same cells as committed,110920,filter
+committed (no filter),spatial null (queen neighbour mean),leave-one-province-out,unweighted,926,-0.0912,+0.0000,+0.0000,same cells as committed,110920,filter
+committed (no filter),spatial null (queen neighbour mean),leave-one-province-out,by sounding count,926,0.0028,+0.0000,+0.0000,same cells as committed,110920,filter
+committed (no filter),spatial null (queen neighbour mean),spatial blocks,unweighted,926,0.3324,+0.0000,+0.0000,same cells as committed,110920,filter
+committed (no filter),spatial null (queen neighbour mean),spatial blocks,by sounding count,926,0.5137,+0.0000,+0.0000,same cells as committed,110920,filter
+committed (no filter),OLS impervious_fraction,leave-one-province-out,unweighted,926,-0.1174,+0.0000,+0.0000,same cells as committed,110920,filter
+committed (no filter),OLS impervious_fraction,leave-one-province-out,by sounding count,926,-0.1620,+0.0000,+0.0000,same cells as committed,110920,filter
+committed (no filter),OLS impervious_fraction,spatial blocks,unweighted,926,0.0847,+0.0000,+0.0000,same cells as committed,110920,filter
+committed (no filter),OLS impervious_fraction,spatial blocks,by sounding count,926,0.0244,+0.0000,+0.0000,same cells as committed,110920,filter
+committed (no filter),OLS rice_fraction_single,leave-one-province-out,unweighted,531,-0.0674,+0.0000,+0.0000,same cells as committed,110920,filter
+committed (no filter),OLS rice_fraction_single,leave-one-province-out,by sounding count,531,-0.4140,+0.0000,+0.0000,same cells as committed,110920,filter
+committed (no filter),OLS rice_fraction_single,spatial blocks,unweighted,531,-0.0314,+0.0000,+0.0000,same cells as committed,110920,filter
+committed (no filter),OLS rice_fraction_single,spatial blocks,by sounding count,531,-0.0925,+0.0000,+0.0000,same cells as committed,110920,filter
+committed (no filter),OLS impervious_fraction + rice_fraction_single,leave-one-province-out,unweighted,531,-0.1290,+0.0000,+0.0000,same cells as committed,110920,filter
+committed (no filter),OLS impervious_fraction + rice_fraction_single,leave-one-province-out,by sounding count,531,-0.8454,+0.0000,+0.0000,same cells as committed,110920,filter
+committed (no filter),OLS impervious_fraction + rice_fraction_single,spatial blocks,unweighted,531,0.0169,+0.0000,+0.0000,same cells as committed,110920,filter
+committed (no filter),OLS impervious_fraction + rice_fraction_single,spatial blocks,by sounding count,531,-0.0775,+0.0000,+0.0000,same cells as committed,110920,filter
+committed (no filter),"OLS trend surface (lat, lon)",leave-one-province-out,unweighted,926,-0.2863,+0.0000,+0.0000,same cells as committed,110920,filter
+committed (no filter),"OLS trend surface (lat, lon)",leave-one-province-out,by sounding count,926,-0.0775,+0.0000,+0.0000,same cells as committed,110920,filter
+committed (no filter),"OLS trend surface (lat, lon)",spatial blocks,unweighted,926,0.2401,+0.0000,+0.0000,same cells as committed,110920,filter
+committed (no filter),"OLS trend surface (lat, lon)",spatial blocks,by sounding count,926,0.2579,+0.0000,+0.0000,same cells as committed,110920,filter
+committed (no filter),"OLS wind (u, v, speed)",leave-one-province-out,unweighted,926,0.6332,+0.0000,+0.0000,same cells as committed,110920,filter
+committed (no filter),"OLS wind (u, v, speed)",leave-one-province-out,by sounding count,926,0.3110,+0.0000,+0.0000,same cells as committed,110920,filter
+committed (no filter),"OLS wind (u, v, speed)",spatial blocks,unweighted,926,0.6527,+0.0000,+0.0000,same cells as committed,110920,filter
+committed (no filter),"OLS wind (u, v, speed)",spatial blocks,by sounding count,926,0.5627,+0.0000,+0.0000,same cells as committed,110920,filter
+precision under 10 ppb,constant (global mean),leave-one-province-out,unweighted,926,-0.1724,+0.0000,+0.0000,same cells as committed,110920,filter
+precision under 10 ppb,constant (global mean),leave-one-province-out,by sounding count,926,-0.0853,+0.0000,+0.0000,same cells as committed,110920,filter
+precision under 10 ppb,constant (global mean),spatial blocks,unweighted,926,-0.0084,+0.0000,+0.0000,same cells as committed,110920,filter
+precision under 10 ppb,constant (global mean),spatial blocks,by sounding count,926,-0.0031,+0.0000,+0.0000,same cells as committed,110920,filter
+precision under 10 ppb,spatial null (queen neighbour mean),leave-one-province-out,unweighted,926,-0.0912,+0.0000,+0.0000,same cells as committed,110920,filter
+precision under 10 ppb,spatial null (queen neighbour mean),leave-one-province-out,by sounding count,926,0.0028,+0.0000,+0.0000,same cells as committed,110920,filter
+precision under 10 ppb,spatial null (queen neighbour mean),spatial blocks,unweighted,926,0.3324,+0.0000,+0.0000,same cells as committed,110920,filter
+precision under 10 ppb,spatial null (queen neighbour mean),spatial blocks,by sounding count,926,0.5137,+0.0000,+0.0000,same cells as committed,110920,filter
+precision under 10 ppb,OLS impervious_fraction,leave-one-province-out,unweighted,926,-0.1174,+0.0000,+0.0000,same cells as committed,110920,filter
+precision under 10 ppb,OLS impervious_fraction,leave-one-province-out,by sounding count,926,-0.1620,+0.0000,+0.0000,same cells as committed,110920,filter
+precision under 10 ppb,OLS impervious_fraction,spatial blocks,unweighted,926,0.0847,+0.0000,+0.0000,same cells as committed,110920,filter
+precision under 10 ppb,OLS impervious_fraction,spatial blocks,by sounding count,926,0.0244,+0.0000,+0.0000,same cells as committed,110920,filter
+precision under 10 ppb,OLS rice_fraction_single,leave-one-province-out,unweighted,531,-0.0674,+0.0000,+0.0000,same cells as committed,110920,filter
+precision under 10 ppb,OLS rice_fraction_single,leave-one-province-out,by sounding count,531,-0.4140,+0.0000,+0.0000,same cells as committed,110920,filter
+precision under 10 ppb,OLS rice_fraction_single,spatial blocks,unweighted,531,-0.0314,+0.0000,+0.0000,same cells as committed,110920,filter
+precision under 10 ppb,OLS rice_fraction_single,spatial blocks,by sounding count,531,-0.0925,+0.0000,+0.0000,same cells as committed,110920,filter
+precision under 10 ppb,OLS impervious_fraction + rice_fraction_single,leave-one-province-out,unweighted,531,-0.1290,+0.0000,+0.0000,same cells as committed,110920,filter
+precision under 10 ppb,OLS impervious_fraction + rice_fraction_single,leave-one-province-out,by sounding count,531,-0.8454,+0.0000,+0.0000,same cells as committed,110920,filter
+precision under 10 ppb,OLS impervious_fraction + rice_fraction_single,spatial blocks,unweighted,531,0.0169,+0.0000,+0.0000,same cells as committed,110920,filter
+precision under 10 ppb,OLS impervious_fraction + rice_fraction_single,spatial blocks,by sounding count,531,-0.0775,+0.0000,+0.0000,same cells as committed,110920,filter
+precision under 10 ppb,"OLS trend surface (lat, lon)",leave-one-province-out,unweighted,926,-0.2863,+0.0000,+0.0000,same cells as committed,110920,filter
+precision under 10 ppb,"OLS trend surface (lat, lon)",leave-one-province-out,by sounding count,926,-0.0775,+0.0000,+0.0000,same cells as committed,110920,filter
+precision under 10 ppb,"OLS trend surface (lat, lon)",spatial blocks,unweighted,926,0.2401,+0.0000,+0.0000,same cells as committed,110920,filter
+precision under 10 ppb,"OLS trend surface (lat, lon)",spatial blocks,by sounding count,926,0.2579,+0.0000,+0.0000,same cells as committed,110920,filter
+precision under 10 ppb,"OLS wind (u, v, speed)",leave-one-province-out,unweighted,926,0.6332,+0.0000,+0.0000,same cells as committed,110920,filter
+precision under 10 ppb,"OLS wind (u, v, speed)",leave-one-province-out,by sounding count,926,0.3110,+0.0000,+0.0000,same cells as committed,110920,filter
+precision under 10 ppb,"OLS wind (u, v, speed)",spatial blocks,unweighted,926,0.6527,+0.0000,+0.0000,same cells as committed,110920,filter
+precision under 10 ppb,"OLS wind (u, v, speed)",spatial blocks,by sounding count,926,0.5627,+0.0000,+0.0000,same cells as committed,110920,filter
+SWIR albedo at least 0.05,constant (global mean),leave-one-province-out,unweighted,752,-0.0086,+0.1638,+0.0073,matched reference on the 752 surviving cells,99213,filter
+SWIR albedo at least 0.05,constant (global mean),leave-one-province-out,by sounding count,752,-0.0308,+0.0545,+0.0803,matched reference on the 752 surviving cells,99213,filter
+SWIR albedo at least 0.05,constant (global mean),spatial blocks,unweighted,752,-0.0062,+0.0022,+0.0017,matched reference on the 752 surviving cells,99213,filter
+SWIR albedo at least 0.05,constant (global mean),spatial blocks,by sounding count,752,-0.0081,-0.0050,+0.0070,matched reference on the 752 surviving cells,99213,filter
+SWIR albedo at least 0.05,spatial null (queen neighbour mean),leave-one-province-out,unweighted,752,0.0191,+0.1103,+0.0002,matched reference on the 752 surviving cells,99213,filter
+SWIR albedo at least 0.05,spatial null (queen neighbour mean),leave-one-province-out,by sounding count,752,0.0400,+0.0372,+0.0348,matched reference on the 752 surviving cells,99213,filter
+SWIR albedo at least 0.05,spatial null (queen neighbour mean),spatial blocks,unweighted,752,0.0384,-0.2940,-0.0815,matched reference on the 752 surviving cells,99213,filter
+SWIR albedo at least 0.05,spatial null (queen neighbour mean),spatial blocks,by sounding count,752,0.1064,-0.4073,-0.1588,matched reference on the 752 surviving cells,99213,filter
+SWIR albedo at least 0.05,OLS impervious_fraction,leave-one-province-out,unweighted,752,-0.0083,+0.1091,+0.0613,matched reference on the 752 surviving cells,99213,filter
+SWIR albedo at least 0.05,OLS impervious_fraction,leave-one-province-out,by sounding count,752,-0.0809,+0.0811,+0.1287,matched reference on the 752 surviving cells,99213,filter
+SWIR albedo at least 0.05,OLS impervious_fraction,spatial blocks,unweighted,752,0.0271,-0.0576,+0.0077,matched reference on the 752 surviving cells,99213,filter
+SWIR albedo at least 0.05,OLS impervious_fraction,spatial blocks,by sounding count,752,-0.0043,-0.0287,+0.0247,matched reference on the 752 surviving cells,99213,filter
+SWIR albedo at least 0.05,OLS rice_fraction_single,leave-one-province-out,unweighted,498,-0.2087,-0.1413,+0.0419,matched reference on the 752 surviving cells,99213,filter
+SWIR albedo at least 0.05,OLS rice_fraction_single,leave-one-province-out,by sounding count,498,-0.2212,+0.1928,+0.2393,matched reference on the 752 surviving cells,99213,filter
+SWIR albedo at least 0.05,OLS rice_fraction_single,spatial blocks,unweighted,498,-0.0559,-0.0245,-0.0133,matched reference on the 752 surviving cells,99213,filter
+SWIR albedo at least 0.05,OLS rice_fraction_single,spatial blocks,by sounding count,498,-0.0252,+0.0673,+0.0081,matched reference on the 752 surviving cells,99213,filter
+SWIR albedo at least 0.05,OLS impervious_fraction + rice_fraction_single,leave-one-province-out,unweighted,498,-0.2682,-0.1392,+0.0925,matched reference on the 752 surviving cells,99213,filter
+SWIR albedo at least 0.05,OLS impervious_fraction + rice_fraction_single,leave-one-province-out,by sounding count,498,-0.5901,+0.2553,+0.3030,matched reference on the 752 surviving cells,99213,filter
+SWIR albedo at least 0.05,OLS impervious_fraction + rice_fraction_single,spatial blocks,unweighted,498,0.0218,+0.0049,+0.0390,matched reference on the 752 surviving cells,99213,filter
+SWIR albedo at least 0.05,OLS impervious_fraction + rice_fraction_single,spatial blocks,by sounding count,498,0.0244,+0.1019,+0.0548,matched reference on the 752 surviving cells,99213,filter
+SWIR albedo at least 0.05,"OLS trend surface (lat, lon)",leave-one-province-out,unweighted,752,-0.0995,+0.1868,-0.0080,matched reference on the 752 surviving cells,99213,filter
+SWIR albedo at least 0.05,"OLS trend surface (lat, lon)",leave-one-province-out,by sounding count,752,-0.0024,+0.0751,-0.0296,matched reference on the 752 surviving cells,99213,filter
+SWIR albedo at least 0.05,"OLS trend surface (lat, lon)",spatial blocks,unweighted,752,-0.0201,-0.2602,-0.0110,matched reference on the 752 surviving cells,99213,filter
+SWIR albedo at least 0.05,"OLS trend surface (lat, lon)",spatial blocks,by sounding count,752,0.0352,-0.2227,-0.0776,matched reference on the 752 surviving cells,99213,filter
+SWIR albedo at least 0.05,"OLS wind (u, v, speed)",leave-one-province-out,unweighted,752,0.0375,-0.5957,-0.0603,matched reference on the 752 surviving cells,99213,filter
+SWIR albedo at least 0.05,"OLS wind (u, v, speed)",leave-one-province-out,by sounding count,752,-0.2652,-0.5762,+0.2134,matched reference on the 752 surviving cells,99213,filter
+SWIR albedo at least 0.05,"OLS wind (u, v, speed)",spatial blocks,unweighted,752,-0.0225,-0.6752,-0.1759,matched reference on the 752 surviving cells,99213,filter
+SWIR albedo at least 0.05,"OLS wind (u, v, speed)",spatial blocks,by sounding count,752,-0.1599,-0.7226,-0.1212,matched reference on the 752 surviving cells,99213,filter
+both filters,constant (global mean),leave-one-province-out,unweighted,752,-0.0086,+0.1638,+0.0073,matched reference on the 752 surviving cells,99213,filter
+both filters,constant (global mean),leave-one-province-out,by sounding count,752,-0.0308,+0.0545,+0.0803,matched reference on the 752 surviving cells,99213,filter
+both filters,constant (global mean),spatial blocks,unweighted,752,-0.0062,+0.0022,+0.0017,matched reference on the 752 surviving cells,99213,filter
+both filters,constant (global mean),spatial blocks,by sounding count,752,-0.0081,-0.0050,+0.0070,matched reference on the 752 surviving cells,99213,filter
+both filters,spatial null (queen neighbour mean),leave-one-province-out,unweighted,752,0.0191,+0.1103,+0.0002,matched reference on the 752 surviving cells,99213,filter
+both filters,spatial null (queen neighbour mean),leave-one-province-out,by sounding count,752,0.0400,+0.0372,+0.0348,matched reference on the 752 surviving cells,99213,filter
+both filters,spatial null (queen neighbour mean),spatial blocks,unweighted,752,0.0384,-0.2940,-0.0815,matched reference on the 752 surviving cells,99213,filter
+both filters,spatial null (queen neighbour mean),spatial blocks,by sounding count,752,0.1064,-0.4073,-0.1588,matched reference on the 752 surviving cells,99213,filter
+both filters,OLS impervious_fraction,leave-one-province-out,unweighted,752,-0.0083,+0.1091,+0.0613,matched reference on the 752 surviving cells,99213,filter
+both filters,OLS impervious_fraction,leave-one-province-out,by sounding count,752,-0.0809,+0.0811,+0.1287,matched reference on the 752 surviving cells,99213,filter
+both filters,OLS impervious_fraction,spatial blocks,unweighted,752,0.0271,-0.0576,+0.0077,matched reference on the 752 surviving cells,99213,filter
+both filters,OLS impervious_fraction,spatial blocks,by sounding count,752,-0.0043,-0.0287,+0.0247,matched reference on the 752 surviving cells,99213,filter
+both filters,OLS rice_fraction_single,leave-one-province-out,unweighted,498,-0.2087,-0.1413,+0.0419,matched reference on the 752 surviving cells,99213,filter
+both filters,OLS rice_fraction_single,leave-one-province-out,by sounding count,498,-0.2212,+0.1928,+0.2393,matched reference on the 752 surviving cells,99213,filter
+both filters,OLS rice_fraction_single,spatial blocks,unweighted,498,-0.0559,-0.0245,-0.0133,matched reference on the 752 surviving cells,99213,filter
+both filters,OLS rice_fraction_single,spatial blocks,by sounding count,498,-0.0252,+0.0673,+0.0081,matched reference on the 752 surviving cells,99213,filter
+both filters,OLS impervious_fraction + rice_fraction_single,leave-one-province-out,unweighted,498,-0.2682,-0.1392,+0.0925,matched reference on the 752 surviving cells,99213,filter
+both filters,OLS impervious_fraction + rice_fraction_single,leave-one-province-out,by sounding count,498,-0.5901,+0.2553,+0.3030,matched reference on the 752 surviving cells,99213,filter
+both filters,OLS impervious_fraction + rice_fraction_single,spatial blocks,unweighted,498,0.0218,+0.0049,+0.0390,matched reference on the 752 surviving cells,99213,filter
+both filters,OLS impervious_fraction + rice_fraction_single,spatial blocks,by sounding count,498,0.0244,+0.1019,+0.0548,matched reference on the 752 surviving cells,99213,filter
+both filters,"OLS trend surface (lat, lon)",leave-one-province-out,unweighted,752,-0.0995,+0.1868,-0.0080,matched reference on the 752 surviving cells,99213,filter
+both filters,"OLS trend surface (lat, lon)",leave-one-province-out,by sounding count,752,-0.0024,+0.0751,-0.0296,matched reference on the 752 surviving cells,99213,filter
+both filters,"OLS trend surface (lat, lon)",spatial blocks,unweighted,752,-0.0201,-0.2602,-0.0110,matched reference on the 752 surviving cells,99213,filter
+both filters,"OLS trend surface (lat, lon)",spatial blocks,by sounding count,752,0.0352,-0.2227,-0.0776,matched reference on the 752 surviving cells,99213,filter
+both filters,"OLS wind (u, v, speed)",leave-one-province-out,unweighted,752,0.0375,-0.5957,-0.0603,matched reference on the 752 surviving cells,99213,filter
+both filters,"OLS wind (u, v, speed)",leave-one-province-out,by sounding count,752,-0.2652,-0.5762,+0.2134,matched reference on the 752 surviving cells,99213,filter
+both filters,"OLS wind (u, v, speed)",spatial blocks,unweighted,752,-0.0225,-0.6752,-0.1759,matched reference on the 752 surviving cells,99213,filter
+both filters,"OLS wind (u, v, speed)",spatial blocks,by sounding count,752,-0.1599,-0.7226,-0.1212,matched reference on the 752 surviving cells,99213,filter
+first-order destriping,constant (global mean),leave-one-province-out,unweighted,926,-0.1741,-0.0017,-0.0017,same cells as committed,110920,filter
+first-order destriping,constant (global mean),leave-one-province-out,by sounding count,926,-0.0840,+0.0013,+0.0013,same cells as committed,110920,filter
+first-order destriping,constant (global mean),spatial blocks,unweighted,926,-0.0069,+0.0015,+0.0015,same cells as committed,110920,filter
+first-order destriping,constant (global mean),spatial blocks,by sounding count,926,-0.0031,+0.0000,+0.0000,same cells as committed,110920,filter
+first-order destriping,spatial null (queen neighbour mean),leave-one-province-out,unweighted,926,-0.0993,-0.0081,-0.0081,same cells as committed,110920,filter
+first-order destriping,spatial null (queen neighbour mean),leave-one-province-out,by sounding count,926,0.0033,+0.0005,+0.0005,same cells as committed,110920,filter
+first-order destriping,spatial null (queen neighbour mean),spatial blocks,unweighted,926,0.3409,+0.0085,+0.0085,same cells as committed,110920,filter
+first-order destriping,spatial null (queen neighbour mean),spatial blocks,by sounding count,926,0.5183,+0.0046,+0.0046,same cells as committed,110920,filter
+first-order destriping,OLS impervious_fraction,leave-one-province-out,unweighted,926,-0.1079,+0.0095,+0.0095,same cells as committed,110920,filter
+first-order destriping,OLS impervious_fraction,leave-one-province-out,by sounding count,926,-0.1591,+0.0029,+0.0029,same cells as committed,110920,filter
+first-order destriping,OLS impervious_fraction,spatial blocks,unweighted,926,0.0923,+0.0076,+0.0076,same cells as committed,110920,filter
+first-order destriping,OLS impervious_fraction,spatial blocks,by sounding count,926,0.0261,+0.0017,+0.0017,same cells as committed,110920,filter
+first-order destriping,OLS rice_fraction_single,leave-one-province-out,unweighted,531,-0.0602,+0.0072,+0.0072,same cells as committed,110920,filter
+first-order destriping,OLS rice_fraction_single,leave-one-province-out,by sounding count,531,-0.3950,+0.0190,+0.0190,same cells as committed,110920,filter
+first-order destriping,OLS rice_fraction_single,spatial blocks,unweighted,531,-0.0293,+0.0021,+0.0021,same cells as committed,110920,filter
+first-order destriping,OLS rice_fraction_single,spatial blocks,by sounding count,531,-0.0907,+0.0018,+0.0018,same cells as committed,110920,filter
+first-order destriping,OLS impervious_fraction + rice_fraction_single,leave-one-province-out,unweighted,531,-0.1093,+0.0197,+0.0197,same cells as committed,110920,filter
+first-order destriping,OLS impervious_fraction + rice_fraction_single,leave-one-province-out,by sounding count,531,-0.8130,+0.0324,+0.0324,same cells as committed,110920,filter
+first-order destriping,OLS impervious_fraction + rice_fraction_single,spatial blocks,unweighted,531,0.0250,+0.0081,+0.0081,same cells as committed,110920,filter
+first-order destriping,OLS impervious_fraction + rice_fraction_single,spatial blocks,by sounding count,531,-0.0734,+0.0041,+0.0041,same cells as committed,110920,filter
+first-order destriping,"OLS trend surface (lat, lon)",leave-one-province-out,unweighted,926,-0.2830,+0.0033,+0.0033,same cells as committed,110920,filter
+first-order destriping,"OLS trend surface (lat, lon)",leave-one-province-out,by sounding count,926,-0.0744,+0.0031,+0.0031,same cells as committed,110920,filter
+first-order destriping,"OLS trend surface (lat, lon)",spatial blocks,unweighted,926,0.2566,+0.0165,+0.0165,same cells as committed,110920,filter
+first-order destriping,"OLS trend surface (lat, lon)",spatial blocks,by sounding count,926,0.2711,+0.0132,+0.0132,same cells as committed,110920,filter
+first-order destriping,"OLS wind (u, v, speed)",leave-one-province-out,unweighted,926,0.6331,-0.0001,-0.0001,same cells as committed,110920,filter
+first-order destriping,"OLS wind (u, v, speed)",leave-one-province-out,by sounding count,926,0.3402,+0.0292,+0.0292,same cells as committed,110920,filter
+first-order destriping,"OLS wind (u, v, speed)",spatial blocks,unweighted,926,0.6554,+0.0027,+0.0027,same cells as committed,110920,filter
+first-order destriping,"OLS wind (u, v, speed)",spatial blocks,by sounding count,926,0.5670,+0.0043,+0.0043,same cells as committed,110920,filter
+representativeness weighting,constant (global mean),leave-one-province-out,unweighted,926,-0.1724,+0.0000,+0.0000,same cells as committed,110920,weighting
+representativeness weighting,constant (global mean),leave-one-province-out,by sounding count,926,-0.0846,+0.0007,+0.0007,same cells as committed,110920,weighting
+representativeness weighting,constant (global mean),spatial blocks,unweighted,926,-0.0084,+0.0000,+0.0000,same cells as committed,110920,weighting
+representativeness weighting,constant (global mean),spatial blocks,by sounding count,926,-0.0237,-0.0206,-0.0206,same cells as committed,110920,weighting
+representativeness weighting,spatial null (queen neighbour mean),leave-one-province-out,unweighted,926,-0.0912,+0.0000,+0.0000,same cells as committed,110920,weighting
+representativeness weighting,spatial null (queen neighbour mean),leave-one-province-out,by sounding count,926,-0.1444,-0.1472,-0.1472,same cells as committed,110920,weighting
+representativeness weighting,spatial null (queen neighbour mean),spatial blocks,unweighted,926,0.3324,+0.0000,+0.0000,same cells as committed,110920,weighting
+representativeness weighting,spatial null (queen neighbour mean),spatial blocks,by sounding count,926,-0.1250,-0.6387,-0.6387,same cells as committed,110920,weighting
+representativeness weighting,OLS impervious_fraction,leave-one-province-out,unweighted,926,-0.1174,+0.0000,+0.0000,same cells as committed,110920,weighting
+representativeness weighting,OLS impervious_fraction,leave-one-province-out,by sounding count,926,-0.0588,+0.1032,+0.1032,same cells as committed,110920,weighting
+representativeness weighting,OLS impervious_fraction,spatial blocks,unweighted,926,0.0847,+0.0000,+0.0000,same cells as committed,110920,weighting
+representativeness weighting,OLS impervious_fraction,spatial blocks,by sounding count,926,0.0334,+0.0090,+0.0090,same cells as committed,110920,weighting
+representativeness weighting,OLS rice_fraction_single,leave-one-province-out,unweighted,531,-0.0674,+0.0000,+0.0000,same cells as committed,110920,weighting
+representativeness weighting,OLS rice_fraction_single,leave-one-province-out,by sounding count,531,-0.2324,+0.1816,+0.1816,same cells as committed,110920,weighting
+representativeness weighting,OLS rice_fraction_single,spatial blocks,unweighted,531,-0.0314,+0.0000,+0.0000,same cells as committed,110920,weighting
+representativeness weighting,OLS rice_fraction_single,spatial blocks,by sounding count,531,-0.1513,-0.0588,-0.0588,same cells as committed,110920,weighting
+representativeness weighting,OLS impervious_fraction + rice_fraction_single,leave-one-province-out,unweighted,531,-0.1290,+0.0000,+0.0000,same cells as committed,110920,weighting
+representativeness weighting,OLS impervious_fraction + rice_fraction_single,leave-one-province-out,by sounding count,531,-0.4090,+0.4364,+0.4364,same cells as committed,110920,weighting
+representativeness weighting,OLS impervious_fraction + rice_fraction_single,spatial blocks,unweighted,531,0.0169,+0.0000,+0.0000,same cells as committed,110920,weighting
+representativeness weighting,OLS impervious_fraction + rice_fraction_single,spatial blocks,by sounding count,531,-0.2294,-0.1519,-0.1519,same cells as committed,110920,weighting
+representativeness weighting,"OLS trend surface (lat, lon)",leave-one-province-out,unweighted,926,-0.2863,+0.0000,+0.0000,same cells as committed,110920,weighting
+representativeness weighting,"OLS trend surface (lat, lon)",leave-one-province-out,by sounding count,926,-0.4277,-0.3502,-0.3502,same cells as committed,110920,weighting
+representativeness weighting,"OLS trend surface (lat, lon)",spatial blocks,unweighted,926,0.2401,+0.0000,+0.0000,same cells as committed,110920,weighting
+representativeness weighting,"OLS trend surface (lat, lon)",spatial blocks,by sounding count,926,-0.1570,-0.4149,-0.4149,same cells as committed,110920,weighting
+representativeness weighting,"OLS wind (u, v, speed)",leave-one-province-out,unweighted,926,0.6332,+0.0000,+0.0000,same cells as committed,110920,weighting
+representativeness weighting,"OLS wind (u, v, speed)",leave-one-province-out,by sounding count,926,-0.2717,-0.5827,-0.5827,same cells as committed,110920,weighting
+representativeness weighting,"OLS wind (u, v, speed)",spatial blocks,unweighted,926,0.6527,+0.0000,+0.0000,same cells as committed,110920,weighting
+representativeness weighting,"OLS wind (u, v, speed)",spatial blocks,by sounding count,926,0.1951,-0.3676,-0.3676,same cells as committed,110920,weighting

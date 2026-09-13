@@ -72,6 +72,47 @@ recipes:
     day's interval is simulated from the coefficient covariance with a fixed
     seed, so the artefact is reproducible.
   sha256: 25616eef6d68e08c42f2b027660b72b66beabe3b1e01a9d096b26e84530fe34a
+- artefact: data/processed/granule_quality_2018.csv
+  command: python scripts/summarise_composite_quality.py --write
+  out_flag: --out-granule
+  label: per-granule quality accounting and declared footprint
+  cost: seconds from the extended checkpoint
+  seconds: 6
+  inputs: local
+  compare: bytes
+  verified: on_local
+  note: >-
+    Reads the extended granule checkpoint, which is gitignored, so this is
+    local-tier. One row per granule: soundings read, those in box before any
+    filtering, those carrying a retrieval, those passing quality control, and
+    the ground pixel size the file declares.
+- artefact: data/processed/cell_quality_2018.csv
+  command: python scripts/summarise_composite_quality.py --write
+  out_flag: --out-cell
+  label: per-cell quality accounting, spread and candidate weightings
+  cost: seconds from the extended checkpoint
+  seconds: 6
+  inputs: local
+  compare: bytes
+  verified: on_local
+  note: >-
+    Written by the same command as the granule table. One row per cell: the
+    pre-filter and retrieved counts, months observed, within-cell standard
+    deviation, and the two candidate weightings side by side.
+- artefact: data/processed/preprocessing_sensitivity_2018.csv
+  command: python scripts/test_preprocessing_omissions.py --write
+  label: the four preprocessing omissions tested as sensitivities
+  cost: about four minutes; it refits the baseline suite once per variant
+  seconds: 260
+  inputs: local
+  compare: bytes
+  verified: on_local
+  note: >-
+    Six variants by seven models by four scheme-weighting combinations. Where a
+    filter empties cells the committed target is re-run on exactly the same
+    surviving cells, and `delta_vs_matched` is the honest comparison;
+    `delta_vs_committed` is against the published 926-cell fit and is not
+    like-for-like for the albedo rows.
 - artefact: data/processed/grid_resolution_2018.csv
   command: python scripts/measure_grid_resolution.py --write
   label: coverage and precision across grid resolutions

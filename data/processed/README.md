@@ -1480,3 +1480,81 @@ existing lattice.
 The verdict recorded in `notes/decisions.md` is that 0.1 degrees is not viable:
 six times the cells, no additional independent information, and twice the noise
 per cell.
+## granule_quality_2018.csv and cell_quality_2018.csv
+
+What the Tier 3 retention pass measured about the composite's own quality,
+written together by `scripts/summarise_composite_quality.py --write`. Both read
+the extended granule checkpoint, which is gitignored, so both are local-tier.
+
+**The rejection rate over this domain is two numbers, and reporting one would
+be wrong.** Of 2,098,671 soundings inside the box across the year, **221,686
+carry a retrieval at all** and **110,920 pass the quality threshold**. So
+89.44 percent of in-box soundings are lost to no retrieval — cloud, geometry —
+which the quality filter does not reject, because there is nothing there to
+reject; and **49.97 percent of the retrievals that do exist are removed by the
+threshold**, almost exactly half. Collapsing these into a single "95 percent
+rejected" would attribute monsoon cloud to a quality decision.
+
+**The threshold removes whole bins, not a tail.** The year's `qa_value` takes
+four distinct values — 0, 0.16, 0.4 and 1.0 — so a cut at 0.75 keeps the 1.0
+bin and discards the 0.4 bin entire. Moving the threshold anywhere between 0.4
+and 1.0 changes nothing at all.
+
+**Every granule declares the same footprint**, `7.0x7.0 km2`, read from the
+files rather than from the mission documentation. That figure had been in no
+committed record. A 0.25 degree cell here is about 663 km², so roughly 13.5
+footprints; a 0.1 degree cell would be about 106 km², roughly 2.2.
+
+The per-cell table adds the within-cell standard deviation — **median 18.94 ppb
+over 905 cells with more than one sounding, against a between-cell spread of
+14.86 ppb**. The scatter inside an average cell exceeds the entire spatial
+signal between cells, which is what the per-sounding uncertainty of 29 ppb
+predicts and what makes the composite's ability to say anything rest on
+averaging.
+
+It also carries the two candidate weightings side by side. `weight_by_count` is
+the committed one. `weight_representativeness` is `1 / (29² / n + s²)` with `s`
+the within-cell spread, the Level 3 literature's inverse-variance weight with
+its spatial term at the low-coverage limit. **The two are close to orthogonal**:
+their correlation is −0.03, because the spatial term carries 97.5 percent of
+the variance and does not shrink with n. It is also *less* extreme than count
+weighting, spanning 69× against 205×, and it does not concentrate on sparse
+cells — cells with under 10 soundings hold 8.7 percent of the weight while
+being 11.6 percent of the cells.
+
+## preprocessing_sensitivity_2018.csv
+
+The four preprocessing steps `notes/draft-methods.md` §2.5 says this project
+does not apply, tested as sensitivities rather than adopted. Written by
+`scripts/test_preprocessing_omissions.py --write`: six variants by seven models
+by four scheme-weighting combinations.
+
+**Read `delta_vs_matched`, not `delta_vs_committed`.** The albedo floor empties
+174 cells, so its fit is on 752 cells where the committed fit is on 926, and an
+R² on one sample is not comparable with an R² on the other. For any variant
+whose surviving cell set differs, the committed target is re-run **on exactly
+those cells** and `delta_vs_matched` is measured against that.
+`delta_vs_committed` is kept because it is what a reader would otherwise
+compute, and it is the misleading one.
+
+| variant | soundings kept | cells | what it does |
+|---|---|---|---|
+| precision under 10 ppb | 110,920 (100 %) | 926 | **nothing** |
+| SWIR albedo ≥ 0.05 | 99,213 (89.45 %) | 752 | drops 174 cells |
+| both filters | 99,213 (89.45 %) | 752 | identical to albedo alone |
+| first-order destriping | 110,920 (100 %) | 926 | shifts values, keeps every sounding |
+| representativeness weighting | 110,920 (100 %) | 926 | reweights, changes no value |
+
+**The precision filter is provably a no-op**, not approximately one: of the
+110,920 soundings that pass quality control, 99.89 percent have a precision
+under 5 ppb and the remaining 0.11 percent fall between 5 and 10. **None
+exceeds 10 ppb.** The quality threshold already enforces the published
+precision filter, so that omission was never an omission in effect.
+
+The destriping variant is **first order only**. The accumulator retains each
+detector column's sum over the whole domain and year, so the offset is measured
+against the domain mean and absorbs any systematic relationship between column
+and geography — a swath crosses the domain at an angle, so the two are not
+independent. Read it as an upper bound on what destriping would remove. The
+offsets span −15.27 to +12.77 ppb with a standard deviation of 5.09 ppb across
+the 200 columns that carry soundings.

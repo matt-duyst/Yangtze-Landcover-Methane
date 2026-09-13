@@ -459,6 +459,33 @@ def _cycle(quantity: str) -> float:
     return float(_cache["cycle"][quantity]["value"])
 
 
+def _quality_granules() -> list[dict]:
+    """Per-granule quality accounting from the Tier 3 retention pass."""
+    if "qgran" not in _cache:
+        _cache["qgran"] = _read_csv(PROCESSED / "granule_quality_2018.csv")
+    return _cache["qgran"]
+
+
+def _quality_cells() -> list[dict]:
+    if "qcell" not in _cache:
+        _cache["qcell"] = _read_csv(PROCESSED / "cell_quality_2018.csv")
+    return _cache["qcell"]
+
+
+def _qsum(column: str) -> int:
+    return int(sum(int(r[column]) for r in _quality_granules()))
+
+
+def _sensitivity(variant: str, model: str, scheme: str, weighting: str,
+                 column: str = "held_out_r2") -> float:
+    """One row of the preprocessing sensitivity table."""
+    if "sens" not in _cache:
+        _cache["sens"] = {
+            (r["variant"], r["model"], r["scheme"], r["weighting"]): r
+            for r in _read_csv(PROCESSED / "preprocessing_sensitivity_2018.csv")}
+    return float(_cache["sens"][(variant, model, scheme, weighting)][column])
+
+
 def _resolution(resolution: str, quantity: str) -> float:
     """One row of the grid-resolution table, by resolution and quantity label.
 
@@ -1094,6 +1121,59 @@ QUANTITIES = {
     "resolution.singletons_01": lambda: _resolution("0.1", "single-cell gaps"),
     "resolution.effective_n_empirical": lambda: _resolution(
         "", "effective sample size at 0.25 degree, empirical"),
+    # The Tier 3 retention pass: what the quality threshold removed over this
+    # domain, and how the composite responds to the omitted preprocessing.
+    "quality.granules": lambda: len(_quality_granules()),
+    "quality.read": lambda: _qsum("soundings_read"),
+    "quality.in_box_total": lambda: _qsum("in_box_total"),
+    "quality.in_box_retrieved": lambda: _qsum("in_box_retrieved"),
+    "quality.in_box_passed": lambda: _qsum("in_box_passed"),
+    "quality.no_retrieval_pct": lambda: 100.0 * (
+        _qsum("in_box_total") - _qsum("in_box_retrieved")) / _qsum("in_box_total"),
+    "quality.threshold_rejected_pct": lambda: 100.0 * (
+        _qsum("in_box_retrieved") - _qsum("in_box_passed"))
+        / _qsum("in_box_retrieved"),
+    "quality.within_sd_median": lambda: float(np.median(
+        [float(r["within_cell_sd_ppb"]) for r in _quality_cells()
+         if r["within_cell_sd_ppb"]])),
+    "quality.cells_with_spread": lambda: sum(
+        1 for r in _quality_cells() if r["within_cell_sd_ppb"]),
+    "quality.months_median": lambda: float(np.median(
+        [int(r["months_observed"]) for r in _quality_cells()
+         if int(r["sounding_count"])])),
+    "sens.precision_kept": lambda: _sensitivity(
+        "precision under 10 ppb", "OLS impervious_fraction",
+        "spatial blocks", "unweighted", "soundings"),
+    "sens.albedo_kept": lambda: _sensitivity(
+        "SWIR albedo at least 0.05", "OLS impervious_fraction",
+        "spatial blocks", "unweighted", "soundings"),
+    "sens.committed_soundings": lambda: _sensitivity(
+        "committed (no filter)", "OLS impervious_fraction",
+        "spatial blocks", "unweighted", "soundings"),
+    "sens.albedo_cells": lambda: _sensitivity(
+        "SWIR albedo at least 0.05", "OLS impervious_fraction",
+        "spatial blocks", "unweighted", "n"),
+    "sens.impervious_destriped": lambda: _sensitivity(
+        "first-order destriping", "OLS impervious_fraction",
+        "spatial blocks", "unweighted"),
+    "sens.null_destriped": lambda: _sensitivity(
+        "first-order destriping", "spatial null (queen neighbour mean)",
+        "spatial blocks", "unweighted"),
+    "sens.impervious_repweight": lambda: _sensitivity(
+        "representativeness weighting", "OLS impervious_fraction",
+        "spatial blocks", "by sounding count"),
+    "sens.null_repweight": lambda: _sensitivity(
+        "representativeness weighting", "spatial null (queen neighbour mean)",
+        "spatial blocks", "by sounding count"),
+    "sens.null_committed_weighted": lambda: _sensitivity(
+        "committed (no filter)", "spatial null (queen neighbour mean)",
+        "spatial blocks", "by sounding count"),
+    "sens.impervious_albedo": lambda: _sensitivity(
+        "SWIR albedo at least 0.05", "OLS impervious_fraction",
+        "spatial blocks", "unweighted"),
+    "sens.null_albedo": lambda: _sensitivity(
+        "SWIR albedo at least 0.05", "spatial null (queen neighbour mean)",
+        "spatial blocks", "unweighted"),
     "cycle.peak_day": lambda: _cycle("peak day of year"),
     "cycle.peak_low": lambda: _cycle("peak day 2.5th percentile"),
     "cycle.peak_high": lambda: _cycle("peak day 97.5th percentile"),
