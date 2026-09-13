@@ -5840,3 +5840,117 @@ computed for two years. It also carries a cost this pass quantified: **the rice
 layer would be weaker in a 2021 year than in 2018**, because NESDC's totals are
 pinned for Shanghai from 2019 and for Jiangsu from 2020, so a 2021 year would
 have both provinces pinned where 2018 has neither.
+
+## The accuracy assessment is blocked, and the sampling question never arose
+
+13 September 2026. This settles the status of an item that has been open since
+the methods grounding and records a research failure alongside it.
+
+### The finding, which is about the region rather than about this project
+
+**No reference layer exists over the Yangtze River Delta that is both more
+accurate than the 30 m products this project uses and available for a year this
+project analyses.** `notes/grounding-methods.md` records the four candidates
+individually, with the reason each fails, because a later pass will otherwise
+reopen them one at a time. The short form: against GISA's impervious F-score of
+0.954, SinoLC-1 is 73.61 percent overall, ISA-1's impervious class is F1 75.53
+with recall 61.76, EcoVision is 83.6 percent and urban-only, and CISC is 30 m
+and therefore a fourth product rather than a reference.
+
+The distinction between "the products over this region cannot support it" and
+"this project did not do it" is not cosmetic. It decides whether the paper
+reports an absence in its methods section as a property of the available data,
+or in a limitations paragraph as a debt. **It goes in methods**, on the same
+reasoning that put the preprocessing omissions there, and
+`notes/draft-methods.md` §7 now states it with the four candidates and their
+numbers.
+
+### The research failure, which is the more useful half
+
+**Eight literature rounds went to the sampling-design question and it was the
+wrong question.** Probability samples, stratified prediction-powered inference,
+its design-based extension, the certainty-stratum framework, and three deposited
+sample sets: all of it addressed to Olofsson's first recommendation, a
+probability sampling design.
+
+**That recommendation does not apply to the protocol this project had already
+adopted.** The continuous-field frame for a fractional layer — Riemann et al.
+(2010), as used by the NLCD percent-impervious assessment — compares a product
+against **complete-coverage** reference data, and says so in its own words: "we
+do not estimate agreement from a sample, but rather calculate agreement directly
+from the full coverage data". A complete-coverage comparison has no sampling
+design to be valid about. This record had already made exactly that argument for
+Olofsson's fourth and fifth recommendations, which concern error matrices and
+do not apply to fractional cover. **The same argument covers the first and
+nobody extended it.**
+
+So the problem was never *obtain a probability sample*. It was *obtain a
+reference layer more accurate than the product* — a different problem, a harder
+one, and the one with no solution here. **The sampling literature was answering
+a question this project had already ruled out of scope for itself**, and the
+scope was stated in the same section of this repository that established the
+protocol.
+
+**The rule worth keeping, because it is transferable and cheap:** when a
+protocol is adopted, read what it does about sampling before searching for
+samples. A protocol that assesses complete coverage and a protocol that assesses
+a sample ask for different things, and the difference is in the first paragraph
+of each. The cost of not reading it was eight rounds.
+
+`ERRATA.md` 6.5 is corrected a second time for the same reason. It said the
+reproduction owes Olofsson's first three recommendations; it owes the second and
+third.
+
+### What the project can say instead, and what it cannot
+
+**Product-against-product disagreement**, which this project already reports as
+a single percentage of provincial area and which the Pontius and Millones
+decomposition splits into a quantity component and an allocation component. That
+is queue item 10, it needs only the two committed products, and it is now the
+live item where the assessment was.
+
+**What it cannot say is either product's error.** Two layers can agree closely
+and both be wrong the same way. So there is no absolute accuracy for either
+layer and therefore no reliability ratio in the errors-in-variables sense.
+
+### The consequence for de-attenuation, which is a reduction and not a block
+
+Queue item 11 was gated on items 9 and 10. **Item 9 is blocked and item 11 is
+not**, because item 11's impervious input was always item 10's allocation
+disagreement rather than a reference assessment. What changes is what that input
+can be:
+
+* Allocation disagreement is a **lower bound** on the pair's joint error
+  variance — where GAIA and GISA differ at least one is wrong; where they agree
+  nothing is constrained.
+* A lower bound on error variance gives an **upper bound on attenuation**.
+* So item 11 produces a **bound on the de-attenuated coefficient, not a point
+  estimate** — and that bound is the thing actually needed, because the question
+  is whether measurement error *could* manufacture the null. **If the upper
+  bound on attenuation does not reach the observed coefficient, the null
+  survives the objection.**
+
+The rice half is unaffected: the assessment is blocked for want of a reference
+*layer*, and the CCD-Rice polygons are reference *points*, still usable over the
+62 cells they reach, with the purposive-sample caveat that they carry no
+inclusion probabilities and so support an estimate without a design-based
+interval.
+
+**So item 11 is reduced from estimation to bounding and its gate is item 10
+alone.** `notes/draft-results.md` §3.4 now says what follows for the negative
+result: measurement error has not been excluded, the bound that would exclude it
+is queued and not computed, and the second predictors built here are evidence
+against it rather than a measurement of it.
+
+### What would reopen this, recorded as files rather than hopes
+
+ISA-1's claimed biennial 2017 and 2019 maps, none deposited, which would fix the
+year and not the accuracy. EcoVision's full text, unread behind a publisher 403
+and absent from its own authors' server, whose impervious-class F-score could
+exceed 0.954 even at 83.6 percent overall because built-up is among the easiest
+classes. And **CISC's expert-interpreted validation points**, produced on a
+stated entropy-guided stratified design, which would be reference data even
+though its product is not, and whose existence as a file is unestablished
+because Zenodo refused this network throughout the verification pass. **That
+third is the most valuable unresolved item**, because expert-interpreted points
+on a stated design over China is what every other candidate lacks.

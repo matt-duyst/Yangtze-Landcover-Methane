@@ -1233,6 +1233,15 @@ classes. The national deposit holds 3,619.
 Three facts in the table bound what an accuracy assessment could do, and none
 of them is visible from the deposit's landing page.
 
+**As of 13 September 2026 the assessment itself is blocked**, for a reason that
+has nothing to do with these polygons: no reference *layer* over this domain is
+more accurate than the products it would assess, which
+`notes/grounding-methods.md` records with the measurements. These polygons are
+reference *points* and remain useful for what they can bound — a rice error
+variance over the 62 cells they reach, carried into the de-attenuation item as a
+bound rather than an estimate, since a purposive sample has no inclusion
+probabilities. **So this table's purpose changed and its content did not.**
+
 **They reach 62 of the 926 analysis cells.** Visual interpretation was done in
 clusters, not spread over the domain, so 6.7 percent of the lattice carries all
 the reference data there is. Shanghai's 338 polygons fall in six cells. The

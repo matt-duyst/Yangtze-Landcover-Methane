@@ -560,12 +560,41 @@ requires, cannot validate a field**, and no result in this work rests on that
 comparison. It establishes that the comparison is possible and bounds how much of
 it is available.
 
-No accuracy assessment of either land-cover product was performed. No reference
-data independent of the products is distributed for the impervious layers, and
-the good-practice standard for area estimation in this literature has no
-treatment of fractional cover, which is the form both predictors take here
-(§4.3). The absence is a limitation on any statement about the *size* of a
-land-cover effect and not on the capability statements of §6.
+**No accuracy assessment of either land-cover product was performed, and this is
+a methods statement rather than a limitation**, on the same reasoning that puts
+the preprocessing omissions here: it is a property of what was done and of what
+could be done, established by measurement, not a caveat appended to a result.
+
+The assessment frame for a fractional layer is agreement of a continuous field —
+mean deviation, mean absolute deviation and regression against a more accurate
+reference fraction — rather than an error matrix, because the good-practice
+standard for categorical area estimation contains no treatment of fractional
+cover, which is the form both predictors take here (§4.3). That frame compares a
+product against **complete-coverage** reference data and does not sample, so it
+requires no sampling design. **What it requires is a reference layer over the
+domain more accurate than the product, and no such layer exists.**
+
+Four candidates were verified against the four provinces. The impervious layers
+this work uses report an F-score of 0.954 (GISA) and 93.12 percent overall
+accuracy (GISA-new). A 1 m national land-cover map of China reports 73.61
+percent overall accuracy with a kappa of 0.6595, and splits impervious surface
+across two classes. A 1 m impervious product for the Yangtze River Economic
+Belt reports an impervious-class F1 of 75.53 with a recall of 61.76, is
+super-resolved from 10 m imagery, and is deposited as seven example cities. A
+submeter product over 42 cities reports 83.6 percent overall accuracy and covers
+urban areas only. A 30 m product for 2020 and 2022 reports an impervious F1
+above 0.93 and is the same resolution as the layers it would assess, so it is a
+fourth product rather than a reference. **Every candidate is less accurate than
+what it would validate, and each is 2020 or later against analysis years of
+2000, 2010 and 2018.** So the absence is a property of the products available
+over this region, not of effort.
+
+What the layers' disagreement can support instead is stated in §4.3: the
+difference between two independently produced impervious products, decomposed
+into quantity and allocation components. That bounds the pair's error from below
+and gives neither product's error, so **no statement about the *size* of a
+land-cover effect is de-attenuated in this work**, and none of the capability
+statements of §6 depends on one.
 
 ## 8. Reproducibility
 

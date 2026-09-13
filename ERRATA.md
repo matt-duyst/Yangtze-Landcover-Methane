@@ -587,10 +587,35 @@ deviation and regression against a more accurate reference fraction (Wickham et
 al., 2020, International Journal of Applied Earth Observation and Geoinformation
 84, 101955, doi:10.1016/j.jag.2019.101955; Riemann et al., 2010, Remote Sensing
 of Environment 114, 2337-2352, doi:10.1016/j.rse.2010.05.010). What the
-reproduction owes, and has not paid, is the first three of Olofsson's five
-recommendations rather than the last two. `notes/grounding-methods.md` sets out
-the distinction and `notes/dataset-leads.md` records the reference data that
-would make it payable.
+reproduction owes is Olofsson's recommendations **2 and 3** — reference data more
+accurate than the map, and analysis consistent with it.
+
+**A second correction to this item, on 13 September 2026, and it changes what
+the reproduction owes rather than what the thesis owes.** Until this date the
+sentence above read "the first three of Olofsson's five recommendations rather
+than the last two". Recommendation 1, a probability sampling design, **does not
+apply to the reproduction either**, for the same reason 4 and 5 do not: the
+continuous-field protocol it adopted for a fractional layer assesses agreement
+against complete-coverage reference data and states that it does not estimate
+agreement from a sample, so there is no sampling design in it to be valid about.
+The reproduction owes two recommendations, not three.
+
+**And the remaining debt is now established as unpayable over this domain, which
+is a stronger statement than "has not paid".** `notes/grounding-methods.md`
+records the measurements: every candidate reference product over the Yangtze
+River Delta is less accurate than the 30 m products it would assess — SinoLC-1
+at 73.61 percent overall accuracy, ISA-1's impervious class at F1 75.53,
+EcoVision at 83.6 percent and urban-only, and CISC at 30 m and so not a
+reference at all — against GISA's impervious F-score of 0.954. **Recommendation
+2 cannot be met with anything that exists**, so recommendation 3 cannot follow.
+
+That sharpens the asymmetry this note exists to state rather than softening it.
+The thesis reported no accuracy assessment **and reported a number as one**:
+Section 5.1 is titled "Accuracy Assessment" and compares two independent
+estimates of the same quantity. The reproduction reports no accuracy assessment
+**and says so, in its methods section, with the reason and the measurements
+behind it**. The asymmetry is not that one has an excuse and the other does not.
+It is that one names the absence and the other named its absence an assessment.
 
 *Verified by:* full-text search of the thesis PDF for confusion matrix, kappa,
 overall accuracy, producer's and user's accuracy, precision, recall, F1 and

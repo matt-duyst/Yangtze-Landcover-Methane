@@ -296,6 +296,20 @@ analysis can argue against a null hypothesis and not in favour of one. Setting
 such bounds is queued and not done, so no result here should be read as
 establishing the absence of an effect.
 
+**The one mechanism that could manufacture this result is measurement error in
+the predictors, and what can be said about it is a bound rather than a
+correction.** No accuracy assessment of either land-cover layer was performed,
+because no reference layer over this domain is more accurate than the products
+used (methods §7). So neither layer's error variance is known, and the
+de-attenuated coefficient cannot be estimated. What the two independently
+produced impervious products do give, through the quantity-and-allocation
+decomposition of their disagreement, is a **lower bound** on their joint error
+variance and therefore an **upper bound** on how much attenuation measurement
+error could be producing. That bound is queued and not computed. **Until it is,
+the honest statement is that measurement error has not been excluded as an
+explanation for the small coefficients reported in §3.3**, and the second
+predictors built here are evidence against it rather than a measurement of it.
+
 ## 4. Confounds, each with its measurement
 
 ### 4.1 Albedo collinearity
