@@ -1298,6 +1298,39 @@ venue requires and which this repository could write almost mechanically from
 at all.** That is the whole reason for grouping them: each alone would cost the
 same as all five.
 
+**The pass produces 0.25 degrees only, decided 15 September 2026 by
+measurement.** This was an open question in the queue and it is now closed
+against the finer grid, which removes a branch from Tier 3's scope rather than
+adding one. `data/processed/grid_resolution_2018.csv` measures it and
+`notes/decisions.md` records the reasoning. The short form: a 0.1 degree lattice
+holds 6,314<!--#resolution.cells_01--> cells against
+1,023<!--#resolution.cells_025--> at 0.25 degrees, and carries **no more
+independent information** — the modelled effective sample size is
+30.9<!--#resolution.effective_n_025--> at 0.25 degrees and
+30.6<!--#resolution.effective_n_01--> at 0.1, because effective n is set by the
+domain's extent against the autocorrelation length and regridding changes
+neither. Meanwhile the median cell's standard error doubles, from
+3.37<!--#resolution.se_025--> ppb to 7.49<!--#resolution.se_01--> ppb against a
+between-cell signal of 14.9 ppb, and the number of cells whose error exceeds the
+entire field spread rises from 63<!--#resolution.over_spread_025--> to
+1,015<!--#resolution.over_spread_01-->. **Six times the cells, no additional
+information, twice the noise.**
+
+*Two consequences for the items below.* Item 14's within-cell variance
+accumulator is unaffected, since it is per-cell at whatever resolution is
+chosen. Item 15's growing-season composite gains nothing from a finer grid and
+would lose from one, because a seasonal subset already cuts each cell's count
+and the finer grid cuts it again — the two multiply.
+
+*And one for the paper rather than the queue.* The resolution belongs in the
+discussion of resolution, where it **strengthens the capability claim**: the
+working resolution is a constraint the observations impose, now measured, rather
+than a convenience adopted without examination. It is also the one place the
+paper can say that a finer grid would help a method it does not use — an
+inversion propagates information through a transport model, so its fine cells
+are constrained by observations elsewhere, where a per-cell composite leaves
+each cell on its own.
+
 **12. Grid and filter on the precision variable.** `methane_mixing_ratio_precision`
 is in every granule, carries the random error from the spectral fit, and is
 neither gridded nor filtered on. Published precedent filters under 10 ppb.

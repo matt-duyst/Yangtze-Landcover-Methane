@@ -6337,7 +6337,7 @@ that states what the paper establishes in its own voice at the end.
 reviewer reads first and the one the publication-bias literature this file
 already records identifies as where null results are filtered. No data
 availability statement, which the target venue requires and which is the one
-section this repository could write almost mechanically — 64 registered
+section this repository could write almost mechanically — 65 registered
 recipes, a byte-comparison runner, and every artefact's provenance recorded.
 
 So the honest state is **four of five narrative sections drafted, plus two
@@ -6358,3 +6358,139 @@ excluding the file, and every number in it is unverified while looking verified.
 The discussion draft spent a day in that state. A third test asserts each
 scanned draft actually carries markers, since being in the tuple is necessary
 and not sufficient.
+## 15 September 2026 — the 0.1 degree grid, measured rather than estimated
+
+**What reopened it.** This file closed the finer grid on a pilot estimate of
+32.91 percent annual coverage at 0.1 degrees, and recorded in the same place
+that the estimate came from an understated granule sample, that a free-asymptote
+fit put the ceiling at 50.4 percent, and that "Reopening it needs a measured
+curve at each resolution, not another sample." That curve now exists as
+`data/processed/grid_resolution_2018.csv`, built by
+`scripts/measure_grid_resolution.py` from the committed analysis grid.
+
+**The verdict is that 0.1 degrees is not viable, and the measurement that says
+so is not coverage.** Coverage was the wrong thing to have closed the question
+on. Two other measurements decide it, and they point the same way.
+
+### The effective sample size does not move
+
+The assumption worth naming, because it is the one this file would have made:
+that degrees of freedom grow with cell count. They do not. Dutilleul's effective
+n is set by the domain's extent relative to the autocorrelation length, and
+regridding changes neither. On a spherical model correlogram at the measured
+operational half-sill of 103.2 km, the full lattice carries **30.9 effective
+observations at 0.25 degrees and 30.6 at 0.1 degrees** — 6.17 times the cells
+for no gain, and the small difference is model noise rather than signal. The
+model is calibrated: `src/model/spatial_dof.py`'s empirical estimator gives
+**32.8** on the committed field at 0.25 degrees, within 8 percent of the model's
+30.9, and the ratio between resolutions held to within 1 percent across
+exponential, Gaussian and spherical correlation forms that disagree by 27
+percent on the absolute level.
+
+The physical reading is that the domain is 739 by 918 km and holds roughly 33
+independent patches about 144 km across. That count is a property of the region
+and the atmosphere. **No gridding choice can create independent information, and
+a finer grid subdivides the same 33 patches into more cells.**
+
+*The model is used in one direction only.* Going finer, cells shrink further
+below the correlation length and the point approximation improves. Going
+coarser it fails: real aggregation averages within cells and changes the
+support, and the empirical estimator falls to 20.4 at 0.5 degrees where the
+point model predicts 28.7. So no coarsening claim is made from it. The
+asymmetry favours the question actually asked.
+
+### The per-cell standard error doubles
+
+TCCON gives a single-retrieval precision of 14.5 ppb for the operational
+product, and the mission's recommended error multiplication factor of 2 puts a
+single sounding at 29 ppb. Against the field's between-cell standard deviation
+of 14.9 ppb — the whole spatial signal a cell has to resolve — the median
+covered cell's standard error is **3.37 ppb at 0.25 degrees, 23 percent of the
+signal, and 7.49 ppb at 0.1 degrees, 50 percent of it.** Cells whose standard
+error exceeds the entire field spread go from **63 to 1,015**. Cells below 30
+soundings go from 278 to 3,786.
+
+So the trade is explicit: 6.17 times the cells, no additional independent
+observations, and twice the noise in each cell.
+
+### The gaps fragment rather than concentrate
+
+At 0.25 degrees the 97 uncovered cells form 28 components with 43.3 percent of
+them in the largest, which is a describable feature — predominantly inland, over
+rugged southern terrain. Projected to 0.1 degrees they become **107 components
+with only 36.1 percent in the largest and 62 single-cell holes**, up from 17. A
+coherent limitation with a terrain explanation becomes scattered speckle with
+none. That is worse for the paper than a larger gap would be.
+
+### What could not be measured, and what the cheapest measurement would cost
+
+**Coverage at 0.1 degrees cannot be measured from anything this repository
+holds.** Sounding coordinates are not retained. The checkpoint's
+`granule_cells` bitset is 1024 bits per granule *over the 0.25 degree lattice*,
+so it records which coarse cell a granule touched and **a cell set recorded at
+0.25 degrees cannot be subdivided**; `data/interim/alt_grids/` holds alternative
+predictor products rather than alternative resolutions, despite its name; and
+`data/raw/s5p` retains one of the 578 granules. Neither route exists without
+re-reading granules, which this pass did not do.
+
+So the fine rows in the artefact are **projections, not measurements**, and the
+`basis` column says so. They allocate each coarse cell's soundings to fine cells
+by area overlap under a uniform-within-cell assumption. TROPOMI soundings arrive
+in along-track swaths, and clustering can only concentrate the same soundings
+into fewer fine cells, so **every projected coverage figure is an upper bound
+and every count-below-threshold figure is a lower bound.** The verdict rests on
+figures that are already unfavourable at their most favourable.
+
+*The cheapest real measurement* is a second gridding accumulator inside the
+existing granule pass. That pass took 122.7 minutes at 4.0 MB/s for 28.9 GB, so
+it is transfer-bound: the marginal cost of a second resolution alongside a
+0.25 degree pass is accumulator arithmetic and about 11 MB of memory rather than
+another transfer. Done later as a separate pass it costs another 28.9 GB and
+about two hours. **The asymmetry is roughly two hours against a few minutes,
+which is the argument for deciding the resolution before the pass and not
+after.**
+
+### Three premises that did not survive
+
+* **6,396 cells is not the 0.1 degree lattice.** Neither 7.75 nor 8.25 degrees
+  divides by 0.1 — they give 77.5 and 82.5 cells, both half-integers. Whole
+  cells from the southwest corner give **77 by 82 = 6,314**, and rounding both
+  up gives 78 by 83 = 6,474. The recorded 6,396 is 78 by 82: longitude rounded
+  up and latitude rounded down. This is the same failure as the 0.25 degree
+  lattice's extent diverging from its declared box on both axes in opposite
+  directions, and it is the reason the artefact reports the remainder rather
+  than hiding it — at 0.1 degrees the lattice ends 0.05 degrees short on both
+  axes.
+* **32.91 percent was far too low**, as this file suspected without being able
+  to show it. The full-year counts bound 0.1 degree coverage at **84.7 percent
+  or below**, and the 50.4 percent free-asymptote ceiling is below that bound
+  too. The pilot understated coverage badly enough that the number should never
+  have closed a question. *It did not matter*: coverage turns out not to be the
+  binding constraint, so the estimate was both wrong and beside the point.
+* **"Roughly 53 of 926 effective observations" is not the field's effective n.**
+  53.4 is `dof.effective_n_median`, a median across correlations. The field
+  against itself gives **32.8**, which is the comparable figure and the one used
+  above.
+
+### Where this leaves the study
+
+Two recorded statements bracket it. That 0.25 by 0.3125 degrees is the field's
+working resolution because error correlations mean higher density does not buy
+proportionate information — which this measurement now confirms on this domain
+in the strong form, that it buys none. And that finer-scale regional inversions
+would better exploit TROPOMI — which remains true and is not what this study is.
+The distinction is that an inversion propagates information through a transport
+model, so its fine cells are constrained by observations elsewhere; a per-cell
+composite has no such mechanism and each cell is on its own. **A finer grid
+helps a method this study does not use.**
+
+So the resolution goes in the paper's discussion of resolution, and it
+**strengthens the capability claim rather than weakening it**: the working
+resolution was a constraint the observations impose, measured, and not a
+convenience chosen and left unexamined. Tier 3 produces 0.25 degrees only.
+
+*One gap this raised and did not close.* No committed record states TROPOMI's
+ground pixel size, which is the quantity that would say how close 0.1 degrees
+comes to the native retrieval footprint — the point at which gridding stops
+averaging. It is worth recording, and it is not recorded here on the strength
+of recollection.
