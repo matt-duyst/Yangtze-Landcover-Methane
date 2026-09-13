@@ -75,7 +75,7 @@ which is the only place any of them was ever written down.
 | Figure | What it would show | Why it is not here |
 | --- | --- | --- |
 | predictor maps | impervious fraction and rice fraction on the analysis lattice, beside the methane field | not started; the covariate rasters and the lattice both exist, so this is drawing rather than analysis |
-| fold map | which cells fall in which spatial block and which province, for both evaluation schemes | not started; it is the figure that would show why a held-out province's interior has no training neighbour, which is currently a sentence in three captions |
+| fold map | which cells fall in which spatial block and which province, for both evaluation schemes, and how far each held-out cell sits from its nearest training cell | not started, and the most necessary of the three. It was wanted to show why a held-out province's interior has no training neighbour. It is now wanted for a stronger reason: the distance it would draw has never been measured, the decision record asserted a figure for it that does not hold, and the decay curve cannot say what its own shaded interval means about the folds without it |
 | sampling artefact map | where the composite's cell means rest on few soundings, and where the observation days differ most | not started; `ERRATA.md` 7.4 is why it matters — a cell's annual mean is taken over whichever days it was observed on, and those differ by up to 228 days |
 
 Three, so the set is a planned sixteen and thirteen of them exist.
@@ -95,6 +95,36 @@ carries every model under both schemes and both weightings, which is strictly
 more than the bar chart would have held. The two figures added here replace it;
 they do not sit beside it. That is why the count went from a planned nine with
 seven built to a planned ten with eight.
+
+## Which of these a results section can cite
+
+`notes/draft-results.md` carries a table of the results it would cite and the
+figure each would cite, and that table is the authority. What it shows, once
+`buffered_decay` and `capability` are in it, is that **eight of the thirteen
+built figures are cited by a results section and five are not.** The five are
+recorded here because "no place in the results" reads as "surplus" and none of
+them is, and because the register should say what a figure is *for* when the
+answer is not "a result".
+
+| Figure | Serves instead |
+| --- | --- |
+| `landcover_native` | the predictors' own provenance, at the resolution the source products are published at. It is the only figure that shows what a 0.25 degree cell fraction is built from, and the methods section needs that before any association can be read |
+| `urban_change` | the errata. Its panel (c) puts the thesis's reported GAIA four-province totals beside both products recomputed, which is where the year-of-change direction error is visible rather than asserted |
+| `landcover_regional` | the provincial breakdown, which is methods material for the same reason and errata material for one more: it marks the unclassified part of Anhui, and that omission bounds every rice result in the repository |
+| `framework_pipeline` | documentation of the pipeline, as an ISO 5807 flowchart with the refusal gates drawn. It answers to no thesis figure and deliberately not to Figure 3.1. **It also has a dependency worth knowing**: it reads `config/recipes.yml` and prints the recipe counts, so registering a recipe changes this figure's bytes and the recipe guard will say so |
+| `framework_reproduction` | documentation of the reproduction's own structure, stage by stage against the 2023 study, each cell citing the `ERRATA.md` section that establishes it |
+
+**Three of the five are the predictors' record and two are documentation.**
+That is a coherent division rather than a leftover: a reader who wants to know
+whether the analysis is trustworthy needs the first three, and a reader who
+wants to know whether it is reproducible needs the last two. Neither reader is
+reading a results section.
+
+**The set is no longer short of results figures; it is short of fold geometry.**
+Of the three planned figures, the fold map is the one the new figures made more
+necessary rather than less, because `buffered_decay` has to shade an interval
+and cannot say what that interval means about the folds. See
+`notes/decisions.md`.
 
 ## The 2023 thesis's figures, and what answers to them
 

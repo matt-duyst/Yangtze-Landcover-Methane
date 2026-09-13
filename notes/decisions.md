@@ -4983,9 +4983,21 @@ needs 0.0492 Tg a-1. For scale, a large municipal landfill emits on the order of
 as an independent measurement.
 
 **The domain total, swept because the prior is not held here.** Expected DOFS
-crosses the Permian work's practical minimum of 0.5 at about 2 Tg a-1, IMI's own
-minimum viability of 1 at about 3 Tg a-1, and its marginal ceiling of 2 at about
-5 Tg a-1. Against the band the literature already in `notes/references.md`
+crosses the Permian work's practical minimum of 0.5 at 1.767 Tg a-1, IMI's own
+minimum viability of 1 at 2.500 Tg a-1, and its marginal ceiling of 2 at 3.539
+Tg a-1. *Corrected on 13 September 2026, and the original figures are worth
+keeping visible: this paragraph said "about 2", "about 3" and "about 5", which
+were the nearest swept points at or above each threshold rather than the
+crossings. The script's own console line said "crossed at or below" and this
+paragraph read it as the crossing. Sensitivity is very nearly quadratic in
+emission at these magnitudes -- 0.160 at 1 Tg, 0.640 at 2, 1.439 at 3, 3.979 at
+5, all of them 0.16 times the square -- so the nearest swept point above a
+threshold overstates the crossing by 13 to 41 percent, and linear interpolation
+between sparse points overstates it too. The sweep in
+`scripts/estimate_inversion_dofs.py` was densified from eleven points to
+twenty-three, the three crossings are bisected on the sensitivity expression and
+written to the artefact, and the console now prints the bisected value. A
+crossing claim now reads from a file instead of being eyeballed off a table.* Against the band the literature already in `notes/references.md`
 supports for this domain — 5 to 12 Tg a-1, from Huang et al.'s 2018 Yangtze
 River Delta inversion implying about 11.7 Tg a-1 for its domain and Duan et al.'s
 seven-province agricultural share implying less than that for four provinces —
@@ -5244,13 +5256,175 @@ cross-validation schemes may bracket the truth, since leave-one-province-out is
 maximally extrapolative, and says the decay curve is the measurement that would
 show it. The spatial null's leave-one-province-out held-out R squared is
 **−0.091**. Buffered, it is **−0.084 at 150 km and −0.112 at 200 km** on the
-operational field, and **−0.099 at 150 km** on the blended one. A held-out
-province's interior sits roughly 150 to 200 km from the nearest training cell.
-**So the leave-one-province-out figure is what a 150 to 200 km buffer gives, and
-the two schemes are measuring the same thing at two points on one curve rather
-than disagreeing.** The spatial-blocks value of 0.332 and the
-leave-one-province-out value of −0.091 are the curve at roughly 50 and 175 km,
+operational field, and **−0.099 at 150 km** on the blended one. **So the
+leave-one-province-out figure falls between two adjacent points of the null's
+own buffered curve, and the two schemes are measuring the same thing at two
+points on one curve rather than disagreeing.** The spatial-blocks value of
+0.332 and the leave-one-province-out value of −0.091 are both on that curve,
 and neither is wrong.
 
-No figure is built from any of this. The figure set already has a fold-map slot
-planned and whether the decay curve earns one of its own is a later decision.
+*Amended on 13 September 2026, while building the decay figure.* This paragraph
+originally continued: "A held-out province's interior sits roughly 150 to 200 km
+from the nearest training cell", and concluded that the leave-one-province-out
+figure is "what a 150 to 200 km buffer gives". **That distance was never
+measured.** A scratch calculation against the fold assignment committed in
+`baseline_predictions_2018.csv` -- five folds, the four provinces and Outside --
+puts the median cell about 56 km from its nearest training cell, the 90th
+percentile at about 146 km, roughly 4 percent of cells inside the 150-to-200 km
+range and about three quarters within 100 km. The per-fold medians run from
+28 km for Shanghai to 74 km for Outside.
+
+So the bracketing conclusion stands and its stated reason does not. The
+province-out value does lie between two adjacent points of the buffered curve;
+it lies there at a radius two to three times the typical fold distance, which
+says that **leave-one-province-out is more extrapolative than its geometry alone
+accounts for.** That is not surprising on reflection -- withholding a province
+withholds a region of the predictor and response distribution, not just a
+neighbourhood -- but it is an open question rather than a result, and it is the
+question the planned fold map would answer. None of these scratch numbers is
+quoted anywhere in the repository, because no registered script produces them;
+`src/figures/buffered_decay.py` shades the bracketing interval derived from the
+committed table and says in its own docstring that the interval is not a claim
+about fold geometry.
+
+`figures/buffered_decay` is built from this, as of 13 September 2026. The fold
+map slot is still planned and is now the most necessary of the three.
+
+## The two figures the results section needed, 13 September 2026
+
+The figure audit found that the two results the contribution now rests on had
+no figure and that neither had ever been planned. Both are built.
+`figures/README_fragments.md` carries the captions and `figures/README.md` the
+inventory; what is recorded here is the four decisions that were not obvious
+and the four things that went wrong in the making.
+
+### The decay curve plots two metrics, not one
+
+`scripts/buffered_loo_curve.py` already recorded that `r2_above_constant` is
+the readable column and `held_out_r2` is not, because a constant fitted on the
+training data is itself a model and its held-out skill slides from −0.002 at no
+buffer to −0.407 at 500 km. Every raw curve therefore slopes down whether or
+not the model is degrading.
+
+The obvious figure plots the difference alone. That is wrong here, and the
+reason is worth stating: **the fact that the baseline moves is itself one of
+the three things the figure has to show.** A reader who sees only the difference
+learns that land cover decays, but not that the decay had to be separated from
+a sliding floor to be seen at all, and so has no way to judge whether the
+separation was legitimate. A reader who sees only the raw metric would conclude
+that all three models decay, which is false.
+
+So panel (a) is the raw metric for all three models including the constant, and
+exists to show the floor move. Panel (b) is the difference for the two models
+with predictors, and is where the conclusions come from. A reader who looks
+only at (b) is not misled; a reader who looks only at (a) would be.
+
+**A second reason settled it.** The bracketing result compares the null's
+buffered curve against its leave-one-province-out value, and a
+leave-one-province-out fold reports a raw held-out R squared. There is no
+above-constant number for it — the null's advantage over a constant is exactly
+zero at every radius past 50 km, because past one cell the null *is* the
+constant — and no radius for it to sit at. Without panel (a) the bracketing
+cannot be drawn at all, which a first version of the module discovered by
+putting the marker on panel (b), where the plot call was a no-op.
+
+### The block width and the residual range are one line, not a band
+
+The brief asked for the residual half-sill range, 96.1 km, and the block width,
+95.0 km, marked on the axis. They are 1.1 km apart on a 500 km axis: about two
+pixels at the committed size. A band between them renders as a line, and a band
+that a reader cannot see as a band claims a visible distinction the measurement
+does not support.
+
+One line is drawn, at the 95.55 km midpoint, and the caption carries both
+numbers with their resolvers. **The point the two numbers make together is that
+the block is marginal against the range it would have to exceed**, and that
+point survives being made in prose; a two-pixel band would not have made it
+better.
+
+### The per-cell distribution is a panel because it is the finding
+
+The capability figure's risk is that its headline travels without its
+qualifications. Two of the three are annotations — the estimate is a
+reimplementation and not an inversion, and the sweep is a lower bound. The
+third is not a qualification at all: **no cell reaches a sensitivity of 0.5,
+and the DOFS total conceals that completely.** A total of 22 reads as
+capability. It accumulates from 926 weakly constrained cells.
+
+The artefact had no per-cell distribution, only the count above 0.5, which is
+zero and says nothing about how far below. So the script now writes the median,
+the 90th percentile and the maximum at both ends of the literature band, and
+panel (b) draws them on a log axis against the 0.5 line. The strongest
+statement this supports is much stronger than the count was: at the top of the
+band the *best* cell reaches 0.065, an order of magnitude below the threshold.
+
+The prior-free threshold went into the same figure as panel (c) rather than its
+own. Panels (b) and (c) are the same statement in two units, and both are there
+because they fail differently — (b) is exact and abstract, (c) is concrete and
+asks the reader to accept a landfill figure from the literature. Neither alone
+is as convincing as the pair.
+
+**Drawing (c) corrected a claim in this file.** The paragraph above under *the
+prior-free one* says individual large point sources in this domain sit below
+`a = 0.5`, which is true of a median cell, whose threshold of 86 Gg a-1 is
+above the whole 10-to-50 Gg landfill range. It is not true of the
+best-observed cell, whose threshold is 49 Gg a-1 and falls *inside* that range,
+so a landfill at the top of the range would just reach half-constraint in the
+one cell of 926 with the most observation days. The figure draws both points
+against the band, which is how the exception was noticed;
+`notes/draft-results.md` §6.2 now states it.
+
+### Reference lines carry values, not names
+
+Three placements of the DOFS threshold names in panel (a) were clipped by the
+rising curve, and the geometry says they always will be. The lowest line is
+reached at 1.77 Tg, which leaves about 1.2 decades of clear axis on either side
+of the crossing, and 1.2 decades holds roughly thirteen characters at caption
+size. No useful name fits. Placing a name to the right of the crossing and
+below the line is clear of the curve in principle and still clips it where the
+curve approaches the line.
+
+So the lines carry their values, which is three characters and cannot be
+reached, and the caption names what each threshold is. **The names are
+editorial gloss; the values are the data**, and the y axis already says they
+are DOFS.
+
+### Four mistakes, three of which a guard caught
+
+**The wrong interpreter recoloured a committed figure, and no guard caught
+it.** `cmcrameri` is installed in `.venv` and absent from the bare pyenv
+`python3`. Running a figure script under the latter made
+`style.sequential("batlowS")` fall back to viridis *silently*, and `series(3)`
+returned three colours 0.004 apart in luminance against a declared floor of
+0.15. The figure rewritten under that fallback was
+`figures/observed_predicted.png`, restored with `git checkout`. For some
+minutes the conclusion on hand was that the palette was broken.
+
+The fallback was the whole problem: a missing dependency that changes every
+colour in the repository should not be a warning-free substitution. Three tests
+were added to `tests/test_figures_palette.py` — that `style._crameri` is not
+`None`, that the categorical series is ordered by tone with consecutive
+luminance gaps at or above `MIN_LUMINANCE_GAP`, and that every pair in the
+series clears `MIN_CVD_DISTANCE` under all three simulated deficiencies. Any
+one of them fails under the fallback.
+
+**`plt.subplots` bypasses the style module.** A first version of the decay
+figure used it and produced a PDF with outlined rather than embedded fonts,
+because `style.figure()` is what applies `pdf.fonttype: 42`. `export()` does
+report `fonts_embedded: False`, so the guard worked; the module comment now
+says why the indirection exists, since the failure is invisible on screen.
+
+**Registering a recipe changes a committed figure.**
+`src/figures/framework_pipeline.py` reads `config/recipes.yml` and prints the
+recipe counts in its own note text, so the four new recipe entries changed that
+diagram's bytes. `tests/test_recipes.py` caught it as a byte mismatch on
+`framework_pipeline.png` and `.pdf`, and `figures/README.md` now records the
+dependency beside that figure. The recipe table in the repository README needed
+`verify_recipes.py --update-readme` for the same reason, and the three prose
+files quoting the recipe counts were caught by the claim checker.
+
+**The shaded band in the decay figure meant the wrong thing**, which is
+recorded in full under item 4 above. It was shaded as the distance from a
+held-out province's interior to the nearest training cell, a figure this file
+asserted and no script ever measured. It is now derived from the committed
+table by `buffered_decay._bracket()` and a test asserts the derivation.

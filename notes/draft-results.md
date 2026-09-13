@@ -449,24 +449,50 @@ Expected DOFS over the domain is 1.44<!--#dofs.at_3tg--> at a 3 Tg a⁻¹ prior,
 3.98<!--#dofs.at_5tg--> at 5 Tg a⁻¹ and
 22.21<!--#dofs.at_12tg--> at 12 Tg a⁻¹.
 
+The sweep crosses the per-inversion practical minimum of 0.5 at
+1.77<!--#dofs.cross_half--> Tg a⁻¹, IMI's stated minimum viability of 1 at
+2.50<!--#dofs.cross_one--> and its marginal ceiling of 2 at
+3.54<!--#dofs.cross_two-->. Those crossings are bisected on the sensitivity
+expression rather than interpolated between swept points or taken as the
+nearest swept point above the threshold; sensitivity is very nearly quadratic
+in emission at these magnitudes, so both of those approximations overstate a
+crossing. **The sweep is a lower bound** in any case, because it spreads the
+assumed total uniformly over covered cells while real emissions concentrate,
+and a cell's sensitivity rises faster than linearly in its own emission.
+
 **At no point in the sweep does any cell reach an averaging-kernel sensitivity
 above 0.5** — the count is 0<!--#dofs.cells_above_half--> at every prior
 magnitude tested. The DOFS total accumulates from 926 weakly constrained cells
-rather than from a few well constrained ones.
+rather than from a few well constrained ones, and the margin is not narrow. At
+5 Tg a⁻¹ the median cell's sensitivity is
+0.0039<!--#dofs.cell_median_5tg--> and the best-observed cell reaches
+0.0119<!--#dofs.cell_max_5tg-->; at 12 Tg a⁻¹, the top of the band, the median
+is 0.0221<!--#dofs.cell_median_12tg--> and the best cell
+0.0649<!--#dofs.cell_max_12tg-->. **The most favourable cell under the most
+favourable assumed total is an order of magnitude below the threshold.** This
+is the distribution behind the total, and the total alone conceals it: a DOFS
+of 22 reads as capability until the per-cell figures are beside it.
 
 ### 6.2 The prior-free threshold
 
 The sensitivity expression can be inverted without assuming any prior, because at
 a given sensitivity it depends only on the observation counts. **A median cell in
 this composite would need 0.0862<!--#dofs.prior_free_median--> Tg a⁻¹ — about
-86 Gg a⁻¹ from a single 625 km² cell — for the observations to constrain it half
+86<!--#dofs.prior_free_median_gg--> Gg a⁻¹ from a single 625 km² cell — for the observations to constrain it half
 independently of the prior.** The best-observed cell, with 65 observation days,
-would need 0.0492<!--#dofs.prior_free_best--> Tg a⁻¹.
+would need 0.0492<!--#dofs.prior_free_best--> Tg a⁻¹, or
+49<!--#dofs.prior_free_best_gg--> Gg a⁻¹.
 
 For scale, a large municipal landfill emits on the order of 10 to 50 Gg a⁻¹.
-**Individual large point sources in this domain therefore sit below a
-sensitivity of 0.5 and above zero**: visible to an inversion as a partial
-constraint weighted toward the prior, not as an independent measurement. This is
+**A median cell's threshold therefore sits above that whole range**: no single
+landfill would half-constrain a typical cell. The best-observed cell is the
+exception, and it is worth stating precisely because the figure draws it. Its
+threshold falls *inside* the range rather than above it, so a landfill at the
+top of the range would just reach half-constraint — in the one cell of 926 with
+the most observation days. Everywhere else **individual large point sources in
+this domain sit below a sensitivity of 0.5 and above zero**: visible to an
+inversion as a partial constraint weighted toward the prior, not as an
+independent measurement. This is
 the most concrete available statement of the information-content limit, and it is
 prior-free, so it does not inherit the factor-of-two uncertainty in the domain's
 emission total.
@@ -534,18 +560,46 @@ and a test recomputes each from the artefact.
 | §3.3, §5 residual structure | `residual_field` | exists |
 | §4.1 albedo collinearity | `albedo_collinearity` | exists |
 | §3 land-cover predictors on the lattice | **none** | planned, not built: predictor maps |
-| §5.1–5.3 the fold geometry | **none** | planned, not built: fold map |
+| §5.1–5.3 the fold geometry | **none** | planned, not built: fold map. **The most necessary of the three**, and more so than before: `buffered_decay` shades an interval and cannot say what it means about the folds |
 | §4.2 sampling composition | **none** | planned, not built: sampling-artefact map |
-| §5.2 the buffered decay curve | **none** | not planned; this is the new gap |
-| §6.1–6.2 the DOFS sweep and the prior-free threshold | **none** | not planned; this is the second new gap |
+| §5.2–5.3 the buffered decay curve and the bracketing | `buffered_decay` | exists; built for this section, and it carries §5.3 as well as §5.2 |
+| §6.1–6.3 the sweep, the per-cell distribution and the prior-free threshold | `capability` | exists; built for this section, and its panel (b) is §6.3's information-content result |
 
-**Two results central to the contribution have no figure and none is planned.**
-The buffered decay curve is the direct measurement of the impervious
-coefficient's spatial instability and exists only as a ten-row table per field.
-The DOFS sweep and the prior-free threshold are the capability claim itself and
-exist only as a twenty-row table. Under the earlier framing neither was a
-headline; under this one both are, and a reader of §5.2 and §6 has nothing to
-look at. Both are line plots over a swept parameter and neither needs new data.
+**Both were gaps and both are now built.** The buffered decay curve was the
+direct measurement of the impervious coefficient's spatial instability and
+existed only as a ten-row table per field; the capability figure was the
+contribution's own claim and existed only as a twenty-row table, since
+densified to forty-one rows. Drawing them changed three things in this section.
+
+**§5.3's bracketing is on the raw held-out scale, not the above-constant
+scale.** The null's advantage over a constant is exactly zero at every radius
+past 50 km, because past one cell the null *is* the constant, so the comparison
+against the leave-one-province-out value can only be made on `held_out_r2`:
+-0.084<!--#loo.null_150km_raw--> at 150 km and
+-0.112<!--#loo.null_200km_raw--> at 200 km against
+-0.091<!--#suite.null_operational_pu--> under leave-one-province-out.
+
+**And the reason §5.3 gave for that being the corresponding radius does not
+hold.** The claim was that a held-out province's interior sits roughly 150 to
+200 km from the nearest training cell. That distance is not measured anywhere
+in this repository. A scratch calculation against the fold assignment in
+`baseline_predictions_2018.csv` — five folds, the four provinces and Outside —
+puts the median cell about 56 km from its nearest training cell, with roughly
+4 percent of cells in the 150-to-200 km range and about three quarters inside
+100 km. So the bracketing interval is much wider than the typical fold
+distance, and **leave-one-province-out is more extrapolative than its geometry
+alone accounts for.** The bracketing itself stands: the province-out value does
+fall between two adjacent points of the buffered curve, and that is all the
+figure claims. Why it falls where it does is open, and the fold map is what
+would settle it. No number from that scratch calculation is quoted in the
+repository, because it has no registered script behind it.
+
+**§6.1's threshold crossings were wrong.** They were the nearest swept point at
+or above each threshold. Sensitivity is very nearly quadratic in emission at
+these magnitudes, so that overstates a crossing and so does linear
+interpolation. The sweep was densified from eleven points to twenty-three and
+the crossings are now bisected on the sensitivity expression itself and written
+to the artefact.
 
 **Three figures the set holds that this section does not cite.**
 `landcover_native`, `urban_change` and `landcover_regional` answer to the 2023
@@ -553,10 +607,11 @@ thesis's land-cover figures. They document the predictors' provenance and
 disagreements, which is methods material and errata material rather than
 results. `framework_pipeline` and `framework_reproduction` are documentation of
 the pipeline and of the reproduction's structure and belong in neither section.
-**That is five of eleven figures with no place in a results section**, which is
-not an argument for deleting them — three are the predictors' own record — but is
-an argument for building the two missing capability figures before the three
-planned ones.
+**That is five of thirteen figures with no place in a results section**, which
+is not an argument for deleting them — three are the predictors' own record —
+and the argument it did make, for building the two missing capability figures
+before the three planned ones, has now been acted on. `figures/README.md`
+records the five and what each serves instead.
 
 ### Numbers without a resolver
 
