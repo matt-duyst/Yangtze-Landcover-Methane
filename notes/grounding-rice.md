@@ -609,8 +609,13 @@ a downward revision because the prior put paddy where the satellite saw none.
 *A predictor confound.* Rice and aquaculture are both flooded land, spectrally
 similar and spatially interleaved. **So a rice-fraction signal in this project's
 regression could be an aquaculture signal**, and a rice classification could be
-counting ponds as paddy. That is not a confound the association analysis can
-control for, because the two are not separately measured here at all.
+counting ponds as paddy. **That was not a confound the association analysis
+could control for, because the two were not separately measured here at all.
+As of 14 September 2026 they are.** A national 10 m aquaculture pond product is
+reachable and fetched — see the AAP row in `notes/dataset-leads.md` — and it
+supplies pond polygons for 2015, 2020 and 2025. It does not cover 2018, so it
+brackets the analysis year rather than matching it, which for infrastructure as
+persistent as a pond is a weaker limitation than it would be for an annual crop.
 
 ### The classification confound is a documented hard problem
 
@@ -908,7 +913,22 @@ enhancement unexplained and the sector most likely to absorb it is rice**, since
 ponds and paddy share the same flooded lowland. The confusion runs the other way
 too: the aquaculture-mapping literature names spectral confusion with flooded
 paddy as a principal challenge, and whether the committed rice layer excludes
-ponds has never been asked. China_AP would settle it at 10 m for 2018.
+ponds had never been asked. **China_AP would have settled it at 10 m for 2018
+and remains blocked; the AAP product settles it at 10 m for 2015 and 2020
+instead**, and a first-order ceiling is already available from it.
+
+**The ceiling is about 15 percent, and it is a ratio rather than an overlay.**
+Inside this lattice the AAP product holds 485,522 ponds covering 6,651.8 km² in
+2015 and 667,032 covering 7,971.3 km² in 2020, against roughly 52,452 km² of
+mapped single-season rice. So **even if the rice layer misclassified every pond
+in the domain as paddy, ponds could account for at most about 15 percent of the
+mapped rice area** — 12.7 percent on the 2015 pond extent and 15.2 percent on
+the 2020 one. That bounds the confound without measuring it: what it does not
+say is how much of that maximum is realised, because the rice layer may exclude
+ponds correctly, partly, or not at all. **The per-cell overlay is the
+measurement and it is queued, not done.** Two things it will have to handle: the
+year mismatch, and that a ratio of totals is not a ratio within cells, since
+both ponds and paddy are concentrated in the same lowland.
 
 **A candidate has appeared for a trend the region record could not explain.**
 Four years of autumn straw incorporation produced a five-fold increase in
