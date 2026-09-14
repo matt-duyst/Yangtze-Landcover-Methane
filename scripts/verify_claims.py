@@ -65,7 +65,11 @@ SCANNED = ("README.md", "ERRATA.md", "data/processed/README.md",
            "notes/draft-introduction.md",
            # The reference audit's counts come from an artefact and will drift
            # as the drafts gain citations, so they are guarded like any other.
-           "notes/reference-audit.md")
+           "notes/reference-audit.md",
+           # The availability statements quote the recipe tier counts, which
+           # move whenever a recipe is added. notes/draft-*.md is also the name
+           # tests/test_drafts_are_scanned.py requires to be scanned.
+           "notes/draft-availability.md")
 
 #: number, then optional space, then the marker naming what it is
 CLAIM = re.compile(r"(-?[\d][\d,]*(?:\.\d+)?)\s*<!--#([a-zA-Z0-9_.]+)-->")
