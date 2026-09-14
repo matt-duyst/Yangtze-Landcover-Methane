@@ -1,0 +1,198 @@
+key,doi,kind,section,draft_verified,draft_named_no_year,draft_candidate,grounding,elsewhere
+xie2025glorice,10.1038/s41597-025-04483-1,peer-reviewed paper,Datasets used,methods:287,,methods,,notes/decisions.md;data/processed/README.md;data/manifest.json;config/sources.yml
+gong2020gaia,10.1016/j.rse.2019.111510,peer-reviewed paper,Datasets used,methods:245,,methods,,notes/repository-architecture.md;data/manifest.json;config/sources.yml
+huang2021gisa,10.1007/s11430-020-9797-9,peer-reviewed paper,Datasets used,methods:247,,methods,yrd,ERRATA.md;notes/decisions.md;notes/dataset-leads.md;data/processed/README.md;config/sources.yml
+shen2023rice,10.5194/essd-15-3203-2023,peer-reviewed paper,Datasets used,,,,methods;yrd,notes/decisions.md;config/sources.yml
+lorente2021tropomi,10.5194/amt-14-665-2021,peer-reviewed paper,Findings relied on: the retrieval,,,,,README.md;notes/decisions.md;data/processed/README.md
+schneising2026wfmd,10.5194/amt-19-2407-2026,peer-reviewed paper,Findings contested,,,,methane;methods,notes/decisions.md
+he2022mae,10.1109/CVPR52688.2022.01553,peer-reviewed paper,Findings contested,,,,,ERRATA.md;notes/decisions.md
+shen2023ricedata,10.57760/sciencedb.06963,dataset record,Datasets used,,,,methods;yrd,notes/decisions.md;notes/paper-target.md;config/sources.yml
+xie2024gloricedata,10.6084/m9.figshare.27965832.v2,dataset record,Datasets used,,,,,data/manifest.json;config/sources.yml
+gong2024gaiadata,10.6084/m9.figshare.27245775.v1,dataset record,Datasets used,,,,,notes/decisions.md;data/processed/README.md;data/manifest.json;config/sources.yml
+ifpri2019spam2000,10.7910/DVN/A50I2T,dataset record,Datasets used,,,,,data/processed/README.md
+ifpri2019spam2010,10.7910/DVN/PRFF8V,dataset record,Datasets used,,,,,data/processed/README.md
+esa2021s5pch4,10.5270/S5P-3lcdqiv,dataset record,Datasets used,,,,,notes/decisions.md;data/manifest.json
+esa2019s5pch4,10.5270/S5P-3p6lnwd,dataset record,Datasets used,,,,,data/manifest.json
+roberts2017cv,10.1111/ecog.02881,peer-reviewed paper,Methods applied,,,,methods,notes/decisions.md;data/processed/README.md
+valavi2019blockcv,10.1111/2041-210X.13107,peer-reviewed paper,Methods applied,,,,methods,notes/decisions.md;data/processed/README.md
+crameri2020colour,10.1038/s41467-020-19160-7,peer-reviewed paper,Methods applied,,,,,src/figures/style.py
+correll2018vsup,10.1145/3173574.3174216,peer-reviewed paper,Methods applied,,,,,
+liu2021divergence,10.1029/2021GL094151,peer-reviewed paper,Methods applied,,,,rice,notes/decisions.md;config/sources.yml
+patil2019visual,10.1038/s41562-019-0629-z,peer-reviewed paper,"The diagram sources, added 9 September 2026",,,,,notes/decisions.md;figures/README_fragments.md;src/figures/diagram.py
+desai2025reproducibility,10.1002/aaai.70004,peer-reviewed paper,"The diagram sources, added 9 September 2026",,,,,notes/decisions.md;figures/README_fragments.md
+lodemann2022process,10.1097/SIH.0000000000000622,(unlabelled),What could not be verified,,,,,notes/decisions.md
+zhang2020fingerprint,10.1038/s41467-019-14155-5,peer-reviewed paper,The rice-paddy exchange,,,,,ERRATA.md;notes/paper-target.md;data/manifest.json;config/sources.yml
+zeng2021comment,10.1038/s41467-021-21434-7,peer-reviewed paper,The rice-paddy exchange,discussion:269,,discussion,rice,ERRATA.md;notes/paper-target.md
+zhang2021reply,10.1038/s41467-021-21437-4,peer-reviewed paper,The rice-paddy exchange,,,,rice,ERRATA.md;notes/decisions.md;notes/paper-target.md;config/sources.yml
+hu2019yrd,10.1029/2018JG004850,peer-reviewed paper,Findings relied on: the region,,,,yrd,ERRATA.md
+huang2021yrdinversion,10.1007/s00376-021-0383-9,peer-reviewed paper,Findings relied on: the region,,,methods,yrd,ERRATA.md;notes/dataset-leads.md;config/sources.yml
+huang2019yrdtopdown,10.3390/atmos10040185,peer-reviewed paper,Findings relied on: the region,,,,,
+zhao2024hangzhou,10.1021/acsestair.4c00068,peer-reviewed paper,Findings relied on: the region,,,,rice;urban;yrd,ERRATA.md;notes/decisions.md;notes/dataset-leads.md
+dapan2020ngv,10.1038/s41467-020-18141-0,peer-reviewed paper,Findings relied on: the region,,,,yrd,ERRATA.md;notes/decisions.md
+forster2021ar6ch7,10.1017/9781009157896.009,book chapter,Assessments and instrument documentation,,,,,ERRATA.md
+myhre2013ar5ch8,10.1017/CBO9781107415324.018,book chapter,Assessments and instrument documentation,,,,,ERRATA.md;notes/decisions.md
+veefkind2012tropomi,10.1016/j.rse.2011.09.027,peer-reviewed paper,Assessments and instrument documentation,,,,,ERRATA.md
+cohen2016equivariant,10.48550/arXiv.1602.07576,preprint,Assessments and instrument documentation,,,,,ERRATA.md
+azulay2018invariance,10.48550/arXiv.1805.12177,preprint,Assessments and instrument documentation,,,,,ERRATA.md
+moran1950,10.1093/biomet/37.1-2.17,peer-reviewed paper,Assessments and instrument documentation,,"methods:416, results:169",,,ERRATA.md
+shen2025ccdrice,10.5194/essd-17-2193-2025,peer-reviewed paper,Reference data published since the thesis,,,,rice,ERRATA.md;notes/decisions.md
+han2022apra,10.1016/j.agsy.2022.103437,peer-reviewed paper,Reference data published since the thesis,,,,rice,ERRATA.md
+chen2025grpi,10.1029/2024EF005479,peer-reviewed paper,Reference data published since the thesis,,,,methods;rice,ERRATA.md;notes/decisions.md;notes/dataset-leads.md
+liang2024ricehub,10.1021/acs.est.4c09822,peer-reviewed paper,Reference data published since the thesis,,,,methods;rice,ERRATA.md
+duan2023agmethane,10.1021/acs.est.3c04209,peer-reviewed paper,The regional budget,,,,yrd,
+zhang2026cityscale,10.1021/acs.est.5c18654,(unlabelled),What could not be verified,,,,methane;rice;urban;yrd,ERRATA.md
+li2024ricecalendar,10.5194/essd-16-1689-2024,peer-reviewed paper,The rice calendar,,,,rice;yrd,
+liu2023ricecalendardata,10.7910/DVN/EUP8EY,dataset record,The rice calendar,,,,yrd,notes/decisions.md;notes/dataset-leads.md
+wu2018watergwp,10.1038/s41598-017-19110-2,peer-reviewed paper,"Water management, which is the mechanism the study has no layer for",,,,rice;yrd,
+minamikawa2025metasynthesis,10.1007/s10333-025-01045-4,peer-reviewed paper,"Water management, which is the mechanism the study has no layer for",,,,yrd,
+jiang2019watermeta,10.1016/j.fcr.2019.02.010,peer-reviewed paper,"Water management, which is the mechanism the study has no layer for",,,,rice;yrd,
+vo2018mekongef,10.1080/00380768.2017.1413926,peer-reviewed paper,"Water management, which is the mechanism the study has no layer for",,,,yrd,
+wang2024irrigation,10.1016/j.agwat.2024.109083,peer-reviewed paper,"Water management, which is the mechanism the study has no layer for",,,,methods;rice;urban;yrd,notes/dataset-leads.md
+huang1998ch4mod,10.1046/j.1365-2486.1998.00129.x,peer-reviewed paper,"Water management, which is the mechanism the study has no layer for",,,,yrd,
+jiang2023cropping,10.3390/land12020270,peer-reviewed paper,The two transitions the thesis does not frame,,,,yrd,
+yuan2016vegetables,10.1371/journal.pone.0155926,peer-reviewed paper,The two transitions the thesis does not frame,,,,yrd,
+li2026paddyvegetable,10.3389/fmicb.2026.1750894,peer-reviewed paper,The two transitions the thesis does not frame,,,,methods;rice;urban;yrd,
+yang2021spartina,10.1016/j.ecss.2021.107258,peer-reviewed paper,"Wetlands, urban gas and transport",,,,yrd,config/sources.yml
+zhao2026gasleakage,10.1038/s44284-026-00504-1,peer-reviewed paper,"Wetlands, urban gas and transport",,,methods,rice;yrd,ERRATA.md;notes/dataset-leads.md
+shan2022linan,10.3390/atmos13081206,peer-reviewed paper,"Wetlands, urban gas and transport",,,,yrd,
+guo2023suzhou,10.1016/j.apr.2023.101830,peer-reviewed paper,"Wetlands, urban gas and transport",,,,yrd,notes/dataset-leads.md
+wang2026lulcmeteorology,10.1016/j.jes.2025.07.021,peer-reviewed paper,"Wetlands, urban gas and transport",,,methods,methane;rice;urban;yrd,notes/dataset-leads.md
+sun2026wastewater,10.1126/sciadv.aec0536,peer-reviewed paper,"Wetlands, urban gas and transport",,,,,ERRATA.md
+zhu2025yrdsynthesis,10.1007/s13762-024-06050-4,peer-reviewed paper,One work cited and not relied on,,,,rice;yrd,
+olofsson2014goodpractice,10.1016/j.rse.2014.02.015,peer-reviewed paper,"Accuracy assessment and the fractional-cover frame, added 10 September 2026",,,,methods,ERRATA.md;notes/dataset-leads.md
+wickham2020nlcdimpervious,10.1016/j.jag.2019.101955,peer-reviewed paper,"Accuracy assessment and the fractional-cover frame, added 10 September 2026",,,,methods,ERRATA.md;notes/paper-target.md
+huang2022gisa2,10.1016/j.jag.2022.102787,peer-reviewed paper,"Accuracy assessment and the fractional-cover frame, added 10 September 2026",,,,rice,README.md;notes/decisions.md;data/processed/README.md
+riemann2010continuous,10.1016/j.rse.2010.05.010,peer-reviewed paper,The accuracy-assessment frame for a continuous field,,,,methods,ERRATA.md;notes/decisions.md;notes/paper-target.md
+wickham2023nlcd2019,10.1080/15481603.2023.2181143,peer-reviewed paper,The accuracy-assessment frame for a continuous field,,,,methods,
+angelopoulos2023ppi,10.1126/science.adi6000,peer-reviewed paper,Prediction-powered inference,,,,methods,
+lu2025ppiremote,10.1016/j.rse.2025.114949,(unlabelled),"The methods grounding, added 11 September 2026",,,,methods;urban,notes/decisions.md;data/processed/README.md;data/manifest.json;config/sources.yml
+kluger2025nonuniform,10.48550/arXiv.2501.18577,preprint,Prediction-powered inference,,,,methods,
+shirota2026designppi,10.48550/arXiv.2608.10356,preprint,Prediction-powered inference,,,,methods,
+nab2021sensitivity,10.48550/arXiv.2106.04285,(unlabelled),Errors-in-variables,,,,methods,notes/decisions.md
+xu2026simexwls,10.1080/20964471.2026.2660552,peer-reviewed paper,Errors-in-variables,,,,methods,notes/decisions.md
+masjkur2025laggedeiv,10.1016/j.spasta.2025.100909,(unlabelled),"The methods grounding, added 11 September 2026",,,,methods,
+pontius2011deathtokappa,10.1080/01431161.2011.552923,peer-reviewed paper,"Reliability, disagreement, and what not to report",,methods:632,,methods,ERRATA.md;notes/decisions.md
+stehman2019keyissues,10.1016/j.rse.2019.05.018,(unlabelled),"The methods grounding, added 11 September 2026",,,,methods,ERRATA.md;notes/decisions.md
+wadoux2021spatialcv,10.1016/j.ecolmodel.2021.109692,peer-reviewed paper,"Spatial cross-validation, both sides",,,,methods,notes/decisions.md
+mila2022nndm,10.1111/2041-210X.13851,peer-reviewed paper,"Spatial cross-validation, both sides",,,,,
+linnenbrink2024knndm,10.5194/gmd-17-5897-2024,peer-reviewed paper,"Spatial cross-validation, both sides",,,,methods,
+ploton2020spatialvalidation,10.1038/s41467-020-18321-y,peer-reviewed paper,"Spatial cross-validation, both sides",,,,methods,
+hawinkel2022fieldtrials,10.3389/fpls.2022.858711,peer-reviewed paper,"Spatial cross-validation, both sides",,,,methods,
+clifford1989correlation,10.2307/2532039,peer-reviewed paper,Effective degrees of freedom,methods:420,,methods,methods,notes/decisions.md;src/model/spatial_dof.py
+dutilleul1993modifiedt,10.2307/2532625,peer-reviewed paper,Effective degrees of freedom,methods:421,,methods,methods,notes/decisions.md;src/model/spatial_dof.py
+afyouni2019edf,10.1016/j.neuroimage.2019.05.011,peer-reviewed paper,Effective degrees of freedom,,,,methods,notes/decisions.md;src/model/spatial_dof.py
+balasus2023blended,10.5194/amt-16-3787-2023,peer-reviewed paper,The column field's own uncertainty,methods:99,,methods,methods,notes/decisions.md;data/processed/README.md;data/manifest.json
+schutgens2017representativeness,10.5194/acp-17-9761-2017,peer-reviewed paper,The column field's own uncertainty,results:117,,results,methods,notes/decisions.md
+rijsdijk2025superobservations,10.5194/gmd-18-483-2025,peer-reviewed paper,The column field's own uncertainty,,,,methods,
+glissenaar2025no2l3,10.5194/essd-17-4627-2025,peer-reviewed paper,The column field's own uncertainty,,,,methods,notes/decisions.md
+schuit2023superemitters,10.5194/acp-23-9071-2023,peer-reviewed paper,The preprocessing chain,,,,methods,notes/decisions.md
+nesser2024usinversion,10.5194/acp-24-5069-2024,peer-reviewed paper,The preprocessing chain,,,,methods,notes/decisions.md
+sicsikpare2026european,10.5194/acp-26-10423-2026,peer-reviewed paper,The preprocessing chain,,,,methane;methods,
+bourached2023scaling,10.1093/braincomms/fcae007,peer-reviewed paper,Model class and resolution,,,,methods,
+alwosheel2018samplesize,10.1016/j.jocm.2018.07.002,peer-reviewed paper,Model class and resolution,,,,methods,
+passafaro2020broilers,10.1186/s12864-020-07181-x,peer-reviewed paper,Model class and resolution,,,,methods,
+lee2025multitab,10.48550/arXiv.2505.14312,(unlabelled),Model class and resolution,,,,,
+sheng2018osse,10.5194/amt-11-6379-2018,peer-reviewed paper,Model class and resolution,,,,methods,notes/decisions.md;notes/paper-target.md
+qu2021comparative,10.5194/acp-21-14159-2021,peer-reviewed paper,Model class and resolution,,,,methods,
+halsey2025sayingno,10.1098/rsbl.2025.0506,peer-reviewed paper,Reporting a negative result,,,,methods,notes/decisions.md;notes/paper-target.md
+xco2transformerbilstm2026,10.5194/essd-18-4279-2026,peer-reviewed paper,"The gap-filling literature, cited as a pattern",,,,methods,
+xco2deepfusion2024,10.1016/j.atmosres.2024.107542,peer-reviewed paper,"The gap-filling literature, cited as a pattern",,,,methods,
+xch4gapfill2026,10.1016/j.apr.2026.102918,peer-reviewed paper,"The gap-filling literature, cited as a pattern",,,,methods,
+arabianpeninsula2025,10.1038/s41598-024-84593-9,peer-reviewed paper,"The gap-filling literature, cited as a pattern",,,,methods,
+chen2022chinainversion,10.5194/acp-22-10809-2022,peer-reviewed paper,The inference frame,,,,methods,notes/paper-target.md
+feng2025reggcas,10.5194/acp-25-15121-2025,peer-reviewed paper,The inference frame,,,,methods;rice,
+xia2026chengdu,10.1016/j.jclepro.2026.148229,peer-reviewed paper,The inference frame,,,,methods,
+estrada2025imi2,10.5194/gmd-18-3311-2025,peer-reviewed paper,Information content,"methods:230,497",,methods,methane;methods,
+he2026attribution,10.1126/sciadv.adz9007,peer-reviewed paper,Information content,,,,methane;methods;rice,
+shen2023fuelexploitation,10.1038/s41467-023-40671-6,peer-reviewed paper,Information content,,,,methods;yrd,notes/decisions.md
+zhong2026groundvalue,10.5194/amt-19-4759-2026,peer-reviewed paper,Information content,,,,methods;yrd,notes/dataset-leads.md
+varon2023permian,10.5194/acp-23-7503-2023,peer-reviewed paper,Information content,,,,methods,data/manifest.json
+nikolaisen2023riceef,10.1016/j.jclepro.2023.137245,(unlabelled),"The inversion frame and the urban layer, added 11 September 2026",,,,methods,
+lee2024twostagebayes,10.1093/biostatistics/kxae038,peer-reviewed paper,The alternatives to prediction-powered inference,,,,methods,
+vanderweele2019differential,10.1093/aje/kwz133,peer-reviewed paper,The alternatives to prediction-powered inference,,,,methods,
+cinelli2020sensitivity,10.1111/rssb.12348,peer-reviewed paper,The alternatives to prediction-powered inference,,,,methods,
+simonsohn2020speccurve,10.1038/s41562-020-0912-z,peer-reviewed paper,The alternatives to prediction-powered inference,,,,methods,
+wang2026usurban,10.1126/sciadv.adz9308,peer-reviewed paper,The urban layer,methods:554,,methods,methane;methods;rice;urban;yrd,notes/dataset-leads.md
+wang2024landfills,10.1038/s41893-024-01307-9,peer-reviewed paper,The urban layer,,,,methods;rice;urban;yrd,notes/dataset-leads.md
+luo2025oilgas,10.1038/s41467-025-58237-z,peer-reviewed paper,The urban layer,,,,rice;urban,
+chen2026seasia,10.1038/s41597-026-07320-1,peer-reviewed paper,The urban layer,,,,rice;urban;yrd,
+gao2026mswmitigation,10.1016/j.jenvman.2025.128450,peer-reviewed paper,The urban layer,,,,urban,
+ma2024mswdecrease,10.1021/acs.est.4c00408,peer-reviewed paper,The urban layer,,,,rice;urban,
+zhang2026landfillsites,10.1016/j.jenvman.2026.128672,peer-reviewed paper,The urban layer,,,,methane;rice;urban;yrd,ERRATA.md;notes/dataset-leads.md
+dogniaux2025ghgsat,10.1038/s41586-025-09683-8,peer-reviewed paper,The urban layer,,,,,
+wang2022nechina,10.1038/s41598-022-19462-4,peer-reviewed paper,The urban layer,,,,urban,
+lu2025canine,10.1038/s44284-024-00183-w,peer-reviewed paper,The urban layer,,,,methods;urban,notes/decisions.md;data/processed/README.md;data/manifest.json;config/sources.yml
+zhou2024wwtp,10.1038/s41597-024-03815-x,dataset paper,The urban layer,,,,,
+zhu2021pppm,10.1080/15481603.2021.1943214,peer-reviewed paper,Datasets used,,,,rice,notes/decisions.md
+sheng2019coalgrid,10.1021/acs.estlett.9b00294,peer-reviewed paper,"Coal, the sector four grounding passes missed",,,,yrd,
+liu2009huainancbm,10.1016/j.coal.2009.05.001,peer-reviewed paper,"Coal, the sector four grounding passes missed",,,,yrd,
+wei2024qinan,10.1038/s41598-024-79922-x,peer-reviewed paper,"Coal, the sector four grounding passes missed",,,,yrd,
+zhu2022coalch4,10.3390/ijerph19127408,peer-reviewed paper,"Coal, the sector four grounding passes missed",,,,yrd,
+li2026popchange,10.1057/s41599-026-07688-w,peer-reviewed paper,The proxy comparison,,,,methods;rice;urban;yrd,
+langritter2025rural,10.1038/s41467-025-56906-7,peer-reviewed paper,The proxy comparison,,,,urban,
+wei2021imperviouspop,10.1080/01431161.2020.1841322,peer-reviewed paper,The proxy comparison,,,,urban,
+zhang2026buildingheight,10.5194/essd-18-5329-2026,peer-reviewed paper,Building form,,,,methane;rice;urban;yrd,ERRATA.md
+che2024globfp,10.5194/essd-16-5357-2024,peer-reviewed paper,Building form,,,,urban,
+wu2023cnbh10m,10.1016/j.rse.2023.113578,peer-reviewed paper,Building form,,,,urban,
+zhang2025cmab,10.1038/s41597-025-04730-5,dataset paper,Building form,,,,methane;rice;urban,notes/decisions.md
+maasakkers2022landfills,10.1126/sciadv.abn9683,peer-reviewed paper,"Tip-and-cue, and two in-domain observations",,,,,
+pang2025shaoxing,10.1016/j.jes.2024.03.045,peer-reviewed paper,"Tip-and-cue, and two in-domain observations",,,,,notes/dataset-leads.md
+fu2026shanghaicanopy,10.5194/acp-26-5477-2026,peer-reviewed paper,"Tip-and-cue, and two in-domain observations",,,,,notes/dataset-leads.md
+han2021nesearice10,10.5194/essd-13-5969-2021,peer-reviewed paper,The rice products,,,,rice,
+han2021apra500data,10.5281/zenodo.5555721,"the deposit, fetched",The rice products,,,,rice,notes/dataset-leads.md
+wei2022efsp,10.3390/rs14030759,peer-reviewed paper,The rice products,,,,rice,notes/dataset-leads.md
+fang2024ricereview,10.1016/j.srs.2024.100172,peer-reviewed review,The rice products,,,,rice,notes/dataset-leads.md
+hou2025nericedata,10.6084/m9.figshare.28407710,"the deposit, not fetched",The rice products,,,,rice,notes/dataset-leads.md
+zhao2026searice30m,10.5194/essd-18-5583-2026,peer-reviewed paper,The rice products,,,methods,rice;yrd,ERRATA.md;notes/dataset-leads.md
+runkle2019awd,10.1021/acs.est.8b05535,peer-reviewed paper,"Water regime, temperature and the diurnal cycle",,,,rice,
+sun2016warmdry,10.1038/srep28255,peer-reviewed paper,"Water regime, temperature and the diurnal cycle",,,,rice,
+qian2022parabolic,10.1021/acs.est.2c00738,peer-reviewed paper,"Water regime, temperature and the diurnal cycle",,,,rice,
+wassmann2018nighttime,10.1371/journal.pone.0191352,peer-reviewed paper,"Water regime, temperature and the diurnal cycle",,,,rice,
+li2024nocturnal,10.1016/j.agrformet.2024.110238,peer-reviewed paper,"Water regime, temperature and the diurnal cycle",,,,rice;yrd,
+jiang2018cropintensity,10.3390/rs11010035,peer-reviewed paper,"The cropping-system transition, measured as extent",,,,rice;yrd,
+he2026gba,10.1021/acsestair.5c00446,peer-reviewed paper,"The inversion precedents, in two directions",,,,methane;methods;rice,
+mehla2026ricereview,10.1038/s43247-026-03902-4,peer-reviewed review,The rice layer's synthesis anchor,,,,rice,
+qian2023ricereview,10.1038/s43017-023-00482-1,peer-reviewed review,The rice layer's synthesis anchor,,,,rice;yrd,
+li2025cityreview,10.3390/rs17183152,peer-reviewed review,The urban layer's synthesis anchor,,,,rice;urban;yrd,notes/decisions.md;notes/dataset-leads.md;data/processed/README.md;data/manifest.json;config/sources.yml
+whiting2026urbantrend,10.1073/pnas.2504211123,peer-reviewed paper,The urban layer's synthesis anchor,,,,urban,
+long2026urbanpreprint,10.5194/egusphere-2026-2570,(unlabelled),The urban layer's synthesis anchor,,,,urban,
+nasem2018methane,10.17226/24987,consensus study report,The urban layer's synthesis anchor,,,,urban,
+zhao2026subnational,10.1016/j.scib.2026.06.019,peer-reviewed paper,The region's synthesis anchor,methods:40,,methods,rice;yrd,ERRATA.md;notes/dataset-leads.md
+khanna2024mitigation,10.1038/s41467-024-54038-y,peer-reviewed paper,The region's synthesis anchor,,,,yrd,
+zhang2022irrigated,10.1038/s41597-022-01522-z,peer-reviewed paper,One dataset for the inventory,,,,rice,
+zhang2024aquaculture,10.1038/s43247-024-01699-8,peer-reviewed paper,"Aquaculture, the unrepresented source",,,,rice,
+dong2023ponds,10.1021/acs.est.2c05218,peer-reviewed paper,"Aquaculture, the unrepresented source",,,,rice,
+zhao2025pondlake,10.1016/j.jhydrol.2025.132765,peer-reviewed paper,"Aquaculture, the unrepresented source",,,,rice;urban,
+zhao2021pondec,10.1016/j.agrformet.2021.108600,peer-reviewed paper,"Aquaculture, the unrepresented source",,,,rice,
+li2026jiangsuponds,10.1016/j.jes.2025.03.042,peer-reviewed paper,"Aquaculture, the unrepresented source",,,,methods;rice;urban;yrd,
+sun2025chinaap,10.1016/j.jag.2025.104958,peer-reviewed paper,"Aquaculture, the unrepresented source",,,,rice,notes/dataset-leads.md
+chen2025aquaindex,10.1029/2024EF005637,peer-reviewed paper,"Aquaculture, the unrepresented source",,,,methods;rice,ERRATA.md;notes/decisions.md;notes/dataset-leads.md
+bossio1999straw,10.1016/S0038-0717(99)00050-4,peer-reviewed paper,"Straw, the fallow season, and paddy as wetland",,,,rice,
+jiang2019acclimation,10.1126/sciadv.aau9038,peer-reviewed paper,"Straw, the fallow season, and paddy as wetland",,,,rice;yrd,
+martinezeixarch2018fallow,10.1371/journal.pone.0198081,peer-reviewed paper,"Straw, the fallow season, and paddy as wetland",,,,rice;yrd,
+martinezeixarch2021drivers,10.1007/s11104-020-04809-5,peer-reviewed paper,"Straw, the fallow season, and paddy as wetland",,,,rice;yrd,
+shahzadi2026fuseddata,10.35097/wq583rnzpmd83m5g,"the deposit, not fetched",The methane layer's target and observing chain,,,,methane,notes/dataset-leads.md
+shahzadi2026fused,10.5194/essd-18-2153-2026,peer-reviewed paper,The methane layer's target and observing chain,,,,methane,
+liang2023eastasia,10.5194/acp-23-8039-2023,peer-reviewed paper,The methane layer's target and observing chain,,,,methane,
+nesser2025boundary,10.5194/gmd-18-9279-2025,peer-reviewed paper,The methane layer's target and observing chain,,,,methane,
+stanevich2020resolution,10.5194/gmd-13-3839-2020,peer-reviewed paper,The methane layer's target and observing chain,,,,methane,
+wang2026twelvekm,10.5194/acp-26-6857-2026,peer-reviewed paper,The methane layer's target and observing chain,,,methods,methane;rice;urban;yrd,notes/dataset-leads.md
+yu2021osse,10.5194/gmd-14-7775-2021,peer-reviewed paper,The methane layer's target and observing chain,,,,methane,
+penn2025oh,10.5194/acp-25-2947-2025,peer-reviewed paper,The methane layer's target and observing chain,,,,methane,
+bloom2017wetcharts,10.5194/gmd-10-2141-2017,peer-reviewed paper,The methane layer's target and observing chain,,,,methane,
+bloom2021wetchartsdata,10.3334/ORNLDAAC/1915,"the deposit, not fetched",The methane layer's target and observing chain,,,,methane,notes/dataset-leads.md
+chen2026tropicalwetland,10.1021/acs.est.6c05412,peer-reviewed paper,The methane layer's target and observing chain,,,,methane;rice;urban;yrd,
+desjardins2018reconciling,10.1016/j.agrformet.2017.09.003,peer-reviewed paper,The cross-layer synthesis,methods:568,,methods,,notes/paper-target.md
+france2022isotopes,10.1098/rsta.2020.0449,peer-reviewed paper,The cross-layer synthesis,,,,,notes/paper-target.md
+bakkaloglu2022wasteisotopes,10.1016/j.atmosenv.2022.119021,peer-reviewed paper,The cross-layer synthesis,,,,,notes/paper-target.md
+sherwood2020signatures,10.15138/qn55-e011,"the deposit, not fetched",The cross-layer synthesis,,,,,notes/paper-target.md
+lan2021d13c,10.1029/2021GB007000,peer-reviewed paper,The cross-layer synthesis,,,,,notes/paper-target.md
+yao2026southasia,10.5194/acp-26-7765-2026,peer-reviewed paper,The cross-layer synthesis,,,,,notes/paper-target.md
+turner2018capability,10.5194/acp-18-8265-2018,peer-reviewed paper,Capability assessment as a paper type,,,,,notes/paper-target.md
+jacob2022quantifying,10.5194/acp-22-9617-2022,peer-reviewed review,Capability assessment as a paper type,,,,,notes/paper-target.md
+montenegro2025capability,10.5194/egusphere-2025-5923,(unlabelled),Capability assessment as a paper type,,,,,notes/paper-target.md
+chong2023publicationbias,10.1371/journal.pone.0282839,peer-reviewed paper,"Publication bias, which turned out to be the weaker worry",,,,,notes/paper-target.md
+boulesteix2012plea,10.48550/arXiv.1208.2651,(unlabelled),"Publication bias, which turned out to be the weaker worry",,,,,notes/paper-target.md
+nab2021sensitivitypublished,10.1016/j.gloepi.2021.100067,(unlabelled),Errors-in-variables,,,,methods,notes/decisions.md
+boulesteix2013pleapublished,10.1371/journal.pone.0061562,(unlabelled),"Publication bias, which turned out to be the weaker worry",,,,,
+lee2026multitabpublished,10.1145/3770855.3817455,(unlabelled),Model class and resolution,,,,,

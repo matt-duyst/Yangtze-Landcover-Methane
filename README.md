@@ -249,6 +249,7 @@ In outline:
 | 2018 methane composite | `compute_methane_composite.py --checkpoint data/interim/extent_2018.npz --export data/processed/methane_composite_2018 --export-csv data/processed/methane_coverage_2018.csv` | 28.9 GB and about two hours to build the checkpoint; seconds to export from it | on demand |
 | attenuation bound on the land-cover coefficient | `bound_attenuation.py --write` | about ten seconds | continuously |
 | fitted seasonal cycle parameters | `fit_seasonal_cycle.py --write` | seconds from the checkpoint | on local |
+| where each register entry is cited | `audit_reference_use.py --write` | seconds; it reads prose and refits nothing | continuously |
 | equivalence tests for the land-cover associations | `test_equivalence_bounds.py --write` | about a minute; the effective sample sizes are pairwise distance matrices | continuously |
 | every defensible land-cover specification, ordered | `build_specification_curve.py --write` | instant; it assembles committed tables and refits nothing | continuously |
 | per-granule quality accounting and declared footprint | `summarise_composite_quality.py --write` | seconds from the extended checkpoint | on local |

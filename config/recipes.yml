@@ -72,6 +72,23 @@ recipes:
     day's interval is simulated from the coefficient covariance with a fixed
     seed, so the artefact is reproducible.
   sha256: 25616eef6d68e08c42f2b027660b72b66beabe3b1e01a9d096b26e84530fe34a
+- artefact: data/processed/reference_use_2026.csv
+  command: python scripts/audit_reference_use.py --write
+  label: where each register entry is cited
+  cost: seconds; it reads prose and refits nothing
+  seconds: 8
+  inputs: committed
+  compare: bytes
+  verified: continuously
+  note: >-
+    Separates the register, which records what the project consulted, from a
+    reference list, which records what the paper cites. Deliberately coupled to
+    the drafts: any draft gaining or losing a citation changes this artefact and
+    the byte comparison fails until it is regenerated, which is what keeps the
+    audit current. The `draft_verified` column is hand-read from context and is
+    the authority; `draft_candidate` is the mechanical pass and over-reports,
+    because three `zhao2026` and three `wang2026` entries share a surname and
+    year.
 - artefact: data/processed/equivalence_bounds_2018.csv
   command: python scripts/test_equivalence_bounds.py --write
   label: equivalence tests for the land-cover associations

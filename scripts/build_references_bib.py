@@ -388,6 +388,9 @@ KEYS = {
     "10.5194/egusphere-2025-5923": "montenegro2025capability",
     "10.1371/journal.pone.0282839": "chong2023publicationbias",
     "10.48550/arXiv.1208.2651": "boulesteix2012plea",
+    "10.1016/j.gloepi.2021.100067": "nab2021sensitivitypublished",
+    "10.1371/journal.pone.0061562": "boulesteix2013pleapublished",
+    "10.1145/3770855.3817455": "lee2026multitabpublished",
 }
 
 HEADER = """% Verified reference register for Yangtze-Landcover-Methane.
