@@ -1,0 +1,12 @@
+quantity,value,unit,basis,note
+station latitude,31.9100,degrees north,tccon,median of the per-retrieval reported position
+station longitude,117.1700,degrees east,tccon,
+station cell row,13,index,derived,row 0 is the north edge
+station cell column,9,index,derived,
+retrievals in 2018,2767,retrievals,tccon,rows with a finite xch4
+days with a retrieval in 2018,44,days,tccon,
+granules covering the station cell,32,granules,checkpoint,from the packed per-granule cell sets
+days a granule covered the station cell,32,days,checkpoint,
+soundings in the station cell,162,soundings,checkpoint,"qa-passing, over the eight-month record"
+coincident days,9,days,derived,a TCCON retrieval and a granule covering the cell on the same day
+"coincident days, listed",2018-09-03 2018-09-29 2018-10-05 2018-10-07 2018-10-11 2018-10-27 2018-10-31 2018-11-26 2018-12-18,dates,derived,UTC calendar days

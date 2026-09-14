@@ -37,13 +37,14 @@ notes/draft-introduction.md,123,4. What this paper does,3.98,measured,inline res
 notes/draft-introduction.md,123,4. What this paper does,22.21,measured,inline resolver,dofs.at_12tg," 3.98<!--#dofs.at_5tg--> to 22.21<!--#dofs.at_12tg-->, and **no cell reaches an"
 notes/draft-introduction.md,124,4. What this paper does,0.5,cited,in a draft's own exemption list,introduction/discussion: averaging-kernel sensitivity threshold, averaging-kernel sensitivity above 0.5 at any magnitude tested** — the count is
 notes/draft-introduction.md,125,4. What this paper does,0,measured,inline resolver,dofs.cells_above_half, 0<!--#dofs.cells_above_half-->;
-notes/draft-introduction.md,149,4. What this paper does,126,measured,inline resolver,curve.specifications,126<!--#curve.specifications--> defensible specifications
-notes/draft-introduction.md,150,4. What this paper does,0,measured,inline resolver,curve.positive_and_beats,0<!--#curve.positive_and_beats--> are both positive and beat their own spatial
-notes/draft-introduction.md,153,4. What this paper does,7,measured,inline resolver,equiv.impervious_within,7<!--#equiv.impervious_within--> of
-notes/draft-introduction.md,154,4. What this paper does,12,measured,inline resolver,equiv.impervious_rows,"12<!--#equiv.impervious_rows-->, so this paper claims no meaningful rice effect"
-notes/draft-introduction.md,160,4. What this paper does,1.15,measured,inline resolver,atten.factor_max,"1.15<!--#atten.factor_max-->, and reaching the spatial null's performance would"
-notes/draft-introduction.md,161,4. What this paper does,74.5,measured,inline resolver,atten.need_share_bu_pct,require 74.5<!--#atten.need_share_bu_pct--> percent of the predictor's variance
-notes/draft-introduction.md,162,4. What this paper does,5.6,measured,inline resolver,atten.need_multiple_bu,"to be error, which is 5.6<!--#atten.need_multiple_bu--> times what the two"
+notes/draft-introduction.md,141,4. What this paper does,9,measured,inline resolver,tccon.coincident_days,9<!--#tccon.coincident_days--> coincident
+notes/draft-introduction.md,150,4. What this paper does,126,measured,inline resolver,curve.specifications,126<!--#curve.specifications--> defensible specifications
+notes/draft-introduction.md,151,4. What this paper does,0,measured,inline resolver,curve.positive_and_beats,0<!--#curve.positive_and_beats--> are both positive and beat their own spatial
+notes/draft-introduction.md,154,4. What this paper does,7,measured,inline resolver,equiv.impervious_within,7<!--#equiv.impervious_within--> of
+notes/draft-introduction.md,155,4. What this paper does,12,measured,inline resolver,equiv.impervious_rows,"12<!--#equiv.impervious_rows-->, so this paper claims no meaningful rice effect"
+notes/draft-introduction.md,161,4. What this paper does,1.15,measured,inline resolver,atten.factor_max,"1.15<!--#atten.factor_max-->, and reaching the spatial null's performance would"
+notes/draft-introduction.md,162,4. What this paper does,74.5,measured,inline resolver,atten.need_share_bu_pct,require 74.5<!--#atten.need_share_bu_pct--> percent of the predictor's variance
+notes/draft-introduction.md,163,4. What this paper does,5.6,measured,inline resolver,atten.need_multiple_bu,"to be error, which is 5.6<!--#atten.need_multiple_bu--> times what the two"
 notes/draft-methods.md,18,1. Study area and analysis lattice,1,self_evident,structural line,,## 1. Study area and analysis lattice
 notes/draft-methods.md,22,1. Study area and analysis lattice,0.25,self_evident,grid resolution,,was carried out on a regular geographic lattice of 0.25° cells spanning 114.8°
 notes/draft-methods.md,22,1. Study area and analysis lattice,114.8,self_evident,study box or lattice shape,,was carried out on a regular geographic lattice of 0.25° cells spanning 114.8°
@@ -335,43 +336,44 @@ notes/draft-methods.md,580,6.3 Relation to the association analysis,5,self_evide
 notes/draft-methods.md,580,6.3 Relation to the association analysis,6.1,self_evident,structural context,,The association analysis of §5 is the empirical counterpart of §6.1 rather than a
 notes/draft-methods.md,582,6.3 Relation to the association analysis,5,self_evident,structural context,,"sensitivity is a record in which per-cell predictors should fail, and §5 reports"
 notes/draft-methods.md,588,7. Validation,7,self_evident,structural line,,## 7. Validation
-notes/draft-methods.md,593,7. Validation,2018,self_evident,year as a date,,"its 2018 record is sparse: 2,767 retrievals on 44 days. Nine days in 2018 carry"
-notes/draft-methods.md,593,7. Validation,"2,767",unresolved,"in an artefact, no resolver",the Hefei TCCON retrieval count,"its 2018 record is sparse: 2,767 retrievals on 44 days. Nine days in 2018 carry"
-notes/draft-methods.md,593,7. Validation,44,unresolved,"in an artefact, no resolver",the Hefei TCCON day count,"its 2018 record is sparse: 2,767 retrievals on 44 days. Nine days in 2018 carry"
-notes/draft-methods.md,593,7. Validation,2018,self_evident,year as a date,,"its 2018 record is sparse: 2,767 retrievals on 44 days. Nine days in 2018 carry"
-notes/draft-methods.md,609,7. Validation,4.3,self_evident,structural context,,"cover, which is the form both predictors take here (§4.3). That frame compares a"
-notes/draft-methods.md,615,7. Validation,0.954,cited,in a draft's own exemption list,discussion: accuracy figure in section 8,this work uses report an F-score of 0.954 (GISA) and 93.12 percent overall
-notes/draft-methods.md,615,7. Validation,93.12,neither,no resolver and no exemption,,this work uses report an F-score of 0.954 (GISA) and 93.12 percent overall
-notes/draft-methods.md,616,7. Validation,1,neither,no resolver and no exemption,,accuracy (GISA-new). A 1 m national land-cover map of China reports 73.61
-notes/draft-methods.md,616,7. Validation,73.61,cited,in a draft's own exemption list,discussion: SinoLC-1 overall accuracy,accuracy (GISA-new). A 1 m national land-cover map of China reports 73.61
-notes/draft-methods.md,617,7. Validation,0.6595,neither,no resolver and no exemption,,"percent overall accuracy with a kappa of 0.6595, and splits impervious surface"
-notes/draft-methods.md,618,7. Validation,1,neither,no resolver and no exemption,,across two classes. A 1 m impervious product for the Yangtze River Economic
-notes/draft-methods.md,619,7. Validation,75.53,neither,no resolver and no exemption,,"Belt reports an impervious-class F1 of 75.53 with a recall of 61.76, is"
-notes/draft-methods.md,619,7. Validation,61.76,neither,no resolver and no exemption,,"Belt reports an impervious-class F1 of 75.53 with a recall of 61.76, is"
-notes/draft-methods.md,620,7. Validation,10,cited,in a draft's own exemption list,"methods: published precision filter, under 10 ppb","super-resolved from 10 m imagery, and is deposited as seven example cities. A"
-notes/draft-methods.md,621,7. Validation,42,neither,no resolver and no exemption,,submeter product over 42 cities reports 83.6 percent overall accuracy and covers
-notes/draft-methods.md,621,7. Validation,83.6,neither,no resolver and no exemption,,submeter product over 42 cities reports 83.6 percent overall accuracy and covers
-notes/draft-methods.md,622,7. Validation,30,cited,in a draft's own exemption list,"introduction: inventory spread, at least 30 percent",urban areas only. A 30 m product for 2020 and 2022 reports an impervious F1
-notes/draft-methods.md,622,7. Validation,2020,self_evident,year as a date,,urban areas only. A 30 m product for 2020 and 2022 reports an impervious F1
-notes/draft-methods.md,622,7. Validation,2022,self_evident,year as a date,,urban areas only. A 30 m product for 2020 and 2022 reports an impervious F1
-notes/draft-methods.md,623,7. Validation,0.93,unresolved,"equals a resolver's value, written unmarked",atten.lambda_equal,"above 0.93 and is the same resolution as the layers it would assess, so it is a"
-notes/draft-methods.md,625,7. Validation,2020,self_evident,year as a date,,"what it would validate, and each is 2020 or later against analysis years of"
-notes/draft-methods.md,626,7. Validation,2000,self_evident,year as a date,,"2000, 2010 and 2018.** So the absence is a property of the products available"
-notes/draft-methods.md,626,7. Validation,2010,self_evident,year as a date,,"2000, 2010 and 2018.** So the absence is a property of the products available"
-notes/draft-methods.md,626,7. Validation,2018,self_evident,year as a date,,"2000, 2010 and 2018.** So the absence is a property of the products available"
-notes/draft-methods.md,632,7. Validation,868,neither,no resolver and no exemption,,"fractional specialisation of Pontius and Millones's decomposition, at the 868 m"
-notes/draft-methods.md,633,7. Validation,0.25,self_evident,grid resolution,,grid on which both are committed and at the 0.25 degree lattice the association
-notes/draft-methods.md,640,7. Validation,13.2,measured,inline resolver,atten.var_share_pct,"variance is 13.2<!--#atten.var_share_pct--> % of the predictor's own variance,"
-notes/draft-methods.md,641,7. Validation,0.868,measured,inline resolver,atten.lambda_min,so the reliability ratio is at least 0.868<!--#atten.lambda_min--> and the
-notes/draft-methods.md,642,7. Validation,1.15,measured,inline resolver,atten.factor_max,de-attenuation factor is at most 1.15<!--#atten.factor_max-->. Results §3.4
-notes/draft-methods.md,642,7. Validation,3.4,self_evident,structural context,,de-attenuation factor is at most 1.15<!--#atten.factor_max-->. Results §3.4
-notes/draft-methods.md,650,7. Validation,0.118,unresolved,"in an artefact, no resolver","albedo_confounder_2018.csv, partial correlation",the signed difference correlating at −0.118 with methane once the fraction is
-notes/draft-methods.md,661,7. Validation,6,self_evident,structural context,,bounded. None of the capability statements of §6 depends on either.
-notes/draft-methods.md,663,8. Reproducibility,8,self_evident,structural line,,## 8. Reproducibility
-notes/draft-methods.md,667,8. Reproducibility,73,measured,inline resolver,pipeline.recipes,73<!--#pipeline.recipes--> artefacts are registered across four tiers:
-notes/draft-methods.md,668,8. Reproducibility,41,measured,inline resolver,pipeline.recipes_committed,41<!--#pipeline.recipes_committed--> regenerate from a fresh clone with no
-notes/draft-methods.md,670,8. Reproducibility,22,measured,inline resolver,pipeline.recipes_local,22<!--#pipeline.recipes_local--> require local raw data and are verified where it
-notes/draft-methods.md,671,8. Reproducibility,9,measured,inline resolver,pipeline.recipes_network,exists; 9<!--#pipeline.recipes_network--> require a network fetch and are verified
+notes/draft-methods.md,593,7. Validation,"2,767",measured,inline resolver,tccon.retrievals,"its 2018 record is sparse: 2,767<!--#tccon.retrievals--> retrievals on"
+notes/draft-methods.md,593,7. Validation,2018,self_evident,year as a date,,"its 2018 record is sparse: 2,767<!--#tccon.retrievals--> retrievals on"
+notes/draft-methods.md,594,7. Validation,44,measured,inline resolver,tccon.days,44<!--#tccon.days--> days. 9<!--#tccon.coincident_days--> days in 2018 carry
+notes/draft-methods.md,594,7. Validation,9,measured,inline resolver,tccon.coincident_days,44<!--#tccon.days--> days. 9<!--#tccon.coincident_days--> days in 2018 carry
+notes/draft-methods.md,594,7. Validation,2018,self_evident,year as a date,,44<!--#tccon.days--> days. 9<!--#tccon.coincident_days--> days in 2018 carry
+notes/draft-methods.md,610,7. Validation,4.3,self_evident,structural context,,"cover, which is the form both predictors take here (§4.3). That frame compares a"
+notes/draft-methods.md,616,7. Validation,0.954,cited,in a draft's own exemption list,discussion: accuracy figure in section 8,this work uses report an F-score of 0.954 (GISA) and 93.12 percent overall
+notes/draft-methods.md,616,7. Validation,93.12,neither,no resolver and no exemption,,this work uses report an F-score of 0.954 (GISA) and 93.12 percent overall
+notes/draft-methods.md,617,7. Validation,1,neither,no resolver and no exemption,,accuracy (GISA-new). A 1 m national land-cover map of China reports 73.61
+notes/draft-methods.md,617,7. Validation,73.61,cited,in a draft's own exemption list,discussion: SinoLC-1 overall accuracy,accuracy (GISA-new). A 1 m national land-cover map of China reports 73.61
+notes/draft-methods.md,618,7. Validation,0.6595,neither,no resolver and no exemption,,"percent overall accuracy with a kappa of 0.6595, and splits impervious surface"
+notes/draft-methods.md,619,7. Validation,1,neither,no resolver and no exemption,,across two classes. A 1 m impervious product for the Yangtze River Economic
+notes/draft-methods.md,620,7. Validation,75.53,neither,no resolver and no exemption,,"Belt reports an impervious-class F1 of 75.53 with a recall of 61.76, is"
+notes/draft-methods.md,620,7. Validation,61.76,neither,no resolver and no exemption,,"Belt reports an impervious-class F1 of 75.53 with a recall of 61.76, is"
+notes/draft-methods.md,621,7. Validation,10,cited,in a draft's own exemption list,"methods: published precision filter, under 10 ppb","super-resolved from 10 m imagery, and is deposited as seven example cities. A"
+notes/draft-methods.md,622,7. Validation,42,neither,no resolver and no exemption,,submeter product over 42 cities reports 83.6 percent overall accuracy and covers
+notes/draft-methods.md,622,7. Validation,83.6,neither,no resolver and no exemption,,submeter product over 42 cities reports 83.6 percent overall accuracy and covers
+notes/draft-methods.md,623,7. Validation,30,cited,in a draft's own exemption list,"introduction: inventory spread, at least 30 percent",urban areas only. A 30 m product for 2020 and 2022 reports an impervious F1
+notes/draft-methods.md,623,7. Validation,2020,self_evident,year as a date,,urban areas only. A 30 m product for 2020 and 2022 reports an impervious F1
+notes/draft-methods.md,623,7. Validation,2022,self_evident,year as a date,,urban areas only. A 30 m product for 2020 and 2022 reports an impervious F1
+notes/draft-methods.md,624,7. Validation,0.93,unresolved,"equals a resolver's value, written unmarked",atten.lambda_equal,"above 0.93 and is the same resolution as the layers it would assess, so it is a"
+notes/draft-methods.md,626,7. Validation,2020,self_evident,year as a date,,"what it would validate, and each is 2020 or later against analysis years of"
+notes/draft-methods.md,627,7. Validation,2000,self_evident,year as a date,,"2000, 2010 and 2018.** So the absence is a property of the products available"
+notes/draft-methods.md,627,7. Validation,2010,self_evident,year as a date,,"2000, 2010 and 2018.** So the absence is a property of the products available"
+notes/draft-methods.md,627,7. Validation,2018,self_evident,year as a date,,"2000, 2010 and 2018.** So the absence is a property of the products available"
+notes/draft-methods.md,633,7. Validation,868,neither,no resolver and no exemption,,"fractional specialisation of Pontius and Millones's decomposition, at the 868 m"
+notes/draft-methods.md,634,7. Validation,0.25,self_evident,grid resolution,,grid on which both are committed and at the 0.25 degree lattice the association
+notes/draft-methods.md,641,7. Validation,13.2,measured,inline resolver,atten.var_share_pct,"variance is 13.2<!--#atten.var_share_pct--> % of the predictor's own variance,"
+notes/draft-methods.md,642,7. Validation,0.868,measured,inline resolver,atten.lambda_min,so the reliability ratio is at least 0.868<!--#atten.lambda_min--> and the
+notes/draft-methods.md,643,7. Validation,1.15,measured,inline resolver,atten.factor_max,de-attenuation factor is at most 1.15<!--#atten.factor_max-->. Results §3.4
+notes/draft-methods.md,643,7. Validation,3.4,self_evident,structural context,,de-attenuation factor is at most 1.15<!--#atten.factor_max-->. Results §3.4
+notes/draft-methods.md,651,7. Validation,0.118,unresolved,"in an artefact, no resolver","albedo_confounder_2018.csv, partial correlation",the signed difference correlating at −0.118 with methane once the fraction is
+notes/draft-methods.md,662,7. Validation,6,self_evident,structural context,,bounded. None of the capability statements of §6 depends on either.
+notes/draft-methods.md,664,8. Reproducibility,8,self_evident,structural line,,## 8. Reproducibility
+notes/draft-methods.md,668,8. Reproducibility,74,measured,inline resolver,pipeline.recipes,74<!--#pipeline.recipes--> artefacts are registered across four tiers:
+notes/draft-methods.md,669,8. Reproducibility,41,measured,inline resolver,pipeline.recipes_committed,41<!--#pipeline.recipes_committed--> regenerate from a fresh clone with no
+notes/draft-methods.md,671,8. Reproducibility,22,measured,inline resolver,pipeline.recipes_local,22<!--#pipeline.recipes_local--> require local raw data and are verified where it
+notes/draft-methods.md,672,8. Reproducibility,10,measured,inline resolver,pipeline.recipes_network,exists; 10<!--#pipeline.recipes_network--> require a network fetch and are verified
 notes/draft-results.md,11,(none),1,self_evident,structural context,,"preliminary material, so §1 reports the observing system, §2 the field it"
 notes/draft-results.md,11,(none),2,self_evident,structural context,,"preliminary material, so §1 reports the observing system, §2 the field it"
 notes/draft-results.md,12,(none),3,self_evident,structural context,,"produced, §3 the land-cover association, §4 the confounds, §5 the"
@@ -679,10 +681,10 @@ notes/draft-results.md,614,6.4 Relation to §3,3,self_evident,structural context
 notes/draft-results.md,614,6.4 Relation to §3,6.1,self_evident,structural context,,The land-cover result of §3 is the empirical counterpart of §6.1. A record whose
 notes/draft-results.md,616,6.4 Relation to §3,3,self_evident,structural context,,"record in which per-cell predictors should fail, and §3 reports that they do"
 notes/draft-results.md,621,7. Reproducibility of the reported figures,7,self_evident,structural line,,## 7. Reproducibility of the reported figures
-notes/draft-results.md,623,7. Reproducibility of the reported figures,73,measured,inline resolver,pipeline.recipes,73<!--#pipeline.recipes--> derived artefacts are registered with the command that
+notes/draft-results.md,623,7. Reproducibility of the reported figures,74,measured,inline resolver,pipeline.recipes,74<!--#pipeline.recipes--> derived artefacts are registered with the command that
 notes/draft-results.md,625,7. Reproducibility of the reported figures,41,measured,inline resolver,pipeline.recipes_committed,41<!--#pipeline.recipes_committed--> regenerate from a fresh clone with no network
 notes/draft-results.md,627,7. Reproducibility of the reported figures,22,measured,inline resolver,pipeline.recipes_local,run; 22<!--#pipeline.recipes_local--> require local raw data;
-notes/draft-results.md,628,7. Reproducibility of the reported figures,9,measured,inline resolver,pipeline.recipes_network,9<!--#pipeline.recipes_network--> require a network fetch. Every numeric claim in
+notes/draft-results.md,628,7. Reproducibility of the reported figures,10,measured,inline resolver,pipeline.recipes_network,10<!--#pipeline.recipes_network--> require a network fetch. Every numeric claim in
 notes/draft-discussion.md,10,(none),1,self_evident,structural context,,"what the result is and is not (§1), explain why it came out that way (§2 and §3),"
 notes/draft-discussion.md,10,(none),2,self_evident,structural context,,"what the result is and is not (§1), explain why it came out that way (§2 and §3),"
 notes/draft-discussion.md,10,(none),3,self_evident,structural context,,"what the result is and is not (§1), explain why it came out that way (§2 and §3),"
@@ -788,13 +790,14 @@ notes/draft-discussion.md,351,8. Limitations,2023,self_evident,year as a date,,"
 notes/draft-discussion.md,352,8. Limitations,30,cited,in a draft's own exemption list,"introduction: inventory spread, at least 30 percent",eight-month year beginning 30 April. Nothing in this work establishes that 2018
 notes/draft-discussion.md,352,8. Limitations,2018,self_evident,year as a date,,eight-month year beginning 30 April. Nothing in this work establishes that 2018
 notes/draft-discussion.md,356,8. Limitations,2018,self_evident,year as a date,,conclusion is a property of the instrument over this domain or of 2018's
-notes/draft-discussion.md,361,8. Limitations,2018,self_evident,year as a date,,2018 carry both a TROPOMI overpass of its cell and station data. Nine coincident
-notes/draft-discussion.md,369,8. Limitations,30,cited,in a draft's own exemption list,"introduction: inventory spread, at least 30 percent","less accurate than the 30 m products it would assess, the closest being a 1 m"
-notes/draft-discussion.md,369,8. Limitations,1,neither,no resolver and no exemption,,"less accurate than the 30 m products it would assess, the closest being a 1 m"
-notes/draft-discussion.md,370,8. Limitations,73.61,cited,in a draft's own exemption list,discussion: SinoLC-1 overall accuracy,national land-cover map at 73.61 percent overall accuracy against an impervious
-notes/draft-discussion.md,371,8. Limitations,0.954,cited,in a draft's own exemption list,discussion: accuracy figure in section 8,F-score of 0.954 for the layer in use. So the absence is not an omission that
-notes/draft-discussion.md,379,8. Limitations,2024,self_evident,year as a date,,September 2024 to orbits this analysis year will never include. Each is recorded
-notes/draft-discussion.md,383,8. Limitations,4,self_evident,structural context,,"rice product whose errors are independent of the layer in use, as §4 states."
+notes/draft-discussion.md,361,8. Limitations,9,measured,inline resolver,tccon.coincident_days,9<!--#tccon.coincident_days--> days in
+notes/draft-discussion.md,362,8. Limitations,2018,self_evident,year as a date,,2018 carry both a TROPOMI overpass of its cell and station data. Nine coincident
+notes/draft-discussion.md,370,8. Limitations,30,cited,in a draft's own exemption list,"introduction: inventory spread, at least 30 percent","less accurate than the 30 m products it would assess, the closest being a 1 m"
+notes/draft-discussion.md,370,8. Limitations,1,neither,no resolver and no exemption,,"less accurate than the 30 m products it would assess, the closest being a 1 m"
+notes/draft-discussion.md,371,8. Limitations,73.61,cited,in a draft's own exemption list,discussion: SinoLC-1 overall accuracy,national land-cover map at 73.61 percent overall accuracy against an impervious
+notes/draft-discussion.md,372,8. Limitations,0.954,cited,in a draft's own exemption list,discussion: accuracy figure in section 8,F-score of 0.954 for the layer in use. So the absence is not an omission that
+notes/draft-discussion.md,380,8. Limitations,2024,self_evident,year as a date,,September 2024 to orbits this analysis year will never include. Each is recorded
+notes/draft-discussion.md,384,8. Limitations,4,self_evident,structural context,,"rice product whose errors are independent of the layer in use, as §4 states."
 figures/README_fragments.md,8,(none),300,self_evident,inside a code span,,"`src/figures/output.py`, which refuses to write anything below 300 dpi or"
 figures/README_fragments.md,9,(none),8,self_evident,describes the drawing,,narrower than 8 cm. Regenerate with the script named under each caption.
 figures/README_fragments.md,13,"Coverage saturation and monthly yield, 2018",2018,self_evident,structural line,,"### Coverage saturation and monthly yield, 2018"
@@ -1120,10 +1123,10 @@ figures/README_fragments.md,550,"What the repository does, from source to result
 figures/README_fragments.md,550,"What the repository does, from source to result",300,self_evident,describes the drawing,,1.02 of its polygon. The exporter will not write a figure below 300 dpi or 8 cm
 figures/README_fragments.md,550,"What the repository does, from source to result",8,self_evident,describes the drawing,,1.02 of its polygon. The exporter will not write a figure below 300 dpi or 8 cm
 figures/README_fragments.md,555,"What the repository does, from source to result",5,measured,inline resolver,pipeline.fetch_routes,"downloads over four platforms — 5<!--#pipeline.fetch_routes--> parallelograms,"
-figures/README_fragments.md,559,"What the repository does, from source to result",73,measured,inline resolver,pipeline.recipes,"73<!--#pipeline.recipes--> registered regeneration recipes,"
+figures/README_fragments.md,559,"What the repository does, from source to result",74,measured,inline resolver,pipeline.recipes,"74<!--#pipeline.recipes--> registered regeneration recipes,"
 figures/README_fragments.md,560,"What the repository does, from source to result",41,measured,inline resolver,pipeline.recipes_committed,41<!--#pipeline.recipes_committed--> rebuild their artefact from what a fresh
 figures/README_fragments.md,561,"What the repository does, from source to result",22,measured,inline resolver,pipeline.recipes_local,"clone holds, 22<!--#pipeline.recipes_local--> need a fetched input and"
-figures/README_fragments.md,562,"What the repository does, from source to result",9,measured,inline resolver,pipeline.recipes_network,9<!--#pipeline.recipes_network--> need a network run.
+figures/README_fragments.md,562,"What the repository does, from source to result",10,measured,inline resolver,pipeline.recipes_network,10<!--#pipeline.recipes_network--> need a network run.
 figures/README_fragments.md,566,"What the repository does, from source to result",23.4,self_evident,describes the drawing,,"frame the chart is eleven rows and 23.4 cm tall at this width, which is the"
 figures/README_fragments.md,569,"What the repository does, from source to result",5807,self_evident,cross-reference address,,"Symbols are ISO 5807:1985's, drawn from the"
 figures/README_fragments.md,569,"What the repository does, from source to result",1985,self_evident,describes the drawing,,"Symbols are ISO 5807:1985's, drawn from the"

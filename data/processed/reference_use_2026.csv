@@ -120,7 +120,7 @@ gao2026mswmitigation,10.1016/j.jenvman.2025.128450,peer-reviewed paper,The urban
 ma2024mswdecrease,10.1021/acs.est.4c00408,peer-reviewed paper,The urban layer,,,,rice;urban,
 zhang2026landfillsites,10.1016/j.jenvman.2026.128672,peer-reviewed paper,The urban layer,,,,methane;rice;urban;yrd,ERRATA.md;notes/dataset-leads.md
 dogniaux2025ghgsat,10.1038/s41586-025-09683-8,peer-reviewed paper,The urban layer,,,,,
-wang2022nechina,10.1038/s41598-022-19462-4,peer-reviewed paper,The urban layer,,,,urban,
+wang2022nechina,10.1038/s41598-022-19462-4,peer-reviewed paper,The urban layer,,,,urban,data/manifest.json
 lu2025canine,10.1038/s44284-024-00183-w,peer-reviewed paper,The urban layer,,,,methods;urban,notes/decisions.md;data/processed/README.md;data/manifest.json;config/sources.yml
 zhou2024wwtp,10.1038/s41597-024-03815-x,dataset paper,The urban layer,,,,,
 zhu2021pppm,10.1080/15481603.2021.1943214,peer-reviewed paper,Datasets used,,,,rice,notes/decisions.md

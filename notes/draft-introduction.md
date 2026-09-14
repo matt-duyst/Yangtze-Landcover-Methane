@@ -137,7 +137,8 @@ and adds no information the observations do not carry.
 degrees-of-freedom figures reimplement a published closed-form estimate over
 this lattice, with no transport model run and no emissions optimised, and they
 are bounded to this domain, instrument and period. It is not a priority claim.
-And it is not a validated result — one year, one instrument, nine coincident
+And it is not a validated result — one year, one instrument,
+9<!--#tccon.coincident_days--> coincident
 ground-based column days without prior alignment, and no accuracy assessment on
 either land-cover layer, the last because no reference layer over this domain is
 more accurate than the products it would assess.

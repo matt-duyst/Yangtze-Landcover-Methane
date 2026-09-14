@@ -15,7 +15,9 @@ work. Nothing in the drafts was edited by this pass.
 
 ## 1. The counts
 
-1,259 numeric claims across four drafts and the caption file.
+1,262 numeric claims across four drafts and the caption file. (1,259 when this
+section was written; marking the Hefei TCCON counts on 14 September 2026 moved
+five numbers into `measured` and changed the row count.)
 
 | category | count | share |
 |---|---|---|

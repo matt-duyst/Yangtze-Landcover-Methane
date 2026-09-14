@@ -259,6 +259,7 @@ In outline:
 | the four preprocessing omissions tested as sensitivities | `test_preprocessing_omissions.py --write` | about four minutes; it refits the baseline suite once per variant | on local |
 | coverage and precision across grid resolutions | `measure_grid_resolution.py --write` | about twenty seconds, mostly the pairwise distance matrices | continuously |
 | GAIA-GISA quantity and allocation disagreement | `decompose_urban_disagreement.py --write` | about ten seconds over two 992 by 1056 rasters | continuously |
+| Hefei TCCON 2018 record and its coincidence with this project's granules | `measure_tccon_coincidence.py --download --write` | a 57.5 MB download and a netCDF read, under a minute | on demand |
 | CCD-Rice validation polygon counts for the four provinces | `summarise_ccdrice_polygons.py --download` | a 1.9 MB download and a parquet read, a few seconds | on demand |
 | composite coverage table | `compute_methane_composite.py --checkpoint data/interim/extent_2018.npz --export data/processed/methane_composite_2018 --export-csv data/processed/methane_coverage_2018.csv` | seconds from the checkpoint | on demand |
 | covariate companion | `compute_methane_composite.py --checkpoint data/interim/extent_2018.npz --export-covariates data/processed/methane_covariates_2018` | seconds from the checkpoint | on demand |

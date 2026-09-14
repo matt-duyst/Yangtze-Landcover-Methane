@@ -222,6 +222,30 @@ recipes:
     both the 868 m pixel grid and the 0.25 degree lattice, because misallocation
     within a lattice cell cancels when the cell mean is taken and only the
     surviving part reaches the regression.
+- artefact: data/processed/tccon_hefei_2018.csv
+  command: python scripts/measure_tccon_coincidence.py --download --write
+  label: Hefei TCCON 2018 record and its coincidence with this project's granules
+  cost: a 57.5 MB download and a netCDF read, under a minute
+  seconds: 30
+  inputs: network
+  compare: bytes
+  verified: on_demand
+  note: >-
+    Counts only, and deliberately so. The TCCON Data License clause 4 reserves
+    redistribution, display and publishing adaptations, so the station file
+    cannot be committed at any size and the derived counts stand in for it;
+    the deposit is registered in data/manifest.json like any other fetched
+    source. Network tier because the input must be fetched rather than held.
+    No granules are downloaded: the days a granule covered the station's cell
+    come from the committed checkpoint's packed per-granule cell sets, which
+    makes the 480 MB this recovery was priced at unnecessary. A failure here
+    is a route change rather than a broken pipeline -- three other routes in
+    this project changed their request-signature filters between September
+    passes, and this one used a plain urllib request with no signature games.
+  sha256: 9ad5a75b7a916c9eb2a8bd24a254ac29c12769817e9eafd9d7b0578414ff6723
+  last_verified: '2026-09-14'
+  last_verified_by: the apparatus repair pass, which fetched the deposit and ran
+    the recipe end to end
 - artefact: data/processed/ccdrice_polygons_yrd_2026.csv
   command: python scripts/summarise_ccdrice_polygons.py --download
   label: CCD-Rice validation polygon counts for the four provinces

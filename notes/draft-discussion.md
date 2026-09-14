@@ -357,7 +357,8 @@ conclusion is a property of the instrument over this domain or of 2018's
 coverage.
 
 **No validation against ground-based column measurement.** The nearest Total
-Carbon Column Observing Network station lies inside the domain, and nine days in
+Carbon Column Observing Network station lies inside the domain, and
+9<!--#tccon.coincident_days--> days in
 2018 carry both a TROPOMI overpass of its cell and station data. Nine coincident
 days, without the a-priori profile alignment a station–satellite comparison
 requires, cannot validate a field, and no result here rests on that comparison.
@@ -408,9 +409,9 @@ into four classes and only the last is a defect.
   rates and the 1.4–2.6 inventory multiples, and the 73.61 percent and 0.954
   accuracy figures in §8.
 * **Figures derivable from marked ones or already exempted in the methods
-  draft**, which lists them: the Anhui raster bound 33.3462° N, the 20.7 and
-  19.9 percent product differences, the Hefei counts of 2,767 retrievals on 44
-  days and nine coincident days.
+  draft**, which lists them: the Anhui raster bound 33.3462° N, and the 20.7 and
+  19.9 percent product differences. The Hefei counts were on this list and are
+  now marked and resolved against `data/processed/tccon_hefei_2018.csv`.
 * **One number that should be resolvable and is not**, reported rather than
   quietly dropped: **the fitted seasonal peak of the column field at day of year
   245.8**. It appears in `notes/decisions.md` and `notes/grounding-rice.md` as

@@ -590,7 +590,8 @@ arithmetic.
 A comparison against ground-based column measurement was attempted and is
 reported as a feasibility measurement rather than as a validation. The nearest
 Total Carbon Column Observing Network station, Hefei, lies inside the domain and
-its 2018 record is sparse: 2,767 retrievals on 44 days. Nine days in 2018 carry
+its 2018 record is sparse: 2,767<!--#tccon.retrievals--> retrievals on
+44<!--#tccon.days--> days. 9<!--#tccon.coincident_days--> days in 2018 carry
 both a TROPOMI overpass of the station's cell and TCCON data. **Nine coincident
 days, without the a-priori profile alignment that a TCCON–satellite comparison
 requires, cannot validate a field**, and no result in this work rests on that
@@ -664,11 +665,11 @@ bounded. None of the capability statements of §6 depends on either.
 
 Every derived artefact is registered in a machine-readable recipe register giving
 the command that produces it and the verification tier it belongs to.
-73<!--#pipeline.recipes--> artefacts are registered across four tiers:
+74<!--#pipeline.recipes--> artefacts are registered across four tiers:
 41<!--#pipeline.recipes_committed--> regenerate from a fresh clone with no
 network and no local data and are verified on every test run;
 22<!--#pipeline.recipes_local--> require local raw data and are verified where it
-exists; 9<!--#pipeline.recipes_network--> require a network fetch and are verified
+exists; 10<!--#pipeline.recipes_network--> require a network fetch and are verified
 on demand; and the remainder are recorded as unregenerable, with the reason
 stated per artefact.
 
@@ -703,7 +704,6 @@ stale.
 * The correlogram bin count, the n + 1 cap, and the white-noise calibration
   bounds 0.75–1.0 and 0.2.
 * Every IMI default in §6.1, and the DOFS formula's constants.
-* The Hefei TCCON counts, 2,767 retrievals on 44 days and nine coincident days.
 * All figures attributed to the literature: the 60 %/30 % regional shares, the
   +2/−1/−33 % retrieval spread, the 0.35 and 0.45–0.87 posterior error
   correlations, and the 0.5 DOFS operational threshold.

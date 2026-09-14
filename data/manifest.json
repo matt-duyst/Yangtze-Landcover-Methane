@@ -249,5 +249,38 @@
     ],
     "doi_note": "Registry of Open Data listing at registry.opendata.aws/blended-tropomi-gosat-methane; product user manual at github.com/nicholasbalasus/write_blended_files/blob/main/PUM.md, dated 10 January 2026. A Harvard Dataverse copy exists at dataverse.harvard.edu/dataverse/blended-tropomi-gosat-methane and serves anonymously, but the bucket's own README records that maintenance of it stopped on 7 February 2024, so AWS is the live route.",
     "notes": "NO CONTENT CHECKSUM IS AVAILABLE FOR 34 PERCENT OF THIS SOURCE and the archive sha256 is null for that reason. Of the 3,436 keys for 2018, 2,254 carry a single-part MD5 ETag that reproduces (verified on one object) and 1,182 carry a multipart tag that cannot; the threshold is exactly 8 MiB. No x-amz-checksum header is returned even with checksum mode enabled. Verification is structural for the remainder: the file must open as HDF5, carry the product's own Title attribute, and hold methane_mixing_ratio_blended, latitude, longitude and qa_value at the root. The files are FLAT ROOTED, with no netCDF groups, and hold only the soundings with qa_value == 1.0; src.methane.blended reads them and src.methane.grid.read_soundings cannot. They carry the operational values unaltered alongside the new variable: for orbit 03019 the maximum absolute difference against the retained operational granule was exactly zero on latitude, longitude, both operational methane variables and surface_albedo_SWIR across all 64,891 soundings. Three of the seven covariates this project grids are absent from these files -- eastward_wind, northward_wind and solar_zenith_angle -- which costs nothing for the analysis, because those covariates are already committed in methane_covariates_2018.csv over the identical soundings. Only the 223 orbits that carried an in-box sounding were read, and only four variables from each, over HTTP range requests: 335.6 MB in 1,385 requests against 23.08 GiB for the year. The granules are not retained."
+  },
+  "tccon_hefei_ggg2020_r1": {
+    "product": "TCCON data from Hefei (PRC), Release GGG2020.R1; ground-based FTS column-averaged dry-air mole fractions",
+    "url": "https://sdsc.osn.xsede.org/ini210004tommorrell/10.14291/tccon.ggg2020.hefei01.R1",
+    "doi": "10.14291/tccon.ggg2020.hefei01.R1",
+    "caltechdata_record": "etz11-jpg19",
+    "version": "GGG2020.R1, published 2023; record 2015-11-02 to 2025-12-30. A NEWER RELEASE EXISTS: GGG2020.1.R1, doi:10.14291/tccon.ggg2020p1.hefei01.R1, published 2026. This project's recorded counts were computed from R1 and are reproduced from R1; a submission should decide which release to cite.",
+    "retrieved": "2026-09-14",
+    "citation": "Liu, C., Wang, W., and Sun, Y. (2022), TCCON data from Hefei, China, Release GGG2020R1, TCCON data archive, hosted by CaltechDATA, California Institute of Technology, Pasadena, CA, U.S.A., doi:10.14291/tccon.ggg2020.hefei01.R1. The licence file gives this as \"C., Liu, W. Wang, and Y Sun. 2022\", which transposes the initials; the names are corrected here and the DOI is unchanged.",
+    "licence": "TCCON Data License, not an open licence, quoted from the deposit's own LICENSE.txt. Clause 4 verbatim: \"All other rights, including redistribution, display, and publishing adaptations are reserved.\" THE STATION FILE IS THEREFORE NOT COMMITTED; data/processed/tccon_hefei_2018.csv carries derived counts and a network-tier recipe fetches the file. Clause 5 verbatim: \"At a minimum of 4-6 weeks prior to the submission of a manuscript and 1-2 weeks prior to a public presentation of works that include TCCON data, you must contact the individuals listed on the DOI landing page via email and provide a description of the intended publication or presentation.\" THE SITE PIS HAVE NOT BEEN CONTACTED. That obligation applies to any work including TCCON data; only the co-authorship expectation is conditioned on the data being essential. Clause 5 also provides that if the individuals do not respond after 3 emails distributed over a 10 week period, the data are licensed under CC BY 4.0. Clause 3 asks that the authors be kept informed of modifications and improvements to the Data.",
+    "archive": {
+      "name": "three files, not an archive",
+      "bytes": 57493198,
+      "sha256": null
+    },
+    "files": [
+      {
+        "path": "data/raw/tccon_hefei/LICENSE.txt",
+        "bytes": 2245,
+        "sha256": "657b88f2589fe9ac5a1b1f8d9d0e23b737281ba7119a6c1ab9d8a7771d875596"
+      },
+      {
+        "path": "data/raw/tccon_hefei/README.txt",
+        "bytes": 52794,
+        "sha256": "5cef5fd4af42cd59b62d4bdbaa5ef2ea36acd634e3d066bccc82a9c77ea610bb"
+      },
+      {
+        "path": "data/raw/tccon_hefei/hf20151102_20251230.public.qc.nc",
+        "bytes": 57438159,
+        "sha256": "e735a3f1efd6cc1cd5383b5c22b8ad9ee20867cbf0c7e3d478795758c94dd684"
+      }
+    ],
+    "notes": "Fetched to support three counts that reached four documents with no artefact behind them. The counts reproduce exactly: 2,767 retrievals on 44 days in 2018, and 9 days carrying both a retrieval and a TROPOMI overpass of the station's cell. NO GRANULES WERE DOWNLOADED: the days a granule covered the station cell come from the committed checkpoint's packed per-granule cell sets, so the 480 MB this recovery was priced at was not needed. The files listed here are NOT in version control and must not be committed; their digests are recorded so a re-fetch can be checked."
   }
 }

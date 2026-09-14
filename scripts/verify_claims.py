@@ -549,6 +549,19 @@ def _sector(quantity: str) -> float:
     return float(_cache["sector"][quantity]["value"])
 
 
+def _tccon(quantity: str) -> float:
+    """One row of the Hefei TCCON coincidence table.
+
+    The table is written by a network-tier recipe because the TCCON Data
+    License reserves redistribution, so the station file cannot be committed
+    and the counts stand in for it.
+    """
+    if "tccon" not in _cache:
+        _cache["tccon"] = {r["quantity"]: r for r
+                           in _read_csv(PROCESSED / "tccon_hefei_2018.csv")}
+    return float(_cache["tccon"][quantity]["value"])
+
+
 def _register_entries() -> int:
     """DOIs the reference register names, via the BibTeX generator's own parser.
 
@@ -1295,6 +1308,13 @@ QUANTITIES = {
         [r for r in _claims()
          if r["category"] == "neither" and "introduction" in r["source"]]),
     # The domain's sectoral composition on the analysis lattice.
+    "tccon.retrievals": lambda: _tccon("retrievals in 2018"),
+    "tccon.days": lambda: _tccon("days with a retrieval in 2018"),
+    "tccon.coincident_days": lambda: _tccon("coincident days"),
+    "tccon.granules": lambda: _tccon("granules covering the station cell"),
+    "tccon.granule_days": lambda: _tccon(
+        "days a granule covered the station cell"),
+    "tccon.cell_soundings": lambda: _tccon("soundings in the station cell"),
     "sector.cells_any": lambda: _sector(
         "lattice cells with any inventory emission"),
     "sector.coal_share": lambda: _sector("coal, share of the domain"),

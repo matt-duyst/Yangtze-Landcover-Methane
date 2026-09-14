@@ -7301,12 +7301,17 @@ works.
 
 Every claim against its evidence, before any figure is built or any section
 written. `notes/claim-audit.md` holds the audit and
-`data/processed/claim_inventory_2026.csv` the numeric half, 1,259 rows coupled
+`data/processed/claim_inventory_2026.csv` the numeric half, 1,262 rows coupled
 by recipe to the drafts and captions. Catalogued and not fixed, by instruction.
 
 ### The counts, and the expectation that inverted
 
-Measured 465, self-evident 440, **neither 197**, cited 119, **unresolved 38**.
+Measured 470, self-evident 440, **neither 197**, cited 119, **unresolved 36**.
+(Measured 465 and unresolved 38 when this section was written. Marking the
+Hefei TCCON counts moved five numbers and the prose counts here had to be
+edited by hand, because `notes/decisions.md` and `notes/claim-audit.md` are
+outside the claim checker's scanned set: **the inventory's own counts are
+unguarded prose, so making a number checkable silently invalidated them.**)
 
 **The introduction has zero unsupported numbers**, which is the reverse of what
 the batch expected. The expectation came from the reference audit — the
