@@ -6808,3 +6808,167 @@ essential*. It is not essential here, so the comparison can be dropped or kept
 as supplement without starting that clock. If it were ever promoted to a
 validation the clock would start at submission minus six weeks — and that is
 Matt's call, not one this pass makes.
+## The blocked-dataset retry, and the five kinds of "blocked"
+
+The retry's main product is not the data. It is that "blocked" was doing the
+work of five different words, and a record that does not distinguish them sends
+the next pass to the wrong remedy.
+
+### The taxonomy, which is what 4b asked for
+
+**1. A fluctuating filter, which is temporary and whose rule changes.** The
+Zenodo block is lifted. All eight entries behind it answer 200, by the REST API
+and by the HTML record page alike. **And the polarity has inverted**: when the
+block was diagnosed, a default `curl` user agent was silently dropped after the
+handshake while a browser string returned a fast 403; today the only signature
+that fails is an **empty** `User-Agent`, which returns 403 with a 763-byte body,
+while default `curl`, `python-requests` and a full Chrome string all succeed.
+**So no user-agent string is "the one that works."** The durable finding is that
+a signature must be present and that the rule is not stable, and any record
+naming a working string will be wrong within weeks.
+
+**2. A publisher block on an article that is legally open.** China_AP's paper is
+gold open access under CC BY 4.0 — Unpaywall and Semantic Scholar both confirm
+it — and every route leads back to ScienceDirect, which returns **403 with a
+1.2 MB challenge body** to the article and to the `pdfft` path. `doi.org` now
+answers 200, but only onto a 2,745-byte `linkinghub` interstitial, which is a
+200 that means nothing. **This is not a paywall and not a licence problem, and
+calling it either would imply a remedy that does not exist.** The remedy is a
+different network or one email.
+
+**3. A genuine paywall.** The MSW landfill database's article carries no
+Creative Commons licence at all. Same interstitial, different cause.
+
+**4. Never deposited, but available on request.** The gridded coal inventory's
+article is now readable — ACS still 403s everywhere, but both repository copies
+Unpaywall lists answer 200, and MIT DSpace served the 4.5 MB PDF through its
+bitstream API. The paper says the gridded inventory "is available at
+https://forms.gle/NGMXUTfMumMFkMZPA", and its ASSOCIATED CONTENT lists the
+Supporting Information as a **PDF only**. So the dataset was never deposited and
+is obtainable by asking. **The form was not submitted**: contacting authors is a
+human action, not a fetch.
+
+**5. Superseded by a substitute.** China_AP stays blocked, but a different
+national 10 m pond product is reachable, and that changes a claim.
+
+### What each of the three claim-bearing datasets now supports
+
+**Coal.** `notes/draft-discussion.md` says part of the field was never being
+predicted, because northern Anhui carries coal mine methane from a source
+neither predictor represents. The brief anticipated that if the dataset stayed
+blocked the claim would rest on a province ranking rather than a spatial layer,
+"which is weaker". It does rest on the province ranking — but that ranking is
+now **verified from the primary source**, which it was not before: the paper
+states verbatim that "Anhui and Liaoning are the provinces that emit the most in
+the east and north, respectively", and that EDGAR's relative provincial
+contributions "differ significantly from ours". So the claim is weaker in form
+and better grounded in fact than it was this morning.
+
+**Landfills.** Still paywalled, and the GHGSat substitute does not help the
+current paper: 13 of its 1,519 plumes fall inside this lattice and **all 13 are
+2021 or 2022, none in 2018.** It cannot bear on the analysis year at all. That
+is a cleaner closure than "paywalled" was.
+
+**Aquaculture.** `notes/grounding-rice.md` said the paddy–pond confound "is not
+a confound the association analysis can control for, because the two are not
+separately measured here at all", and that China_AP "would settle it at 10 m for
+2018". China_AP is still blocked. The AAP product settles it at 10 m for **2015
+and 2020**, which brackets 2018 rather than matching it — a weaker limitation
+for pond infrastructure than it would be for an annual crop.
+
+**And a first-order ceiling already exists.** Inside this lattice the product
+holds 485,522 ponds covering 6,651.8 km² in 2015 and 667,032 covering
+7,971.3 km² in 2020, against roughly 52,452 km² of mapped single-season rice.
+**Even if the rice layer misclassified every pond in the domain as paddy, ponds
+could account for at most about 15 percent of the mapped rice area.** So the
+answer to the brief's question is **untested, not unresolvable** — and it was
+never going to be unresolvable, because the obstacle was one product's
+publisher rather than the measurement.
+
+*What the ceiling is not.* It is a ratio of totals, not an overlay, and a ratio
+of totals is not a ratio within cells when both ponds and paddy concentrate in
+the same lowland. It bounds one mechanism, not rice's measurement error in
+general. The per-cell overlay is queued.
+
+### The one amendment the retry forced in a draft, and it weakens a claim
+
+§4 of the discussion lists measurement error in the predictor as the only
+candidate that could manufacture a null rather than explain one, and bounds it —
+**for impervious cover only**, because two independent products measure the same
+quantity there. The heading did not say so. It now does, and it states that for
+rice, measurement error remains a candidate this work does not exclude, because
+no second rice product measures the same quantity: the alternatives differ in
+season definition as well as in error, so their disagreement is not an error
+estimate. **The pond ceiling is named there as a bound on one mechanism and
+deliberately not reported as an equivalent to the impervious bound.**
+
+### Two numbers re-verified against deposits rather than against records
+
+**124 points in the four provinces, 12 of them impervious.** This is the number
+the finding that no reference layer exists over this domain rests on, and it was
+checked by clipping the deposit's 44,514 global points to
+`data/reference/yrd_provinces.geojson`: 124 inside, label 190 counting 12. The
+box rather than the provinces gives 131, which is why the geometry matters. The
+24-label claim also holds exactly.
+
+**SinoLC-1's 73.61 percent and kappa 0.6595**, read from the deposit's own User
+Guide rather than from the paper. The deposit turns out to hold **only** that
+guide, not the map.
+
+### What was closed rather than opened
+
+**CISC's validation points are not deposited.** The abstract describes
+"independent, expert-interpreted validation points" from entropy-guided
+stratified sampling, which would have been reference data even though the 30 m
+product is not a reference layer. The deposit holds the two maps, two validity
+masks, and a zip that contains only `source_date_*_dissolve` shapefiles — source
+imagery dates. **Described in prose, absent as a file.**
+
+**Globe230k is confirmed not a probability sample**, from the deposit's own
+description: "in order to ensure the category balance, we intentionally give
+more chance to the rare categories to be sampled". This file already recorded it
+from the user guide; it is now confirmed at the deposit.
+
+### The found-but-unfetched set: nothing was needed, checked rather than assumed
+
+The judgement offered was that none of the seven bears on the capability paper.
+That holds, and it was tested against the drafts rather than accepted: building
+height, irrigation, natural gas vehicles, CMAB and the 422 wastewater
+coordinates appear in **no draft at all**. The apparent "pipeline" matches are
+all `pipeline.recipes` markers for this repository's own artefact register.
+"Wastewater" does appear three times, but as a sector in the national prior and
+as an example of sectors sharing a population allocation surface **in a
+published US inversion** — the identifiability argument — not as Chinese
+facility coordinates.
+
+*The closest call, recorded because it is the one that could change later.* The
+422 wastewater plant coordinates inside the lattice are exactly the kind of
+input the identifiability argument names as decisive: a sector allocated on
+facility coordinates becomes separable. Using them means constructing a prior
+and running an inversion, which is the separate emissions project. **They would
+enable a new claim rather than support or undermine an existing one**, which is
+the test that keeps them out.
+
+### GISA-new: reachable, fetched, and deliberately not used yet
+
+The two 20° tiles covering this domain are 515.8 MB of a 5.8 GB deposit, CC BY
+4.0, covering **1985 to 2021** — so 2018 is extractable. The deposit reports
+93.12 percent overall accuracy and claims to outperform GISA, WSF-evo, GAIA and
+GAUD, which makes it a third product against the two whose disagreement this
+project reports.
+
+**It is not entering the paper, and the reason is not reachability.** Two uses
+are visible and both are new analyses. It would say whether the GAIA–GISA
+disagreement is pairwise or general. And with three products measuring one
+quantity, the attenuation bound could be sharpened from an inequality to a
+decomposition, because three indicators separate individual error variances
+where two only bound their sum. **Neither is needed**: the existing bound
+already leaves a 5.64-fold margin, and a capability assessment does not become
+better by adding a fourth urban product. Queued with the reason, not taken.
+
+*One trap recorded for whoever does use it.* The tile names are north-west
+corners, not bands: `GISA_new_1972_2021_20N_100E.tif` spans 0–20 °N, so this
+domain needs the `40N` tiles and not the `20N` ones. That mistake was made and
+cost 137 MB. The filename also says 1972 where the description says 1985, and
+the in-domain window carries 39 distinct non-zero codes against 37 years, so
+**the code-to-year mapping is not settled and must be established before use.**

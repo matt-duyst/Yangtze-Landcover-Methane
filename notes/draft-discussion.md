@@ -176,6 +176,20 @@ could be deflating the coefficient is
 +0.332<!--#suite.null_operational--> on the same cross-validation scheme and
 weighting.
 
+**That bound covers the impervious predictor and not the rice predictor, and the
+asymmetry is stated rather than left to be noticed.** The impervious bound works
+because two independent products measure the same quantity over the same cells,
+which is what converts their disagreement into an upper bound on error variance.
+No second rice product measures the same quantity: the alternatives differ in
+season definition as well as in error, so their disagreement is not an error
+estimate. **So for rice, measurement error remains a candidate explanation that
+this work does not exclude.** One specific mechanism is now boundable — paddy
+and aquaculture ponds are spectrally similar flooded land, and a 10 m national
+pond product reachable since September 2026 puts pond area inside this lattice
+at most about 15 percent of the mapped rice area — but that is a ceiling on one
+mechanism from an area ratio in neighbouring years, not a reliability ratio, and
+it is recorded in `notes/grounding-rice.md` rather than reported here.
+
 **Put as a requirement, which is the form that shows the margin: for measurement
 error to lift land cover to the spatial null's performance,
 74.5<!--#atten.need_share_bu_pct--> percent of the variance in the impervious
