@@ -1,0 +1,62 @@
+quantity,value,unit,basis,note
+sectors on the lattice,5,count,inventory,of the domain's seven; aquaculture and wetland have no sector in an anthropogenic inventory
+lattice cells with any inventory emission,860,cells,inventory,of 1023
+domain total on the lattice,5140261.7,Mg CH4 per year,inventory,sum of the five sectors
+"rice, domain total",1516257.2,Mg CH4 per year,inventory,
+"rice, share of the domain",29.50,percent,inventory,of the five sectors aggregated here
+"rice, share of its national total",28.47,percent,inventory,how much of China's emission from this sector is inside the box
+"rice, cells present",798,cells,inventory,any emission at all
+"coal, domain total",2035072.8,Mg CH4 per year,inventory,
+"coal, share of the domain",39.59,percent,inventory,of the five sectors aggregated here
+"coal, share of its national total",13.18,percent,inventory,how much of China's emission from this sector is inside the box
+"coal, cells present",22,cells,inventory,any emission at all
+"landfills, domain total",770785.6,Mg CH4 per year,inventory,
+"landfills, share of the domain",15.00,percent,inventory,of the five sectors aggregated here
+"landfills, share of its national total",16.21,percent,inventory,how much of China's emission from this sector is inside the box
+"landfills, cells present",858,cells,inventory,any emission at all
+"wastewater, domain total",781005.5,Mg CH4 per year,inventory,
+"wastewater, share of the domain",15.19,percent,inventory,of the five sectors aggregated here
+"wastewater, share of its national total",29.43,percent,inventory,how much of China's emission from this sector is inside the box
+"wastewater, cells present",858,cells,inventory,any emission at all
+"oil_and_gas, domain total",37140.5,Mg CH4 per year,inventory,
+"oil_and_gas, share of the domain",0.72,percent,inventory,of the five sectors aggregated here
+"oil_and_gas, share of its national total",0.71,percent,inventory,how much of China's emission from this sector is inside the box
+"oil_and_gas, cells present",698,cells,inventory,any emission at all
+cells carrying at least 2 sectors above 1 percent,848,cells,inventory,98.6 percent of observed cells
+cells carrying at least 3 sectors above 1 percent,797,cells,inventory,92.7 percent of observed cells
+cells carrying at least 4 sectors above 1 percent,296,cells,inventory,34.4 percent of observed cells
+median sectors above 1 percent per observed cell,3.0,sectors,inventory,
+cells carrying at least 2 sectors above 2 percent,845,cells,inventory,98.3 percent of observed cells
+cells carrying at least 3 sectors above 2 percent,743,cells,inventory,86.4 percent of observed cells
+cells carrying at least 4 sectors above 2 percent,160,cells,inventory,18.6 percent of observed cells
+median sectors above 2 percent per observed cell,3.0,sectors,inventory,
+cells carrying at least 2 sectors above 5 percent,805,cells,inventory,93.6 percent of observed cells
+cells carrying at least 3 sectors above 5 percent,557,cells,inventory,64.8 percent of observed cells
+cells carrying at least 4 sectors above 5 percent,38,cells,inventory,4.4 percent of observed cells
+median sectors above 5 percent per observed cell,3.0,sectors,inventory,
+cells carrying at least 2 sectors above 10 percent,692,cells,inventory,80.5 percent of observed cells
+cells carrying at least 3 sectors above 10 percent,388,cells,inventory,45.1 percent of observed cells
+cells carrying at least 4 sectors above 10 percent,3,cells,inventory,0.3 percent of observed cells
+median sectors above 10 percent per observed cell,2.0,sectors,inventory,
+cells carrying at least 2 sectors above 15 percent,592,cells,inventory,68.8 percent of observed cells
+cells carrying at least 3 sectors above 15 percent,294,cells,inventory,34.2 percent of observed cells
+cells carrying at least 4 sectors above 15 percent,1,cells,inventory,0.1 percent of observed cells
+median sectors above 15 percent per observed cell,2.0,sectors,inventory,
+cells carrying at least 2 sectors above 20 percent,540,cells,inventory,62.8 percent of observed cells
+cells carrying at least 3 sectors above 20 percent,190,cells,inventory,22.1 percent of observed cells
+cells carrying at least 4 sectors above 20 percent,0,cells,inventory,0.0 percent of observed cells
+median sectors above 20 percent per observed cell,2.0,sectors,inventory,
+cells carrying at least 2 sectors above 25 percent,488,cells,inventory,56.7 percent of observed cells
+cells carrying at least 3 sectors above 25 percent,72,cells,inventory,8.4 percent of observed cells
+cells carrying at least 4 sectors above 25 percent,0,cells,inventory,0.0 percent of observed cells
+median sectors above 25 percent per observed cell,2.0,sectors,inventory,
+cells carrying both rice and coal above 5 percent,1,cells,inventory,
+cells carrying both rice and landfills above 5 percent,658,cells,inventory,
+cells carrying both rice and wastewater above 5 percent,559,cells,inventory,
+cells carrying both rice and oil_and_gas above 5 percent,38,cells,inventory,
+cells carrying both coal and landfills above 5 percent,5,cells,inventory,
+cells carrying both coal and wastewater above 5 percent,5,cells,inventory,
+cells carrying both coal and oil_and_gas above 5 percent,0,cells,inventory,
+cells carrying both landfills and wastewater above 5 percent,672,cells,inventory,
+cells carrying both landfills and oil_and_gas above 5 percent,48,cells,inventory,
+cells carrying both wastewater and oil_and_gas above 5 percent,47,cells,inventory,

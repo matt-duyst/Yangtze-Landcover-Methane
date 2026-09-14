@@ -72,6 +72,40 @@ recipes:
     day's interval is simulated from the coefficient covariance with a fixed
     seed, so the artefact is reproducible.
   sha256: 25616eef6d68e08c42f2b027660b72b66beabe3b1e01a9d096b26e84530fe34a
+- artefact: data/processed/claim_inventory_2026.csv
+  command: python scripts/inventory_claims.py --write
+  label: every numeric claim in the drafts and captions, with its evidence
+  cost: about half a minute; it evaluates every resolver once
+  seconds: 40
+  inputs: committed
+  compare: bytes
+  verified: continuously
+  note: >-
+    One row per numeric claim across the four drafts and the caption file.
+    Deliberately coupled to both, so a draft or caption gaining a marker fails
+    the byte comparison until this is regenerated. Five categories, not the four
+    the audit's brief specified: `unresolved` holds numbers that are in a
+    committed artefact and carry no marker, which is the cheapest state to fix
+    and the easiest to mistake for either neighbour. Every row names the rule
+    that classified it so a category can be argued with.
+- artefact: data/processed/sector_composition_2018.csv
+  command: python scripts/measure_sector_composition.py --write
+  label: the domain's sectoral composition on the analysis lattice
+  cost: about a minute over five national rasters
+  seconds: 70
+  inputs: local
+  compare: bytes
+  verified: on_local
+  note: >-
+    Aggregates the CHN-CH4 per-sector inventory grids to this work's 0.25 degree
+    lattice, mass-correctly: the inventory's unit is per km2 so each pixel is
+    multiplied by its own area before summing. Local-tier because the sector
+    rasters are gitignored raw data. **These are inventory allocations and not
+    observations of sources**, which is the object the identifiability limit is
+    about but is not a measurement of where the sources are; the `basis` column
+    says so on every row. The interleaving statistic is reported across a
+    threshold sweep rather than at one point, because a threshold chosen to
+    flatter the claim is this measurement's failure mode.
 - artefact: data/processed/reference_use_2026.csv
   command: python scripts/audit_reference_use.py --write
   label: where each register entry is cited

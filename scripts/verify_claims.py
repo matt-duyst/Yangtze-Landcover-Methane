@@ -521,6 +521,30 @@ def _curve() -> list[dict]:
     return _cache["curve"]
 
 
+def _claims() -> list[dict]:
+    """The claim inventory, one row per numeric claim."""
+    if "claims" not in _cache:
+        _cache["claims"] = _read_csv(PROCESSED / "claim_inventory_2026.csv")
+    return _cache["claims"]
+
+
+def _claim_count(category: str = "", source: str = "") -> int:
+    rows = _claims()
+    if category:
+        rows = [r for r in rows if r["category"] == category]
+    if source:
+        rows = [r for r in rows if source in r["source"]]
+    return len(rows)
+
+
+def _sector(quantity: str) -> float:
+    """One row of the sectoral composition table."""
+    if "sector" not in _cache:
+        _cache["sector"] = {r["quantity"]: r for r
+                            in _read_csv(PROCESSED / "sector_composition_2018.csv")}
+    return float(_cache["sector"][quantity]["value"])
+
+
 def _register_entries() -> int:
     """DOIs the reference register names, via the BibTeX generator's own parser.
 
@@ -1253,6 +1277,41 @@ QUANTITIES = {
     "curve.median_r2": lambda: float(np.median(
         [float(r["held_out_r2"]) for r in _curve()])),
     # The reference register read as a reference list.
+    # The claim audit.
+    "claims.total": lambda: _claim_count(),
+    "claims.measured": lambda: _claim_count("measured"),
+    "claims.cited": lambda: _claim_count("cited"),
+    "claims.unresolved": lambda: _claim_count("unresolved"),
+    "claims.self_evident": lambda: _claim_count("self_evident"),
+    "claims.neither": lambda: _claim_count("neither"),
+    "claims.neither_captions": lambda: len(
+        [r for r in _claims()
+         if r["category"] == "neither" and "README_fragments" in r["source"]]),
+    "claims.neither_introduction": lambda: len(
+        [r for r in _claims()
+         if r["category"] == "neither" and "introduction" in r["source"]]),
+    # The domain's sectoral composition on the analysis lattice.
+    "sector.cells_any": lambda: _sector(
+        "lattice cells with any inventory emission"),
+    "sector.coal_share": lambda: _sector("coal, share of the domain"),
+    "sector.coal_cells": lambda: _sector("coal, cells present"),
+    "sector.rice_share": lambda: _sector("rice, share of the domain"),
+    "sector.rice_cells": lambda: _sector("rice, cells present"),
+    "sector.landfill_share": lambda: _sector("landfills, share of the domain"),
+    "sector.wastewater_share": lambda: _sector(
+        "wastewater, share of the domain"),
+    "sector.rice_national": lambda: _sector(
+        "rice, share of its national total"),
+    "sector.two_at_5pct": lambda: _sector(
+        "cells carrying at least 2 sectors above 5 percent"),
+    "sector.two_at_25pct": lambda: _sector(
+        "cells carrying at least 2 sectors above 25 percent"),
+    "sector.three_at_5pct": lambda: _sector(
+        "cells carrying at least 3 sectors above 5 percent"),
+    "sector.landfill_wastewater_pair": lambda: _sector(
+        "cells carrying both landfills and wastewater above 5 percent"),
+    "sector.rice_coal_pair": lambda: _sector(
+        "cells carrying both rice and coal above 5 percent"),
     "register.entries": lambda: _register_entries(),
     "register.draft_cited": lambda: _reference_use("draft_verified"),
     "register.named_no_year": lambda: _reference_use("draft_named_no_year"),
