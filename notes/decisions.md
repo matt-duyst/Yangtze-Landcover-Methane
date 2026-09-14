@@ -7297,3 +7297,141 @@ the Zenodo block was first diagnosed, the browser string was the one that
 failed. **Three passes, three different rules.** The durable finding stands and
 is now three-for-three: vary the signature, and never record one as the one that
 works.
+## The claim audit, batch 1
+
+Every claim against its evidence, before any figure is built or any section
+written. `notes/claim-audit.md` holds the audit and
+`data/processed/claim_inventory_2026.csv` the numeric half, 1,259 rows coupled
+by recipe to the drafts and captions. Catalogued and not fixed, by instruction.
+
+### The counts, and the expectation that inverted
+
+Measured 465, self-evident 440, **neither 197**, cited 119, **unresolved 38**.
+
+**The introduction has zero unsupported numbers**, which is the reverse of what
+the batch expected. The expectation came from the reference audit — the
+introduction carries no citations across four sections of almost entirely
+external material — and that is true and a different property. Its own "Numbers
+not marked" note enumerates every literature figure it uses, so each is
+attributable even though a reader of the paper sees no citation. **Uncited and
+unsupported are different defects**, the introduction has only the first, and
+conflating them is what produced the expectation.
+
+**The figure captions lead with 102 of the 197**, and the reason is that they
+were never audited. The set-level consistency check two passes ago covered the
+drafts and said in terms that captions were out of scope. The captions restate
+measured quantities in their own words, at their own precision, without markers
+— so they are where the repository's own discipline was not applied.
+
+### A fifth category the brief did not specify
+
+The audit was framed with four: measured, cited, neither, self-evident. Sampling
+the classifications produced a fifth. **A number that sits in a committed
+artefact and carries no marker is supported but not verified** — neither an
+unsupported claim nor a verified one. It matters because it is the cheapest of
+all states to leave, the remedy being one comment rather than a measurement or a
+citation, and because it is the easiest to mistake for either neighbour: read as
+"measured" it overstates the verification, read as "neither" it overstates the
+work needed.
+
+Thirty-eight were found mechanically, by evaluating every resolver and matching
+its value against every unmarked number. **So the artefact carries its own fix
+list**, which is the property that makes it worth being an artefact rather than
+prose.
+
+*One trap that came with that.* The matching had to be restricted twice. Run
+before the drafts' own exemption lists it stole 94 rows from `cited`, because a
+literature figure can coincidentally equal some artefact value. And with several
+hundred resolvers evaluated at five precisions, "2" and "0.5" match something by
+chance, so a value now needs three significant digits or two decimal places
+before a match counts as evidence. **A mechanical check that fires too often is
+the same defect as one that fires on things that are fine**, which this
+repository has recorded before about hashes over prose.
+
+*And one self-dependence, caught by testing rather than by reading.* The
+`claims.*` resolvers read the inventory, and the inventory evaluates every
+resolver, so the artefact could depend on its own contents. It converges today
+because no draft quotes a claim count — luck, not design — and the `claims.*`
+family is now excluded from the matching table explicitly.
+
+### The borrowed evidence that can be measured locally
+
+This is the finding the audit was worth doing for, and it does not appear in the
+uncited counts because the claims are cited.
+
+**The interspersed-source claim rests on a US inversion.** Both the methods and
+the discussion cite posterior error correlations from a US gridded inventory —
+below 0.35 for a sector on facility coordinates, 0.45 to 0.87 for sectors
+sharing a population surface — to establish that attribution derives from the
+prior's spatial distinctness. That is borrowed evidence about another continent,
+and **the same property is now measured in a Chinese inventory over this
+domain**. The citation should remain as the mechanism's precedent; the claim
+about this domain should be the measurement.
+
+**Results §1 denies having a measurement it now has.** It cites Schutgens for
+"observational coverage … is not an effective metric to limit representation
+errors" and then states "No representativeness-error estimate was computed for
+this composite." That was true when written. Tier 3 collected within-cell
+variance, and the median within-cell standard deviation is **18.94 ppb against a
+between-cell spread of 14.86 ppb** — the scatter inside an average cell exceeds
+the entire spatial signal between cells. **Stronger than the citation, about
+this composite, and currently denied in the draft.**
+
+**Two more.** The Arabian Peninsula downscaling analogue argues that methane is
+the hard case with another region's numbers, where this work's own best
+land-cover RMSE of 14.21 ppb against a 14.86 ppb spread says it locally. And the
+cited 26 percent aquaculture share can be measured: the national pond product
+now on disk puts **35.6 percent of national pond area inside the four
+provinces** — a materially different figure for a related but not identical
+quantity, since the citation counts aquaculture generally and the product counts
+artificial ponds. **The paper should either measure it or scope the citation to
+say what it counts.**
+
+### The two measurements, and the sentence they correct
+
+`data/processed/sector_composition_2018.csv` aggregates the CHN-CH4 per-sector
+grids to this work's 0.25 degree lattice, mass-correctly — the inventory's unit
+is per km², so each pixel is multiplied by its own area before summing. **These
+are inventory allocations and not observations of sources**, which is the object
+the identifiability limit is about and is not a measurement of where the sources
+are; the `basis` column says so on every row.
+
+860 of 1,023 cells carry any inventory emission. Coal holds **39.59 percent of
+the domain's inventoried emissions in 22 cells**; rice 29.50 percent in 798;
+wastewater 15.19 and landfills 15.00 in 858 each; oil and gas 0.72.
+
+**The structural finding is the mismatch between mass and extent.** The domain's
+dominant inventoried sector is point-like, occupying 2.6 percent of the observed
+cells, and the second is diffuse. That is a statement about attributability
+rather than about emissions.
+
+**The interleaving statistic survives the harshest threshold swept.** At a
+25 percent share — a sector must contribute a quarter of a cell's emissions to
+count — **488 of 860 cells still carry two or more sectors**. At 5 percent it is
+805, and the median cell carries three. The threshold was swept rather than
+chosen because a threshold that flatters the claim is this measurement's failure
+mode, and the claim does not need a generous one.
+
+**And the pairwise table corrects a draft sentence.** At 5 percent, landfills
+and wastewater share 672 cells, rice and landfills 658, rice and wastewater 559
+— against **rice and coal in one cell** and coal and landfills in five. So the
+introduction's "all present and interleaved" is true of presence and **false of
+interleaving for the largest sector**. Four of five are heavily confounded and
+coal stands apart.
+
+*The correction strengthens the argument.* The identifiability limit says a
+spatially distinct sector can be attributed and one sharing an allocation
+surface cannot. **Coal is the distinct one** — which is what the limit predicts,
+and it is also the sector neither predictor represents, so its absence from the
+predictors is a sharper omission than the blanket claim allowed.
+
+### Two claims a draft makes about itself that nothing verifies
+
+`draft-introduction.md`'s note says "Six of this section's numbers carry
+resolvers"; there are **12**. `draft-discussion.md`'s says
+"24 of this section's numbers carry resolvers; 81 do not"; there are **28**. Both went stale as later passes added markers. **One is
+spelled as a word and the other is an unmarked digit, so the claim checker
+cannot see either**, and this is the same class as the reference register's
+unguarded self-counts and the figure inventory's missing caption check: the
+guard checks the relation someone thought of. The inventory artefact now makes
+both checkable and they were left unfixed by instruction.

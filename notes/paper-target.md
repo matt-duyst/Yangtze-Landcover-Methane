@@ -1296,6 +1296,34 @@ in that statement and not in a reference list. `notes/reference-audit.md` §3
 names all fifteen. *Needs* no new analysis. **Found by looking at the drafts as
 a set, 14 September 2026.**
 
+**12d. The claim audit's fix lists, batch 1 of three.** `notes/claim-audit.md`
+and `data/processed/claim_inventory_2026.csv`. Three blocks of work, in cost
+order. **38 `unresolved` numbers** sit in a committed artefact with no marker;
+each needs one comment, and clearing them before the captions are rewritten is
+cheaper than deciding each number twice. **102 unsupported numbers in the figure
+captions**, which is the largest single block the audit found and which exists
+because the captions were never in an audit's scope. And **197 unsupported
+numbers overall**, of which the captions are half and the methods a third.
+*Needs* no new analysis. **The introduction needs none of this: it has zero.**
+
+**12e. Four claims where a citation should become a measurement.** The
+interspersed-source claim, which rests on a US inversion and is now measured
+locally. Results §1's statement that no representativeness estimate was computed
+for this composite, which is false since Tier 3 — the median within-cell spread
+is 18.94 ppb against a between-cell 14.86. The Arabian Peninsula analogue, which
+this work's own 14.21 ppb RMSE makes locally. And the cited 26 percent
+aquaculture share, against a measured 35.6 percent of national pond area inside
+the four provinces. *Established by* the claim audit.
+
+**12f. One sentence to qualify.** The introduction's "all present and
+interleaved" is true of presence and false of interleaving for the largest
+sector: coal holds 39.59<!--#sector.coal_share--> percent of the domain's
+inventoried emissions in 22<!--#sector.coal_cells--> cells and shares
+1<!--#sector.rice_coal_pair--> cell with rice. The correction sharpens the
+identifiability argument rather than weakening it, since coal is then the one
+sector distinct enough to be attributable and also the one neither predictor
+represents.
+
 **12c. Citations. The four drafts contain twelve between them.** Ten are in the
 methods; the introduction cites nothing at all, and no draft carries a DOI or a
 reference section. Against a register of
