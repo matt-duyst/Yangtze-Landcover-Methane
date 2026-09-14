@@ -476,6 +476,48 @@ Everything else in [`data/reference/`](data/reference/) is Natural Earth and pub
 
 ## Licence and citation
 
-MIT, in [`LICENSE`](LICENSE), for the code. The thesis text and figures are the author's
-own work and are not covered by it. [`CITATION.cff`](CITATION.cff) carries the citation metadata
-for the repository; cite the thesis itself from [`writeup/`](writeup/).
+MIT, in [`LICENSE`](LICENSE). **One licence file at the root of a repository
+invites the assumption that it covers everything in it, and here it does not**,
+because a good deal of what is committed is derived from other people's data and
+those terms travel with it. What governs each part:
+
+| part | governed by |
+|---|---|
+| [`src/`](src/), [`scripts/`](scripts/), [`tests/`](tests/), [`config/`](config/), `conftest.py`, `pytest.ini` | MIT |
+| [`README.md`](README.md), [`ERRATA.md`](ERRATA.md), [`notes/`](notes/), the caption files in [`figures/`](figures/) | MIT, whose text covers "associated documentation files" |
+| [`writeup/`](writeup/), `Duyst_Thesis_Final.ipynb`, [`legacy/`](legacy/) | the author's own work, not offered under MIT |
+| the thirteen committed figure pairs in [`figures/`](figures/), 26 files | the author's own renderings; the data they draw is under its source's terms |
+| [`data/reference/`](data/reference/) | Natural Earth, public domain, apart from the two Copernicus-derived rasters named above |
+| the 48 artefacts in [`data/processed/`](data/processed/) | their sources' terms, below |
+
+Most of the committed artefacts derive from products under CC BY 4.0 — GAIA,
+the Science Data Bank rice product, GloRice and CHN-CH4 — which permits
+redistribution with attribution, and the attribution is in
+[`data/manifest.json`](data/manifest.json) and
+[`config/sources.yml`](config/sources.yml). The Sentinel-5P granules come under
+the Copernicus open and free data policy. Three cases are not that simple and
+are named rather than glossed:
+
+* **GISA states no licence.** Its download page carries no terms and its paper
+  describes the product as freely available for research, which is a description
+  and not a grant. Four committed artefacts are named for it —
+  `impervious_gisa_2018.csv`, `urban_extent_gisa.tif`,
+  `landcover_window_impervious_gisa.tif` and `urban_area_by_province_gisa.csv` —
+  and five more carry GISA-derived columns: `urban_extent_totals.csv`,
+  `urban_disagreement_2018.csv`, `attenuation_bound_2018.csv`,
+  `alternative_predictors_2018.csv` and `predictor_comparison_2018.csv`. All
+  nine rest on no stated permission.
+* **The blended TROPOMI+GOSAT product** sets no restriction but asks to be told
+  before publication. That has not been done.
+* **Hefei TCCON** reserves redistribution outright, so **no TCCON data is
+  committed here**: `data/processed/tccon_hefei_2018.csv` holds counts derived
+  from the record and a recipe fetches the record itself. Its terms also require
+  contacting the site's listed individuals four to six weeks before a manuscript
+  is submitted.
+
+GADM is the fourth case and is the reason it appears nowhere in
+[`data/`](data/): its licence forbids redistribution, so the twelve provincial
+rows that use it need a user-supplied copy.
+
+[`CITATION.cff`](CITATION.cff) carries the citation metadata for the repository;
+cite the thesis itself from [`writeup/`](writeup/).
