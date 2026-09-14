@@ -7435,3 +7435,134 @@ cannot see either**, and this is the same class as the reference register's
 unguarded self-counts and the figure inventory's missing caption check: the
 guard checks the relation someone thought of. The inventory artefact now makes
 both checkable and they were left unfixed by instruction.
+
+## The claim audit, batch 2: the apparatus
+
+Batch 1 audited the prose. This batch audited what sits behind it: the
+bibliography, the data availability statement, the reproducibility claim and
+the licence conditions. The reference-list half is in
+`notes/reference-audit.md` and the statements themselves are in
+`notes/draft-availability.md`. What is recorded here is what the audit
+established that neither of those files is the right home for, and above all
+**what is now waiting on a decision rather than on work**, because that is the
+category that does not resolve itself by running something.
+
+### The worst defect is a claim resting on data that no longer exists
+
+Three numbers — 2,767 retrievals, 44 days, nine coincident days — describe the
+Hefei TCCON record for 2018. The data was fetched, used and deleted. There is
+no artefact, no manifest entry and no recipe, and none of the three numbers is
+marked, so the claim checker cannot see them.
+
+They are not confined to one draft. They appear in `draft-methods.md`,
+`draft-introduction.md`, `draft-discussion.md` and `paper-target.md` — **four
+documents** — and they are load-bearing in all four, because they are what
+supports the "not a validated result" framing that the introduction and the
+discussion both lean on. The drafts' own unresolved lists already name them, so
+this was known and recorded rather than hidden; what the audit adds is the
+spread and the fact that the framing depends on them.
+
+**This is cheap to fix and that is the point.** `paper-target.md` already
+prices the recovery: only the nine coincident days are needed, roughly 480 MB.
+Against a project that has run 29 GB passes, the number that reaches a
+submission unsupported is one of the cheapest in the whole inventory to
+support. The alternative is to cut the sentences, which costs an argument.
+
+### Provenance lives in three registers and nothing joins them
+
+| Register | Holds | Machine-readable |
+|---|---|---|
+| `config/sources.yml` | 5 fetchable sources, with DOI, licence, citation | yes |
+| `data/manifest.json` | 11 fetched artefacts, with checksums and licence text | yes |
+| `notes/dataset-leads.md` | the September 2026 finds, as prose | no |
+
+The two machine-readable registers overlap on three datasets under different
+keys — `gaia`/`gaia_1985_2022`, `glorice`/`glorice_phsc_ex`,
+`s5p`/`s5p_l2_ch4_2018` — and neither is complete. This is not a bug in either
+file; each was built for its own job, the first for fetching and the second for
+verifying what was fetched. It becomes a problem only when a *statement* has to
+be written, because a statement needs one list and there is none.
+
+**A premise of the brief that did not survive.** I went in expecting the
+manifest's eleven keys to be the whole record and therefore to find four
+datasets with no provenance at all. Two of the four, GISA and the Science Data
+Bank rice product, are fully recorded in `config/sources.yml` with DOI, licence
+and citation, and a third, CHN-CH4, is recorded in `notes/dataset-leads.md`
+with its Zenodo DOI and CC BY 4.0. The count of genuinely unrecorded datasets
+is **one**, not four.
+
+### The one genuinely unrecorded dataset is under the central table
+
+The committed `data/processed/analysis_grid_2018.csv` was built with
+`--rice-source nesdc`, from rasters obtained over an FTP route under a
+personal-use grant. That product appears in no register: no DOI, no licence, no
+citation, no fetch script. It is the rice input to the table the central result
+is fitted on.
+
+What makes this survivable is that the substitution was already measured. The
+Science Data Bank product is the same 2018 classification with the
+double-season class removed, and rebuilding the grid from it changes only
+`rice_fraction_combined`, in 190 of 927 rows. So the statement can be exact
+about what a reader without the grant loses, which is one column and no others.
+
+### What a reader can reproduce, stated as tiers rather than as a claim
+
+The recipe registry already answers this and the answer is better than I
+expected: 41 of 73 recipes verify on every run of the default suite from a
+clone alone. 22 need the raw data, about 6 GB. 9 need a live third-party route,
+and three of those routes were observed changing their request-signature
+filters between September passes, so a failure there is not evidence of a
+broken pipeline. One is unregenerable.
+
+**A second premise that did not survive, and it was mine.** I expected to find
+that the one unregenerable artefact,
+`data/processed/urban_area_by_province_gisa.csv`, fed a published figure, which
+would have meant a figure resting on a hand-typed file that no command
+produces. It does not. `src/figures/urban_change.py` reads the regenerable
+`urban_extent_totals.csv`; the hand-written file is used only as an agreement
+column in `scripts/compute_urban_extent.py`, and the claim checker resolves no
+prose number from it. Nothing published depends on it. The `unregenerable`
+declaration is doing exactly the work it was added to do.
+
+### The licence conditions, and which are met
+
+**Copernicus WorldDEM-90 is the strictest and is fully met.** Its attribution
+notice is set in the figure itself in `src/figures/study_area.py` and asserted
+verbatim by `tests/test_figures_study_area.py`, which checks four separate
+fragments against the rendered text. The brief's worry that the notice might
+not survive a rebuild is mechanically prevented: a rebuild that dropped it
+fails the suite.
+
+**The blended product's condition is the one that is not met.** Its terms ask
+that the author be contacted before the data is used in a publication. That
+has not been done. It is the only unmet provider condition in the project, and
+it cannot be discharged by any amount of computing.
+
+**Two sources state no terms at all**: the S5P mirror route and the GISA
+download page. GISA's paper describes the product as freely available for
+research, which is a description and not a licence.
+
+### Outstanding, and each of these is a decision
+
+Recorded separately because none of them is work that can simply be run:
+
+1. **Contact Balasus** before publication, as that product's terms ask.
+2. **Choose a code licence.** There is no `LICENSE` file, so the code is under
+   default copyright and a reader has no grant to run it. This blocks the code
+   availability statement outright.
+3. **Keep or cut the TCCON sentences**, at roughly 480 MB to keep them.
+4. **Keep the NESDC grid and document the grant, or rebuild on Science Data
+   Bank** and lose `rice_fraction_combined`.
+5. **Decide what to do about the two unstated licences.**
+6. **Draft the three sections a submission needs that no file here drafts**:
+   author contributions, competing interests, financial support. This was
+   outside the brief's four framings and is the largest thing it missed.
+
+### What the framing missed
+
+The brief asked about the bibliography, the data statement, the reproducibility
+claim and the licences, and those four cover the apparatus as a *reader* meets
+it. They do not cover the apparatus as a *journal* meets it. Three required
+sections are absent from every file in the repository and the word "funding"
+appears in none of them. Adding them is not analysis and cannot fail a test,
+which is exactly why four passes over the apparatus have not noticed.

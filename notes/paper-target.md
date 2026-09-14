@@ -2019,3 +2019,47 @@ the in-domain column and tower options it knew of, and the urban record notes
 that hyperspectral instruments have been used against Chinese landfills, but no
 pass has gone looking systematically. **This is the largest unexamined area and
 it is not in the planned sequence**, which is why it is recorded here.
+
+## The apparatus, audited 14 September 2026
+
+The data and code availability statements now exist as drafts in
+`notes/draft-availability.md`, assembled from the three registers that hold
+provenance and from the recipe registry. The reference-list half of the same
+audit is in `notes/reference-audit.md`. Two things belong in this document
+rather than in either of those.
+
+**The reference list will be short, and that is a property of the work.** If
+every claim needing a citation got one, the list would run to about 31 entries
+against the 12 <!--#register.draft_cited--> the drafts cite today. Only
+119 <!--#claims.cited--> of the inventoried numbers are quoted from anyone; the
+rest are measured here. This is below what an ACP article typically carries, so
+it is worth stating in the cover letter rather than leaving a reviewer to read
+it as thin scholarship. The drawn set is also more method-heavy than the
+register it comes from, 32 percent against 23, which follows from the
+load-bearing choices being methodological.
+
+**Six things now wait on a decision rather than on work.** They are recorded in
+full in `notes/decisions.md`; in brief, and in the order they would block a
+submission:
+
+1. The blended product's terms ask that its author be contacted before
+   publication. Not done, and the only unmet provider condition in the project.
+2. There is no `LICENSE` file, so the code availability statement cannot state
+   terms.
+3. The Hefei TCCON counts appear in four documents, have no artefact, and
+   support the "not a validated result" framing. Roughly 480 MB regenerates
+   them; the alternative is to cut the sentences and lose the argument.
+4. The committed analysis grid's rice input came under a personal-use grant
+   with no DOI. Keep it and document the 190-row substitution, or rebuild on
+   the Science Data Bank product and lose `rice_fraction_combined`.
+5. The S5P mirror route and the GISA download page state no licence terms.
+6. **Author contributions, competing interests and financial support are absent
+   from every file here.** A submission needs all three, none is analysis, and
+   no pass over the apparatus has noticed because nothing can fail a test.
+
+**What the audit found in good order**, recorded because the negative result is
+worth as much here: 41 <!--#pipeline.recipes_committed--> of the
+73 <!--#pipeline.recipes--> recipes verify from a clone alone on every run of
+the suite; the Copernicus attribution notice is asserted verbatim against the
+rendered figure, so a rebuild cannot drop it; and the one unregenerable
+artefact feeds no published figure and resolves no prose number.
