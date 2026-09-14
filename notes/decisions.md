@@ -6683,3 +6683,128 @@ sounding", which gives 222 productive granules. Both the committed checkpoint
 and the re-run say **355 and 223**. The re-run reproduces the committed
 composite exactly, so this is an arithmetic slip in the record rather than a
 difference between the runs.
+## Tier 5, and the two decisions it forced
+
+### The weighting, decided
+
+**Sounding-count weighting stays primary for the fits. The equivalence claim is
+stated at the level the least favourable defensible weighting supports.** Those
+are two decisions and separating them is the whole point.
+
+*The case for representativeness weighting.* `notes/grounding-methods.md`
+records that coverage "is not an effective metric to limit representation
+errors" and that density does not bound the error that matters, which is an
+argument that count weighting measures the wrong thing. This repository holds
+its own separate objection, that count weighting tilts fits toward flat bright
+terrain — retrieval succeeds there, so those cells accumulate soundings and
+therefore weight. And the measured weight is better conditioned than the one it
+would replace, spanning 69x against 205x, and close to orthogonal to it at
+-0.03.
+
+*The case against.* It is what four drafts, thirteen figures and every baseline
+artefact use. It is **undefined on 21 cells** — a single sounding gives no
+within-cell spread — so adopting it silently drops them. And its spread term is
+unreliable exactly where it matters: a cell with two soundings has a spread
+estimated from two points, which can be near zero by chance and then attracts
+large weight. The error diagnostic shows it: 25 cells carry 48 percent of the
+weighted squared error and the worst offenders have 2, 3, 10 and 12 soundings.
+The spatial term is also at its low-coverage *limit* rather than a measured
+within-cell coverage, which the accumulator cannot produce.
+
+*What the evidence says, after the correction.* Nothing turns on it for the
+fits. Impervious rises from 0.0244 to 0.1429 under spatial blocks and the
+spatial null rises too, 0.5137 to 0.5399; the ordering holds in all four
+designs under both weightings. **The earlier report that the null collapsed was
+a bug and is corrected above.**
+
+*So the decision for the fits is continuity, and it is labelled as continuity
+rather than dressed as science.* Switching would touch every artefact and
+change no conclusion. That is a sufficient reason only because the evidence
+shows the choice does not matter; if it had mattered, continuity would not have
+been enough, and the better-grounded weighting would have had to win.
+
+### The part where it does matter, and where continuity is not allowed to win
+
+**The weighting decides whether the stronger equivalence claim can be made for
+impervious cover.** Against the comparative bound, impervious clears it in
+**4 of 4 fields under sounding-count weighting, 3 of 4 unweighted, and 0 of 4
+under representativeness weighting.**
+
+So the weighting this project already uses, and which the literature
+criticises, is the one under which the paper would be entitled to say more.
+**Choosing it for that reason would be choosing the weighting that flatters the
+conclusion**, which is the failure mode the equivalence exercise exists to
+prevent.
+
+The claim is therefore stated at the weakest defensible weighting's level: **no
+meaningful rice effect, and for impervious cover a failed detection only.** The
+drafts say which is which and why. Rice needs no such care — it clears the
+bound in all 24 combinations, under every weighting and every field.
+
+### What the equivalence test licenses, and what it does not
+
+The bound is comparative: the spatial null's own held-out performance expressed
+as a correlation, |r| = 0.5765. It was chosen because the paper's claim is
+already comparative, so a comparative bound introduces no arbitrary fraction and
+tests the sentence the paper actually wants to write.
+
+**The policy bound this file and the region grounding both point to could not
+be set, and that is a finding.** The factor of 13.7 for water regime, and the
+tens of percent for variety, straw and nitrogen, all bound *emissions*. This
+study measures a *column mixing ratio*. Converting between them needs a
+transport model, which is the tool the capability claim is built on not having.
+The most defensible basis in the record is out of reach from inside the study,
+and substituting a number would have hidden that.
+
+**What a reader loses**: an effect smaller than the spatial benchmark's but
+still physically substantial passes as equivalent. The claim licensed is
+"smaller than the benchmark this paper reports against", not "small enough not
+to matter". Nothing available here licenses the second.
+
+### The specification curve
+
+126 specifications. **None is both positive and beats its own spatial null.**
+Fifteen beat the null and every one of them does so at a negative held-out R
+squared, where the model and the benchmark both fail and land cover fails less.
+The best land-cover result anywhere is +0.1429, against that specification's
+null of 0.5399.
+
+The curve also measures what this file had asserted without measuring: the
+spread belongs to the evaluation. As the range of medians across each axis,
+cross-validation scheme moves the result 0.1764, predictor set 0.0943,
+weighting 0.0517, preprocessing 0.0444, and the methane field 0.0131. **The
+choice of held-out design moves the result almost twice as much as the choice
+of predictor and fourteen times as much as the choice of field.**
+
+*One claim in this file did not survive the check.* It says land cover "has the
+smallest four-way spread of any predictor in the suite". It has the smallest of
+the seven it lists, and 0.247 is correct, but `OLS wind + trend surface` spans
+0.115 and `constant (global mean)` 0.169. The quantifier is wrong; the argument
+it supports is not.
+
+### TCCON, and why it is not computable here
+
+**The alignment needs two things this repository does not hold.** The Rodgers
+correction needs the satellite averaging kernel, both prior profiles and the
+dry-air subcolumns *per layer*; the granules carry all three as
+`(1, 2905, 215, 12)` arrays, and the checkpoint carries none of them — only
+`xch4_apriori` as a gridded column scalar. And **no TCCON data is on disk at
+all**: `notes/dataset-leads.md` lists Hefei GGG2020.R1 as verified accessible
+on CaltechData at 57.49 MB, and it was fetched, used and deleted under the
+delete-what-you-fetch rule, so the recorded -5.74 ppb bias with a standard
+deviation of 5.79 exists as a number and not as a reproducible artefact.
+
+**The cost is far below a pass, which is the useful part.** The station's cell
+is touched by **32 granules on 32 distinct days** carrying 162 soundings, and
+only the nine days with TCCON coincidence are needed. At the mirror's mean
+granule size that is roughly 480 MB and about a minute of transfer, plus the
+57.49 MB TCCON re-fetch — not another 28.9 GB. It is queued, not run.
+
+**And the licence does not bind, because nothing rests on it.** Both drafts
+already say so in terms: "no result in this work rests on that comparison".
+TCCON's terms require contacting the site's listed individuals four to six weeks
+before submission with co-authorship normally expected *where the data is
+essential*. It is not essential here, so the comparison can be dropped or kept
+as supplement without starting that clock. If it were ever promoted to a
+validation the clock would start at submission minus six weeks — and that is
+Matt's call, not one this pass makes.

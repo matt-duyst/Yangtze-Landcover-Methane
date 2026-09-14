@@ -1406,9 +1406,34 @@ will never have it and a self-implemented per-row correction is the only route.
 steps, which remains true of the implementation and not of the transfer.
 *Established by* the methods record.
 
-### Tier 4 — gated by Tier 3
+### Tier 4 — DONE, and it was never gated
 
-**17. Representativeness weighting in place of sounding-count weighting.**
+**Item 14 was not a gate.** The within-cell spread this item needs was already
+in the seasonal accumulator's `hs::sum_yy`, so item 17 was available for as
+long as the harmonic statistics existed. It is now measured, tested and
+decided.
+
+**17. DONE and decided: sounding-count weighting stays primary, with
+representativeness reported beside it.** The first test of it was wrong — it
+left 21 single-sounding cells carrying raw counts in a column of
+representativeness weights, and those cells took 88.6 percent of all weight,
+producing a spurious collapse of the spatial null. Corrected, both the model and
+the null rise and the ordering holds in all four designs, so nothing about the
+fits turns on the choice and it is made on continuity. **Where it does turn on
+the choice is the equivalence claim**, and there continuity is not allowed to
+decide: impervious clears the bound in 4 of 4 fields under count weighting and
+0 of 4 under representativeness, so the claim is stated at the weaker level.
+`notes/decisions.md` records both decisions and why they are separate.
+
+*What remains, and it is a new item rather than this one.* The weight is
+undefined on the 21 single-sounding cells and its spread term is unreliable
+below about ten soundings. A better version would shrink the spread estimate
+toward the pooled value and use a measured within-cell spatial coverage rather
+than the low-coverage limit — and the second of those needs sub-cell sounding
+positions the accumulator does not retain.
+
+**17 (superseded framing). Representativeness weighting in place of
+sounding-count weighting.**
 Coverage "is not an effective metric to limit representation errors", and this
 project uses it in a figure, a raster band and every model weighting. The
 implementable alternative weights by within-cell spread scaled by the uncovered
@@ -1416,9 +1441,30 @@ fraction. *Established by* the methods record. *Gated by* item 14. **This item
 has the widest reach in the queue**: it changes the weighting of every baseline
 in the repository, so everything downstream of the baseline suite moves with it.
 
-### Tier 5 — last, because they consume everything above
+### Tier 5 — two done, one queued at a cost far below a pass
 
-**18. Equivalence bounds for the central claim.** Two one-sided tests against a
+**18. DONE.** `data/processed/equivalence_bounds_2018.csv`. Of 36 combinations
+none falls outside the bounds; rice clears them in all 24 and impervious in 7 of
+12. **The gate on item 11 did not bind**: the bound is comparative rather than
+an effect size on the predictor's own scale, so the de-attenuated coefficient is
+not what it is set against. The policy bound the record proposed could not be
+set at all — it bounds emissions, and reaching the column needs the transport
+model this work does not run.
+
+**19. QUEUED, and it is cheap.** Not computable from committed data: the Rodgers
+correction needs the averaging kernel and both priors *per layer*, which live in
+granules and not in the checkpoint, and no TCCON data is on disk since it was
+fetched and deleted. But the station's cell is touched by only 32 granules on 32
+distinct days, and only the nine coincident ones are needed — roughly 480 MB and
+about a minute, plus a 57.49 MB TCCON re-fetch. **The licence does not bind**
+while nothing rests on the comparison, which both drafts state.
+
+**20. DONE.** `data/processed/specification_curve_2018.csv`, 126 specifications
+rather than the forty-eight this item anticipated, because the preprocessing
+variants and a third weighting were added after it was written. None is both
+positive and beats its own spatial null.
+
+**18 (original). Equivalence bounds for the central claim.** Two one-sided tests against a
 named smallest effect size of interest. Low in computation and high in
 judgement. *Established by* the methods record. *Gated by* item 11, because the
 effect size to bound is the de-attenuated one, not the attenuated one.
