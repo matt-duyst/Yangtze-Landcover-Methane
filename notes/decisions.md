@@ -6800,7 +6800,15 @@ only the nine days with TCCON coincidence are needed. At the mirror's mean
 granule size that is roughly 480 MB and about a minute of transfer, plus the
 57.49 MB TCCON re-fetch — not another 28.9 GB. It is queued, not run.
 
-**And the licence does not bind, because nothing rests on it.** Both drafts
+**CORRECTED 14 September 2026: the licence does bind.** Clause 5 of the TCCON
+Data License requires contacting the individuals on the DOI landing page at a
+minimum of four to six weeks before a manuscript is submitted, for any work that
+*includes* TCCON data. Only the co-authorship expectation is conditioned on the
+data being essential. The paragraph below read the co-authorship sentence as the
+whole obligation and concluded the licence did not apply; it does, and it is now
+the only dated deadline in the project. The rest of the paragraph stands.
+
+**The original, on essentiality, which is still right about essentiality.** Both drafts
 already say so in terms: "no result in this work rests on that comparison".
 TCCON's terms require contacting the site's listed individuals four to six weeks
 before submission with co-authorship normally expected *where the data is
@@ -7552,9 +7560,13 @@ research, which is a description and not a licence.
 Recorded separately because none of them is work that can simply be run:
 
 1. **Contact Balasus** before publication, as that product's terms ask.
-2. **Choose a code licence.** There is no `LICENSE` file, so the code is under
-   default copyright and a reader has no grant to run it. This blocks the code
-   availability statement outright.
+2. ~~**Choose a code licence.**~~ **WRONG, corrected 14 September 2026.**
+   `LICENSE` is MIT and has been tracked since 3 September; `CITATION.cff`
+   records the same. The check behind this item was
+   `ls LICENSE* LICENCE* COPYING*`, and zsh aborts a command when any glob
+   fails to match, so `ls` never ran and the fallback fired on a shell error
+   that I read as my own output. What was genuinely missing was the licence's
+   **scope**, now in `README.md`.
 3. **Keep or cut the TCCON sentences**, at roughly 480 MB to keep them.
 4. **Keep the NESDC grid and document the grant, or rebuild on Science Data
    Bank** and lose `rice_fraction_combined`.
@@ -7571,3 +7583,159 @@ it. They do not cover the apparatus as a *journal* meets it. Three required
 sections are absent from every file in the repository and the word "funding"
 appears in none of them. Adding them is not analysis and cannot fail a test,
 which is exactly why four passes over the apparatus have not noticed.
+
+## The apparatus repair, and two things the audit got wrong about it
+
+The apparatus audit named four defects that would stop or damage a submission.
+Three are now fixed and one never existed. What is worth recording is not the
+repairs, which are in the commits, but **why a second pass over the same
+material found things the first did not** — because that is the part that
+generalises.
+
+### The licence existed, and the reason I reported otherwise is mechanical
+
+`LICENSE` is MIT, copyright Matthew Duyst, tracked since 3 September 2026.
+`CITATION.cff` records `license: MIT` beside it. `README.md` has carried a
+"Licence and citation" section naming both for as long.
+
+My audit reported "this repository carries no `LICENSE` file". The check was:
+
+    ls LICENSE* LICENCE* COPYING* 2>/dev/null || echo "  NO LICENCE FILE"
+
+**zsh aborts a command when any glob fails to match.** `LICENCE*` — the British
+spelling, which nothing here uses — matched nothing, so the whole command was
+never executed and the `||` branch fired on a shell error rather than on a
+missing file. The shell printed `no matches found: LICENCE*` and I read that
+line as belonging to my own fallback.
+
+The lesson is narrow and worth keeping: **a negative finding from a shell glob
+is not evidence, because the failure mode of a glob is to abort rather than to
+return nothing.** The check that would have caught it is the one used to confirm
+the file afterwards — `git ls-files`, which lists what is tracked and cannot
+half-run. Four documents carried the wrong claim and all four are corrected.
+
+### What was actually missing was the scope, and a fourth register
+
+A single `LICENSE` at a repository root invites the reader to assume it covers
+everything, and here it does not: 48 committed artefacts in `data/processed/`
+derive from third-party products whose terms travel with them. `README.md` now
+states which part is under MIT, which is the author's own work outside it, and
+which is governed by a source's terms. MIT's own text covers "associated
+documentation files", which settles the prose without inventing a position.
+
+The sharpest case is **GISA**, which states no licence at all. Four committed
+artefacts are named for it and five more carry GISA-derived columns, and all
+nine are named individually in `README.md` rather than counted, because a reader
+deciding whether they may redistribute this repository needs the list.
+
+**And `README.md` is a fourth provenance register, which the audit missed.** The
+audit enumerated three — `config/sources.yml`, `data/manifest.json`,
+`notes/dataset-leads.md` — and README's own data-sources table is a fourth. It
+had already recorded the NESDC route as a personal-use grant and had already
+named two of the gaps the audit reported as discoveries: that the Science Data
+Bank product has a fetch module which writes no manifest entry, and that two
+entries carry no licence field. **The audit rediscovered what the front page
+said.** It read the machine-readable registers and the prose lead file and did
+not read the README as a register, which is a poor reason to miss the only
+document a reader sees first.
+
+### Committing the TCCON data is not permitted, and the counts did not need it
+
+The question was whether to commit the Hefei station file now that the counts
+depend on it. **No.** The TCCON Data License, read from the deposit's own
+`LICENSE.txt` rather than from this repository's paraphrase of it, clause 4:
+"All other rights, including redistribution, display, and publishing adaptations
+are reserved." That forbids committing the file at any size, and it also
+reserves *display*, which is stricter than expected and bears on any future
+figure drawing the station's record.
+
+So the counts are committed and the data is not:
+`data/processed/tccon_hefei_2018.csv` behind a network-tier recipe that fetches,
+with the deposit registered in `data/manifest.json` like any other fetched
+source. This is what `.gitignore` has said all along — "Raw inputs are fetched
+and verified against data/manifest.json rather than committed" — and GADM is the
+standing precedent for a source whose licence forbids redistribution.
+
+**Reading the licence rather than the paraphrase changed a conclusion.** This
+file previously recorded that the TCCON licence "does not bind, because nothing
+rests on it". Clause 5's contact requirement applies to any work that *includes*
+TCCON data; only the co-authorship expectation is conditioned on the data being
+essential. So the obligation binds, and since it is dated — a minimum of four to
+six weeks before submission — **it now sets the earliest date this paper can be
+submitted**, which is the only hard deadline in the project. Clause 5 also
+provides that if the listed individuals do not answer three emails over a
+ten-week period, the data falls under CC BY 4.0; that is a documented path, not
+a loophole, and it takes ten weeks.
+
+### The three numbers reproduce exactly, and cost a tenth of the estimate
+
+2,767 retrievals on 44 days in 2018, and 9 days carrying both a retrieval and a
+granule covering the station's cell. All three reproduce to the digit. This was
+the first check they had ever received: they were computed once, written into
+prose, and the data deleted.
+
+**No granules were downloaded.** This file priced the recovery at roughly 480 MB
+of granules plus the 57.49 MB station file. The 480 MB was never needed: the
+checkpoint holds one packed cell bitmap per granule in `granule_cells`,
+index-aligned with a `contributions` array carrying every granule's filename and
+acquisition timestamp, so the TROPOMI side of a coincident-day count is a lookup
+in data already on disk. The pass cost 57.5 MB against a 1 GB budget.
+
+The estimate was wrong in a specific and repeatable way: it reasoned from what
+the *analysis* would need — the alignment does need granules, for per-layer
+kernels and priors — and did not separate that from what the *counts* need. Two
+different questions were priced as one.
+
+### A newer release exists
+
+CaltechDATA also holds Hefei GGG2020.1.R1, `10.14291/tccon.ggg2020p1.hefei01.R1`,
+published 2026, where the record here is GGG2020.R1 from 2023. The committed
+counts are from R1 and reproduce from R1. Which release a submission cites is a
+decision, and re-running the recipe against the newer one would change the
+counts if the reprocessing changed the 2018 record.
+
+### Making a number checkable invalidated the counts of numbers
+
+Marking the three TCCON counts moved five rows in
+`data/processed/claim_inventory_2026.csv`: measured 465 to 470, unresolved 38 to
+36, total 1,259 to 1,262. The claim checker did not notice, and could not:
+`notes/decisions.md` and `notes/claim-audit.md` state those counts in prose and
+are both outside its `SCANNED` set. **The inventory's own counts are unguarded,
+so fixing an unguarded number silently broke a different unguarded number.**
+Both were edited by hand. The guard checks the relation someone thought of, and
+this is the third instance of that pattern recorded in this file.
+
+A smaller version of the same thing: the claim checker's `CLAIM` pattern
+requires a digit before the marker, so "nine coincident days" cannot be marked
+while it is spelled as a word. Three instances were converted to `9`; the
+rhetorical repetitions in the same passages are still words and still unguarded.
+
+### ACP requires a disclosure nobody had noticed
+
+Reading ACP's submission page rather than reasoning about what a journal wants
+turned up two required items outside the audit's four framings. One is an
+**Interactive computing environment** section. The other is that **where AI
+tools were used to generate parts of a manuscript, the usage must be described**,
+in the methods or the acknowledgements. That is not optional, it applies to this
+work more than to most, and no pass over the apparatus had raised it — because
+every pass reasoned from what a paper needs rather than from what this venue
+says it needs. The same reading found that ACP wants code deposited with a
+**DOI** and cited in the reference list, which `CITATION.cff`'s GitHub URL is
+not.
+
+### The NESDC column was citable all along
+
+The brief corrected the framing — the FTP grant covers the access address, not
+the data — and fixing it as a citation gap rather than a permissions one found
+what four passes had missed. The restricted column, `rice_fraction_combined`,
+comes from a double-season class, and that class has its own CC BY 4.0 dataset
+paper: Pan et al. (2021), *Remote Sensing* 13, 4609, `10.3390/rs13224609`,
+sharing four authors with the single-season paper already registered.
+
+**The searches that missed it were searches for the product.** The product has
+no single citable identity — it is a distribution route carrying two classes —
+and the class is what is published. Searching for the thing the column *is*
+rather than for the file it came in found it in one query. `config/sources.yml`
+now carries a `nesdc_rice` block with both papers and deliberately no fetch
+route, since scripting the route would redistribute the credential, which is the
+one thing the grant forbids.

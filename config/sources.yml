@@ -281,6 +281,49 @@ s5p:
   start_date: 2018-01-01
   end_date: 2018-12-31
 
+nesdc_rice:
+  product: China rice 10 m/20 m classified rasters, single and double season
+  # NOT FETCHABLE BY THIS CONFIG, and recorded anyway. The files came over the
+  # National Ecosystem Science Data Center FTP route, whose grant covers the
+  # ACCESS ADDRESS and not the data: the grant's wording is that the FTP
+  # address is for personal use and must not be redistributed. The data itself
+  # is published openly, which is why this entry can carry citations and a
+  # licence at all. There is deliberately no fetch script and no url key: a
+  # scripted fetch would redistribute the credential, which is the one thing
+  # the grant forbids.
+  destination: data/raw/nesdc_rice
+
+  # Two classes, two papers, both CC BY 4.0 and both by one group. The
+  # single-season class is pixel-identical to the Science Data Bank export
+  # registered above as `scidb_rice`; the double-season class is what that
+  # export folds into the background, and it is the only thing this route adds.
+  licence: CC BY 4.0, from the two dataset papers below
+  licence_url: https://creativecommons.org/licenses/by/4.0/
+  citation: >-
+    Shen, R., Pan, B., Peng, Q., Dong, J., Chen, X., Zhang, X., Ye, T.,
+    Huang, J., and Yuan, W.: High-resolution distribution maps of
+    single-season rice in China from 2017 to 2022, Earth System Science Data,
+    15, 3203-3222, 2023. doi:10.5194/essd-15-3203-2023
+  citation_double_season: >-
+    Pan, B., Zheng, Y., Shen, R., Ye, T., Zhao, W., Dong, J., Ma, H., and
+    Yuan, W.: High Resolution Distribution Dataset of Double-Season Paddy Rice
+    in China, Remote Sensing, 13, 4609, 2021. doi:10.3390/rs13224609
+
+  # The open equivalent, for a reader with no FTP grant. `--rice-source scidb`
+  # reproduces every column of the committed analysis grid except
+  # rice_fraction_combined, which it lowers in 190 of 927 rows.
+  equivalent: scidb_rice
+  equivalent_doi: 10.57760/sciencedb.06963
+
+  # Matched against filenames of the form
+  # classified-<Province>-<year>-rice-WGS84-v<version>.tif -- note `-rice-`
+  # where the Science Data Bank export writes `-middle_rice-`.
+  provinces:
+    - Anhui
+    - Zhejiang
+    - Jiangsu
+    - Shanghai
+
 gisa:
   product: GISA global impervious surface area, 30 m, 1972-2019
   # Wuhan University serves the whole bundle over plain HTTP with no

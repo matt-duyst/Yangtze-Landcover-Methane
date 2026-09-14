@@ -1,7 +1,7 @@
 # The register read as a reference list
 
 Audited 14 September 2026. `notes/references.md` is the register: what this
-project consulted, grouped by role, 197<!--#register.entries--> entries. A manuscript's reference list
+project consulted, grouped by role, 198<!--#register.entries--> entries. A manuscript's reference list
 is a different object — what the paper cites — and nothing had ever measured
 which subset that is. This file measures it, so the judgement conversation
 about what the reference list *should* contain has something to work from.
@@ -293,7 +293,7 @@ different places in a submission:
 
 So the **reference list would be about 31 entries**, against the
 12 <!--#register.draft_cited--> the drafts cite today and
-197 <!--#register.entries--> in the register. That is below what an ACP article
+198 <!--#register.entries--> in the register. That is below what an ACP article
 typically carries, and the reason is a property of the work rather than a
 defect: this is a capability assessment resting on its own measurements, so most
 of its numbers are measured and only 119 <!--#claims.cited--> of them are

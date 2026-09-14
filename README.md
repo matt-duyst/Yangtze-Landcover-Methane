@@ -400,7 +400,7 @@ digests for the four sources whose fetch scripts write to it. In brief:
 | Natural Earth | 10 m admin-1 provinces | public domain |
 | Science Data Bank rice | classified single-season rice, 10 m, by province | not in the manifest |
 | GISA | global impervious surface area, 30 m, 1972–2019 | not stated on the download page |
-| NESDC rice | classified single and double season rice, 10 m | personal-use grant, not scripted |
+| NESDC rice | classified single and double season rice, 10 m | CC BY 4.0; the FTP grant covers the access address, not the data |
 | SPAM, GADM | rice area, provincial boundaries | not redistributed, see above |
 
 Two sources publish no usable checksum. Every S3 ETag on the Sentinel-5P mirror

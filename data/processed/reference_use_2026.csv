@@ -7,6 +7,7 @@ lorente2021tropomi,10.5194/amt-14-665-2021,peer-reviewed paper,Findings relied o
 schneising2026wfmd,10.5194/amt-19-2407-2026,peer-reviewed paper,Findings contested,,,,methane;methods,notes/decisions.md
 he2022mae,10.1109/CVPR52688.2022.01553,peer-reviewed paper,Findings contested,,,,,ERRATA.md;notes/decisions.md
 shen2023ricedata,10.57760/sciencedb.06963,dataset record,Datasets used,,,,methods;yrd,notes/decisions.md;notes/paper-target.md;config/sources.yml
+pan2021doubleseason,10.3390/rs13224609,peer-reviewed paper,Datasets used,,,,,notes/decisions.md;config/sources.yml
 xie2024gloricedata,10.6084/m9.figshare.27965832.v2,dataset record,Datasets used,,,,,data/manifest.json;config/sources.yml
 gong2024gaiadata,10.6084/m9.figshare.27245775.v1,dataset record,Datasets used,,,,,notes/decisions.md;data/processed/README.md;data/manifest.json;config/sources.yml
 ifpri2019spam2000,10.7910/DVN/A50I2T,dataset record,Datasets used,,,,,data/processed/README.md

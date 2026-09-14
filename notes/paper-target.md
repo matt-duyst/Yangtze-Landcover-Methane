@@ -1327,7 +1327,7 @@ represents.
 **12c. Citations. The four drafts contain twelve between them.** Ten are in the
 methods; the introduction cites nothing at all, and no draft carries a DOI or a
 reference section. Against a register of
-197<!--#register.entries--> entries and an ACP article's typical forty to
+198<!--#register.entries--> entries and an ACP article's typical forty to
 eighty, **the paper's reference count as drafted is twelve.** This is the
 largest writing gap in the queue and it is not mechanical: the drafts state
 literature findings in prose and attribute them to nobody, so those sentences
@@ -1502,13 +1502,22 @@ not what it is set against. The policy bound the record proposed could not be
 set at all — it bounds emissions, and reaching the column needs the transport
 model this work does not run.
 
-**19. QUEUED, and it is cheap.** Not computable from committed data: the Rodgers
-correction needs the averaging kernel and both priors *per layer*, which live in
-granules and not in the checkpoint, and no TCCON data is on disk since it was
-fetched and deleted. But the station's cell is touched by only 32 granules on 32
-distinct days, and only the nine coincident ones are needed — roughly 480 MB and
-about a minute, plus a 57.49 MB TCCON re-fetch. **The licence does not bind**
-while nothing rests on the comparison, which both drafts state.
+**19. PARTLY DONE, 14 September 2026, and cheaper than this said.** The three
+feasibility counts are recovered and reproduce exactly:
+2,767<!--#tccon.retrievals--> retrievals on 44<!--#tccon.days--> days and
+9<!--#tccon.coincident_days--> coincident days, now in
+`data/processed/tccon_hefei_2018.csv` behind a network-tier recipe. **It cost
+57.5 MB, not the 480 MB this item priced**, because the checkpoint already holds
+a packed cell bitmap per granule beside each granule's filename and acquisition
+time, so no granules had to be fetched at all.
+
+What remains queued is the **alignment**, which is the part that would make the
+comparison a validation rather than a feasibility measurement. That still needs
+the averaging kernel and both priors *per layer*, which live in granules and not
+in the checkpoint. **And the licence does bind**: clause 5 requires contacting
+the site's listed individuals four to six weeks before submission for any work
+including TCCON data, which is now the earliest date this paper can be
+submitted. Only co-authorship turns on essentiality.
 
 **20. DONE.** `data/processed/specification_curve_2018.csv`, 126 specifications
 rather than the forty-eight this item anticipated, because the preprocessing
@@ -2044,8 +2053,10 @@ submission:
 
 1. The blended product's terms ask that its author be contacted before
    publication. Not done, and the only unmet provider condition in the project.
-2. There is no `LICENSE` file, so the code availability statement cannot state
-   terms.
+2. ~~No `LICENSE` file.~~ **Wrong; it is MIT and always was.** What was
+   missing was the scope, now stated in `README.md`. What is still missing is a
+   DOI: ACP requires code to be cited by one and `CITATION.cff` names a GitHub
+   URL.
 3. The Hefei TCCON counts appear in four documents, have no artefact, and
    support the "not a validated result" framing. Roughly 480 MB regenerates
    them; the alternative is to cut the sentences and lose the argument.
@@ -2063,3 +2074,50 @@ worth as much here: 41 <!--#pipeline.recipes_committed--> of the
 the suite; the Copernicus attribution notice is asserted verbatim against the
 rendered figure, so a rebuild cannot drop it; and the one unregenerable
 artefact feeds no published figure and resolves no prose number.
+
+## What remains before writing, 14 September 2026
+
+The apparatus is no longer what blocks a draft. Four defects were named as
+submission-stopping; three are fixed and the fourth never existed. The
+availability statements, the journal sections and the licence scope are drafted
+in `notes/draft-availability.md` and `README.md`, the Hefei counts are behind a
+recipe, and the one restricted data column is citable.
+
+**The earliest submission date is now set by a licence, not by the work.**
+Clause 5 of the TCCON Data License requires contacting the Hefei site's listed
+individuals a minimum of four to six weeks before a manuscript is submitted, for
+any work including TCCON data. That clock has not started. If the intent is to
+submit, starting it is the first action, and it is independent of everything
+else on this list. The author of the blended TROPOMI+GOSAT product should be
+contacted in the same pass.
+
+**Three things no file here can supply**, all Matt's: whether the paper is
+single-authored, given the 2023 thesis was advised; whether the thesis was
+funded, since ACP reports grant numbers to FundRef; and the wording of the AI
+usage disclosure ACP requires, which for this work is substantial rather than
+formal.
+
+**One ten-minute job on Matt's account**: a Zenodo release, for the code DOI ACP
+requires and an ORCID for `CITATION.cff`.
+
+**What is left that is actually work**, in the order it would be done:
+
+1. **The figure set.** Thirteen of a planned sixteen exist. This is the largest
+   remaining build and it is assessed in `figures/figure-assessment.md`.
+2. **The errata audit**, deferred from this sequence on the sound ground that
+   auditing a supporting document against an unwritten paper means auditing
+   against an unknown target. It comes after a draft exists, not before.
+3. **The TCCON prior alignment**, still queued and still optional. It is what
+   would turn the feasibility measurement into a validation, and it is the one
+   item whose completion would change the co-authorship position under the TCCON
+   licence.
+4. **The satellite question**, which remains the largest unexamined area and is
+   still not in the planned sequence.
+
+**And one thing to decide rather than do.** GISA states no licence and nine
+committed artefacts derive from it. Every other source in this project has terms
+that can be quoted; this one has a sentence in a paper describing the product as
+freely available for research. Seeking written permission is thorough; relying
+on the description is what the field does. It is worth choosing deliberately,
+because it is the only place where redistributing this repository rests on a
+reading rather than on a grant.

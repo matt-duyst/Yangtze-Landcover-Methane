@@ -194,6 +194,7 @@ KEYS = {
     "10.5194/amt-19-2407-2026": "schneising2026wfmd",
     "10.1109/CVPR52688.2022.01553": "he2022mae",
     "10.57760/sciencedb.06963": "shen2023ricedata",
+    "10.3390/rs13224609": "pan2021doubleseason",
     "10.6084/m9.figshare.27965832.v2": "xie2024gloricedata",
     "10.6084/m9.figshare.27245775.v1": "gong2024gaiadata",
     "10.7910/DVN/A50I2T": "ifpri2019spam2000",

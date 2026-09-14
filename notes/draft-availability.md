@@ -64,9 +64,26 @@ Reproducibility caveat: **1,182 of 3,436 keys carry multipart ETags**, so no
 content checksum is available for 34 percent of this source and verification is
 structural for that part; the threshold is exactly 8 MiB.
 
-**Hefei TCCON.** Fetched, used and deleted. No artefact, no manifest entry, and
-no recipe. The three column counts that reached four documents therefore rest
-on data this repository cannot produce. See the outstanding list.
+**Hefei TCCON GGG2020.R1.** CaltechDATA, `10.14291/tccon.ggg2020.hefei01.R1`,
+57.49 MB, registered in `data/manifest.json` and **not committed**. Its licence
+is the strictest in this project and the only one that forbids redistribution:
+clause 4 of the TCCON Data License reads "All other rights, including
+redistribution, display, and publishing adaptations are reserved". So
+`data/processed/tccon_hefei_2018.csv` carries counts derived from the record and
+a network-tier recipe fetches the record itself.
+
+Its clause 5 is an obligation on whoever submits: the individuals listed on the
+DOI landing page must be contacted, with a description of the intended
+publication, **at a minimum of four to six weeks before a manuscript is
+submitted** and one to two weeks before a presentation. That applies to any work
+including TCCON data. Only the co-authorship expectation is conditioned on the
+data being essential, which it is not here. Clause 5 also provides that if the
+individuals do not respond to three emails over a ten-week period, the data
+falls under CC BY 4.0.
+
+A newer release exists, GGG2020.1.R1 (`10.14291/tccon.ggg2020p1.hefei01.R1`,
+2026). The committed counts are from R1 and reproduce from R1; which release a
+submission cites is a decision.
 
 ### Land cover
 
@@ -94,7 +111,20 @@ licence requires an attribution notice, which is set in the figure itself at
 
 ### Rice
 
-**NESDC China Rice 10 m/20 m.** **This is the gap.** The committed
+**NESDC China Rice 10 m/20 m.** *This was recorded here as the gap and it is
+now closed.* The grant that carried these files covers the FTP access address
+and not the data, so this was never a licensing problem, and the data is
+published openly under **CC BY 4.0** in two dataset papers by one group: Shen et
+al. (2023) for the single-season class, `10.5194/essd-15-3203-2023`, and **Pan
+et al. (2021) for the double-season class**, `10.3390/rs13224609`, which is the
+class the anonymous export folds away and therefore the citation for
+`rice_fraction_combined`. Both are now in `config/sources.yml` under
+`nesdc_rice`, which deliberately carries no fetch route: scripting it would
+redistribute the credential, which is what the grant actually forbids. The
+original text of this entry follows, because the substitution it describes is
+still the right thing for the statement to say.
+
+The committed
 `data/processed/analysis_grid_2018.csv` was built with `--rice-source nesdc`
 from rasters obtained over an FTP route under a personal-use grant that cannot
 be scripted, and the dataset appears in **no** register: no DOI, no licence, no
@@ -164,34 +194,65 @@ only as an agreement column against the regenerable
 `data/processed/urban_extent_totals.csv`, and the claim checker resolves no
 prose number from it, so no published figure or number depends on it.
 
-**Licence: none.** This repository carries no `LICENSE` file, so the code is
-under default copyright and a reader has no grant to run or modify it. This
-blocks the code availability statement and is a decision, not work.
+**Licence: MIT**, in `LICENSE`, tracked since 3 September 2026, with the same
+licence recorded in `CITATION.cff`. An earlier version of this file said the
+repository carried no `LICENSE` file at all. **That was wrong**, and the cause is
+worth recording because it is a mechanical trap rather than a lapse of
+attention: the check was `ls LICENSE* LICENCE* COPYING*`, and zsh aborts a
+command when any glob fails to match, so the unmatched British spelling meant
+`ls` never ran and the fallback message fired on a shell error.
+
+What was genuinely missing is the **scope**, which `README.md` now states. MIT
+governs `src/`, `scripts/`, `tests/`, `config/` and the documentation, MIT's own
+text covering "associated documentation files". It does not govern the 2023
+thesis, which is the author's own work, and it does not govern the committed
+data artefacts, whose sources' terms travel with them. Nothing is vendored and
+no source file carries a licence header, so the choice was never constrained.
+
+The sharpest case in that scope is **GISA**, which states no licence anywhere:
+four committed artefacts are named for it and five more carry GISA-derived
+columns, and all nine rest on no stated grant.
+
+**What a reader still cannot cite.** ACP requires code to be deposited with a
+DOI and cited in the reference list. `CITATION.cff` names a GitHub URL, which is
+not a DOI, and its ORCID field is a TODO. A Zenodo release supplies both.
 
 ## Outstanding, and each waits on a decision
 
-1. **Contact Balasus before publication.** The blended product's own terms ask
-   for it. Not done. Nothing else in this project has an unmet provider
-   condition.
-2. **Choose a code licence.** No `LICENSE` file exists.
-3. **The Hefei TCCON sentences.** Three counts — 2,767 retrievals, 44 days,
-   nine coincident days — appear in `notes/draft-methods.md`,
-   `notes/draft-introduction.md`, `notes/draft-discussion.md` and
-   `notes/paper-target.md`, are unmarked, and have no artefact behind them. The
-   drafts' own unresolved lists already name them. Either regenerate them, which
-   `notes/paper-target.md` prices at roughly 480 MB because only the nine
-   coincident days are needed, or cut the sentences. They are load-bearing for
-   the "not a validated result" framing, so cutting them costs an argument.
-4. **The NESDC rice product.** Either keep the committed grid and state the
-   grant and the 190-row substitution in the paper, or rebuild the grid from the
-   Science Data Bank product so that the whole chain is anonymous and citable
-   and lose `rice_fraction_combined`.
-5. **Two unstated licences.** The S5P mirror route and the GISA download page
-   state no terms. Decide whether to seek written permission or to cite the
-   primary distributor instead.
-6. **Three sections a submission needs and no document drafts.** Author
-   contributions, competing interests, and financial support. None appears in
-   any file here.
+Rewritten on 14 September 2026. Four of the six items below are new and three of
+the originals are gone: the licence existed, the TCCON counts are recovered, and
+the NESDC product turned out to be citable.
+
+**Two provider contacts, both with clocks.**
+
+1. **The Hefei TCCON site's listed individuals**, at a minimum of four to six
+   weeks before submission, per clause 5 of the TCCON Data License. This is the
+   only dated obligation in the project and it sets the earliest possible
+   submission date. An earlier record in `notes/decisions.md` said this licence
+   "does not bind, because nothing rests on it"; that read the co-authorship
+   sentence as the whole obligation and is corrected.
+2. **The author of the blended TROPOMI+GOSAT product**, whose terms ask to be
+   told before publication. Undated but explicit, and still not done.
+
+**Three things only Matt can supply.**
+
+3. **Financial support.** The reproduction was unfunded as far as this
+   repository records; whether the 2023 thesis was supported is not something
+   any file here can answer, and ACP wants grant numbers rather than a sentence.
+4. **Authorship.** Whether this is a single-author paper at all, given the 2023
+   thesis was advised.
+5. **The AI usage disclosure.** ACP requires one, this work needs a substantial
+   one, and its wording is the author's.
+
+**One thing that is a ten-minute job on Matt's account.**
+
+6. **A Zenodo release**, for the DOI that ACP requires code to be cited by, and
+   an ORCID for `CITATION.cff`'s TODO.
+
+**And one that may have no answer.** GISA states no licence and nine committed
+artefacts derive from it. Seeking written permission is the thorough course;
+citing the paper's "freely available for research" description is what the
+field does in practice. Worth a decision rather than a default.
 
 ---
 
