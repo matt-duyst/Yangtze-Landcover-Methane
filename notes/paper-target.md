@@ -1332,12 +1332,16 @@ logic that the marginal cost inside a transfer-bound pass is minutes and outside
 it is two hours: the across-track detector column, which is what made item 16
 tractable.
 
-*The result that needs a decision.* Under representativeness weighting the
-spatial null's advantage disappears in the two weighted designs, because the
-null collapses rather than because land cover improves. **This is a caveat on
-the benchmark, not evidence for a land-cover effect**, and the paper has to
-choose whether the reported null is the count-weighted one. §5.2 of the methods
-draft is where that choice is stated and it now needs to justify itself.
+*The result that needed a decision, and the decision it turned out not to
+need.* This entry previously said that under representativeness weighting the
+spatial null's advantage disappears. **That was wrong, and the cause was a
+defect in the test rather than a property of the weighting.** The weighting
+variant left 21 single-sounding cells carrying their raw sounding count in a
+column otherwise holding representativeness weights, and those 21 cells took
+88.6 percent of all weight. Corrected, the null rises under representativeness
+weighting rather than collapsing, impervious rises too, and the ordering is
+unchanged. The weighting decision is therefore low-stakes on the evidence and
+is recorded in `notes/decisions.md`.
 
 **The pass produces 0.25 degrees only, decided 15 September 2026 by
 measurement.** This was an open question in the queue and it is now closed

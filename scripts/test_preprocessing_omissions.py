@@ -207,8 +207,18 @@ def write_grid_with_weight(data, weight, path: Path) -> None:
             key = (f"{float(record['centre_lat']):.4f}",
                    f"{float(record['centre_lon']):.4f}")
             value = lookup.get(key)
-            if value is not None and np.isfinite(value) and value > 0:
-                record["sounding_count"] = f"{value:.10f}"
+            # A cell with no representativeness weight is **dropped, not left
+            # at its count**. Leaving it mixes two incompatible scales in one
+            # column: counts run 1 to 410 and representativeness weights run
+            # 0.0003 to 0.019, so a single-sounding cell carrying its count of
+            # 1 outweighs a typical cell 382-fold. The first version of this
+            # function left them, and the 21 single-sounding cells took 88.6
+            # percent of all weight -- which made the whole variant a fit on 21
+            # cells observed once each, and produced a spurious collapse of the
+            # spatial null that was reported as a finding.
+            if value is None or not np.isfinite(value) or value <= 0:
+                continue
+            record["sounding_count"] = f"{value:.10f}"
             writer.writerow(record)
 
 
@@ -350,10 +360,23 @@ def main(argv=None) -> int:
                     soundings=composite[name]["soundings"],
                     basis="filter"))
 
-        # The weighting variant: same target, a different weight column.
+        # The weighting variant: a different weight column, on the cells that
+        # have a weight. Dropping the 21 weightless cells changes the sample,
+        # so it gets a matched reference on the same cells under the committed
+        # weighting -- otherwise the comparison confounds the weighting with
+        # the loss of every single-sounding cell.
         grid = tmp / "grid.csv"
         write_grid_with_weight(data, weight, grid)
         results = run_baselines(grid, None, tmp / "out_w.csv")
+
+        matched_grid = tmp / "grid_matched.csv"
+        write_grid_subset(data, np.where(np.isfinite(weight) & (weight > 0),
+                                         base_counts, 0), matched_grid)
+        matched = {(r["model"], r["scheme"], r["weighting"]):
+                   float(r["held_out_r2"])
+                   for r in run_baselines(matched_grid, None,
+                                          tmp / "out_wm.csv")}
+        kept = int((np.isfinite(weight) & (weight > 0)).sum())
         for r in results:
             if r["model"] not in MODELS:
                 continue
@@ -364,8 +387,8 @@ def main(argv=None) -> int:
                 scheme=r["scheme"], weighting=r["weighting"], n=r["n"],
                 held_out_r2=f"{value:.4f}",
                 delta_vs_committed=f"{value - reference[key]:+.4f}",
-                delta_vs_matched=f"{value - reference[key]:+.4f}",
-                comparison="same cells as committed",
+                delta_vs_matched=f"{value - matched[key]:+.4f}",
+                comparison=f"matched reference on the {kept} weighted cells",
                 soundings=base_total, basis="weighting"))
 
     print(f"\n  held-out R squared, {len(MODELS)} models x 4 scheme-weighting "

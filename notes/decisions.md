@@ -6587,32 +6587,51 @@ first order only**: the accumulator holds each column's sum over the whole
 domain and year, so the offset is measured against the domain mean and absorbs
 any column-to-geography relationship. It bounds what destriping would remove.
 
-**Representativeness weighting is the one that moves a comparison**, and not in
-the direction that would help the land-cover hypothesis.
+**Representativeness weighting changes neither the result nor the benchmark**,
+and the corrected figures are below. The weighting is the Level 3 literature's
+own inverse-variance weight with the spatial term at its low-coverage limit; it
+is better conditioned than the weighting it replaces, spanning 69x against
+205x; and it is close to orthogonal to sounding count, correlation -0.03,
+because the spatial term carries 97.5 percent of the per-cell variance and does
+not shrink with n.
 
-### The one result that changes something, and what it does not change
+Under spatial blocks, impervious cover rises from 0.0244 to 0.1429 and the
+spatial null rises from 0.5137 to 0.5399. **The ordering is unchanged, the gap
+barely moves, and no land-cover model overtakes the null under any weighting.**
 
-Under representativeness weighting, impervious cover overtakes the spatial null
-in **two of the four scheme-weighting combinations** — the two weighted ones,
-which are the only two the substitution can touch.
+### CORRECTED 13 September 2026: the collapse this entry reported was a bug
 
-**The reversal is the benchmark collapsing, not land cover improving.** Under
-spatial blocks the null falls from 0.5137 to -0.125 while impervious moves from
-0.0244 to 0.0334. The land-cover coefficient is essentially unchanged.
+**This passage previously said** that "impervious cover overtakes the spatial
+null in **two of the four scheme-weighting combinations**" and that "the
+reversal is the benchmark collapsing, not land cover improving", with the null
+falling "from 0.5137 to -0.125". **All of that was an artefact of the test, not
+a property of the weighting.**
 
-The weighting is not a straw man. It is the Level 3 literature's own
-inverse-variance weight with the spatial term at its low-coverage limit; it is
-**better conditioned** than the weighting it replaces, spanning 69x against
-205x; it does not concentrate on sparse cells, which hold 8.7 percent of the
-weight while being 11.6 percent of the cells; and it is close to orthogonal to
-sounding count, correlation -0.03, because the spatial term carries 97.5
-percent of the per-cell variance and does not shrink with n.
+`test_preprocessing_omissions.write_grid_with_weight` substituted the
+representativeness weight into the grid's `sounding_count` column **where a
+weight existed and left the raw count where one did not**. Twenty-one cells
+have a single sounding, so no within-cell spread and no representativeness
+weight, and they kept their count of 1 in a column where every other cell now
+held a value near 0.0026. Each of those 21 cells therefore carried 382 times a
+typical cell's weight, and together they held **88.6 percent of all weight in
+the fit.** The "representativeness weighting" variant was in substance a fit on
+21 cells observed once each, which no spatial model can predict — hence a
+spatial null that appeared to collapse.
 
-So the honest statement is: **the finding that no land-cover association
-survives is robust to all four omissions, and the strength of the spatial null
-it is reported against is weighting-dependent.** That is a caveat on the
-benchmark, and it belongs in the methods section beside the weighting choice
-rather than in the results as a positive finding.
+**Two things made it look like a finding rather than a bug.** It had a ready
+mechanism — the Level 3 literature does say count weighting measures the wrong
+thing, so a result where count weighting flattered the null fitted the
+expectation. And the diagnostics run against it were the wrong ones: the weight
+range, the share of weight on sparse cells and the correlation with count were
+all computed from `cell_quality_2018.csv`, which holds only the 905 cells that
+*have* a weight, so none of them could see the 21 cells that did the damage.
+
+The fix drops cells with no weight instead of leaving them, which changes the
+sample, so the variant now carries a matched reference on the same 905 cells.
+**The general lesson is the one this file keeps relearning**: a column that
+means two different things in different rows will not announce itself, and a
+diagnostic computed on the well-behaved subset cannot find the rows that are
+not in it.
 
 ### What remains unresolvable without another read
 

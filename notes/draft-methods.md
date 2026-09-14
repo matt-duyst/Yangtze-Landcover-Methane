@@ -176,19 +176,18 @@ six variants across seven models and all four cross-validation designs.
   detector column was retained during the re-run; the per-column offsets have a
   standard deviation of 5.09<!--#sens.stripe_sd--> ppb. Applying them raises
   every fit slightly and changes no ordering.
-* **Representativeness weighting is the one that moves a comparison.** It is
-  close to orthogonal to sounding-count weighting, correlation
-  -0.03<!--#sens.weight_correlation-->, because the spatial term carries
-  97.5<!--#sens.spatial_share_pct--> percent of the per-cell variance and does
-  not shrink with the number of soundings. Under it the **spatial null's
-  advantage disappears in the two weighted designs** — the null falls from
-  0.5137<!--#sens.null_committed_weighted--> to
-  -0.125<!--#sens.null_repweight--> under spatial blocks while impervious
-  barely moves, from 0.0244<!--#sens.impervious_committed_weighted--> to
-  0.0334<!--#sens.impervious_repweight-->. **The land-cover coefficient does
-  not improve; the benchmark weakens.** That is a caveat on how the null is
-  weighted, not evidence for a land-cover effect, and §5.2 states the
-  weighting the reported result uses.
+* **Representativeness weighting changes neither the result nor the
+  benchmark.** It is close to orthogonal to sounding-count weighting,
+  correlation -0.03<!--#sens.weight_correlation-->, because the spatial term
+  carries 97.5<!--#sens.spatial_share_pct--> percent of the per-cell variance
+  and does not shrink with the number of soundings — so it is a genuinely
+  different weighting rather than a rescaling of the same one. Under it
+  impervious cover rises from
+  0.0244<!--#sens.impervious_committed_weighted--> to
+  0.1429<!--#sens.impervious_repweight--> under spatial blocks, and the spatial
+  null rises too, from 0.5137<!--#sens.null_committed_weighted--> to
+  0.5399<!--#sens.null_repweight-->. **The ordering is unchanged and the gap
+  barely moves.** No land-cover model overtakes the null under any weighting.
 
 **One preprocessing step remains untested and it is not one of these four.**
 The aerosol optical thickness ceilings the same published chain applies were
