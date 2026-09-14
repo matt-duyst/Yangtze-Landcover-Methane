@@ -6972,3 +6972,110 @@ domain needs the `40N` tiles and not the `20N` ones. That mistake was made and
 cost 137 MB. The filename also says 1972 where the description says 1985, and
 the in-domain window carries 39 distinct non-zero codes against 37 years, so
 **the code-to-year mapping is not settled and must be established before use.**
+## Reading the register as a reference list
+
+The bibliography's mechanics were sound and had been audited twice: 197 entries,
+all resolving, guards against truncated author lists and stale cross-references.
+This pass asked a different question — what would the *paper's* reference list
+contain — and the mechanics turned out not to be the thing that mattered.
+
+### The drafts cite twelve works
+
+**Four drafts, twelve formal citations, ten of them in the methods.** The
+introduction cites nothing at all. No draft carries a DOI, a numeric citation or
+a reference section.
+
+**The defect is not formatting.** The drafts state literature findings in prose
+with no attribution, so the sentences read as this project's own claims. The
+introduction's own drafting notes say its unmarked numbers are "literature
+figures resolved by citation" — and the section contains no citation, so that
+sentence describes an intention rather than the file.
+
+**And it was invisible to everything built to catch this class.** The claim
+checker verifies each marked number against the artefact it names; the
+cross-reference guard verifies quoted claims against the file they name; the
+figure inventory verifies files against the register of figures. All three check
+*this project's* assertions against *this project's* evidence. **A claim about
+someone else's work has no artefact and no target file, so no guard sees it.**
+That is the gap, and it is structural rather than an oversight: the mechanisms
+were built to stop the repository contradicting itself, and an uncited external
+claim does not contradict anything.
+
+### What the audit corrected in the register itself
+
+The register is internally reliable about identifiers and was wrong about its
+own counts, in five places:
+
+* "one hundred eighty-nine of them and they are the whole of
+  `notes/references.bib`" — the BibTeX held 194.
+* "The register holds nine preprints, six on arXiv and three as Copernicus
+  discussion papers" — the total is right and **both halves of the split are
+  wrong**: seven on arXiv, two Copernicus.
+* "every one of them says so in its role" — **three of the nine carry no role
+  label at all.**
+* "### The three excluded entries" over a three-row table, where `EXCLUDED`
+  holds **four**: the journal policy page was named in the generator and not in
+  the prose.
+* A stale provenance count that moved with the entry total.
+
+The pattern is worth naming. **Every one of these is a count the register states
+about itself, and the register has no guard on those** — the guards it has
+compare the register against the BibTeX and against author lists, both of which
+are per-entry. A file-level claim like "there are 189" is exactly the kind of
+assertion this repository has repeatedly found to be false elsewhere, and it was
+sitting unguarded in the file that exists to prevent that class.
+
+### Three preprints had been published
+
+`nab2021sensitivity` in *Global Epidemiology*, `boulesteix2012plea` in
+*PLoS ONE*, `lee2025multitab` in the ACM SIGKDD proceedings. All three are
+annotated as superseded in place, with their published details, and the
+published DOIs added so the BibTeX carries both — the preprint stays because it
+is what was consulted.
+
+**One of them arrived carrying the register's own signature failure.** The
+published *PLoS ONE* version has **three** authors — Boulesteix, Lauer and
+Eugster — where the preprint entry has two. That is the truncated-author-list
+class this register was built against, reaching it this time through a preprint
+rather than through a deposit's metadata.
+
+**And one near-miss.** A title search for Cohen and Welling's equivariant
+networks returns a 2026 *Symmetry* paper whose title begins with the same words
+and whose authors are different people citing it. Accepting that as the published
+version would have been the wrong-paper error the register's `NOT_CITATIONS` set
+exists to record. Cohen and Welling was published at ICML and Azulay and Weiss
+in JMLR, and **neither venue registers a Crossref DOI**, so their arXiv DOIs
+remain the only citable identifiers — which is a case ACP's rule accommodates
+and the register had not distinguished.
+
+### What the shape says
+
+**Method-literature share is about a quarter of the drafted citations**, close to
+the register's 28 percent overall rather than lower, and two of the twelve are
+from *Biometrics*. The heavier borrowings — equivalence testing from biology,
+prediction-powered inference from statistics, buffered cross-validation from
+ecology, four diagram sources from outside the earth sciences — are cited in no
+draft, so **the borrowing a reviewer would notice is not yet visible in the
+paper**; it becomes visible when the methods section is cited properly.
+
+**The inverse of what the framing claims.** The register's *Capability
+assessment as a paper type* section holds three entries and **none is cited in
+any draft**, while the paper's whole framing is that it is a capability
+assessment. The region is cited thinly too — two regional works. As drafted, the
+paper cites its statistical method more thoroughly than either the literature it
+claims membership in or the region it is about.
+
+### Three entries are cited nowhere
+
+`correll2018vsup`, `dogniaux2025ghgsat` and `huang2019yrdtopdown`. None is
+load-bearing and none was removed: the register records what was consulted.
+
+*The detection took three passes and the first two were wrong*, which is worth
+recording because the same trap will catch the next audit. A surname-and-year
+search said 42 entries were cited nowhere. Adding a bare-DOI search cut it to 8,
+because grounding records and `data/manifest.json` routinely cite by DOI alone.
+Adding the code paths cut it to 7, because `src/figures` cites the colour-map
+paper and no prose does. The last four fell to hand-checking, because a
+capitalised ASCII key cannot spell **Milà** or **ESA**. The script now keeps the
+hand-verified list as the authority and prints any disagreement with the
+mechanical pass, rather than letting the mechanical pass look like the answer.

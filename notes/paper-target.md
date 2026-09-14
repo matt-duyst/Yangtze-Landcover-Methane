@@ -1288,9 +1288,32 @@ apparatus sections exist nowhere.** No abstract — the section a reviewer reads
 first, and the one this file's own publication-bias material identifies as where
 null results get filtered. No data availability statement, which the target
 venue requires and which this repository could write almost mechanically from
-64 registered recipes, a byte-comparison runner and per-artefact provenance.
-*Needs* no new analysis. **Found by looking at the drafts as a set,
-14 September 2026.**
+71<!--#pipeline.recipes--> registered recipes, a byte-comparison runner and
+per-artefact provenance. **And the reference audit has now established the list
+it should be written from**: fifteen dataset and deposit entries in the
+register, none of them cited in any draft, which is correct — a dataset belongs
+in that statement and not in a reference list. `notes/reference-audit.md` §3
+names all fifteen. *Needs* no new analysis. **Found by looking at the drafts as
+a set, 14 September 2026.**
+
+**12c. Citations. The four drafts contain twelve between them.** Ten are in the
+methods; the introduction cites nothing at all, and no draft carries a DOI or a
+reference section. Against a register of
+197<!--#register.entries--> entries and an ACP article's typical forty to
+eighty, **the paper's reference count as drafted is twelve.** This is the
+largest writing gap in the queue and it is not mechanical: the drafts state
+literature findings in prose and attribute them to nobody, so those sentences
+read as this project's own claims. `notes/reference-audit.md` §2 lists the
+uncited claims by draft. **Found 14 September 2026 by reading the register as a
+reference list rather than as a log.**
+
+*Two properties make it worse than it sounds.* Every guard this repository has
+checks its own assertions against its own evidence, so **an uncited external
+claim is invisible to all of them** — there is no artefact to compare it with
+and no target file to find it in. And the drafts cite the statistical method
+more thoroughly than either the region or the capability literature the framing
+claims membership in: the register's *Capability assessment as a paper type*
+section holds three entries and none is cited anywhere in the drafts.
 
 ### Tier 3 — one re-gridding pass over the granules, shared by five items
 

@@ -62,7 +62,10 @@ SCANNED = ("README.md", "ERRATA.md", "data/processed/README.md",
            "notes/grounding-rice.md", "notes/grounding-methane.md",
            "notes/paper-target.md", "notes/draft-methods.md",
            "notes/draft-results.md", "notes/draft-discussion.md",
-           "notes/draft-introduction.md")
+           "notes/draft-introduction.md",
+           # The reference audit's counts come from an artefact and will drift
+           # as the drafts gain citations, so they are guarded like any other.
+           "notes/reference-audit.md")
 
 #: number, then optional space, then the marker naming what it is
 CLAIM = re.compile(r"(-?[\d][\d,]*(?:\.\d+)?)\s*<!--#([a-zA-Z0-9_.]+)-->")
@@ -516,6 +519,35 @@ def _curve() -> list[dict]:
     if "curve" not in _cache:
         _cache["curve"] = _read_csv(PROCESSED / "specification_curve_2018.csv")
     return _cache["curve"]
+
+
+def _register_entries() -> int:
+    """DOIs the reference register names, via the BibTeX generator's own parser.
+
+    Read from the generator rather than counted here, so the register's stated
+    total and the checker's cannot drift apart -- which they had, the register
+    claiming 189 where the BibTeX held 194.
+    """
+    if "register" not in _cache:
+        import importlib.util
+        spec = importlib.util.spec_from_file_location(
+            "_brb", REPO / "scripts" / "build_references_bib.py")
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        _cache["register"] = len(module.register_dois())
+    return int(_cache["register"])
+
+
+def _reference_use(column: str, value: str = "") -> int:
+    """Rows of the reference-use audit, optionally where `column` is non-empty."""
+    if "refuse" not in _cache:
+        _cache["refuse"] = _read_csv(PROCESSED / "reference_use_2026.csv")
+    rows = _cache["refuse"]
+    if not column:
+        return len(rows)
+    if value:
+        return sum(1 for r in rows if r[column] == value)
+    return sum(1 for r in rows if r[column])
 
 
 def _quality_granules() -> list[dict]:
@@ -1220,6 +1252,15 @@ QUANTITIES = {
         float(r["held_out_r2"]) for r in _curve()),
     "curve.median_r2": lambda: float(np.median(
         [float(r["held_out_r2"]) for r in _curve()])),
+    # The reference register read as a reference list.
+    "register.entries": lambda: _register_entries(),
+    "register.draft_cited": lambda: _reference_use("draft_verified"),
+    "register.named_no_year": lambda: _reference_use("draft_named_no_year"),
+    "register.datasets": lambda: sum(
+        1 for r in _cache.setdefault("refuse", _read_csv(
+            PROCESSED / "reference_use_2026.csv"))
+        if r["kind"] in {"dataset record", "dataset paper",
+                         "the deposit, fetched", "the deposit, not fetched"}),
     "quality.granules": lambda: len(_quality_granules()),
     "quality.read": lambda: _qsum("soundings_read"),
     "quality.in_box_total": lambda: _qsum("in_box_total"),

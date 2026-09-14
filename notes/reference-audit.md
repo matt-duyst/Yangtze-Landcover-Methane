@@ -1,7 +1,7 @@
 # The register read as a reference list
 
 Audited 14 September 2026. `notes/references.md` is the register: what this
-project consulted, grouped by role, 197 entries. A manuscript's reference list
+project consulted, grouped by role, 197<!--#register.entries--> entries. A manuscript's reference list
 is a different object — what the paper cites — and nothing had ever measured
 which subset that is. This file measures it, so the judgement conversation
 about what the reference list *should* contain has something to work from.
@@ -19,8 +19,9 @@ consulted is worth keeping whether or not a manuscript cites it.
 
 ## 1. The finding that matters: the drafts are almost entirely uncited
 
-**Four drafts contain twelve formal citations between them.** Not twelve per
-section — twelve in total, of which ten are in the methods.
+**Four drafts contain 12<!--#register.draft_cited--> formal citations between
+them.** Not twelve per section — twelve in total, of which ten are in the
+methods.
 
 | draft | formal citations | named without a year |
 |---|---|---|
@@ -195,7 +196,7 @@ product that no paper in the register makes. Everything else grey is either
 cited only in a grounding record or, like the ACP policy page, would never be a
 reference.
 
-### Datasets and software — fifteen entries for a data availability statement
+### Datasets and software — 15<!--#register.datasets--> entries for a data availability statement
 
 `notes/paper-target.md` records the data availability statement as one of three
 missing sections. These are what it should be written from, and **none is cited
@@ -213,7 +214,7 @@ and `hou2025nericedata`, `shahzadi2026fuseddata`, `bloom2021wetchartsdata`,
 
 ## 4. Shape
 
-**Reference count as drafted: 12.** A typical ACP article carries 40 to 80. The
+**Reference count as drafted: 12<!--#register.draft_cited-->.** A typical ACP article carries 40 to 80. The
 gap is not a shortage of consulted literature — 197 entries — but that the
 drafts do not cite it.
 
