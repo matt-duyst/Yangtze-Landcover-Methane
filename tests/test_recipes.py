@@ -62,8 +62,18 @@ ON_DEMAND = [r for r in RECIPES if r["verified"] == "on_demand"]
 #: commit -- `git ls-files` lists tracked files, so an untracked new file is
 #: invisible to it. That is worth knowing about this check: it can only fail
 #: after the mistake is committed.
+#: Prose under `data/processed/` or `figures/` that documents artefacts rather
+#: than being one. A file added here is exempt from needing a recipe, so the
+#: set is deliberately short and explicit.
+#:
+#: `figure-assessment.md` was committed on 13 September 2026 without being added
+#: here, and this test failed from that commit until 14 September. **The suite
+#: run that should have caught it was made before `git add`, so the file was
+#: untracked and `git ls-files` could not see it.** A suite run on a working
+#: tree is not a run on the commit, and for this test specifically the two can
+#: differ.
 DOCS = {"data/processed/README.md", "figures/README_fragments.md",
-        "figures/README.md"}
+        "figures/README.md", "figures/figure-assessment.md"}
 
 
 def committed_artefacts() -> set[str]:

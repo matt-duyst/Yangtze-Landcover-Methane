@@ -7202,3 +7202,98 @@ independence. A schematic was considered and rejected: the independence is an
 argument, not a measurement, and drawing it would lend it the appearance of
 one. **A reader looking only at the figures will not get the contribution**, and
 that is a property of the claim rather than a deficiency in the set.
+## What the domain's sources can be located from
+
+Established for the case study figure, and it bears on the discussion's
+interspersed-source argument as well, because that argument has been an
+assertion and part of it is now a measurement.
+
+### Seven sectors, not six
+
+`notes/draft-discussion.md` says "seven sectors present in this domain" and the
+introduction lists them: paddy rice, freshwater aquaculture, natural wetland,
+landfills, wastewater treatment, urban gas distribution and coal mining.
+**`figures/figure-assessment.md` said six, twice**, and the brief for this pass
+inherited it. That is my error rather than the brief's and it is corrected in
+both files.
+
+### Two things the pass overturned
+
+**Coal is no longer a province ranking.** It was recorded as locatable only that
+way, because the gridded inventory is request-gated behind a form. Two other
+deposits exist, both CC BY 4.0 and both fetched: a **mine-level** dataset with
+3,222 mines carrying longitude, latitude and monthly 2018 emissions, and a
+**25 km gridded** CMM and AMM series with a 2018 raster. In domain: **116 mines,
+41 of them in Anhui, and Huainan plus Huaibei is 24 mines carrying 40.7 percent
+of in-domain coal emissions.** The coalfield the drafts name is now located and
+quantified. The mine-level deposit was published on 22 July 2026, so it was
+weeks old when found — the recency the brief said was worth checking.
+
+**Five of the seven sectors can be put on one grid at one resolution.**
+CHN-CH4's per-sector archives cover rice, coal, oil and natural gas, landfills
+and wastewater for 1990 to 2020. **The two it omits are aquaculture and
+wetland** — precisely the two the drafts already name as absent from the priors
+this field uses, which means the inventory's own omissions reproduce the paper's
+complaint about inventories.
+
+*Two traps in that deposit, recorded because they cost time.* Its **latest
+version holds only a 67 kB national comparison table and not the grids**; the
+grids are in the two earlier versions, so the newest version is the least
+useful. And its description says 0.1 degree while the files are **~10 km in a
+Krasovsky 1940 Albers projection** — equivalent in scale, not the same grid, and
+a lon/lat window returns an empty array without complaint.
+
+### The measurement the argument had been asserting
+
+The discussion says the sources are "interspersed at the scale of the analysis
+cell" and cites the literature for it. Over this domain, in a real prior, that
+is now measurable and the measurement is sharper than the claim.
+
+**Landfill and wastewater have an identical non-zero footprint** — the same
+6,416 in-domain cells — and correlate at **+0.80**, because both are allocated
+on the same population surface. **Every one of the 4,797 in-domain rice cells
+also carries landfill emissions.** Meanwhile landfill against rice correlates at
+−0.06 and against coal at −0.21.
+
+**So the sectors share support almost completely while their magnitudes vary
+independently.** That is a more precise statement than "interspersed" and it is
+the mechanism rather than the symptom: a cell's sectoral mix cannot be read from
+any one proxy, which is why a prior's spatial distinctness is what attribution
+turns on. **The identifiability limit now has evidence over this domain rather
+than a citation to a US inversion.**
+
+### What remains unlocatable, and the honest count
+
+**Six of seven in some form; only natural wetland is absent from both tiers.**
+
+**Landfill is the sector with no located representation.** A targeted search of
+Zenodo, figshare, Science Data Bank and OpenAlex found no deposited Chinese
+landfill or municipal-solid-waste facility location dataset. The 300-site
+database stays paywalled; the GHGSat plumes are 2021 and 2022 with none in 2018;
+and **Shanghai Laogang is named in `notes/grounding-urban.md` without
+coordinates**, from operator documentation. So the brief's "a single point" was
+optimistic — there is no point, only a name and a size.
+
+**Wetland cannot be drawn at all.** WetCHARTs needs a NASA Earthdata login and
+CHN-CH4 is an anthropogenic inventory with no wetland sector. The claim that the
+rice and wetland priors overlap therefore rests on WetCHARTs' own documenting
+paper and cannot be shown over this domain.
+
+**And two of the five measured sectors carry a year problem.** The pond product
+brackets 2018 at 2015 and 2020 rather than covering it. And the wastewater
+file's `Construction_Year` is populated for the 201 underground plants and
+**empty for all 2,464 aboveground rows**, so of the 422 in-domain plants only
+the underground ones can be filtered to 2018 — 11 of the 35 in the lattice box.
+**A 2018-framed figure cannot honestly draw all 422**, and that constraint was
+invisible until the file was opened.
+
+### The request signature inverted for a third time
+
+`ndownloader.figshare.com` answered **200 to a default `curl` user agent** while
+a full browser string got 202 with an empty body, and `figshare.com/ndownloader`
+returned a bare nginx 403 to both. On Zenodo in the previous pass the only
+failing signature was an *empty* user agent and the browser string worked; when
+the Zenodo block was first diagnosed, the browser string was the one that
+failed. **Three passes, three different rules.** The durable finding stands and
+is now three-for-three: vary the signature, and never record one as the one that
+works.
