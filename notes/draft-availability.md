@@ -1,4 +1,7 @@
-# Data and code availability, drafted
+# The submission apparatus, drafted
+
+The availability statements first, then the journal sections ACP requires. Both
+are drafts.
 
 Two statements a submission needs and this repository did not have in any
 publishable form. **Both are drafts.** The data statement is assembled from
@@ -189,3 +192,136 @@ blocks the code availability statement and is a decision, not work.
 6. **Three sections a submission needs and no document drafts.** Author
    contributions, competing interests, and financial support. None appears in
    any file here.
+
+---
+
+# The journal sections, drafted
+
+ACP's own submission page is the authority for what a manuscript must carry and
+in what order, and it was read on 14 September 2026 rather than recalled. Its
+back matter runs: code availability, data availability, interactive computing
+environment, sample availability, video supplement, supplement link, team list,
+author contribution, competing interests, statement on inclusion in global
+research, disclaimer, special issue statement, acknowledgements, financial
+support, review statement. Copernicus inserts the copyright statement, the
+supplement link, the special issue statement and the review statement itself.
+
+**The apparatus audit named three missing sections. ACP's list has five that
+apply here**, and one of the two it missed is the more consequential.
+
+## Author contribution
+
+Required, placed before the acknowledgements. ACP recommends the CRediT
+taxonomy. Draft, on the assumption of single authorship:
+
+> MD designed the study, wrote the analysis code, performed the analysis and
+> prepared the manuscript.
+
+**What only Matt can supply.** Whether this is a single-author paper. The 2023
+thesis was advised by Xuhui Lee, and whether that advisory role becomes
+co-authorship on a 2026 paper reworking the thesis is not a question the
+repository can answer. If it does, this statement and the author list both
+change. A second authorship question is live and separate: the Hefei TCCON
+licence says co-authorship "would normally be expected" where a site's data is
+essential to the work. It is not essential here and the drafts say so, so the
+expectation does not arise — but it arises immediately if the comparison is ever
+promoted to a validation.
+
+## Competing interests
+
+Required even when there are none, and ACP gives the wording to use:
+
+> The authors declare that they have no conflict of interest.
+
+**What only Matt can supply.** Confirmation that this is true. The repository
+records no funding, no commercial relationship and no editorial board
+membership, but absence of a record is not a declaration.
+
+## Financial support
+
+**What only Matt can supply, and this one is entirely his.** ACP lists support
+funds and grant agreement numbers as specified at manuscript registration and
+reports them to FundRef, so a number is wanted, not a sentence. The repository
+records no funding for the 2026 reproduction. The 2023 MESc thesis may have been
+supported — a Yale School of the Environment fellowship, a departmental award,
+or a grant supporting the advisor's group whose resources the thesis used — and
+any of those may need acknowledging even though the reproduction itself was
+unfunded. Nothing in this repository can settle it.
+
+If there was none, ACP's convention is to say so rather than omit the section.
+
+## Acknowledgements
+
+Distinct from the above, and ACP asks for more in it than gratitude: it asks
+authors to name **research infrastructure they benefitted from**, giving field
+stations and marine laboratories as examples. For this work that means the data
+infrastructure, which is unusually load-bearing here because the whole argument
+is about what public products can support. Candidates, in the order they would
+appear:
+
+* **The data providers whose terms request acknowledgement.** The Hefei TCCON
+  site and its listed individuals, once contacted, and the author of the blended
+  TROPOMI+GOSAT product, whose terms ask to be told before publication so that
+  proper acknowledgement can be made. Both contacts are outstanding.
+* **The infrastructure.** TCCON as a network; the Copernicus programme and ESA
+  for Sentinel-5P; the MEEO mirror, which is the only anonymous route to the
+  2018 L2 methane record and without which this work could not run from a fresh
+  clone; CaltechDATA, Science Data Bank, figshare and Zenodo as the deposits
+  that made the land-cover and inventory products reachable.
+* **The Copernicus DEM notice.** It belongs in the figure and its caption, where
+  it already is, because the licence requires it on the adapted product itself.
+  Repeating it in the acknowledgements is not required and would read as
+  gratitude for something that is a licence condition; it belongs in the data
+  availability statement instead, where it now is.
+* **The advisor**, if he is not a co-author.
+
+## AI usage, which is the section nobody had noticed
+
+**This is the item the apparatus audit missed entirely and the brief did not
+ask for.** ACP's submission page states that where AI tools were used to
+generate parts of a manuscript, the usage must be described, in either the
+methods section or the acknowledgements. It is not optional and it is not
+covered by any of the three sections the audit named.
+
+It applies here more than to most submissions. The 2026 reproduction — the
+pipeline, the artefacts, the guards, the drafts and these statements — was
+written in collaboration with an AI assistant across many sessions, and
+`notes/decisions.md` is the record of that work. A description is therefore
+required, it is not a formality, and it cannot be written as a disclaimer of
+something marginal.
+
+**What only Matt can supply.** The wording, and where it goes. The honest
+version is specific rather than general: it says which parts were AI-written,
+what was verified and how, and who is accountable for the result. This
+repository is unusually well placed to make that statement checkable, because
+the drift guards exist precisely so that no number in the prose is taken on
+trust — which is the substance of what such a disclosure should convey.
+
+## Interactive computing environment
+
+ACP has a section for this and the repository has a reasonable claim on it: the
+2023 thesis is a Jupyter notebook, `Duyst_Thesis_Final.ipynb`, committed and
+preserved as submitted, and the 2026 pipeline is a scripted repository with a
+registry of regeneration commands. ACP's data policy wants code deposited with a
+DOI and cited in the reference list, which is the next item below.
+
+## What is still needed and is not a section
+
+**A deposit with a DOI.** ACP requires that code be deposited and cited in the
+reference list using the received DOI, and a GitHub URL is not that.
+`CITATION.cff` names `https://github.com/matt-duyst/Yangtze-Landcover-Methane`
+and carries no DOI, and its ORCID field is a TODO. A Zenodo release of the
+repository would supply both, and it is a ten-minute job that nothing in the
+repository blocks — but it is Matt's account and Matt's release, so it is
+recorded here rather than done.
+
+**Not applicable, recorded so the list is complete.** Sample availability
+(no physical samples), video supplement, team list, and the special issue
+statement.
+
+**Optional and worth a decision.** ACP invites a statement on inclusion in
+global research, up to 100 words, where research used samples or data collected
+in another country. This work analyses Chinese territory entirely through
+Chinese and European public datasets, with no fieldwork and no local
+collaboration, which is exactly the situation that statement exists to make
+visible. Declining it is defensible; declining it without noticing is not.
