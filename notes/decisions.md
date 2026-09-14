@@ -7079,3 +7079,126 @@ paper and no prose does. The last four fell to hand-checking, because a
 capitalised ASCII key cannot spell **Milà** or **ESA**. The script now keeps the
 hand-verified list as the authority and prints any disagreement with the
 mechanical pass, rather than letting the mechanical pass look like the answer.
+## What set the paper needs, and the two panels that lose
+
+The figure set had been reorganised twice without anyone asking what a reader
+needs. This pass asked, by inverting the question: not which planned figures to
+build, but which findings need seeing. `figures/figure-assessment.md` carries
+the assessment; this records what it concluded and, in particular, what is
+dropped, because a figure removed is the kind of decision that gets quietly
+reversed.
+
+### The test, and the findings it excused
+
+A finding needs a figure if it has a **shape** — a distribution, a spatial
+pattern, a relationship, a trajectory, a comparison across many cases. Several
+important findings do not, and saying so is the point of writing it down:
+
+**The attenuation bound needs no figure**, and the brief was right to make that
+the test case. Its headline is a margin of 5.6, which is a number. The question
+was whether the sweep behind it has a shape, and the answer is that **there is
+no sweep**: `attenuation_bound_2018.csv` holds lambda_min, the factor, the
+required error share and the multiple — four scalars. A sensitivity curve could
+be *constructed*, but it would be a near-straight line through a point already
+stated, and the finding is the margin.
+
+Also excused: the equivalence result, the grid-resolution verdict and the
+preprocessing sensitivities, all of which are tables; the effective sample size
+and the rejection rates, which are numbers; and the field's own distribution,
+which is three numbers and is currently cited to a figure that shows a map.
+
+### The four findings whose figure shows something adjacent
+
+This was the category worth the attention, and it is where the assessment did
+most of its work.
+
+**The GAIA–GISA disagreement**, drawn as two side-by-side categorical maps —
+see below. **The sampling-composition confound**, which rests on observation
+days differing by up to 228 across cells, while the figure cited for it shows
+sounding *counts*: a cell with 200 soundings on 12 days is not a cell with 200
+soundings on 200 days, and the count map is read as if it were the day map.
+**The capability claim's per-cell distribution**, summarised as three points.
+And **the field's distribution**, which needs no figure at all and needs its
+citation corrected instead.
+
+### `urban_change`: split, and the reasoning rather than the verdict
+
+The judgement asked for agreed with the diagnosis offered and stopped short of
+dropping the figure.
+
+Panels (a) and (b) are the two products as first-year-of-imperviousness classes
+at four-province extent, where both are overwhelmingly one class with city
+cores picked out. **The finding is that they disagree — GAIA reproduced reaching
+49.3 × 10³ km² in 2018 against GISA's 39.5, growing ×3.01 against ×2.00 — and
+two similar-looking categorical maps are the one form that cannot show it.** A
+reader must flick between panels and hold the difference in memory.
+
+Panel (c) carries two findings and both are shapes: the thesis's reported ×6.0
+against the reproduced ×3.01, which is the errata's central correction, and the
+divergence between the products.
+
+**So: promote panel (c), drop panels (a) and (b).** Their remaining function is
+showing where urban land is, which `landcover_native` does at native resolution
+and the proposed predictor maps would do on the analysis lattice. If the
+disagreement needs *seeing*, it needs a difference map — per-cell GAIA minus
+GISA — which is drawable from committed artefacts and is **not** on the build
+list, because panel (c) carries the magnitude and
+`urban_disagreement_2018.csv` decomposes it, and a paper needs one of the three
+rather than all of them.
+
+**And the threshold's cost stays a caveat rather than becoming a figure.** The
+1/64° inking rule draws the 2000 class at 0.73 of true area and the 2019 class
+at 1.30. That is a caveat *on panels (a) and (b) specifically*, carried in
+prose because those panels cannot carry it — which is one more reason they go.
+
+### One property that affects five figures at once
+
+**Nine of the thirteen modules render their explanatory paragraph inside the
+image**, via `figtext`: `residual_field` bakes seven lines,
+`observed_predicted` five, `urban_change` four. It reads well in a repository
+and it is wrong for a manuscript, where caption text belongs in the caption so
+a copy-editor can set it and a reader can enlarge it. **This is a rebuild
+property and not a relocation one**, and it is the single largest piece of work
+the proposal implies — five main-text figures, each a change to text handling
+rather than to analysis.
+
+### What the assessment found in the caption file
+
+`buffered_decay` and `capability` have captions and **no heading**. They were
+appended into the `albedo_collinearity` section, which is why that section reads
+as 2,418 words where the next longest is 991. `tests/test_figure_inventory.py`
+checks the inventory tables against the directory in both directions and **does
+not check that each figure has a caption of its own**, so nothing caught it.
+That is the same class as the register's unguarded self-counts: the guard
+checks the relation someone thought of.
+
+### Three candidates rejected, with reasons, so they are not re-proposed
+
+**The urban–rice overlay** was the 2023 thesis's central visual argument and has
+never been drawn regionally. It should stay undrawn *in this paper*: the overlay
+asserts co-location as an explanation, and this paper's finding is that
+co-location produces no detectable association. Drawing it would give the
+thesis's argument visual force the analysis withdraws.
+
+**The hotspot analysis** is the thesis's Objective 3 and the reproduction has
+never attempted it. It is not a figure decision — there is no analysis to draw —
+and the capability finding that no cell is individually constrained is an
+argument against hotspot attribution at this resolution rather than for drawing
+one.
+
+**The seasonal cycle against the monthly distribution and the rice calendar**
+carries three real findings at once and belongs to the emissions project. This
+paper's use of the cycle is to deseasonalise, and doing so moved the
+association by 0.009. A figure whose payoff is that nothing changed earns a
+sentence.
+
+### The gap in the sequence, which is not fixable by a figure
+
+Read as captions alone the proposed eleven tell the argument in order, with one
+exception. **The contribution's own pairing — that the identifiability limit is
+untouched by any improvement to the information limit — has no figure, and
+should not get one.** Two figures each carry one limit; nothing shows their
+independence. A schematic was considered and rejected: the independence is an
+argument, not a measurement, and drawing it would lend it the appearance of
+one. **A reader looking only at the figures will not get the contribution**, and
+that is a property of the claim rather than a deficiency in the set.

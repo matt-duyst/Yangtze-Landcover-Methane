@@ -1727,6 +1727,54 @@ data. `notes/decisions.md` records the audit. They rank ahead of the three
 planned figures — predictor maps, fold map, sampling-artefact map — which answer
 to the 2023 thesis's figure set rather than to this paper's results.
 
+**SUPERSEDED 14 September 2026 by a full assessment of the set.** Both were
+built. The figure queue is now `figures/figure-assessment.md`, which asked what
+set the paper needs rather than which planned figures to build, and the three
+planned figures all survive — the fold map for a reason this entry got wrong,
+since `buffered_decay` turned out to be the argument *for* it rather than a
+substitute: that figure's caption states the fold distance "has never been
+measured in this repository".
+
+### The figure set, assessed 14 September 2026
+
+**Proposed: eleven in the main text and seven in the supplement**, against the
+eight to twelve an ACP capability paper carries.
+
+*Main text, in order*: `study_area`; **predictor maps (new)**;
+`coverage_saturation_2018`; `methane_composite_2018` **plus one new
+observation-day panel**; `observed_predicted`; `residual_field`;
+**the specification curve (new)**; `albedo_collinearity`; `buffered_decay`;
+`capability`; **a source map (new)**.
+
+*Supplement*: `landcover_native`, `landcover_regional`, `urban_change` panel (c)
+rebuilt standalone, `framework_pipeline`, `framework_reproduction`, the fold map
+and a semivariogram-range figure.
+
+**The build list, in cost order.** The specification curve, predictor maps and
+the semivariogram ranges plot committed artefacts and are drawing rather than
+analysis. The fold map needs a registered distance computation first — the
+~56 km median it would show is a scratch calculation quoted nowhere. The source
+map is partly blocked: four of six sectors come from committed artefacts, and
+the wastewater coordinates and coalfield extent need a fetch, the coal layer
+through the request form `notes/dataset-leads.md` records.
+
+**Five existing figures need rebuilding for one shared reason**: nine of the
+thirteen modules render their explanatory paragraph *inside* the image with
+`figtext` — `residual_field` bakes seven lines — and in a manuscript that text
+belongs in the caption. `study_area`, `observed_predicted`, `residual_field`,
+`albedo_collinearity` and `urban_change` are affected in the main text.
+
+**Two panels are dropped and nothing else is.** `urban_change` (a) and (b) are
+two categorical maps of two products whose finding is that they disagree, which
+is the one form that cannot show it. Panel (c) carries both of that figure's
+findings. *Needs* no new analysis.
+
+**One gap in the figure sequence has no figure and should not get one.** The
+contribution's pairing — that the identifiability limit is untouched by any
+improvement to the information limit — is an argument rather than a
+measurement, and a schematic would lend it the appearance of one. A reader
+looking only at figures will not get it, and prose has to carry it.
+
 ### Added 16 September 2026, from settling 0i and 0j
 
 **0j is done.** The blended field's albedo slope is computed and in the
