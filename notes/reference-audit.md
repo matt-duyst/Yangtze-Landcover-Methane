@@ -265,3 +265,123 @@ records and manifests often cite by bare DOI rather than by author, that code
 cites the colour-map paper and no prose does, and that a capitalised ASCII key
 cannot spell Milà or ESA. The script now searches DOIs and code paths and keeps
 the hand-verified list as the authority, reporting any disagreement.
+
+## The reference list the expanded claim set implies, 14 September 2026
+
+The audit above asked which register entries the drafts cite. This section asks
+the harder question the claim inventory made answerable: **if every claim that
+needs a citation got one, how large would the reference list be, and what would
+it be made of?**
+
+**How the drawn set was derived, and why it is a floor.** Two inputs, both
+committed: the 119 <!--#claims.cited--> numeric claims in
+`data/processed/claim_inventory_2026.csv` that resolve to a literature figure
+rather than to an artefact, and the prose claims this audit's own §2 listed as
+needing support. Together they name **46** register entries. That is a floor
+rather than a count, because it includes only entries some pass has already
+named; a claim whose support has not yet been looked for adds to it. **These
+derived counts are checked by review, not by a test** — the derivation is
+stated so it can be redone, but no resolver produces it.
+
+The 46 split in two, and the split matters because the two halves go to
+different places in a submission:
+
+| | Entries | Goes in |
+|---|---|---|
+| literature | 31 | the reference list |
+| datasets and deposits | 15 <!--#register.datasets--> | the data availability statement |
+
+So the **reference list would be about 31 entries**, against the
+12 <!--#register.draft_cited--> the drafts cite today and
+197 <!--#register.entries--> in the register. That is below what an ACP article
+typically carries, and the reason is a property of the work rather than a
+defect: this is a capability assessment resting on its own measurements, so most
+of its numbers are measured and only 119 <!--#claims.cited--> of them are
+quoted from anyone.
+
+### What the list is made of
+
+Of the 31 literature entries, **22 are peer-reviewed papers and 9 are not** —
+29 percent. That is the number a handling editor will notice, and §4 below
+takes it apart.
+
+**Method literature is 10 of the 31, 32 percent**, against 23 percent of the
+register as a whole: `arabianpeninsula2025`, `boulesteix2012plea`,
+`clifford1989correlation`, `correll2018vsup`, `dutilleul1993modifiedt`,
+`kluger2025nonuniform`, `lee2025multitab`, `nab2021sensitivity`,
+`pontius2011deathtokappa`, `shirota2026designppi`. The drawn set is therefore
+*more* method-heavy than the register it comes from, which is the opposite of
+what a register built mostly from domain reading would suggest. It follows from
+what the paper argues: the load-bearing choices here are the effective degrees
+of freedom, the disagreement decomposition and the errors-in-variables bound,
+and each needs its own citation.
+
+### Concentration, and the entries that carry it alone
+
+The 119 cited claims resolve to only **37 distinct literature figures**, and the
+distribution is skewed: the **top four figures carry 53 of the 119**. The
+largest, at 21 claims, is the introduction's inventory-spread figure of at least
+30 percent; then the published precision filter under 10 ppb at 14, the
+averaging-kernel sensitivity threshold at 12, and the transport error standard
+deviation at 6.
+
+**14 of the 37 are quoted once**, and each is a single point of failure — if the
+source is misread, one sentence is wrong and nothing else catches it. Eleven of
+the 14 are a single block: the national prior's per-sector shares (coal,
+livestock, landfills, wastewater, wetlands, lakes and aquaculture) and the
+posterior uncertainty bounds, all in the introduction. They come from the same
+small number of works, so the single-quotation risk is concentrated in one
+passage rather than spread, which makes it cheap to check and worth checking
+once carefully.
+
+### Entries bearing on claims nobody made
+
+Three register entries are cited nowhere and support no claim in any draft:
+`correll2018vsup`, `dogniaux2025ghgsat` and `huang2019yrdtopdown`. Two of the
+three are not waste. `correll2018vsup` is method literature for a figure
+technique, and it appears in the method-literature list above because the
+drawn set needs it if the technique is used. `dogniaux2025ghgsat` documents a
+wastewater plume near Shanghai that was filtered from its own analysis, which
+is a fact about an instrument's coverage that the discussion could use and does
+not. `huang2019yrdtopdown` is a top-down study of this exact domain and its
+absence from the drafts is the one that should be explained or fixed.
+
+## 4. Preprints and grey literature under the expanded list
+
+ACP allows a preprint to be cited when it carries a DOI, and grey literature
+only where no formal alternative exists. The 9 non-peer-reviewed entries in the
+drawn set are three different situations and only one of them is a problem.
+
+**Superseded, and the published version must be cited (3).** All three were
+checked and corrected on 14 September 2026 and the register records the
+replacement:
+
+| Entry | Published as |
+|---|---|
+| `boulesteix2012plea` | *PLoS ONE* 8, e61562 (2013), `10.1371/journal.pone.0061562` |
+| `lee2025multitab` | *Proc. 32nd ACM SIGKDD*, 9278–9289 (2026), `10.1145/3770855.3817455` |
+| `nab2021sensitivity` | *Global Epidemiology* 3, 100067 (2021), `10.1016/j.gloepi.2021.100067` |
+
+One of these carries a second defect worth keeping in view: the published
+`boulesteix2012plea` has **three authors where the preprint entry has two**,
+Boulesteix, Lauer and Eugster. A truncated author list survives a DOI check,
+because the DOI resolves correctly to the preprint.
+
+**Preprints with a DOI, in open discussion (2).** `long2026urbanpreprint`
+(`10.5194/egusphere-2026-2570`, CC-BY-4.0, discussion opened 20 May 2026) and
+`montenegro2025capability` (`10.5194/egusphere-2025-5923`, discussion opened
+23 December 2025). Both are ACP-admissible as cited. `long2026urbanpreprint`
+supplies two statements found peer-reviewed nowhere, so it also meets the
+narrower grey-literature test of no formal alternative existing.
+
+**arXiv only, with no supersession check (4).** `azulay2018invariance`,
+`cohen2016equivariant`, `kluger2025nonuniform` and `shirota2026designppi` are
+labelled `preprint` with no replacement recorded. **The supersession sweep was
+incomplete.** It resolved the three entries above and did not run over these
+four, and age is the reason to care: `kluger2025nonuniform` is from January 2025
+and `shirota2026designppi` is weeks old, so an arXiv-only record is unsurprising
+for both, but `cohen2016equivariant` and `azulay2018invariance` are eight and
+ten years old and both are well-known machine-learning papers. **An arXiv-only
+entry that old is far more likely to have a published version than not.** This
+was not verified here, which needs a network check the audit could not make, and
+it is the one open defect in the reference list rather than in the data.
