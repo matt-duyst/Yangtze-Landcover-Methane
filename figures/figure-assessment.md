@@ -63,7 +63,7 @@ however important it is.
 | finding | shape |
 |---|---|
 | **The spread belongs to the evaluation, not the predictor** — 126 specifications, 0 both positive and beating their own null, scheme moving the result 0.1764 against the predictor's 0.0943 | an ordered curve over 126 cases with membership beneath |
-| **The sources are interspersed at the cell scale** — six sectors in the same cells, which is the identifiability limit's whole basis | a spatial pattern, six layers on one lattice |
+| **The sources are interspersed at the cell scale** — seven sectors in the same cells, which is the identifiability limit's whole basis (the count said six until 14 September 2026; the drafts say seven) | a spatial pattern, six layers on one lattice |
 | **Residual autocorrelation against block size** — 10 model-field half-sill ranges against a 111.2 × 95.0 km block, 4 still correlated at a block width (verified against the artefact's own verdict column) | 10 values against two reference lines |
 | **Fold geometry** — which cells fall in which block and province, and how far each held-out cell sits from its nearest training cell | a spatial pattern; and `buffered_decay`'s caption says explicitly that it cannot answer this |
 | The seasonal cycle against the monthly sounding distribution and the rice calendar | three series on one time axis |
@@ -179,7 +179,7 @@ choices*, and a range quoted as "−1.04 to +0.14" invites the reader to pick an
 end. Results §3.4. **Plots a committed artefact** —
 `specification_curve_2018.csv` — so this is drawing, not analysis.
 
-**B. The source map.** Where the six sectors sit on one lattice: paddy,
+**B. The source map.** Where the seven sectors sit on one lattice: paddy,
 aquaculture, wetland, landfill and wastewater points, urban gas as the
 population surface, and the Huainan–Huaibei coalfield. Shows the
 interspersed-source premise the identifiability limit rests on, which the paper
@@ -348,3 +348,165 @@ need.
    means the figure sequence does not tell the reader this paper revises
    anything — which matches the framing, where the land-cover result is the
    assessment's occasion rather than its contribution.
+---
+
+# The case study section, assessed 14 September 2026
+
+The set is being worked section by section and this is the first. Part 1 of the
+brief was locatability, because the design depends on it, and it changed the
+design substantially.
+
+## What can be located, and at what precision
+
+**Seven sectors, not six.** `notes/draft-discussion.md` says "seven sectors
+present in this domain" and the introduction lists them: paddy rice, freshwater
+aquaculture, natural wetland, landfills, wastewater treatment, urban gas
+distribution and coal mining. The "six" in §3 of this file above was wrong and
+is corrected here.
+
+**Two tiers of evidence, and they must not share a map.** A facility coordinate
+and an inventory's 10 km allocation are different objects, and drawing them
+together would imply a precision that does not exist.
+
+### Tier A — measured extent or facility location
+
+| sector | form | resolution | year | state |
+|---|---|---|---|---|
+| paddy rice | area | 30 m | 2018 | on disk (NESDC, CCD-Rice, GloRice) |
+| aquaculture | area, polygons | 10 m | **2015 and 2020, not 2018** | on disk |
+| urban gas | area, **proxy only** | 30 m | 2018 | on disk (GAIA, GISA, GISA-new). Impervious surface is a proxy for gas distribution, not the sector |
+| coal mining | **points** | per mine | **2018** | **fetched 14 September 2026**: 116 mines inside the lattice box with per-mine monthly 2018 emissions |
+| wastewater | **points** | per plant | mixed | **fetched**: 422 in the four provinces, 28 underground and 394 aboveground |
+| landfills | — | — | — | **not located** |
+| natural wetland | — | — | — | **not located** |
+
+*Five of seven, with two caveats that bear on the drawing.* The pond product
+brackets 2018 rather than covering it. And the wastewater file's
+`Construction_Year` is populated for the 201 underground plants and **empty for
+all 2,464 aboveground rows**, so of the 422 in-domain plants only the
+underground ones can be filtered to 2018 — 11 of the 35 in the lattice box were
+built by then. **A 2018-framed figure cannot honestly draw all 422.**
+
+### Tier B — one inventory prior, one resolution
+
+CHN-CH4, per-sector gridded emissions for China, CC BY 4.0, fetched
+14 September 2026. It covers **five of the seven**: rice, coal, oil and natural
+gas (the urban-gas proxy), landfills and wastewater. **The two it omits are
+aquaculture and wetland** — which are exactly the two the drafts already name as
+absent from the priors this field uses.
+
+In-domain 2018, as a share of the national total: rice 32.7 %, wastewater
+33.6 %, landfills 18.8 %, coal 13.6 %, oil and gas 1.1 %. Within the domain the
+five split coal 36.9 %, rice 30.6 %, landfills 15.7 %, wastewater 15.7 %, oil
+and gas 1.0 %.
+
+**Union of both tiers: six of seven locatable in some form. Only wetland is
+absent from both, and landfill exists only as a prior.**
+
+## What a reader must know first, and whether it needs seeing
+
+Derived from the drafts rather than from the brief.
+
+| must know | needs | why |
+|---|---|---|
+| where it is | **seeing** | a reader cannot place four Chinese provinces from a name |
+| what the terrain does | **seeing** | relief explains the composite's 97 holes, and the holes are a result |
+| that seven sources overlap **in the same cells** | **seeing** | it is a spatial property and the identifiability limit's whole basis |
+| why methane here — 60 % of emissions on under 30 % of land | **reading**, with an inset at most | two numbers about the country, not a property of the domain. It is national context and it belongs in a sentence |
+| that the domain is 26 % of China's aquaculture area | **reading** | one number |
+| the eight-month record and the 30 April start | **reading** | already in the methods |
+
+**The one item argued down**: the national-context claim. It is the paper's
+reason for choosing the region and it is two numbers. An inset showing the three
+sub-national regions would be honest but it would occupy a panel to carry a
+sentence, and the figure it would sit in is already the densest in the set.
+**Reading, not seeing** — and if it is drawn at all it is a locator inset, which
+`study_area` already has.
+
+## The proposal: two figures
+
+### Figure 1 — `study_area`, rebuilt and reduced
+
+**Keeps**: relief, province boundaries, the coastline, the locator inset, and
+the analysis-cell detail box. **Sheds**: the four city labels, which are
+orientation a reader gets from the provinces, and the baked explanatory
+paragraph, which moves to the caption. That is the density rebuild §2 of this
+file already called for, and nothing from the source distribution belongs in it
+— adding sources would put a 10 km inventory and a 30 m raster on a relief map
+and make three claims in one frame.
+
+Methods, or introduction if the section is written as a case study.
+
+### Figure 2 — the source distribution, drawn as a prior and labelled as one
+
+**Not a map of where the sources are. A map of where an inventory puts them**,
+which is the honest object and, more importantly, **the object the paper's
+argument is actually about**: the identifiability limit says attribution derives
+from the prior's spatial distinctness. So drawing the prior is drawing the thing
+the limit is about, rather than an approximation to it.
+
+Five sectors from CHN-CH4 on one 10 km grid, with the two it omits named in the
+caption and **not drawn**. Coal's 116 mine points and the underground
+wastewater plants existing in 2018 can be overplotted as a second tier if the
+panel can carry it without implying the grid is that precise; if not, they go in
+a supplementary panel.
+
+**And the figure carries a measured result rather than only a depiction.**
+Landfill and wastewater in this inventory have an **identical non-zero footprint**
+— the same 6,416 in-domain cells — and correlate at **+0.80**, because both are
+allocated on the same population surface. Every one of the 4,797 in-domain rice
+cells also carries landfill emissions. Meanwhile landfill against rice
+correlates at −0.06 and against coal at −0.21. **So the sectors share support
+almost completely while their magnitudes vary independently**, which is a
+sharper statement than "interspersed" and is the mechanism that makes
+attribution hard: a cell's mix cannot be read from any one proxy.
+
+## 2e. Where the source map sits
+
+**The introduction, as the brief proposes, and the reason is not the one
+offered.** My earlier assessment put it in the discussion because that is where
+the identifiability argument is made. The better argument for the introduction
+is that **the figure is now a measurement and not an illustration.** It shows
+that two sectors in a real prior share a footprint at r = 0.80 — which is
+evidence, and evidence that the introduction needs, because §3's gap argument
+asserts that identifiability is a property of real priors that a simulation
+cannot supply. That assertion currently has nothing behind it in the paper.
+
+The discussion then refers back rather than drawing again, which is the
+ordinary use of an introduction figure.
+
+*One thing this changes upstream.* §3 of this file listed the source map as
+discussion material and "partly blocked, draw four, name two". Both are
+superseded: it is introduction material, and it draws five of seven from one
+consistent source with two named.
+
+## What the section cannot establish
+
+* **Natural wetland cannot be drawn at all.** WetCHARTs needs a NASA Earthdata
+  login and CHN-CH4 has no wetland sector, being an anthropogenic inventory.
+  The paper's claim that rice and wetland priors overlap therefore rests on
+  WetCHARTs' own documenting paper and cannot be shown over this domain.
+* **Landfill cannot be drawn as locations.** No deposited Chinese landfill
+  location dataset was found on Zenodo, figshare, Science Data Bank or via
+  OpenAlex; the 300-site database stays paywalled; the GHGSat plumes are 2021
+  and 2022 with none in 2018; and Shanghai Laogang is named in
+  `notes/grounding-urban.md` **without coordinates**, from operator
+  documentation. So the brief's "a single point" is optimistic — there is no
+  point.
+* **Aquaculture cannot be drawn for 2018**, only bracketed by 2015 and 2020.
+* **The urban gas sector is drawn by proxy**, as impervious surface or as the
+  inventory's oil-and-gas grid, and neither is gas distribution.
+
+### What a computation could establish instead
+
+The interleaving claim is the case in point. It is currently a literature-backed
+assertion — "interspersed at the scale of the analysis cell" — and it is
+**measurable over this domain from what is now on disk**: the footprint overlap
+and the magnitude correlations above are that measurement, and they say something
+the literature does not, because they are about this prior over these cells.
+Two further quantities are computable and are not yet: each sector's share of
+in-domain emissions aggregated to the **0.25 degree analysis lattice** rather
+than the 10 km inventory grid, and the number of analysis cells carrying more
+than one sector above a stated threshold. **That second number is the
+interspersed-source claim as a single statistic**, and it would replace a
+citation with a measurement.
