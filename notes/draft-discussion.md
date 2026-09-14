@@ -23,12 +23,22 @@ that survives correction for spatial dependence, control for surface albedo, or
 evaluation under more than one held-out design. **That is a statement about a
 failed detection, and it is the strongest form the evidence supports.**
 
-It is not a claim in favour of the null. A claim that no association exists
-requires equivalence testing against a named smallest effect size of interest,
-and no equivalence bounds were set in this work; conventional *p*-value analysis
-can argue against a null hypothesis and not in favour of one. **What can now be
-said, which is more than a bare non-detection, is that measurement error in the
-impervious predictor does not account for the result** — §4 gives the bound.
+**Equivalence bounds have since been set, and they separate the two
+predictors.** Against a comparative bound at the spatial null's own performance,
+|r| = 0.58<!--#equiv.bound_comparative-->, tested on a 90 percent interval with
+effective degrees of freedom, **no combination of field, predictor and weighting
+falls outside the bounds** — there is no positive result anywhere. For rice the
+interval falls entirely within the bounds in all
+24<!--#equiv.rice_rows--> combinations, which is evidence of no meaningful
+effect. For impervious cover it does so in only
+7<!--#equiv.impervious_within--> of 12<!--#equiv.impervious_rows-->, and spans
+the bound in the rest, so there the weaker non-detection claim stands. **The
+paper therefore makes the stronger claim for rice and the weaker one for
+impervious cover**, and the asymmetry is a property of the evidence rather than
+of the argument.
+
+**What can also now be said is that measurement error in the impervious
+predictor does not account for the result** — §4 gives the bound.
 
 The reproduction's null is also not a finding that rice does not matter in this
 domain. A tower inversion of this region in this study's own year found

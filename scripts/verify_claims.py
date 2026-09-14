@@ -498,6 +498,26 @@ def _weighting():
     return _cache["weighting"]
 
 
+def _equivalence() -> list[dict]:
+    """The equivalence table, one row per field, predictor and weighting."""
+    if "equiv" not in _cache:
+        _cache["equiv"] = _read_csv(PROCESSED / "equivalence_bounds_2018.csv")
+    return _cache["equiv"]
+
+
+def _equiv_count(predictor: str, outcome: str) -> int:
+    """How many of a predictor's rows reach one of the three outcomes."""
+    return sum(1 for r in _equivalence()
+               if r["predictor"] == predictor
+               and r["verdict_comparative"].startswith(outcome))
+
+
+def _curve() -> list[dict]:
+    if "curve" not in _cache:
+        _cache["curve"] = _read_csv(PROCESSED / "specification_curve_2018.csv")
+    return _cache["curve"]
+
+
 def _quality_granules() -> list[dict]:
     """Per-granule quality accounting from the Tier 3 retention pass."""
     if "qgran" not in _cache:
@@ -1162,6 +1182,44 @@ QUANTITIES = {
         "", "effective sample size at 0.25 degree, empirical"),
     # The Tier 3 retention pass: what the quality threshold removed over this
     # domain, and how the composite responds to the omitted preprocessing.
+    # Equivalence bounds and the specification curve, Tier 5.
+    "equiv.rows": lambda: len(_equivalence()),
+    "equiv.bound_comparative": lambda: float(
+        _equivalence()[0]["bound_comparative"]),
+    "equiv.within_comparative": lambda: sum(
+        1 for r in _equivalence()
+        if r["verdict_comparative"].startswith("within")),
+    "equiv.outside_comparative": lambda: sum(
+        1 for r in _equivalence()
+        if r["verdict_comparative"].startswith("outside")),
+    "equiv.spanning_comparative": lambda: sum(
+        1 for r in _equivalence()
+        if r["verdict_comparative"].startswith("spans")),
+    "equiv.rice_within": lambda: _equiv_count("rice_fraction_single", "within")
+        + _equiv_count("rice_fraction_combined", "within"),
+    "equiv.rice_rows": lambda: sum(
+        1 for r in _equivalence()
+        if r["predictor"].startswith("rice_fraction")),
+    "equiv.impervious_within": lambda: _equiv_count(
+        "impervious_fraction", "within"),
+    "equiv.impervious_spans": lambda: _equiv_count(
+        "impervious_fraction", "spans"),
+    "equiv.impervious_rows": lambda: sum(
+        1 for r in _equivalence() if r["predictor"] == "impervious_fraction"),
+    "curve.specifications": lambda: len(_curve()),
+    "curve.positive": lambda: sum(
+        1 for r in _curve() if r["nominally_positive"] == "yes"),
+    "curve.beats_benchmark": lambda: sum(
+        1 for r in _curve() if r["beats_benchmark"] == "yes"),
+    "curve.positive_and_beats": lambda: sum(
+        1 for r in _curve() if r["nominally_positive"] == "yes"
+        and r["beats_benchmark"] == "yes"),
+    "curve.best_r2": lambda: max(
+        float(r["held_out_r2"]) for r in _curve()),
+    "curve.worst_r2": lambda: min(
+        float(r["held_out_r2"]) for r in _curve()),
+    "curve.median_r2": lambda: float(np.median(
+        [float(r["held_out_r2"]) for r in _curve()])),
     "quality.granules": lambda: len(_quality_granules()),
     "quality.read": lambda: _qsum("soundings_read"),
     "quality.in_box_total": lambda: _qsum("in_box_total"),

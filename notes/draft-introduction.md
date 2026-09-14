@@ -145,7 +145,14 @@ more accurate than the products it would assess.
 **The land-cover result is reported as the assessment's occasion and as
 supporting evidence**, not as the contribution. No association survives
 correction for spatial dependence, control for surface albedo, or evaluation
-under more than one held-out design. **The one confound that could manufacture
+under more than one held-out design, and across
+126<!--#curve.specifications--> defensible specifications
+0<!--#curve.positive_and_beats--> are both positive and beat their own spatial
+null. Equivalence tests against a bound set at that null's performance place
+every rice combination inside the bounds and impervious cover inside them in
+7<!--#equiv.impervious_within--> of
+12<!--#equiv.impervious_rows-->, so this paper claims no meaningful rice effect
+and only a failed detection for impervious cover. **The one confound that could manufacture
 such a result rather than explain it — measurement error in a predictor, which
 attenuates its coefficient toward zero — is measured and excluded for the
 impervious layer**: using the second impervious product as a second measurement

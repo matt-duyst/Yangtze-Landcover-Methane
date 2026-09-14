@@ -289,12 +289,39 @@ survives correction for spatial dependence, control for albedo, or evaluation
 under more than one held-out design.** That is a statement about a failed
 detection and it is the strongest form the evidence supports.
 
-It is not a statement that no association exists. A claim in favour of a null
-hypothesis requires equivalence testing against a named smallest effect size of
-interest, and no equivalence bounds were set in this work; conventional *p*-value
-analysis can argue against a null hypothesis and not in favour of one. Setting
-such bounds is queued and not done, so no result here should be read as
-establishing the absence of an effect.
+**Equivalence bounds were set, and they license more for rice than for
+impervious cover.** A claim in favour of a null requires equivalence testing
+against a named smallest effect size of interest, because conventional analysis
+can argue against a null and not in favour of one. The bound taken here is
+comparative — the spatial null's held-out performance expressed as a
+correlation, |r| = 0.58<!--#equiv.bound_comparative--> — because this paper's
+claim is comparative and a comparative bound introduces no arbitrary fraction.
+Two one-sided tests are assessed on a 90 percent interval with effective
+degrees of freedom throughout.
+
+Across 36<!--#equiv.rows--> combinations of field, predictor and weighting,
+**0<!--#equiv.outside_comparative--> fall outside the bounds**, so no
+specification yields a positive result.
+31<!--#equiv.within_comparative--> fall entirely within them and
+5<!--#equiv.spanning_comparative--> span a bound.
+
+The split is not even between the predictors, and the difference is the
+result. **For rice, all 24<!--#equiv.rice_within--> of
+24<!--#equiv.rice_rows--> combinations fall entirely within the bounds**: the
+rice association is smaller than the spatial benchmark's in every field and
+every weighting, which is evidence of no meaningful effect rather than a failure
+to detect one. **For impervious cover only
+7<!--#equiv.impervious_within--> of 12<!--#equiv.impervious_rows--> do**, and
+the other 5<!--#equiv.impervious_spans--> span the bound, so for impervious the
+data cannot distinguish an effect the size of the benchmark's from none, and the
+weaker non-detection claim is what stands.
+
+**What the bound does not license.** An effect smaller than the spatial
+benchmark's but still physically substantial would pass as equivalent. The
+policy-relevant bound — what a land-cover effect would have to be to matter for
+an inventory — could not be set, because the literature bounds *emissions* and
+converting an emission change to a column change needs the transport model this
+work does not run.
 
 **The one mechanism that could manufacture this result is measurement error in
 the predictors, and for the impervious layer it is now bounded and excluded.**
@@ -593,9 +620,9 @@ correspondence is reported and its interpretation belongs in a discussion.
 
 ## 7. Reproducibility of the reported figures
 
-68<!--#pipeline.recipes--> derived artefacts are registered with the command that
+70<!--#pipeline.recipes--> derived artefacts are registered with the command that
 produces them and a verification tier.
-37<!--#pipeline.recipes_committed--> regenerate from a fresh clone with no network
+39<!--#pipeline.recipes_committed--> regenerate from a fresh clone with no network
 and no local data and are re-executed and compared byte for byte on every test
 run; 21<!--#pipeline.recipes_local--> require local raw data;
 9<!--#pipeline.recipes_network--> require a network fetch. Every numeric claim in

@@ -1251,6 +1251,15 @@ against the 5% alpha level". For the absence of *any* effect, likelihood ratios
 and Bayes factors. Tooling exists — the TOSTER package in R, or Jamovi and JASP
 (Halsey, 2025).
 
+**DONE, 13 September 2026.** `scripts/test_equivalence_bounds.py` implements
+it and `data/processed/equivalence_bounds_2018.csv` holds the result, on a 90
+percent interval with effective degrees of freedom as this passage requires.
+The bound taken is comparative rather than policy-relevant, and the reason is
+below: the policy basis this record suggests turned out not to be reachable
+from here. Of 36 combinations of field, predictor and weighting, none falls
+outside the bounds; every rice combination falls entirely within them and
+impervious cover does so in 7 of 12.
+
 **The bounds are a scientific judgement that must be named and defended, and the
 region grounding supplies a basis for naming them.** If the water regime carries
 a factor of 13.7 in emission at constant rice area, and rice extent explains
@@ -1259,6 +1268,18 @@ what a policy-relevant effect would have to be — an effect large enough that a
 land-cover intervention would change the column field measurably. That is a
 defensible bound rather than an arbitrary one, and it is the argument a reviewer
 would want.
+
+**It is also not reachable from this study, which the attempt established.** The
+factor of 13.7 and the tens-of-percent figures for variety, straw and nitrogen
+all bound **emissions**. What this study measures is a **column mixing ratio**,
+and converting an emission change into a column change requires a transport
+model -- precisely the tool this work states it does not run and whose absence
+defines the capability claim. So the most defensible basis in this record cannot
+be used from here, and the comparative bound was taken instead: the spatial
+null's own held-out performance expressed as a correlation, which introduces no
+arbitrary fraction because the paper's claim is already comparative. What that
+costs is stated in the artefact -- an effect smaller than the benchmark's but
+still physically substantial would pass as equivalent.
 
 One more requirement, from the systematic-review guidance rather than the
 statistics literature: "if a 'positive' but statistically non-significant trend

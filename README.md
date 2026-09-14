@@ -34,6 +34,20 @@ they appear in the same places on every methane field and every predictor pair,
 which is what makes them look like properties of the unweighted comparison
 rather than of land cover.
 
+**Across every defensible specification the result holds, and equivalence
+testing now says how strongly.** A specification curve over
+126<!--#curve.specifications--> combinations of field, predictor set, scheme,
+weighting and preprocessing finds
+0<!--#curve.positive_and_beats--> that are both positive and beat their own
+spatial null; the 15<!--#curve.beats_benchmark--> that beat the null do so at a
+negative held-out R squared, where both the model and the benchmark fail and
+land cover merely fails less. Two one-sided tests against a bound set at the
+spatial null's own performance put every rice combination entirely inside the
+bounds — evidence of no meaningful effect — while impervious cover clears them
+in 7<!--#equiv.impervious_within--> of
+12<!--#equiv.impervious_rows--> and spans the bound in the rest, so the
+stronger claim is made for rice and the weaker one for impervious cover.
+
 The 2023 thesis identified paddy rice fields as the dominant driver of the
 methane hotspots. The reanalysis does not support that. Rice fraction's
 coefficient is +8.83 ppb per unit fraction counting cells equally and -3.20
@@ -235,6 +249,8 @@ In outline:
 | 2018 methane composite | `compute_methane_composite.py --checkpoint data/interim/extent_2018.npz --export data/processed/methane_composite_2018 --export-csv data/processed/methane_coverage_2018.csv` | 28.9 GB and about two hours to build the checkpoint; seconds to export from it | on demand |
 | attenuation bound on the land-cover coefficient | `bound_attenuation.py --write` | about ten seconds | continuously |
 | fitted seasonal cycle parameters | `fit_seasonal_cycle.py --write` | seconds from the checkpoint | on local |
+| equivalence tests for the land-cover associations | `test_equivalence_bounds.py --write` | about a minute; the effective sample sizes are pairwise distance matrices | continuously |
+| every defensible land-cover specification, ordered | `build_specification_curve.py --write` | instant; it assembles committed tables and refits nothing | continuously |
 | per-granule quality accounting and declared footprint | `summarise_composite_quality.py --write` | seconds from the extended checkpoint | on local |
 | per-cell quality accounting, spread and candidate weightings | `summarise_composite_quality.py --write` | seconds from the extended checkpoint | on local |
 | the four preprocessing omissions tested as sensitivities | `test_preprocessing_omissions.py --write` | about four minutes; it refits the baseline suite once per variant | on local |

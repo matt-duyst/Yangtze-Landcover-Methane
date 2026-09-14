@@ -72,6 +72,35 @@ recipes:
     day's interval is simulated from the coefficient covariance with a fixed
     seed, so the artefact is reproducible.
   sha256: 25616eef6d68e08c42f2b027660b72b66beabe3b1e01a9d096b26e84530fe34a
+- artefact: data/processed/equivalence_bounds_2018.csv
+  command: python scripts/test_equivalence_bounds.py --write
+  label: equivalence tests for the land-cover associations
+  cost: about a minute; the effective sample sizes are pairwise distance matrices
+  seconds: 70
+  inputs: committed
+  compare: bytes
+  verified: continuously
+  note: >-
+    Two one-sided tests against named bounds, on a 90 percent interval as the
+    procedure requires, with effective degrees of freedom throughout. The
+    primary bound is comparative -- the spatial null's held-out R squared as a
+    correlation -- because the paper's claim is comparative and that introduces
+    no arbitrary fraction. The policy bound is unavailable and the artefact
+    says so rather than substituting one.
+- artefact: data/processed/specification_curve_2018.csv
+  command: python scripts/build_specification_curve.py --write
+  label: every defensible land-cover specification, ordered
+  cost: instant; it assembles committed tables and refits nothing
+  seconds: 3
+  inputs: committed
+  compare: bytes
+  verified: continuously
+  note: >-
+    Assembled from the three baseline tables and the preprocessing sensitivity
+    table, so it cannot disagree with them. `beats_benchmark` compares each
+    specification against the spatial null fitted under that same
+    specification, which is the comparison the paper's claim is stated
+    against; `nominally_positive` only says the model beat the sample mean.
 - artefact: data/processed/granule_quality_2018.csv
   command: python scripts/summarise_composite_quality.py --write
   out_flag: --out-granule

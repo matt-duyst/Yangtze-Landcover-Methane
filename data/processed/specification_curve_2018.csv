@@ -1,0 +1,127 @@
+rank,field,predictors,scheme,weighting,preprocessing,n,held_out_r2,benchmark_r2,nominally_positive,beats_benchmark,source
+1,blended,OLS impervious_fraction + rice_fraction_single + interaction,leave-one-province-out,by sounding count,committed,531,-1.0431,+0.0138,no,no,baseline_results_blended_2018.csv
+2,blended,OLS impervious_fraction + rice_fraction_single,leave-one-province-out,by sounding count,committed,531,-1.0123,+0.0138,no,no,baseline_results_blended_2018.csv
+3,deseasonalised,OLS impervious_fraction + rice_fraction_single,leave-one-province-out,by sounding count,committed,531,-1.0103,-0.0337,no,no,baseline_results_deseasonalised_2018.csv
+4,blended,OLS impervious_fraction [rice sample],leave-one-province-out,by sounding count,committed,531,-0.9556,+0.0138,no,no,baseline_results_blended_2018.csv
+5,deseasonalised,OLS impervious_fraction [rice sample],leave-one-province-out,by sounding count,committed,531,-0.9210,-0.0337,no,no,baseline_results_deseasonalised_2018.csv
+6,deseasonalised,OLS impervious_fraction + rice_fraction_single + interaction,leave-one-province-out,by sounding count,committed,531,-0.8921,-0.0337,no,no,baseline_results_deseasonalised_2018.csv
+7,operational,OLS impervious_fraction + rice_fraction_single,leave-one-province-out,by sounding count,committed,531,-0.8454,+0.0028,no,no,baseline_results_2018.csv
+8,operational,OLS impervious_fraction + rice_fraction_single,leave-one-province-out,by sounding count,precision under 10 ppb,531,-0.8454,+0.0028,no,no,preprocessing_sensitivity_2018.csv
+9,operational,OLS impervious_fraction + rice_fraction_single,leave-one-province-out,by sounding count,first-order destriping,531,-0.8130,+0.0033,no,no,preprocessing_sensitivity_2018.csv
+10,operational,OLS impervious_fraction + rice_fraction_single + interaction,leave-one-province-out,by sounding count,committed,531,-0.7964,+0.0028,no,no,baseline_results_2018.csv
+11,operational,OLS impervious_fraction [rice sample],leave-one-province-out,by sounding count,committed,531,-0.7461,+0.0028,no,no,baseline_results_2018.csv
+12,blended,OLS rice_fraction_single,leave-one-province-out,by sounding count,committed,531,-0.6454,+0.0138,no,no,baseline_results_blended_2018.csv
+13,blended,OLS rice_fraction_combined,leave-one-province-out,by sounding count,committed,531,-0.6212,+0.0138,no,no,baseline_results_blended_2018.csv
+14,operational,OLS impervious_fraction + rice_fraction_single,leave-one-province-out,by sounding count,SWIR albedo at least 0.05,498,-0.5901,+0.0400,no,no,preprocessing_sensitivity_2018.csv
+15,operational,OLS impervious_fraction + rice_fraction_single,leave-one-province-out,by sounding count,both filters,498,-0.5901,+0.0400,no,no,preprocessing_sensitivity_2018.csv
+16,deseasonalised,OLS rice_fraction_single,leave-one-province-out,by sounding count,committed,531,-0.4952,-0.0337,no,no,baseline_results_deseasonalised_2018.csv
+17,deseasonalised,OLS rice_fraction_combined,leave-one-province-out,by sounding count,committed,531,-0.4940,-0.0337,no,no,baseline_results_deseasonalised_2018.csv
+18,operational,OLS rice_fraction_single,leave-one-province-out,by sounding count,precision under 10 ppb,531,-0.4140,+0.0028,no,no,preprocessing_sensitivity_2018.csv
+19,operational,OLS rice_fraction_single,leave-one-province-out,by sounding count,committed,531,-0.4139,+0.0028,no,no,baseline_results_2018.csv
+20,operational,OLS rice_fraction_combined,leave-one-province-out,by sounding count,committed,531,-0.4057,+0.0028,no,no,baseline_results_2018.csv
+21,operational,OLS rice_fraction_single,leave-one-province-out,by sounding count,first-order destriping,531,-0.3950,+0.0033,no,no,preprocessing_sensitivity_2018.csv
+22,operational,OLS impervious_fraction,leave-one-province-out,by representativeness,committed,905,-0.2757,-0.2340,no,no,preprocessing_sensitivity_2018.csv
+23,operational,OLS impervious_fraction + rice_fraction_single,leave-one-province-out,unweighted,SWIR albedo at least 0.05,498,-0.2682,+0.0191,no,no,preprocessing_sensitivity_2018.csv
+24,operational,OLS impervious_fraction + rice_fraction_single,leave-one-province-out,unweighted,both filters,498,-0.2682,+0.0191,no,no,preprocessing_sensitivity_2018.csv
+25,blended,OLS impervious_fraction,leave-one-province-out,by sounding count,committed,926,-0.2602,+0.0138,no,no,baseline_results_blended_2018.csv
+26,operational,OLS rice_fraction_single,leave-one-province-out,by sounding count,SWIR albedo at least 0.05,498,-0.2212,+0.0400,no,no,preprocessing_sensitivity_2018.csv
+27,operational,OLS rice_fraction_single,leave-one-province-out,by sounding count,both filters,498,-0.2212,+0.0400,no,no,preprocessing_sensitivity_2018.csv
+28,blended,OLS impervious_fraction,leave-one-province-out,unweighted,committed,926,-0.2110,-0.1254,no,no,baseline_results_blended_2018.csv
+29,operational,OLS rice_fraction_single,leave-one-province-out,unweighted,SWIR albedo at least 0.05,498,-0.2087,+0.0191,no,no,preprocessing_sensitivity_2018.csv
+30,operational,OLS rice_fraction_single,leave-one-province-out,unweighted,both filters,498,-0.2087,+0.0191,no,no,preprocessing_sensitivity_2018.csv
+31,operational,OLS impervious_fraction + rice_fraction_single,leave-one-province-out,by representativeness,committed,515,-0.2010,-0.2340,no,yes,preprocessing_sensitivity_2018.csv
+32,blended,OLS impervious_fraction + rice_fraction_single,leave-one-province-out,unweighted,committed,531,-0.1851,-0.1254,no,no,baseline_results_blended_2018.csv
+33,deseasonalised,OLS impervious_fraction,leave-one-province-out,by sounding count,committed,926,-0.1810,-0.0337,no,no,baseline_results_deseasonalised_2018.csv
+34,operational,OLS impervious_fraction,leave-one-province-out,by sounding count,committed,926,-0.1620,+0.0028,no,no,baseline_results_2018.csv
+35,operational,OLS impervious_fraction,leave-one-province-out,by sounding count,precision under 10 ppb,926,-0.1620,+0.0028,no,no,preprocessing_sensitivity_2018.csv
+36,operational,OLS impervious_fraction,leave-one-province-out,by sounding count,first-order destriping,926,-0.1591,+0.0033,no,no,preprocessing_sensitivity_2018.csv
+37,blended,OLS impervious_fraction [rice sample],leave-one-province-out,unweighted,committed,531,-0.1539,-0.1254,no,no,baseline_results_blended_2018.csv
+38,deseasonalised,OLS impervious_fraction + rice_fraction_single,leave-one-province-out,unweighted,committed,531,-0.1372,-0.1098,no,no,baseline_results_deseasonalised_2018.csv
+39,blended,OLS impervious_fraction + rice_fraction_single + interaction,leave-one-province-out,unweighted,committed,531,-0.1364,-0.1254,no,no,baseline_results_blended_2018.csv
+40,operational,OLS impervious_fraction + rice_fraction_single,leave-one-province-out,unweighted,committed,531,-0.1290,-0.0912,no,no,baseline_results_2018.csv
+41,operational,OLS impervious_fraction + rice_fraction_single,leave-one-province-out,unweighted,precision under 10 ppb,531,-0.1290,-0.0912,no,no,preprocessing_sensitivity_2018.csv
+42,operational,OLS impervious_fraction,leave-one-province-out,unweighted,committed,926,-0.1174,-0.0912,no,no,baseline_results_2018.csv
+43,operational,OLS impervious_fraction,leave-one-province-out,unweighted,precision under 10 ppb,926,-0.1174,-0.0912,no,no,preprocessing_sensitivity_2018.csv
+44,operational,OLS rice_fraction_single,leave-one-province-out,by representativeness,committed,515,-0.1140,-0.2340,no,yes,preprocessing_sensitivity_2018.csv
+45,operational,OLS impervious_fraction + rice_fraction_single,leave-one-province-out,unweighted,first-order destriping,531,-0.1093,-0.0993,no,no,preprocessing_sensitivity_2018.csv
+46,operational,OLS impervious_fraction,leave-one-province-out,unweighted,first-order destriping,926,-0.1079,-0.0993,no,no,preprocessing_sensitivity_2018.csv
+47,deseasonalised,OLS rice_fraction_combined,spatial blocks,by sounding count,committed,531,-0.1040,+0.5176,no,no,baseline_results_deseasonalised_2018.csv
+48,deseasonalised,OLS impervious_fraction,leave-one-province-out,unweighted,committed,926,-0.1038,-0.1098,no,yes,baseline_results_deseasonalised_2018.csv
+49,deseasonalised,OLS rice_fraction_single,spatial blocks,by sounding count,committed,531,-0.0977,+0.5176,no,no,baseline_results_deseasonalised_2018.csv
+50,blended,OLS impervious_fraction + rice_fraction_single,spatial blocks,by sounding count,committed,531,-0.0930,+0.5619,no,no,baseline_results_blended_2018.csv
+51,operational,OLS rice_fraction_single,spatial blocks,by sounding count,committed,531,-0.0925,+0.5136,no,no,baseline_results_2018.csv
+52,operational,OLS rice_fraction_combined,spatial blocks,by sounding count,committed,531,-0.0925,+0.5136,no,no,baseline_results_2018.csv
+53,operational,OLS rice_fraction_single,spatial blocks,by sounding count,precision under 10 ppb,531,-0.0925,+0.5137,no,no,preprocessing_sensitivity_2018.csv
+54,operational,OLS rice_fraction_single,spatial blocks,by sounding count,first-order destriping,531,-0.0907,+0.5183,no,no,preprocessing_sensitivity_2018.csv
+55,deseasonalised,OLS rice_fraction_single,leave-one-province-out,unweighted,committed,531,-0.0888,-0.1098,no,yes,baseline_results_deseasonalised_2018.csv
+56,blended,OLS impervious_fraction [rice sample],spatial blocks,by sounding count,committed,531,-0.0881,+0.5619,no,no,baseline_results_blended_2018.csv
+57,deseasonalised,OLS impervious_fraction + rice_fraction_single,spatial blocks,by sounding count,committed,531,-0.0842,+0.5176,no,no,baseline_results_deseasonalised_2018.csv
+58,blended,OLS rice_fraction_single,leave-one-province-out,unweighted,committed,531,-0.0809,-0.1254,no,yes,baseline_results_blended_2018.csv
+59,operational,OLS impervious_fraction,leave-one-province-out,by sounding count,SWIR albedo at least 0.05,752,-0.0809,+0.0400,no,no,preprocessing_sensitivity_2018.csv
+60,operational,OLS impervious_fraction,leave-one-province-out,by sounding count,both filters,752,-0.0809,+0.0400,no,no,preprocessing_sensitivity_2018.csv
+61,deseasonalised,OLS rice_fraction_combined,leave-one-province-out,unweighted,committed,531,-0.0803,-0.1098,no,yes,baseline_results_deseasonalised_2018.csv
+62,operational,OLS impervious_fraction + rice_fraction_single,spatial blocks,by sounding count,committed,531,-0.0775,+0.5136,no,no,baseline_results_2018.csv
+63,operational,OLS impervious_fraction + rice_fraction_single,spatial blocks,by sounding count,precision under 10 ppb,531,-0.0775,+0.5137,no,no,preprocessing_sensitivity_2018.csv
+64,deseasonalised,OLS impervious_fraction + rice_fraction_single + interaction,leave-one-province-out,unweighted,committed,531,-0.0774,-0.1098,no,yes,baseline_results_deseasonalised_2018.csv
+65,operational,OLS impervious_fraction + rice_fraction_single + interaction,leave-one-province-out,unweighted,committed,531,-0.0772,-0.0912,no,yes,baseline_results_2018.csv
+66,blended,OLS rice_fraction_single,spatial blocks,by sounding count,committed,531,-0.0765,+0.5619,no,no,baseline_results_blended_2018.csv
+67,operational,OLS impervious_fraction + rice_fraction_single,spatial blocks,by sounding count,first-order destriping,531,-0.0734,+0.5183,no,no,preprocessing_sensitivity_2018.csv
+68,blended,OLS rice_fraction_combined,spatial blocks,by sounding count,committed,531,-0.0725,+0.5619,no,no,baseline_results_blended_2018.csv
+69,blended,OLS impervious_fraction + rice_fraction_single + interaction,spatial blocks,by sounding count,committed,531,-0.0725,+0.5619,no,no,baseline_results_blended_2018.csv
+70,operational,OLS impervious_fraction [rice sample],spatial blocks,by sounding count,committed,531,-0.0694,+0.5136,no,no,baseline_results_2018.csv
+71,operational,OLS rice_fraction_single,leave-one-province-out,unweighted,committed,531,-0.0674,-0.0912,no,yes,baseline_results_2018.csv
+72,operational,OLS rice_fraction_single,leave-one-province-out,unweighted,precision under 10 ppb,531,-0.0674,-0.0912,no,yes,preprocessing_sensitivity_2018.csv
+73,deseasonalised,OLS impervious_fraction [rice sample],spatial blocks,by sounding count,committed,531,-0.0651,+0.5176,no,no,baseline_results_deseasonalised_2018.csv
+74,blended,OLS rice_fraction_combined,leave-one-province-out,unweighted,committed,531,-0.0645,-0.1254,no,yes,baseline_results_blended_2018.csv
+75,operational,OLS impervious_fraction [rice sample],leave-one-province-out,unweighted,committed,531,-0.0628,-0.0912,no,yes,baseline_results_2018.csv
+76,operational,OLS rice_fraction_single,leave-one-province-out,unweighted,first-order destriping,531,-0.0602,-0.0993,no,yes,preprocessing_sensitivity_2018.csv
+77,operational,OLS rice_fraction_combined,leave-one-province-out,unweighted,committed,531,-0.0587,-0.0912,no,yes,baseline_results_2018.csv
+78,operational,OLS rice_fraction_single,spatial blocks,unweighted,SWIR albedo at least 0.05,498,-0.0559,+0.0384,no,no,preprocessing_sensitivity_2018.csv
+79,operational,OLS rice_fraction_single,spatial blocks,unweighted,both filters,498,-0.0559,+0.0384,no,no,preprocessing_sensitivity_2018.csv
+80,deseasonalised,OLS impervious_fraction [rice sample],leave-one-province-out,unweighted,committed,531,-0.0488,-0.1098,no,yes,baseline_results_deseasonalised_2018.csv
+81,operational,OLS rice_fraction_single,spatial blocks,by representativeness,committed,515,-0.0440,+0.5399,no,no,preprocessing_sensitivity_2018.csv
+82,operational,OLS impervious_fraction + rice_fraction_single + interaction,spatial blocks,by sounding count,committed,531,-0.0418,+0.5136,no,no,baseline_results_2018.csv
+83,deseasonalised,OLS rice_fraction_single,spatial blocks,unweighted,committed,531,-0.0384,+0.3374,no,no,baseline_results_deseasonalised_2018.csv
+84,deseasonalised,OLS rice_fraction_combined,spatial blocks,unweighted,committed,531,-0.0380,+0.3374,no,no,baseline_results_deseasonalised_2018.csv
+85,operational,OLS rice_fraction_combined,spatial blocks,unweighted,committed,531,-0.0319,+0.3324,no,no,baseline_results_2018.csv
+86,operational,OLS rice_fraction_single,spatial blocks,unweighted,committed,531,-0.0314,+0.3324,no,no,baseline_results_2018.csv
+87,operational,OLS rice_fraction_single,spatial blocks,unweighted,precision under 10 ppb,531,-0.0314,+0.3324,no,no,preprocessing_sensitivity_2018.csv
+88,deseasonalised,OLS impervious_fraction + rice_fraction_single + interaction,spatial blocks,by sounding count,committed,531,-0.0308,+0.5176,no,no,baseline_results_deseasonalised_2018.csv
+89,operational,OLS rice_fraction_single,spatial blocks,unweighted,first-order destriping,531,-0.0293,+0.3409,no,no,preprocessing_sensitivity_2018.csv
+90,operational,OLS rice_fraction_single,spatial blocks,by sounding count,SWIR albedo at least 0.05,498,-0.0252,+0.1064,no,no,preprocessing_sensitivity_2018.csv
+91,operational,OLS rice_fraction_single,spatial blocks,by sounding count,both filters,498,-0.0252,+0.1064,no,no,preprocessing_sensitivity_2018.csv
+92,blended,OLS rice_fraction_combined,spatial blocks,unweighted,committed,531,-0.0110,+0.4141,no,no,baseline_results_blended_2018.csv
+93,blended,OLS rice_fraction_single,spatial blocks,unweighted,committed,531,-0.0087,+0.4141,no,no,baseline_results_blended_2018.csv
+94,operational,OLS impervious_fraction,leave-one-province-out,unweighted,SWIR albedo at least 0.05,752,-0.0083,+0.0191,no,no,preprocessing_sensitivity_2018.csv
+95,operational,OLS impervious_fraction,leave-one-province-out,unweighted,both filters,752,-0.0083,+0.0191,no,no,preprocessing_sensitivity_2018.csv
+96,blended,OLS impervious_fraction [rice sample],spatial blocks,unweighted,committed,531,-0.0057,+0.4141,no,no,baseline_results_blended_2018.csv
+97,blended,OLS impervious_fraction,spatial blocks,by sounding count,committed,926,-0.0053,+0.5619,no,no,baseline_results_blended_2018.csv
+98,operational,OLS impervious_fraction,spatial blocks,by sounding count,SWIR albedo at least 0.05,752,-0.0043,+0.1064,no,no,preprocessing_sensitivity_2018.csv
+99,operational,OLS impervious_fraction,spatial blocks,by sounding count,both filters,752,-0.0043,+0.1064,no,no,preprocessing_sensitivity_2018.csv
+100,blended,OLS impervious_fraction + rice_fraction_single,spatial blocks,unweighted,committed,531,+0.0031,+0.4141,yes,no,baseline_results_blended_2018.csv
+101,operational,OLS impervious_fraction + rice_fraction_single,spatial blocks,by representativeness,committed,515,+0.0061,+0.5399,yes,no,preprocessing_sensitivity_2018.csv
+102,operational,OLS impervious_fraction + rice_fraction_single,spatial blocks,unweighted,committed,531,+0.0169,+0.3324,yes,no,baseline_results_2018.csv
+103,operational,OLS impervious_fraction + rice_fraction_single,spatial blocks,unweighted,precision under 10 ppb,531,+0.0169,+0.3324,yes,no,preprocessing_sensitivity_2018.csv
+104,operational,OLS impervious_fraction [rice sample],spatial blocks,unweighted,committed,531,+0.0180,+0.3324,yes,no,baseline_results_2018.csv
+105,blended,OLS impervious_fraction + rice_fraction_single + interaction,spatial blocks,unweighted,committed,531,+0.0198,+0.4141,yes,no,baseline_results_blended_2018.csv
+106,operational,OLS impervious_fraction + rice_fraction_single,spatial blocks,unweighted,SWIR albedo at least 0.05,498,+0.0218,+0.0384,yes,no,preprocessing_sensitivity_2018.csv
+107,operational,OLS impervious_fraction + rice_fraction_single,spatial blocks,unweighted,both filters,498,+0.0218,+0.0384,yes,no,preprocessing_sensitivity_2018.csv
+108,operational,OLS impervious_fraction,spatial blocks,by sounding count,committed,926,+0.0244,+0.5136,yes,no,baseline_results_2018.csv
+109,operational,OLS impervious_fraction,spatial blocks,by sounding count,precision under 10 ppb,926,+0.0244,+0.5137,yes,no,preprocessing_sensitivity_2018.csv
+110,operational,OLS impervious_fraction + rice_fraction_single,spatial blocks,by sounding count,SWIR albedo at least 0.05,498,+0.0244,+0.1064,yes,no,preprocessing_sensitivity_2018.csv
+111,operational,OLS impervious_fraction + rice_fraction_single,spatial blocks,by sounding count,both filters,498,+0.0244,+0.1064,yes,no,preprocessing_sensitivity_2018.csv
+112,operational,OLS impervious_fraction + rice_fraction_single,spatial blocks,unweighted,first-order destriping,531,+0.0250,+0.3409,yes,no,preprocessing_sensitivity_2018.csv
+113,operational,OLS impervious_fraction,spatial blocks,by sounding count,first-order destriping,926,+0.0261,+0.5183,yes,no,preprocessing_sensitivity_2018.csv
+114,operational,OLS impervious_fraction,spatial blocks,unweighted,SWIR albedo at least 0.05,752,+0.0271,+0.0384,yes,no,preprocessing_sensitivity_2018.csv
+115,operational,OLS impervious_fraction,spatial blocks,unweighted,both filters,752,+0.0271,+0.0384,yes,no,preprocessing_sensitivity_2018.csv
+116,deseasonalised,OLS impervious_fraction,spatial blocks,by sounding count,committed,926,+0.0285,+0.5176,yes,no,baseline_results_deseasonalised_2018.csv
+117,deseasonalised,OLS impervious_fraction + rice_fraction_single,spatial blocks,unweighted,committed,531,+0.0329,+0.3374,yes,no,baseline_results_deseasonalised_2018.csv
+118,operational,OLS impervious_fraction + rice_fraction_single + interaction,spatial blocks,unweighted,committed,531,+0.0331,+0.3324,yes,no,baseline_results_2018.csv
+119,deseasonalised,OLS impervious_fraction [rice sample],spatial blocks,unweighted,committed,531,+0.0333,+0.3374,yes,no,baseline_results_deseasonalised_2018.csv
+120,deseasonalised,OLS impervious_fraction + rice_fraction_single + interaction,spatial blocks,unweighted,committed,531,+0.0542,+0.3374,yes,no,baseline_results_deseasonalised_2018.csv
+121,blended,OLS impervious_fraction,spatial blocks,unweighted,committed,926,+0.0653,+0.4141,yes,no,baseline_results_blended_2018.csv
+122,operational,OLS impervious_fraction,spatial blocks,unweighted,committed,926,+0.0847,+0.3324,yes,no,baseline_results_2018.csv
+123,operational,OLS impervious_fraction,spatial blocks,unweighted,precision under 10 ppb,926,+0.0847,+0.3324,yes,no,preprocessing_sensitivity_2018.csv
+124,operational,OLS impervious_fraction,spatial blocks,unweighted,first-order destriping,926,+0.0923,+0.3409,yes,no,preprocessing_sensitivity_2018.csv
+125,deseasonalised,OLS impervious_fraction,spatial blocks,unweighted,committed,926,+0.0953,+0.3374,yes,no,baseline_results_deseasonalised_2018.csv
+126,operational,OLS impervious_fraction,spatial blocks,by representativeness,committed,905,+0.1429,+0.5399,yes,no,preprocessing_sensitivity_2018.csv

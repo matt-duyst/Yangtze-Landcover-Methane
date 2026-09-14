@@ -1558,3 +1558,76 @@ and geography — a swath crosses the domain at an angle, so the two are not
 independent. Read it as an upper bound on what destriping would remove. The
 offsets span −15.27 to +12.77 ppb with a standard deviation of 5.09 ppb across
 the 200 columns that carry soundings.
+## equivalence_bounds_2018.csv
+
+Two one-sided tests for the land-cover associations, written by
+`scripts/test_equivalence_bounds.py --write`. This is the artefact that decides
+what the paper is allowed to claim, because conventional analysis can argue
+against a null and never in favour of one.
+
+**The bound is comparative, and the policy bound could not be set.** The record
+suggested a policy basis — water regime moves rice emissions by a factor of
+about 13.7 at constant area — but those figures bound *emissions*, and
+converting an emission change to a column change needs a transport model this
+work does not run. So the bound is the spatial null's own held-out performance
+expressed as a correlation, |r| = 0.5765, which introduces no arbitrary fraction
+because the paper's claim is already comparative. Ninety percent intervals, as
+two one-sided tests at 5 percent require, with effective degrees of freedom
+throughout.
+
+| predictor | within the bounds | spans a bound | outside |
+|---|---|---|---|
+| rice_fraction_single | 12 of 12 | 0 | 0 |
+| rice_fraction_combined | 12 of 12 | 0 | 0 |
+| impervious_fraction | 7 of 12 | 5 | 0 |
+
+**Nothing falls outside the bounds**, so no combination of field, predictor and
+weighting yields a positive result. Rice clears the bound everywhere, which is
+evidence of no meaningful effect. Impervious cover does not: the five spanning
+rows are the raw field unweighted and all four fields under representativeness
+weighting, where the interval reaches past the bound and the data cannot
+distinguish an effect the size of the benchmark's from none.
+
+**What the bound does not license**, stated because it is the obvious
+misreading: an effect smaller than the spatial benchmark's but still physically
+substantial passes as equivalent here. The claim is "smaller than the benchmark
+this paper reports against", not "small enough not to matter".
+
+The `scheme` dimension of the rest of the repository is absent by construction.
+Equivalence is a test on a parameter, and spatial blocks and
+leave-one-province-out are designs for estimating held-out prediction, not
+parameters.
+
+## specification_curve_2018.csv
+
+Every defensible land-cover specification in one ordered table, written by
+`scripts/build_specification_curve.py --write`. Assembled from the three
+baseline result tables and the preprocessing sensitivity table, refitting
+nothing, so it cannot disagree with the tables it summarises.
+
+126 specifications: field by land-cover predictor set by cross-validation
+scheme by weighting by preprocessing variant. Held-out R squared runs from
+−1.0431 to +0.1429 with a median of −0.0774.
+
+**Read `beats_benchmark`, not `nominally_positive`.** The first compares a
+specification against the spatial null fitted under that same specification,
+which is the comparison the paper's claim is stated against. The second only
+says the model beat the sample mean, which any predictor with a spatial
+gradient can do.
+
+| | count |
+|---|---|
+| nominally positive | 27 of 126 |
+| beats its own spatial null | 15 of 126 |
+| **both positive and beats the null** | **0 of 126** |
+
+All 15 that beat the benchmark do so at a *negative* held-out R squared — both
+the model and the null fail, and land cover fails less. That is the honest form
+of the claim: no specification anywhere produces a land-cover result that both
+explains variance and outperforms a purely spatial benchmark.
+
+**The spread belongs to the evaluation, and the curve measures how much.** As
+the range of medians across each axis's levels: cross-validation scheme 0.1764,
+predictor set 0.0943, weighting 0.0517, preprocessing 0.0444, methane field
+0.0131. **The choice of held-out design moves the result almost twice as much as
+the choice of predictor, and fourteen times as much as the choice of field.**
