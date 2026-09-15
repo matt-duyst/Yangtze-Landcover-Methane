@@ -8510,3 +8510,96 @@ small to see. So the recommended restatement keeps the pair and prefixes it:
 That is one sentence longer and it front-loads the thing a reader can check. It
 is not adopted here; it is on record for whoever writes the manuscript, and
 the manuscript's prose has to be theirs in any case.
+
+## What an emissions estimate would have to build, 16 September 2026
+
+A code search before anything is built, on the standing ground that this
+project has twice written from a paper description when the authors had
+published an implementation. It found more than expected on the rice side and
+almost nothing on the others, and the asymmetry is the finding.
+
+### Which sectors are estimable, and what the obstacle is where they are not
+
+| Sector | Estimable? | Obstacle |
+|---|---|---|
+| **Rice** | yes | none blocking. Code, cropland mask and factors all exist; the factors are described rather than deposited |
+| **Coal** | **already estimated** | none. 116 located mines in domain with monthly 2018 emissions, plus a gridded series whose deposit ships its own Python |
+| **Landfill** | no | **data.** Method is standard first-order decay and third-party LandGEM code exists; this project holds no landfill locations for the four provinces |
+| **Wastewater** | yes, with a small write | **code**, and it is not a real obstacle: 422 plant coordinates are held and the IPCC method is arithmetic |
+| **Gas distribution** | marginal | **method.** 347 prefecture cities' pipeline lengths are held; the leakage rate per kilometre is the uncertain term and no open implementation exists |
+| **Aquaculture** | no | **method.** No inventory carries it, no code exists, and no established factor per mapped pond area at this scale |
+
+**The honest reading is that the sectoral coverage would be uneven and that the
+unevenness is not fixable by more searching.** Rice and coal would be well
+founded, wastewater adequate, gas distribution a guess with a number on it, and
+landfill and aquaculture absent or crude. An inventory with that profile is
+worth building only if the argument tolerates two weak sectors, and it is worth
+saying so before rather than after.
+
+### The build list, which nobody had stated
+
+After everything findable was found, this is what remains to be written.
+Separated into what would be novel and what would be reimplementation, because
+the distinction decides what the work can claim.
+
+**Reimplementation, and honest as such:**
+
+1. **Running GRPI's Earth Engine script over the four provinces.** It is
+   published and global; applying it to a subdomain is configuration plus an
+   Earth Engine account. Cost: a registration and a run.
+2. **Applying LGRIP30 as a cropland mask.** Reachable through Earthdata; a
+   fetch and a raster operation. Cost: a fetch and a run.
+3. **Assembling sectors into HEMCO format.** `grpi_hemco.nc` is the template
+   and the format is documented. Cost: a write, small.
+4. **Configuring IMI for the domain.** Its config is a YAML file and the docs
+   carry a local-cluster route. Cost: a method decision about resolution and
+   period, then a run.
+5. **A wastewater estimate on the 422 held coordinates.** IPCC first-order
+   arithmetic. Cost: a write, small.
+
+**Novel, and only these:**
+
+6. **A Yangtze-Delta-specific rice emission factor.** This is the one item that
+   would be a contribution rather than a port. Nikolaisen's factors are applied
+   uniformly within a country, and their own paper reports emissions "strongly
+   linked to water regime, soil texture and organic amendment practices" — the
+   grounding here records water regime moving rice emissions by a factor near
+   13.7. So a uniform Chinese factor is a strong assumption over deltaic
+   systems, and a local factor would be a real improvement.
+
+   **Whether the data exists to derive one is unresolved and is the question to
+   settle next.** Deriving it needs either local flux measurements — the
+   grounding records four years of in-domain flux data as a lead — or local
+   water-regime mapping to drive the published GAM. The second is the cheaper
+   route and it depends on whether the GAM is obtainable, which it currently is
+   not: the paper describes it and no deposit was found. Cost: a method
+   decision first, then either a fetch or a correspondence.
+7. **An aquaculture factor.** Novel by default, because nothing exists. That is
+   a reason for caution rather than for enthusiasm: a sector with no method and
+   no inventory is one where an estimate cannot be checked against anything.
+
+**And one that is neither, but has to happen:**
+
+8. **Landfill locations for the four provinces.** A data build, not a method or
+   a code problem. The site-level Chinese landfill work is recorded in the lead
+   inventory as having no deposit.
+
+### What this changes about the direction
+
+Nothing in the search argues against the direction; two things sharpen it.
+
+**The rice sector could be taken rather than built.** GRPI's deposit is a
+HEMCO-format netCDF, which is GEOS-Chem's own emissions input format, so it
+drops into IMI without any reimplementation at all. The build list's items 1 and
+2 exist to produce something *better* than GRPI over this domain — at higher
+resolution, or with a local factor — and not to reproduce it. That is worth
+keeping straight, because "we rebuilt GRPI for the YRD" and "we improved GRPI's
+factor for the YRD" are different claims and only the second is a contribution.
+
+**And the whole chain is one group's.** GRPI's authors include Balasus and
+Jacob, the same group that produces IMI and the blended TROPOMI+GOSAT product
+this project already committed; Hardy authored both GRPI and TropWet. So the
+prior, the inversion and the observations would all come from one lineage. That
+is convenient and it is also a dependency worth stating: an error in that
+group's conventions would propagate through every stage, and the project would
+have no independent check on it.
