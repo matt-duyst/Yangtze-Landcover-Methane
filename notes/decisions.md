@@ -8144,3 +8144,172 @@ A guard is conceivable and is not proposed here: requiring that every external
 number in a draft carry either a quoted passage or an explicit provisional mark
 is checkable by pattern, in the way the drift guards already are. It would have
 caught the 0.954 on the day it was written.
+
+## The change design is underpowered, and the same arithmetic explains the null
+
+A power calculation run before anything was built, from committed data at every
+step rather than from a scaling. It closes the design, and on the way it
+produces a cleaner explanation for this project's central result than the one
+the drafts currently give.
+
+### Three structural facts settle it before any arithmetic
+
+**There is no 2010 column field.** The methane record begins 30 April 2018. The
+interval the design was specified over — land-cover change 2010 to 2018 against
+methane change over the same interval — cannot be observed, because the
+instrument did not exist for the first endpoint. This was not noticed in the
+framing and it is the whole design's precondition.
+
+**The observable interval is one to three years.** GISA ends in 2019 and GAIA in
+2021, so the longest interval both records share is 2018 to 2021, and the only
+one this repository holds committed rasters for is 2018 to 2019. Over one year
+the median impervious change is 0.0012 against 0.0247 over eight, and since the
+required sample goes as the inverse square of the treatment spread, the
+shortfall grows from 279-fold to 126,932-fold.
+
+**The treatment is what the two products most disagree about.** GAIA and GISA
+agree at r = 0.92 on *where* impervious surface was added and disagree by a
+factor of 2.20 on *how much* — against 1.15 for the 2018 extent itself. So the
+design's independent variable is measured to within a factor of two at best,
+and which product is used changes the required sample by six times.
+
+### The distributions, which are nothing like the framing assumed
+
+The brief's illustrative cell urbanised from 0.1 to 0.3. That change of 0.20 is
+the 98th percentile in GAIA, reached by 23 of 1,023 cells, and it is **above
+GISA's domain maximum of 0.107**. Medians are 0.0247 (GAIA) and 0.0124 (GISA),
+eight and sixteen times smaller than the example.
+
+Differencing does not buy back degrees of freedom either. Moran's I of the GAIA
+change field is 0.710, indistinguishable from the 0.690 of the 2018 level field:
+**the change is as spatially clustered as the level.** The effective sample size
+for the change-against-methane pair is 60.6 of 926 nominal, which is roughly
+double the ~33 the level fields give, but on the subset that actually changed it
+collapses again — 39.4 effective cells of 274 above a change of 0.05, and 29.7
+of 86 for GISA.
+
+### What the inventory says, and where its proportionality fails
+
+The urban-scaling sectors — landfill, wastewater, oil and gas — total 1,588.9 Gg
+a⁻¹ over the domain. Against impervious area per cell the relationship is
+**closer to proportional than expected**: a through-origin slope of 28.82 Mg
+km⁻² a⁻¹, an ordinary slope of 31.16 with an intercept of −389 Mg a⁻¹ that is
+small and the wrong sign to matter, and an aggregate rate of 25.74. Correlation
+is r = 0.699.
+
+**The apparatus work's worry was right in substance and wrong in target.** It
+established that gas, wastewater and combustion are allocated on population,
+which is not urban area — and the consequence is not that the relationship
+disappears but that its apparent proportionality is *induced by the allocation
+surface*, because population and impervious area are themselves strongly
+related. So the inventory cannot independently establish that emissions scale
+with urban land. It can only say what rate a bottom-up inventory predicts, which
+is what a power calculation needs and is not evidence about the world. The
+per-cell rate spans 24-fold between its 5th and 95th percentiles, so a per-cell
+prediction carries a factor of several either way.
+
+**Where proportionality actually fails is rice.** The inventory's rice grid
+against this project's satellite-derived rice area gives **r = 0.198**. The two
+disagree about where rice is, so no rice rate per square kilometre can be taken
+from the inventory at all, and the rice half of the design has no expected
+effect that this repository can compute. That is the opposite of what the
+framing anticipated.
+
+### The conversion, and why it is not a box model
+
+The Integrated Methane Inversion preview's closed form, whose constants were
+checked line by line against that facility's source in the primary-source
+re-read: k = α M_air L g / (M_CH₄ U p), with an enhancement of k times the
+surface flux. This is preferable to a hand-rolled box model because it is the
+relation the operational literature actually uses to turn an emission into an
+observable signal, and because its constants are published.
+
+The wind is this domain's own, and **the choice made here overstates the
+signal**. The committed covariates carry annual means of the wind *components*,
+so their vector magnitude cancels opposing directions across a year: the median
+is 1.41 m/s where a mean scalar speed over eastern China would be several times
+that. Since the enhancement goes as 1/U, using it inflates the answer. It lands
+within 2 percent of IMI's own 5 km/h default, which is a coincidence worth
+noting rather than a validation — both are low.
+
+**Every assumption in the calculation was chosen in the design's favour**, so
+that an underpowered verdict cannot be an artefact of pessimism: the generous
+wind, GAIA rather than GISA, the eight-year interval that cannot be observed,
+the marginal rate taken equal to the average rate, and sampling error alone as
+the noise, with no allowance for real interannual variability in the field.
+
+### The verdict
+
+Expected slope β = 1.1995 ppb per unit impervious fraction. Implied enhancement
+per cell: median 0.029 ppb, domain maximum 0.356 ppb. Noise on a two-year
+difference: 2.801 ppb, from a per-cell standard error of 1.980.
+
+| Case | t at effective n | Effective cells needed | Shortfall |
+|---|---|---|---|
+| GAIA 2010–2018 (unobservable) | 0.165 | 16,923 | 279× |
+| GISA 2010–2018 (unobservable) | 0.068 | 109,085 | 1,663× |
+| GAIA 2018–2019 (observable) | 0.008 | 7,687,675 | 126,932× |
+
+The minimum detectable slope is 20.4 ppb per unit fraction against a true slope
+of 1.20, so **the effect would have to be 17 times larger**. Put physically: a
+detectable change needs one 663 km² cell to gain **325 Gg a⁻¹**, which is 20
+percent of the entire four-province urban-sector inventory in a single cell.
+
+**Underpowered, not marginal.** Nothing about the assumptions could be tightened
+to change it, because the gap is two to five orders of magnitude and every
+assumption already leans the other way.
+
+### What would change it, and none of it is this study
+
+A longer interval helps as the square of its length, so thirty years would buy
+14-fold against a 279-fold gap — and no column record exists before 2018, so it
+is unavailable in principle rather than merely absent. A larger region does not
+help as its cell count suggests: the 0.1 degree pass established that effective
+sample size is set by domain extent against autocorrelation length and does not
+scale with cell count, so reaching 16,923 effective cells would need on the
+order of 300 domains of this size. Coarser aggregation trades noise for
+treatment spread at roughly one for one and loses cells besides. A tropospheric
+partial column — the MUSICA IASI–TROPOMI product carries one for the lowermost
+half of the atmosphere — would roughly double the signal by mixing a surface
+addition into half the column, which is 4-fold in required sample and still 70
+times short.
+
+**The honest summary is that no satellite column design over this domain detects
+urban methane from land-cover change, at any interval or aggregation the data
+permit.** A point-source instrument aimed at individual facilities is a different
+study with a different observable.
+
+### And the same arithmetic explains the null, which is the finding
+
+This was run to close a future design and it bears on the paper's present
+result.
+
+The cross-sectional design asks whether the *level* of impervious fraction
+explains the *level* of column methane. Run the same conversion over the
+observed impervious range: from the 5th to the 95th percentile of impervious
+fraction, the implied column contrast is **0.410 ppb**. The observed field has a
+between-cell standard deviation of 14.86 ppb and a 5th-to-95th span of 49.7 ppb.
+**So the entire cross-domain land-cover contrast should produce 2.8 percent of
+the field's standard deviation, and 2.0 percent of its span.** The implied R² is
+about 7 × 10⁻⁵.
+
+The measured held-out R² for impervious fraction is 0.085 — **three orders of
+magnitude larger than the physics permits**. That is the useful result, and it
+cuts in a direction the drafts do not currently state:
+
+* **A null was the predicted outcome, not a surprising one.** The drafts explain
+  the null through mechanisms, confounds and observing-system limits. A simpler
+  and prior explanation is that the signal sought is 30 to 50 times below the
+  noise floor at this resolution. No amount of careful modelling recovers it.
+* **And the apparent association cannot be the emission signal.** An observed
+  0.085 against a permitted 0.00007 is not a weak version of the right thing; it
+  is a different thing. That is independent support for what the albedo and wind
+  analyses already found by other means — the partial correlations against albedo
+  are indistinguishable from zero, and wind alone reaches 0.65 — and it converts
+  "the association does not survive controls" into "the association could not
+  have been the signal in the first place".
+
+The two explanations are complementary rather than competing, and stating both
+is stronger than either. The detection limit says the true signal is
+unobservable here; the confound analysis says what the observed signal actually
+was.

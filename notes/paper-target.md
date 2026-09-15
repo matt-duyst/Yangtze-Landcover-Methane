@@ -2182,3 +2182,53 @@ turned out wrong had been read from an intermediary and every claim that held
 had been read from the source, which makes reading-provenance the thing worth
 recording — because it is what predicts error, and it is cheap to record at the
 moment the note is written and expensive to reconstruct later.
+
+## The detection limit, and what it changes about the paper, 15 September 2026
+
+A power calculation for a change-over-time design closed that design and
+produced something the paper should use.
+
+**The change design is dead and cheaply so.** Underpowered by 279-fold in
+effective cells over an interval the methane record cannot observe, and by
+126,932-fold over the interval it can. `notes/decisions.md` carries the
+arithmetic and every assumption, all of which lean in the design's favour. The
+queue item can be closed rather than deferred.
+
+**What it changes about the present paper is the explanation of the null, and it
+is a strengthening.** Converting the observed impervious range to a column
+signal with the same closed form the capability section already uses, the whole
+5th-to-95th-percentile contrast in impervious fraction implies
+0.410<!--#change.xsec_contrast--> ppb, which is
+2.8<!--#change.xsec_share--> percent of the field's between-cell standard
+deviation. The implied R squared is about
+0.00007<!--#change.xsec_r2-->.
+
+Two consequences, and the second is the sharper:
+
+1. **The null was the predicted outcome.** §3 of the discussion explains it
+   through mechanisms, confounds and observing-system limits. A prior and simpler
+   explanation is that the emission signal land cover could carry is thirty to
+   fifty times below the per-cell noise at this resolution. That belongs early in
+   the discussion, before the mechanisms, because it makes them secondary rather
+   than load-bearing.
+2. **The observed association cannot be the emission signal.** A measured
+   held-out R squared of 0.085 against a physically permitted 0.00007 is three
+   orders of magnitude too large to be the thing it looks like. This is
+   independent support for the albedo and wind results, and it upgrades "the
+   association does not survive controls" to "the association could not have been
+   the signal". The errors-in-variables bound in §4 of the introduction gains
+   from it too: it already shows attenuation cannot explain the null, and this
+   shows the null needed no explaining.
+
+**What this does not license.** It is a bottom-up expectation, resting on an
+inventory whose urban allocation is proportional to impervious area partly by
+construction, and on a closed-form conversion with a wind term chosen to
+overstate the signal. It bounds what the observations could show; it is not a
+measurement of what they do show. Stated as a bound it is robust, because every
+assumption leans one way; stated as an estimate it would be overreach.
+
+**And one methodological item for the methods section.** The committed wind
+covariates are annual means of the wind components, not of the wind speed. Any
+future use of them as a ventilation rate must say so, because vector averaging
+over a year cancels opposing directions and the resulting magnitude is a lower
+bound on the speed.

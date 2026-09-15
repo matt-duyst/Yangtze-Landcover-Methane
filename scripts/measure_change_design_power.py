@@ -381,7 +381,16 @@ def main(argv=None) -> int:
                 handle, fieldnames=["quantity", "value", "unit", "basis", "note"])
             writer.writeheader()
             writer.writerows(rows)
-        print(f"\n  wrote {Path(args.out).resolve().relative_to(REPO)}")
+        try:
+            shown = Path(args.out).resolve().relative_to(REPO)
+        except ValueError:
+            # The recipe verifier redirects --out to a temporary directory
+            # outside the repository, and relative_to raises there. The other
+            # measurement scripts already guard this; this one did not, and the
+            # slow tier caught it because the default tier never re-runs a
+            # local-input recipe.
+            shown = Path(args.out)
+        print(f"\n  wrote {shown}")
     else:
         print("\n  re-run with --write to write the artefact")
     return 0
