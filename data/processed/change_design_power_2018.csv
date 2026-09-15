@@ -1,0 +1,59 @@
+quantity,value,unit,basis,note
+"cell area, mean",663,km2,lattice,
+wind speed used,1.413,m s-1,covariates,"median of |mean(u), mean(v)|; a lower bound on ventilation, so the enhancement it gives is an upper bound"
+"per-cell standard error, median",1.980,ppb,composite,"within-cell sd over sqrt(count), 905 cells"
+"per-cell standard error, upper quartile",3.375,ppb,composite,
+"gaia impervious change 2010-2018, median",0.0247,fraction,urban layer,
+"gaia impervious change 2010-2018, upper quartile",0.0547,fraction,urban layer,
+"gaia impervious change 2010-2018, maximum",0.2947,fraction,urban layer,
+"gaia impervious change 2010-2018, sd",0.05028,fraction,urban layer,the regression's treatment spread
+gaia cells with change above 0.05,279,cells,urban layer,of 1023
+gaia cells with change above 0.1,105,cells,urban layer,of 1023
+gaia cells with change above 0.2,23,cells,urban layer,of 1023
+"gaia impervious change, Moran I",0.7096,index,derived,queen adjacency over the covered cells
+"gisa impervious change 2010-2018, median",0.0124,fraction,urban layer,
+"gisa impervious change 2010-2018, upper quartile",0.0270,fraction,urban layer,
+"gisa impervious change 2010-2018, maximum",0.1074,fraction,urban layer,
+"gisa impervious change 2010-2018, sd",0.01980,fraction,urban layer,the regression's treatment spread
+gisa cells with change above 0.05,86,cells,urban layer,of 1023
+gisa cells with change above 0.1,2,cells,urban layer,of 1023
+gisa cells with change above 0.2,0,cells,urban layer,of 1023
+"gisa impervious change, Moran I",0.5959,index,derived,queen adjacency over the covered cells
+"gaia impervious change 2018-2019, median",0.00117,fraction,urban layer,the only interval the methane record shares
+"gaia impervious change 2018-2019, sd",0.00236,fraction,urban layer,
+"product agreement on change, correlation",0.9212,r,derived,they agree where and disagree how much
+"product disagreement on change, ratio of means",2.20,ratio,derived,against 1.15 for the 2018 extent itself
+"gaia effective sample size, change against methane",60.6,cells,derived,of 926 nominal
+"gaia effective sample size, cells changing above 0.05",39.4,cells,derived,of 274 nominal
+"gisa effective sample size, change against methane",65.6,cells,derived,of 926 nominal
+"gisa effective sample size, cells changing above 0.05",29.7,cells,derived,of 86 nominal
+"urban-sector emission, domain total",1588.9,Gg yr-1,inventory,"landfill, wastewater, oil and gas"
+"urban-sector rate, through-origin slope",28.82,Mg km-2 yr-1,inventory,the rate the calculation uses
+"urban-sector rate, ordinary slope",31.16,Mg km-2 yr-1,inventory,"intercept -389 Mg yr-1, small and negative"
+"urban-sector rate, aggregate",25.74,Mg km-2 yr-1,inventory,
+"urban-sector emission against impervious area, correlation",0.6994,r,inventory,"proportional in aggregate, loose per cell"
+"urban-sector rate, 5th to 95th percentile spread",24,ratio,inventory,per-cell rates span this factor
+"rice emission against rice area, correlation",0.1979,r,inventory,PROPORTIONALITY FAILS FOR RICE; the inventory cannot supply a rice rate
+"rice rate, through-origin slope",10.82,Mg km-2 yr-1,inventory,"reported but not relied on, given the above"
+"k, emission to column factor",1.2374,kg-1 m2 s,derived,IMI preview closed form at this domain's wind
+"beta, expected slope",1.1995,ppb per unit fraction,derived,the column enhancement a full-cell impervious change would make
+"gaia implied enhancement, median",0.0294,ppb,derived,
+"gaia implied enhancement, maximum",0.3555,ppb,derived,the largest anywhere in the domain
+"gisa implied enhancement, median",0.0149,ppb,derived,
+"gisa implied enhancement, maximum",0.1321,ppb,derived,the largest anywhere in the domain
+noise on a two-year difference,2.801,ppb,derived,"per-cell standard error times root two, sampling error only"
+gaia t statistic at effective n,0.1648,t,derived,against 1.96 for significance
+gaia effective cells needed for 80 percent power,16923,cells,derived,
+gaia shortfall factor,279,ratio,derived,against 60.6 effective cells available
+gisa t statistic at effective n,0.0677,t,derived,against 1.96 for significance
+gisa effective cells needed for 80 percent power,109085,cells,derived,
+gisa shortfall factor,1663,ratio,derived,against 65.6 effective cells available
+gaia_1yr t statistic at effective n,0.0077,t,derived,against 1.96 for significance
+gaia_1yr effective cells needed for 80 percent power,7687675,cells,derived,
+gaia_1yr shortfall factor,126932,ratio,derived,against 60.6 effective cells available
+minimum detectable slope,20.4,ppb per unit fraction,derived,
+effect-size shortfall,17,ratio,derived,how many times larger the true effect would have to be
+emission change a detectable cell would need,325,Gg yr-1,derived,"in one cell, against a domain urban total of 1589 Gg yr-1"
+"cross-sectional implied contrast, p5 to p95",0.410,ppb,derived,the whole impervious range's expected column signature
+cross-sectional contrast as a share of the field sd,2.8,percent,derived,against the observed between-cell sd of 14.86 ppb
+cross-sectional implied R squared,0.000070,fraction,derived,"treating the p5-p95 contrast as 3.29 sd of a normal; the observed held-out R squared for impervious fraction is 0.085, three orders of magnitude larger, so the observed association is not this signal"

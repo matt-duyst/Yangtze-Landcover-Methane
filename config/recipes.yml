@@ -88,6 +88,23 @@ recipes:
     committed artefact and carry no marker, which is the cheapest state to fix
     and the easiest to mistake for either neighbour. Every row names the rule
     that classified it so a category can be argued with.
+- artefact: data/processed/change_design_power_2018.csv
+  command: python scripts/measure_change_design_power.py --write
+  label: Expected effect and power for the change-over-time design
+  cost: reads the committed urban rasters and the CHN-CH4 sector grids, seconds
+  seconds: 25
+  inputs: local
+  compare: bytes
+  verified: on_local
+  note: >-
+    A power calculation run before anything was built, and it closed the design.
+    Local tier because it reads the CHN-CH4 sector grids from data/raw; the
+    urban change itself comes from the committed 1/128 degree rasters, whose
+    four bands carry 2000, 2010, 2018 and 2019, so no raw urban data is needed.
+    Every assumption is chosen to favour the design -- the wind is the magnitude
+    of the annual mean vector, which understates ventilation and so overstates
+    the signal -- so that an underpowered verdict cannot be an artefact of
+    pessimism.
 - artefact: data/processed/sector_composition_2018.csv
   command: python scripts/measure_sector_composition.py --write
   label: the domain's sectoral composition on the analysis lattice

@@ -411,9 +411,9 @@ notes/draft-methods.md,716,7. Validation,3.4,self_evident,structural context,,de
 notes/draft-methods.md,724,7. Validation,0.118,unresolved,"in an artefact, no resolver","albedo_confounder_2018.csv, partial correlation",the signed difference correlating at −0.118 with methane once the fraction is
 notes/draft-methods.md,735,7. Validation,6,self_evident,structural context,,bounded. None of the capability statements of §6 depends on either.
 notes/draft-methods.md,737,8. Reproducibility,8,self_evident,structural line,,## 8. Reproducibility
-notes/draft-methods.md,741,8. Reproducibility,74,measured,inline resolver,pipeline.recipes,74<!--#pipeline.recipes--> artefacts are registered across four tiers:
+notes/draft-methods.md,741,8. Reproducibility,75,measured,inline resolver,pipeline.recipes,75<!--#pipeline.recipes--> artefacts are registered across four tiers:
 notes/draft-methods.md,742,8. Reproducibility,41,measured,inline resolver,pipeline.recipes_committed,41<!--#pipeline.recipes_committed--> regenerate from a fresh clone with no
-notes/draft-methods.md,744,8. Reproducibility,22,measured,inline resolver,pipeline.recipes_local,22<!--#pipeline.recipes_local--> require local raw data and are verified where it
+notes/draft-methods.md,744,8. Reproducibility,23,measured,inline resolver,pipeline.recipes_local,23<!--#pipeline.recipes_local--> require local raw data and are verified where it
 notes/draft-methods.md,745,8. Reproducibility,10,measured,inline resolver,pipeline.recipes_network,exists; 10<!--#pipeline.recipes_network--> require a network fetch and are verified
 notes/draft-results.md,11,(none),1,self_evident,structural context,,"preliminary material, so §1 reports the observing system, §2 the field it"
 notes/draft-results.md,11,(none),2,self_evident,structural context,,"preliminary material, so §1 reports the observing system, §2 the field it"
@@ -722,9 +722,9 @@ notes/draft-results.md,614,6.4 Relation to §3,3,self_evident,structural context
 notes/draft-results.md,614,6.4 Relation to §3,6.1,self_evident,structural context,,The land-cover result of §3 is the empirical counterpart of §6.1. A record whose
 notes/draft-results.md,616,6.4 Relation to §3,3,self_evident,structural context,,"record in which per-cell predictors should fail, and §3 reports that they do"
 notes/draft-results.md,621,7. Reproducibility of the reported figures,7,self_evident,structural line,,## 7. Reproducibility of the reported figures
-notes/draft-results.md,623,7. Reproducibility of the reported figures,74,measured,inline resolver,pipeline.recipes,74<!--#pipeline.recipes--> derived artefacts are registered with the command that
+notes/draft-results.md,623,7. Reproducibility of the reported figures,75,measured,inline resolver,pipeline.recipes,75<!--#pipeline.recipes--> derived artefacts are registered with the command that
 notes/draft-results.md,625,7. Reproducibility of the reported figures,41,measured,inline resolver,pipeline.recipes_committed,41<!--#pipeline.recipes_committed--> regenerate from a fresh clone with no network
-notes/draft-results.md,627,7. Reproducibility of the reported figures,22,measured,inline resolver,pipeline.recipes_local,run; 22<!--#pipeline.recipes_local--> require local raw data;
+notes/draft-results.md,627,7. Reproducibility of the reported figures,23,measured,inline resolver,pipeline.recipes_local,run; 23<!--#pipeline.recipes_local--> require local raw data;
 notes/draft-results.md,628,7. Reproducibility of the reported figures,10,measured,inline resolver,pipeline.recipes_network,10<!--#pipeline.recipes_network--> require a network fetch. Every numeric claim in
 notes/draft-discussion.md,10,(none),1,self_evident,structural context,,"what the result is and is not (§1), explain why it came out that way (§2 and §3),"
 notes/draft-discussion.md,10,(none),2,self_evident,structural context,,"what the result is and is not (§1), explain why it came out that way (§2 and §3),"
@@ -1164,9 +1164,9 @@ figures/README_fragments.md,550,"What the repository does, from source to result
 figures/README_fragments.md,550,"What the repository does, from source to result",300,self_evident,describes the drawing,,1.02 of its polygon. The exporter will not write a figure below 300 dpi or 8 cm
 figures/README_fragments.md,550,"What the repository does, from source to result",8,self_evident,describes the drawing,,1.02 of its polygon. The exporter will not write a figure below 300 dpi or 8 cm
 figures/README_fragments.md,555,"What the repository does, from source to result",5,measured,inline resolver,pipeline.fetch_routes,"downloads over four platforms — 5<!--#pipeline.fetch_routes--> parallelograms,"
-figures/README_fragments.md,559,"What the repository does, from source to result",74,measured,inline resolver,pipeline.recipes,"74<!--#pipeline.recipes--> registered regeneration recipes,"
+figures/README_fragments.md,559,"What the repository does, from source to result",75,measured,inline resolver,pipeline.recipes,"75<!--#pipeline.recipes--> registered regeneration recipes,"
 figures/README_fragments.md,560,"What the repository does, from source to result",41,measured,inline resolver,pipeline.recipes_committed,41<!--#pipeline.recipes_committed--> rebuild their artefact from what a fresh
-figures/README_fragments.md,561,"What the repository does, from source to result",22,measured,inline resolver,pipeline.recipes_local,"clone holds, 22<!--#pipeline.recipes_local--> need a fetched input and"
+figures/README_fragments.md,561,"What the repository does, from source to result",23,measured,inline resolver,pipeline.recipes_local,"clone holds, 23<!--#pipeline.recipes_local--> need a fetched input and"
 figures/README_fragments.md,562,"What the repository does, from source to result",10,measured,inline resolver,pipeline.recipes_network,10<!--#pipeline.recipes_network--> need a network run.
 figures/README_fragments.md,566,"What the repository does, from source to result",23.4,self_evident,describes the drawing,,"frame the chart is eleven rows and 23.4 cm tall at this width, which is the"
 figures/README_fragments.md,569,"What the repository does, from source to result",5807,self_evident,cross-reference address,,"Symbols are ISO 5807:1985's, drawn from the"

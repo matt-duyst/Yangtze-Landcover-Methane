@@ -549,6 +549,14 @@ def _sector(quantity: str) -> float:
     return float(_cache["sector"][quantity]["value"])
 
 
+def _change(quantity: str) -> float:
+    """One row of the change-design power table."""
+    if "change" not in _cache:
+        _cache["change"] = {r["quantity"]: r for r
+                            in _read_csv(PROCESSED / "change_design_power_2018.csv")}
+    return float(_cache["change"][quantity]["value"])
+
+
 def _tccon(quantity: str) -> float:
     """One row of the Hefei TCCON coincidence table.
 
@@ -1308,6 +1316,40 @@ QUANTITIES = {
         [r for r in _claims()
          if r["category"] == "neither" and "introduction" in r["source"]]),
     # The domain's sectoral composition on the analysis lattice.
+    "change.gaia_median": lambda: _change(
+        "gaia impervious change 2010-2018, median"),
+    "change.gaia_max": lambda: _change(
+        "gaia impervious change 2010-2018, maximum"),
+    "change.gisa_max": lambda: _change(
+        "gisa impervious change 2010-2018, maximum"),
+    "change.gaia_above_20": lambda: _change("gaia cells with change above 0.2"),
+    "change.product_ratio": lambda: _change(
+        "product disagreement on change, ratio of means"),
+    "change.effective_n": lambda: _change(
+        "gaia effective sample size, change against methane"),
+    "change.rate_urban": lambda: _change(
+        "urban-sector rate, through-origin slope"),
+    "change.rice_correlation": lambda: _change(
+        "rice emission against rice area, correlation"),
+    "change.beta": lambda: _change("beta, expected slope"),
+    "change.enhancement_median": lambda: _change(
+        "gaia implied enhancement, median"),
+    "change.enhancement_max": lambda: _change(
+        "gaia implied enhancement, maximum"),
+    "change.se_median": lambda: _change("per-cell standard error, median"),
+    "change.t_gaia": lambda: _change("gaia t statistic at effective n"),
+    "change.needed": lambda: _change(
+        "gaia effective cells needed for 80 percent power"),
+    "change.shortfall": lambda: _change("gaia shortfall factor"),
+    "change.mde": lambda: _change("minimum detectable slope"),
+    "change.effect_shortfall": lambda: _change("effect-size shortfall"),
+    "change.detectable_emission": lambda: _change(
+        "emission change a detectable cell would need"),
+    "change.xsec_contrast": lambda: _change(
+        "cross-sectional implied contrast, p5 to p95"),
+    "change.xsec_share": lambda: _change(
+        "cross-sectional contrast as a share of the field sd"),
+    "change.xsec_r2": lambda: _change("cross-sectional implied R squared"),
     "tccon.retrievals": lambda: _tccon("retrievals in 2018"),
     "tccon.days": lambda: _tccon("days with a retrieval in 2018"),
     "tccon.coincident_days": lambda: _tccon("coincident days"),
