@@ -109,7 +109,7 @@ he2026attribution,10.1126/sciadv.adz9007,peer-reviewed paper,Information content
 shen2023fuelexploitation,10.1038/s41467-023-40671-6,peer-reviewed paper,Information content,,,,methods;yrd,notes/decisions.md
 zhong2026groundvalue,10.5194/amt-19-4759-2026,peer-reviewed paper,Information content,,,,methods;yrd,notes/decisions.md;notes/dataset-leads.md
 varon2023permian,10.5194/acp-23-7503-2023,peer-reviewed paper,Information content,,,methods,methods,data/manifest.json
-nikolaisen2023riceef,10.1016/j.jclepro.2023.137245,(unlabelled),"The inversion frame and the urban layer, added 11 September 2026",,,,methods,
+nikolaisen2023riceef,10.1016/j.jclepro.2023.137245,(unlabelled),"The inversion frame and the urban layer, added 11 September 2026",,,,methods,notes/dataset-leads.md
 lee2024twostagebayes,10.1093/biostatistics/kxae038,peer-reviewed paper,The alternatives to prediction-powered inference,,,,methods,
 vanderweele2019differential,10.1093/aje/kwz133,peer-reviewed paper,The alternatives to prediction-powered inference,,,,methods,
 cinelli2020sensitivity,10.1111/rssb.12348,peer-reviewed paper,The alternatives to prediction-powered inference,,,,methods,

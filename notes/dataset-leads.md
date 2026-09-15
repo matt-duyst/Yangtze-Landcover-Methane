@@ -636,3 +636,76 @@ conversation: it separates what was tried from what was read, it records the
 licence beside the route so that a constraint is met before work depends on it,
 and it records rejections and their reasons so a candidate is not reconsidered
 from scratch.
+
+## Code, as distinct from data, searched 16 September 2026
+
+Everything above is data. This section is code, because the emissions direction
+needs implementations rather than products and the inventory had no place to put
+them. Searched by going at GitHub, Zenodo, figshare and NASA's CMR directly
+rather than at the literature about them.
+
+**Zenodo answers this network now.** Three deposits recorded above as
+unreachable — "zenodo.org refuses this network" — returned HTTP 200 on 16
+September 2026, and two of them hold code. The refusal was a property of that
+pass, not of the host, which is the third instance of a request-signature or
+route condition changing between passes in this project.
+
+### The rice chain
+
+| Component | Where | Form | Licence | Access |
+|---|---|---|---|---|
+| **GRPI inundation algorithm** | `github.com/zichongchen/GRPI`, archived at Zenodo `10.5281/zenodo.14934425` | **Google Earth Engine JavaScript**, `grpi_chen.js`, 32,943 B, 87 `ee.` calls | **none declared on GitHub**; the Zenodo archive records CC BY 4.0 | needs an Earth Engine account |
+| GRPI inventory itself | Zenodo `10.5281/zenodo.15210212` | one file, `grpi_hemco.nc`, 4,157,165 B — **HEMCO format** | CC BY 4.0 | direct, anonymous |
+| **TropWet** | `github.com/tropwet/tropwet` | Python package, v0.0.1, `install_requires=["earthengine-api"]` | **Apache-2.0** | needs an Earth Engine account |
+| TropWet outputs | `github.com/ajhardy13/TropWet`, `…/tropwet_rwanda`, `…/tropwet_sudd`, `…/tropwet_sudd_v2` | output tiles, i.e. data | none declared | direct |
+| **LGRIP30** | NASA LP DAAC, `10.5067/Community/LGRIP/LGRIP30.001` | data | NASA open data | Earthdata login; **CMR lists a v002 as well as the cited v001** |
+| Nikolaisen emission factors | paper only, `10.1016/j.jclepro.2023.137245`, published version CC BY via Edinburgh | a generalised additive model **described in the paper**; **no deposit found** | CC BY (the paper) | the model is not distributed |
+| **CCD-Rice** | `github.com/shenrq/CCD-Rice`, archived Zenodo `10.5281/zenodo.15468566` | "Codes of a rice mapping method to generate CCD-Rice product" | **MIT** | direct; previously recorded unreachable |
+
+**GRPI's published code is TropWet invoked directly.** `grpi_chen.js` calls
+`doTropwet(polygon, i)` over global 5-degree polygons and carries 14 `unmix`
+calls against Landsat 5, 7, 8 and 9 collections. So the two are one code path
+rather than two components, and what GRPI publishes is the **inundation** half:
+the script contains no reference to LGRIP30 and none to an emission factor, so
+the cropland masking and the factor multiplication are not in it.
+
+### The other sectors
+
+| Sector | Code found | Licence |
+|---|---|---|
+| Landfill | no authors' code. Two third-party reimplementations of EPA LandGEM: `decoles/Landfill-Gas-Emission-Model-Desktop` and `Saltykoff1986/krasGEM` | MIT / none |
+| Wastewater | **none** | — |
+| Gas distribution | **none** | — |
+| Coal, gridded | **five Python files inside the data deposit**, Zenodo `10.5281/zenodo.10884855`: `Uncertainty.py`, `calc.py`, `preExit.py`, `mine_exit.py`, `Best_Fit.py` | CC BY 4.0 |
+| Coal, mine-level | none; the deposit is one xlsx | CC BY 4.0 |
+| Aquaculture | **none** | — |
+| GHGSat plumes | `reproduce_GHGSat_rates_in_csv.py` plus `requirements.txt` inside Zenodo `10.5281/zenodo.16641834` | **the deposit is CC-BY-NC-SA-4.0**, not the CC BY 4.0 recorded above from Crossref for the paper |
+
+### The inversion chain
+
+| Component | Where | Licence | Notes |
+|---|---|---|---|
+| **IMI** | `github.com/geoschem/integrated_methane_inversion` | **MIT** | pushed the day of this search; 49 stars. Its docs carry **three routes**: AWS, "Running the IMI on a local cluster", and "Using the IMI Docker container" — so a local run is documented and the cloud is not the only route |
+| GEOS-Chem | `github.com/geoschem/geos-chem` | **MIT**, from `LICENSE.txt`; GitHub reports NOASSERTION, which is a detection failure | Fortran, 107 MB |
+| GCClassic | `github.com/geoschem/GCClassic` | as above | the superproject wrapper |
+| **HEMCO** | `github.com/geoschem/HEMCO` | as above | the emissions component, and the format GRPI's deposit is already in |
+
+**The four public S3 buckets verify.** `gcgrid`, `geos-chem`,
+`imi-boundary-conditions` and `blended-tropomi-gosat-methane` each answered a
+list request with HTTP 200 and no credentials on 16 September 2026.
+
+### Earth Engine, which gates the rice chain
+
+Both GRPI and TropWet require it. Google's own noncommercial page, read 16
+September 2026, states that "Earth Engine remains free of charge for certain use
+cases" and lists among the eligible: "Academic or educational institution using
+Earth Engine for research or teaching", where it "will remain free of charge for
+students, faculty, or staff at an academic or educational institution … for
+academic research or teaching/learning purposes", and separately "Individual
+using Earth Engine for noncommercial purposes".
+
+**So the blocker that stopped the earlier PPPM reimplementation does not hold.**
+That was the loss of an institutional account; free registration for
+noncommercial use is available on its own terms. The restriction attached is
+that free users may not perform fee-for-service work or take compensation from
+commercial entities for what they produce, neither of which applies here.
