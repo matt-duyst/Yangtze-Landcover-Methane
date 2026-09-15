@@ -40,13 +40,18 @@ notes/draft-introduction.md,135,4. What this paper does,0.5,cited,in a draft's o
 notes/draft-introduction.md,136,4. What this paper does,0,measured,inline resolver,dofs.cells_above_half, 0<!--#dofs.cells_above_half-->;
 notes/draft-introduction.md,148,4. What this paper does,2018,self_evident,year as a date,,limitation was asserted for this instrument in 2018 and the contribution is
 notes/draft-introduction.md,154,4. What this paper does,9,measured,inline resolver,tccon.coincident_days,9<!--#tccon.coincident_days--> coincident
-notes/draft-introduction.md,163,4. What this paper does,126,measured,inline resolver,curve.specifications,126<!--#curve.specifications--> defensible specifications
-notes/draft-introduction.md,164,4. What this paper does,0,measured,inline resolver,curve.positive_and_beats,0<!--#curve.positive_and_beats--> are both positive and beat their own spatial
-notes/draft-introduction.md,167,4. What this paper does,7,measured,inline resolver,equiv.impervious_within,7<!--#equiv.impervious_within--> of
-notes/draft-introduction.md,168,4. What this paper does,12,measured,inline resolver,equiv.impervious_rows,"12<!--#equiv.impervious_rows-->, so this paper claims no meaningful rice effect"
-notes/draft-introduction.md,174,4. What this paper does,1.15,measured,inline resolver,atten.factor_max,"1.15<!--#atten.factor_max-->, and reaching the spatial null's performance would"
-notes/draft-introduction.md,175,4. What this paper does,74.5,measured,inline resolver,atten.need_share_bu_pct,require 74.5<!--#atten.need_share_bu_pct--> percent of the predictor's variance
-notes/draft-introduction.md,176,4. What this paper does,5.6,measured,inline resolver,atten.need_multiple_bu,"to be error, which is 5.6<!--#atten.need_multiple_bu--> times what the two"
+notes/draft-introduction.md,163,4. What this paper does,0.410,measured,inline resolver,change.xsec_contrast,0.410<!--#change.xsec_contrast--> ppb against a field whose between-cell
+notes/draft-introduction.md,164,4. What this paper does,14.86,measured,inline resolver,field.sd_operational,standard deviation is 14.86<!--#field.sd_operational--> ppb — an implied R
+notes/draft-introduction.md,165,4. What this paper does,0.00007,measured,inline resolver,change.xsec_r2,squared of 0.00007<!--#change.xsec_r2-->. A predictor carrying a signal that
+notes/draft-introduction.md,170,4. What this paper does,5.80,measured,inline resolver,change.coal_enhancement,5.80<!--#change.coal_enhancement--> ppb for a cell of the inventory's coal
+notes/draft-introduction.md,171,4. What this paper does,2.9,measured,inline resolver,change.coal_multiple,"sector, which is 2.9<!--#change.coal_multiple--> times the per-cell error. The"
+notes/draft-introduction.md,178,4. What this paper does,126,measured,inline resolver,curve.specifications,126<!--#curve.specifications--> defensible specifications
+notes/draft-introduction.md,179,4. What this paper does,0,measured,inline resolver,curve.positive_and_beats,0<!--#curve.positive_and_beats--> are both positive and beat their own spatial
+notes/draft-introduction.md,182,4. What this paper does,7,measured,inline resolver,equiv.impervious_within,7<!--#equiv.impervious_within--> of
+notes/draft-introduction.md,183,4. What this paper does,12,measured,inline resolver,equiv.impervious_rows,"12<!--#equiv.impervious_rows-->, so this paper claims no meaningful rice effect"
+notes/draft-introduction.md,189,4. What this paper does,1.15,measured,inline resolver,atten.factor_max,"1.15<!--#atten.factor_max-->, and reaching the spatial null's performance would"
+notes/draft-introduction.md,190,4. What this paper does,74.5,measured,inline resolver,atten.need_share_bu_pct,require 74.5<!--#atten.need_share_bu_pct--> percent of the predictor's variance
+notes/draft-introduction.md,191,4. What this paper does,5.6,measured,inline resolver,atten.need_multiple_bu,"to be error, which is 5.6<!--#atten.need_multiple_bu--> times what the two"
 notes/draft-methods.md,18,1. Study area and analysis lattice,1,self_evident,structural line,,## 1. Study area and analysis lattice
 notes/draft-methods.md,22,1. Study area and analysis lattice,0.25,self_evident,grid resolution,,was carried out on a regular geographic lattice of 0.25° cells spanning 114.8°
 notes/draft-methods.md,22,1. Study area and analysis lattice,114.8,self_evident,study box or lattice shape,,was carried out on a regular geographic lattice of 0.25° cells spanning 114.8°
@@ -365,56 +370,63 @@ notes/draft-methods.md,598,6.2 Identifiability,0.35,cited,in a draft's own exemp
 notes/draft-methods.md,598,6.2 Identifiability,35,neither,no resolver and no exemption,,"what its own threshold means — correlations below 0.35 imply ""less than 35 % of"
 notes/draft-methods.md,608,6.2 Identifiability,4.2,self_evident,structural context,,(§4.2). The methodological literature states the consequence directly: inversion
 notes/draft-methods.md,615,6.2 Identifiability,2018,self_evident,year as a date,,"spatial resolution and their lack of sensitivity"" (Desjardins et al., 2018)."
-notes/draft-methods.md,629,6.3 Relation to the association analysis,6.3,self_evident,structural line,,### 6.3 Relation to the association analysis
-notes/draft-methods.md,631,6.3 Relation to the association analysis,5,self_evident,structural context,,The association analysis of §5 is the empirical counterpart of §6.1 rather than a
-notes/draft-methods.md,631,6.3 Relation to the association analysis,6.1,self_evident,structural context,,The association analysis of §5 is the empirical counterpart of §6.1 rather than a
-notes/draft-methods.md,633,6.3 Relation to the association analysis,5,self_evident,structural context,,"sensitivity is a record in which per-cell predictors should fail, and §5 reports"
-notes/draft-methods.md,639,7. Validation,7,self_evident,structural line,,## 7. Validation
-notes/draft-methods.md,644,7. Validation,"2,767",measured,inline resolver,tccon.retrievals,"its 2018 record is sparse: 2,767<!--#tccon.retrievals--> retrievals on"
-notes/draft-methods.md,644,7. Validation,2018,self_evident,year as a date,,"its 2018 record is sparse: 2,767<!--#tccon.retrievals--> retrievals on"
-notes/draft-methods.md,645,7. Validation,44,measured,inline resolver,tccon.days,44<!--#tccon.days--> days. 9<!--#tccon.coincident_days--> days in 2018 carry
-notes/draft-methods.md,645,7. Validation,9,measured,inline resolver,tccon.coincident_days,44<!--#tccon.days--> days. 9<!--#tccon.coincident_days--> days in 2018 carry
-notes/draft-methods.md,645,7. Validation,2018,self_evident,year as a date,,44<!--#tccon.days--> days. 9<!--#tccon.coincident_days--> days in 2018 carry
-notes/draft-methods.md,661,7. Validation,4.3,self_evident,structural context,,"cover, which is the form both predictors take here (§4.3). That frame compares a"
-notes/draft-methods.md,668,7. Validation,0.954,cited,in a draft's own exemption list,discussion: accuracy figure in section 8,caveat that it is not fully verifiable: GISA's impervious F-score of 0.954 is
-notes/draft-methods.md,670,7. Validation,90,neither,no resolver and no exemption,,"accuracy above 90 percent likewise. A third product, GISA-new, reports 93.12"
-notes/draft-methods.md,670,7. Validation,93.12,neither,no resolver and no exemption,,"accuracy above 90 percent likewise. A third product, GISA-new, reports 93.12"
-notes/draft-methods.md,671,7. Validation,10.50,neither,no resolver and no exemption,,percent overall accuracy with omission errors of 10.50 percent and commission
-notes/draft-methods.md,672,7. Validation,3.52,neither,no resolver and no exemption,,"errors of 3.52 percent on two independent global test sets of more than 100,000"
-notes/draft-methods.md,672,7. Validation,"100,000",neither,no resolver and no exemption,,"errors of 3.52 percent on two independent global test sets of more than 100,000"
-notes/draft-methods.md,675,7. Validation,1,neither,no resolver and no exemption,,against each other on a single common sample. A 1 m national land-cover map of China reports 73.61
-notes/draft-methods.md,675,7. Validation,73.61,cited,in a draft's own exemption list,discussion: SinoLC-1 overall accuracy,against each other on a single common sample. A 1 m national land-cover map of China reports 73.61
-notes/draft-methods.md,676,7. Validation,0.6595,neither,no resolver and no exemption,,"percent overall accuracy with a kappa of 0.6595 on 106,344 counted points from"
-notes/draft-methods.md,676,7. Validation,"106,344",neither,no resolver and no exemption,,"percent overall accuracy with a kappa of 0.6595 on 106,344 counted points from"
-notes/draft-methods.md,677,7. Validation,"100,000",neither,no resolver and no exemption,,"over 100,000 visually interpreted random samples across eleven classes, and"
-notes/draft-methods.md,680,7. Validation,1,neither,no resolver and no exemption,,map rather than a table. A 1 m impervious product for the Yangtze River Economic
-notes/draft-methods.md,681,7. Validation,75.53,neither,no resolver and no exemption,,"Belt reports an impervious-class F1 of 75.53 with a recall of 61.76, is"
-notes/draft-methods.md,681,7. Validation,61.76,neither,no resolver and no exemption,,"Belt reports an impervious-class F1 of 75.53 with a recall of 61.76, is"
-notes/draft-methods.md,682,7. Validation,10,cited,in a draft's own exemption list,"methods: published precision filter, under 10 ppb","super-resolved from 10 m imagery, and is deposited as seven example cities. A"
-notes/draft-methods.md,683,7. Validation,42,neither,no resolver and no exemption,,submeter product over 42 cities reports 83.6 percent overall accuracy and covers
-notes/draft-methods.md,683,7. Validation,83.6,neither,no resolver and no exemption,,submeter product over 42 cities reports 83.6 percent overall accuracy and covers
-notes/draft-methods.md,684,7. Validation,30,cited,in a draft's own exemption list,"introduction: inventory spread, at least 30 percent",urban areas only. A 30 m product for 2020 and 2022 reports an impervious F1
-notes/draft-methods.md,684,7. Validation,2020,self_evident,year as a date,,urban areas only. A 30 m product for 2020 and 2022 reports an impervious F1
-notes/draft-methods.md,684,7. Validation,2022,self_evident,year as a date,,urban areas only. A 30 m product for 2020 and 2022 reports an impervious F1
-notes/draft-methods.md,685,7. Validation,0.93,unresolved,"equals a resolver's value, written unmarked",atten.lambda_equal,"above 0.93 and is the same resolution as the layers it would assess, so it is a"
-notes/draft-methods.md,687,7. Validation,2020,self_evident,year as a date,,"what it would validate, and each is 2020 or later against analysis years of"
-notes/draft-methods.md,688,7. Validation,2000,self_evident,year as a date,,"2000, 2010 and 2018.** So the absence is a property of the products available"
-notes/draft-methods.md,688,7. Validation,2010,self_evident,year as a date,,"2000, 2010 and 2018.** So the absence is a property of the products available"
-notes/draft-methods.md,688,7. Validation,2018,self_evident,year as a date,,"2000, 2010 and 2018.** So the absence is a property of the products available"
-notes/draft-methods.md,697,7. Validation,42,neither,no resolver and no exemption,,"42 urban cores, and the Yangtze River Economic Belt. What closes the route is"
-notes/draft-methods.md,706,7. Validation,868,neither,no resolver and no exemption,,"fractional specialisation of Pontius and Millones's decomposition, at the 868 m"
-notes/draft-methods.md,707,7. Validation,0.25,self_evident,grid resolution,,grid on which both are committed and at the 0.25 degree lattice the association
-notes/draft-methods.md,714,7. Validation,13.2,measured,inline resolver,atten.var_share_pct,"variance is 13.2<!--#atten.var_share_pct--> % of the predictor's own variance,"
-notes/draft-methods.md,715,7. Validation,0.868,measured,inline resolver,atten.lambda_min,so the reliability ratio is at least 0.868<!--#atten.lambda_min--> and the
-notes/draft-methods.md,716,7. Validation,1.15,measured,inline resolver,atten.factor_max,de-attenuation factor is at most 1.15<!--#atten.factor_max-->. Results §3.4
-notes/draft-methods.md,716,7. Validation,3.4,self_evident,structural context,,de-attenuation factor is at most 1.15<!--#atten.factor_max-->. Results §3.4
-notes/draft-methods.md,724,7. Validation,0.118,unresolved,"in an artefact, no resolver","albedo_confounder_2018.csv, partial correlation",the signed difference correlating at −0.118 with methane once the fraction is
-notes/draft-methods.md,735,7. Validation,6,self_evident,structural context,,bounded. None of the capability statements of §6 depends on either.
-notes/draft-methods.md,737,8. Reproducibility,8,self_evident,structural line,,## 8. Reproducibility
-notes/draft-methods.md,741,8. Reproducibility,75,measured,inline resolver,pipeline.recipes,75<!--#pipeline.recipes--> artefacts are registered across four tiers:
-notes/draft-methods.md,742,8. Reproducibility,41,measured,inline resolver,pipeline.recipes_committed,41<!--#pipeline.recipes_committed--> regenerate from a fresh clone with no
-notes/draft-methods.md,744,8. Reproducibility,23,measured,inline resolver,pipeline.recipes_local,23<!--#pipeline.recipes_local--> require local raw data and are verified where it
-notes/draft-methods.md,745,8. Reproducibility,10,measured,inline resolver,pipeline.recipes_network,exists; 10<!--#pipeline.recipes_network--> require a network fetch and are verified
+notes/draft-methods.md,629,6.3 Expected column signal from a land-cover contrast,6.3,self_evident,structural line,,### 6.3 Expected column signal from a land-cover contrast
+notes/draft-methods.md,631,6.3 Expected column signal from a land-cover contrast,6.1,self_evident,structural context,,The same closed form that gives §6.1's sensitivities also relates an emission to
+notes/draft-methods.md,635,6.3 Expected column signal from a land-cover contrast,6.1,self_evident,structural context,,in §6.1 and evaluated at the same wind.
+notes/draft-methods.md,639,6.3 Expected column signal from a land-cover contrast,28.82,unresolved,"equals a resolver's value, written unmarked",change.rate_urban,"and oil-and-gas grids on impervious area over this lattice, 28.82 Mg km⁻² a⁻¹,"
+notes/draft-methods.md,640,6.3 Expected column signal from a land-cover contrast,31.16,neither,no resolver and no exemption,,with an ordinary-least-squares slope of 31.16 and an intercept of −389 Mg a⁻¹
+notes/draft-methods.md,640,6.3 Expected column signal from a land-cover contrast,389,neither,no resolver and no exemption,,with an ordinary-least-squares slope of 31.16 and an intercept of −389 Mg a⁻¹
+notes/draft-methods.md,643,6.3 Expected column signal from a land-cover contrast,6.1,self_evident,structural context,,§6.1.
+notes/draft-methods.md,656,6.4 Relation to the association analysis,6.4,self_evident,structural line,,### 6.4 Relation to the association analysis
+notes/draft-methods.md,658,6.4 Relation to the association analysis,5,self_evident,structural context,,The association analysis of §5 is the empirical counterpart of §6.1 rather than a
+notes/draft-methods.md,658,6.4 Relation to the association analysis,6.1,self_evident,structural context,,The association analysis of §5 is the empirical counterpart of §6.1 rather than a
+notes/draft-methods.md,660,6.4 Relation to the association analysis,5,self_evident,structural context,,"sensitivity is a record in which per-cell predictors should fail, and §5 reports"
+notes/draft-methods.md,666,7. Validation,7,self_evident,structural line,,## 7. Validation
+notes/draft-methods.md,671,7. Validation,"2,767",measured,inline resolver,tccon.retrievals,"its 2018 record is sparse: 2,767<!--#tccon.retrievals--> retrievals on"
+notes/draft-methods.md,671,7. Validation,2018,self_evident,year as a date,,"its 2018 record is sparse: 2,767<!--#tccon.retrievals--> retrievals on"
+notes/draft-methods.md,672,7. Validation,44,measured,inline resolver,tccon.days,44<!--#tccon.days--> days. 9<!--#tccon.coincident_days--> days in 2018 carry
+notes/draft-methods.md,672,7. Validation,9,measured,inline resolver,tccon.coincident_days,44<!--#tccon.days--> days. 9<!--#tccon.coincident_days--> days in 2018 carry
+notes/draft-methods.md,672,7. Validation,2018,self_evident,year as a date,,44<!--#tccon.days--> days. 9<!--#tccon.coincident_days--> days in 2018 carry
+notes/draft-methods.md,688,7. Validation,4.3,self_evident,structural context,,"cover, which is the form both predictors take here (§4.3). That frame compares a"
+notes/draft-methods.md,695,7. Validation,0.954,cited,in a draft's own exemption list,discussion: accuracy figure in section 8,caveat that it is not fully verifiable: GISA's impervious F-score of 0.954 is
+notes/draft-methods.md,697,7. Validation,90,neither,no resolver and no exemption,,"accuracy above 90 percent likewise. A third product, GISA-new, reports 93.12"
+notes/draft-methods.md,697,7. Validation,93.12,neither,no resolver and no exemption,,"accuracy above 90 percent likewise. A third product, GISA-new, reports 93.12"
+notes/draft-methods.md,698,7. Validation,10.50,neither,no resolver and no exemption,,percent overall accuracy with omission errors of 10.50 percent and commission
+notes/draft-methods.md,699,7. Validation,3.52,neither,no resolver and no exemption,,"errors of 3.52 percent on two independent global test sets of more than 100,000"
+notes/draft-methods.md,699,7. Validation,"100,000",neither,no resolver and no exemption,,"errors of 3.52 percent on two independent global test sets of more than 100,000"
+notes/draft-methods.md,702,7. Validation,1,neither,no resolver and no exemption,,against each other on a single common sample. A 1 m national land-cover map of China reports 73.61
+notes/draft-methods.md,702,7. Validation,73.61,cited,in a draft's own exemption list,discussion: SinoLC-1 overall accuracy,against each other on a single common sample. A 1 m national land-cover map of China reports 73.61
+notes/draft-methods.md,703,7. Validation,0.6595,neither,no resolver and no exemption,,"percent overall accuracy with a kappa of 0.6595 on 106,344 counted points from"
+notes/draft-methods.md,703,7. Validation,"106,344",neither,no resolver and no exemption,,"percent overall accuracy with a kappa of 0.6595 on 106,344 counted points from"
+notes/draft-methods.md,704,7. Validation,"100,000",neither,no resolver and no exemption,,"over 100,000 visually interpreted random samples across eleven classes, and"
+notes/draft-methods.md,707,7. Validation,1,neither,no resolver and no exemption,,map rather than a table. A 1 m impervious product for the Yangtze River Economic
+notes/draft-methods.md,708,7. Validation,75.53,neither,no resolver and no exemption,,"Belt reports an impervious-class F1 of 75.53 with a recall of 61.76, is"
+notes/draft-methods.md,708,7. Validation,61.76,neither,no resolver and no exemption,,"Belt reports an impervious-class F1 of 75.53 with a recall of 61.76, is"
+notes/draft-methods.md,709,7. Validation,10,cited,in a draft's own exemption list,"methods: published precision filter, under 10 ppb","super-resolved from 10 m imagery, and is deposited as seven example cities. A"
+notes/draft-methods.md,710,7. Validation,42,neither,no resolver and no exemption,,submeter product over 42 cities reports 83.6 percent overall accuracy and covers
+notes/draft-methods.md,710,7. Validation,83.6,neither,no resolver and no exemption,,submeter product over 42 cities reports 83.6 percent overall accuracy and covers
+notes/draft-methods.md,711,7. Validation,30,cited,in a draft's own exemption list,"introduction: inventory spread, at least 30 percent",urban areas only. A 30 m product for 2020 and 2022 reports an impervious F1
+notes/draft-methods.md,711,7. Validation,2020,self_evident,year as a date,,urban areas only. A 30 m product for 2020 and 2022 reports an impervious F1
+notes/draft-methods.md,711,7. Validation,2022,self_evident,year as a date,,urban areas only. A 30 m product for 2020 and 2022 reports an impervious F1
+notes/draft-methods.md,712,7. Validation,0.93,unresolved,"equals a resolver's value, written unmarked",atten.lambda_equal,"above 0.93 and is the same resolution as the layers it would assess, so it is a"
+notes/draft-methods.md,714,7. Validation,2020,self_evident,year as a date,,"what it would validate, and each is 2020 or later against analysis years of"
+notes/draft-methods.md,715,7. Validation,2000,self_evident,year as a date,,"2000, 2010 and 2018.** So the absence is a property of the products available"
+notes/draft-methods.md,715,7. Validation,2010,self_evident,year as a date,,"2000, 2010 and 2018.** So the absence is a property of the products available"
+notes/draft-methods.md,715,7. Validation,2018,self_evident,year as a date,,"2000, 2010 and 2018.** So the absence is a property of the products available"
+notes/draft-methods.md,724,7. Validation,42,neither,no resolver and no exemption,,"42 urban cores, and the Yangtze River Economic Belt. What closes the route is"
+notes/draft-methods.md,733,7. Validation,868,neither,no resolver and no exemption,,"fractional specialisation of Pontius and Millones's decomposition, at the 868 m"
+notes/draft-methods.md,734,7. Validation,0.25,self_evident,grid resolution,,grid on which both are committed and at the 0.25 degree lattice the association
+notes/draft-methods.md,741,7. Validation,13.2,measured,inline resolver,atten.var_share_pct,"variance is 13.2<!--#atten.var_share_pct--> % of the predictor's own variance,"
+notes/draft-methods.md,742,7. Validation,0.868,measured,inline resolver,atten.lambda_min,so the reliability ratio is at least 0.868<!--#atten.lambda_min--> and the
+notes/draft-methods.md,743,7. Validation,1.15,measured,inline resolver,atten.factor_max,de-attenuation factor is at most 1.15<!--#atten.factor_max-->. Results §3.4
+notes/draft-methods.md,743,7. Validation,3.4,self_evident,structural context,,de-attenuation factor is at most 1.15<!--#atten.factor_max-->. Results §3.4
+notes/draft-methods.md,751,7. Validation,0.118,unresolved,"in an artefact, no resolver","albedo_confounder_2018.csv, partial correlation",the signed difference correlating at −0.118 with methane once the fraction is
+notes/draft-methods.md,762,7. Validation,6,self_evident,structural context,,bounded. None of the capability statements of §6 depends on either.
+notes/draft-methods.md,764,8. Reproducibility,8,self_evident,structural line,,## 8. Reproducibility
+notes/draft-methods.md,768,8. Reproducibility,75,measured,inline resolver,pipeline.recipes,75<!--#pipeline.recipes--> artefacts are registered across four tiers:
+notes/draft-methods.md,769,8. Reproducibility,41,measured,inline resolver,pipeline.recipes_committed,41<!--#pipeline.recipes_committed--> regenerate from a fresh clone with no
+notes/draft-methods.md,771,8. Reproducibility,23,measured,inline resolver,pipeline.recipes_local,23<!--#pipeline.recipes_local--> require local raw data and are verified where it
+notes/draft-methods.md,772,8. Reproducibility,10,measured,inline resolver,pipeline.recipes_network,exists; 10<!--#pipeline.recipes_network--> require a network fetch and are verified
 notes/draft-results.md,11,(none),1,self_evident,structural context,,"preliminary material, so §1 reports the observing system, §2 the field it"
 notes/draft-results.md,11,(none),2,self_evident,structural context,,"preliminary material, so §1 reports the observing system, §2 the field it"
 notes/draft-results.md,12,(none),3,self_evident,structural context,,"produced, §3 the land-cover association, §4 the confounds, §5 the"
@@ -716,129 +728,168 @@ notes/draft-results.md,593,6.3 Identifiability,0.35,cited,in a draft's own exemp
 notes/draft-results.md,595,6.3 Identifiability,0.45,cited,in a draft's own exemption list,"discussion: posterior error correlation, shared surface, lower",stationary combustion — posterior error correlations among them run 0.45 to 0.87
 notes/draft-results.md,595,6.3 Identifiability,0.87,cited,in a draft's own exemption list,"discussion: posterior error correlation, shared surface, upper",stationary combustion — posterior error correlations among them run 0.45 to 0.87
 notes/draft-results.md,606,6.3 Identifiability,86.11,measured,inline resolver,rice.anhui_coverage_percent,86.11<!--#rice.anhui_coverage_percent--> % of that province.
-notes/draft-results.md,612,6.4 Relation to §3,6.4,self_evident,structural line,,### 6.4 Relation to §3
-notes/draft-results.md,612,6.4 Relation to §3,3,self_evident,structural line,,### 6.4 Relation to §3
-notes/draft-results.md,614,6.4 Relation to §3,3,self_evident,structural context,,The land-cover result of §3 is the empirical counterpart of §6.1. A record whose
-notes/draft-results.md,614,6.4 Relation to §3,6.1,self_evident,structural context,,The land-cover result of §3 is the empirical counterpart of §6.1. A record whose
-notes/draft-results.md,616,6.4 Relation to §3,3,self_evident,structural context,,"record in which per-cell predictors should fail, and §3 reports that they do"
-notes/draft-results.md,621,7. Reproducibility of the reported figures,7,self_evident,structural line,,## 7. Reproducibility of the reported figures
-notes/draft-results.md,623,7. Reproducibility of the reported figures,75,measured,inline resolver,pipeline.recipes,75<!--#pipeline.recipes--> derived artefacts are registered with the command that
-notes/draft-results.md,625,7. Reproducibility of the reported figures,41,measured,inline resolver,pipeline.recipes_committed,41<!--#pipeline.recipes_committed--> regenerate from a fresh clone with no network
-notes/draft-results.md,627,7. Reproducibility of the reported figures,23,measured,inline resolver,pipeline.recipes_local,run; 23<!--#pipeline.recipes_local--> require local raw data;
-notes/draft-results.md,628,7. Reproducibility of the reported figures,10,measured,inline resolver,pipeline.recipes_network,10<!--#pipeline.recipes_network--> require a network fetch. Every numeric claim in
-notes/draft-discussion.md,10,(none),1,self_evident,structural context,,"what the result is and is not (§1), explain why it came out that way (§2 and §3),"
-notes/draft-discussion.md,10,(none),2,self_evident,structural context,,"what the result is and is not (§1), explain why it came out that way (§2 and §3),"
-notes/draft-discussion.md,10,(none),3,self_evident,structural context,,"what the result is and is not (§1), explain why it came out that way (§2 and §3),"
-notes/draft-discussion.md,11,(none),4,self_evident,structural context,,"show that the explanation is not an artefact (§4), and then generalise it — which"
-notes/draft-discussion.md,12,(none),5,self_evident,structural context,,is where the contribution sits (§5). Only then does it locate the work against
-notes/draft-discussion.md,13,(none),6,self_evident,structural context,,"prior results (§6) and say what would answer the original question (§7), closing"
-notes/draft-discussion.md,13,(none),7,self_evident,structural context,,"prior results (§6) and say what would answer the original question (§7), closing"
-notes/draft-discussion.md,14,(none),8,self_evident,structural context,,with limitations (§8). Mechanism precedes capability deliberately: the mechanism
-notes/draft-discussion.md,19,"1. What the reproduction establishes, and what it does not",1,self_evident,structural line,,"## 1. What the reproduction establishes, and what it does not"
-notes/draft-discussion.md,21,"1. What the reproduction establishes, and what it does not",2018,self_evident,year as a date,,No association between land cover and the 2018 methane column field was detected
-notes/draft-discussion.md,28,"1. What the reproduction establishes, and what it does not",0.58,measured,inline resolver,equiv.bound_comparative,"|r| = 0.58<!--#equiv.bound_comparative-->, tested on a 90 percent interval with"
-notes/draft-discussion.md,28,"1. What the reproduction establishes, and what it does not",90,self_evident,label or pair beside a marked number,,"|r| = 0.58<!--#equiv.bound_comparative-->, tested on a 90 percent interval with"
-notes/draft-discussion.md,32,"1. What the reproduction establishes, and what it does not",24,measured,inline resolver,equiv.rice_rows,"24<!--#equiv.rice_rows--> combinations, which is evidence of no meaningful"
-notes/draft-discussion.md,34,"1. What the reproduction establishes, and what it does not",7,measured,inline resolver,equiv.impervious_within,"7<!--#equiv.impervious_within--> of 12<!--#equiv.impervious_rows-->, and spans"
-notes/draft-discussion.md,34,"1. What the reproduction establishes, and what it does not",12,measured,inline resolver,equiv.impervious_rows,"7<!--#equiv.impervious_within--> of 12<!--#equiv.impervious_rows-->, and spans"
-notes/draft-discussion.md,41,"1. What the reproduction establishes, and what it does not",4,self_evident,structural context,,predictor does not account for the result** — §4 gives the bound.
-notes/draft-discussion.md,48,"1. What the reproduction establishes, and what it does not",0.25,self_evident,grid resolution,,"regressed against an annual column composite at 0.25 degrees, cannot recover"
-notes/draft-discussion.md,52,"2. Extent is a proxy for presence, not for management",2,self_evident,structural line,,"## 2. Extent is a proxy for presence, not for management"
-notes/draft-discussion.md,59,"2. Extent is a proxy for presence, not for management",13.7,cited,in a draft's own exemption list,"introduction/discussion: rice prior Tg, and the water-regime ratio", one soil under one crop span a factor of 13.7 in net global warming potential.
-notes/draft-discussion.md,62,"2. Extent is a proxy for presence, not for management",38,cited,in a draft's own exemption list,discussion: collection efficiency," efficiency averages 38 percent against a reported 70, while the Los Angeles"
-notes/draft-discussion.md,62,"2. Extent is a proxy for presence, not for management",70,cited,in a draft's own exemption list,discussion: collection efficiency," efficiency averages 38 percent against a reported 70, while the Los Angeles"
-notes/draft-discussion.md,63,"2. Extent is a proxy for presence, not for management",85,cited,in a draft's own exemption list,discussion: collection efficiency, sites in the same analysis average 85 — a factor of two in emission at
-notes/draft-discussion.md,69,"2. Extent is a proxy for presence, not for management",8,neither,no resolver and no exemption,, content across the Huainan–Huaibei coalfield runs 8 to 16 m³ per tonne in
-notes/draft-discussion.md,69,"2. Extent is a proxy for presence, not for management",16,neither,no resolver and no exemption,, content across the Huainan–Huaibei coalfield runs 8 to 16 m³ per tonne in
-notes/draft-discussion.md,70,"2. Extent is a proxy for presence, not for management",10,cited,in a draft's own exemption list,"methods: published precision filter, under 10 ppb", Huaibei and 10 to 30 in Huainan.
-notes/draft-discussion.md,70,"2. Extent is a proxy for presence, not for management",30,cited,in a draft's own exemption list,"introduction: inventory spread, at least 30 percent", Huaibei and 10 to 30 in Huainan.
-notes/draft-discussion.md,76,"2. Extent is a proxy for presence, not for management",197,cited,in a draft's own exemption list,discussion: within-class aquaculture ratio, intensity per unit of fish production runs **197 times higher** in traditional
-notes/draft-discussion.md,90,"2. Extent is a proxy for presence, not for management",197,cited,in a draft's own exemption list,discussion: within-class aquaculture ratio,practice. A factor of 197 between two ways of farming the same water is not an
-notes/draft-discussion.md,93,"2. Extent is a proxy for presence, not for management",7,self_evident,structural context,,"quality** — and it is why §7's routes are about priors, targeted observation and"
-notes/draft-discussion.md,96,3. What the predictors never contained,3,self_evident,structural line,,## 3. What the predictors never contained
-notes/draft-discussion.md,99,3. What the predictors never contained,2,self_evident,structural context,,§2 says a perfectly measured extent predictor would still fail. This section
-notes/draft-discussion.md,107,3. What the predictors never contained,33.3462,unresolved,"in an artefact, no resolver","the Anhui raster bound, exempted in the methods note","hole**, because the committed rice raster stops classifying north of 33.3462° N,"
-notes/draft-discussion.md,112,3. What the predictors never contained,26,cited,in a draft's own exemption list,introduction/discussion: 26 percent aquaculture share,"**Aquaculture.** The region holds 26 percent of China's aquaculture area, ponds"
-notes/draft-discussion.md,115,3. What the predictors never contained,197,cited,in a draft's own exemption list,discussion: within-class aquaculture ratio,"of 197 between pond types, a source of this size being both unmapped and"
-notes/draft-discussion.md,126,4. Why the result is not an artefact,4,self_evident,structural line,,## 4. Why the result is not an artefact
-notes/draft-discussion.md,134,4. Why the result is not an artefact,0.761,measured,inline resolver,collinear.collinearity,"+0.761<!--#collinear.collinearity--> over 926<!--#grid.rows--> cells, and albedo"
-notes/draft-discussion.md,134,4. Why the result is not an artefact,926,measured,inline resolver,grid.rows,"+0.761<!--#collinear.collinearity--> over 926<!--#grid.rows--> cells, and albedo"
-notes/draft-discussion.md,137,4. Why the result is not an artefact,0.021,measured,inline resolver,collinear.partial,variables reduces the association to +0.021<!--#collinear.partial-->. The
-notes/draft-discussion.md,139,4. Why the result is not an artefact,2.1,measured,inline resolver,collinear.reduction_percent,"2.1<!--#collinear.reduction_percent--> percent of the fitted albedo slope, so the"
-notes/draft-discussion.md,146,4. Why the result is not an artefact,0.699,measured,inline resolver,deseason.doy_raw,0.699<!--#deseason.doy_raw--> — a stronger association than either land-cover
-notes/draft-discussion.md,149,4. Why the result is not an artefact,0.009,measured,inline resolver,deseason.impervious_change,0.009<!--#deseason.impervious_change--> in Pearson correlation. **The calendar
-notes/draft-discussion.md,152,4. Why the result is not an artefact,12,cited,in a draft's own exemption list,discussion: transport error standard deviation ppb,**Transport error.** A model transport error standard deviation of 12 ppb for
-notes/draft-discussion.md,154,4. Why the result is not an artefact,14.86,measured,inline resolver,field.sd_operational,standard deviation of 14.86<!--#field.sd_operational--> ppb. That is a reason a
-notes/draft-discussion.md,158,4. Why the result is not an artefact,926,measured,inline resolver,grid.rows,**Effective sample size.** The 926<!--#grid.rows--> lattice cells are not 926
-notes/draft-discussion.md,158,4. Why the result is not an artefact,926,self_evident,study box or lattice shape,,**Effective sample size.** The 926<!--#grid.rows--> lattice cells are not 926
-notes/draft-discussion.md,160,4. Why the result is not an artefact,53.4,measured,inline resolver,dof.effective_n_median,"sample size at 53.4<!--#dof.effective_n_median-->, so every nominal *p*-value in"
-notes/draft-discussion.md,169,4. Why the result is not an artefact,13.2,measured,inline resolver,atten.var_share_pct,"13.2<!--#atten.var_share_pct--> percent of the predictor's own, so under"
-notes/draft-discussion.md,171,4. Why the result is not an artefact,0.868,measured,inline resolver,atten.lambda_min,0.868<!--#atten.lambda_min--> and **the largest factor by which measurement error
-notes/draft-discussion.md,173,4. Why the result is not an artefact,1.15,measured,inline resolver,atten.factor_max,1.15<!--#atten.factor_max-->.** That lifts the best impervious held-out R² from
-notes/draft-discussion.md,174,4. Why the result is not an artefact,0.085,measured,inline resolver,suite.impervious_operational,+0.085<!--#suite.impervious_operational--> to
-notes/draft-discussion.md,175,4. Why the result is not an artefact,0.098,measured,inline resolver,atten.r2_bound_bu,+0.098<!--#atten.r2_bound_bu--> against a spatial null of
-notes/draft-discussion.md,176,4. Why the result is not an artefact,0.332,measured,inline resolver,suite.null_operational,+0.332<!--#suite.null_operational--> on the same cross-validation scheme and
-notes/draft-discussion.md,187,4. Why the result is not an artefact,10,cited,in a draft's own exemption list,"methods: published precision filter, under 10 ppb","and aquaculture ponds are spectrally similar flooded land, and a 10 m national"
-notes/draft-discussion.md,188,4. Why the result is not an artefact,2026,self_evident,year as a date,,pond product reachable since September 2026 puts pond area inside this lattice
-notes/draft-discussion.md,189,4. Why the result is not an artefact,15,cited,in a draft's own exemption list,"introduction: fifteen Tg, the inventory gap",at most about 15 percent of the mapped rice area — but that is a ceiling on one
-notes/draft-discussion.md,195,4. Why the result is not an artefact,74.5,measured,inline resolver,atten.need_share_bu_pct,74.5<!--#atten.need_share_bu_pct--> percent of the variance in the impervious
-notes/draft-discussion.md,196,4. Why the result is not an artefact,5.6,measured,inline resolver,atten.need_multiple_bu,fraction would have to be error — 5.6<!--#atten.need_multiple_bu--> times what
-notes/draft-discussion.md,198,4. Why the result is not an artefact,7.2,measured,inline resolver,atten.need_multiple_bw,7.2<!--#atten.need_multiple_bw--> times on the sounding-weighted combination.
-notes/draft-discussion.md,211,5. What the observing system can and cannot constrain,5,self_evident,structural line,,## 5. What the observing system can and cannot constrain
-notes/draft-discussion.md,218,5. What the observing system can and cannot constrain,3.98,measured,inline resolver,dofs.at_5tg,"counts, run from 3.98<!--#dofs.at_5tg--> to"
-notes/draft-discussion.md,219,5. What the observing system can and cannot constrain,22.21,measured,inline resolver,dofs.at_12tg,22.21<!--#dofs.at_12tg--> across the range the literature supports for the
-notes/draft-discussion.md,222,5. What the observing system can and cannot constrain,0.5,cited,in a draft's own exemption list,introduction/discussion: averaging-kernel sensitivity threshold,sensitivity above 0.5 — the count is
-notes/draft-discussion.md,223,5. What the observing system can and cannot constrain,0,measured,inline resolver,dofs.cells_above_half,0<!--#dofs.cells_above_half--> at every magnitude tested — and at the top of the
-notes/draft-discussion.md,224,5. What the observing system can and cannot constrain,926,self_evident,study box or lattice shape,,range the best-observed cell of 926 reaches
-notes/draft-discussion.md,225,5. What the observing system can and cannot constrain,0.065,measured,inline resolver,dofs.cell_max_12tg,"0.065<!--#dofs.cell_max_12tg-->, an order of magnitude below the threshold at"
-notes/draft-discussion.md,230,5. What the observing system can and cannot constrain,86,measured,inline resolver,dofs.prior_free_median_gg,86<!--#dofs.prior_free_median_gg--> Gg a⁻¹ for the observations to constrain it
-notes/draft-discussion.md,244,5. What the observing system can and cannot constrain,0.35,cited,in a draft's own exemption list,"discussion: posterior error correlation, distinct sector",error correlations with other sectors fall below 0.35 and the sector can be
-notes/draft-discussion.md,246,5. What the observing system can and cannot constrain,0.45,cited,in a draft's own exemption list,"discussion: posterior error correlation, shared surface, lower",correlations run 0.45 to 0.87 and separation is limited and prior-weighted. The
-notes/draft-discussion.md,246,5. What the observing system can and cannot constrain,0.87,cited,in a draft's own exemption list,"discussion: posterior error correlation, shared surface, upper",correlations run 0.45 to 0.87 and separation is limited and prior-weighted. The
-notes/draft-discussion.md,264,6. Relation to prior results,6,self_evident,structural line,,## 6. Relation to prior results
-notes/draft-discussion.md,269,6. Relation to prior results,2021,self_evident,year as a date,,"contributions across four regions, Zeng et al. (2021) found transported fluxes"
-notes/draft-discussion.md,288,6. Relation to prior results,0.63,cited,in a draft's own exemption list,introduction/discussion: downscaling R squared for CH4,"tracker, satellite land products and reanalysis as inputs, reached R² 0.63 with"
-notes/draft-discussion.md,289,6. Relation to prior results,13.26,cited,in a draft's own exemption list,introduction/discussion: downscaling RMSE ppb,"an RMSE of 13.26 ppb, described by its authors as moderate accuracy — against"
-notes/draft-discussion.md,290,6. Relation to prior results,0.98,cited,in a draft's own exemption list,introduction: downscaling R squared for CO2,R² 0.98 for column carbon dioxide with the same method and inputs. **Methane is
-notes/draft-discussion.md,291,6. Relation to prior results,13.26,cited,in a draft's own exemption list,introduction/discussion: downscaling RMSE ppb,"the hard one even with the right predictors**, and an RMSE of 13.26 ppb is"
-notes/draft-discussion.md,293,6. Relation to prior results,14.86,measured,inline resolver,field.sd_operational,14.86<!--#field.sd_operational--> ppb. That is a comparator from another region
-notes/draft-discussion.md,296,6. Relation to prior results,2023,self_evident,year as a date,,One sentence on the prior work this extends: the 2023 thesis asked whether urban
-notes/draft-discussion.md,301,7. What would be required to answer the original question,7,self_evident,structural line,,## 7. What would be required to answer the original question
-notes/draft-discussion.md,313,7. What would be required to answer the original question,245.8,unresolved,"equals a resolver's value, written unmarked",cycle.peak_day,"245.8, which is 2 September, so a uniform June peak is roughly ten weeks early"
-notes/draft-discussion.md,313,7. What would be required to answer the original question,2,neither,no resolver and no exemption,,"245.8, which is 2 September, so a uniform June peak is roughly ten weeks early"
-notes/draft-discussion.md,315,7. What would be required to answer the original question,0.43,cited,in a draft's own exemption list,"discussion: Heilongjiang Tg pair, lower",sectoral estimate from 0.43 to 0.85 Tg and **reduced model-observation mean
-notes/draft-discussion.md,315,7. What would be required to answer the original question,0.85,cited,in a draft's own exemption list,"discussion: Heilongjiang Tg pair, upper",sectoral estimate from 0.43 to 0.85 Tg and **reduced model-observation mean
-notes/draft-discussion.md,316,7. What would be required to answer the original question,40,cited,in a draft's own exemption list,discussion: bias reduction percent,biases by 40 percent**; a separate regional inversion attributed increases in
-notes/draft-discussion.md,324,7. What would be required to answer the original question,3,neither,no resolver and no exemption,,emitting 3 to 29 t h⁻¹ and city emissions 1.4 to 2.6 times inventory. **This
-notes/draft-discussion.md,324,7. What would be required to answer the original question,29,neither,no resolver and no exemption,,emitting 3 to 29 t h⁻¹ and city emissions 1.4 to 2.6 times inventory. **This
-notes/draft-discussion.md,324,7. What would be required to answer the original question,1.4,self_evident,study box or lattice shape,,emitting 3 to 29 t h⁻¹ and city emissions 1.4 to 2.6 times inventory. **This
-notes/draft-discussion.md,324,7. What would be required to answer the original question,2.6,neither,no resolver and no exemption,,emitting 3 to 29 t h⁻¹ and city emissions 1.4 to 2.6 times inventory. **This
-notes/draft-discussion.md,325,7. What would be required to answer the original question,5,self_evident,structural context,,"project has the tip and not the cue**, and §5's prior-free threshold is the"
-notes/draft-discussion.md,333,7. What would be required to answer the original question,61,cited,in a draft's own exemption list,discussion: rice isotopic signature,literature puts rice fields at about −61 ± 4‰ in δ¹³C and atmospherically
-notes/draft-discussion.md,333,7. What would be required to answer the original question,4,neither,no resolver and no exemption,,literature puts rice fields at about −61 ± 4‰ in δ¹³C and atmospherically
-notes/draft-discussion.md,334,7. What would be required to answer the original question,56.1,cited,in a draft's own exemption list,discussion: waste isotopic signature,"measured waste sources at −56.1 ± 2.4‰, which overlap within one standard"
-notes/draft-discussion.md,334,7. What would be required to answer the original question,2.4,neither,no resolver and no exemption,,"measured waste sources at −56.1 ± 2.4‰, which overlap within one standard"
-notes/draft-discussion.md,336,7. What would be required to answer the original question,2026,self_evident,year as a date,,landfill. **But regional endmembers are not global means.** A 2026 South Asian
-notes/draft-discussion.md,338,7. What would be required to answer the original question,53.8,cited,in a draft's own exemption list,discussion: South Asian campaign isotopic signature,"with Miller–Tans values of −53.8 ± 0.8‰ in δ¹³C and −311 ± 6‰ in δ²H, and"
-notes/draft-discussion.md,338,7. What would be required to answer the original question,0.8,neither,no resolver and no exemption,,"with Miller–Tans values of −53.8 ± 0.8‰ in δ¹³C and −311 ± 6‰ in δ²H, and"
-notes/draft-discussion.md,338,7. What would be required to answer the original question,311,cited,in a draft's own exemption list,discussion: South Asian campaign deuterium signature,"with Miller–Tans values of −53.8 ± 0.8‰ in δ¹³C and −311 ± 6‰ in δ²H, and"
-notes/draft-discussion.md,338,7. What would be required to answer the original question,6,neither,no resolver and no exemption,,"with Miller–Tans values of −53.8 ± 0.8‰ in δ¹³C and −311 ± 6‰ in δ²H, and"
-notes/draft-discussion.md,340,7. What would be required to answer the original question,53.8,cited,in a draft's own exemption list,discussion: South Asian campaign isotopic signature,source apportionment. A rice signature at −53.8 is enriched *past* the waste
-notes/draft-discussion.md,341,7. What would be required to answer the original question,56.1,cited,in a draft's own exemption list,discussion: waste isotopic signature,"average of −56.1, so a regional dual-isotope campaign can separate what global"
-notes/draft-discussion.md,348,8. Limitations,8,self_evident,structural line,,## 8. Limitations
-notes/draft-discussion.md,350,8. Limitations,2018,self_evident,year as a date,,**One year of one instrument.** 2018 is the first full year of the TROPOMI
-notes/draft-discussion.md,351,8. Limitations,2023,self_evident,year as a date,,"record and the 2023 thesis's own analysis year, and the record here is an"
-notes/draft-discussion.md,352,8. Limitations,30,cited,in a draft's own exemption list,"introduction: inventory spread, at least 30 percent",eight-month year beginning 30 April. Nothing in this work establishes that 2018
-notes/draft-discussion.md,352,8. Limitations,2018,self_evident,year as a date,,eight-month year beginning 30 April. Nothing in this work establishes that 2018
-notes/draft-discussion.md,356,8. Limitations,2018,self_evident,year as a date,,conclusion is a property of the instrument over this domain or of 2018's
-notes/draft-discussion.md,361,8. Limitations,9,measured,inline resolver,tccon.coincident_days,9<!--#tccon.coincident_days--> days in
-notes/draft-discussion.md,362,8. Limitations,2018,self_evident,year as a date,,2018 carry both a TROPOMI overpass of its cell and station data. Nine coincident
-notes/draft-discussion.md,370,8. Limitations,30,cited,in a draft's own exemption list,"introduction: inventory spread, at least 30 percent","less accurate than the 30 m products it would assess, the closest being a 1 m"
-notes/draft-discussion.md,370,8. Limitations,1,neither,no resolver and no exemption,,"less accurate than the 30 m products it would assess, the closest being a 1 m"
-notes/draft-discussion.md,371,8. Limitations,73.61,cited,in a draft's own exemption list,discussion: SinoLC-1 overall accuracy,national land-cover map at 73.61 percent overall accuracy against an impervious
-notes/draft-discussion.md,372,8. Limitations,0.954,cited,in a draft's own exemption list,discussion: accuracy figure in section 8,F-score of 0.954 for the layer in use. So the absence is not an omission that
-notes/draft-discussion.md,380,8. Limitations,2024,self_evident,year as a date,,September 2024 to orbits this analysis year will never include. Each is recorded
-notes/draft-discussion.md,384,8. Limitations,4,self_evident,structural context,,"rice product whose errors are independent of the layer in use, as §4 states."
+notes/draft-results.md,612,6.4 The expected signal against the noise,6.4,self_evident,structural line,,### 6.4 The expected signal against the noise
+notes/draft-results.md,616,6.4 The expected signal against the noise,6.1,self_evident,structural context,,closed form as §6.1 with the same wind.
+notes/draft-results.md,619,6.4 The expected signal against the noise,28.82,measured,inline resolver,change.rate_urban,"28.82<!--#change.rate_urban--> Mg km⁻² a⁻¹, the through-origin slope of its"
+notes/draft-results.md,621,6.4 The expected signal against the noise,1.1995,measured,inline resolver,change.beta,slope of 1.1995<!--#change.beta--> ppb per unit impervious fraction. Across the
+notes/draft-results.md,623,6.4 The expected signal against the noise,0.410,measured,inline resolver,change.xsec_contrast,"is 0.410<!--#change.xsec_contrast--> ppb, which is"
+notes/draft-results.md,624,6.4 The expected signal against the noise,2.8,measured,inline resolver,change.xsec_share,2.8<!--#change.xsec_share--> percent of the field's
+notes/draft-results.md,625,6.4 The expected signal against the noise,14.86,measured,inline resolver,field.sd_operational,"14.86<!--#field.sd_operational--> ppb between-cell standard deviation, for an"
+notes/draft-results.md,626,6.4 The expected signal against the noise,0.00007,measured,inline resolver,change.xsec_r2,implied R squared of 0.00007<!--#change.xsec_r2-->. The largest correlation this
+notes/draft-results.md,627,6.4 The expected signal against the noise,0.0084,measured,inline resolver,change.r_max,permits is |r| = 0.0084<!--#change.r_max-->.
+notes/draft-results.md,631,6.4 The expected signal against the noise,1.98,measured,inline resolver,change.se_median,"1.98<!--#change.se_median--> ppb, so the whole land-cover contrast is a fifth of"
+notes/draft-results.md,633,6.4 The expected signal against the noise,2035.1,measured,inline resolver,change.coal_total,coal sector — 2035.1<!--#change.coal_total--> Gg a⁻¹ over
+notes/draft-results.md,634,6.4 The expected signal against the noise,22,measured,inline resolver,change.coal_cells,22<!--#change.coal_cells--> cells — gives
+notes/draft-results.md,635,6.4 The expected signal against the noise,5.80,measured,inline resolver,change.coal_enhancement,"5.80<!--#change.coal_enhancement--> ppb per coal cell, which is"
+notes/draft-results.md,636,6.4 The expected signal against the noise,2.9,measured,inline resolver,change.coal_multiple,2.9<!--#change.coal_multiple--> times that error. **An emission of the coal
+notes/draft-results.md,641,6.4 The expected signal against the noise,6.5,self_evident,structural context,,"allocated on population, and §6.5 and the discussion state what that does and"
+notes/draft-results.md,644,6.5 Relation to §3,6.5,self_evident,structural line,,### 6.5 Relation to §3
+notes/draft-results.md,644,6.5 Relation to §3,3,self_evident,structural line,,### 6.5 Relation to §3
+notes/draft-results.md,646,6.5 Relation to §3,3,self_evident,structural context,,The land-cover result of §3 is the empirical counterpart of §6.1. A record whose
+notes/draft-results.md,646,6.5 Relation to §3,6.1,self_evident,structural context,,The land-cover result of §3 is the empirical counterpart of §6.1. A record whose
+notes/draft-results.md,648,6.5 Relation to §3,3,self_evident,structural context,,"record in which per-cell predictors should fail, and §3 reports that they do"
+notes/draft-results.md,653,7. Reproducibility of the reported figures,7,self_evident,structural line,,## 7. Reproducibility of the reported figures
+notes/draft-results.md,655,7. Reproducibility of the reported figures,75,measured,inline resolver,pipeline.recipes,75<!--#pipeline.recipes--> derived artefacts are registered with the command that
+notes/draft-results.md,657,7. Reproducibility of the reported figures,41,measured,inline resolver,pipeline.recipes_committed,41<!--#pipeline.recipes_committed--> regenerate from a fresh clone with no network
+notes/draft-results.md,659,7. Reproducibility of the reported figures,23,measured,inline resolver,pipeline.recipes_local,run; 23<!--#pipeline.recipes_local--> require local raw data;
+notes/draft-results.md,660,7. Reproducibility of the reported figures,10,measured,inline resolver,pipeline.recipes_network,10<!--#pipeline.recipes_network--> require a network fetch. Every numeric claim in
+notes/draft-discussion.md,9,(none),1,self_evident,structural context,,"order: say what the result is and is not (§1), show that the result was the"
+notes/draft-discussion.md,10,(none),2,self_evident,structural context,,"predicted one (§2), explain why extent would have failed even had the signal"
+notes/draft-discussion.md,11,(none),3,self_evident,structural context,,"been visible (§3 and §4), show that the explanation is not an artefact (§5), and"
+notes/draft-discussion.md,11,(none),4,self_evident,structural context,,"been visible (§3 and §4), show that the explanation is not an artefact (§5), and"
+notes/draft-discussion.md,11,(none),5,self_evident,structural context,,"been visible (§3 and §4), show that the explanation is not an artefact (§5), and"
+notes/draft-discussion.md,12,(none),6,self_evident,structural context,,then generalise it — which is where the contribution sits (§6). Only then does it
+notes/draft-discussion.md,13,(none),7,self_evident,structural context,,"locate the work against prior results (§7), say what would answer the original"
+notes/draft-discussion.md,14,(none),8,self_evident,structural context,,"question (§8), and close with limitations (§9)."
+notes/draft-discussion.md,14,(none),9,self_evident,structural context,,"question (§8), and close with limitations (§9)."
+notes/draft-discussion.md,16,(none),2,self_evident,structural context,,**§2 is new and it comes first on purpose.** An earlier draft opened the
+notes/draft-discussion.md,22,(none),3,self_evident,structural context,,"displaced by it — they answer a different question, and §3 says which — but they"
+notes/draft-discussion.md,25,"1. What the reproduction establishes, and what it does not",1,self_evident,structural line,,"## 1. What the reproduction establishes, and what it does not"
+notes/draft-discussion.md,27,"1. What the reproduction establishes, and what it does not",2018,self_evident,year as a date,,No association between land cover and the 2018 methane column field was detected
+notes/draft-discussion.md,34,"1. What the reproduction establishes, and what it does not",0.58,measured,inline resolver,equiv.bound_comparative,"|r| = 0.58<!--#equiv.bound_comparative-->, tested on a 90 percent interval with"
+notes/draft-discussion.md,34,"1. What the reproduction establishes, and what it does not",90,self_evident,label or pair beside a marked number,,"|r| = 0.58<!--#equiv.bound_comparative-->, tested on a 90 percent interval with"
+notes/draft-discussion.md,38,"1. What the reproduction establishes, and what it does not",24,measured,inline resolver,equiv.rice_rows,"24<!--#equiv.rice_rows--> combinations, which is evidence of no meaningful"
+notes/draft-discussion.md,40,"1. What the reproduction establishes, and what it does not",7,measured,inline resolver,equiv.impervious_within,"7<!--#equiv.impervious_within--> of 12<!--#equiv.impervious_rows-->, and spans"
+notes/draft-discussion.md,40,"1. What the reproduction establishes, and what it does not",12,measured,inline resolver,equiv.impervious_rows,"7<!--#equiv.impervious_within--> of 12<!--#equiv.impervious_rows-->, and spans"
+notes/draft-discussion.md,47,"1. What the reproduction establishes, and what it does not",5,self_evident,structural context,,predictor does not account for the result** — §5 gives the bound.
+notes/draft-discussion.md,54,"1. What the reproduction establishes, and what it does not",0.25,self_evident,grid resolution,,"regressed against an annual column composite at 0.25 degrees, cannot recover"
+notes/draft-discussion.md,58,2. The result was the predicted one,2,self_evident,structural line,,## 2. The result was the predicted one
+notes/draft-discussion.md,64,2. The result was the predicted one,6,self_evident,structural context,,"The conversion is the same closed form §6 uses for information content, taken"
+notes/draft-discussion.md,69,2. The result was the predicted one,28.82,unresolved,"equals a resolver's value, written unmarked",change.rate_urban,"wastewater and gas distribution, at 28.82 Mg km⁻² a⁻¹ — gives a slope of"
+notes/draft-discussion.md,70,2. The result was the predicted one,1.1995,measured,inline resolver,change.beta,1.1995<!--#change.beta--> ppb per unit impervious fraction.
+notes/draft-discussion.md,74,2. The result was the predicted one,0.410,measured,inline resolver,change.xsec_contrast,0.410<!--#change.xsec_contrast--> ppb.** The field's between-cell standard
+notes/draft-discussion.md,75,2. The result was the predicted one,14.86,measured,inline resolver,field.sd_operational,deviation is 14.86<!--#field.sd_operational--> ppb. So the entire land-cover
+notes/draft-discussion.md,77,2. The result was the predicted one,2.8,measured,inline resolver,change.xsec_share,"2.8<!--#change.xsec_share--> percent of the variation the field actually has,"
+notes/draft-discussion.md,78,2. The result was the predicted one,0.00007,measured,inline resolver,change.xsec_r2,for an implied R squared of 0.00007<!--#change.xsec_r2-->.
+notes/draft-discussion.md,81,2. The result was the predicted one,0.085,measured,inline resolver,baseline.impervious_r2,"0.085<!--#baseline.impervious_r2-->, three orders of magnitude larger than the"
+notes/draft-discussion.md,92,2. The result was the predicted one,0.085,unresolved,"equals a resolver's value, written unmarked",baseline.impervious_r2,observed 0.085 against a permitted 0.00007 is not a weak version of the right
+notes/draft-discussion.md,92,2. The result was the predicted one,0.00007,neither,no resolver and no exemption,,observed 0.085 against a permitted 0.00007 is not a weak version of the right
+notes/draft-discussion.md,94,2. The result was the predicted one,5,self_evident,structural context,,results in §5 and agrees with them: it converts *the association does not
+notes/draft-discussion.md,101,2. The result was the predicted one,2035.1,measured,inline resolver,change.coal_total,inventory puts at 2035.1<!--#change.coal_total--> Gg a⁻¹ across
+notes/draft-discussion.md,102,2. The result was the predicted one,22,measured,inline resolver,change.coal_cells,"22<!--#change.coal_cells--> cells, some 92.5 Gg a⁻¹ each — gives"
+notes/draft-discussion.md,102,2. The result was the predicted one,92.5,self_evident,label or pair beside a marked number,,"22<!--#change.coal_cells--> cells, some 92.5 Gg a⁻¹ each — gives"
+notes/draft-discussion.md,103,2. The result was the predicted one,5.80,measured,inline resolver,change.coal_enhancement,"5.80<!--#change.coal_enhancement--> ppb, or"
+notes/draft-discussion.md,104,2. The result was the predicted one,2.9,measured,inline resolver,change.coal_multiple,2.9<!--#change.coal_multiple--> times the median per-cell standard error. **A
+notes/draft-discussion.md,107,2. The result was the predicted one,8,self_evident,structural context,,"the instrument, and it is why §8's routes are about better priors and targeted"
+notes/draft-discussion.md,112,2. The result was the predicted one,0.0366,measured,inline resolver,change.coal_vs_impervious,"is +0.0366<!--#change.coal_vs_impervious-->, and only 2 of its 22 cells fall in"
+notes/draft-discussion.md,112,2. The result was the predicted one,2,self_evident,label or pair beside a marked number,,"is +0.0366<!--#change.coal_vs_impervious-->, and only 2 of its 22 cells fall in"
+notes/draft-discussion.md,112,2. The result was the predicted one,22,self_evident,label or pair beside a marked number,,"is +0.0366<!--#change.coal_vs_impervious-->, and only 2 of its 22 cells fall in"
+notes/draft-discussion.md,124,"3. Extent is a proxy for presence, not for management",3,self_evident,structural line,,"## 3. Extent is a proxy for presence, not for management"
+notes/draft-discussion.md,131,"3. Extent is a proxy for presence, not for management",13.7,cited,in a draft's own exemption list,"introduction/discussion: rice prior Tg, and the water-regime ratio", one soil under one crop span a factor of 13.7 in net global warming potential.
+notes/draft-discussion.md,134,"3. Extent is a proxy for presence, not for management",38,cited,in a draft's own exemption list,discussion: collection efficiency," efficiency averages 38 percent against a reported 70, while the Los Angeles"
+notes/draft-discussion.md,134,"3. Extent is a proxy for presence, not for management",70,cited,in a draft's own exemption list,discussion: collection efficiency," efficiency averages 38 percent against a reported 70, while the Los Angeles"
+notes/draft-discussion.md,135,"3. Extent is a proxy for presence, not for management",85,cited,in a draft's own exemption list,discussion: collection efficiency, sites in the same analysis average 85 — a factor of two in emission at
+notes/draft-discussion.md,141,"3. Extent is a proxy for presence, not for management",8,neither,no resolver and no exemption,, content across the Huainan–Huaibei coalfield runs 8 to 16 m³ per tonne in
+notes/draft-discussion.md,141,"3. Extent is a proxy for presence, not for management",16,neither,no resolver and no exemption,, content across the Huainan–Huaibei coalfield runs 8 to 16 m³ per tonne in
+notes/draft-discussion.md,142,"3. Extent is a proxy for presence, not for management",10,cited,in a draft's own exemption list,"methods: published precision filter, under 10 ppb", Huaibei and 10 to 30 in Huainan.
+notes/draft-discussion.md,142,"3. Extent is a proxy for presence, not for management",30,cited,in a draft's own exemption list,"introduction: inventory spread, at least 30 percent", Huaibei and 10 to 30 in Huainan.
+notes/draft-discussion.md,148,"3. Extent is a proxy for presence, not for management",197,cited,in a draft's own exemption list,discussion: within-class aquaculture ratio, intensity per unit of fish production runs **197 times higher** in traditional
+notes/draft-discussion.md,162,"3. Extent is a proxy for presence, not for management",197,cited,in a draft's own exemption list,discussion: within-class aquaculture ratio,practice. A factor of 197 between two ways of farming the same water is not an
+notes/draft-discussion.md,165,"3. Extent is a proxy for presence, not for management",8,self_evident,structural context,,"quality** — and it is why §8's routes are about priors, targeted observation and"
+notes/draft-discussion.md,168,4. What the predictors never contained,4,self_evident,structural line,,## 4. What the predictors never contained
+notes/draft-discussion.md,171,4. What the predictors never contained,3,self_evident,structural context,,§3 says a perfectly measured extent predictor would still fail. This section
+notes/draft-discussion.md,179,4. What the predictors never contained,33.3462,unresolved,"in an artefact, no resolver","the Anhui raster bound, exempted in the methods note","hole**, because the committed rice raster stops classifying north of 33.3462° N,"
+notes/draft-discussion.md,184,4. What the predictors never contained,26,cited,in a draft's own exemption list,introduction/discussion: 26 percent aquaculture share,"**Aquaculture.** The region holds 26 percent of China's aquaculture area, ponds"
+notes/draft-discussion.md,187,4. What the predictors never contained,197,cited,in a draft's own exemption list,discussion: within-class aquaculture ratio,"of 197 between pond types, a source of this size being both unmapped and"
+notes/draft-discussion.md,198,5. Why the result is not an artefact,5,self_evident,structural line,,## 5. Why the result is not an artefact
+notes/draft-discussion.md,206,5. Why the result is not an artefact,0.761,measured,inline resolver,collinear.collinearity,"+0.761<!--#collinear.collinearity--> over 926<!--#grid.rows--> cells, and albedo"
+notes/draft-discussion.md,206,5. Why the result is not an artefact,926,measured,inline resolver,grid.rows,"+0.761<!--#collinear.collinearity--> over 926<!--#grid.rows--> cells, and albedo"
+notes/draft-discussion.md,209,5. Why the result is not an artefact,0.021,measured,inline resolver,collinear.partial,variables reduces the association to +0.021<!--#collinear.partial-->. The
+notes/draft-discussion.md,211,5. Why the result is not an artefact,2.1,measured,inline resolver,collinear.reduction_percent,"2.1<!--#collinear.reduction_percent--> percent of the fitted albedo slope, so the"
+notes/draft-discussion.md,218,5. Why the result is not an artefact,0.699,measured,inline resolver,deseason.doy_raw,0.699<!--#deseason.doy_raw--> — a stronger association than either land-cover
+notes/draft-discussion.md,221,5. Why the result is not an artefact,0.009,measured,inline resolver,deseason.impervious_change,0.009<!--#deseason.impervious_change--> in Pearson correlation. **The calendar
+notes/draft-discussion.md,224,5. Why the result is not an artefact,12,cited,in a draft's own exemption list,discussion: transport error standard deviation ppb,**Transport error.** A model transport error standard deviation of 12 ppb for
+notes/draft-discussion.md,226,5. Why the result is not an artefact,14.86,measured,inline resolver,field.sd_operational,standard deviation of 14.86<!--#field.sd_operational--> ppb. That is a reason a
+notes/draft-discussion.md,230,5. Why the result is not an artefact,926,measured,inline resolver,grid.rows,**Effective sample size.** The 926<!--#grid.rows--> lattice cells are not 926
+notes/draft-discussion.md,230,5. Why the result is not an artefact,926,self_evident,study box or lattice shape,,**Effective sample size.** The 926<!--#grid.rows--> lattice cells are not 926
+notes/draft-discussion.md,232,5. Why the result is not an artefact,53.4,measured,inline resolver,dof.effective_n_median,"sample size at 53.4<!--#dof.effective_n_median-->, so every nominal *p*-value in"
+notes/draft-discussion.md,241,5. Why the result is not an artefact,13.2,measured,inline resolver,atten.var_share_pct,"13.2<!--#atten.var_share_pct--> percent of the predictor's own, so under"
+notes/draft-discussion.md,243,5. Why the result is not an artefact,0.868,measured,inline resolver,atten.lambda_min,0.868<!--#atten.lambda_min--> and **the largest factor by which measurement error
+notes/draft-discussion.md,245,5. Why the result is not an artefact,1.15,measured,inline resolver,atten.factor_max,1.15<!--#atten.factor_max-->.** That lifts the best impervious held-out R² from
+notes/draft-discussion.md,246,5. Why the result is not an artefact,0.085,measured,inline resolver,suite.impervious_operational,+0.085<!--#suite.impervious_operational--> to
+notes/draft-discussion.md,247,5. Why the result is not an artefact,0.098,measured,inline resolver,atten.r2_bound_bu,+0.098<!--#atten.r2_bound_bu--> against a spatial null of
+notes/draft-discussion.md,248,5. Why the result is not an artefact,0.332,measured,inline resolver,suite.null_operational,+0.332<!--#suite.null_operational--> on the same cross-validation scheme and
+notes/draft-discussion.md,259,5. Why the result is not an artefact,10,cited,in a draft's own exemption list,"methods: published precision filter, under 10 ppb","and aquaculture ponds are spectrally similar flooded land, and a 10 m national"
+notes/draft-discussion.md,260,5. Why the result is not an artefact,2026,self_evident,year as a date,,pond product reachable since September 2026 puts pond area inside this lattice
+notes/draft-discussion.md,261,5. Why the result is not an artefact,15,cited,in a draft's own exemption list,"introduction: fifteen Tg, the inventory gap",at most about 15 percent of the mapped rice area — but that is a ceiling on one
+notes/draft-discussion.md,267,5. Why the result is not an artefact,74.5,measured,inline resolver,atten.need_share_bu_pct,74.5<!--#atten.need_share_bu_pct--> percent of the variance in the impervious
+notes/draft-discussion.md,268,5. Why the result is not an artefact,5.6,measured,inline resolver,atten.need_multiple_bu,fraction would have to be error — 5.6<!--#atten.need_multiple_bu--> times what
+notes/draft-discussion.md,270,5. Why the result is not an artefact,7.2,measured,inline resolver,atten.need_multiple_bw,7.2<!--#atten.need_multiple_bw--> times on the sounding-weighted combination.
+notes/draft-discussion.md,283,6. What the observing system can and cannot constrain,6,self_evident,structural line,,## 6. What the observing system can and cannot constrain
+notes/draft-discussion.md,290,6. What the observing system can and cannot constrain,3.98,measured,inline resolver,dofs.at_5tg,"counts, run from 3.98<!--#dofs.at_5tg--> to"
+notes/draft-discussion.md,291,6. What the observing system can and cannot constrain,22.21,measured,inline resolver,dofs.at_12tg,22.21<!--#dofs.at_12tg--> across the range the literature supports for the
+notes/draft-discussion.md,294,6. What the observing system can and cannot constrain,0.5,cited,in a draft's own exemption list,introduction/discussion: averaging-kernel sensitivity threshold,sensitivity above 0.5 — the count is
+notes/draft-discussion.md,295,6. What the observing system can and cannot constrain,0,measured,inline resolver,dofs.cells_above_half,0<!--#dofs.cells_above_half--> at every magnitude tested — and at the top of the
+notes/draft-discussion.md,296,6. What the observing system can and cannot constrain,926,self_evident,study box or lattice shape,,range the best-observed cell of 926 reaches
+notes/draft-discussion.md,297,6. What the observing system can and cannot constrain,0.065,measured,inline resolver,dofs.cell_max_12tg,"0.065<!--#dofs.cell_max_12tg-->, an order of magnitude below the threshold at"
+notes/draft-discussion.md,302,6. What the observing system can and cannot constrain,86,measured,inline resolver,dofs.prior_free_median_gg,86<!--#dofs.prior_free_median_gg--> Gg a⁻¹ for the observations to constrain it
+notes/draft-discussion.md,316,6. What the observing system can and cannot constrain,0.35,cited,in a draft's own exemption list,"discussion: posterior error correlation, distinct sector",error correlations with other sectors fall below 0.35 and the sector can be
+notes/draft-discussion.md,318,6. What the observing system can and cannot constrain,0.45,cited,in a draft's own exemption list,"discussion: posterior error correlation, shared surface, lower",correlations run 0.45 to 0.87 and separation is limited and prior-weighted. The
+notes/draft-discussion.md,318,6. What the observing system can and cannot constrain,0.87,cited,in a draft's own exemption list,"discussion: posterior error correlation, shared surface, upper",correlations run 0.45 to 0.87 and separation is limited and prior-weighted. The
+notes/draft-discussion.md,336,7. Relation to prior results,7,self_evident,structural line,,## 7. Relation to prior results
+notes/draft-discussion.md,341,7. Relation to prior results,2021,self_evident,year as a date,,"contributions across four regions, Zeng et al. (2021) found transported fluxes"
+notes/draft-discussion.md,360,7. Relation to prior results,0.63,cited,in a draft's own exemption list,introduction/discussion: downscaling R squared for CH4,"tracker, satellite land products and reanalysis as inputs, reached R² 0.63 with"
+notes/draft-discussion.md,361,7. Relation to prior results,13.26,cited,in a draft's own exemption list,introduction/discussion: downscaling RMSE ppb,"an RMSE of 13.26 ppb, described by its authors as moderate accuracy — against"
+notes/draft-discussion.md,362,7. Relation to prior results,0.98,cited,in a draft's own exemption list,introduction: downscaling R squared for CO2,R² 0.98 for column carbon dioxide with the same method and inputs. **Methane is
+notes/draft-discussion.md,363,7. Relation to prior results,13.26,cited,in a draft's own exemption list,introduction/discussion: downscaling RMSE ppb,"the hard one even with the right predictors**, and an RMSE of 13.26 ppb is"
+notes/draft-discussion.md,365,7. Relation to prior results,14.86,measured,inline resolver,field.sd_operational,14.86<!--#field.sd_operational--> ppb. That is a comparator from another region
+notes/draft-discussion.md,368,7. Relation to prior results,2023,self_evident,year as a date,,One sentence on the prior work this extends: the 2023 thesis asked whether urban
+notes/draft-discussion.md,373,8. What would be required to answer the original question,8,self_evident,structural line,,## 8. What would be required to answer the original question
+notes/draft-discussion.md,385,8. What would be required to answer the original question,245.8,unresolved,"equals a resolver's value, written unmarked",cycle.peak_day,"245.8, which is 2 September, so a uniform June peak is roughly ten weeks early"
+notes/draft-discussion.md,385,8. What would be required to answer the original question,2,neither,no resolver and no exemption,,"245.8, which is 2 September, so a uniform June peak is roughly ten weeks early"
+notes/draft-discussion.md,387,8. What would be required to answer the original question,0.43,cited,in a draft's own exemption list,"discussion: Heilongjiang Tg pair, lower",sectoral estimate from 0.43 to 0.85 Tg and **reduced model-observation mean
+notes/draft-discussion.md,387,8. What would be required to answer the original question,0.85,cited,in a draft's own exemption list,"discussion: Heilongjiang Tg pair, upper",sectoral estimate from 0.43 to 0.85 Tg and **reduced model-observation mean
+notes/draft-discussion.md,388,8. What would be required to answer the original question,40,cited,in a draft's own exemption list,discussion: bias reduction percent,biases by 40 percent**; a separate regional inversion attributed increases in
+notes/draft-discussion.md,396,8. What would be required to answer the original question,3,neither,no resolver and no exemption,,emitting 3 to 29 t h⁻¹ and city emissions 1.4 to 2.6 times inventory. **This
+notes/draft-discussion.md,396,8. What would be required to answer the original question,29,neither,no resolver and no exemption,,emitting 3 to 29 t h⁻¹ and city emissions 1.4 to 2.6 times inventory. **This
+notes/draft-discussion.md,396,8. What would be required to answer the original question,1.4,self_evident,study box or lattice shape,,emitting 3 to 29 t h⁻¹ and city emissions 1.4 to 2.6 times inventory. **This
+notes/draft-discussion.md,396,8. What would be required to answer the original question,2.6,neither,no resolver and no exemption,,emitting 3 to 29 t h⁻¹ and city emissions 1.4 to 2.6 times inventory. **This
+notes/draft-discussion.md,397,8. What would be required to answer the original question,6,self_evident,structural context,,"project has the tip and not the cue**, and §6's prior-free threshold is the"
+notes/draft-discussion.md,405,8. What would be required to answer the original question,61,cited,in a draft's own exemption list,discussion: rice isotopic signature,literature puts rice fields at about −61 ± 4‰ in δ¹³C and atmospherically
+notes/draft-discussion.md,405,8. What would be required to answer the original question,4,neither,no resolver and no exemption,,literature puts rice fields at about −61 ± 4‰ in δ¹³C and atmospherically
+notes/draft-discussion.md,406,8. What would be required to answer the original question,56.1,cited,in a draft's own exemption list,discussion: waste isotopic signature,"measured waste sources at −56.1 ± 2.4‰, which overlap within one standard"
+notes/draft-discussion.md,406,8. What would be required to answer the original question,2.4,neither,no resolver and no exemption,,"measured waste sources at −56.1 ± 2.4‰, which overlap within one standard"
+notes/draft-discussion.md,408,8. What would be required to answer the original question,2026,self_evident,year as a date,,landfill. **But regional endmembers are not global means.** A 2026 South Asian
+notes/draft-discussion.md,410,8. What would be required to answer the original question,53.8,cited,in a draft's own exemption list,discussion: South Asian campaign isotopic signature,"with Miller–Tans values of −53.8 ± 0.8‰ in δ¹³C and −311 ± 6‰ in δ²H, and"
+notes/draft-discussion.md,410,8. What would be required to answer the original question,0.8,neither,no resolver and no exemption,,"with Miller–Tans values of −53.8 ± 0.8‰ in δ¹³C and −311 ± 6‰ in δ²H, and"
+notes/draft-discussion.md,410,8. What would be required to answer the original question,311,cited,in a draft's own exemption list,discussion: South Asian campaign deuterium signature,"with Miller–Tans values of −53.8 ± 0.8‰ in δ¹³C and −311 ± 6‰ in δ²H, and"
+notes/draft-discussion.md,410,8. What would be required to answer the original question,6,neither,no resolver and no exemption,,"with Miller–Tans values of −53.8 ± 0.8‰ in δ¹³C and −311 ± 6‰ in δ²H, and"
+notes/draft-discussion.md,412,8. What would be required to answer the original question,53.8,cited,in a draft's own exemption list,discussion: South Asian campaign isotopic signature,source apportionment. A rice signature at −53.8 is enriched *past* the waste
+notes/draft-discussion.md,413,8. What would be required to answer the original question,56.1,cited,in a draft's own exemption list,discussion: waste isotopic signature,"average of −56.1, so a regional dual-isotope campaign can separate what global"
+notes/draft-discussion.md,420,9. Limitations,9,self_evident,structural line,,## 9. Limitations
+notes/draft-discussion.md,422,9. Limitations,2018,self_evident,year as a date,,**One year of one instrument.** 2018 is the first full year of the TROPOMI
+notes/draft-discussion.md,423,9. Limitations,2023,self_evident,year as a date,,"record and the 2023 thesis's own analysis year, and the record here is an"
+notes/draft-discussion.md,424,9. Limitations,30,cited,in a draft's own exemption list,"introduction: inventory spread, at least 30 percent",eight-month year beginning 30 April. Nothing in this work establishes that 2018
+notes/draft-discussion.md,424,9. Limitations,2018,self_evident,year as a date,,eight-month year beginning 30 April. Nothing in this work establishes that 2018
+notes/draft-discussion.md,428,9. Limitations,2018,self_evident,year as a date,,conclusion is a property of the instrument over this domain or of 2018's
+notes/draft-discussion.md,433,9. Limitations,9,measured,inline resolver,tccon.coincident_days,9<!--#tccon.coincident_days--> days in
+notes/draft-discussion.md,434,9. Limitations,2018,self_evident,year as a date,,2018 carry both a TROPOMI overpass of its cell and station data. Nine coincident
+notes/draft-discussion.md,442,9. Limitations,30,cited,in a draft's own exemption list,"introduction: inventory spread, at least 30 percent","less accurate than the 30 m products it would assess, the closest being a 1 m"
+notes/draft-discussion.md,442,9. Limitations,1,neither,no resolver and no exemption,,"less accurate than the 30 m products it would assess, the closest being a 1 m"
+notes/draft-discussion.md,443,9. Limitations,73.61,cited,in a draft's own exemption list,discussion: SinoLC-1 overall accuracy,national land-cover map at 73.61 percent overall accuracy against an impervious
+notes/draft-discussion.md,444,9. Limitations,0.954,cited,in a draft's own exemption list,discussion: accuracy figure in section 8,F-score of 0.954 for the layer in use. So the absence is not an omission that
+notes/draft-discussion.md,452,9. Limitations,2024,self_evident,year as a date,,September 2024 to orbits this analysis year will never include. Each is recorded
+notes/draft-discussion.md,456,9. Limitations,5,self_evident,structural context,,"rice product whose errors are independent of the layer in use, as §5 states."
 figures/README_fragments.md,8,(none),300,self_evident,inside a code span,,"`src/figures/output.py`, which refuses to write anything below 300 dpi or"
 figures/README_fragments.md,9,(none),8,self_evident,describes the drawing,,narrower than 8 cm. Regenerate with the script named under each caption.
 figures/README_fragments.md,13,"Coverage saturation and monthly yield, 2018",2018,self_evident,structural line,,"### Coverage saturation and monthly yield, 2018"

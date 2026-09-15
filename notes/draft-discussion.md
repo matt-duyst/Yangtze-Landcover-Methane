@@ -5,16 +5,22 @@ committed record or a committed artefact, and every quoted number carries an
 inline resolver naming the artefact quantity it reads from, on the convention
 `scripts/verify_claims.py` enforces.
 
-**The ordering, and why.** The results section reports a failed detection and an
-observing-system assessment. This section has four jobs in a fixed order: say
-what the result is and is not (§1), explain why it came out that way (§2 and §3),
-show that the explanation is not an artefact (§4), and then generalise it — which
-is where the contribution sits (§5). Only then does it locate the work against
-prior results (§6) and say what would answer the original question (§7), closing
-with limitations (§8). Mechanism precedes capability deliberately: the mechanism
-explains this particular result, the capability limits explain why no refinement
-of the same design would change it, and the second is only interesting once the
-first is established.
+**The ordering, and why it changed.** This section has five jobs in a fixed
+order: say what the result is and is not (§1), show that the result was the
+predicted one (§2), explain why extent would have failed even had the signal
+been visible (§3 and §4), show that the explanation is not an artefact (§5), and
+then generalise it — which is where the contribution sits (§6). Only then does it
+locate the work against prior results (§7), say what would answer the original
+question (§8), and close with limitations (§9).
+
+**§2 is new and it comes first on purpose.** An earlier draft opened the
+explanation with the mechanisms, on the reasoning that the mechanism explains
+this particular result and the capability limits explain why no refinement would
+change it. That ordering buried the simplest statement available: the signal
+sought is far below the per-cell noise, which is one number rather than six
+literature passes, and it is prior to every mechanism. The mechanisms are not
+displaced by it — they answer a different question, and §3 says which — but they
+no longer carry the explanation alone.
 
 ## 1. What the reproduction establishes, and what it does not
 
@@ -38,7 +44,7 @@ impervious cover**, and the asymmetry is a property of the evidence rather than
 of the argument.
 
 **What can also now be said is that measurement error in the impervious
-predictor does not account for the result** — §4 gives the bound.
+predictor does not account for the result** — §5 gives the bound.
 
 The reproduction's null is also not a finding that rice does not matter in this
 domain. A tower inversion of this region in this study's own year found
@@ -49,7 +55,73 @@ regressed against an annual column composite at 0.25 degrees, cannot recover
 what a tower inversion recovers.** The question is why, and the answer has two
 parts that are different in kind.
 
-## 2. Extent is a proxy for presence, not for management
+## 2. The result was the predicted one
+
+Before any mechanism, there is an arithmetic question that the reproduction can
+answer and that had not been asked: **how large a column signal should a
+land-cover contrast of the observed size produce?**
+
+The conversion is the same closed form §6 uses for information content, taken
+from the operational inversion literature rather than constructed here: a column
+enhancement is `k` times a surface flux, with
+`k = α M_air L g / (M_CH4 U p)`, evaluated at this domain's own wind. Applying
+it to the inventory's own rate for the sectors urban land proxies — landfill,
+wastewater and gas distribution, at 28.82 Mg km⁻² a⁻¹ — gives a slope of
+1.1995<!--#change.beta--> ppb per unit impervious fraction.
+
+**Across the whole observed impervious range, from the 5th to the 95th
+percentile, that is a column contrast of
+0.410<!--#change.xsec_contrast--> ppb.** The field's between-cell standard
+deviation is 14.86<!--#field.sd_operational--> ppb. So the entire land-cover
+contrast available in this domain should move the column by
+2.8<!--#change.xsec_share--> percent of the variation the field actually has,
+for an implied R squared of 0.00007<!--#change.xsec_r2-->.
+
+**The measured held-out R squared for impervious fraction is
+0.085<!--#baseline.impervious_r2-->, three orders of magnitude larger than the
+expectation.** Two things follow and they are different in kind.
+
+**The null was the predicted outcome.** A predictor whose physical signal is
+one part in three hundred of a field's variation is not expected to explain that
+field, and no modelling choice recovers it. The sections that follow explain why
+extent is a poor proxy and why the observing system cannot attribute; this
+section says that even a perfect proxy and a perfect attribution would be
+looking for something below the noise. That is prior to both.
+
+**And the association that was measured cannot be the emission signal.** An
+observed 0.085 against a permitted 0.00007 is not a weak version of the right
+thing; it is a different thing. This is independent of the albedo and wind
+results in §5 and agrees with them: it converts *the association does not
+survive controls* into *the association could not have been the signal in the
+first place*.
+
+**What this does not say, and the distinction is the whole of it.** It does not
+say that this observing system cannot see methane over this domain. It can. The
+same conversion applied to the domain's largest sector — coal mining, which the
+inventory puts at 2035.1<!--#change.coal_total--> Gg a⁻¹ across
+22<!--#change.coal_cells--> cells, some 92.5 Gg a⁻¹ each — gives
+5.80<!--#change.coal_enhancement--> ppb, or
+2.9<!--#change.coal_multiple--> times the median per-cell standard error. **A
+source of that size is visible; the differences land-cover extent proxies are
+twenty to fifty times smaller.** The limit is a property of the signal, not of
+the instrument, and it is why §8's routes are about better priors and targeted
+observation rather than about more of the same observations.
+
+Coal is also not an alternative explanation for the measured association, which
+had to be checked rather than assumed: its correlation with impervious fraction
+is +0.0366<!--#change.coal_vs_impervious-->, and only 2 of its 22 cells fall in
+the top decile of impervious fraction.
+
+**The bound's own limits.** This is a bottom-up expectation. It says what the
+inventory's allocation implies, and the urban sectors are allocated on
+population, which tracks impervious area — so the proportionality it rests on is
+partly induced by the allocation rather than observed. It therefore cannot rule
+out an emission the inventory does not carry. Aquaculture is the one such source
+interleaved with a predictor here, and at the magnitude the literature supports
+it stays below the noise too, but that is an estimate rather than a measurement
+and it is recorded as one.
+
+## 3. Extent is a proxy for presence, not for management
 
 The first part is a property of the predictor rather than of its quality. Across
 seven sectors present in this domain, the recorded determinant of emission is a
@@ -90,13 +162,13 @@ field, because the two are measuring different things.
 practice. A factor of 197 between two ways of farming the same water is not an
 error better mapping could reduce. **This is the load-bearing form of the
 argument, because it means the failure is structural rather than a matter of map
-quality** — and it is why §7's routes are about priors, targeted observation and
+quality** — and it is why §8's routes are about priors, targeted observation and
 isotopes rather than about better land-cover products.
 
-## 3. What the predictors never contained
+## 4. What the predictors never contained
 
 The second part is a different claim and should not be merged with the first.
-§2 says a perfectly measured extent predictor would still fail. This section
+§3 says a perfectly measured extent predictor would still fail. This section
 says part of the field was never being predicted at all.
 
 **Coal mine methane in northern Anhui.** The Huainan–Huaibei coalfield lies
@@ -123,7 +195,7 @@ wetland, and that the distinction "has yet to be consistently addressed". So the
 two largest microbial sources in this domain are not separated in the prior that
 would be used to attribute them.
 
-## 4. Why the result is not an artefact
+## 5. Why the result is not an artefact
 
 Five candidate explanations for a null that is not a real absence were each
 tested rather than argued away. This is the structure a reviewer checks, so it is
@@ -208,7 +280,7 @@ its training samples from the same map this work uses. So measurement error is
 excluded for the impervious predictor and not for the rice predictor, and the
 paper should not imply symmetry.
 
-## 5. What the observing system can and cannot constrain
+## 6. What the observing system can and cannot constrain
 
 This is the contribution, and it is two limits measured on one domain.
 
@@ -261,7 +333,7 @@ the question is not answerable as asked. Together they say why no refinement of
 the same design would fix it**, which is a stronger and more transferable claim
 than a null result in one region.
 
-## 6. Relation to prior results
+## 7. Relation to prior results
 
 **The mechanism this work measured has been reached independently by a different
 method, and that strengthens rather than weakens it.** Decomposing the seasonal
@@ -298,7 +370,7 @@ expansion and paddy rice explain the methane field over these four provinces,
 and the errata document accompanying this reproduction records what that study
 did and did not establish. This section does not relitigate it.
 
-## 7. What would be required to answer the original question
+## 8. What would be required to answer the original question
 
 Three routes, each specific, each with a measured or published precedent. None
 of them is a better land-cover product.
@@ -322,7 +394,7 @@ it.**
 The published route uses TROPOMI to locate a hotspot and a facility-scale
 instrument to quantify it; applied to landfills in four cities it found sites
 emitting 3 to 29 t h⁻¹ and city emissions 1.4 to 2.6 times inventory. **This
-project has the tip and not the cue**, and §5's prior-free threshold is the
+project has the tip and not the cue**, and §6's prior-free threshold is the
 quantitative statement of why the tip alone is insufficient: no single facility
 in this domain emits enough for the column to constrain it half independently of
 the prior.
@@ -345,7 +417,7 @@ or for rice — the two sectors this project's question compares. That is a
 concrete and fundable next study, and this domain is where it would be worth
 doing.
 
-## 8. Limitations
+## 9. Limitations
 
 **One year of one instrument.** 2018 is the first full year of the TROPOMI
 record and the 2023 thesis's own analysis year, and the record here is an
@@ -381,7 +453,7 @@ September 2024 to orbits this analysis year will never include. Each is recorded
 with its cost, and each would require a second pass over the granule archive.
 
 **The rice half of the attenuation question is unbounded**, for want of a second
-rice product whose errors are independent of the layer in use, as §4 states.
+rice product whose errors are independent of the layer in use, as §5 states.
 
 **And the capability figures are a reimplementation rather than an inversion**,
 bounded to this domain, this instrument and this period. The single free preview
@@ -396,7 +468,7 @@ run of the published tool would settle what this work estimates.
 24 of this section's numbers carry resolvers; 81 do not. The unmarked ones fall
 into four classes and only the last is a defect.
 
-* **Section and year references** — §1 to §8, 2018, 2023, 0.25 degrees.
+* **Section and year references** — §1 to §9, 2018, 2023, 0.25 degrees.
 * **Every figure attributed to the literature**, which comes from a paper rather
   than from an artefact and is resolved by its citation instead: the 13.7 water
   regime ratio, the 197 aquaculture ratio, the five-fold straw increase, the
@@ -407,7 +479,7 @@ into four classes and only the last is a defect.
   signatures −61 ± 4, −56.1 ± 2.4, −53.8 ± 0.8 and −311 ± 6, the 40 percent bias
   reduction and the 0.43/0.85 Tg Heilongjiang pair, the 3–29 t h⁻¹ landfill
   rates and the 1.4–2.6 inventory multiples, and the 73.61 percent and 0.954
-  accuracy figures in §8.
+  accuracy figures in §9.
 * **Figures derivable from marked ones or already exempted in the methods
   draft**, which lists them: the Anhui raster bound 33.3462° N, and the 20.7 and
   19.9 percent product differences. The Hefei counts were on this list and are
@@ -416,14 +488,14 @@ into four classes and only the last is a defect.
   quietly dropped: **the fitted seasonal peak of the column field at day of year
   245.8**. It appears in `notes/decisions.md` and `notes/grounding-rice.md` as
   prose and in no committed artefact, so it cannot be marked. It is load-bearing
-  in §7 — it is what makes EDGAR's uniform June peak "roughly ten weeks early
+  in §8 — it is what makes EDGAR's uniform June peak "roughly ten weeks early
   here" — and it should have a row in `deseasonalisation_2018.csv`, which
   currently holds only the correlation table. Queued.
 
 ### Resolvers added for this draft
 
 **Five**, all for `attenuation_bound_2018.csv`, because the two figures that
-carry §4's conclusion had no way to be quoted. The artefact held the reliability
+carry §5's conclusion had no way to be quoted. The artefact held the reliability
 bound and the R² bounds but expressed "what it would take to overturn this" only
 in a free-text `note` column, which no resolver reads. Added:
 `atten.need_share_bu` and its percent form, and
@@ -439,9 +511,9 @@ passed while verifying nothing in it.
 ### Figures this section cites
 
 The discussion cites **two** figures directly and neither is new:
-`figures/capability.png` for §5's two limits, and
-`figures/albedo_collinearity.png` for §4's first test. It also leans on
-`figures/buffered_decay.png` for §2's structural claim, though the citation sits
+`figures/capability.png` for §6's two limits, and
+`figures/albedo_collinearity.png` for §5's first test. It also leans on
+`figures/buffered_decay.png` for §3's structural claim, though the citation sits
 more naturally in results.
 
 **That leaves the two framework diagrams and the three land-cover provenance
@@ -456,7 +528,7 @@ five-figure count stands.**
 ### A figure this section wants and does not have
 
 **The attenuation sweep**, recorded as a candidate in the previous pass, belongs
-here rather than in results. §4's conclusion is a margin — the de-attenuated
+here rather than in results. §5's conclusion is a margin — the de-attenuated
 coefficient against assumed error variance, with the observed product
 disagreement marked, the spatial null as a horizontal reference, and the crossing
 at 5.6 times visible as a distance. A reader who sees the distance does not need

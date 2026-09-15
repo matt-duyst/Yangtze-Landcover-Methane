@@ -626,7 +626,34 @@ Either limit alone establishes that emissions in this domain cannot be
 attributed to land cover cell by cell from this record; together they establish
 that no refinement of the same design would change that.
 
-### 6.3 Relation to the association analysis
+### 6.3 Expected column signal from a land-cover contrast
+
+The same closed form that gives §6.1's sensitivities also relates an emission to
+the column enhancement it produces, and it is used here in that direction to ask
+how large a signal the association analysis was looking for. A surface flux `E`
+over a state-vector element produces an enhancement `k E`, with `k` as defined
+in §6.1 and evaluated at the same wind.
+
+Three inputs, each measured rather than assumed. The **emission rate per unit
+urban land** is the through-origin slope of the inventory's landfill, wastewater
+and oil-and-gas grids on impervious area over this lattice, 28.82 Mg km⁻² a⁻¹,
+with an ordinary-least-squares slope of 31.16 and an intercept of −389 Mg a⁻¹
+for comparison. The **impervious contrast** is the 5th-to-95th-percentile range
+of the committed impervious fraction. The **wind** is the domain's own, as in
+§6.1.
+
+**What the step assumes, since the result is used as a bound.** The inventory's
+urban sectors are allocated on population rather than on urban land, so the
+proportionality the rate rests on is partly induced by the allocation surface;
+the rate therefore expresses what a bottom-up inventory predicts and is not an
+observation of the atmosphere. The marginal rate is taken equal to the average
+rate. And the wind used is the magnitude of the annual mean of the wind
+*components*, which cancels opposing directions over a year and so understates
+ventilation — and since the enhancement goes as the inverse of wind speed, it
+overstates the signal. Every one of those leans toward a larger expected signal,
+which is the direction that makes a small result robust.
+
+### 6.4 Relation to the association analysis
 
 The association analysis of §5 is the empirical counterpart of §6.1 rather than a
 separate result. A record whose DOFS accumulates from uniformly weak per-cell

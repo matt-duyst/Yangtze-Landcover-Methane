@@ -184,7 +184,7 @@ aquaculture, wetland, landfill and wastewater points, urban gas as the
 population surface, and the Huainan–Huaibei coalfield. Shows the
 interspersed-source premise the identifiability limit rests on, which the paper
 currently asserts in prose in both the introduction and the discussion.
-Discussion §3. **Needs assembly, not fetching**: rice and impervious are
+Discussion §4, renumbered from §3 when the detection limit became §2. **Needs assembly, not fetching**: rice and impervious are
 committed; the wastewater coordinates and coalfield extent are in the lead
 register and not on disk, so a first version can draw four of six sectors and
 say which two are named rather than drawn.

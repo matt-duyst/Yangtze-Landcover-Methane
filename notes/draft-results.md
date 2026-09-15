@@ -609,7 +609,39 @@ where the rice classification stops, which is
 degrees of freedom and do not make a prior more spatially distinct; a better
 prior sharpens attribution and adds no information the observations do not carry.
 
-### 6.4 Relation to §3
+### 6.4 The expected signal against the noise
+
+The preceding two limits concern what the observations can constrain. This one
+concerns how large the signal being sought is, and it is computed from the same
+closed form as §6.1 with the same wind.
+
+Applying the inventory's own rate for the sectors urban land proxies —
+28.82<!--#change.rate_urban--> Mg km⁻² a⁻¹, the through-origin slope of its
+landfill, wastewater and gas emissions on impervious area — gives an expected
+slope of 1.1995<!--#change.beta--> ppb per unit impervious fraction. Across the
+observed impervious range, 5th to 95th percentile, the implied column contrast
+is 0.410<!--#change.xsec_contrast--> ppb, which is
+2.8<!--#change.xsec_share--> percent of the field's
+14.86<!--#field.sd_operational--> ppb between-cell standard deviation, for an
+implied R squared of 0.00007<!--#change.xsec_r2-->. The largest correlation this
+permits is |r| = 0.0084<!--#change.r_max-->.
+
+Two reference points make the number interpretable rather than merely small.
+The median per-cell standard error of the composite is
+1.98<!--#change.se_median--> ppb, so the whole land-cover contrast is a fifth of
+the error on a single cell. And the same conversion applied to the inventory's
+coal sector — 2035.1<!--#change.coal_total--> Gg a⁻¹ over
+22<!--#change.coal_cells--> cells — gives
+5.80<!--#change.coal_enhancement--> ppb per coal cell, which is
+2.9<!--#change.coal_multiple--> times that error. **An emission of the coal
+sector's per-cell size is well above the noise; the contrast land-cover extent
+proxies is well below it.**
+
+This is a bottom-up expectation from an inventory whose urban sectors are
+allocated on population, and §6.5 and the discussion state what that does and
+does not license.
+
+### 6.5 Relation to §3
 
 The land-cover result of §3 is the empirical counterpart of §6.1. A record whose
 degrees of freedom accumulate from uniformly weak per-cell sensitivity is a

@@ -156,6 +156,21 @@ ground-based column days without prior alignment, and no accuracy assessment on
 either land-cover layer, the last because no reference layer over this domain is
 more accurate than the products it would assess.
 
+**And the land-cover result was the predicted one, which the paper says rather
+than leaves to be inferred.** Converting the observed impervious contrast to a
+column signal with the same closed form the capability assessment uses, the
+whole 5th-to-95th-percentile range of impervious fraction implies
+0.410<!--#change.xsec_contrast--> ppb against a field whose between-cell
+standard deviation is 14.86<!--#field.sd_operational--> ppb — an implied R
+squared of 0.00007<!--#change.xsec_r2-->. A predictor carrying a signal that
+size is not expected to explain that field, so the null needs no explanation
+beyond arithmetic, and the association that was measured is three orders of
+magnitude too large to have been that signal. **This is not a statement that the
+instrument cannot see methane here**: the same conversion gives
+5.80<!--#change.coal_enhancement--> ppb for a cell of the inventory's coal
+sector, which is 2.9<!--#change.coal_multiple--> times the per-cell error. The
+limit is the size of what land-cover extent proxies.
+
 **The land-cover result is reported as the assessment's occasion and as
 supporting evidence**, not as the contribution. No association survives
 correction for spatial dependence, control for surface albedo, or evaluation
@@ -215,7 +230,7 @@ nothing had decided whether it was introduction or discussion material.
 
 ### Numbers not marked
 
-Six of this section's numbers carry resolvers. The unmarked ones are literature
+Eighteen of this section's numbers carry resolvers. (This count said six for several passes while the true figure rose to twelve and then eighteen; it is a spelled-out number in prose, which the claim checker cannot see, and it is the defect `notes/decisions.md` records as the reason the inventory artefact exists.) The unmarked ones are literature
 figures resolved by citation — the 30 percent inventory spread and its fifteen
 Tg, the 60-and-30 percent regional concentration, the seven sectoral totals, the
 26 percent aquaculture share, the 53-to-69 percent posterior uncertainties, the

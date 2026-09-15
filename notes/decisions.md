@@ -7440,8 +7440,9 @@ predictors is a sharper omission than the blanket claim allowed.
 
 ### Two claims a draft makes about itself that nothing verifies
 
-`draft-introduction.md`'s note says "Six of this section's numbers carry
-resolvers"; there are **12**. `draft-discussion.md`'s says
+`draft-introduction.md`'s note previously said "Six of this section's numbers
+carry resolvers"; there were **12** at the time, and it was corrected to
+eighteen on 15 September 2026. `draft-discussion.md`'s says
 "24 of this section's numbers carry resolvers; 81 do not"; there are **28**. Both went stale as later passes added markers. **One is
 spelled as a word and the other is an unmarked digit, so the claim checker
 cannot see either**, and this is the same class as the reference register's

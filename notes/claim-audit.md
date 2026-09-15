@@ -163,8 +163,9 @@ section.
 computed for this composite", above.
 
 **Two self-referential**, and they are worth recording because nothing can catch
-them. `draft-introduction.md`'s note says "Six of this section's numbers carry
-resolvers" — there are **12**. `draft-discussion.md`'s says "24 of this
+them. `draft-introduction.md`'s note previously said "Six of this section's numbers
+carry resolvers" — there were **12** when this was written, and the note was
+corrected to eighteen on 15 September 2026. `draft-discussion.md`'s says "24 of this
 section's numbers carry resolvers; 81 do not" — there are **28**. Both went
 stale as later passes added markers, and **both are claims a draft makes about
 itself that no mechanism verifies**: one is spelled as a word and the other is
