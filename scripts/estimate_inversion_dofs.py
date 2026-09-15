@@ -47,7 +47,8 @@ DOFS against it. The first is the prior-free result and is the one to quote.
 **Reading the answer.** IMI's own documentation calls DOFS above 1 the minimum
 for viability and below 2 marginal for most applications. The Permian weekly
 work adopted DOFS above 0.5 per inversion as a practical minimum for a basin
-total with 2-sigma error under 30 percent. A global TROPOMI inversion of all of
+total with 2-sigma error under 30 percent -- a threshold that paper credits to
+Shen et al. (2022), which states no DOFS threshold; see notes/decisions.md. A global TROPOMI inversion of all of
 China constrained 113 independent pieces of information. A domain-total DOFS
 for four provinces should be read against all three.
 """

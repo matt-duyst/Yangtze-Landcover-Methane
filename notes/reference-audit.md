@@ -1,7 +1,7 @@
 # The register read as a reference list
 
 Audited 14 September 2026. `notes/references.md` is the register: what this
-project consulted, grouped by role, 198<!--#register.entries--> entries. A manuscript's reference list
+project consulted, grouped by role, 199<!--#register.entries--> entries. A manuscript's reference list
 is a different object — what the paper cites — and nothing had ever measured
 which subset that is. This file measures it, so the judgement conversation
 about what the reference list *should* contain has something to work from.
@@ -274,7 +274,7 @@ needs a citation got one, how large would the reference list be, and what would
 it be made of?**
 
 **How the drawn set was derived, and why it is a floor.** Two inputs, both
-committed: the 119 <!--#claims.cited--> numeric claims in
+committed: the 124 <!--#claims.cited--> numeric claims in
 `data/processed/claim_inventory_2026.csv` that resolve to a literature figure
 rather than to an artefact, and the prose claims this audit's own §2 listed as
 needing support. Together they name **46** register entries. That is a floor
@@ -293,10 +293,10 @@ different places in a submission:
 
 So the **reference list would be about 31 entries**, against the
 12 <!--#register.draft_cited--> the drafts cite today and
-198 <!--#register.entries--> in the register. That is below what an ACP article
+199 <!--#register.entries--> in the register. That is below what an ACP article
 typically carries, and the reason is a property of the work rather than a
 defect: this is a capability assessment resting on its own measurements, so most
-of its numbers are measured and only 119 <!--#claims.cited--> of them are
+of its numbers are measured and only 124 <!--#claims.cited--> of them are
 quoted from anyone.
 
 ### What the list is made of
@@ -319,7 +319,7 @@ and each needs its own citation.
 ### Concentration, and the entries that carry it alone
 
 The 119 cited claims resolve to only **37 distinct literature figures**, and the
-distribution is skewed: the **top four figures carry 53 of the 119**. The
+distribution is skewed: the **top four figures carry 57 of the 124**. The
 largest, at 21 claims, is the introduction's inventory-spread figure of at least
 30 percent; then the published precision filter under 10 ppb at 14, the
 averaging-kernel sensitivity threshold at 12, and the transport error standard

@@ -99,281 +99,313 @@ notes/draft-methods.md,95,"2.4 Four methane fields, not one",2,self_evident,stru
 notes/draft-methods.md,98,"2.4 Four methane fields, not one",11.64,measured,inline resolver,composite.bias_mean, mean of 11.64<!--#composite.bias_mean--> ppb. This is the primary target.
 notes/draft-methods.md,99,"2.4 Four methane fields, not one",3,self_evident,structural line,,"3. **The blended TROPOMI+GOSAT product** of Balasus et al. (2023), in which a"
 notes/draft-methods.md,99,"2.4 Four methane fields, not one",2023,self_evident,structural line,,"3. **The blended TROPOMI+GOSAT product** of Balasus et al. (2023), in which a"
-notes/draft-methods.md,101,"2.4 Four methane fields, not one",0.5,self_evident,inside a code span,, operational product's artefacts. This field is restricted to `qa_value ≥ 0.5`
-notes/draft-methods.md,103,"2.4 Four methane fields, not one",2.3,self_evident,structural context,, §2.3. Its published improvements over the operational product are a
-notes/draft-methods.md,104,"2.4 Four methane fields, not one",11.9,cited,in a draft's own exemption list,results: blended single-retrieval precision ppb, single-retrieval precision of 11.9 against 14.5 ppb and a reduction in
-notes/draft-methods.md,104,"2.4 Four methane fields, not one",14.5,cited,in a draft's own exemption list,results: operational single-retrieval precision ppb, single-retrieval precision of 11.9 against 14.5 ppb and a reduction in
-notes/draft-methods.md,105,"2.4 Four methane fields, not one",14.3,neither,no resolver and no exemption,, spatially variable bias against GOSAT from 14.3 to 10.4 ppb at 0.25 ×
-notes/draft-methods.md,105,"2.4 Four methane fields, not one",10.4,neither,no resolver and no exemption,, spatially variable bias against GOSAT from 14.3 to 10.4 ppb at 0.25 ×
-notes/draft-methods.md,105,"2.4 Four methane fields, not one",0.25,self_evident,grid resolution,, spatially variable bias against GOSAT from 14.3 to 10.4 ppb at 0.25 ×
-notes/draft-methods.md,106,"2.4 Four methane fields, not one",0.3125,self_evident,grid resolution,, 0.3125°.
-notes/draft-methods.md,107,"2.4 Four methane fields, not one",4,self_evident,structural line,,"4. **A deseasonalised field**, in which a region-wide seasonal cycle is removed"
-notes/draft-methods.md,119,"2.4 Four methane fields, not one",5,self_evident,structural context,,"**The full baseline suite of §5 was run independently against fields 2, 3 and"
-notes/draft-methods.md,119,"2.4 Four methane fields, not one",2,neither,no resolver and no exemption,,"**The full baseline suite of §5 was run independently against fields 2, 3 and"
-notes/draft-methods.md,119,"2.4 Four methane fields, not one",3,neither,no resolver and no exemption,,"**The full baseline suite of §5 was run independently against fields 2, 3 and"
-notes/draft-methods.md,120,"2.4 Four methane fields, not one",4,neither,no resolver and no exemption,,"4**, giving three complete sets of 88 model-scheme-weighting results. Field 2 is"
-notes/draft-methods.md,120,"2.4 Four methane fields, not one",88,neither,no resolver and no exemption,,"4**, giving three complete sets of 88 model-scheme-weighting results. Field 2 is"
-notes/draft-methods.md,120,"2.4 Four methane fields, not one",2,neither,no resolver and no exemption,,"4**, giving three complete sets of 88 model-scheme-weighting results. Field 2 is"
-notes/draft-methods.md,129,"2.4 Four methane fields, not one",2019,self_evident,year as a date,,methane products into one variational inversion over Europe for 2019 produced
-notes/draft-methods.md,130,"2.4 Four methane fields, not one",2,neither,no resolver and no exemption,,"emission budgets of +2 %, −1 % and −33 % relative to the same prior, with machine"
-notes/draft-methods.md,130,"2.4 Four methane fields, not one",1,neither,no resolver and no exemption,,"emission budgets of +2 %, −1 % and −33 % relative to the same prior, with machine"
-notes/draft-methods.md,130,"2.4 Four methane fields, not one",33,self_evident,study box or lattice shape,,"emission budgets of +2 %, −1 % and −33 % relative to the same prior, with machine"
-notes/draft-methods.md,132,"2.4 Four methane fields, not one",2026,self_evident,year as a date,,"sensitivity (Sicsik-Paré et al., 2026). A result that holds on one retrieval and"
-notes/draft-methods.md,135,2.5 Preprocessing steps not applied,2.5,self_evident,structural line,,### 2.5 Preprocessing steps not applied
-notes/draft-methods.md,142,2.5 Preprocessing steps not applied,2024,self_evident,year as a date,, introduced for data from September 2024 onward and earlier orbits have not been
-notes/draft-methods.md,146,2.5 Preprocessing steps not applied,10,cited,in a draft's own exemption list,"methods: published precision filter, under 10 ppb"," floor**. Published chains variously require methane precision below 10 ppb, a"
-notes/draft-methods.md,150,2.5 Preprocessing steps not applied,5.2,self_evident,structural context,," weighting is applied at all (§5.2), not by any measure of how representative"
-notes/draft-methods.md,153,2.5 Preprocessing steps not applied,2.4,self_evident,structural context,,"The blended product in §2.4 addresses albedo dependence, aerosol scattering and"
-notes/draft-methods.md,161,2.5 Preprocessing steps not applied,2.3,self_evident,structural context,,rather than adopted: the composite in §2.3 remains the primary field and
-notes/draft-methods.md,167,2.5 Preprocessing steps not applied,"110,920",measured,inline resolver,quality.in_box_passed," 110,920<!--#quality.in_box_passed--> soundings that pass quality control,"
-notes/draft-methods.md,168,2.5 Preprocessing steps not applied,10,cited,in a draft's own exemption list,"methods: published precision filter, under 10 ppb"," none has a retrieval precision above 10 ppb, so the published threshold would"
-notes/draft-methods.md,170,2.5 Preprocessing steps not applied,0.05,cited,in a draft's own exemption list,methods: published albedo floor,* **The albedo floor at 0.05 removes
-notes/draft-methods.md,171,2.5 Preprocessing steps not applied,"11,707",measured,inline resolver,sens.albedo_removed," 11,707<!--#sens.albedo_removed--> soundings and empties"
-notes/draft-methods.md,172,2.5 Preprocessing steps not applied,174,measured,inline resolver,sens.albedo_cells_lost, 174<!--#sens.albedo_cells_lost--> of the 926 cells.** Compared on the
-notes/draft-methods.md,172,2.5 Preprocessing steps not applied,926,self_evident,study box or lattice shape,, 174<!--#sens.albedo_cells_lost--> of the 926 cells.** Compared on the
-notes/draft-methods.md,173,2.5 Preprocessing steps not applied,752,measured,inline resolver,sens.albedo_cells," 752<!--#sens.albedo_cells--> cells that survive, no land-cover model"
-notes/draft-methods.md,177,2.5 Preprocessing steps not applied,5.09,measured,inline resolver,sens.stripe_sd, standard deviation of 5.09<!--#sens.stripe_sd--> ppb. Applying them raises
-notes/draft-methods.md,181,2.5 Preprocessing steps not applied,-0.03,measured,inline resolver,sens.weight_correlation," correlation -0.03<!--#sens.weight_correlation-->, because the spatial term"
-notes/draft-methods.md,182,2.5 Preprocessing steps not applied,97.5,measured,inline resolver,sens.spatial_share_pct, carries 97.5<!--#sens.spatial_share_pct--> percent of the per-cell variance
-notes/draft-methods.md,186,2.5 Preprocessing steps not applied,0.0244,measured,inline resolver,sens.impervious_committed_weighted, 0.0244<!--#sens.impervious_committed_weighted--> to
-notes/draft-methods.md,187,2.5 Preprocessing steps not applied,0.1429,measured,inline resolver,sens.impervious_repweight," 0.1429<!--#sens.impervious_repweight--> under spatial blocks, and the spatial"
-notes/draft-methods.md,188,2.5 Preprocessing steps not applied,0.5137,measured,inline resolver,sens.null_committed_weighted," null rises too, from 0.5137<!--#sens.null_committed_weighted--> to"
-notes/draft-methods.md,189,2.5 Preprocessing steps not applied,0.5399,measured,inline resolver,sens.null_repweight, 0.5399<!--#sens.null_repweight-->. **The ordering is unchanged and the gap
-notes/draft-methods.md,197,3. Compositing,3,self_evident,structural line,,## 3. Compositing
-notes/draft-methods.md,206,3. Compositing,926,measured,inline resolver,composite.covered_cells,The resulting composite covers 926<!--#composite.covered_cells--> of the
-notes/draft-methods.md,207,3. Compositing,"1,023",measured,inline resolver,composite.total_cells,"1,023<!--#composite.total_cells--> cells, or"
-notes/draft-methods.md,208,3. Compositing,90.52,measured,inline resolver,composite.coverage_percent,"90.52<!--#composite.coverage_percent--> %, leaving"
-notes/draft-methods.md,209,3. Compositing,97,measured,inline resolver,composite.uncovered_cells,97<!--#composite.uncovered_cells--> cells with no qualifying sounding in 2018.
-notes/draft-methods.md,209,3. Compositing,2018,self_evident,year as a date,,97<!--#composite.uncovered_cells--> cells with no qualifying sounding in 2018.
-notes/draft-methods.md,210,3. Compositing,1,measured,inline resolver,composite.min_soundings,Per-cell counts run from 1<!--#composite.min_soundings--> to
-notes/draft-methods.md,211,3. Compositing,410,measured,inline resolver,composite.max_soundings,410<!--#composite.max_soundings--> with a median of
-notes/draft-methods.md,212,3. Compositing,74,measured,inline resolver,composite.median_soundings,74<!--#composite.median_soundings-->.
-notes/draft-methods.md,214,3. Compositing,97,self_evident,study box or lattice shape,,"Coverage is not missing at random. Of the 97 uncovered cells,"
-notes/draft-methods.md,215,3. Compositing,74,measured,inline resolver,composite.absent_on_land,"74<!--#composite.absent_on_land--> lie wholly on land, and their median elevation"
-notes/draft-methods.md,216,3. Compositing,502,measured,inline resolver,composite.absent_median_elevation,is 502<!--#composite.absent_median_elevation--> m against
-notes/draft-methods.md,217,3. Compositing,35,measured,inline resolver,composite.covered_median_elevation,35<!--#composite.covered_median_elevation--> m for the covered cells;
-notes/draft-methods.md,218,3. Compositing,50,measured,inline resolver,composite.absent_above_500m,50<!--#composite.absent_above_500m--> sit above 500 m against
-notes/draft-methods.md,218,3. Compositing,500,self_evident,label or pair beside a marked number,,50<!--#composite.absent_above_500m--> sit above 500 m against
-notes/draft-methods.md,219,3. Compositing,24,measured,inline resolver,composite.covered_above_500m,24<!--#composite.covered_above_500m--> of the 926. The largest connected gap is
-notes/draft-methods.md,219,3. Compositing,926,self_evident,study box or lattice shape,,24<!--#composite.covered_above_500m--> of the 926. The largest connected gap is
-notes/draft-methods.md,220,3. Compositing,47,measured,inline resolver,composite.largest_absent_block,47<!--#composite.largest_absent_block--> cells over the mountains on the southern
-notes/draft-methods.md,222,3. Compositing,6,measured,inline resolver,composite.coast_median_soundings,sounding count is 6<!--#composite.coast_median_soundings--> against
-notes/draft-methods.md,223,3. Compositing,133,measured,inline resolver,composite.land_median_soundings,133<!--#composite.land_median_soundings--> for cells that are wholly land.
-notes/draft-methods.md,231,3. Compositing,2025,self_evident,year as a date,,"al., 2025). Averaging within a cell and an orbit is therefore nearly free;"
-notes/draft-methods.md,235,3. Compositing,6,self_evident,structural context,,and neither can be derived from the other. The capability assessment in §6
-notes/draft-methods.md,238,4. Land cover and covariates,4,self_evident,structural line,,## 4. Land cover and covariates
-notes/draft-methods.md,240,4.1 Urban extent,4.1,self_evident,structural line,,### 4.1 Urban extent
-notes/draft-methods.md,245,4.1 Urban extent,2020,self_evident,year as a date,,"* **GAIA**, the Global Artificial Impervious Area dataset (Gong et al., 2020), at"
-notes/draft-methods.md,246,4.1 Urban extent,30,cited,in a draft's own exemption list,"introduction: inventory spread, at least 30 percent", 30 m.
-notes/draft-methods.md,247,4.1 Urban extent,2021,self_evident,year as a date,,"* **GISA**, the Global Impervious Surface Area dataset (Huang et al., 2021), at"
-notes/draft-methods.md,248,4.1 Urban extent,30,cited,in a draft's own exemption list,"introduction: inventory spread, at least 30 percent", 30 m.
-notes/draft-methods.md,253,4.1 Urban extent,2023,self_evident,inside a code span,,"`year = 2023 − value`, so an extent through a target year selects values at or"
-notes/draft-methods.md,254,4.1 Urban extent,1972,self_evident,year as a date,,"*above* the code for that year. GISA counts upward from 1972, so the same extent"
-notes/draft-methods.md,255,4.1 Urban extent,1,neither,no resolver and no exemption,,"is a closed interval from 1 to the code for that year — not a one-sided threshold,"
-notes/draft-methods.md,256,4.1 Urban extent,0,neither,no resolver and no exemption,,because 0 denotes absence and an upper-bound-only selector would count every
-notes/draft-methods.md,260,4.1 Urban extent,"5,507,866,225",neither,no resolver and no exemption,,"documentation: GISA over 5,507,866,225 pixels and GAIA over 3,105,244,301."
-notes/draft-methods.md,260,4.1 Urban extent,"3,105,244,301",neither,no resolver and no exemption,,"documentation: GISA over 5,507,866,225 pixels and GAIA over 3,105,244,301."
-notes/draft-methods.md,262,4.1 Urban extent,2018,self_evident,year as a date,,"For GISA in 2018 the correct selector returns 202,830,997 pixels where the"
-notes/draft-methods.md,262,4.1 Urban extent,"202,830,997",neither,no resolver and no exemption,,"For GISA in 2018 the correct selector returns 202,830,997 pixels where the"
-notes/draft-methods.md,263,4.1 Urban extent,"9,468,801",neither,no resolver and no exemption,,"one-sided form returns 9,468,801, a map of what was built in 2018 and 2019 alone."
-notes/draft-methods.md,263,4.1 Urban extent,2018,self_evident,year as a date,,"one-sided form returns 9,468,801, a map of what was built in 2018 and 2019 alone."
-notes/draft-methods.md,263,4.1 Urban extent,2019,self_evident,year as a date,,"one-sided form returns 9,468,801, a map of what was built in 2018 and 2019 alone."
-notes/draft-methods.md,264,4.1 Urban extent,128,neither,no resolver and no exemption,,Neither product declares a nodata value; GAIA's is −128 and is undocumented.
-notes/draft-methods.md,267,4.1 Urban extent,"19,786.9",measured,inline resolver,urban.gisa_2000,"provinces GISA gives 19,786.9<!--#urban.gisa_2000--> km² of impervious surface in"
-notes/draft-methods.md,268,4.1 Urban extent,"16,387.1",measured,inline resolver,urban.gaia_2000,"2000 against GAIA's 16,387.1<!--#urban.gaia_2000--> km², and"
-notes/draft-methods.md,268,4.1 Urban extent,2000,self_evident,year as a date,,"2000 against GAIA's 16,387.1<!--#urban.gaia_2000--> km², and"
-notes/draft-methods.md,269,4.1 Urban extent,"39,532.2",measured,inline resolver,urban.gisa_2018,"39,532.2<!--#urban.gisa_2018--> km² in 2018 against GAIA's"
-notes/draft-methods.md,269,4.1 Urban extent,2018,self_evident,year as a date,,"39,532.2<!--#urban.gisa_2018--> km² in 2018 against GAIA's"
-notes/draft-methods.md,270,4.1 Urban extent,"49,348.0",measured,inline resolver,urban.gaia_2018,"49,348.0<!--#urban.gaia_2018--> km². **GISA is therefore 20.7 % larger in 2000"
-notes/draft-methods.md,270,4.1 Urban extent,20.7,self_evident,label or pair beside a marked number,,"49,348.0<!--#urban.gaia_2018--> km². **GISA is therefore 20.7 % larger in 2000"
-notes/draft-methods.md,270,4.1 Urban extent,2000,self_evident,year as a date,,"49,348.0<!--#urban.gaia_2018--> km². **GISA is therefore 20.7 % larger in 2000"
-notes/draft-methods.md,271,4.1 Urban extent,19.9,neither,no resolver and no exemption,,"and 19.9 % smaller in 2018**, so the products disagree about the growth factor far"
-notes/draft-methods.md,271,4.1 Urban extent,2018,self_evident,year as a date,,"and 19.9 % smaller in 2018**, so the products disagree about the growth factor far"
-notes/draft-methods.md,272,4.1 Urban extent,2.0,measured,inline resolver,urban.gisa_factor,more than about the extent: 2.0<!--#urban.gisa_factor--> against
-notes/draft-methods.md,273,4.1 Urban extent,3.0,measured,inline resolver,urban.gaia_factor,3.0<!--#urban.gaia_factor--> over 2000 to 2018. Both are year-of-change products
-notes/draft-methods.md,273,4.1 Urban extent,2000,self_evident,year as a date,,3.0<!--#urban.gaia_factor--> over 2000 to 2018. Both are year-of-change products
-notes/draft-methods.md,273,4.1 Urban extent,2018,self_evident,year as a date,,3.0<!--#urban.gaia_factor--> over 2000 to 2018. Both are year-of-change products
-notes/draft-methods.md,279,4.2 Rice extent,4.2,self_evident,structural line,,### 4.2 Rice extent
-notes/draft-methods.md,283,4.2 Rice extent,30,cited,in a draft's own exemption list,"introduction: inventory spread, at least 30 percent","* **A 30 m single-season rice product for China** covering 2017 onward,"
-notes/draft-methods.md,283,4.2 Rice extent,2017,self_evident,year as a date,,"* **A 30 m single-season rice product for China** covering 2017 onward,"
-notes/draft-methods.md,286,4.2 Rice extent,5,neither,no resolver and no exemption,,"* **GloRice (I)**, gridded annual paddy rice distribution at 5 arcmin for 1961 to"
-notes/draft-methods.md,286,4.2 Rice extent,1961,self_evident,year as a date,,"* **GloRice (I)**, gridded annual paddy rice distribution at 5 arcmin for 1961 to"
-notes/draft-methods.md,287,4.2 Rice extent,2021,self_evident,year as a date,," 2021 (Xie et al., 2025)."
-notes/draft-methods.md,287,4.2 Rice extent,2025,self_evident,year as a date,," 2021 (Xie et al., 2025)."
-notes/draft-methods.md,294,4.2 Rice extent,30,cited,in a draft's own exemption list,"introduction: inventory spread, at least 30 percent",Two limitations of the 30 m product bear directly on interpretation and are
-notes/draft-methods.md,296,4.2 Rice extent,86.11,measured,inline resolver,rice.anhui_coverage_percent,86.11<!--#rice.anhui_coverage_percent--> % of the province that lies south of 33.3462° N
-notes/draft-methods.md,296,4.2 Rice extent,33.3462,unresolved,"in an artefact, no resolver","the Anhui raster bound, exempted in the methods note",86.11<!--#rice.anhui_coverage_percent--> % of the province that lies south of 33.3462° N
-notes/draft-methods.md,297,4.2 Rice extent,115.2682,neither,no resolver and no exemption,,"and east of 115.2682° E**, so the northern part of the province — which contains"
-notes/draft-methods.md,298,4.2 Rice extent,1,self_evident,structural context,,the coalfield named in §1 — is unclassified rather than classified as
-notes/draft-methods.md,300,4.2 Rice extent,0.03,unresolved,"equals a resolver's value, written unmarked",collinear.partial_weighted,parts of the record**: Shanghai's single-season count is stable to 0.03 % across
-notes/draft-methods.md,301,4.2 Rice extent,2019,self_evident,year as a date,,2019 to 2025 while only 52.69 % of pixels labelled rice in 2019 are still so
-notes/draft-methods.md,301,4.2 Rice extent,2025,self_evident,year as a date,,2019 to 2025 while only 52.69 % of pixels labelled rice in 2019 are still so
-notes/draft-methods.md,301,4.2 Rice extent,52.69,neither,no resolver and no exemption,,2019 to 2025 while only 52.69 % of pixels labelled rice in 2019 are still so
-notes/draft-methods.md,301,4.2 Rice extent,2019,self_evident,year as a date,,2019 to 2025 while only 52.69 % of pixels labelled rice in 2019 are still so
-notes/draft-methods.md,302,4.2 Rice extent,2025,self_evident,year as a date,,"labelled in 2025, a Jaccard index of 0.3577; between 2023 and 2024, 5,651,475"
-notes/draft-methods.md,302,4.2 Rice extent,0.3577,neither,no resolver and no exemption,,"labelled in 2025, a Jaccard index of 0.3577; between 2023 and 2024, 5,651,475"
-notes/draft-methods.md,302,4.2 Rice extent,2023,self_evident,year as a date,,"labelled in 2025, a Jaccard index of 0.3577; between 2023 and 2024, 5,651,475"
-notes/draft-methods.md,302,4.2 Rice extent,2024,self_evident,year as a date,,"labelled in 2025, a Jaccard index of 0.3577; between 2023 and 2024, 5,651,475"
-notes/draft-methods.md,302,4.2 Rice extent,"5,651,475",neither,no resolver and no exemption,,"labelled in 2025, a Jaccard index of 0.3577; between 2023 and 2024, 5,651,475"
-notes/draft-methods.md,303,4.2 Rice extent,"5,651,551",neither,no resolver and no exemption,,"pixels gained the label and 5,651,551 lost it. A stable total over a relocating"
-notes/draft-methods.md,306,4.3 Aggregation to fractional cover,4.3,self_evident,structural line,,### 4.3 Aggregation to fractional cover
-notes/draft-methods.md,311,4.3 Aggregation to fractional cover,25,neither,no resolver and no exemption,,Albers Equal Area projection with standard parallels at 25° and 47° north and a
-notes/draft-methods.md,311,4.3 Aggregation to fractional cover,47,neither,no resolver and no exemption,,Albers Equal Area projection with standard parallels at 25° and 47° north and a
-notes/draft-methods.md,312,4.3 Aggregation to fractional cover,105,neither,no resolver and no exemption,,"central meridian at 105° east, rather than by counting pixels, because pixel"
-notes/draft-methods.md,317,4.3 Aggregation to fractional cover,926,self_evident,study box or lattice shape,,Across the 926 covered cells the median impervious fraction is
-notes/draft-methods.md,318,4.3 Aggregation to fractional cover,0.0595,measured,inline resolver,grid.impervious_median,0.0595<!--#grid.impervious_median--> with
-notes/draft-methods.md,319,4.3 Aggregation to fractional cover,136,measured,inline resolver,grid.impervious_zeros,136<!--#grid.impervious_zeros--> cells at zero.
-notes/draft-methods.md,320,4.3 Aggregation to fractional cover,531,measured,inline resolver,grid.rice_rows,"531<!--#grid.rice_rows--> cells carry a rice fraction, of which"
-notes/draft-methods.md,321,4.3 Aggregation to fractional cover,18,measured,inline resolver,grid.rice_zero_rows,"18<!--#grid.rice_zero_rows--> are recorded zeros, with a median single-season"
-notes/draft-methods.md,322,4.3 Aggregation to fractional cover,0.1291,measured,inline resolver,grid.rice_single_median,fraction of 0.1291<!--#grid.rice_single_median--> and a median combined
-notes/draft-methods.md,323,4.3 Aggregation to fractional cover,0.1366,measured,inline resolver,grid.rice_combined_median,single-and-double fraction of 0.1366<!--#grid.rice_combined_median-->. Rice
-notes/draft-methods.md,324,4.3 Aggregation to fractional cover,0.3412,measured,inline resolver,grid.rice_coverage_median,coverage has a median of 0.3412<!--#grid.rice_coverage_median--> and falls below
-notes/draft-methods.md,325,4.3 Aggregation to fractional cover,569,measured,inline resolver,grid.rice_coverage_below_99,"0.99 in 569<!--#grid.rice_coverage_below_99--> cells, which is the quantitative"
-notes/draft-methods.md,325,4.3 Aggregation to fractional cover,0.99,self_evident,label or pair beside a marked number,,"0.99 in 569<!--#grid.rice_coverage_below_99--> cells, which is the quantitative"
-notes/draft-methods.md,326,4.3 Aggregation to fractional cover,69,measured,inline resolver,grid.straddling_cells,form of the Anhui limitation above. 69<!--#grid.straddling_cells--> cells
-notes/draft-methods.md,330,4.4 Covariates,4.4,self_evident,structural line,,### 4.4 Covariates
-notes/draft-methods.md,343,4.4 Covariates,10,cited,in a draft's own exemption list,"methods: published precision filter, under 10 ppb","| Eastward wind at 10 m | Advective transport, the alternative explanation for a column gradient |"
-notes/draft-methods.md,344,4.4 Covariates,10,cited,in a draft's own exemption list,"methods: published precision filter, under 10 ppb",| Northward wind at 10 m | As above |
-notes/draft-methods.md,349,4.4 Covariates,"110,920",unresolved,"equals a resolver's value, written unmarked",composite.soundings,"110,920 soundings and cover all 926 cells."
-notes/draft-methods.md,349,4.4 Covariates,926,self_evident,study box or lattice shape,,"110,920 soundings and cover all 926 cells."
-notes/draft-methods.md,354,4.4 Covariates,2026,self_evident,year as a date,,"2026), so albedo is a co-retrieved parameter rather than an external"
-notes/draft-methods.md,357,4.4 Covariates,166,measured,inline resolver,cov.albedo_negative,coupling and cannot remove the rest. 166<!--#cov.albedo_negative--> cells carry a
-notes/draft-methods.md,361,5. Statistical analysis,5,self_evident,structural line,,## 5. Statistical analysis
-notes/draft-methods.md,363,5.1 Baseline suite,5.1,self_evident,structural line,,### 5.1 Baseline suite
-notes/draft-methods.md,378,5.1 Baseline suite,0.247,measured,inline resolver,spread.impervious,0.247<!--#spread.impervious--> of R² across them. Where one figure is quoted it
-notes/draft-methods.md,380,5.1 Baseline suite,5.4,self_evident,structural context,,bracket for the reason §5.4 gives.
-notes/draft-methods.md,384,5.1 Baseline suite,0.0847,measured,inline resolver,baseline.impervious_r2,"0.0847<!--#baseline.impervious_r2--> for impervious fraction alone,"
-notes/draft-methods.md,385,5.1 Baseline suite,-0.0314,measured,inline resolver,baseline.rice_alone_r2,-0.0314<!--#baseline.rice_alone_r2--> for rice fraction alone and
-notes/draft-methods.md,386,5.1 Baseline suite,0.0169,measured,inline resolver,baseline.rice_plus_impervious_r2,"0.0169<!--#baseline.rice_plus_impervious_r2--> for the two together, against"
-notes/draft-methods.md,387,5.1 Baseline suite,-0.0084,measured,inline resolver,baseline.constant_r2,"-0.0084<!--#baseline.constant_r2--> for a global-mean constant,"
-notes/draft-methods.md,388,5.1 Baseline suite,0.3324,measured,inline resolver,baseline.null_r2,0.3324<!--#baseline.null_r2--> for the spatial null and
-notes/draft-methods.md,389,5.1 Baseline suite,0.6527,measured,inline resolver,baseline.wind_r2,0.6527<!--#baseline.wind_r2--> for wind components. The observed field spans
-notes/draft-methods.md,390,5.1 Baseline suite,106.1,measured,inline resolver,baseline.observed_span_ppb,106.1<!--#baseline.observed_span_ppb--> ppb between its extreme cells; the
-notes/draft-methods.md,392,5.1 Baseline suite,42.7,measured,inline resolver,baseline.impervious_span_ppb,42.7<!--#baseline.impervious_span_ppb--> ppb and its root mean squared error is
-notes/draft-methods.md,393,5.1 Baseline suite,14.2,measured,inline resolver,baseline.impervious_rmse,14.2<!--#baseline.impervious_rmse--> ppb.
-notes/draft-methods.md,395,5.2 Cross-validation and weighting,5.2,self_evident,structural line,,### 5.2 Cross-validation and weighting
-notes/draft-methods.md,400,5.2 Cross-validation and weighting,111.2,measured,inline resolver,range.block_ns_km,111.2<!--#range.block_ns_km--> km north-south by
-notes/draft-methods.md,401,5.2 Cross-validation and weighting,95.0,measured,inline resolver,range.block_ew_km,95.0<!--#range.block_ew_km--> km east-west at this latitude. Each model was
-notes/draft-methods.md,402,5.2 Cross-validation and weighting,88,neither,no resolver and no exemption,,"fitted both unweighted and weighted by sounding count, giving 88 fitted"
-notes/draft-methods.md,408,5.2 Cross-validation and weighting,5.4,self_evident,structural context,,"autocorrelation extends beyond the test unit, and it was not applied. §5.4"
-notes/draft-methods.md,411,5.3 Effective degrees of freedom,5.3,self_evident,structural line,,### 5.3 Effective degrees of freedom
-notes/draft-methods.md,414,5.3 Effective degrees of freedom,926,self_evident,study box or lattice shape,,"autocorrelated, so the nominal degrees of freedom of a correlation over 926 cells"
-notes/draft-methods.md,417,5.3 Effective degrees of freedom,0.7085,measured,inline resolver,residual.observed_moran,0.7085<!--#residual.observed_moran--> under a permutation test with
-notes/draft-methods.md,418,5.3 Effective degrees of freedom,999,measured,inline resolver,residual.permutations,999<!--#residual.permutations--> permutations.
-notes/draft-methods.md,421,5.3 Effective degrees of freedom,1989,self_evident,year as a date,,"Richardson and Hémon (1989) as extended by Dutilleul et al. (1993), in which the"
-notes/draft-methods.md,421,5.3 Effective degrees of freedom,1993,self_evident,year as a date,,"Richardson and Hémon (1989) as extended by Dutilleul et al. (1993), in which the"
-notes/draft-methods.md,424,5.3 Effective degrees of freedom,1,neither,no resolver and no exemption,," M = 1 + n² / tr(R_X R_Y), tr(R_X R_Y) = ΣᵢΣⱼ ρ_X(d_ij) ρ_Y(d_ij)"
-notes/draft-methods.md,427,5.3 Effective degrees of freedom,30,cited,in a draft's own exemption list,"introduction: inventory spread, at least 30 percent",into 30 bins and taking the empirical correlation within each bin. Distances are
-notes/draft-methods.md,430,5.3 Effective degrees of freedom,1,neither,no resolver and no exemption,,"effective sample size is capped at n + 1, since a noisy correlogram can otherwise"
-notes/draft-methods.md,434,5.3 Effective degrees of freedom,72,measured,inline resolver,dof.rows,"Applied to the 72<!--#dof.rows--> correlations reported for this domain, the"
-notes/draft-methods.md,436,5.3 Effective degrees of freedom,0.0200,measured,inline resolver,dof.shrinkage_min,0.0200<!--#dof.shrinkage_min--> and
-notes/draft-methods.md,437,5.3 Effective degrees of freedom,0.2517,measured,inline resolver,dof.shrinkage_max,"0.2517<!--#dof.shrinkage_max--> of nominal — that is, to between"
-notes/draft-methods.md,438,5.3 Effective degrees of freedom,11.4,measured,inline resolver,dof.effective_n_min,11.4<!--#dof.effective_n_min--> and
-notes/draft-methods.md,439,5.3 Effective degrees of freedom,185.7,measured,inline resolver,dof.effective_n_max,185.7<!--#dof.effective_n_max--> independent observations in place of 926 — and
-notes/draft-methods.md,439,5.3 Effective degrees of freedom,926,self_evident,study box or lattice shape,,185.7<!--#dof.effective_n_max--> independent observations in place of 926 — and
-notes/draft-methods.md,440,5.3 Effective degrees of freedom,27,measured,inline resolver,dof.verdict_changed,27<!--#dof.verdict_changed--> of the 72 correlations that reach significance at
-notes/draft-methods.md,440,5.3 Effective degrees of freedom,72,self_evident,label or pair beside a marked number,,27<!--#dof.verdict_changed--> of the 72 correlations that reach significance at
-notes/draft-methods.md,441,5.3 Effective degrees of freedom,5,neither,no resolver and no exemption,,the 5 % level nominally do not reach it after correction. The estimator was
-notes/draft-methods.md,443,5.3 Effective degrees of freedom,0.75,cited,in a draft's own exemption list,methods: blended-albedo ceiling,"between 0.75 and 1.0 of nominal, so a shrinkage near 0.87 is read as ""no"
-notes/draft-methods.md,443,5.3 Effective degrees of freedom,1.0,neither,no resolver and no exemption,,"between 0.75 and 1.0 of nominal, so a shrinkage near 0.87 is read as ""no"
-notes/draft-methods.md,443,5.3 Effective degrees of freedom,0.87,cited,in a draft's own exemption list,"discussion: posterior error correlation, shared surface, upper","between 0.75 and 1.0 of nominal, so a shrinkage near 0.87 is read as ""no"
-notes/draft-methods.md,444,5.3 Effective degrees of freedom,150,self_evident,swept buffer radius,,"dependence detected"" rather than as a real loss, and on fields with a 150 km"
-notes/draft-methods.md,445,5.3 Effective degrees of freedom,0.2,neither,no resolver and no exemption,,correlation range it returns under 0.2.
-notes/draft-methods.md,447,5.4 Residual autocorrelation and the buffered decay curve,5.4,self_evident,structural line,,### 5.4 Residual autocorrelation and the buffered decay curve
-notes/draft-methods.md,451,5.4 Residual autocorrelation and the buffered decay curve,1,neither,no resolver and no exemption,,γ(h) = nugget + (sill − nugget)(1 − exp(−h/a)) were fitted to the residuals of
-notes/draft-methods.md,457,5.4 Residual autocorrelation and the buffered decay curve,10,measured,inline resolver,range.models,"Of the 10<!--#range.models--> model-field combinations,"
-notes/draft-methods.md,458,5.4 Residual autocorrelation and the buffered decay curve,4,measured,inline resolver,range.too_small,4<!--#range.too_small--> have residuals still correlated at the block width. The
-notes/draft-methods.md,460,5.4 Residual autocorrelation and the buffered decay curve,96.1,measured,inline resolver,range.operational_impervious_km,96.1<!--#range.operational_impervious_km--> km on the operationally corrected
-notes/draft-methods.md,461,5.4 Residual autocorrelation and the buffered decay curve,134.5,measured,inline resolver,range.blended_impervious_km,"field and 134.5<!--#range.blended_impervious_km--> km on the blended field,"
-notes/draft-methods.md,462,5.4 Residual autocorrelation and the buffered decay curve,95.0,neither,no resolver and no exemption,,against a block 95.0 km at its narrowest; models that include the albedo
-notes/draft-methods.md,464,5.4 Residual autocorrelation and the buffered decay curve,22.5,measured,inline resolver,range.operational_full_km,22.5<!--#range.operational_full_km--> km or less. **So the block scheme is too
-notes/draft-methods.md,469,5.4 Residual autocorrelation and the buffered decay curve,0,self_evident,swept buffer radius,,"each cell withheld together with every cell within a radius r of it, for r from 0"
-notes/draft-methods.md,470,5.4 Residual autocorrelation and the buffered decay curve,500,self_evident,swept buffer radius,,to 500 km. Because a constant predictor's held-out skill also falls as r grows —
-notes/draft-methods.md,474,5.4 Residual autocorrelation and the buffered decay curve,0.687,measured,inline resolver,loo.null_0km,0.687<!--#loo.null_0km--> at r = 0 to
-notes/draft-methods.md,474,5.4 Residual autocorrelation and the buffered decay curve,0,self_evident,label or pair beside a marked number,,0.687<!--#loo.null_0km--> at r = 0 to
-notes/draft-methods.md,475,5.4 Residual autocorrelation and the buffered decay curve,0.000,measured,inline resolver,loo.null_50km,"0.000<!--#loo.null_50km--> at r = 50 km, which is the expected collapse for a"
-notes/draft-methods.md,475,5.4 Residual autocorrelation and the buffered decay curve,50,self_evident,swept buffer radius,,"0.000<!--#loo.null_50km--> at r = 50 km, which is the expected collapse for a"
-notes/draft-methods.md,477,5.4 Residual autocorrelation and the buffered decay curve,0.118,measured,inline resolver,loo.impervious_0km,0.118<!--#loo.impervious_0km--> at r = 0 to
-notes/draft-methods.md,477,5.4 Residual autocorrelation and the buffered decay curve,0,self_evident,label or pair beside a marked number,,0.118<!--#loo.impervious_0km--> at r = 0 to
-notes/draft-methods.md,478,5.4 Residual autocorrelation and the buffered decay curve,0.089,measured,inline resolver,loo.impervious_100km,0.089<!--#loo.impervious_100km--> at 100 km and
-notes/draft-methods.md,478,5.4 Residual autocorrelation and the buffered decay curve,100,self_evident,swept buffer radius,,0.089<!--#loo.impervious_100km--> at 100 km and
-notes/draft-methods.md,479,5.4 Residual autocorrelation and the buffered decay curve,0.007,measured,inline resolver,loo.impervious_300km,0.007<!--#loo.impervious_300km--> at 300 km.
-notes/draft-methods.md,479,5.4 Residual autocorrelation and the buffered decay curve,300,self_evident,swept buffer radius,,0.007<!--#loo.impervious_300km--> at 300 km.
-notes/draft-methods.md,482,5.4 Residual autocorrelation and the buffered decay curve,1,neither,no resolver and no exemption,,disagree.** Leave-one-province-out is the more pessimistic scheme and the 1° block
-notes/draft-methods.md,487,6. Capability assessment of the observing system,6,self_evident,structural line,,## 6. Capability assessment of the observing system
-notes/draft-methods.md,493,6.1 Information content,6.1,self_evident,structural line,,### 6.1 Information content
-notes/draft-methods.md,497,6.1 Information content,2025,self_evident,year as a date,,"(Estrada et al., 2025), which gives a per-cell averaging-kernel sensitivity"
-notes/draft-methods.md,502,6.1 Information content,0.5,cited,in a draft's own exemption list,introduction/discussion: averaging-kernel sensitivity threshold,"0.5, observation error 15 ppb, length scale 25 km, α = 0.4, wind speed 5 km h⁻¹,"
-notes/draft-methods.md,502,6.1 Information content,15,cited,in a draft's own exemption list,"introduction: fifteen Tg, the inventory gap","0.5, observation error 15 ppb, length scale 25 km, α = 0.4, wind speed 5 km h⁻¹,"
-notes/draft-methods.md,502,6.1 Information content,25,self_evident,swept buffer radius,,"0.5, observation error 15 ppb, length scale 25 km, α = 0.4, wind speed 5 km h⁻¹,"
-notes/draft-methods.md,502,6.1 Information content,0.4,neither,no resolver and no exemption,,"0.5, observation error 15 ppb, length scale 25 km, α = 0.4, wind speed 5 km h⁻¹,"
-notes/draft-methods.md,502,6.1 Information content,5,neither,no resolver and no exemption,,"0.5, observation error 15 ppb, length scale 25 km, α = 0.4, wind speed 5 km h⁻¹,"
-notes/draft-methods.md,503,6.1 Information content,0.55,neither,no resolver and no exemption,,retrieval error correlation 0.55 and transport error 4.5 ppb.
-notes/draft-methods.md,503,6.1 Information content,4.5,neither,no resolver and no exemption,,retrieval error correlation 0.55 and transport error 4.5 ppb.
-notes/draft-methods.md,506,6.1 Information content,3,self_evident,structural context,,"the composite, for the reason given in §3. Per-cell **observation days**,"
-notes/draft-methods.md,509,6.1 Information content,23.0,measured,inline resolver,dofs.days_median,23.0<!--#dofs.days_median--> days per covered cell; the number of retrievals
-notes/draft-methods.md,511,6.1 Information content,4.4,measured,inline resolver,dofs.retrievals_median,4.4<!--#dofs.retrievals_median-->.
-notes/draft-methods.md,516,6.1 Information content,1.44,measured,inline resolver,dofs.at_3tg,"1.44<!--#dofs.at_3tg--> at a 3 Tg a⁻¹ domain prior,"
-notes/draft-methods.md,516,6.1 Information content,3,self_evident,label or pair beside a marked number,,"1.44<!--#dofs.at_3tg--> at a 3 Tg a⁻¹ domain prior,"
-notes/draft-methods.md,517,6.1 Information content,3.98,measured,inline resolver,dofs.at_5tg,3.98<!--#dofs.at_5tg--> at 5 Tg a⁻¹ and
-notes/draft-methods.md,517,6.1 Information content,5,self_evident,label or pair beside a marked number,,3.98<!--#dofs.at_5tg--> at 5 Tg a⁻¹ and
-notes/draft-methods.md,518,6.1 Information content,22.21,measured,inline resolver,dofs.at_12tg,22.21<!--#dofs.at_12tg--> at 12 Tg a⁻¹.
-notes/draft-methods.md,518,6.1 Information content,12,cited,in a draft's own exemption list,discussion: transport error standard deviation ppb,22.21<!--#dofs.at_12tg--> at 12 Tg a⁻¹.
-notes/draft-methods.md,522,6.1 Information content,0.5,cited,in a draft's own exemption list,introduction/discussion: averaging-kernel sensitivity threshold,"First, **no cell reaches an averaging-kernel sensitivity above 0.5 at any point in"
-notes/draft-methods.md,523,6.1 Information content,0,measured,inline resolver,dofs.cells_above_half,the sweep** — the count is 0<!--#dofs.cells_above_half--> in every case. The DOFS
-notes/draft-methods.md,524,6.1 Information content,926,self_evident,study box or lattice shape,,total accumulates from 926 weakly constrained cells rather than from a few well
-notes/draft-methods.md,528,6.1 Information content,0.5,cited,in a draft's own exemption list,introduction/discussion: averaging-kernel sensitivity threshold,DOFS above 0.5 as a practical minimum for estimating a total with a 2σ error of
-notes/draft-methods.md,529,6.1 Information content,30,cited,in a draft's own exemption list,"introduction: inventory spread, at least 30 percent","30 % or less, and reports that low-DOFS inversions are mainly constrained by the"
-notes/draft-methods.md,539,6.2 Identifiability,6.2,self_evident,structural line,,### 6.2 Identifiability
-notes/draft-methods.md,550,6.2 Identifiability,0.35,cited,in a draft's own exemption list,"discussion: posterior error correlation, distinct sector","correlations with other sectors fall below 0.35, and the sector's emissions can be"
-notes/draft-methods.md,553,6.2 Identifiability,0.45,cited,in a draft's own exemption list,"discussion: posterior error correlation, shared surface, lower","error correlations among them run from 0.45 to 0.87, and their separation is, in"
-notes/draft-methods.md,553,6.2 Identifiability,0.87,cited,in a draft's own exemption list,"discussion: posterior error correlation, shared surface, upper","error correlations among them run from 0.45 to 0.87, and their separation is, in"
-notes/draft-methods.md,555,6.2 Identifiability,2026,self_evident,year as a date,,"2026). The same instrument, the same inversion and the same domain separate one"
-notes/draft-methods.md,565,6.2 Identifiability,4.2,self_evident,structural context,,(§4.2). The methodological literature states the consequence directly: inversion
-notes/draft-methods.md,568,6.2 Identifiability,2018,self_evident,year as a date,,"grouped and treated as a single source (Desjardins et al., 2018)."
-notes/draft-methods.md,578,6.3 Relation to the association analysis,6.3,self_evident,structural line,,### 6.3 Relation to the association analysis
-notes/draft-methods.md,580,6.3 Relation to the association analysis,5,self_evident,structural context,,The association analysis of §5 is the empirical counterpart of §6.1 rather than a
-notes/draft-methods.md,580,6.3 Relation to the association analysis,6.1,self_evident,structural context,,The association analysis of §5 is the empirical counterpart of §6.1 rather than a
-notes/draft-methods.md,582,6.3 Relation to the association analysis,5,self_evident,structural context,,"sensitivity is a record in which per-cell predictors should fail, and §5 reports"
-notes/draft-methods.md,588,7. Validation,7,self_evident,structural line,,## 7. Validation
-notes/draft-methods.md,593,7. Validation,"2,767",measured,inline resolver,tccon.retrievals,"its 2018 record is sparse: 2,767<!--#tccon.retrievals--> retrievals on"
-notes/draft-methods.md,593,7. Validation,2018,self_evident,year as a date,,"its 2018 record is sparse: 2,767<!--#tccon.retrievals--> retrievals on"
-notes/draft-methods.md,594,7. Validation,44,measured,inline resolver,tccon.days,44<!--#tccon.days--> days. 9<!--#tccon.coincident_days--> days in 2018 carry
-notes/draft-methods.md,594,7. Validation,9,measured,inline resolver,tccon.coincident_days,44<!--#tccon.days--> days. 9<!--#tccon.coincident_days--> days in 2018 carry
-notes/draft-methods.md,594,7. Validation,2018,self_evident,year as a date,,44<!--#tccon.days--> days. 9<!--#tccon.coincident_days--> days in 2018 carry
-notes/draft-methods.md,610,7. Validation,4.3,self_evident,structural context,,"cover, which is the form both predictors take here (§4.3). That frame compares a"
-notes/draft-methods.md,616,7. Validation,0.954,cited,in a draft's own exemption list,discussion: accuracy figure in section 8,this work uses report an F-score of 0.954 (GISA) and 93.12 percent overall
-notes/draft-methods.md,616,7. Validation,93.12,neither,no resolver and no exemption,,this work uses report an F-score of 0.954 (GISA) and 93.12 percent overall
-notes/draft-methods.md,617,7. Validation,1,neither,no resolver and no exemption,,accuracy (GISA-new). A 1 m national land-cover map of China reports 73.61
-notes/draft-methods.md,617,7. Validation,73.61,cited,in a draft's own exemption list,discussion: SinoLC-1 overall accuracy,accuracy (GISA-new). A 1 m national land-cover map of China reports 73.61
-notes/draft-methods.md,618,7. Validation,0.6595,neither,no resolver and no exemption,,"percent overall accuracy with a kappa of 0.6595, and splits impervious surface"
-notes/draft-methods.md,619,7. Validation,1,neither,no resolver and no exemption,,across two classes. A 1 m impervious product for the Yangtze River Economic
-notes/draft-methods.md,620,7. Validation,75.53,neither,no resolver and no exemption,,"Belt reports an impervious-class F1 of 75.53 with a recall of 61.76, is"
-notes/draft-methods.md,620,7. Validation,61.76,neither,no resolver and no exemption,,"Belt reports an impervious-class F1 of 75.53 with a recall of 61.76, is"
-notes/draft-methods.md,621,7. Validation,10,cited,in a draft's own exemption list,"methods: published precision filter, under 10 ppb","super-resolved from 10 m imagery, and is deposited as seven example cities. A"
-notes/draft-methods.md,622,7. Validation,42,neither,no resolver and no exemption,,submeter product over 42 cities reports 83.6 percent overall accuracy and covers
-notes/draft-methods.md,622,7. Validation,83.6,neither,no resolver and no exemption,,submeter product over 42 cities reports 83.6 percent overall accuracy and covers
-notes/draft-methods.md,623,7. Validation,30,cited,in a draft's own exemption list,"introduction: inventory spread, at least 30 percent",urban areas only. A 30 m product for 2020 and 2022 reports an impervious F1
-notes/draft-methods.md,623,7. Validation,2020,self_evident,year as a date,,urban areas only. A 30 m product for 2020 and 2022 reports an impervious F1
-notes/draft-methods.md,623,7. Validation,2022,self_evident,year as a date,,urban areas only. A 30 m product for 2020 and 2022 reports an impervious F1
-notes/draft-methods.md,624,7. Validation,0.93,unresolved,"equals a resolver's value, written unmarked",atten.lambda_equal,"above 0.93 and is the same resolution as the layers it would assess, so it is a"
-notes/draft-methods.md,626,7. Validation,2020,self_evident,year as a date,,"what it would validate, and each is 2020 or later against analysis years of"
-notes/draft-methods.md,627,7. Validation,2000,self_evident,year as a date,,"2000, 2010 and 2018.** So the absence is a property of the products available"
-notes/draft-methods.md,627,7. Validation,2010,self_evident,year as a date,,"2000, 2010 and 2018.** So the absence is a property of the products available"
-notes/draft-methods.md,627,7. Validation,2018,self_evident,year as a date,,"2000, 2010 and 2018.** So the absence is a property of the products available"
-notes/draft-methods.md,633,7. Validation,868,neither,no resolver and no exemption,,"fractional specialisation of Pontius and Millones's decomposition, at the 868 m"
-notes/draft-methods.md,634,7. Validation,0.25,self_evident,grid resolution,,grid on which both are committed and at the 0.25 degree lattice the association
-notes/draft-methods.md,641,7. Validation,13.2,measured,inline resolver,atten.var_share_pct,"variance is 13.2<!--#atten.var_share_pct--> % of the predictor's own variance,"
-notes/draft-methods.md,642,7. Validation,0.868,measured,inline resolver,atten.lambda_min,so the reliability ratio is at least 0.868<!--#atten.lambda_min--> and the
-notes/draft-methods.md,643,7. Validation,1.15,measured,inline resolver,atten.factor_max,de-attenuation factor is at most 1.15<!--#atten.factor_max-->. Results §3.4
-notes/draft-methods.md,643,7. Validation,3.4,self_evident,structural context,,de-attenuation factor is at most 1.15<!--#atten.factor_max-->. Results §3.4
-notes/draft-methods.md,651,7. Validation,0.118,unresolved,"in an artefact, no resolver","albedo_confounder_2018.csv, partial correlation",the signed difference correlating at −0.118 with methane once the fraction is
-notes/draft-methods.md,662,7. Validation,6,self_evident,structural context,,bounded. None of the capability statements of §6 depends on either.
-notes/draft-methods.md,664,8. Reproducibility,8,self_evident,structural line,,## 8. Reproducibility
-notes/draft-methods.md,668,8. Reproducibility,74,measured,inline resolver,pipeline.recipes,74<!--#pipeline.recipes--> artefacts are registered across four tiers:
-notes/draft-methods.md,669,8. Reproducibility,41,measured,inline resolver,pipeline.recipes_committed,41<!--#pipeline.recipes_committed--> regenerate from a fresh clone with no
-notes/draft-methods.md,671,8. Reproducibility,22,measured,inline resolver,pipeline.recipes_local,22<!--#pipeline.recipes_local--> require local raw data and are verified where it
-notes/draft-methods.md,672,8. Reproducibility,10,measured,inline resolver,pipeline.recipes_network,exists; 10<!--#pipeline.recipes_network--> require a network fetch and are verified
+notes/draft-methods.md,103,"2.4 Four methane fields, not one",1,neither,no resolver and no exemption,, a **quality assurance value of 1**. That restriction costs nothing over this
+notes/draft-methods.md,104,"2.4 Four methane fields, not one",2.3,self_evident,structural context,, domain and for a sharper reason than §2.3's: in-box `qa_value` takes only the
+notes/draft-methods.md,105,"2.4 Four methane fields, not one",0,neither,no resolver and no exemption,," three values 0, 0.4 and 1, so every threshold above 0.4 selects the same"
+notes/draft-methods.md,105,"2.4 Four methane fields, not one",0.4,neither,no resolver and no exemption,," three values 0, 0.4 and 1, so every threshold above 0.4 selects the same"
+notes/draft-methods.md,105,"2.4 Four methane fields, not one",1,neither,no resolver and no exemption,," three values 0, 0.4 and 1, so every threshold above 0.4 selects the same"
+notes/draft-methods.md,105,"2.4 Four methane fields, not one",0.4,neither,no resolver and no exemption,," three values 0, 0.4 and 1, so every threshold above 0.4 selects the same"
+notes/draft-methods.md,107,"2.4 Four methane fields, not one",11.9,cited,in a draft's own exemption list,results: blended single-retrieval precision ppb, single-retrieval precision of 11.9 against 14.5 ppb and a reduction in
+notes/draft-methods.md,107,"2.4 Four methane fields, not one",14.5,cited,in a draft's own exemption list,results: operational single-retrieval precision ppb, single-retrieval precision of 11.9 against 14.5 ppb and a reduction in
+notes/draft-methods.md,108,"2.4 Four methane fields, not one",14.3,neither,no resolver and no exemption,, spatially variable bias against GOSAT from 14.3 to 10.4 ppb at 0.25 ×
+notes/draft-methods.md,108,"2.4 Four methane fields, not one",10.4,neither,no resolver and no exemption,, spatially variable bias against GOSAT from 14.3 to 10.4 ppb at 0.25 ×
+notes/draft-methods.md,108,"2.4 Four methane fields, not one",0.25,self_evident,grid resolution,, spatially variable bias against GOSAT from 14.3 to 10.4 ppb at 0.25 ×
+notes/draft-methods.md,109,"2.4 Four methane fields, not one",0.3125,self_evident,grid resolution,," 0.3125°, the resolution the authors name as the one a regional inversion"
+notes/draft-methods.md,111,"2.4 Four methane fields, not one",0.4,neither,no resolver and no exemption,," shortwave-infrared albedo is below 0.4, which is where TROPOMI biases are"
+notes/draft-methods.md,114,"2.4 Four methane fields, not one",4,self_evident,structural line,,"4. **A deseasonalised field**, in which a region-wide seasonal cycle is removed"
+notes/draft-methods.md,126,"2.4 Four methane fields, not one",5,self_evident,structural context,,"**The full baseline suite of §5 was run independently against fields 2, 3 and"
+notes/draft-methods.md,126,"2.4 Four methane fields, not one",2,neither,no resolver and no exemption,,"**The full baseline suite of §5 was run independently against fields 2, 3 and"
+notes/draft-methods.md,126,"2.4 Four methane fields, not one",3,neither,no resolver and no exemption,,"**The full baseline suite of §5 was run independently against fields 2, 3 and"
+notes/draft-methods.md,127,"2.4 Four methane fields, not one",4,neither,no resolver and no exemption,,"4**, giving three complete sets of 88 model-scheme-weighting results. Field 2 is"
+notes/draft-methods.md,127,"2.4 Four methane fields, not one",88,neither,no resolver and no exemption,,"4**, giving three complete sets of 88 model-scheme-weighting results. Field 2 is"
+notes/draft-methods.md,127,"2.4 Four methane fields, not one",2,neither,no resolver and no exemption,,"4**, giving three complete sets of 88 model-scheme-weighting results. Field 2 is"
+notes/draft-methods.md,136,"2.4 Four methane fields, not one",2019,self_evident,year as a date,,methane products into one variational inversion over Europe for 2019 produced
+notes/draft-methods.md,137,"2.4 Four methane fields, not one",2,neither,no resolver and no exemption,,"emission budgets of +2 %, −1 % and −33 % relative to the same prior, with machine"
+notes/draft-methods.md,137,"2.4 Four methane fields, not one",1,neither,no resolver and no exemption,,"emission budgets of +2 %, −1 % and −33 % relative to the same prior, with machine"
+notes/draft-methods.md,137,"2.4 Four methane fields, not one",33,self_evident,study box or lattice shape,,"emission budgets of +2 %, −1 % and −33 % relative to the same prior, with machine"
+notes/draft-methods.md,139,"2.4 Four methane fields, not one",2026,self_evident,year as a date,,"sensitivity (Sicsik-Paré et al., 2026). A result that holds on one retrieval and"
+notes/draft-methods.md,141,"2.4 Four methane fields, not one",20,neither,no resolver and no exemption,,disagreement: aerosols account for 20–29 % of the predicted inter-product
+notes/draft-methods.md,141,"2.4 Four methane fields, not one",29,neither,no resolver and no exemption,,disagreement: aerosols account for 20–29 % of the predicted inter-product
+notes/draft-methods.md,142,"2.4 Four methane fields, not one",13,neither,no resolver and no exemption,,"difference, striping patterns 13–19 % and extreme albedo values 13–14 %, which"
+notes/draft-methods.md,142,"2.4 Four methane fields, not one",19,neither,no resolver and no exemption,,"difference, striping patterns 13–19 % and extreme albedo values 13–14 %, which"
+notes/draft-methods.md,142,"2.4 Four methane fields, not one",13,neither,no resolver and no exemption,,"difference, striping patterns 13–19 % and extreme albedo values 13–14 %, which"
+notes/draft-methods.md,142,"2.4 Four methane fields, not one",14,neither,no resolver and no exemption,,"difference, striping patterns 13–19 % and extreme albedo values 13–14 %, which"
+notes/draft-methods.md,144,"2.4 Four methane fields, not one",2.5,self_evident,structural context,,§2.5 are the right two things to have checked.
+notes/draft-methods.md,146,2.5 Preprocessing steps not applied,2.5,self_evident,structural line,,### 2.5 Preprocessing steps not applied
+notes/draft-methods.md,153,2.5 Preprocessing steps not applied,7,neither,no resolver and no exemption,, applied to data from 7 September 2024 (processor v02.07) onward and earlier
+notes/draft-methods.md,153,2.5 Preprocessing steps not applied,2024,self_evident,year as a date,, applied to data from 7 September 2024 (processor v02.07) onward and earlier
+notes/draft-methods.md,160,2.5 Preprocessing steps not applied,10,cited,in a draft's own exemption list,"methods: published precision filter, under 10 ppb"," floor**. Published chains variously require methane precision below 10 ppb, a"
+notes/draft-methods.md,164,2.5 Preprocessing steps not applied,5.2,self_evident,structural context,," weighting is applied at all (§5.2), not by any measure of how representative"
+notes/draft-methods.md,167,2.5 Preprocessing steps not applied,2.4,self_evident,structural context,,"The blended product in §2.4 addresses albedo dependence, aerosol scattering and"
+notes/draft-methods.md,175,2.5 Preprocessing steps not applied,2.3,self_evident,structural context,,rather than adopted: the composite in §2.3 remains the primary field and
+notes/draft-methods.md,181,2.5 Preprocessing steps not applied,"110,920",measured,inline resolver,quality.in_box_passed," 110,920<!--#quality.in_box_passed--> soundings that pass quality control,"
+notes/draft-methods.md,182,2.5 Preprocessing steps not applied,10,cited,in a draft's own exemption list,"methods: published precision filter, under 10 ppb"," none has a retrieval precision above 10 ppb, so the published threshold would"
+notes/draft-methods.md,184,2.5 Preprocessing steps not applied,0.05,cited,in a draft's own exemption list,methods: published albedo floor,* **The albedo floor at 0.05 removes
+notes/draft-methods.md,185,2.5 Preprocessing steps not applied,"11,707",measured,inline resolver,sens.albedo_removed," 11,707<!--#sens.albedo_removed--> soundings and empties"
+notes/draft-methods.md,186,2.5 Preprocessing steps not applied,174,measured,inline resolver,sens.albedo_cells_lost, 174<!--#sens.albedo_cells_lost--> of the 926 cells.** Compared on the
+notes/draft-methods.md,186,2.5 Preprocessing steps not applied,926,self_evident,study box or lattice shape,, 174<!--#sens.albedo_cells_lost--> of the 926 cells.** Compared on the
+notes/draft-methods.md,187,2.5 Preprocessing steps not applied,752,measured,inline resolver,sens.albedo_cells," 752<!--#sens.albedo_cells--> cells that survive, no land-cover model"
+notes/draft-methods.md,191,2.5 Preprocessing steps not applied,5.09,measured,inline resolver,sens.stripe_sd, standard deviation of 5.09<!--#sens.stripe_sd--> ppb. Applying them raises
+notes/draft-methods.md,195,2.5 Preprocessing steps not applied,-0.03,measured,inline resolver,sens.weight_correlation," correlation -0.03<!--#sens.weight_correlation-->, because the spatial term"
+notes/draft-methods.md,196,2.5 Preprocessing steps not applied,97.5,measured,inline resolver,sens.spatial_share_pct, carries 97.5<!--#sens.spatial_share_pct--> percent of the per-cell variance
+notes/draft-methods.md,200,2.5 Preprocessing steps not applied,0.0244,measured,inline resolver,sens.impervious_committed_weighted, 0.0244<!--#sens.impervious_committed_weighted--> to
+notes/draft-methods.md,201,2.5 Preprocessing steps not applied,0.1429,measured,inline resolver,sens.impervious_repweight," 0.1429<!--#sens.impervious_repweight--> under spatial blocks, and the spatial"
+notes/draft-methods.md,202,2.5 Preprocessing steps not applied,0.5137,measured,inline resolver,sens.null_committed_weighted," null rises too, from 0.5137<!--#sens.null_committed_weighted--> to"
+notes/draft-methods.md,203,2.5 Preprocessing steps not applied,0.5399,measured,inline resolver,sens.null_repweight, 0.5399<!--#sens.null_repweight-->. **The ordering is unchanged and the gap
+notes/draft-methods.md,211,3. Compositing,3,self_evident,structural line,,## 3. Compositing
+notes/draft-methods.md,220,3. Compositing,926,measured,inline resolver,composite.covered_cells,The resulting composite covers 926<!--#composite.covered_cells--> of the
+notes/draft-methods.md,221,3. Compositing,"1,023",measured,inline resolver,composite.total_cells,"1,023<!--#composite.total_cells--> cells, or"
+notes/draft-methods.md,222,3. Compositing,90.52,measured,inline resolver,composite.coverage_percent,"90.52<!--#composite.coverage_percent--> %, leaving"
+notes/draft-methods.md,223,3. Compositing,97,measured,inline resolver,composite.uncovered_cells,97<!--#composite.uncovered_cells--> cells with no qualifying sounding in 2018.
+notes/draft-methods.md,223,3. Compositing,2018,self_evident,year as a date,,97<!--#composite.uncovered_cells--> cells with no qualifying sounding in 2018.
+notes/draft-methods.md,224,3. Compositing,1,measured,inline resolver,composite.min_soundings,Per-cell counts run from 1<!--#composite.min_soundings--> to
+notes/draft-methods.md,225,3. Compositing,410,measured,inline resolver,composite.max_soundings,410<!--#composite.max_soundings--> with a median of
+notes/draft-methods.md,226,3. Compositing,74,measured,inline resolver,composite.median_soundings,74<!--#composite.median_soundings-->.
+notes/draft-methods.md,228,3. Compositing,97,self_evident,study box or lattice shape,,"Coverage is not missing at random. Of the 97 uncovered cells,"
+notes/draft-methods.md,229,3. Compositing,74,measured,inline resolver,composite.absent_on_land,"74<!--#composite.absent_on_land--> lie wholly on land, and their median elevation"
+notes/draft-methods.md,230,3. Compositing,502,measured,inline resolver,composite.absent_median_elevation,is 502<!--#composite.absent_median_elevation--> m against
+notes/draft-methods.md,231,3. Compositing,35,measured,inline resolver,composite.covered_median_elevation,35<!--#composite.covered_median_elevation--> m for the covered cells;
+notes/draft-methods.md,232,3. Compositing,50,measured,inline resolver,composite.absent_above_500m,50<!--#composite.absent_above_500m--> sit above 500 m against
+notes/draft-methods.md,232,3. Compositing,500,self_evident,label or pair beside a marked number,,50<!--#composite.absent_above_500m--> sit above 500 m against
+notes/draft-methods.md,233,3. Compositing,24,measured,inline resolver,composite.covered_above_500m,24<!--#composite.covered_above_500m--> of the 926. The largest connected gap is
+notes/draft-methods.md,233,3. Compositing,926,self_evident,study box or lattice shape,,24<!--#composite.covered_above_500m--> of the 926. The largest connected gap is
+notes/draft-methods.md,234,3. Compositing,47,measured,inline resolver,composite.largest_absent_block,47<!--#composite.largest_absent_block--> cells over the mountains on the southern
+notes/draft-methods.md,236,3. Compositing,6,measured,inline resolver,composite.coast_median_soundings,sounding count is 6<!--#composite.coast_median_soundings--> against
+notes/draft-methods.md,237,3. Compositing,133,measured,inline resolver,composite.land_median_soundings,133<!--#composite.land_median_soundings--> for cells that are wholly land.
+notes/draft-methods.md,245,3. Compositing,2025,self_evident,year as a date,,"al., 2025). Averaging within a cell and an orbit is therefore nearly free;"
+notes/draft-methods.md,249,3. Compositing,6,self_evident,structural context,,and neither can be derived from the other. The capability assessment in §6
+notes/draft-methods.md,252,4. Land cover and covariates,4,self_evident,structural line,,## 4. Land cover and covariates
+notes/draft-methods.md,254,4.1 Urban extent,4.1,self_evident,structural line,,### 4.1 Urban extent
+notes/draft-methods.md,259,4.1 Urban extent,2020,self_evident,year as a date,,"* **GAIA**, the Global Artificial Impervious Area dataset (Gong et al., 2020), at"
+notes/draft-methods.md,260,4.1 Urban extent,30,cited,in a draft's own exemption list,"introduction: inventory spread, at least 30 percent", 30 m.
+notes/draft-methods.md,261,4.1 Urban extent,2021,self_evident,year as a date,,"* **GISA**, the Global Impervious Surface Area dataset (Huang et al., 2021), at"
+notes/draft-methods.md,262,4.1 Urban extent,30,cited,in a draft's own exemption list,"introduction: inventory spread, at least 30 percent", 30 m.
+notes/draft-methods.md,267,4.1 Urban extent,2023,self_evident,inside a code span,,"`year = 2023 − value`, so an extent through a target year selects values at or"
+notes/draft-methods.md,268,4.1 Urban extent,1972,self_evident,year as a date,,"*above* the code for that year. GISA counts upward from 1972, so the same extent"
+notes/draft-methods.md,269,4.1 Urban extent,1,neither,no resolver and no exemption,,"is a closed interval from 1 to the code for that year — not a one-sided threshold,"
+notes/draft-methods.md,270,4.1 Urban extent,0,neither,no resolver and no exemption,,because 0 denotes absence and an upper-bound-only selector would count every
+notes/draft-methods.md,274,4.1 Urban extent,"5,507,866,225",neither,no resolver and no exemption,,"documentation: GISA over 5,507,866,225 pixels and GAIA over 3,105,244,301."
+notes/draft-methods.md,274,4.1 Urban extent,"3,105,244,301",neither,no resolver and no exemption,,"documentation: GISA over 5,507,866,225 pixels and GAIA over 3,105,244,301."
+notes/draft-methods.md,276,4.1 Urban extent,2018,self_evident,year as a date,,"For GISA in 2018 the correct selector returns 202,830,997 pixels where the"
+notes/draft-methods.md,276,4.1 Urban extent,"202,830,997",neither,no resolver and no exemption,,"For GISA in 2018 the correct selector returns 202,830,997 pixels where the"
+notes/draft-methods.md,277,4.1 Urban extent,"9,468,801",neither,no resolver and no exemption,,"one-sided form returns 9,468,801, a map of what was built in 2018 and 2019 alone."
+notes/draft-methods.md,277,4.1 Urban extent,2018,self_evident,year as a date,,"one-sided form returns 9,468,801, a map of what was built in 2018 and 2019 alone."
+notes/draft-methods.md,277,4.1 Urban extent,2019,self_evident,year as a date,,"one-sided form returns 9,468,801, a map of what was built in 2018 and 2019 alone."
+notes/draft-methods.md,278,4.1 Urban extent,128,neither,no resolver and no exemption,,Neither product declares a nodata value; GAIA's is −128 and is undocumented.
+notes/draft-methods.md,281,4.1 Urban extent,"19,786.9",measured,inline resolver,urban.gisa_2000,"provinces GISA gives 19,786.9<!--#urban.gisa_2000--> km² of impervious surface in"
+notes/draft-methods.md,282,4.1 Urban extent,"16,387.1",measured,inline resolver,urban.gaia_2000,"2000 against GAIA's 16,387.1<!--#urban.gaia_2000--> km², and"
+notes/draft-methods.md,282,4.1 Urban extent,2000,self_evident,year as a date,,"2000 against GAIA's 16,387.1<!--#urban.gaia_2000--> km², and"
+notes/draft-methods.md,283,4.1 Urban extent,"39,532.2",measured,inline resolver,urban.gisa_2018,"39,532.2<!--#urban.gisa_2018--> km² in 2018 against GAIA's"
+notes/draft-methods.md,283,4.1 Urban extent,2018,self_evident,year as a date,,"39,532.2<!--#urban.gisa_2018--> km² in 2018 against GAIA's"
+notes/draft-methods.md,284,4.1 Urban extent,"49,348.0",measured,inline resolver,urban.gaia_2018,"49,348.0<!--#urban.gaia_2018--> km². **GISA is therefore 20.7 % larger in 2000"
+notes/draft-methods.md,284,4.1 Urban extent,20.7,self_evident,label or pair beside a marked number,,"49,348.0<!--#urban.gaia_2018--> km². **GISA is therefore 20.7 % larger in 2000"
+notes/draft-methods.md,284,4.1 Urban extent,2000,self_evident,year as a date,,"49,348.0<!--#urban.gaia_2018--> km². **GISA is therefore 20.7 % larger in 2000"
+notes/draft-methods.md,285,4.1 Urban extent,19.9,neither,no resolver and no exemption,,"and 19.9 % smaller in 2018**, so the products disagree about the growth factor far"
+notes/draft-methods.md,285,4.1 Urban extent,2018,self_evident,year as a date,,"and 19.9 % smaller in 2018**, so the products disagree about the growth factor far"
+notes/draft-methods.md,286,4.1 Urban extent,2.0,measured,inline resolver,urban.gisa_factor,more than about the extent: 2.0<!--#urban.gisa_factor--> against
+notes/draft-methods.md,287,4.1 Urban extent,3.0,measured,inline resolver,urban.gaia_factor,3.0<!--#urban.gaia_factor--> over 2000 to 2018. Both are year-of-change products
+notes/draft-methods.md,287,4.1 Urban extent,2000,self_evident,year as a date,,3.0<!--#urban.gaia_factor--> over 2000 to 2018. Both are year-of-change products
+notes/draft-methods.md,287,4.1 Urban extent,2018,self_evident,year as a date,,3.0<!--#urban.gaia_factor--> over 2000 to 2018. Both are year-of-change products
+notes/draft-methods.md,293,4.2 Rice extent,4.2,self_evident,structural line,,### 4.2 Rice extent
+notes/draft-methods.md,297,4.2 Rice extent,30,cited,in a draft's own exemption list,"introduction: inventory spread, at least 30 percent","* **A 30 m single-season rice product for China** covering 2017 onward,"
+notes/draft-methods.md,297,4.2 Rice extent,2017,self_evident,year as a date,,"* **A 30 m single-season rice product for China** covering 2017 onward,"
+notes/draft-methods.md,300,4.2 Rice extent,5,neither,no resolver and no exemption,,"* **GloRice (I)**, gridded annual paddy rice distribution at 5 arcmin for 1961 to"
+notes/draft-methods.md,300,4.2 Rice extent,1961,self_evident,year as a date,,"* **GloRice (I)**, gridded annual paddy rice distribution at 5 arcmin for 1961 to"
+notes/draft-methods.md,301,4.2 Rice extent,2021,self_evident,year as a date,," 2021 (Xie et al., 2025)."
+notes/draft-methods.md,301,4.2 Rice extent,2025,self_evident,year as a date,," 2021 (Xie et al., 2025)."
+notes/draft-methods.md,311,4.2 Rice extent,2018,self_evident,year as a date,,and a 2018 map of these four provinces is a year-2000 pattern with a provincial
+notes/draft-methods.md,315,4.2 Rice extent,30,cited,in a draft's own exemption list,"introduction: inventory spread, at least 30 percent",Two limitations of the 30 m product bear directly on interpretation and are
+notes/draft-methods.md,317,4.2 Rice extent,86.11,measured,inline resolver,rice.anhui_coverage_percent,86.11<!--#rice.anhui_coverage_percent--> % of the province that lies south of 33.3462° N
+notes/draft-methods.md,317,4.2 Rice extent,33.3462,unresolved,"in an artefact, no resolver","the Anhui raster bound, exempted in the methods note",86.11<!--#rice.anhui_coverage_percent--> % of the province that lies south of 33.3462° N
+notes/draft-methods.md,318,4.2 Rice extent,115.2682,neither,no resolver and no exemption,,"and east of 115.2682° E**, so the northern part of the province — which contains"
+notes/draft-methods.md,319,4.2 Rice extent,1,self_evident,structural context,,the coalfield named in §1 — is unclassified rather than classified as
+notes/draft-methods.md,321,4.2 Rice extent,0.03,unresolved,"equals a resolver's value, written unmarked",collinear.partial_weighted,parts of the record**: Shanghai's single-season count is stable to 0.03 % across
+notes/draft-methods.md,322,4.2 Rice extent,2019,self_evident,year as a date,,2019 to 2025 while only 52.69 % of pixels labelled rice in 2019 are still so
+notes/draft-methods.md,322,4.2 Rice extent,2025,self_evident,year as a date,,2019 to 2025 while only 52.69 % of pixels labelled rice in 2019 are still so
+notes/draft-methods.md,322,4.2 Rice extent,52.69,neither,no resolver and no exemption,,2019 to 2025 while only 52.69 % of pixels labelled rice in 2019 are still so
+notes/draft-methods.md,322,4.2 Rice extent,2019,self_evident,year as a date,,2019 to 2025 while only 52.69 % of pixels labelled rice in 2019 are still so
+notes/draft-methods.md,323,4.2 Rice extent,2025,self_evident,year as a date,,"labelled in 2025, a Jaccard index of 0.3577; between 2023 and 2024, 5,651,475"
+notes/draft-methods.md,323,4.2 Rice extent,0.3577,neither,no resolver and no exemption,,"labelled in 2025, a Jaccard index of 0.3577; between 2023 and 2024, 5,651,475"
+notes/draft-methods.md,323,4.2 Rice extent,2023,self_evident,year as a date,,"labelled in 2025, a Jaccard index of 0.3577; between 2023 and 2024, 5,651,475"
+notes/draft-methods.md,323,4.2 Rice extent,2024,self_evident,year as a date,,"labelled in 2025, a Jaccard index of 0.3577; between 2023 and 2024, 5,651,475"
+notes/draft-methods.md,323,4.2 Rice extent,"5,651,475",neither,no resolver and no exemption,,"labelled in 2025, a Jaccard index of 0.3577; between 2023 and 2024, 5,651,475"
+notes/draft-methods.md,324,4.2 Rice extent,"5,651,551",neither,no resolver and no exemption,,"pixels gained the label and 5,651,551 lost it. A stable total over a relocating"
+notes/draft-methods.md,327,4.3 Aggregation to fractional cover,4.3,self_evident,structural line,,### 4.3 Aggregation to fractional cover
+notes/draft-methods.md,332,4.3 Aggregation to fractional cover,25,neither,no resolver and no exemption,,Albers Equal Area projection with standard parallels at 25° and 47° north and a
+notes/draft-methods.md,332,4.3 Aggregation to fractional cover,47,neither,no resolver and no exemption,,Albers Equal Area projection with standard parallels at 25° and 47° north and a
+notes/draft-methods.md,333,4.3 Aggregation to fractional cover,105,neither,no resolver and no exemption,,"central meridian at 105° east, rather than by counting pixels, because pixel"
+notes/draft-methods.md,338,4.3 Aggregation to fractional cover,926,self_evident,study box or lattice shape,,Across the 926 covered cells the median impervious fraction is
+notes/draft-methods.md,339,4.3 Aggregation to fractional cover,0.0595,measured,inline resolver,grid.impervious_median,0.0595<!--#grid.impervious_median--> with
+notes/draft-methods.md,340,4.3 Aggregation to fractional cover,136,measured,inline resolver,grid.impervious_zeros,136<!--#grid.impervious_zeros--> cells at zero.
+notes/draft-methods.md,341,4.3 Aggregation to fractional cover,531,measured,inline resolver,grid.rice_rows,"531<!--#grid.rice_rows--> cells carry a rice fraction, of which"
+notes/draft-methods.md,342,4.3 Aggregation to fractional cover,18,measured,inline resolver,grid.rice_zero_rows,"18<!--#grid.rice_zero_rows--> are recorded zeros, with a median single-season"
+notes/draft-methods.md,343,4.3 Aggregation to fractional cover,0.1291,measured,inline resolver,grid.rice_single_median,fraction of 0.1291<!--#grid.rice_single_median--> and a median combined
+notes/draft-methods.md,344,4.3 Aggregation to fractional cover,0.1366,measured,inline resolver,grid.rice_combined_median,single-and-double fraction of 0.1366<!--#grid.rice_combined_median-->. Rice
+notes/draft-methods.md,345,4.3 Aggregation to fractional cover,0.3412,measured,inline resolver,grid.rice_coverage_median,coverage has a median of 0.3412<!--#grid.rice_coverage_median--> and falls below
+notes/draft-methods.md,346,4.3 Aggregation to fractional cover,569,measured,inline resolver,grid.rice_coverage_below_99,"0.99 in 569<!--#grid.rice_coverage_below_99--> cells, which is the quantitative"
+notes/draft-methods.md,346,4.3 Aggregation to fractional cover,0.99,self_evident,label or pair beside a marked number,,"0.99 in 569<!--#grid.rice_coverage_below_99--> cells, which is the quantitative"
+notes/draft-methods.md,347,4.3 Aggregation to fractional cover,69,measured,inline resolver,grid.straddling_cells,form of the Anhui limitation above. 69<!--#grid.straddling_cells--> cells
+notes/draft-methods.md,351,4.4 Covariates,4.4,self_evident,structural line,,### 4.4 Covariates
+notes/draft-methods.md,364,4.4 Covariates,10,cited,in a draft's own exemption list,"methods: published precision filter, under 10 ppb","| Eastward wind at 10 m | Advective transport, the alternative explanation for a column gradient |"
+notes/draft-methods.md,365,4.4 Covariates,10,cited,in a draft's own exemption list,"methods: published precision filter, under 10 ppb",| Northward wind at 10 m | As above |
+notes/draft-methods.md,370,4.4 Covariates,"110,920",unresolved,"equals a resolver's value, written unmarked",composite.soundings,"110,920 soundings and cover all 926 cells."
+notes/draft-methods.md,370,4.4 Covariates,926,self_evident,study box or lattice shape,,"110,920 soundings and cover all 926 cells."
+notes/draft-methods.md,375,4.4 Covariates,2026,self_evident,year as a date,,"2026), so albedo is a co-retrieved parameter rather than an external"
+notes/draft-methods.md,378,4.4 Covariates,166,measured,inline resolver,cov.albedo_negative,coupling and cannot remove the rest. 166<!--#cov.albedo_negative--> cells carry a
+notes/draft-methods.md,382,5. Statistical analysis,5,self_evident,structural line,,## 5. Statistical analysis
+notes/draft-methods.md,384,5.1 Baseline suite,5.1,self_evident,structural line,,### 5.1 Baseline suite
+notes/draft-methods.md,399,5.1 Baseline suite,0.247,measured,inline resolver,spread.impervious,0.247<!--#spread.impervious--> of R² across them. Where one figure is quoted it
+notes/draft-methods.md,401,5.1 Baseline suite,5.4,self_evident,structural context,,bracket for the reason §5.4 gives.
+notes/draft-methods.md,405,5.1 Baseline suite,0.0847,measured,inline resolver,baseline.impervious_r2,"0.0847<!--#baseline.impervious_r2--> for impervious fraction alone,"
+notes/draft-methods.md,406,5.1 Baseline suite,-0.0314,measured,inline resolver,baseline.rice_alone_r2,-0.0314<!--#baseline.rice_alone_r2--> for rice fraction alone and
+notes/draft-methods.md,407,5.1 Baseline suite,0.0169,measured,inline resolver,baseline.rice_plus_impervious_r2,"0.0169<!--#baseline.rice_plus_impervious_r2--> for the two together, against"
+notes/draft-methods.md,408,5.1 Baseline suite,-0.0084,measured,inline resolver,baseline.constant_r2,"-0.0084<!--#baseline.constant_r2--> for a global-mean constant,"
+notes/draft-methods.md,409,5.1 Baseline suite,0.3324,measured,inline resolver,baseline.null_r2,0.3324<!--#baseline.null_r2--> for the spatial null and
+notes/draft-methods.md,410,5.1 Baseline suite,0.6527,measured,inline resolver,baseline.wind_r2,0.6527<!--#baseline.wind_r2--> for wind components. The observed field spans
+notes/draft-methods.md,411,5.1 Baseline suite,106.1,measured,inline resolver,baseline.observed_span_ppb,106.1<!--#baseline.observed_span_ppb--> ppb between its extreme cells; the
+notes/draft-methods.md,413,5.1 Baseline suite,42.7,measured,inline resolver,baseline.impervious_span_ppb,42.7<!--#baseline.impervious_span_ppb--> ppb and its root mean squared error is
+notes/draft-methods.md,414,5.1 Baseline suite,14.2,measured,inline resolver,baseline.impervious_rmse,14.2<!--#baseline.impervious_rmse--> ppb.
+notes/draft-methods.md,416,5.2 Cross-validation and weighting,5.2,self_evident,structural line,,### 5.2 Cross-validation and weighting
+notes/draft-methods.md,421,5.2 Cross-validation and weighting,111.2,measured,inline resolver,range.block_ns_km,111.2<!--#range.block_ns_km--> km north-south by
+notes/draft-methods.md,422,5.2 Cross-validation and weighting,95.0,measured,inline resolver,range.block_ew_km,95.0<!--#range.block_ew_km--> km east-west at this latitude. Each model was
+notes/draft-methods.md,423,5.2 Cross-validation and weighting,88,neither,no resolver and no exemption,,"fitted both unweighted and weighted by sounding count, giving 88 fitted"
+notes/draft-methods.md,429,5.2 Cross-validation and weighting,5.4,self_evident,structural context,,"autocorrelation extends beyond the test unit, and it was not applied. §5.4"
+notes/draft-methods.md,432,5.3 Effective degrees of freedom,5.3,self_evident,structural line,,### 5.3 Effective degrees of freedom
+notes/draft-methods.md,435,5.3 Effective degrees of freedom,926,self_evident,study box or lattice shape,,"autocorrelated, so the nominal degrees of freedom of a correlation over 926 cells"
+notes/draft-methods.md,438,5.3 Effective degrees of freedom,0.7085,measured,inline resolver,residual.observed_moran,0.7085<!--#residual.observed_moran--> under a permutation test with
+notes/draft-methods.md,439,5.3 Effective degrees of freedom,999,measured,inline resolver,residual.permutations,999<!--#residual.permutations--> permutations.
+notes/draft-methods.md,442,5.3 Effective degrees of freedom,1989,self_evident,year as a date,,"Richardson and Hémon (1989) as extended by Dutilleul et al. (1993), in which the"
+notes/draft-methods.md,442,5.3 Effective degrees of freedom,1993,self_evident,year as a date,,"Richardson and Hémon (1989) as extended by Dutilleul et al. (1993), in which the"
+notes/draft-methods.md,445,5.3 Effective degrees of freedom,1,neither,no resolver and no exemption,," M = 1 + n² / tr(R_X R_Y), tr(R_X R_Y) = ΣᵢΣⱼ ρ_X(d_ij) ρ_Y(d_ij)"
+notes/draft-methods.md,448,5.3 Effective degrees of freedom,30,cited,in a draft's own exemption list,"introduction: inventory spread, at least 30 percent",into 30 bins and taking the empirical correlation within each bin. Distances are
+notes/draft-methods.md,451,5.3 Effective degrees of freedom,1,neither,no resolver and no exemption,,"effective sample size is capped at n + 1, since a noisy correlogram can otherwise"
+notes/draft-methods.md,455,5.3 Effective degrees of freedom,72,measured,inline resolver,dof.rows,"Applied to the 72<!--#dof.rows--> correlations reported for this domain, the"
+notes/draft-methods.md,457,5.3 Effective degrees of freedom,0.0200,measured,inline resolver,dof.shrinkage_min,0.0200<!--#dof.shrinkage_min--> and
+notes/draft-methods.md,458,5.3 Effective degrees of freedom,0.2517,measured,inline resolver,dof.shrinkage_max,"0.2517<!--#dof.shrinkage_max--> of nominal — that is, to between"
+notes/draft-methods.md,459,5.3 Effective degrees of freedom,11.4,measured,inline resolver,dof.effective_n_min,11.4<!--#dof.effective_n_min--> and
+notes/draft-methods.md,460,5.3 Effective degrees of freedom,185.7,measured,inline resolver,dof.effective_n_max,185.7<!--#dof.effective_n_max--> independent observations in place of 926 — and
+notes/draft-methods.md,460,5.3 Effective degrees of freedom,926,self_evident,study box or lattice shape,,185.7<!--#dof.effective_n_max--> independent observations in place of 926 — and
+notes/draft-methods.md,461,5.3 Effective degrees of freedom,27,measured,inline resolver,dof.verdict_changed,27<!--#dof.verdict_changed--> of the 72 correlations that reach significance at
+notes/draft-methods.md,461,5.3 Effective degrees of freedom,72,self_evident,label or pair beside a marked number,,27<!--#dof.verdict_changed--> of the 72 correlations that reach significance at
+notes/draft-methods.md,462,5.3 Effective degrees of freedom,5,neither,no resolver and no exemption,,the 5 % level nominally do not reach it after correction. The estimator was
+notes/draft-methods.md,464,5.3 Effective degrees of freedom,0.75,cited,in a draft's own exemption list,methods: blended-albedo ceiling,"between 0.75 and 1.0 of nominal, so a shrinkage near 0.87 is read as ""no"
+notes/draft-methods.md,464,5.3 Effective degrees of freedom,1.0,neither,no resolver and no exemption,,"between 0.75 and 1.0 of nominal, so a shrinkage near 0.87 is read as ""no"
+notes/draft-methods.md,464,5.3 Effective degrees of freedom,0.87,cited,in a draft's own exemption list,"discussion: posterior error correlation, shared surface, upper","between 0.75 and 1.0 of nominal, so a shrinkage near 0.87 is read as ""no"
+notes/draft-methods.md,465,5.3 Effective degrees of freedom,150,self_evident,swept buffer radius,,"dependence detected"" rather than as a real loss, and on fields with a 150 km"
+notes/draft-methods.md,466,5.3 Effective degrees of freedom,0.2,neither,no resolver and no exemption,,correlation range it returns under 0.2.
+notes/draft-methods.md,468,5.4 Residual autocorrelation and the buffered decay curve,5.4,self_evident,structural line,,### 5.4 Residual autocorrelation and the buffered decay curve
+notes/draft-methods.md,472,5.4 Residual autocorrelation and the buffered decay curve,1,neither,no resolver and no exemption,,γ(h) = nugget + (sill − nugget)(1 − exp(−h/a)) were fitted to the residuals of
+notes/draft-methods.md,478,5.4 Residual autocorrelation and the buffered decay curve,10,measured,inline resolver,range.models,"Of the 10<!--#range.models--> model-field combinations,"
+notes/draft-methods.md,479,5.4 Residual autocorrelation and the buffered decay curve,4,measured,inline resolver,range.too_small,4<!--#range.too_small--> have residuals still correlated at the block width. The
+notes/draft-methods.md,481,5.4 Residual autocorrelation and the buffered decay curve,96.1,measured,inline resolver,range.operational_impervious_km,96.1<!--#range.operational_impervious_km--> km on the operationally corrected
+notes/draft-methods.md,482,5.4 Residual autocorrelation and the buffered decay curve,134.5,measured,inline resolver,range.blended_impervious_km,"field and 134.5<!--#range.blended_impervious_km--> km on the blended field,"
+notes/draft-methods.md,483,5.4 Residual autocorrelation and the buffered decay curve,95.0,neither,no resolver and no exemption,,against a block 95.0 km at its narrowest; models that include the albedo
+notes/draft-methods.md,485,5.4 Residual autocorrelation and the buffered decay curve,22.5,measured,inline resolver,range.operational_full_km,22.5<!--#range.operational_full_km--> km or less. **So the block scheme is too
+notes/draft-methods.md,490,5.4 Residual autocorrelation and the buffered decay curve,0,self_evident,swept buffer radius,,"each cell withheld together with every cell within a radius r of it, for r from 0"
+notes/draft-methods.md,491,5.4 Residual autocorrelation and the buffered decay curve,500,self_evident,swept buffer radius,,to 500 km. Because a constant predictor's held-out skill also falls as r grows —
+notes/draft-methods.md,495,5.4 Residual autocorrelation and the buffered decay curve,0.687,measured,inline resolver,loo.null_0km,0.687<!--#loo.null_0km--> at r = 0 to
+notes/draft-methods.md,495,5.4 Residual autocorrelation and the buffered decay curve,0,self_evident,label or pair beside a marked number,,0.687<!--#loo.null_0km--> at r = 0 to
+notes/draft-methods.md,496,5.4 Residual autocorrelation and the buffered decay curve,0.000,measured,inline resolver,loo.null_50km,"0.000<!--#loo.null_50km--> at r = 50 km, which is the expected collapse for a"
+notes/draft-methods.md,496,5.4 Residual autocorrelation and the buffered decay curve,50,self_evident,swept buffer radius,,"0.000<!--#loo.null_50km--> at r = 50 km, which is the expected collapse for a"
+notes/draft-methods.md,498,5.4 Residual autocorrelation and the buffered decay curve,0.118,measured,inline resolver,loo.impervious_0km,0.118<!--#loo.impervious_0km--> at r = 0 to
+notes/draft-methods.md,498,5.4 Residual autocorrelation and the buffered decay curve,0,self_evident,label or pair beside a marked number,,0.118<!--#loo.impervious_0km--> at r = 0 to
+notes/draft-methods.md,499,5.4 Residual autocorrelation and the buffered decay curve,0.089,measured,inline resolver,loo.impervious_100km,0.089<!--#loo.impervious_100km--> at 100 km and
+notes/draft-methods.md,499,5.4 Residual autocorrelation and the buffered decay curve,100,self_evident,swept buffer radius,,0.089<!--#loo.impervious_100km--> at 100 km and
+notes/draft-methods.md,500,5.4 Residual autocorrelation and the buffered decay curve,0.007,measured,inline resolver,loo.impervious_300km,0.007<!--#loo.impervious_300km--> at 300 km.
+notes/draft-methods.md,500,5.4 Residual autocorrelation and the buffered decay curve,300,self_evident,swept buffer radius,,0.007<!--#loo.impervious_300km--> at 300 km.
+notes/draft-methods.md,503,5.4 Residual autocorrelation and the buffered decay curve,1,neither,no resolver and no exemption,,disagree.** Leave-one-province-out is the more pessimistic scheme and the 1° block
+notes/draft-methods.md,508,6. Capability assessment of the observing system,6,self_evident,structural line,,## 6. Capability assessment of the observing system
+notes/draft-methods.md,514,6.1 Information content,6.1,self_evident,structural line,,### 6.1 Information content
+notes/draft-methods.md,518,6.1 Information content,2025,self_evident,year as a date,,"(Estrada et al., 2025), which gives a per-cell averaging-kernel sensitivity"
+notes/draft-methods.md,524,6.1 Information content,0.5,cited,in a draft's own exemption list,introduction/discussion: averaging-kernel sensitivity threshold,error of 0.5 and the observation error of 15 ppb are the `PriorError` and
+notes/draft-methods.md,524,6.1 Information content,15,cited,in a draft's own exemption list,"introduction: fifteen Tg, the inventory gap",error of 0.5 and the observation error of 15 ppb are the `PriorError` and
+notes/draft-methods.md,526,6.1 Information content,25,self_evident,swept buffer radius,,"of 25 km, α = 0.4 and the wind speed of 5 km h⁻¹ are set in its preview source,"
+notes/draft-methods.md,526,6.1 Information content,0.4,neither,no resolver and no exemption,,"of 25 km, α = 0.4 and the wind speed of 5 km h⁻¹ are set in its preview source,"
+notes/draft-methods.md,526,6.1 Information content,5,neither,no resolver and no exemption,,"of 25 km, α = 0.4 and the wind speed of 5 km h⁻¹ are set in its preview source,"
+notes/draft-methods.md,527,6.1 Information content,0.55,neither,no resolver and no exemption,,while the retrieval error correlation of 0.55 and the transport error of 4.5 ppb
+notes/draft-methods.md,527,6.1 Information content,4.5,neither,no resolver and no exemption,,while the retrieval error correlation of 0.55 and the transport error of 4.5 ppb
+notes/draft-methods.md,528,6.1 Information content,2023,self_evident,year as a date,,"are stated in the paper, following Chen et al. (2023) and specified there for an"
+notes/draft-methods.md,529,6.1 Information content,0.25,self_evident,grid resolution,,inversion at 0.25° × 0.3125° — which is this lattice's own resolution. The
+notes/draft-methods.md,529,6.1 Information content,0.3125,self_evident,grid resolution,,inversion at 0.25° × 0.3125° — which is this lattice's own resolution. The
+notes/draft-methods.md,534,6.1 Information content,3,self_evident,structural context,,"the composite, for the reason given in §3. Per-cell **observation days**,"
+notes/draft-methods.md,537,6.1 Information content,23.0,measured,inline resolver,dofs.days_median,23.0<!--#dofs.days_median--> days per covered cell; the number of retrievals
+notes/draft-methods.md,539,6.1 Information content,4.4,measured,inline resolver,dofs.retrievals_median,4.4<!--#dofs.retrievals_median-->.
+notes/draft-methods.md,544,6.1 Information content,1.44,measured,inline resolver,dofs.at_3tg,"1.44<!--#dofs.at_3tg--> at a 3 Tg a⁻¹ domain prior,"
+notes/draft-methods.md,544,6.1 Information content,3,self_evident,label or pair beside a marked number,,"1.44<!--#dofs.at_3tg--> at a 3 Tg a⁻¹ domain prior,"
+notes/draft-methods.md,545,6.1 Information content,3.98,measured,inline resolver,dofs.at_5tg,3.98<!--#dofs.at_5tg--> at 5 Tg a⁻¹ and
+notes/draft-methods.md,545,6.1 Information content,5,self_evident,label or pair beside a marked number,,3.98<!--#dofs.at_5tg--> at 5 Tg a⁻¹ and
+notes/draft-methods.md,546,6.1 Information content,22.21,measured,inline resolver,dofs.at_12tg,22.21<!--#dofs.at_12tg--> at 12 Tg a⁻¹.
+notes/draft-methods.md,546,6.1 Information content,12,cited,in a draft's own exemption list,discussion: transport error standard deviation ppb,22.21<!--#dofs.at_12tg--> at 12 Tg a⁻¹.
+notes/draft-methods.md,550,6.1 Information content,0.5,cited,in a draft's own exemption list,introduction/discussion: averaging-kernel sensitivity threshold,"First, **no cell reaches an averaging-kernel sensitivity above 0.5 at any point in"
+notes/draft-methods.md,551,6.1 Information content,0,measured,inline resolver,dofs.cells_above_half,the sweep** — the count is 0<!--#dofs.cells_above_half--> in every case. The DOFS
+notes/draft-methods.md,552,6.1 Information content,926,self_evident,study box or lattice shape,,total accumulates from 926 weakly constrained cells rather than from a few well
+notes/draft-methods.md,556,6.1 Information content,0.5,cited,in a draft's own exemption list,introduction/discussion: averaging-kernel sensitivity threshold,DOFS above 0.5 as a practical minimum for estimating a basin total with a 2σ
+notes/draft-methods.md,557,6.1 Information content,30,cited,in a draft's own exemption list,"introduction: inventory spread, at least 30 percent","error of 30 % or less, met by 124 of their 127 weeks, and reported that"
+notes/draft-methods.md,557,6.1 Information content,124,neither,no resolver and no exemption,,"error of 30 % or less, met by 124 of their 127 weeks, and reported that"
+notes/draft-methods.md,557,6.1 Information content,127,neither,no resolver and no exemption,,"error of 30 % or less, met by 124 of their 127 weeks, and reported that"
+notes/draft-methods.md,559,6.1 Information content,2023,self_evident,year as a date,,"(Varon et al., 2023). **That threshold is weaker in provenance than it looks and"
+notes/draft-methods.md,560,6.1 Information content,2022,self_evident,year as a date,,"is not relied on alone.** Varon et al. credit it to Shen et al. (2022), whose"
+notes/draft-methods.md,562,6.1 Information content,30,cited,in a draft's own exemption list,"introduction: inventory spread, at least 30 percent",be quantified to better than 30 % (2σ) in areas with emission rates above
+notes/draft-methods.md,563,6.1 Information content,0.2,neither,no resolver and no exemption,,"0.2–0.5 Tg a⁻¹ and more than 5,000 observations a⁻¹. This domain meets both of"
+notes/draft-methods.md,563,6.1 Information content,0.5,cited,in a draft's own exemption list,introduction/discussion: averaging-kernel sensitivity threshold,"0.2–0.5 Tg a⁻¹ and more than 5,000 observations a⁻¹. This domain meets both of"
+notes/draft-methods.md,563,6.1 Information content,"5,000",neither,no resolver and no exemption,,"0.2–0.5 Tg a⁻¹ and more than 5,000 observations a⁻¹. This domain meets both of"
+notes/draft-methods.md,565,6.1 Information content,"110,920",unresolved,"equals a resolver's value, written unmarked",composite.soundings,"110,920 retained soundings, so the conclusion that the **total** is"
+notes/draft-methods.md,576,6.2 Identifiability,6.2,self_evident,structural line,,### 6.2 Identifiability
+notes/draft-methods.md,587,6.2 Identifiability,0.35,cited,in a draft's own exemption list,"discussion: posterior error correlation, distinct sector","correlations with other sectors fall below 0.35, and the sector's emissions can be"
+notes/draft-methods.md,590,6.2 Identifiability,0.45,cited,in a draft's own exemption list,"discussion: posterior error correlation, shared surface, lower","error correlations among them run from 0.45 to 0.87, and their separation is, in"
+notes/draft-methods.md,590,6.2 Identifiability,0.87,cited,in a draft's own exemption list,"discussion: posterior error correlation, shared surface, upper","error correlations among them run from 0.45 to 0.87, and their separation is, in"
+notes/draft-methods.md,592,6.2 Identifiability,2026,self_evident,year as a date,,"2026). The same instrument, the same inversion and the same domain separate one"
+notes/draft-methods.md,594,6.2 Identifiability,12,cited,in a draft's own exemption list,discussion: transport error standard deviation ppb,sector's prior was spatially distributed. **That contrast is drawn at 12 km
+notes/draft-methods.md,595,6.2 Identifiability,0.25,self_evident,grid resolution,,"resolution**, finer than the 0.25° cells here, so it is not a result that a"
+notes/draft-methods.md,597,6.2 Identifiability,12,cited,in a draft's own exemption list,discussion: transport error standard deviation ppb,separated at 12 km cannot be separated at 25 km either. The study also states
+notes/draft-methods.md,597,6.2 Identifiability,25,self_evident,swept buffer radius,,separated at 12 km cannot be separated at 25 km either. The study also states
+notes/draft-methods.md,598,6.2 Identifiability,0.35,cited,in a draft's own exemption list,"discussion: posterior error correlation, distinct sector","what its own threshold means — correlations below 0.35 imply ""less than 35 % of"
+notes/draft-methods.md,598,6.2 Identifiability,35,neither,no resolver and no exemption,,"what its own threshold means — correlations below 0.35 imply ""less than 35 % of"
+notes/draft-methods.md,608,6.2 Identifiability,4.2,self_evident,structural context,,(§4.2). The methodological literature states the consequence directly: inversion
+notes/draft-methods.md,611,6.2 Identifiability,2018,self_evident,year as a date,,"grouped and treated as a single source (Desjardins et al., 2018)."
+notes/draft-methods.md,621,6.3 Relation to the association analysis,6.3,self_evident,structural line,,### 6.3 Relation to the association analysis
+notes/draft-methods.md,623,6.3 Relation to the association analysis,5,self_evident,structural context,,The association analysis of §5 is the empirical counterpart of §6.1 rather than a
+notes/draft-methods.md,623,6.3 Relation to the association analysis,6.1,self_evident,structural context,,The association analysis of §5 is the empirical counterpart of §6.1 rather than a
+notes/draft-methods.md,625,6.3 Relation to the association analysis,5,self_evident,structural context,,"sensitivity is a record in which per-cell predictors should fail, and §5 reports"
+notes/draft-methods.md,631,7. Validation,7,self_evident,structural line,,## 7. Validation
+notes/draft-methods.md,636,7. Validation,"2,767",measured,inline resolver,tccon.retrievals,"its 2018 record is sparse: 2,767<!--#tccon.retrievals--> retrievals on"
+notes/draft-methods.md,636,7. Validation,2018,self_evident,year as a date,,"its 2018 record is sparse: 2,767<!--#tccon.retrievals--> retrievals on"
+notes/draft-methods.md,637,7. Validation,44,measured,inline resolver,tccon.days,44<!--#tccon.days--> days. 9<!--#tccon.coincident_days--> days in 2018 carry
+notes/draft-methods.md,637,7. Validation,9,measured,inline resolver,tccon.coincident_days,44<!--#tccon.days--> days. 9<!--#tccon.coincident_days--> days in 2018 carry
+notes/draft-methods.md,637,7. Validation,2018,self_evident,year as a date,,44<!--#tccon.days--> days. 9<!--#tccon.coincident_days--> days in 2018 carry
+notes/draft-methods.md,653,7. Validation,4.3,self_evident,structural context,,"cover, which is the form both predictors take here (§4.3). That frame compares a"
+notes/draft-methods.md,659,7. Validation,0.954,cited,in a draft's own exemption list,discussion: accuracy figure in section 8,this work uses report an F-score of 0.954 (GISA) and 93.12 percent overall
+notes/draft-methods.md,659,7. Validation,93.12,neither,no resolver and no exemption,,this work uses report an F-score of 0.954 (GISA) and 93.12 percent overall
+notes/draft-methods.md,660,7. Validation,1,neither,no resolver and no exemption,,accuracy (GISA-new). A 1 m national land-cover map of China reports 73.61
+notes/draft-methods.md,660,7. Validation,73.61,cited,in a draft's own exemption list,discussion: SinoLC-1 overall accuracy,accuracy (GISA-new). A 1 m national land-cover map of China reports 73.61
+notes/draft-methods.md,661,7. Validation,0.6595,neither,no resolver and no exemption,,"percent overall accuracy with a kappa of 0.6595, and splits impervious surface"
+notes/draft-methods.md,662,7. Validation,1,neither,no resolver and no exemption,,across two classes. A 1 m impervious product for the Yangtze River Economic
+notes/draft-methods.md,663,7. Validation,75.53,neither,no resolver and no exemption,,"Belt reports an impervious-class F1 of 75.53 with a recall of 61.76, is"
+notes/draft-methods.md,663,7. Validation,61.76,neither,no resolver and no exemption,,"Belt reports an impervious-class F1 of 75.53 with a recall of 61.76, is"
+notes/draft-methods.md,664,7. Validation,10,cited,in a draft's own exemption list,"methods: published precision filter, under 10 ppb","super-resolved from 10 m imagery, and is deposited as seven example cities. A"
+notes/draft-methods.md,665,7. Validation,42,neither,no resolver and no exemption,,submeter product over 42 cities reports 83.6 percent overall accuracy and covers
+notes/draft-methods.md,665,7. Validation,83.6,neither,no resolver and no exemption,,submeter product over 42 cities reports 83.6 percent overall accuracy and covers
+notes/draft-methods.md,666,7. Validation,30,cited,in a draft's own exemption list,"introduction: inventory spread, at least 30 percent",urban areas only. A 30 m product for 2020 and 2022 reports an impervious F1
+notes/draft-methods.md,666,7. Validation,2020,self_evident,year as a date,,urban areas only. A 30 m product for 2020 and 2022 reports an impervious F1
+notes/draft-methods.md,666,7. Validation,2022,self_evident,year as a date,,urban areas only. A 30 m product for 2020 and 2022 reports an impervious F1
+notes/draft-methods.md,667,7. Validation,0.93,unresolved,"equals a resolver's value, written unmarked",atten.lambda_equal,"above 0.93 and is the same resolution as the layers it would assess, so it is a"
+notes/draft-methods.md,669,7. Validation,2020,self_evident,year as a date,,"what it would validate, and each is 2020 or later against analysis years of"
+notes/draft-methods.md,670,7. Validation,2000,self_evident,year as a date,,"2000, 2010 and 2018.** So the absence is a property of the products available"
+notes/draft-methods.md,670,7. Validation,2010,self_evident,year as a date,,"2000, 2010 and 2018.** So the absence is a property of the products available"
+notes/draft-methods.md,670,7. Validation,2018,self_evident,year as a date,,"2000, 2010 and 2018.** So the absence is a property of the products available"
+notes/draft-methods.md,676,7. Validation,868,neither,no resolver and no exemption,,"fractional specialisation of Pontius and Millones's decomposition, at the 868 m"
+notes/draft-methods.md,677,7. Validation,0.25,self_evident,grid resolution,,grid on which both are committed and at the 0.25 degree lattice the association
+notes/draft-methods.md,684,7. Validation,13.2,measured,inline resolver,atten.var_share_pct,"variance is 13.2<!--#atten.var_share_pct--> % of the predictor's own variance,"
+notes/draft-methods.md,685,7. Validation,0.868,measured,inline resolver,atten.lambda_min,so the reliability ratio is at least 0.868<!--#atten.lambda_min--> and the
+notes/draft-methods.md,686,7. Validation,1.15,measured,inline resolver,atten.factor_max,de-attenuation factor is at most 1.15<!--#atten.factor_max-->. Results §3.4
+notes/draft-methods.md,686,7. Validation,3.4,self_evident,structural context,,de-attenuation factor is at most 1.15<!--#atten.factor_max-->. Results §3.4
+notes/draft-methods.md,694,7. Validation,0.118,unresolved,"in an artefact, no resolver","albedo_confounder_2018.csv, partial correlation",the signed difference correlating at −0.118 with methane once the fraction is
+notes/draft-methods.md,705,7. Validation,6,self_evident,structural context,,bounded. None of the capability statements of §6 depends on either.
+notes/draft-methods.md,707,8. Reproducibility,8,self_evident,structural line,,## 8. Reproducibility
+notes/draft-methods.md,711,8. Reproducibility,74,measured,inline resolver,pipeline.recipes,74<!--#pipeline.recipes--> artefacts are registered across four tiers:
+notes/draft-methods.md,712,8. Reproducibility,41,measured,inline resolver,pipeline.recipes_committed,41<!--#pipeline.recipes_committed--> regenerate from a fresh clone with no
+notes/draft-methods.md,714,8. Reproducibility,22,measured,inline resolver,pipeline.recipes_local,22<!--#pipeline.recipes_local--> require local raw data and are verified where it
+notes/draft-methods.md,715,8. Reproducibility,10,measured,inline resolver,pipeline.recipes_network,exists; 10<!--#pipeline.recipes_network--> require a network fetch and are verified
 notes/draft-results.md,11,(none),1,self_evident,structural context,,"preliminary material, so §1 reports the observing system, §2 the field it"
 notes/draft-results.md,11,(none),2,self_evident,structural context,,"preliminary material, so §1 reports the observing system, §2 the field it"
 notes/draft-results.md,12,(none),3,self_evident,structural context,,"produced, §3 the land-cover association, §4 the confounds, §5 the"
@@ -643,7 +675,7 @@ notes/draft-results.md,533,6.1 Expected degrees of freedom for signal,3.98,measu
 notes/draft-results.md,533,6.1 Expected degrees of freedom for signal,5,self_evident,label or pair beside a marked number,,3.98<!--#dofs.at_5tg--> at 5 Tg a⁻¹ and
 notes/draft-results.md,534,6.1 Expected degrees of freedom for signal,22.21,measured,inline resolver,dofs.at_12tg,22.21<!--#dofs.at_12tg--> at 12 Tg a⁻¹.
 notes/draft-results.md,534,6.1 Expected degrees of freedom for signal,12,cited,in a draft's own exemption list,discussion: transport error standard deviation ppb,22.21<!--#dofs.at_12tg--> at 12 Tg a⁻¹.
-notes/draft-results.md,536,6.1 Expected degrees of freedom for signal,0.5,cited,in a draft's own exemption list,introduction/discussion: averaging-kernel sensitivity threshold,The sweep crosses the per-inversion practical minimum of 0.5 at
+notes/draft-results.md,536,6.1 Expected degrees of freedom for signal,0.5,cited,in a draft's own exemption list,introduction/discussion: averaging-kernel sensitivity threshold,"The sweep crosses the threshold one weekly basin study adopted, 0.5, at"
 notes/draft-results.md,537,6.1 Expected degrees of freedom for signal,1.77,measured,inline resolver,dofs.cross_half,"1.77<!--#dofs.cross_half--> Tg a⁻¹, IMI's stated minimum viability of 1 at"
 notes/draft-results.md,537,6.1 Expected degrees of freedom for signal,1,neither,no resolver and no exemption,,"1.77<!--#dofs.cross_half--> Tg a⁻¹, IMI's stated minimum viability of 1 at"
 notes/draft-results.md,538,6.1 Expected degrees of freedom for signal,2.50,measured,inline resolver,dofs.cross_one,2.50<!--#dofs.cross_one--> and its marginal ceiling of 2 at

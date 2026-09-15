@@ -1327,7 +1327,7 @@ represents.
 **12c. Citations. The four drafts contain twelve between them.** Ten are in the
 methods; the introduction cites nothing at all, and no draft carries a DOI or a
 reference section. Against a register of
-198<!--#register.entries--> entries and an ACP article's typical forty to
+199<!--#register.entries--> entries and an ACP article's typical forty to
 eighty, **the paper's reference count as drafted is twelve.** This is the
 largest writing gap in the queue and it is not mechanical: the drafts state
 literature findings in prose and attribute them to nobody, so those sentences
@@ -2040,7 +2040,7 @@ rather than in either of those.
 **The reference list will be short, and that is a property of the work.** If
 every claim needing a citation got one, the list would run to about 31 entries
 against the 12 <!--#register.draft_cited--> the drafts cite today. Only
-119 <!--#claims.cited--> of the inventoried numbers are quoted from anyone; the
+124 <!--#claims.cited--> of the inventoried numbers are quoted from anyone; the
 rest are measured here. This is below what an ACP article typically carries, so
 it is worth stating in the cover letter rather than leaving a reviewer to read
 it as thin scholarship. The drawn set is also more method-heavy than the

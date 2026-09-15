@@ -118,6 +118,28 @@ that "inversions with low DOFS are mainly constrained by the prior emission
 estimate and may introduce smoothing error" (Varon et al., 2023, *Atmospheric
 Chemistry and Physics* 23, 7503, doi:10.5194/acp-23-7503-2023).
 
+**Where that threshold actually comes from, checked 15 September 2026.** Varon
+et al. attribute it: "Shen et al. (2022) identified DOFS > 0.5 as a practical
+minimum to estimate total basin methane emissions with 2 σ error ≤30 % from
+inverse analysis of TROPOMI observations." **Shen et al. (2022) says no such
+thing.** DOFS appears once in that paper, defined and not thresholded, and
+nothing resembling the phrase appears in its main text or its supplement. What
+Shen et al. conclude instead is that "the TROPOMI observations can quantify
+emission rates with an uncertainty (2σ) better than 30 % in areas with emissions
+exceeding 0.2–0.5 Tg a⁻¹ and observation counts exceeding 5000 a⁻¹" (Shen et
+al., 2022, *Atmospheric Chemistry and Physics* 22, 11203,
+doi:10.5194/acp-22-11203-2022) — an emission-rate and observation-count
+criterion, not a DOFS one, and the numerical coincidence between 0.5 Tg a⁻¹ and
+DOFS 0.5 is a plausible route for the slip.
+
+**This is useful rather than merely a correction.** Shen et al.'s criterion
+applies to this domain directly and is met with room to spare: the prior sweep
+runs from 3 to 12 Tg a⁻¹, well above 0.2–0.5, and the record carries 110,920
+retained soundings against a bar of 5,000 a⁻¹. So the claim that this record can
+constrain a domain total has a better-founded basis than the DOFS threshold it
+was resting on, and the threshold can be reported as what one study adopted
+rather than as what the field requires.
+
 **This project reports held-out R squared against a spatial null. The field
 reports degrees of freedom for signal, uncertainty reduction and information
 content.** A reviewer in this field would expect the latter, and the honest

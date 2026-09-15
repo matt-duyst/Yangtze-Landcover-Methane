@@ -8,6 +8,7 @@ schneising2026wfmd,10.5194/amt-19-2407-2026,peer-reviewed paper,Findings contest
 he2022mae,10.1109/CVPR52688.2022.01553,peer-reviewed paper,Findings contested,,,,,ERRATA.md;notes/decisions.md
 shen2023ricedata,10.57760/sciencedb.06963,dataset record,Datasets used,,,,methods;yrd,notes/decisions.md;notes/paper-target.md;config/sources.yml
 pan2021doubleseason,10.3390/rs13224609,peer-reviewed paper,Datasets used,,,,,notes/decisions.md;config/sources.yml
+shen2022basins,10.5194/acp-22-11203-2022,peer-reviewed paper,Information content,,,methods,methods,
 xie2024gloricedata,10.6084/m9.figshare.27965832.v2,dataset record,Datasets used,,,,,data/manifest.json;config/sources.yml
 gong2024gaiadata,10.6084/m9.figshare.27245775.v1,dataset record,Datasets used,,,,,notes/decisions.md;data/processed/README.md;data/manifest.json;config/sources.yml
 ifpri2019spam2000,10.7910/DVN/A50I2T,dataset record,Datasets used,,,,,data/processed/README.md
@@ -107,7 +108,7 @@ estrada2025imi2,10.5194/gmd-18-3311-2025,peer-reviewed paper,Information content
 he2026attribution,10.1126/sciadv.adz9007,peer-reviewed paper,Information content,,,,methane;methods;rice,
 shen2023fuelexploitation,10.1038/s41467-023-40671-6,peer-reviewed paper,Information content,,,,methods;yrd,notes/decisions.md
 zhong2026groundvalue,10.5194/amt-19-4759-2026,peer-reviewed paper,Information content,,,,methods;yrd,notes/dataset-leads.md
-varon2023permian,10.5194/acp-23-7503-2023,peer-reviewed paper,Information content,,,,methods,data/manifest.json
+varon2023permian,10.5194/acp-23-7503-2023,peer-reviewed paper,Information content,,,methods,methods,data/manifest.json
 nikolaisen2023riceef,10.1016/j.jclepro.2023.137245,(unlabelled),"The inversion frame and the urban layer, added 11 September 2026",,,,methods,
 lee2024twostagebayes,10.1093/biostatistics/kxae038,peer-reviewed paper,The alternatives to prediction-powered inference,,,,methods,
 vanderweele2019differential,10.1093/aje/kwz133,peer-reviewed paper,The alternatives to prediction-powered inference,,,,methods,

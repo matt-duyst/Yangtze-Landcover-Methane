@@ -98,12 +98,19 @@ Four column fields were carried through the analysis rather than one:
    mean of 11.64<!--#composite.bias_mean--> ppb. This is the primary target.
 3. **The blended TROPOMI+GOSAT product** of Balasus et al. (2023), in which a
    machine-learning correction trained against GOSAT removes the bulk of the
-   operational product's artefacts. This field is restricted to `qa_value ≥ 0.5`
-   by its authors, a restriction that costs nothing here for the reason given in
-   §2.3. Its published improvements over the operational product are a
+   operational product's artefacts. It is built from operational v02.04.00, the
+   same processor version used here, and its authors retain only soundings with
+   a **quality assurance value of 1**. That restriction costs nothing over this
+   domain and for a sharper reason than §2.3's: in-box `qa_value` takes only the
+   three values 0, 0.4 and 1, so every threshold above 0.4 selects the same
+   soundings. Its published improvements over the operational product are a
    single-retrieval precision of 11.9 against 14.5 ppb and a reduction in
    spatially variable bias against GOSAT from 14.3 to 10.4 ppb at 0.25 ×
-   0.3125°.
+   0.3125°, the resolution the authors name as the one a regional inversion
+   would use. Their validation is against TCCON sites that all lie where the
+   shortwave-infrared albedo is below 0.4, which is where TROPOMI biases are
+   relatively low, so the improvement is demonstrated in the easier part of the
+   albedo range.
 4. **A deseasonalised field**, in which a region-wide seasonal cycle is removed
    *at the sounding level* rather than from the cell means. The cycle is fitted
    to every sounding individually as a fixed-effects model with one offset per
@@ -130,7 +137,11 @@ methane products into one variational inversion over Europe for 2019 produced
 emission budgets of +2 %, −1 % and −33 % relative to the same prior, with machine
 learning attributing the differences principally to aerosol scattering and albedo
 sensitivity (Sicsik-Paré et al., 2026). A result that holds on one retrieval and
-not another is a statement about the retrieval.
+not another is a statement about the retrieval. That study also apportions the
+disagreement: aerosols account for 20–29 % of the predicted inter-product
+difference, striping patterns 13–19 % and extreme albedo values 13–14 %, which
+is the quantitative reason the albedo covariates and the across-track test in
+§2.5 are the right two things to have checked.
 
 ### 2.5 Preprocessing steps not applied
 
@@ -138,10 +149,13 @@ Published TROPOMI inversion chains apply corrections this analysis does not, and
 the omissions are stated here rather than deferred to a limitations section
 because they characterise the field a reader is about to see results from.
 
-* **No destriping was applied.** The operational destriping procedure was
-  introduced for data from September 2024 onward and earlier orbits have not been
-  reprocessed, so no official destriping exists for this processor version and
-  year. Only a self-implemented correction would have been available.
+* **No destriping was applied.** The operational destriping procedure is
+  applied to data from 7 September 2024 (processor v02.07) onward and earlier
+  orbits have not been reprocessed, so no official destriping exists for this
+  processor version and year. Only a self-implemented correction would have been
+  available. Reprocessing of destriped orbits is named as an expected future
+  product update, so this omission is one a later version of this analysis may
+  be able to close rather than a permanent limitation.
 * **No filter on retrieval precision** beyond the quality flag, and **no albedo
   floor**. Published chains variously require methane precision below 10 ppb, a
   shortwave-infrared aerosol optical thickness ceiling, and an albedo above a
@@ -289,7 +303,14 @@ Paddy rice was taken from two products:
 GloRice is *not* an independent observation of rice extent and is not treated as
 one: its authors produce the annual maps by allocating national and sub-national
 agricultural statistics to grid cells within each administrative unit, so its
-totals match the statistical totals by construction.
+totals match the statistical totals by construction. For China the allocation is
+sharper than that description implies. Each year's map is the **year-2000**
+spatial pattern, itself a composite of three earlier gridded products, rescaled
+by the ratio of that year's provincial statistic to the year-2000 statistic. So
+within a province GloRice carries no year-to-year spatial information at all,
+and a 2018 map of these four provinces is a year-2000 pattern with a provincial
+multiplier. It is used here only as a third check on totals and never as a
+spatial predictor.
 
 Two limitations of the 30 m product bear directly on interpretation and are
 reported with every result that uses it. **Anhui's rasters classify only the
@@ -498,9 +519,16 @@ estimate published for the Integrated Methane Inversion's preview facility
 
     a = s_A² / (s_A² + (s_super/k)²/m_super),     k = α M_air L g / (M_CH4 U p)
 
-and DOFS = Σᵢ aᵢ, evaluated with that tool's published defaults: prior error
-0.5, observation error 15 ppb, length scale 25 km, α = 0.4, wind speed 5 km h⁻¹,
-retrieval error correlation 0.55 and transport error 4.5 ppb.
+and DOFS = Σᵢ aᵢ. The seven constants are the tool's own defaults and come from two
+places, distinguished here because they are not equally published: the prior
+error of 0.5 and the observation error of 15 ppb are the `PriorError` and
+`ObsError` defaults in the facility's configuration file, and the length scale
+of 25 km, α = 0.4 and the wind speed of 5 km h⁻¹ are set in its preview source,
+while the retrieval error correlation of 0.55 and the transport error of 4.5 ppb
+are stated in the paper, following Chen et al. (2023) and specified there for an
+inversion at 0.25° × 0.3125° — which is this lattice's own resolution. The
+formula, the constants and the definition of m_super were checked against the
+facility's source rather than inferred from the paper.
 
 The two observation inputs were derived from the granule record rather than from
 the composite, for the reason given in §3. Per-cell **observation days**,
@@ -524,10 +552,19 @@ the sweep** — the count is 0<!--#dofs.cells_above_half--> in every case. The D
 total accumulates from 926 weakly constrained cells rather than from a few well
 constrained ones. That is the profile a domain-total estimate needs and not the
 profile a per-cell attribution needs: a regional total is constrainable by this
-record and a cell-level attribution is not. The operational literature treats
-DOFS above 0.5 as a practical minimum for estimating a total with a 2σ error of
-30 % or less, and reports that low-DOFS inversions are mainly constrained by the
-prior rather than by the observations.
+record and a cell-level attribution is not. Weekly Permian Basin inversions adopted
+DOFS above 0.5 as a practical minimum for estimating a basin total with a 2σ
+error of 30 % or less, met by 124 of their 127 weeks, and reported that
+inversions with low DOFS are mainly constrained by the prior emission estimate
+(Varon et al., 2023). **That threshold is weaker in provenance than it looks and
+is not relied on alone.** Varon et al. credit it to Shen et al. (2022), whose
+text states no DOFS threshold; what Shen et al. establish is that emissions can
+be quantified to better than 30 % (2σ) in areas with emission rates above
+0.2–0.5 Tg a⁻¹ and more than 5,000 observations a⁻¹. This domain meets both of
+those criteria by a wide margin, at every prior magnitude swept and with
+110,920 retained soundings, so the conclusion that the **total** is
+constrainable rests on the criterion as its originators stated it and not only
+on a DOFS cut-off.
 
 Second, **this is a reimplementation of the published estimate evaluated over
 this lattice, not an inversion.** No transport model was run, no Jacobian was
@@ -554,7 +591,13 @@ error correlations among them run from 0.45 to 0.87, and their separation is, in
 that study's own words, limited and heavily weighted by the prior (Wang et al.,
 2026). The same instrument, the same inversion and the same domain separate one
 sector and fail to separate three; the only thing that differs is how each
-sector's prior was spatially distributed.
+sector's prior was spatially distributed. **That contrast is drawn at 12 km
+resolution**, finer than the 0.25° cells here, so it is not a result that a
+coarser lattice could escape by being coarser: the sectors that could not be
+separated at 12 km cannot be separated at 25 km either. The study also states
+what its own threshold means — correlations below 0.35 imply "less than 35 % of
+the correction attributed to landfills could be obfuscated by other sectors" —
+which is the form in which a correlation becomes a bound on attribution.
 
 **The sources in this domain are interspersed in every direction.** Paddy rice
 and freshwater aquaculture occupy the same flooded lowland and are spectrally

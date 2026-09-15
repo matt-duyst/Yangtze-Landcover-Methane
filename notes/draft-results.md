@@ -533,7 +533,7 @@ Expected DOFS over the domain is 1.44<!--#dofs.at_3tg--> at a 3 Tg a⁻¹ prior,
 3.98<!--#dofs.at_5tg--> at 5 Tg a⁻¹ and
 22.21<!--#dofs.at_12tg--> at 12 Tg a⁻¹.
 
-The sweep crosses the per-inversion practical minimum of 0.5 at
+The sweep crosses the threshold one weekly basin study adopted, 0.5, at
 1.77<!--#dofs.cross_half--> Tg a⁻¹, IMI's stated minimum viability of 1 at
 2.50<!--#dofs.cross_one--> and its marginal ceiling of 2 at
 3.54<!--#dofs.cross_two-->. Those crossings are bisected on the sensitivity
