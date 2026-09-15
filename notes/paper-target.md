@@ -91,7 +91,13 @@ central finding is already published somewhere:
 * A transport error of 12 ppb at 25 km with a 6-hour error correlation is
   Sheng et al. (2018), and [`notes/grounding-methods.md`](grounding-methods.md)
   carries it as the ceiling on the whole enterprise.
-* That inversion cannot separate interspersed sources is Desjardins et al.
+* That inversion cannot separate interspersed sources is Desjardins et al.,
+  **and the same review says it of TROPOMI by name** — "not likely to be useful
+  to separate the contributions of managed and unmanaged CH4 sources because of
+  their coarse spatial resolution and their lack of sensitivity". That is an
+  assertion, not a measurement, so the contribution is unchanged and the framing
+  is: the field expected this and did not measure it. The introduction now says
+  so rather than leaving a reviewer to raise it.
   (2018), quoted in this file's synthesis section.
 * And that degrees of freedom for signal bound what an observing system can
   resolve is standard Rodgers optimal-estimation theory, which

@@ -98,6 +98,17 @@ real domain**, and a simulation supplies that structure rather than measuring
 it. The consequence is that the limit which is hardest to escape is the one the
 literature's dominant design cannot see.
 
+**And the expectation itself is not new, which sharpens what is.** A 2018
+review of the gap between bottom-up and top-down agricultural methane estimates
+states both limits for this instrument in one sentence: satellites such as GOSAT
+and TROPOMI "are not likely to be useful to separate the contributions of
+managed and unmanaged CH4 sources because of their coarse spatial resolution and
+their lack of sensitivity". That is an assertion in a review whose own
+measurements are aircraft flux transects; it names no number for either limit
+and measures neither. **So the field has expected this result for as long as the
+instrument has existed and has not measured it**, which is a more precise
+statement of the gap than an absence of expectation would be.
+
 **So what is missing is both limits measured on one real domain**: how much
 information the observations carry, and whether what they constrain can be
 attributed to a sector, with the same instrument, the same period and the same
@@ -133,7 +144,9 @@ improvement to the first.** More observations raise degrees of freedom and do
 not make a prior more spatially distinct; a better prior sharpens attribution
 and adds no information the observations do not carry.
 
-**Three things that claim is not.** It is not an inversion: the
+**Four things that claim is not.** It is not a novel expectation: the
+limitation was asserted for this instrument in 2018 and the contribution is
+measuring it, not anticipating it. It is not an inversion: the
 degrees-of-freedom figures reimplement a published closed-form estimate over
 this lattice, with no transport model run and no emissions optimised, and they
 are bounded to this domain, instrument and period. It is not a priority claim.

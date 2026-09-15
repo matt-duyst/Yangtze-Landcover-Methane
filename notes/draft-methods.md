@@ -606,9 +606,17 @@ products' own account; four urban sectors share one population-like allocation
 surface within the same city cells; and coal mining in northern Anhui sits
 adjacent to, and partly inside, the cells where the rice classification stops
 (§4.2). The methodological literature states the consequence directly: inversion
-modelling is not capable of distinguishing interspersed sources from different
-sectors, and overlapping grid-level sources from different sectors are typically
-grouped and treated as a single source (Desjardins et al., 2018).
+modelling is also not capable of distinguishing interspersed sources from
+different sectors, and overlapping grid-level sources from different sectors are
+typically grouped and treated as a single source. **The same review extends the
+point to this instrument by name**: atmospheric observations from satellites
+"such as GOSAT and TROPOMI are not likely to be useful to separate the
+contributions of managed and unmanaged CH4 sources because of their coarse
+spatial resolution and their lack of sensitivity" (Desjardins et al., 2018).
+Both statements are assertions in that review rather than results of it — its
+own measurements are aircraft flux transects over farmland — so what this
+section supplies is the measurement of a limitation the field had already
+stated.
 
 **The two limits are independent, and that is the point.** Additional
 observations raise the information content and leave the identifiability
@@ -655,11 +663,21 @@ product against **complete-coverage** reference data and does not sample, so it
 requires no sampling design. **What it requires is a reference layer over the
 domain more accurate than the product, and no such layer exists.**
 
-Four candidates were verified against the four provinces. The impervious layers
-this work uses report an F-score of 0.954 (GISA) and 93.12 percent overall
-accuracy (GISA-new). A 1 m national land-cover map of China reports 73.61
-percent overall accuracy with a kappa of 0.6595, and splits impervious surface
-across two classes. A 1 m impervious product for the Yangtze River Economic
+Four candidates were verified against the four provinces. The bar is the
+accuracy of the layers this work actually uses, and it is reported with the
+caveat that it is not fully verifiable: GISA's impervious F-score of 0.954 is
+published in a closed paper that could not be obtained, and GAIA's stated
+accuracy above 90 percent likewise. A third product, GISA-new, reports 93.12
+percent overall accuracy with omission errors of 10.50 percent and commission
+errors of 3.52 percent on two independent global test sets of more than 100,000
+samples; **it is not a layer this work uses** and is quoted only because its
+assessment is the one place in this literature where GISA and GAIA are measured
+against each other on a single common sample. A 1 m national land-cover map of China reports 73.61
+percent overall accuracy with a kappa of 0.6595 on 106,344 counted points from
+over 100,000 visually interpreted random samples across eleven classes, and
+splits impervious surface across two classes; it also reports overall accuracy
+per province, so figures for these four exist although they are published as a
+map rather than a table. A 1 m impervious product for the Yangtze River Economic
 Belt reports an impervious-class F1 of 75.53 with a recall of 61.76, is
 super-resolved from 10 m imagery, and is deposited as seven example cities. A
 submeter product over 42 cities reports 83.6 percent overall accuracy and covers
@@ -669,6 +687,18 @@ fourth product rather than a reference. **Every candidate is less accurate than
 what it would validate, and each is 2020 or later against analysis years of
 2000, 2010 and 2018.** So the absence is a property of the products available
 over this region, not of effort.
+
+**The comparison is not between like quantities and the argument does not need
+it to be.** A multi-class overall accuracy is not a single-class impervious
+F-score, and a product can be weak overall and strong on built-up surfaces,
+which are among the easiest classes to separate. Only two of the candidates
+publish a single-class impervious F-measure that can be set beside GISA's, and
+both are below it, one far below. The populations differ too — global, national,
+42 urban cores, and the Yangtze River Economic Belt. What closes the route is
+therefore not a ranking of five numbers but the narrower statement that **no
+candidate publishes an impervious-class accuracy over this domain that exceeds
+the products it would assess**, which holds however the incomparable figures are
+treated.
 
 What the layers' disagreement supports instead is a bound, and for the
 impervious layer the bound is computed. The two products' difference is
