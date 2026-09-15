@@ -7717,6 +7717,18 @@ rhetorical repetitions in the same passages are still words and still unguarded.
 
 ### ACP requires a disclosure nobody had noticed
 
+**CORRECTED 15 September 2026: it is not a disclosure requirement, it is a
+prohibition.** The submission page says the usage must be described. ACP's
+separate AI policy page says what is permitted, and its operative sentence is
+"Generative AI must not be used for text or interpretations." Assistive use
+needs no declaration; illustrations and schematics are permitted with the tool
+named; text and interpretations are not permitted at all. Reading the wrong one
+of two venue pages produced a requirement that could be satisfied by writing a
+paragraph, where the actual rule means the manuscript's prose and arguments
+have to be written by the author. `notes/draft-availability.md` carries the
+policy verbatim and what follows from it. The paragraph below stands as
+written about the *submission page*, and understates the rule.
+
 Reading ACP's submission page rather than reasoning about what a journal wants
 turned up two required items outside the audit's four framings. One is an
 **Interactive computing environment** section. The other is that **where AI

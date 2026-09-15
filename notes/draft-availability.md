@@ -250,8 +250,10 @@ the NESDC product turned out to be citable.
    any file here can answer, and ACP wants grant numbers rather than a sentence.
 4. **Authorship.** Whether this is a single-author paper at all, given the 2023
    thesis was advised.
-5. **The AI usage disclosure.** ACP requires one, this work needs a substantial
-   one, and its wording is the author's.
+5. **The AI policy, which is a prohibition and not a disclosure.** ACP forbids
+   generative AI for text or interpretations. The drafts cannot be the
+   manuscript's prose. See the section below; this is the largest single item
+   on this list.
 
 **One thing that is a ten-minute job on Matt's account.**
 
@@ -345,27 +347,55 @@ appear:
   availability statement instead, where it now is.
 * **The advisor**, if he is not a co-author.
 
-## AI usage, which is the section nobody had noticed
+## AI usage, and it is a prohibition rather than a disclosure
 
-**This is the item the apparatus audit missed entirely and the brief did not
-ask for.** ACP's submission page states that where AI tools were used to
-generate parts of a manuscript, the usage must be described, in either the
-methods section or the acknowledgements. It is not optional and it is not
-covered by any of the three sections the audit named.
+**Read from ACP's own AI policy page on 15 September 2026, which is a different
+and stricter document than the submission page an earlier pass read.** The
+submission page says the usage must be described. The policy page says what may
+and may not be done, and the operative sentence is verbatim:
 
-It applies here more than to most submissions. The 2026 reproduction — the
-pipeline, the artefacts, the guards, the drafts and these statements — was
-written in collaboration with an AI assistant across many sessions, and
-`notes/decisions.md` is the record of that work. A description is therefore
-required, it is not a formality, and it cannot be written as a disclaimer of
-something marginal.
+> Generative AI must not be used for text or interpretations, and authors need
+> to ensure that the manuscript does not include any AI-generated hallucinated
+> or unverifiable data.
 
-**What only Matt can supply.** The wording, and where it goes. The honest
-version is specific rather than general: it says which parts were AI-written,
-what was verified and how, and who is accountable for the result. This
-repository is unusually well placed to make that statement checkable, because
-the drift guards exist precisely so that no number in the prose is taken on
-trust — which is the substance of what such a disclosure should convey.
+The rest of the policy sets out the permitted uses, also verbatim: "AI can be
+used to improve sentence structure and readability of manuscripts including
+punctuation, grammar, and spelling checks. This assistive use of AI does not
+need to be declared by authors." And: "AI use is permitted for the generation
+of illustrations and schematics provided that the AI tool is properly cited in
+the manuscript. Authors should provide the name of the specific AI tool utilised
+and clearly describe the purpose and extent of this use. This can be done either
+in the Methods or in the Acknowledgements sections." Finally: "During manuscript
+registration, authors have to certify that they have described in the Methods
+section or in the Acknowledgements the generative use of AI tools."
+
+**So the three categories are separate and only one of them is a disclosure
+problem.** Assistive use needs no declaration. Illustrations and schematics are
+permitted with the tool named. **Text and interpretations are not permitted at
+all.**
+
+**What that means for this work, stated plainly.** The drafts in `notes/` were
+written by an AI assistant. Under this policy they cannot be the manuscript's
+text, and the arguments in them cannot be the manuscript's interpretations. A
+disclosure does not cure it, because the policy does not offer disclosure as a
+route for that category. The prose and the interpretation have to be the
+author's own work, written by the author.
+
+That is not a statement about the value of the drafts. They remain a complete
+record of what was found and why, and a person writing the paper from the
+artefacts, the guards and `notes/decisions.md` has everything needed. What
+changes is that the writing is work still to be done rather than work already
+done, and an earlier record here said the opposite by treating the requirement
+as a disclosure.
+
+**What only Matt can supply.** Whether the analysis code falls under this at
+all. The policy addresses manuscript text, interpretations, illustrations and
+schematics; it says nothing about software, which ACP handles through code
+availability instead. The reading taken here is that code is not manuscript
+text, so the pipeline is disclosed through the code availability statement and
+the figures through the illustrations clause with the tool named. That reading
+should be confirmed with the editor rather than assumed, because the whole
+submission rests on it.
 
 ## Interactive computing environment
 
@@ -374,6 +404,30 @@ ACP has a section for this and the repository has a reasonable claim on it: the
 preserved as submitted, and the 2026 pipeline is a scripted repository with a
 registry of regeneration commands. ACP's data policy wants code deposited with a
 DOI and cited in the reference list, which is the next item below.
+
+## What the data policy adds, read 15 September 2026
+
+Three requirements from ACP's data policy page rather than its submission page,
+none of which the earlier reading found:
+
+* **Placement is specified.** "Copernicus Publications requires all authors to
+  provide a statement on the availability of underlying data **as the last
+  paragraph of each article**." The statement is not a back-matter section
+  placed wherever it fits.
+* **Assets are linked by DOI, separately from the reference list.** "data sets,
+  model code, video supplements, video abstracts, International Geo Sample
+  Numbers, and other digital assets should be linked to the article through DOIs
+  in the assets tab." So every dataset above needs a DOI, which is why the
+  NESDC citation mattered and why GISA's want of one is a problem beyond
+  licensing.
+* **Data citation principle 3** is the standard the claim inventory already
+  meets: "whenever and wherever a claim relies upon data, the corresponding data
+  should be cited."
+
+And one from the AI policy: **authors certify at registration**, not in the
+manuscript, that generative AI use is described in the Methods or
+Acknowledgements. That is a box to tick with a statement behind it, so the
+statement has to exist before registration begins.
 
 ## What is still needed and is not a section
 
