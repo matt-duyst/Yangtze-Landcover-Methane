@@ -1,5 +1,18 @@
 # Processed data
 
+**Contains modified Copernicus Sentinel data 2018.**
+
+That notice is not decoration and is not this repository's wording. The
+Copernicus Sentinel Data Legal Notice, under Regulation (EU) No 377/2014 and
+Commission Delegated Regulation (EU) No 1159/2013, grants reproduction,
+distribution, communication to the public and adaptation, and requires in
+return that a distributor of *adapted or modified* Sentinel data carry
+"Contains modified Copernicus Sentinel data [Year]". The eight committed
+methane artefacts here — the composite, coverage, covariate, deseasonalised and
+blended files — are modified Sentinel-5P data distributed publicly, so the
+notice is owed on them. `data/manifest.json` carries the licence in full.
+
+
 Small derived tables, committed. Every file here should be regenerable from
 committed inputs by committed code, and most rows now are: 148 of the 160 urban
 rows and 28 of the 36 rice rows. Both tables regenerate from a clone with

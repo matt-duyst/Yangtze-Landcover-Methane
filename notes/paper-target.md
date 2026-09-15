@@ -2063,7 +2063,9 @@ submission:
 4. The committed analysis grid's rice input came under a personal-use grant
    with no DOI. Keep it and document the 190-row substitution, or rebuild on
    the Science Data Bank product and lose `rice_fraction_combined`.
-5. The S5P mirror route and the GISA download page state no licence terms.
+5. GISA's download page states no licence terms. (The S5P route was listed here
+   too and should not have been: the Copernicus Sentinel Data Legal Notice
+   governs it, and its required notice is now carried.)
 6. **Author contributions, competing interests and financial support are absent
    from every file here.** A submission needs all three, none is analysis, and
    no pass over the apparatus has noticed because nothing can fail a test.

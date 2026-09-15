@@ -7551,7 +7551,12 @@ that the author be contacted before the data is used in a publication. That
 has not been done. It is the only unmet provider condition in the project, and
 it cannot be discharged by any amount of computing.
 
-**Two sources state no terms at all**: the S5P mirror route and the GISA
+**CORRECTED 15 September 2026: one source, not two.** The Copernicus Sentinel
+Data Legal Notice governs the S5P data whatever the mirror says, and this
+repository had its text on file already — for Sentinel-2. The paragraph below
+listed both and only GISA belongs in it.
+
+**Originally: two sources state no terms at all**: the S5P mirror route and the GISA
 download page. GISA's paper describes the product as freely available for
 research, which is a description and not a licence.
 

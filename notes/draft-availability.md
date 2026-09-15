@@ -46,8 +46,17 @@ list below.
 MEEO mirror at `https://meeo-s5p.s3.amazonaws.com`, which serves the
 operational products over plain HTTPS with no credentials; Copernicus Data
 Space carries the same granules but requires authentication and so cannot run
-from a fresh clone. **No licence is stated on this route** and none is recorded
-in either register. **There is no usable checksum**: every S3 ETag observed is
+from a fresh clone. The mirror states no licence of its own, but **the data is
+not unlicensed**: it is governed by the Copernicus Sentinel Data Legal Notice,
+under Regulation (EU) No 377/2014 and Commission Delegated Regulation (EU) No
+1159/2013, which grants reproduction, distribution, communication to the public
+and adaptation, and **requires** a distributor of adapted or modified Sentinel
+data to carry "Contains modified Copernicus Sentinel data [Year]". The eight
+committed methane artefacts are exactly that, so the notice is owed and is now
+carried in `README.md`, `data/processed/README.md` and `data/manifest.json`.
+An earlier version of this file said no licence was stated; that misread the
+manifest, which recorded the Copernicus policy and noted only that the *mirror*
+adds no terms of its own. **There is no usable checksum**: every S3 ETag observed is
 a multipart tag whose part size is not published, so verification is
 structural — the file must open as netCDF4 and hold a `PRODUCT` group with the
 expected variables. That is weaker than the MD5 verification the figshare and

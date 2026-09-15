@@ -396,12 +396,20 @@ digests for the four sources whose fetch scripts write to it. In brief:
 |---|---|---|
 | GAIA | annual global artificial impervious area, 30 m, 1985–2021 | CC BY 4.0 |
 | GloRice | gridded paddy rice annual distribution, 2017–2021 | not recorded |
-| Sentinel-5P TROPOMI | Level 2 methane, RPRO stream, processor 020400 | Copernicus open and free data policy |
+| Sentinel-5P TROPOMI | Level 2 methane, RPRO stream, processor 020400 | Copernicus Sentinel Data Legal Notice; requires the notice below |
 | Natural Earth | 10 m admin-1 provinces | public domain |
 | Science Data Bank rice | classified single-season rice, 10 m, by province | not in the manifest |
 | GISA | global impervious surface area, 30 m, 1972–2019 | not stated on the download page |
 | NESDC rice | classified single and double season rice, 10 m | CC BY 4.0; the FTP grant covers the access address, not the data |
 | SPAM, GADM | rice area, provincial boundaries | not redistributed, see above |
+
+**Contains modified Copernicus Sentinel data 2018.** The Copernicus Sentinel
+Data Legal Notice, under Regulation (EU) No 377/2014 and Commission Delegated
+Regulation (EU) No 1159/2013, grants reproduction, distribution, communication
+to the public and adaptation, and requires a distributor of adapted or modified
+Sentinel data to carry that notice. The eight committed methane artefacts are
+modified Sentinel-5P data, so this repository owes it, in the same way the
+shaded relief owes the WorldDEM notice recorded above.
 
 Two sources publish no usable checksum. Every S3 ETag on the Sentinel-5P mirror
 is a multipart tag, an MD5 of the part MD5s with an unpublished part size, so
