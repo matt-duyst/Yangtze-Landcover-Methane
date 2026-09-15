@@ -2123,3 +2123,56 @@ freely available for research. Seeking written permission is thorough; relying
 on the description is what the field does. It is worth choosing deliberately,
 because it is the only place where redistributing this repository rests on a
 reading rather than on a grant.
+
+## What the primary-source re-read changed, 15 September 2026
+
+Two items moved from statement to decision, and one obligation appeared.
+
+**1. The prose cannot be reused, and this is the largest change to the plan in
+this document.** ACP's AI policy states that "Generative AI must not be used for
+text or interpretations." The drafts in `notes/` were written by an AI
+assistant, so they cannot be the manuscript's text and their arguments cannot be
+its interpretations. Assistive use needs no declaration and illustrations and
+schematics are permitted with the tool named, but this category has no
+disclosure route. **The writing is therefore work still to be done, not work
+already done.** What the drafts remain is a complete record of what was found
+and why, and everything needed to write from — the artefacts, the guards and
+`notes/decisions.md` — is in place. An earlier record here treated this as a
+disclosure to be worded, which understated it.
+
+One reading this rests on and cannot settle alone: that analysis code is not
+manuscript text, so the pipeline is disclosed through code availability rather
+than prohibited. That should be put to an editor before submission, because the
+whole submission depends on it.
+
+**2. A required attribution notice was owed and is now carried.** Eight
+committed methane artefacts are modified Copernicus Sentinel data, and the
+Sentinel Data Legal Notice requires "Contains modified Copernicus Sentinel data
+2018" on distributed adaptations. This repository already had that notice text
+on file, correct and fully sourced, recorded for Sentinel-2 and never applied to
+Sentinel-5P. Any figure that draws the composite should carry it in its caption
+too, which is a build decision rather than a text one and is not yet done.
+
+**3. The availability statement's placement is specified.** ACP requires it "as
+the last paragraph of each article", not as a back-matter section placed
+wherever it fits, and datasets and code are additionally linked by DOI in the
+assets tab. That makes GISA's want of a DOI a second problem beyond its licence.
+
+**And one claim got stronger rather than weaker.** The capability assessment's
+central threshold was resting on a DOFS cut-off whose attribution does not hold.
+Its originators' actual criterion — better than 30 % at 2σ above 0.2–0.5 Tg a⁻¹
+and 5,000 observations a⁻¹ — applies to this domain directly and is met by a
+wide margin, so the claim that this record can constrain a domain total is now
+better founded than it was. The method itself was checked line by line against
+the inversion facility's own source and reproduces it exactly.
+
+### The practice this establishes
+
+A load-bearing claim about an external thing should cite **the passage** it rests
+on, not the work. A paraphrase written from a search result, an abstract or a
+paper's summary of another paper is provisional until the source is opened, and
+should be marked as such until it is. This pass found that every claim which
+turned out wrong had been read from an intermediary and every claim that held
+had been read from the source, which makes reading-provenance the thing worth
+recording — because it is what predicts error, and it is cheap to record at the
+moment the note is written and expensive to reconstruct later.

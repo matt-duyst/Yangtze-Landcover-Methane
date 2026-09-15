@@ -7756,3 +7756,130 @@ rather than for the file it came in found it in one query. `config/sources.yml`
 now carries a `nesdc_rice` block with both papers and deliberately no fetch
 route, since scripting the route would redistribute the credential, which is the
 one thing the grant forbids.
+
+## The primary-source re-read, 15 September 2026
+
+A pass that checked what this repository believes about things outside itself,
+by obtaining the sources and reading the passages rather than reasoning about
+records of them. Corrections first, then additions, then what the pass taught
+about how to rank the next one.
+
+### What held, and it is the part that matters most
+
+**The capability assessment's method is a faithful reproduction and was checked
+line by line against the facility's own source, not against the paper.** The
+sensitivity expression in `scripts/estimate_inversion_dofs.py` is
+`imi_preview.py`'s `a = sA**2 / (sA**2 + (s_superO / k) ** 2 / (m_superi))`,
+character for character in structure, and `k = alpha * (Mair * L * g /
+(Mspecies * U * p))` likewise. The four constants that are not in the published
+paper — `U = 5 km/h`, `p = 101325`, `g = 9.8`, `alpha = 0.4` — are in that
+source with the same values and the same comments. `PriorError: [0.5]` and
+`ObsError: [15]` are in `config.yml`. The source's own comment defines
+`m_superi` as the "sum of days in each grid cell with >0 successful obs", which
+is exactly how this repository derives it from the granule bitmaps.
+
+Two independent corroborations turned up while checking. Jacob et al. (2022)
+gives the same prior-error convention from the other direction — "f is the
+fractional error (such as 50 %)" — and the paper specifies the two error
+constants for an inversion at 0.25° × 0.3125°, which is this lattice's own
+resolution. **So the paper's central method rests on a correct reading**, and
+that is worth recording as plainly as the errors, because the pass was designed
+to find errors and this is the claim whose failure would have cost the most.
+
+Wang et al. (2026) holds completely, including the phrase this repository
+quotes. Balasus et al.'s two improvement figures hold verbatim. Sicsik-Paré et
+al.'s three budget percentages hold, and the repository was right to exclude the
+fourth, which is a surface-based inversion rather than a TROPOMI product. The
+destriping claim holds and the source is more precise than the record was.
+GloRice's construction holds and is worse for GloRice than the record said.
+
+### Corrections
+
+**The blended product's filter.** Recorded as `qa_value ≥ 0.5` "by its authors";
+Balasus et al.'s Table 1 says only observations with a quality assurance value
+of **1** are used. The conclusion drawn from it survives and simplifies: in-box
+`qa_value` takes only the values 0, 0.4 and 1, so every threshold above 0.4
+selects the same soundings. Checked on the granule held locally.
+
+**The DOFS constants' attribution.** Recorded as "that tool's published
+defaults (Estrada et al., 2025)" for all seven. Four are not in that paper at
+all — "wind speed" and "length scale" do not occur in it — and two are the
+paper's, following Chen et al. (2023). The values were right; the sourcing was
+not, and the script's own header had it right while the draft did not.
+
+**The DOFS > 0.5 threshold, which is the substantive one.** Recorded as what
+"the operational literature" treats as a practical minimum. It is one weekly
+basin study's adopted criterion, and that study credits it to Shen et al.
+(2022): "Shen et al. (2022) identified DOFS > 0.5 as a practical minimum to
+estimate total basin methane emissions with 2 σ error ≤30 % from inverse
+analysis of TROPOMI observations." **Shen et al. (2022) contains no such
+statement.** DOFS appears once in it, defined and not thresholded; the
+supplement carries it only as a figure label. What Shen et al. conclude is that
+TROPOMI "can quantify emission rates with an uncertainty (2σ) better than 30 %
+in areas with emissions exceeding 0.2–0.5 Tg a⁻¹ and observation counts
+exceeding 5000 a⁻¹". The numerical coincidence between 0.5 Tg a⁻¹ and DOFS 0.5
+is a plausible route for the slip.
+
+This is a chain error in the published literature and not in this repository,
+which quoted its source accurately. It still had to be fixed here, because the
+threshold was carrying weight it could not support. **And the fix strengthens
+the claim**: Shen et al.'s actual criterion applies to this domain directly and
+is met by a wide margin at every prior magnitude swept, so "this record can
+constrain a domain total" now rests on the criterion as its originators stated
+it.
+
+**My own claim that the S5P source states no licence.** It does not; the
+manifest recorded the Copernicus policy and noted only that the *mirror* adds
+no terms. A qualifier read as an absence — the same error as the `LICENSE` glob
+the last pass made, and the second of that kind in two passes. The pattern is
+mine and it is worth naming: **I read a hedge as a negative.**
+
+**My own account of ACP's AI rule.** Reported as a disclosure requirement from
+the submission page. The AI policy page prohibits generative AI for text or
+interpretations outright. Recorded separately below because it changes a plan
+rather than a sentence.
+
+### Additions, which is what the pass was for
+
+* **Copernicus Sentinel data carries a mandatory attribution notice** and eight
+  committed artefacts owed it. Recorded in full in the licence commit.
+* **Wang et al.'s sector contrast is drawn at 12 km**, finer than this lattice,
+  so the failure to separate population-allocated sectors is not something a
+  coarser grid escapes. And its 0.35 has a stated meaning: "less than 35 % of
+  the correction attributed to landfills could be obfuscated by other sectors".
+* **Sicsik-Paré et al. apportion the inter-product disagreement**: aerosols
+  20–29 %, striping 13–19 %, extreme albedo 13–14 %. That is the quantitative
+  justification for the albedo covariates and the across-track test.
+* **Balasus et al.'s validation is at low albedo** — every TCCON site used lies
+  where shortwave-infrared albedo is below 0.4, where TROPOMI biases are
+  relatively low — so the blended product's demonstrated improvement is in the
+  easier part of the range.
+* **GloRice's annual maps for China rescale a fixed year-2000 pattern** by a
+  provincial statistic, so within a province they carry no year-to-year spatial
+  information whatever. A stronger reason than the record gave for never using
+  it as a spatial predictor.
+* **Destriping reprocessing is an expected product update**, so that omission
+  may be closable later rather than permanent.
+
+### What the pass taught about ranking, which is the transferable part
+
+The brief ranked six classes by consequence and predicted the licences, the
+venue rules and the published thresholds at the top. **The errors did cluster
+in those three**, so the ranking worked. But the ranking is not what predicted
+them, and the thing that did is simpler.
+
+**Every claim that turned out wrong was originally read from something citing
+the source, and every claim that held was originally read from the source.** The
+DOFS constants came from a paper that points at a config file; the threshold
+came from a paper crediting another paper; the AI rule came from a submission
+page summarising a policy page; the S5P licence came from my own reading of a
+manifest field. The three that held completely — the preview source, Wang,
+Balasus — were each read from the thing itself the first time.
+
+So the predictor of error is not the topic and not the consequence. **It is
+whether the first reading was of the source or of an intermediary**, and that is
+a property the record can carry: a citation to a passage is evidence the source
+was opened, and a citation to a work is not. The highest-stakes item on the
+brief's list, the borrowed method, sat fifth and was clean — because it had been
+read from the source. Ranking by consequence says what to verify; ranking by
+reading-provenance says where to find errors, and they are different orders.

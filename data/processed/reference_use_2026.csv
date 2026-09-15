@@ -8,7 +8,7 @@ schneising2026wfmd,10.5194/amt-19-2407-2026,peer-reviewed paper,Findings contest
 he2022mae,10.1109/CVPR52688.2022.01553,peer-reviewed paper,Findings contested,,,,,ERRATA.md;notes/decisions.md
 shen2023ricedata,10.57760/sciencedb.06963,dataset record,Datasets used,,,,methods;yrd,notes/decisions.md;notes/paper-target.md;config/sources.yml
 pan2021doubleseason,10.3390/rs13224609,peer-reviewed paper,Datasets used,,,,,notes/decisions.md;config/sources.yml
-shen2022basins,10.5194/acp-22-11203-2022,peer-reviewed paper,Information content,,,methods,methods,
+shen2022basins,10.5194/acp-22-11203-2022,peer-reviewed paper,Information content,,,methods,methods,notes/decisions.md
 xie2024gloricedata,10.6084/m9.figshare.27965832.v2,dataset record,Datasets used,,,,,data/manifest.json;config/sources.yml
 gong2024gaiadata,10.6084/m9.figshare.27245775.v1,dataset record,Datasets used,,,,,notes/decisions.md;data/processed/README.md;data/manifest.json;config/sources.yml
 ifpri2019spam2000,10.7910/DVN/A50I2T,dataset record,Datasets used,,,,,data/processed/README.md
@@ -58,7 +58,7 @@ yang2021spartina,10.1016/j.ecss.2021.107258,peer-reviewed paper,"Wetlands, urban
 zhao2026gasleakage,10.1038/s44284-026-00504-1,peer-reviewed paper,"Wetlands, urban gas and transport",,,methods,rice;yrd,ERRATA.md;notes/dataset-leads.md
 shan2022linan,10.3390/atmos13081206,peer-reviewed paper,"Wetlands, urban gas and transport",,,,yrd,
 guo2023suzhou,10.1016/j.apr.2023.101830,peer-reviewed paper,"Wetlands, urban gas and transport",,,,yrd,notes/dataset-leads.md
-wang2026lulcmeteorology,10.1016/j.jes.2025.07.021,peer-reviewed paper,"Wetlands, urban gas and transport",,,methods,methane;rice;urban;yrd,notes/dataset-leads.md
+wang2026lulcmeteorology,10.1016/j.jes.2025.07.021,peer-reviewed paper,"Wetlands, urban gas and transport",,,methods,methane;rice;urban;yrd,notes/decisions.md;notes/dataset-leads.md
 sun2026wastewater,10.1126/sciadv.aec0536,peer-reviewed paper,"Wetlands, urban gas and transport",,,,,ERRATA.md
 zhu2025yrdsynthesis,10.1007/s13762-024-06050-4,peer-reviewed paper,One work cited and not relied on,,,,rice;yrd,
 olofsson2014goodpractice,10.1016/j.rse.2014.02.015,peer-reviewed paper,"Accuracy assessment and the fractional-cover frame, added 10 September 2026",,,,methods,ERRATA.md;notes/dataset-leads.md
@@ -104,7 +104,7 @@ arabianpeninsula2025,10.1038/s41598-024-84593-9,peer-reviewed paper,"The gap-fil
 chen2022chinainversion,10.5194/acp-22-10809-2022,peer-reviewed paper,The inference frame,,,,methods,notes/paper-target.md
 feng2025reggcas,10.5194/acp-25-15121-2025,peer-reviewed paper,The inference frame,,,,methods;rice,
 xia2026chengdu,10.1016/j.jclepro.2026.148229,peer-reviewed paper,The inference frame,,,,methods,
-estrada2025imi2,10.5194/gmd-18-3311-2025,peer-reviewed paper,Information content,"methods:230,497",,methods,methane;methods,
+estrada2025imi2,10.5194/gmd-18-3311-2025,peer-reviewed paper,Information content,"methods:230,497",,methods,methane;methods,notes/decisions.md
 he2026attribution,10.1126/sciadv.adz9007,peer-reviewed paper,Information content,,,,methane;methods;rice,
 shen2023fuelexploitation,10.1038/s41467-023-40671-6,peer-reviewed paper,Information content,,,,methods;yrd,notes/decisions.md
 zhong2026groundvalue,10.5194/amt-19-4759-2026,peer-reviewed paper,Information content,,,,methods;yrd,notes/dataset-leads.md
@@ -114,7 +114,7 @@ lee2024twostagebayes,10.1093/biostatistics/kxae038,peer-reviewed paper,The alter
 vanderweele2019differential,10.1093/aje/kwz133,peer-reviewed paper,The alternatives to prediction-powered inference,,,,methods,
 cinelli2020sensitivity,10.1111/rssb.12348,peer-reviewed paper,The alternatives to prediction-powered inference,,,,methods,
 simonsohn2020speccurve,10.1038/s41562-020-0912-z,peer-reviewed paper,The alternatives to prediction-powered inference,,,,methods,
-wang2026usurban,10.1126/sciadv.adz9308,peer-reviewed paper,The urban layer,methods:554,,methods,methane;methods;rice;urban;yrd,notes/dataset-leads.md
+wang2026usurban,10.1126/sciadv.adz9308,peer-reviewed paper,The urban layer,methods:554,,methods,methane;methods;rice;urban;yrd,notes/decisions.md;notes/dataset-leads.md
 wang2024landfills,10.1038/s41893-024-01307-9,peer-reviewed paper,The urban layer,,,,methods;rice;urban;yrd,notes/dataset-leads.md
 luo2025oilgas,10.1038/s41467-025-58237-z,peer-reviewed paper,The urban layer,,,,rice;urban,
 chen2026seasia,10.1038/s41597-026-07320-1,peer-reviewed paper,The urban layer,,,,rice;urban;yrd,
@@ -178,7 +178,7 @@ shahzadi2026fused,10.5194/essd-18-2153-2026,peer-reviewed paper,The methane laye
 liang2023eastasia,10.5194/acp-23-8039-2023,peer-reviewed paper,The methane layer's target and observing chain,,,,methane,
 nesser2025boundary,10.5194/gmd-18-9279-2025,peer-reviewed paper,The methane layer's target and observing chain,,,,methane,
 stanevich2020resolution,10.5194/gmd-13-3839-2020,peer-reviewed paper,The methane layer's target and observing chain,,,,methane,
-wang2026twelvekm,10.5194/acp-26-6857-2026,peer-reviewed paper,The methane layer's target and observing chain,,,methods,methane;rice;urban;yrd,notes/dataset-leads.md
+wang2026twelvekm,10.5194/acp-26-6857-2026,peer-reviewed paper,The methane layer's target and observing chain,,,methods,methane;rice;urban;yrd,notes/decisions.md;notes/dataset-leads.md
 yu2021osse,10.5194/gmd-14-7775-2021,peer-reviewed paper,The methane layer's target and observing chain,,,,methane,
 penn2025oh,10.5194/acp-25-2947-2025,peer-reviewed paper,The methane layer's target and observing chain,,,,methane,
 bloom2017wetcharts,10.5194/gmd-10-2141-2017,peer-reviewed paper,The methane layer's target and observing chain,,,,methane,
@@ -191,7 +191,7 @@ sherwood2020signatures,10.15138/qn55-e011,"the deposit, not fetched",The cross-l
 lan2021d13c,10.1029/2021GB007000,peer-reviewed paper,The cross-layer synthesis,,,,,notes/paper-target.md
 yao2026southasia,10.5194/acp-26-7765-2026,peer-reviewed paper,The cross-layer synthesis,,,,,notes/paper-target.md
 turner2018capability,10.5194/acp-18-8265-2018,peer-reviewed paper,Capability assessment as a paper type,,,,,notes/paper-target.md
-jacob2022quantifying,10.5194/acp-22-9617-2022,peer-reviewed review,Capability assessment as a paper type,,,,,notes/paper-target.md
+jacob2022quantifying,10.5194/acp-22-9617-2022,peer-reviewed review,Capability assessment as a paper type,,,,,notes/decisions.md;notes/paper-target.md
 montenegro2025capability,10.5194/egusphere-2025-5923,(unlabelled),Capability assessment as a paper type,,,,,notes/paper-target.md
 chong2023publicationbias,10.1371/journal.pone.0282839,peer-reviewed paper,"Publication bias, which turned out to be the weaker worry",,,,,notes/paper-target.md
 boulesteix2012plea,10.48550/arXiv.1208.2651,(unlabelled),"Publication bias, which turned out to be the weaker worry",,,,,notes/paper-target.md
