@@ -8020,3 +8020,127 @@ subtly the wrong one.
 library or interlibrary copy of *Biometrics* 49, 305 settles it in an afternoon
 and needs no computing, and it should be obtained before submission rather than
 after.
+
+## The audit, closed 15 September 2026
+
+Five passes audited this work: the claim audit in two batches, the apparatus
+audit, the blocked-dataset retry, and two primary-source re-reads. This records
+where that leaves things, because an audit that does not say when it is finished
+is indistinguishable from one that failed.
+
+### What the five passes established
+
+**The claim audit** built `data/processed/claim_inventory_2026.csv`, which
+classifies every number in the drafts and the captions — now 1,294 rows across
+measured, self-evident, cited, neither and unresolved. Its finding was that the
+drafts' numbers are overwhelmingly this project's own measurements and only 124
+are quoted from anyone, and it replaced two argued claims with measured ones by
+aggregating a real inventory onto the lattice.
+
+**The apparatus audit** found that provenance lived in three registers with
+three conventions and that a fourth, `README.md`'s own data table, was not being
+read as one. It produced the availability statements, found the journal sections
+nobody had drafted, and reported two things that were wrong: that there was no
+`LICENSE` file, and that the Sentinel source stated no licence. Both were my
+errors and both were a hedge read as an absence.
+
+**The blocked-dataset retry** established that "blocked" is five different
+conditions and that request-signature filters change between passes, which is
+why no route in this repository is recorded as "the one that works".
+
+**The first re-read** checked the top of the ranked list. The capability
+assessment's method survived a line-by-line comparison with the inversion
+facility's own source. Three claims were wrong: the blended product's quality
+filter, the attribution of the DOFS constants, and the provenance of the DOFS
+threshold. One compliance gap surfaced — the Copernicus Sentinel notice — and
+one venue rule turned out to be a prohibition rather than a disclosure.
+
+**The second re-read**, this one, checked the four sources left over. Desjardins
+yielded the sentence that names TROPOMI. SinoLC-1, GISA-new and the national
+sectoral budget verified exactly. The land-cover closure argument's own bar was
+found to be quoting a product this work does not use. Clifford and Dutilleul
+remain unread.
+
+### What is now blocking nothing
+
+Recorded because a queue that only grows is a queue nobody trusts.
+
+* The code licence: it existed all along, and its scope is now stated.
+* The Hefei TCCON counts: recovered, with an artefact, a recipe, resolvers and a
+  manifest entry, and they reproduced exactly.
+* The NESDC rice citation: closed, by finding the double-season class's own
+  dataset paper.
+* The Copernicus Sentinel attribution: owed, and now carried.
+* The 0.1 degree lattice: settled as not viable, with the measurement to show it.
+* The spatial null's collapse: found to be my own weighting bug and corrected.
+* Route B, a reference layer for accuracy assessment: closed, and now closed on
+  a statement that survives the comparability objection rather than on a ranking
+  of incomparable numbers.
+* The identifiability limit's borrowed claim: read, extended, and no longer the
+  only support for that pillar, since a local measurement on a Chinese inventory
+  now sits beside it.
+* Three of five preprint entries: resolved to their published versions.
+
+### What remains genuinely open
+
+**Work not done, and doable.** A library copy of *Biometrics* 49, 305 to read
+the effective-degrees-of-freedom primary. Three closed land-cover accuracy
+papers, obtainable the same way. Two arXiv-only machine-learning entries never
+screened for supersession. The figure set, thirteen of a planned sixteen. The
+errata audit, deferred on the sound ground that it cannot be audited against an
+unwritten paper. The TCCON prior alignment, optional. The satellite question,
+still the largest unexamined area and still not in the planned sequence. A
+Zenodo release for the code DOI, and an ORCID.
+
+**Work that cannot be done here, because it is not work.** Contacting the Hefei
+site's listed individuals, which is the only dated obligation in the project,
+and contacting the blended product's author. Authorship, funding and competing
+interests. The AI disclosure's wording, and the question to an editor about
+whether analysis code falls under the text prohibition. GISA's licence, where
+there is nothing to find because no terms exist.
+
+**And one that is neither.** The manuscript's prose. ACP prohibits generative AI
+for text and interpretations, so the drafts cannot be the paper, and writing it
+is work that only the author can do. That is not a gap in the audit; it is what
+the audit hands over.
+
+### The audit's own lessons
+
+**Three, and they are of different kinds.**
+
+**The silent-zero class, which is now five instances.** GAIA's undeclared −128
+nodata; GISA's 0 meaning non-impervious rather than absent; the NESDC rasters'
+silent zeros; ISA-1's undeclared nodata where 0 means both non-impervious and
+outside the city; and CISC, which states the trap for itself. Every one is a
+product encoding absence and non-occurrence in the same value, and every one
+would produce a plausible map of the wrong thing. It has recurred often enough
+that it should be the first question asked of any new raster, before resolution
+or licence.
+
+**The paraphrase-versus-source rule, now with two passes behind it, and in a
+sharper form.** The first re-read found that every claim which turned out wrong
+had been read from an intermediary. This pass adds a mechanical version of the
+same thing: **where the record carries a quoted passage, the claim held; where it
+carries a number with no quotation, the claim was wrong, unsourced, or both.**
+Zhong's eight sectoral figures are quoted and every one is exact. SinoLC-1's two
+are quoted and both are exact. Desjardins is quoted and holds. The GISA F-score
+of 0.954 carries no quotation and no citation anywhere in this repository, and it
+is the number the closure argument rested on. That is a test the record can
+apply to itself without reading anything: **a load-bearing external number with
+no quoted passage behind it is provisional.**
+
+**And the structural one: every guard this repository has checks it against
+itself.** The recipe registry checks artefacts against commands, the claim
+checker checks prose against artefacts, the figure inventory checks files
+against a list, and the cross-reference test checks quotations against other
+files in this repository. All four are closed loops. **Nothing checks a claim
+about the outside world**, and the 124 cited claims are precisely the ones with
+no mechanical check at all — which is why five passes of internal auditing found
+none of what the two re-reads found. The guards were not failing; they were
+answering a different question, and the question they do not answer is the one a
+reviewer will ask.
+
+A guard is conceivable and is not proposed here: requiring that every external
+number in a draft carry either a quoted passage or an explicit provisional mark
+is checkable by pattern, in the way the drift guards already are. It would have
+caught the 0.954 on the day it was written.
