@@ -8412,3 +8412,101 @@ the 22 coal cells carry a mean impervious fraction of 0.148 against a domain
 mean of 0.092, with only 2 of the 22 in the top impervious decile. Near enough
 orthogonal to both predictors that it can neither be a missed signal nor a
 manufactured one.
+
+## What the detection limit bears on, and what it does not change
+
+Integration, not new analysis. Four things were checked and three of them moved.
+
+### The equivalence bounds: the unreachable bound is now reachable, and the study cannot meet it
+
+The equivalence tests set their bound at the spatial null's own held-out
+performance, |r| = 0.5765, and the record states why: the policy-relevant bound
+would require converting an emissions threshold into a column threshold, which
+needs a transport model this project does not run. **The detection calculation
+performs exactly that conversion**, so the bound that was unreachable is now
+computable.
+
+Computing it settles the matter in an unexpected direction. The largest
+correlation a land-cover emission signal could produce over this domain is
+|r| = 0.0084. **The comparative bound in use is 69 times wider than that.** So
+the equivalence result — every rice combination falling inside the bounds — is
+true, and it is a test against a bound two orders of magnitude more generous
+than the physics permits.
+
+Restating equivalence against the physical bound would fail for everything,
+because the study's confidence intervals are far wider than 0.0084. That is not
+a reason to do it: an equivalence test that cannot reject anything is
+uninformative, and reporting it as a failure would misdescribe the study. **The
+recommendation is to keep the comparative bound and state its generosity**,
+which converts a silent weakness into a stated one. The equivalence tests should
+*not* be recomputed; what changes is one sentence of interpretation beside them.
+
+The deeper point is worth keeping: the comparative bound was chosen because it
+was the only bound reachable from inside the study, and it turns out to be a
+bound the study was always going to clear. That is a general hazard of
+benchmark-relative equivalence testing and it is now documented with a number.
+
+### The capability claim: the same physics, and the detection limit is the more useful form
+
+They are not two findings. The averaging-kernel sensitivity is
+`a = σ_A² / (σ_A² + (σ_super/k)²/m)`, and σ_A is the prior error times the
+emission density while k is the same constant the detection calculation uses.
+So "no cell reaches a sensitivity above 0.5" and "a land-cover-proxied emission
+change produces a sub-noise column change" are **two expressions of one fact**:
+the emissions in question are small relative to what this observing system can
+constrain per cell.
+
+Which form is more useful depends on the audience, and the paper needs both.
+DOFS is the field's own currency and makes the work comparable to the inversion
+literature; it is also the form in which the identifiability limit is stated, so
+it cannot be dropped. The detection limit is expressed in the paper's own units —
+parts per billion, and an R squared directly comparable to the one the results
+section reports — so it is the form a reader can check against the measurement.
+**The detection limit is the interpretable form and DOFS the comparable one**,
+and §6 of the results now carries them adjacent so the relation is visible.
+
+### The errata: a statement about what was achievable, not about what was done
+
+`ERRATA.md` item 5.2 said that causal language about rice should become
+associational language, on the strength of a published exchange the thesis did
+not cite. The detection limit adds an independent objection about magnitude:
+**a spatial association between land-cover extent and the column field at this
+resolution could not have been the emission signal, at any level of care.**
+
+That is stronger than the item made and it is written to be careful rather than
+triumphant. Three qualifications travel with it in the errata text: it is a
+bottom-up expectation resting on an allocation that is partly circular; it does
+not say the instrument is insensitive, since coal at 5.80 ppb per cell is
+plainly visible; and it is independent of items 3.1 to 3.6, which concern what
+the thesis's model was fitted to and stand on their own. It neither replaces nor
+strengthens those, and saying so matters because a magnitude argument and an
+implementation defect are different kinds of error.
+
+### The contribution statement: it should be restated, and here is the form
+
+Reported rather than acted on, because the brief asked for that. The statement
+currently pairs an information-content limit with an identifiability limit and
+claims the second is untouched by improvements to the first.
+
+**The detection limit does not add a third member to that pair.** It sits
+underneath the information-content limit as the same physics in different units,
+as above, so presenting it as a third independent limit would be double-counting
+and a reviewer who checked would find it.
+
+What it does change is the *order* of the claim. The pairing's force is that
+neither limit can be escaped by refining the design; the detection limit says
+something prior and simpler, which is that the quantity being sought is too
+small to see. So the recommended restatement keeps the pair and prefixes it:
+
+> A capability assessment of a real satellite column record over a region whose
+> methane sources overlap. The expected signal from the land-cover contrast
+> available in this domain is two orders of magnitude below the field's own
+> variation, so the negative result is the predicted one rather than a finding;
+> what is new is the pairing of two independent limits measured on the same
+> domain, an information-content limit and an identifiability limit, together
+> with the demonstration that the second is untouched by any improvement to the
+> first.
+
+That is one sentence longer and it front-loads the thing a reader can check. It
+is not adopted here; it is on record for whoever writes the manuscript, and
+the manuscript's prose has to be theirs in any case.

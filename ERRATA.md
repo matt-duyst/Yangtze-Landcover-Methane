@@ -343,6 +343,42 @@ Arising; and Zhang et al. (2021, Nature Communications 12, 1189,
 doi:10.1038/s41467-021-21437-4), the reply. All three are in
 `notes/references.md`.
 
+**A second and independent objection, added 15 September 2026, and it concerns
+magnitude rather than causality.** The reproduction has since converted an
+emission to a column enhancement, using the closed form the operational
+inversion literature uses and this domain's own wind, and the result bears on
+this item directly.
+
+The inventory's rice emission for this domain, spread over the cells that carry
+rice, implies a column enhancement of
+0.119<!--#change.rice_enhancement--> ppb per cell. The whole 5th-to-95th
+percentile range of impervious fraction implies
+0.410<!--#change.xsec_contrast--> ppb. The composite's median per-cell standard
+error is 1.98<!--#change.se_median--> ppb and the field's between-cell standard
+deviation is 14.86<!--#field.sd_operational--> ppb. **So the emission signal
+that land-cover extent proxies over this domain is between a fifth and a
+twentieth of the noise on a single cell, and the largest correlation it could
+produce is |r| = 0.0084<!--#change.r_max-->.**
+
+What that adds to the item is a statement about what was achievable rather than
+about what was done: **a spatial association between land-cover extent and the
+column field at this resolution could not have been the emission signal, at any
+level of care in the analysis.** It is therefore not only that causal language
+should become associational language; the association itself, had it been
+measured soundly, would have been too small to detect.
+
+**Three qualifications, because this is a bound and not a measurement.** It is
+a bottom-up expectation, computed from an inventory whose urban sectors are
+allocated on population rather than on urban land, so the rate it rests on
+expresses what an inventory predicts and not what the atmosphere does. It does
+not say the observing system is insensitive: the same conversion gives
+5.80<!--#change.coal_enhancement--> ppb for a cell of the inventory's coal
+sector, which is 2.9<!--#change.coal_multiple--> times the per-cell error, so a
+concentrated source of that size is plainly visible. And it is independent of
+items 3.1 through 3.6 above, which concern what the thesis's model was actually
+fitted to; those stand on their own and this neither replaces nor strengthens
+them.
+
 ### 5.3 Urban methane attributed to natural gas vehicles
 
 Sections 1.1 and 1.5 attribute urban methane to natural gas vehicles, with a

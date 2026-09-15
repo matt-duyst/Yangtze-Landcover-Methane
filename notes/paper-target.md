@@ -2232,3 +2232,46 @@ covariates are annual means of the wind components, not of the wind speed. Any
 future use of them as a ventilation rate must say so, because vector averaging
 over a year cancels opposing directions and the resulting magnitude is a lower
 bound on the speed.
+
+## The change design, closed formally, 15 September 2026
+
+Recorded as closed with a verdict so that a later pass does not reopen it, since
+this queue's habit is to reopen anything left merely deferred.
+
+**CLOSED — underpowered, not deferred.** A change-over-time design regressing
+per-cell methane change on land-cover change is short by 279-fold in effective
+cells over the eight-year interval, which the methane record cannot observe at
+all because TROPOMI begins 30 April 2018, and by 126,932-fold over the one-year
+interval it can. The minimum detectable slope is 17 times the expected one.
+Nothing in the family works: a longer interval is unavailable in principle, a
+larger region does not raise effective sample size proportionally, coarser
+aggregation trades noise for treatment spread at about one for one, and a
+tropospheric partial column buys a factor of two against a gap of hundreds.
+`data/processed/change_design_power_2018.csv` holds the arithmetic and
+`notes/decisions.md` the assumptions with their directions.
+
+**Do not reopen it on the strength of a better land-cover product.** The binding
+term is the size of the emission that urban land proxies, not the precision with
+which urban land is measured. A perfect impervious layer changes nothing.
+
+### And the one item this opened, which is a sentence rather than a study
+
+The equivalence tests' comparative bound, |r| = 0.5765, is **69 times wider than
+the largest correlation the physics permits**, which is |r| = 0.0084. The bound
+was chosen because it was the only one reachable from inside the study, and it
+turns out to have been a bound the study would always clear. The equivalence
+tests should not be recomputed — a test against the physical bound could not
+reject anything and would misdescribe the study — but the results section should
+state the bound's generosity beside the result. That converts a silent weakness
+into a stated one and it costs one sentence.
+
+### What the detection limit does to the contribution statement
+
+`notes/decisions.md` carries a recommended restatement and the reasoning. In
+short: the detection limit is **not** a third limit to add to the pair, because
+it is the information-content limit in different units and presenting it as
+independent would be double-counting. What it changes is the order — the claim
+should open with the predicted-null arithmetic, which a reader can check in one
+line, and then make the pairing the contribution. The restatement is on record
+and deliberately not adopted, since the manuscript's prose has to be the
+author's.
