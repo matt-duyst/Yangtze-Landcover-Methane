@@ -341,6 +341,32 @@ def rows_for() -> list[dict]:
         "in one cell, against a domain urban total of "
         f"{urban.sum() / 1000:.0f} Gg yr-1")
 
+    # --- what the bound does NOT cover: sectors no predictor represents
+    coal = grids["coal"].ravel()
+    coal_cells = int((coal > 0).sum())
+    per_coal = coal.sum() / max(coal_cells, 1)
+    add("coal emission, domain total", f"{coal.sum() / 1000:.1f}", "Gg yr-1",
+        "inventory", "the domain's largest single sector")
+    add("coal cells", f"{coal_cells}", "cells", "inventory", "")
+    add("coal implied enhancement per coal cell", f"{enhancement(per_coal):.2f}",
+        "ppb", "derived",
+        "ABOVE the noise: the observing system is not blind to an emission of "
+        "this size, which is why the limit is about the land-cover signal and "
+        "not about the instrument")
+    add("coal enhancement as a multiple of the per-cell error",
+        f"{enhancement(per_coal) / float(np.median(se)):.1f}", "ratio", "derived", "")
+    rice_cells = int((rice > 0).sum())
+    add("rice implied enhancement per rice cell",
+        f"{enhancement(rice.sum() / max(rice_cells, 1)):.3f}", "ppb", "derived",
+        "below the noise, like the impervious contrast")
+    add("coal emission against impervious fraction, correlation",
+        f"{np.corrcoef(coal, imp18 / area)[0, 1]:+.4f}", "r", "derived",
+        "near-orthogonal, so coal cannot manufacture the observed association")
+    rice_frac_ok = ~np.isnan(rice_frac)
+    add("coal emission against rice fraction, correlation",
+        f"{np.corrcoef(coal[rice_frac_ok], rice_frac[rice_frac_ok])[0, 1]:+.4f}",
+        "r", "derived", "")
+
     # --- Part 5c: the same arithmetic on the cross-sectional design
     lo, hi = np.percentile(imp18 / area, [5, 95])
     contrast = float(enhancement((hi - lo) * float(np.median(area)) * slope0))
@@ -349,6 +375,13 @@ def rows_for() -> list[dict]:
     add("cross-sectional contrast as a share of the field sd",
         f"{100 * contrast / 14.86:.1f}", "percent", "derived",
         "against the observed between-cell sd of 14.86 ppb")
+    r_max = contrast / 3.29 / 14.86
+    add("maximum correlation the physics permits", f"{r_max:.4f}", "r", "derived",
+        "the p5-p95 contrast as 3.29 sd of a normal, over the field's own sd")
+    add("comparative equivalence bound, ratio to the physical ceiling",
+        f"{0.5765 / r_max:.0f}", "ratio", "derived",
+        "the bound the equivalence tests use is this many times wider than the "
+        "largest correlation a land-cover signal could produce")
     add("cross-sectional implied R squared", f"{(contrast / 3.29 / 14.86) ** 2:.6f}",
         "fraction", "derived",
         "treating the p5-p95 contrast as 3.29 sd of a normal; the observed "

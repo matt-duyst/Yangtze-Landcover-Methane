@@ -1345,6 +1345,19 @@ QUANTITIES = {
     "change.effect_shortfall": lambda: _change("effect-size shortfall"),
     "change.detectable_emission": lambda: _change(
         "emission change a detectable cell would need"),
+    "change.coal_total": lambda: _change("coal emission, domain total"),
+    "change.coal_cells": lambda: _change("coal cells"),
+    "change.coal_enhancement": lambda: _change(
+        "coal implied enhancement per coal cell"),
+    "change.coal_multiple": lambda: _change(
+        "coal enhancement as a multiple of the per-cell error"),
+    "change.rice_enhancement": lambda: _change(
+        "rice implied enhancement per rice cell"),
+    "change.coal_vs_impervious": lambda: _change(
+        "coal emission against impervious fraction, correlation"),
+    "change.r_max": lambda: _change("maximum correlation the physics permits"),
+    "change.bound_ratio": lambda: _change(
+        "comparative equivalence bound, ratio to the physical ceiling"),
     "change.xsec_contrast": lambda: _change(
         "cross-sectional implied contrast, p5 to p95"),
     "change.xsec_share": lambda: _change(

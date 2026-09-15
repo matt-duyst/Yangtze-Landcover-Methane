@@ -54,6 +54,15 @@ gaia_1yr shortfall factor,126932,ratio,derived,against 60.6 effective cells avai
 minimum detectable slope,20.4,ppb per unit fraction,derived,
 effect-size shortfall,17,ratio,derived,how many times larger the true effect would have to be
 emission change a detectable cell would need,325,Gg yr-1,derived,"in one cell, against a domain urban total of 1589 Gg yr-1"
+"coal emission, domain total",2035.1,Gg yr-1,inventory,the domain's largest single sector
+coal cells,22,cells,inventory,
+coal implied enhancement per coal cell,5.80,ppb,derived,"ABOVE the noise: the observing system is not blind to an emission of this size, which is why the limit is about the land-cover signal and not about the instrument"
+coal enhancement as a multiple of the per-cell error,2.9,ratio,derived,
+rice implied enhancement per rice cell,0.119,ppb,derived,"below the noise, like the impervious contrast"
+"coal emission against impervious fraction, correlation",+0.0366,r,derived,"near-orthogonal, so coal cannot manufacture the observed association"
+"coal emission against rice fraction, correlation",+0.1275,r,derived,
 "cross-sectional implied contrast, p5 to p95",0.410,ppb,derived,the whole impervious range's expected column signature
 cross-sectional contrast as a share of the field sd,2.8,percent,derived,against the observed between-cell sd of 14.86 ppb
+maximum correlation the physics permits,0.0084,r,derived,"the p5-p95 contrast as 3.29 sd of a normal, over the field's own sd"
+"comparative equivalence bound, ratio to the physical ceiling",69,ratio,derived,the bound the equivalence tests use is this many times wider than the largest correlation a land-cover signal could produce
 cross-sectional implied R squared,0.000070,fraction,derived,"treating the p5-p95 contrast as 3.29 sd of a normal; the observed held-out R squared for impervious fraction is 0.085, three orders of magnitude larger, so the observed association is not this signal"

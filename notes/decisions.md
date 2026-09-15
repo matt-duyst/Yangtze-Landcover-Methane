@@ -8313,3 +8313,101 @@ The two explanations are complementary rather than competing, and stating both
 is stronger than either. The detection limit says the true signal is
 unobservable here; the confound analysis says what the observed signal actually
 was.
+
+## The detection limit, stated with its derivation and its edges
+
+The power calculation's by-product is larger than the decision it was
+commissioned for, so it is set out here in full: the conversion, the
+assumptions with their directions, and what the bound does not cover. The last
+of those turned out to change the claim, so it is not a formality.
+
+### The conversion, step by step
+
+The question is what column enhancement a land-cover-proxied emission produces
+over one 0.25 degree cell. The conversion is the Integrated Methane Inversion
+preview's closed form, not a box model, for two reasons: it is the relation the
+operational literature uses to turn an emission into an observable signal, and
+its constants are published and were checked line by line against that
+facility's own source in the primary-source re-read.
+
+    k   = alpha * M_air * L * g / (M_CH4 * U * p)
+    dX  = k * flux,  flux = dE / (L^2 * seconds per year)
+
+| Term | Value | Where it came from |
+|---|---|---|
+| alpha | 0.4 | `imi_preview.py`, turbulence parameterisation |
+| L | 25 km | `imi_preview.py` for 0.25° × 0.3125°, the resolution the paper cites it at |
+| g, p | 9.8 m s⁻², 101,325 Pa | `imi_preview.py` |
+| M_air, M_CH4 | 0.029, 0.01604 kg mol⁻¹ | `imi_preview.py` |
+| U | 1.41 m s⁻¹ | this domain's own committed wind covariates |
+| dE | impervious change × cell area × 28.82 Mg km⁻² a⁻¹ | committed urban rasters × CHN-CH4 |
+
+That gives k = 1.2374 kg⁻¹ m² s and a slope of
+1.1995 ppb per unit impervious fraction. Over the observed
+range, from the 5th to the 95th percentile of impervious fraction, the implied
+column contrast is 0.410 ppb, which is
+2.8 percent of the field's 14.86 ppb standard
+deviation and an R squared of
+0.00007. The measured held-out R squared is 0.085.
+
+### The assumptions, and which way each leans
+
+Every one was chosen in the design's favour, so the bound cannot be an artefact
+of pessimism:
+
+| Assumption | Direction |
+|---|---|
+| U from the magnitude of the annual **mean vector** of the wind, which cancels opposing directions | **overstates the signal**, since dX goes as 1/U |
+| GAIA rather than GISA for the impervious layer | **overstates**, GAIA's change is 2.2× GISA's |
+| the marginal emission rate taken equal to the average rate | unclear, probably overstates: new suburban land is less landfill-dense than old urban land |
+| sampling error alone as the noise, nothing for real interannual variability | **overstates the power**, so understates the gap |
+| the eight-year interval, which the methane record cannot observe | **overstates**, the observable interval is one to three years |
+
+**And the caveat that matters most.** The rate of 28.82 Mg km⁻² a⁻¹ comes from
+regressing the inventory's urban sectors on impervious area, and that regression
+looks proportional — slope 28.82 through the origin, an ordinary slope of 31.16
+with an intercept of −389 Mg a⁻¹ — **partly by construction**. Those sectors are
+allocated on population in the inventory, population and impervious area are
+themselves strongly related, so the proportionality is induced by the allocation
+surface rather than observed in the world. **The inventory therefore states what
+a bottom-up inventory predicts**, which is exactly what a power calculation
+needs and is not evidence about the world. The bound is a statement about the
+expectation, not a measurement of the atmosphere.
+
+### What the bound does not cover, and this is where it gets interesting
+
+It is a bottom-up expectation over the sectors an anthropogenic inventory
+carries and that land cover proxies. Two sectors in this domain fall outside
+that, and they behave differently.
+
+**Aquaculture is absent from every inventory and is interleaved with paddy**, so
+a rice-fraction predictor could proxy it. The national prior puts lakes and
+aquaculture at 1.3 Tg a⁻¹ and this repository measured 35.6 percent of national
+pond area inside the four provinces, so an in-domain figure near 0.46 Tg a⁻¹ is
+the order of magnitude. Spread over the 798 rice-bearing cells that is about
+0.6 Gg a⁻¹ per cell and an enhancement near 0.04 ppb; concentrated into a
+hundred cells it reaches 0.29 ppb. **Either way it is below the noise**, so the
+bound holds for it, and adding it to the rice sector would not move the verdict.
+
+**Coal is the case that changes the claim.** The inventory puts
+2035.1 Gg a⁻¹ of coal-mine methane in this domain
+across only 22 cells — 92.5 Gg a⁻¹ per cell, which
+converts to 5.80 ppb, or
+2.9 times the per-cell standard error. **That is
+above the noise.**
+
+So the detection limit is not a statement that this observing system cannot see
+methane at 0.25 degrees. It plainly can: it would see a 92 Gg a⁻¹ cell at three
+times the noise. **The limit is that the emission differences land-cover extent
+proxies are twenty to fifty times smaller than the emission the domain's largest
+sector already puts in individual cells.** That is a better claim than the one
+the calculation was run for, and it removes the reading the bound most invites —
+that the instrument is at fault.
+
+**And coal cannot be the observed association either**, which had to be checked
+rather than assumed. Coal emission against impervious fraction gives
+r = +0.0366, and against rice fraction +0.1275;
+the 22 coal cells carry a mean impervious fraction of 0.148 against a domain
+mean of 0.092, with only 2 of the 22 in the top impervious decile. Near enough
+orthogonal to both predictors that it can neither be a missed signal nor a
+manufactured one.
