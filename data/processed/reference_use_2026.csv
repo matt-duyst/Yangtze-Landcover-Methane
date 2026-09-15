@@ -1,6 +1,6 @@
 key,doi,kind,section,draft_verified,draft_named_no_year,draft_candidate,grounding,elsewhere
 xie2025glorice,10.1038/s41597-025-04483-1,peer-reviewed paper,Datasets used,methods:287,,methods,,notes/decisions.md;data/processed/README.md;data/manifest.json;config/sources.yml
-gong2020gaia,10.1016/j.rse.2019.111510,peer-reviewed paper,Datasets used,methods:245,,methods,,notes/repository-architecture.md;data/manifest.json;config/sources.yml
+gong2020gaia,10.1016/j.rse.2019.111510,peer-reviewed paper,Datasets used,methods:245,,methods,,notes/decisions.md;notes/repository-architecture.md;data/manifest.json;config/sources.yml
 huang2021gisa,10.1007/s11430-020-9797-9,peer-reviewed paper,Datasets used,methods:247,,methods,yrd,ERRATA.md;notes/decisions.md;notes/dataset-leads.md;data/processed/README.md;config/sources.yml
 shen2023rice,10.5194/essd-15-3203-2023,peer-reviewed paper,Datasets used,,,,methods;yrd,notes/decisions.md;config/sources.yml
 lorente2021tropomi,10.5194/amt-14-665-2021,peer-reviewed paper,Findings relied on: the retrieval,,,,,README.md;notes/decisions.md;data/processed/README.md
@@ -27,13 +27,13 @@ zhang2020fingerprint,10.1038/s41467-019-14155-5,peer-reviewed paper,The rice-pad
 zeng2021comment,10.1038/s41467-021-21434-7,peer-reviewed paper,The rice-paddy exchange,discussion:269,,discussion,rice,ERRATA.md;notes/paper-target.md
 zhang2021reply,10.1038/s41467-021-21437-4,peer-reviewed paper,The rice-paddy exchange,,,,rice,ERRATA.md;notes/decisions.md;notes/paper-target.md;config/sources.yml
 hu2019yrd,10.1029/2018JG004850,peer-reviewed paper,Findings relied on: the region,,,,yrd,ERRATA.md
-huang2021yrdinversion,10.1007/s00376-021-0383-9,peer-reviewed paper,Findings relied on: the region,,,methods,yrd,ERRATA.md;notes/dataset-leads.md;config/sources.yml
+huang2021yrdinversion,10.1007/s00376-021-0383-9,peer-reviewed paper,Findings relied on: the region,,,methods,yrd,ERRATA.md;notes/decisions.md;notes/dataset-leads.md;config/sources.yml
 huang2019yrdtopdown,10.3390/atmos10040185,peer-reviewed paper,Findings relied on: the region,,,,,
 zhao2024hangzhou,10.1021/acsestair.4c00068,peer-reviewed paper,Findings relied on: the region,,,,rice;urban;yrd,ERRATA.md;notes/decisions.md;notes/dataset-leads.md
 dapan2020ngv,10.1038/s41467-020-18141-0,peer-reviewed paper,Findings relied on: the region,,,,yrd,ERRATA.md;notes/decisions.md
 forster2021ar6ch7,10.1017/9781009157896.009,book chapter,Assessments and instrument documentation,,,,,ERRATA.md
 myhre2013ar5ch8,10.1017/CBO9781107415324.018,book chapter,Assessments and instrument documentation,,,,,ERRATA.md;notes/decisions.md
-veefkind2012tropomi,10.1016/j.rse.2011.09.027,peer-reviewed paper,Assessments and instrument documentation,,,,,ERRATA.md
+veefkind2012tropomi,10.1016/j.rse.2011.09.027,peer-reviewed paper,Assessments and instrument documentation,,,,,ERRATA.md;notes/decisions.md
 cohen2016equivariant,10.48550/arXiv.1602.07576,preprint,Assessments and instrument documentation,,,,,ERRATA.md
 azulay2018invariance,10.48550/arXiv.1805.12177,preprint,Assessments and instrument documentation,,,,,ERRATA.md
 moran1950,10.1093/biomet/37.1-2.17,peer-reviewed paper,Assessments and instrument documentation,,"methods:416, results:169",,,ERRATA.md
@@ -107,7 +107,7 @@ xia2026chengdu,10.1016/j.jclepro.2026.148229,peer-reviewed paper,The inference f
 estrada2025imi2,10.5194/gmd-18-3311-2025,peer-reviewed paper,Information content,"methods:230,497",,methods,methane;methods,notes/decisions.md
 he2026attribution,10.1126/sciadv.adz9007,peer-reviewed paper,Information content,,,,methane;methods;rice,
 shen2023fuelexploitation,10.1038/s41467-023-40671-6,peer-reviewed paper,Information content,,,,methods;yrd,notes/decisions.md
-zhong2026groundvalue,10.5194/amt-19-4759-2026,peer-reviewed paper,Information content,,,,methods;yrd,notes/dataset-leads.md
+zhong2026groundvalue,10.5194/amt-19-4759-2026,peer-reviewed paper,Information content,,,,methods;yrd,notes/decisions.md;notes/dataset-leads.md
 varon2023permian,10.5194/acp-23-7503-2023,peer-reviewed paper,Information content,,,methods,methods,data/manifest.json
 nikolaisen2023riceef,10.1016/j.jclepro.2023.137245,(unlabelled),"The inversion frame and the urban layer, added 11 September 2026",,,,methods,
 lee2024twostagebayes,10.1093/biostatistics/kxae038,peer-reviewed paper,The alternatives to prediction-powered inference,,,,methods,
@@ -184,7 +184,7 @@ penn2025oh,10.5194/acp-25-2947-2025,peer-reviewed paper,The methane layer's targ
 bloom2017wetcharts,10.5194/gmd-10-2141-2017,peer-reviewed paper,The methane layer's target and observing chain,,,,methane,
 bloom2021wetchartsdata,10.3334/ORNLDAAC/1915,"the deposit, not fetched",The methane layer's target and observing chain,,,,methane,notes/dataset-leads.md
 chen2026tropicalwetland,10.1021/acs.est.6c05412,peer-reviewed paper,The methane layer's target and observing chain,,,,methane;rice;urban;yrd,
-desjardins2018reconciling,10.1016/j.agrformet.2017.09.003,peer-reviewed paper,The cross-layer synthesis,methods:568,,methods,,notes/paper-target.md
+desjardins2018reconciling,10.1016/j.agrformet.2017.09.003,peer-reviewed paper,The cross-layer synthesis,methods:568,,methods,,notes/decisions.md;notes/paper-target.md
 france2022isotopes,10.1098/rsta.2020.0449,peer-reviewed paper,The cross-layer synthesis,,,,,notes/paper-target.md
 bakkaloglu2022wasteisotopes,10.1016/j.atmosenv.2022.119021,peer-reviewed paper,The cross-layer synthesis,,,,,notes/paper-target.md
 sherwood2020signatures,10.15138/qn55-e011,"the deposit, not fetched",The cross-layer synthesis,,,,,notes/paper-target.md

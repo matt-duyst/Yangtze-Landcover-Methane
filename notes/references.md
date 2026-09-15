@@ -2845,7 +2845,33 @@ distinguishing interspersed sources from different sectors. Overlapping grid
 level sources from different sectors are typically grouped and treated as a
 single source." Crossref dates it 2018 in volume 248; **it was carried into this
 pass as 2017**, which is its online-first year.
-Cited in `notes/paper-target.md`.
+
+**Read in full on 15 September 2026** from the accepted manuscript in KIT's
+institutional repository at doi 10.5445/ir/1000075357, which is a copy location
+rather than a register entry, the published version being closed. Three things the earlier entry did not have.
+
+The quotation is verbatim but drops a word: the original reads "Inversion
+modelling is **also** not capable of distinguishing interspersed sources from
+different sectors", following a paragraph on discrepancies among European and US
+inverse modelling studies. So the scope is regional atmospheric inverse
+modelling of methane, which is the scope this repository applies it in.
+
+**And the very next sentence is the most on-point sentence in this register for
+this project's own thesis**, which no pass had found: "Atmospheric observations
+from greenhouse gas monitoring satellites such as GOSAT (Turner et al., 2015)
+and TROPOMI (Veefkind et al., 2012) are not likely to be useful to separate the
+contributions of managed and unmanaged CH4 sources because of their coarse
+spatial resolution and their lack of sensitivity." It names this project's
+instrument and gives this project's two limits — resolution for attribution,
+sensitivity for information content — as the two reasons, in 2018.
+
+**Both sentences are assertions in a literature review and not results.** This
+paper's own measurements are aircraft eddy-covariance fluxes over a 7,000 km²
+agricultural region in eastern Ontario; it asserts the satellite limitation and
+measures nothing about satellites. That is what leaves the measurement to this
+work and it is also why the introduction cannot present the conclusion as
+unanticipated.
+Cited in `notes/paper-target.md`, `notes/draft-methods.md`.
 
 **France, J. L., Fisher, R. E., Lowry, D., Allen, G., Andrade, M. F.,
 Bauguitte, S. J.-B., Bower, K., Broderick, T. J., Daly, M. C., Forster, G., and

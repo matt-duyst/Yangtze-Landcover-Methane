@@ -7883,3 +7883,140 @@ was opened, and a citation to a work is not. The highest-stakes item on the
 brief's list, the borrowed method, sat fifth and was clean — because it had been
 read from the source. Ranking by consequence says what to verify; ranking by
 reading-provenance says where to find errors, and they are different orders.
+
+## The four unchecked sources, read 15 September 2026
+
+The last pass named four sources it had not reached. Three were obtained and
+read; one pair remains closed. The triage rule used was the one the last pass
+derived rather than the stakes ranking: check the claims whose first reading was
+of an intermediary.
+
+### Desjardins et al. (2018), and the sentence nobody had found
+
+Read from the accepted manuscript in KIT's institutional repository, the
+published version being closed. **The quotation holds.** The original reads
+"Inversion modelling is *also* not capable of distinguishing interspersed
+sources from different sectors. Overlapping grid level sources from different
+sectors are typically grouped and treated as a single source." The dropped
+"also" follows a paragraph on discrepancies among European and US inverse
+modelling studies, which fixes the scope as regional atmospheric inverse
+modelling of methane — the scope this repository applies it in. **So the brief's
+worry that the scope might need qualifying did not survive: the paper's scope is
+the right one and it needs extending, not narrowing.**
+
+**What it omitted is the most directly relevant sentence in the register**, and
+it is the sentence immediately following the quotation:
+
+> Atmospheric observations from greenhouse gas monitoring satellites such as
+> GOSAT (Turner et al., 2015) and TROPOMI (Veefkind et al., 2012) are not likely
+> to be useful to separate the contributions of managed and unmanaged CH4
+> sources because of their coarse spatial resolution and their lack of
+> sensitivity.
+
+It names TROPOMI. It gives both of this project's limits as its two reasons —
+coarse resolution for attribution, lack of sensitivity for information content.
+It was published in 2018, the analysis year. **Five passes over this literature
+quoted the sentence before it and none found it**, because the quotation had been
+taken from a search result rather than from the page, which is precisely the
+failure mode the last pass named.
+
+**It cuts both ways and the honest reading is that it cuts in this project's
+favour.** Both sentences are assertions in a literature review; the paper's own
+measurements are aircraft eddy-covariance fluxes over a 7,000 km² agricultural
+region in Ontario, and it measures nothing about satellites. So the expectation
+was in print and the measurement was not, which is exactly the gap §3 of the
+introduction claims. What has to change is the tone rather than the claim: the
+paper measures what a 2018 review asserted, and it must say so rather than let a
+reviewer who knows this literature raise it first.
+
+### The land-cover accuracy figures: two verified, three unreachable
+
+**Verified exactly.** SinoLC-1's overall accuracy of 73.61 % and κ of 0.6595,
+from over 100,000 visually interpreted random samples of which 106,344 were
+ultimately counted in the confusion matrix — which matches the count this
+repository already carried. GISA-new's 93.12 % overall accuracy, and with it two
+figures this repository did not have: omission errors of 10.50 % and commission
+errors of 3.52 %, on "two independent test datasets with over 100,000 test
+samples globally".
+
+**Unreachable, and stated as such rather than treated as confirmed.** GISA's
+F-score of 0.954 (Huang et al., 2021, *Science China Earth Sciences*, closed),
+GAIA's accuracy above 90 % from 3,500 validation samples (Gong et al., 2020,
+*Remote Sensing of Environment*, closed), and GISA 2.0's F1 of 0.935 against
+GAIA's 0.721 on 118,822 ZY-3 samples (Huang et al., 2022, nominally gold open
+access, and ScienceDirect returns 403 to every request signature tried).
+
+**The comparability question was already answered and answered well.**
+`notes/dataset-leads.md` already states that a multi-class overall accuracy is
+not a single-class impervious F-score, that SinoLC-1's and EcoVision's figures
+are therefore not comparable to GISA's, that the two which are comparable are
+ISA-1's and CISC's, and that the populations differ — global, national, 42 city
+cores, and the Yangtze River Economic Belt. **The brief's premise that these had
+never been systematically checked holds for the figures and not for their
+comparability**, which had been done carefully a pass earlier.
+
+What the reading adds to it is the sampling detail the comparison needs and did
+not have: SinoLC-1 is random sampling, visually interpreted, 11 classes, 106,344
+points, per-pixel; GISA-new is two independent global test sets, over 100,000
+samples, binary impervious, per-pixel, and **is a head-to-head against GISA,
+GAIA, WSF-evo and GAUD on one common sample** — which is the only place in this
+literature where GISA's and GAIA's accuracies are measured on the same points.
+That is worth having, and it is a better comparison than any of the pairs the
+closure argument currently rests on.
+
+**On region-specific accuracy, the answer is one product.** SinoLC-1 reports
+overall accuracy for every provincial administrative region, in a figure rather
+than a table, so figures for Anhui, Jiangsu, Zhejiang and Shanghai exist and
+were not read off it. GISA-new's is explicitly global. Nothing else in the set
+reports a figure for this domain. The closure argument is unaffected, because
+the comparability objection binds regardless of region, but the record should not
+imply no regional figure exists anywhere.
+
+### The national sectoral budget: verified verbatim
+
+Every figure the region grounding quotes is exact in Zhong et al. (2026): the
+68 Tg a⁻¹ total with 64 anthropogenic, the eight sectoral entries from coal
+mining's 21.0 down to lakes and aquaculture's 1.3, the 53 %–69 % posterior
+uncertainties for rice, lakes and wetlands, the "at least 30 %" bottom-up
+disagreement with EDGARv6 at 63 Tg a⁻¹ against Peking University's 48, the
+TROPOMI-only 113 degrees of freedom and the 19 % enhancement from adding the
+ground network, and the capability statement about constraining the national
+total while individual sources remain challenging.
+
+Two things worth noting. The introduction's "about fifteen Tg" is 63 − 48 and is
+derivable from the quoted pair rather than separately sourced, which is correct.
+And the 53 %–69 % figure is attributed by Zhong et al. (2026) to their own
+earlier 2025 paper, which this register already records as unread — so that one
+number remains second-hand, and it was already flagged as such.
+
+### Clifford and Dutilleul: the primary is unread and stays unread
+
+Both are closed with no open location of any version: Clifford, Richardson and
+Hémon (1989) and Dutilleul et al. (1993), both *Biometrics*. The two
+restatements found are closed too — a *Journal of Statistical Planning and
+Inference* extension and a Springer book chapter. **Nothing was corrected by
+reasoning and the formula was not touched.**
+
+**What the implementation was written from.** `notes/grounding-methods.md`
+describes the method and cites, for the general statement, Afyouni, Smith and
+Nichols (2019) in *NeuroImage* — the same result in a temporal setting, and
+explicitly labelled there as the clearest modern version rather than as the
+source. **The formula itself has no recorded provenance**: no passage is quoted
+for `M = 1 + n² / tr(R_X R_Y)`, and the estimation choices around it — 30
+distance bins, the cap at n + 1 — are already recorded as this repository's own
+rather than the source's.
+
+**Whether that is adequate: partly, and the part that is missing is the part
+that matters.** In favour, the estimator is calibrated behaviourally against
+synthetic fields — on independent white noise it returns 0.75 to 1.0 of nominal
+and on fields with a 150 km correlation range under 0.2 — which tests that it
+does what an effective-sample-size correction should do, independently of any
+source. Against, this is the one load-bearing method in the project whose
+primary has not been read, and it changed the significance verdict on 27 of 72
+reported associations. A behavioural calibration cannot detect a formula that is
+subtly the wrong one.
+
+**So it is recorded as unread and as the one outstanding item of this kind.** A
+library or interlibrary copy of *Biometrics* 49, 305 settles it in an afternoon
+and needs no computing, and it should be obtained before submission rather than
+after.
