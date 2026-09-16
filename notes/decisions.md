@@ -8697,3 +8697,123 @@ composition, the monsoon climate — plus two claims that should simply go: that
 the region is better instrumented than most of China, and that urban growth
 concentrated along a named corridor for named economic reasons. Neither appears
 in any record and the first has no obvious source.
+
+## The urban sweep, and the landfill answer changes, 16 September 2026
+
+The brief's diagnosis was right: every dataset pass in this project searched
+research deposits well and administrative or crowd-sourced sources not at all.
+Going at OpenStreetMap and a facility inventory directly changed the landfill
+verdict, which had been "no open dataset gives their positions in this domain".
+
+### Landfill positions exist; usable landfill attributes do not
+
+**OpenStreetMap carries 242 `landuse=landfill` polygons inside the lattice
+box**, plus 217 waste-transfer and 152 waste-disposal features — 616 in all. So
+the statement in the drafts and in `notes/grounding-urban.md` that no open
+dataset gives landfill positions here **is wrong and has to be corrected**.
+
+But positions are not what an emission estimate needs. Of the 242 polygons only
+27 carry a name and the tag inventory is `landuse`, `source`, `name` and nothing
+else material: **no operator, no waste type, no start date, no capacity.** OSM's
+`landuse=landfill` covers construction spoil and ordinary tips as well as
+municipal sites, and with no waste-type tag the 242 cannot be sorted.
+
+**Climate TRACE supplies the attributes and is partly OSM underneath.** Its v6
+API returns 96 solid-waste-disposal assets inside the lattice with coordinates,
+tonnes of waste, capacity in square metres, and CH₄ with per-attribute
+confidence ratings. Seventeen are named "Openstreetmap Landfill", so for those
+it is derived rather than independent. All 96 are typed `Dumpsite` and none
+`Sanitary Landfill` despite several being named "Landfill", so the type field
+cannot serve as the gas-collection proxy, which is the attribute that decides
+the emission.
+
+**So the obstacle is attributes, not access and not licence.** That distinction
+matters because the remedies differ: an access problem is solved by a route, a
+licence problem by permission, and an attribute problem only by measurement or
+by a better source. Positions plus a uniform factor would produce a number whose
+spatial pattern is defensible and whose magnitude is not.
+
+**And the two sources disagree by 13.5 times.** The 96 facilities sum to 57.0 Gg
+CH₄ a⁻¹ against CHN-CH4's 770.8 Gg for the landfill sector over the same domain.
+This project had no cross-check on that sector until now. The discrepancy is
+larger than anything the detection-limit work assumed about sectoral
+uncertainty, and it is the most consequential number the sweep produced: it says
+the landfill sector's magnitude in this domain is uncertain by an order of
+magnitude, so a sectoral inventory built here would inherit that.
+
+### The ODbL problem, which the licence work makes concrete
+
+OSM is under the Open Database License: "If you alter or build upon our data,
+you may distribute the result only under the same licence." **A committed
+artefact derived from OSM landfill positions would have to be offered under
+ODbL, not MIT**, and `README.md` now states this repository's licence scope
+precisely enough for that to be a real conflict rather than a footnote. Climate
+TRACE's own licence could not be verified — its FAQ page returns 404 — so the
+same question is open there and is recorded as open rather than assumed.
+
+### Population against impervious, measured rather than assumed
+
+The records held that population grids are accurate cross-sectionally and
+unreliable in change. What they did not hold is how much an impervious allocator
+would add over the population surface the inventories already use, and that is
+measurable. WorldPop's constrained 1 km product for 2018 against the committed
+impervious fraction over the lattice:
+
+| | Pearson | R² | Spearman |
+|---|---|---|---|
+| GAIA | +0.744 | 0.553 | +0.904 |
+| GISA | +0.773 | 0.597 | +0.921 |
+
+**Real information in magnitude, almost none in rank.** An impervious allocator
+shares 55 to 60 percent of its variance with the population allocator and orders
+the cells almost identically. Since inventories allocate proportionally the
+magnitude relationship is the one that counts, so there is something to add — but
+the near-identical ordering means the resulting spatial pattern would look very
+like the incumbent's, and a paper claiming a different allocation would be
+claiming more than this measurement supports.
+
+One trap found in passing: the lattice box holds 310 million people against
+roughly 230 million in the four provinces, because it reaches into Shandong,
+Henan, Hubei, Jiangxi and Fujian. **The box is not the provinces**, and every
+previous use of the box has been for a satellite field where that did not
+matter. For an allocation it does, and the mask has to come first.
+
+### Whether GAIA and GISA are the right pair
+
+**The decision should be revisited, and the reason is not accuracy.** The
+earlier reasoning — that the existing pair establishes the disagreement this
+study reports and a third product would add a new analysis — was correct under a
+column target and is beside the point under an emissions target, as the brief
+says. But the deciding fact is temporal, not accuracy: **GISA ends in 2019**.
+
+Under an emissions target the layer allocates, and an allocation needs the
+analysis year. GISA covers 2018 and 2019 and stops. GISA-new and GAIA both run
+to 2021. CISC is 2020 and 2022 only and SinoLC-1 is 2021 only, so neither can
+reach 2018 at all. **So the choice is not between two products and three; it is
+between the two that span the analysis years and the three that do not.**
+
+Cost of revisiting: GISA-new is already fetched, 515.8 MB of a 5.8 GB deposit,
+CC BY 4.0, reported at 93.12 percent overall accuracy against GISA's F-score of
+0.954 — figures whose comparability the reference re-read established cannot be
+assumed, since one is an overall accuracy and the other a single-class F-score.
+Adding it as an allocator is a run rather than a fetch. Adding it as a third
+product in the *column* analysis remains what the earlier decision declined, and
+that decision still holds for that purpose.
+
+### The temporal intersection, which is the constraint that matters
+
+For a stack of impervious, building height, population and methane, the binding
+dates are GISA ending 2019, the 30 m annual building-height product ending 2019,
+and TROPOMI beginning 30 April 2018.
+
+**The window in which every usable layer exists simultaneously is 2018 and 2019
+— two years, of which 2018 is an eight-month methane year.** Substituting the
+finer products does not help: CISC, SinoLC-1 and CNBH-10m are all 2020 or later
+and have no overlap with GISA or the building heights at all. So a change design
+on this stack has one interval available, 2018 to 2019, which is the interval the
+power calculation already found short by 126,932-fold.
+
+That is the sweep's second conclusion and it is worth as much as the first: the
+urban layers are not the limiting factor, and neither is their resolution. **The
+limit is that the finest products arrived after the instrument's record began and
+the longest-running ones stopped before the finest arrived.**

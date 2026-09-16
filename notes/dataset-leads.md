@@ -709,3 +709,85 @@ That was the loss of an institutional account; free registration for
 noncommercial use is available on its own terms. The restriction attached is
 that free users may not perform fee-for-service work or take compensation from
 commercial entities for what they produce, neither of which applies here.
+
+## The urban layer swept beyond research deposits, 16 September 2026
+
+Every previous dataset pass searched research repositories and no administrative
+or crowd-sourced source at all. This one went at OpenStreetMap, a facility
+inventory and a population product directly, and the landfill answer changed.
+
+### Facility locations, which is what the sector needed
+
+| Source | What it gives over this domain | Licence | Route | Years |
+|---|---|---|---|---|
+| **OpenStreetMap** | **616 waste features** in the lattice box: 242 `landuse=landfill` ways, 171+46 `waste_transfer_station`, 137+15 `waste_disposal`. Median bounding-box area 5.0 ha, 80 above 10 ha, 19 above 50 ha | **ODbL 1.0, share-alike** | Overpass API, anonymous, ~100 kB | current snapshot only |
+| **Climate TRACE v6** | **96 solid-waste-disposal assets** inside the lattice, each with coordinates, a name, activity in tonnes of waste, capacity in m², and CH₄ with a per-attribute confidence rating | **not verified** — the FAQ page 404s | `api.climatetrace.org/v6/assets`, anonymous | 2023 reporting year in this query |
+| MSW landfill site database | >300 major landfills nationally, site-level | closed | — | — |
+
+**OSM gives positions and almost no attributes.** Of the 242 landfill polygons
+only 27 carry a name, and the tag inventory is `landuse` 242, `source` 44,
+`name` 27 and nothing else of substance: **no `operator`, no waste-type tag, no
+`start_date`, no capacity.** `landuse=landfill` in OSM also covers construction
+spoil and ordinary tips, so without a waste-type tag the 242 cannot be sorted
+into municipal and other.
+
+**Climate TRACE gives the attributes and is partly OSM underneath.** Seventeen
+of the 96 in-domain assets are named "Openstreetmap Landfill", so for those it
+is a derived product rather than an independent source and inherits OSM's gaps
+and possibly its licence obligations. All 96 in-domain assets are typed
+`Dumpsite` and none `Sanitary Landfill`, although several carry names containing
+"Landfill" — so the type field is not usable as a gas-collection proxy, which is
+the attribute that matters most.
+
+**And it disagrees with the gridded inventory by an order of magnitude.** The 96
+in-domain facilities sum to **57.0 Gg CH₄ a⁻¹** against CHN-CH4's **770.8 Gg**
+for the landfill sector over the same domain — a factor of **13.5**. Two
+independent estimates of one sector in one domain, differing by more than ten
+times, and this project had no cross-check on that sector before.
+
+Wastewater was not re-swept in this pass; the 422 coordinates inside the
+lattice stand, and whether a better-attributed source carries capacity and
+treatment type is still open.
+
+### Population, measured against the incumbent allocator
+
+| Source | Coverage | Licence | Route |
+|---|---|---|---|
+| **WorldPop constrained 1 km** | China, annual 2000–2020 | CC BY 4.0 | `data.worldpop.org`, anonymous, 49.7 MB for one year |
+
+Fetched for 2018 and measured against the committed impervious fraction over the
+lattice, which is the thing the records did not hold:
+
+| | Pearson | R² | Spearman |
+|---|---|---|---|
+| GAIA impervious vs population | **+0.744** | 0.553 | **+0.904** |
+| GISA impervious vs population | **+0.773** | 0.597 | **+0.921** |
+
+**So an impervious allocator would add real information in magnitude and almost
+none in rank.** It shares 55 to 60 percent of its variance with the population
+surface the inventories already use, but orders the cells almost identically.
+Since inventories allocate proportionally, the magnitude relationship is what
+counts and there is something to add; but anyone expecting a different spatial
+pattern from an impervious allocator should not.
+
+Note on the box: the lattice's population total is 310 million, against roughly
+230 million in the four provinces, because the bounding box includes parts of
+Shandong, Henan, Hubei, Jiangxi and Fujian. **The box is not the provinces**, and
+any allocation done on the box has to mask to the provinces first.
+
+### Temporal coverage, which is the binding constraint
+
+| Dimension | Product | Years |
+|---|---|---|
+| Impervious | GAIA | 1985–2021 |
+| Impervious | GISA | 1972–**2019** |
+| Impervious | GISA-new | 1985–2021 |
+| Impervious | CISC | 2020 and 2022 only |
+| Impervious | SinoLC-1 | 2021 only |
+| Impervious | GHSL | rejected: no layer consistent with 2018 |
+| Building height | 30 m annual China | 1990–**2019**, so it carries 2000, 2010 and 2018 — the only one that does |
+| Building height | CNBH-10m | 2020 only |
+| Building function | CMAB | reachable; year not verified in this pass |
+| Roads | OpenStreetMap | current snapshot only |
+| Population | WorldPop | 2000–2020 annual |
+| Methane | TROPOMI | 2018-04-30 onward |
