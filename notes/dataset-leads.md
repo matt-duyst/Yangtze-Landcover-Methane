@@ -863,3 +863,73 @@ change design whatever its attributes.
 | Climate TRACE | **not verified**; the FAQ page 404s | unknown, recorded as open |
 | WorldPop | CC BY 4.0 | yes, with attribution |
 | Underground WWTP deposit | CC BY 4.0 | yes, with attribution |
+
+## Structure of what is held, enumerated from the files, 16 September 2026
+
+**Form.** The entries above describe datasets by subject and carry provenance
+and judgement; a structural listing wants a different shape, so it is a separate
+section rather than a rewrite. Every line below was read from the file, not from
+a landing page. Columns are given for tabular data, variables for rasters and
+netCDF, and a populated fraction wherever a field is sparse.
+
+### Tabular and vector
+
+**`data/raw/wwtp/wwtp_china.xlsx`** — two sheets, 2,666 plants nationally
+(sheet1 202 underground, sheet2 2,464 general). Columns: `Type_WWTP`,
+`Name_WWTP`, `Local_province`, `Local_city`, `Local_lon`, `Local_lat`,
+`Scale_WWTP`, `Process_category`, `Process_category-specific`,
+`Discharge_standard_WWTP`, `Sample_COD`, `Sample_NH3-N`, `Construction_Year`,
+`Source`. In the lattice box, 545 plants: capacity 544/545, process 543/545,
+discharge standard 545/545, **construction year 33/545**, sludge treatment
+absent as a column. `Sample_COD` and `Sample_NH3-N` are empty in sheet1 (0/202)
+and populated in sheet2 (2,195 and 2,253 of 2,464).
+
+**`data/raw/coal_mines/coal_mine_level_2018_2024.xlsx`** — **seven sheets, one
+per year 2018 to 2024**; the 2018 sheet has 3,222 mines. 24 columns: `ID`,
+`Coal Mine Name`, **`Coal Mine Name (English)`**, `Longitude`, `Latitude`,
+`Province`, `Prefecture-level City`, `Production Capacity（10^4 t/year）`,
+`Mine Type`, `Methane Emission Factor（m^3/t）`, **`Methods for determining
+emission factors`**, then **`January` through `December`** and `Total`.
+**The register mentions none of the last fourteen**: this dataset is monthly, not
+annual, and it records how each emission factor was determined.
+
+**`data/raw/aquaculture_ponds/{2015,2020}/*_AquacPond.shp`** — individual pond
+polygons, **1,466,117 for 2015 and 1,952,351 for 2020**. CRS **EPSG:3857**, not
+WGS84. Attributes `Id`, `Area_m2`, `Area_ha`, `Area_km2`, plus `FID_1` in 2015
+only. **The stored areas are Web Mercator areas and are inflated by
+1/cos²(latitude)** — verified against reprojection on a 100-pond sample, 1.62× at
+38° N and 1.17× at 22° N. True national pond area for 2020 is **13,628 km²**
+against the stored fields' 18,969, so the stored values overstate by 39 percent.
+561,894 of the 2020 ponds lie inside the four provinces, 28.8 percent by count
+against 35.3 percent by true area.
+
+### Rasters
+
+| Dataset | Files | Grid | Type | Resolution | CRS | Nodata |
+|---|---|---|---|---|---|---|
+| gaia | 9 | 18,556² | int8 | 0.000269495° | EPSG:4326 | **−128, declared in the file** |
+| gisa | 4 | 37,107×37,108 | uint8 | 0.000269495° | EPSG:4326 | none declared |
+| gisa_new | 2 | 74,214² | uint8 | 0.000269495° | EPSG:4326 | none declared; band is named **`remapped_min`** |
+| chn_ch4 | 5 | 658×451 | float32 | **10,003 m** | **Krasovsky 1940 Albers**, standard parallels 25 and 47, centre 105° E | none declared |
+| nesdc_rice | 36 | 48,724×43,982 | uint8 | 8.98315e-05° | EPSG:4326 | none declared |
+| scidb_rice | 36 | 48,724×43,982 | uint8 | 8.98315e-05° | EPSG:4326 | none declared |
+| copernicus_dem | 80 | 1,200² | float32 | 0.000833333° | EPSG:4326 | none declared |
+| coal_mines (gridded) | 2 | 287×229 | float32 | 25,000 m | **EPSG:2380** | −9999 |
+
+The nesdc and scidb rice rasters share grid, type, resolution and CRS exactly,
+which is the structural form of the record's finding that they are the same
+classification by two routes.
+
+### netCDF
+
+**`data/raw/glorice/*.nc`** — seven files, one per year. Dimensions lon 4,320 ×
+lat 2,160, so 5 arcmin. **Exactly three variables: `lon`, `lat`, and `area` in
+hectares.** The register does not state the variable name or its units.
+
+**`data/raw/tccon_hefei/hf20151102_20251230.public.qc.nc`** — **96 variables**,
+dimensions time 90,763, prior_altitude 51, ak_altitude 51. It carries per
+retrieval and per level: **`ak_xch4`** (the XCH₄ column averaging kernel),
+**`prior_ch4`** in ppb, `prior_pressure`, `prior_density` in molecules cm⁻³,
+`prior_gravity`, `prior_h2o`, `prior_tropopause_altitude`, and the altitude and
+pressure grids. **This is the TCCON half of the prior-profile alignment, and
+`notes/decisions.md` records the project as not holding it.**

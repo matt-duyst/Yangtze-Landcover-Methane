@@ -8937,3 +8937,102 @@ dimension — landfill positions, roads — is cross-sectional too.
 So of the six urban dimensions, the ones that could enter a change design are
 impervious surface and building height, and both stop in 2019 or 2021. The rest
 are single-epoch.
+
+## Enumerating what is held rather than what is recorded, 16 September 2026
+
+The second urban sweep found the wastewater answer already on disk because the
+register described the deposit by subject and never listed its columns. This
+pass opened every file. `notes/dataset-leads.md` carries the structural listing;
+what follows is what the enumeration changed.
+
+### The question it reopened, which is worth more than the listing
+
+**The TCCON prior-profile alignment is half-supplied and this file says it is
+not.** The record above states that the alignment "needs two things this
+repository does not hold" — the satellite averaging kernel with both prior
+profiles and dry-air subcolumns per layer — and that "no TCCON data is on disk
+at all". The second clause stopped being true when the station file was fetched
+on 14 September, and the first is now half wrong.
+
+The file carries 96 variables, and per retrieval across 51 levels: `ak_xch4`,
+the XCH₄ column averaging kernel; `prior_ch4` in ppb; `prior_pressure`,
+`prior_density` in molecules cm⁻³, `prior_gravity` and `prior_h2o`, from which
+dry-air subcolumns follow. **So the TCCON side of the Rodgers correction is
+entirely on disk.** What remains missing is the satellite side — the granules'
+own kernels and subcolumns — which the power record already priced at roughly
+480 MB and about a minute of transfer.
+
+That changes the queue item's cost rather than its status. It was "needs two
+things"; it is now "needs one, and the one it needs is a cheap fetch". The
+alignment remains a separate decision and this pass does not take it.
+
+### The corrections, where a file contradicts the record
+
+**The pond areas are Web Mercator and the register does not say so.** Stored
+`Area_m2`, `Area_ha` and `Area_km2` are areas computed in EPSG:3857 and are
+inflated by 1/cos²(latitude) — verified against reprojection, 1.62× at 38° N and
+1.17× at 22° N. True national pond area for 2020 is **13,628 km²** where the
+stored fields give 18,969, so anyone multiplying the stored area by an emission
+factor per km² would overstate by 39 percent.
+
+**But the 35.6 percent share survives, and that is worth recording as clearly as
+the error.** Recomputed both ways: stored areas give 35.61 percent inside the
+four provinces and latitude-corrected areas give **35.29 percent**. The recorded
+35.6 matches the stored computation exactly, so that is how it was made; the
+figure is nonetheless robust, because the four provinces sit near the
+area-weighted mean latitude of China's ponds and the inflation very nearly
+cancels in the ratio. **A share computed from Mercator areas can be right while
+every absolute area behind it is wrong**, and both halves have to be stated or
+the next pass will either distrust the share or trust the areas.
+
+Two further corrections of the same kind. The coal mine-level dataset is
+**monthly across seven yearly sheets**, not an annual table, and it records the
+**method by which each emission factor was determined** — fourteen columns the
+register does not mention. And GloRice's netCDF holds exactly three variables,
+`lon`, `lat` and **`area` in hectares**, which the register also does not state.
+
+### What was carried that nobody had looked for
+
+The coal dataset's twelve monthly columns are the clearest case. This project
+fits a seasonal cycle to its methane field and has no monthly emission estimate
+for any sector; one has been on disk since 14 September for the domain's largest
+sector. Whether it is usable is a separate question — the monthly split may be
+a uniform disaggregation of an annual total rather than a measurement, and the
+`Methods for determining emission factors` column is the place to check — but
+the search for a seasonal emission term need not start outside.
+
+The wastewater capacity and process fields were the first instance. The TCCON
+kernels are the third. **Three datasets in one pass carried an attribute a
+previous pass had searched for elsewhere.**
+
+### The mask, which has now failed twice and should stop being remembered
+
+The lattice box is not the four provinces. It holds 545 wastewater plants
+against 422 in the provinces, 310 million people against roughly 230 million,
+and 561,894 ponds of which the provincial subset is what matters. Every dataset
+used as a **field** is unaffected, because the field is defined on the box. Every
+dataset used for **allocation** is affected, and that is now the direction of
+travel.
+
+The datasets where it matters: the wastewater plants, the coal mines, the pond
+polygons, the Climate TRACE facilities, any population grid, and the OSM
+extracts. The datasets where it does not: the methane composite and its
+covariates, the impervious and rice rasters as fractions, the DEM.
+
+**The remedy is to mask once at fetch time rather than at each use**, because
+remembering has failed twice in two passes and both failures were silent — a
+count that looked plausible and was for a different geometry. A fetch script
+that writes both the box extract and the province-masked extract, with the
+province-masked one named so that it cannot be mistaken, removes the decision
+from every later use. That is a change to the fetch layer and is not made here;
+it is recorded as the remedy because the alternative is a third instance.
+
+### The practice
+
+A dataset entry that does not state what the dataset contains has caused at
+least three searches for things already held. So: **a lead record states the
+columns of a table, the variables of a raster or netCDF, and the populated
+fraction of any sparse field — not only the subject.** The cost is one command
+per dataset at entry time. The cost of not doing it has been a wastewater sweep,
+a seasonal-emissions question, and a TCCON queue item priced as twice the work
+it needs.
