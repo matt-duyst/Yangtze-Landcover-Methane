@@ -8817,3 +8817,123 @@ That is the sweep's second conclusion and it is worth as much as the first: the
 urban layers are not the limiting factor, and neither is their resolution. **The
 limit is that the finest products arrived after the instrument's record began and
 the longest-running ones stopped before the finest arrived.**
+
+## What the two urban sweeps establish, 16 September 2026
+
+The first swept facilities, impervious products, building height and
+population. The second swept the four dimensions the first named as unreached:
+regulatory routes, wastewater attributes, building function and roads. Taken
+together they settle what the urban layer can and cannot be.
+
+### The landfill sector cannot be estimated defensibly, and the reason is one attribute
+
+Positions exist — 242 OpenStreetMap polygons and 96 Climate TRACE assets inside
+the lattice. Attributes mostly do not, and **gas collection, the attribute the
+emission turns on, is recorded for no Chinese facility in any source reachable
+from here.**
+
+The routes fail in two different ways and the distinction is the useful part.
+OSM and Climate TRACE **do not hold the attribute**: OSM's 242 polygons carry
+`landuse`, `source` and `name` and nothing else, and Climate TRACE types every
+in-domain asset `Dumpsite` including ones named "Landfill". The UNFCCC CDM
+registry, which records landfill-gas recovery per registered project and is the
+one source that would have it, **is behind Imperva bot protection** and returns a
+212-byte challenge to every request tried. That is an access problem with a
+remedy — a browser session, or a bulk export if one exists elsewhere — where the
+others have none.
+
+The records already reached the same conclusion from the literature side and
+should be read with this: `notes/grounding-urban.md` records that the
+collection-efficiency literature "disagrees with itself and the disagreement is
+not resolved here", with one account near 80 percent for large Chinese landfills
+and another that systems were inadequately equipped, **neither verifiable to a
+primary source**. So the attribute is missing from the facility data and
+unsettled in the literature at the same time.
+
+### The magnitude disagreement is the state of knowledge, not a gap in searching
+
+Three lines of evidence on this domain's landfill methane and they do not
+reconcile:
+
+* CHN-CH4's gridded inventory: **770.8 Gg CH₄ a⁻¹**
+* Climate TRACE's 96 facilities: **57.0 Gg CH₄ a⁻¹** — a factor of 13.5 lower
+* Zhang et al. (2026), comparing an IPCC first-order-decay inventory against
+  hyperspectral satellite observations at three Chinese landfill sites: "
+  satellite-detected instantaneous emissions consistently exceed inventory-based
+  averages" — which says inventories are **low**, and therefore cuts against the
+  lower of the first two being nearer the truth
+
+**No third source was obtained that resolves it.** EDGAR's sectoral grids and
+UNEP's plume catalogue were both attempted and neither route was established —
+one path 404s and one host does not resolve — so those are unreached rather than
+absent, and are recorded that way.
+
+So the answer to whether a third source resolves the disagreement is the second
+of the two the brief offered: **the disagreement is the state of knowledge.** A
+sector whose two independent estimates differ by 13.5 times, with a third line
+saying both may be low, is not a sector this project can put a defensible
+magnitude on. That is worth stating as a result rather than treated as a gap,
+and it bounds the emissions direction: a sectoral inventory built here would
+carry an order-of-magnitude uncertainty in its largest urban sector.
+
+### Wastewater needs no new source, and the search should have started at home
+
+The file already on disk holds **2,666 plants nationally across two sheets**, and
+inside the lattice box **544 of 545 carry capacity and 543 carry treatment
+process**. Two of the three attributes an emission estimate needs were already
+there. What is missing is construction year, on 33 of 545, and anaerobic sludge
+treatment, which no column carries.
+
+**This is the pattern the project keeps meeting from the other direction.** The
+brief asked whether a better-attributed source exists because the records
+described the deposit without enumerating its columns. Reading the file took one
+command. The rule that follows is narrow and cheap: **a lead record should state
+a dataset's columns, not only its subject**, because otherwise a later pass
+searches outside for something already on disk. This is the second time in two
+passes that reading what is held beat searching for what is not — the first was
+the wastewater file, the second the box-versus-provinces count.
+
+### The box is not the provinces, and this is now twice
+
+The records say "422 wastewater plant coordinates inside the lattice". The
+lattice box holds **545**; 422 is the count inside the four provinces, with
+Jiangsu 171, Anhui 122, Zhejiang 72 and Shanghai 57. The remaining 123 are in
+Jiangxi, Shandong, Henan and Fujian.
+
+The first sweep found the same error in population: 310 million in the box
+against roughly 230 million in the provinces. **Two independent instances in two
+passes, both in facility or allocation data, and both harmless for a satellite
+field and wrong for an allocation.** Any emissions work has to mask to the
+provinces before it allocates, and the phrase "inside the lattice" should not be
+used for a provincial count again.
+
+### Roads, and the case against assuming a physical proxy is better
+
+OSM carries substantial road coverage over the domain with class distinguished —
+80,109 motorway way-segments, 298,525 service, 278,394 unclassified, with
+several classes timing out under rate limiting and left uncounted. It is ODbL.
+
+**Whether road density would improve a within-city allocation was not measured
+and the brief was right to warn against assuming it.** The first sweep measured
+impervious against population at Spearman 0.90, and roads, impervious surface
+and population are all near-monotone in urban intensity, so a third proxy from
+that family would most likely rank cells the same way and add little. That is
+reasoning rather than measurement and is recorded as such: the measurement would
+need a per-cell road-length extraction over 1,023 cells, which Overpass would
+not serve in this pass at the rate limits observed.
+
+And OSM has no usable history here, so roads cannot enter a change design at all
+regardless of what a correlation showed.
+
+### The temporal intersection is unchanged, and one thing narrows it
+
+Still **2018 to 2019**, the window where impervious, building height, population
+and methane all exist. Nothing found in this sweep extends it, and two findings
+narrow what can be done inside it: the wastewater plants carry a construction
+year for 33 of 545, so the layer is effectively cross-sectional; and
+OpenStreetMap is a current snapshot with no history, so every OSM-derived
+dimension — landfill positions, roads — is cross-sectional too.
+
+So of the six urban dimensions, the ones that could enter a change design are
+impervious surface and building height, and both stop in 2019 or 2021. The rest
+are single-epoch.

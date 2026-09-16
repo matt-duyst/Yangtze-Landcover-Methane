@@ -42,7 +42,7 @@ han2022apra,10.1016/j.agsy.2022.103437,peer-reviewed paper,Reference data publis
 chen2025grpi,10.1029/2024EF005479,peer-reviewed paper,Reference data published since the thesis,,,,methods;rice,ERRATA.md;notes/decisions.md;notes/dataset-leads.md
 liang2024ricehub,10.1021/acs.est.4c09822,peer-reviewed paper,Reference data published since the thesis,,,,methods;rice,ERRATA.md
 duan2023agmethane,10.1021/acs.est.3c04209,peer-reviewed paper,The regional budget,,,,yrd,
-zhang2026cityscale,10.1021/acs.est.5c18654,(unlabelled),What could not be verified,,,,methane;rice;urban;yrd,ERRATA.md
+zhang2026cityscale,10.1021/acs.est.5c18654,(unlabelled),What could not be verified,,,,methane;rice;urban;yrd,ERRATA.md;notes/decisions.md
 li2024ricecalendar,10.5194/essd-16-1689-2024,peer-reviewed paper,The rice calendar,,,,rice;yrd,
 liu2023ricecalendardata,10.7910/DVN/EUP8EY,dataset record,The rice calendar,,,,yrd,notes/decisions.md;notes/dataset-leads.md
 wu2018watergwp,10.1038/s41598-017-19110-2,peer-reviewed paper,"Water management, which is the mechanism the study has no layer for",,,,rice;yrd,
@@ -120,7 +120,7 @@ luo2025oilgas,10.1038/s41467-025-58237-z,peer-reviewed paper,The urban layer,,,,
 chen2026seasia,10.1038/s41597-026-07320-1,peer-reviewed paper,The urban layer,,,,rice;urban;yrd,
 gao2026mswmitigation,10.1016/j.jenvman.2025.128450,peer-reviewed paper,The urban layer,,,,urban,
 ma2024mswdecrease,10.1021/acs.est.4c00408,peer-reviewed paper,The urban layer,,,,rice;urban,
-zhang2026landfillsites,10.1016/j.jenvman.2026.128672,peer-reviewed paper,The urban layer,,,,methane;rice;urban;yrd,ERRATA.md;notes/dataset-leads.md
+zhang2026landfillsites,10.1016/j.jenvman.2026.128672,peer-reviewed paper,The urban layer,,,,methane;rice;urban;yrd,ERRATA.md;notes/decisions.md;notes/dataset-leads.md
 dogniaux2025ghgsat,10.1038/s41586-025-09683-8,peer-reviewed paper,The urban layer,,,,,
 wang2022nechina,10.1038/s41598-022-19462-4,peer-reviewed paper,The urban layer,,,,urban,data/manifest.json
 lu2025canine,10.1038/s44284-024-00183-w,peer-reviewed paper,The urban layer,,,,methods;urban,notes/decisions.md;data/processed/README.md;data/manifest.json;config/sources.yml
@@ -133,7 +133,7 @@ zhu2022coalch4,10.3390/ijerph19127408,peer-reviewed paper,"Coal, the sector four
 li2026popchange,10.1057/s41599-026-07688-w,peer-reviewed paper,The proxy comparison,,,,methods;rice;urban;yrd,
 langritter2025rural,10.1038/s41467-025-56906-7,peer-reviewed paper,The proxy comparison,,,,urban,
 wei2021imperviouspop,10.1080/01431161.2020.1841322,peer-reviewed paper,The proxy comparison,,,,urban,
-zhang2026buildingheight,10.5194/essd-18-5329-2026,peer-reviewed paper,Building form,,,,methane;rice;urban;yrd,ERRATA.md
+zhang2026buildingheight,10.5194/essd-18-5329-2026,peer-reviewed paper,Building form,,,,methane;rice;urban;yrd,ERRATA.md;notes/decisions.md
 che2024globfp,10.5194/essd-16-5357-2024,peer-reviewed paper,Building form,,,,urban,
 wu2023cnbh10m,10.1016/j.rse.2023.113578,peer-reviewed paper,Building form,,,,urban,
 zhang2025cmab,10.1038/s41597-025-04730-5,dataset paper,Building form,,,,methane;rice;urban,notes/decisions.md

@@ -791,3 +791,75 @@ any allocation done on the box has to mask to the provinces first.
 | Roads | OpenStreetMap | current snapshot only |
 | Population | WorldPop | 2000–2020 annual |
 | Methane | TROPOMI | 2018-04-30 onward |
+
+## The second urban sweep: regulatory routes, wastewater attributes, roads, 16 September 2026
+
+### Gas collection, the attribute a landfill estimate turns on
+
+**It is recorded for no Chinese facility in any source reachable from here**, and
+the routes divide into two different obstacles.
+
+| Route | Position |
+|---|---|
+| OpenStreetMap | no `operator`, waste-type, `start_date` or capacity tag on any of the 242 landfill polygons. **Attribute absence** |
+| Climate TRACE v6 | all 96 in-domain assets typed `Dumpsite`, none `Sanitary Landfill`, several named "Landfill". The type field cannot proxy gas collection. **Attribute absence** |
+| **UNFCCC CDM registry** | the one registry that records landfill-gas recovery per project, since each registered project names its landfill and its collection system. **Behind Imperva/Incapsula bot protection**: `cdm.unfccc.int` returns a 212-byte challenge page to every request tried. **Access, not absence** |
+| UNEP IMEO / MARS plume catalogue | host `api.methanedata.unep.org` does not resolve. Route not established |
+| EDGAR sectoral grids | the JRC path tried returns 404. Route not established |
+
+**The distinction matters because the remedies differ.** OSM and Climate TRACE do
+not hold the attribute; CDM very likely does and cannot be scripted from here.
+A browser session, or a bulk CDM project export if one is published elsewhere,
+would settle it. This is a new access class for this register: not a
+request-signature filter, which this project has met three times, but a
+bot-protection layer.
+
+### Wastewater: the source on disk already carries what was being searched for
+
+`data/raw/wwtp/wwtp_china.xlsx` has **two sheets and 2,666 plants nationally**,
+not one sheet of underground plants. Columns: `Type_WWTP`, `Name_WWTP`,
+province, city, longitude, latitude, **`Scale_WWTP`** (capacity),
+**`Process_category`** and `Process_category-specific`,
+`Discharge_standard_WWTP`, `Sample_COD`, `Sample_NH3-N`, `Construction_Year`,
+`Source`.
+
+Inside the lattice box, **545 plants**:
+
+| Attribute | Filled |
+|---|---|
+| capacity (`Scale_WWTP`) | **544 of 545** |
+| process category | **543 of 545** |
+| discharge standard | 545 |
+| construction year | **33 of 545** |
+| sludge treatment | **absent as a column** |
+
+So two of the three attributes an emission estimate needs — capacity and
+treatment type — are already held for essentially every plant, and the
+never-enumerated columns are why previous passes did not know it. Treatment
+processes present include MBR, SBR, CAST, AO, CASS, AAO, AAO+MBR, oxidation
+ditch variants and biofilm systems. What is missing is anaerobic sludge
+treatment, which no column carries.
+
+**And the "422 inside the lattice" in the records is the four-province count.**
+By province the in-box plants are Jiangsu 171, Anhui 122, Zhejiang 72, Shanghai
+57 — **422 exactly** — plus Jiangxi 59, Shandong 34, Henan 15 and Fujian 14
+outside them. The lattice box holds 545. This is the second instance in two
+sweeps of the box being mistaken for the provinces.
+
+### Roads
+
+| Source | Coverage in the lattice box | Licence | Route |
+|---|---|---|---|
+| **OpenStreetMap** | way-segment counts by class: motorway 80,109, service 298,525, unclassified 278,394; several classes timed out under rate limiting and were not counted. Class is distinguished | **ODbL 1.0, share-alike** | Overpass `out count`, anonymous |
+
+OSM is a **current snapshot** with no usable history here, so it cannot enter a
+change design whatever its attributes.
+
+### Licences, since they constrain what can be committed
+
+| Source | Licence | Can a derived artefact be committed under this repository's MIT? |
+|---|---|---|
+| OpenStreetMap | ODbL 1.0, share-alike | **No** — a derived database must be offered under ODbL |
+| Climate TRACE | **not verified**; the FAQ page 404s | unknown, recorded as open |
+| WorldPop | CC BY 4.0 | yes, with attribution |
+| Underground WWTP deposit | CC BY 4.0 | yes, with attribution |
