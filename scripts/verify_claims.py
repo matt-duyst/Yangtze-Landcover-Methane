@@ -69,7 +69,10 @@ SCANNED = ("README.md", "ERRATA.md", "data/processed/README.md",
            # The availability statements quote the recipe tier counts, which
            # move whenever a recipe is added. notes/draft-*.md is also the name
            # tests/test_drafts_are_scanned.py requires to be scanned.
-           "notes/draft-availability.md")
+           "notes/draft-availability.md",
+           # The verified case-study background. Its literature figures cannot
+           # carry resolvers; the artefact-backed ones must.
+           "notes/draft-case-study-background.md")
 
 #: number, then optional space, then the marker naming what it is
 CLAIM = re.compile(r"(-?[\d][\d,]*(?:\.\d+)?)\s*<!--#([a-zA-Z0-9_.]+)-->")

@@ -8603,3 +8603,97 @@ prior, the inversion and the observations would all come from one lineage. That
 is convenient and it is also a dependency worth stating: an error in that
 group's conventions would propagate through every stage, and the project would
 have no independent check on it.
+
+## Verifying the case-study background draft, 16 September 2026
+
+A background section drafted from recall, checked claim by claim against the
+records. `notes/draft-case-study-background.md` holds the corrected version with
+a status tag on every claim. Seven claims the records contradict, ten that
+nothing supports, seven measured here for the first time.
+
+### The seven contradictions, worst first
+
+1. **The eddy-covariance water-regime figures were attributed to Chinese
+   paddy. They are from Arkansas.** Runkle et al. (2019), whose ranges of 7.1 to
+   31.7 and 75.7 to 141.6 kg CH₄-C ha⁻¹ the register carries with the site
+   "recorded as a limit on transfer". The draft also called the difference
+   "roughly an order of magnitude" where the register deliberately refuses a
+   single ratio, because it "runs from 2.4 to 20 depending on which ends are
+   taken". Wrong country and a ratio the register declined to state.
+2. **The aquaculture share was the cited 26 percent where this project measured
+   35.6 percent.** The national pond product has been on disk since the case
+   study pass and the measurement is a third larger than the citation.
+3. **Coal's 39.59 percent was given as a share of "the domain's inventoried
+   total".** It is the share of the five sectors aggregated onto the lattice,
+   against an inventory carrying eight.
+4. **The tower inversion's finding was strengthened.** The record says it
+   attributed *seasonal variability* to agricultural activity; the draft said it
+   found agricultural soils "the largest single contributor", which is a claim
+   about the total budget rather than about seasonality.
+5. **Natural wetland was said to be unlocatable.** The records locate it —
+   coastal and estuarine, Chongming Dongtan and Hangzhou Bay — and the real
+   difficulty is sharper than the draft's: invasive *Spartina alterniflora*
+   turned a Yangtze Estuary marsh from a sink into a source, so the sign is not
+   fixed, let alone the magnitude.
+6. **The ethane leakage magnitudes were stated as established.** The register
+   records them as **not verified**: paywalled article, unindexed abstract, a
+   press summary as the only source. The direction, that YRD urban gas methane
+   is underestimated, is verified; "several times higher" is not.
+7. **The wastewater coordinates were placed "for the four provinces".** The
+   record says 422 inside the lattice, which is a different boundary.
+
+### The pattern in the errors, which is more useful than the list
+
+Four distinct habits, and each has appeared before in this project.
+
+**A cited national figure used where a local measurement exists.** The 26
+percent pond share is the clearest case, and it is the second time: the claim
+audit already flagged that exact figure as "computable with data already on
+disk" and the measurement was made. The draft then reached for the citation
+again. **A measurement does not displace a citation in recall unless the
+citation is deleted.**
+
+**A denominator dropped.** Coal's 39.59 percent, the wastewater 422, and the
+pond 197-times figure all lost the thing they were a share or a rate *of* — five
+sectors not eight, lattice not provinces, production not area. Percentages and
+ratios travel without their denominators and arrive looking like facts.
+
+**A range collapsed to a point.** The 2.4-to-20 ratio became "roughly an order
+of magnitude"; 59-to-62 percent became "roughly sixty"; 1.60 ± 0.62 Tg became
+"on the order of two". The register's habit of quoting both ends exists
+precisely because the midpoint is not a finding, and recall reinstates the
+midpoint every time.
+
+**A hedge dropped.** The unverified ethane magnitudes, and the provenance of the
+Arkansas site, were both recorded with explicit caveats that did not survive
+into the prose. This is the same failure recorded twice in the licence work —
+reading a qualifier as an absence — in the opposite direction: writing a
+qualified figure as though it were unqualified.
+
+**And one absence rather than an error.** The draft omitted the single most
+locally relevant measurement in the records: Sun et al. (2016) at Zhuanghang,
+30°53′N 121°23′E, the only in-domain flux measurement in any of the three
+grounding records. A section titled "what has been measured here" that leaves
+out the one flux tower inside the lattice has lost the thing the records were
+assembled to find.
+
+### What was measured rather than cited
+
+Seven figures, all cheap and all previously uncomputed for this purpose: the
+domain's span (918 km by 739 km), the four province areas on this project's own
+boundaries (Shanghai 6,746, Jiangsu 100,091, Zhejiang 101,337, Anhui 140,194
+km², so Anhui is 20.8 times Shanghai), and the monthly sounding distribution —
+June 4.96, July 4.55, August 5.00 percent against **October's 30.82** — which
+confirms the draft's monsoon claim exactly and is far better evidence than the
+citation it would otherwise have carried.
+
+### How much of a background section this project can support
+
+78 tagged claims: 51 verified against a record, 3 against a source, 7 measured
+here, 10 unverified, 7 corrected. **So 78 percent is evidence-backed and 13
+percent is currently unsupportable.** The unsupported set is mostly
+uncontroversial physical geography — the Huai River plain, the floodplain's
+composition, the monsoon climate — plus two claims that should simply go: that
+the region is better instrumented than most of China, and that urban growth
+concentrated along a named corridor for named economic reasons. Neither appears
+in any record and the first has no obvious source.

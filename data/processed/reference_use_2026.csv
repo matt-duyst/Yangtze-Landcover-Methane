@@ -146,8 +146,8 @@ wei2022efsp,10.3390/rs14030759,peer-reviewed paper,The rice products,,,,rice,not
 fang2024ricereview,10.1016/j.srs.2024.100172,peer-reviewed review,The rice products,,,,rice,notes/dataset-leads.md
 hou2025nericedata,10.6084/m9.figshare.28407710,"the deposit, not fetched",The rice products,,,,rice,notes/dataset-leads.md
 zhao2026searice30m,10.5194/essd-18-5583-2026,peer-reviewed paper,The rice products,,,methods,rice;yrd,ERRATA.md;notes/dataset-leads.md
-runkle2019awd,10.1021/acs.est.8b05535,peer-reviewed paper,"Water regime, temperature and the diurnal cycle",,,,rice,
-sun2016warmdry,10.1038/srep28255,peer-reviewed paper,"Water regime, temperature and the diurnal cycle",,,,rice,
+runkle2019awd,10.1021/acs.est.8b05535,peer-reviewed paper,"Water regime, temperature and the diurnal cycle",,,,rice,notes/decisions.md
+sun2016warmdry,10.1038/srep28255,peer-reviewed paper,"Water regime, temperature and the diurnal cycle",,,,rice,notes/decisions.md
 qian2022parabolic,10.1021/acs.est.2c00738,peer-reviewed paper,"Water regime, temperature and the diurnal cycle",,,,rice,
 wassmann2018nighttime,10.1371/journal.pone.0191352,peer-reviewed paper,"Water regime, temperature and the diurnal cycle",,,,rice,
 li2024nocturnal,10.1016/j.agrformet.2024.110238,peer-reviewed paper,"Water regime, temperature and the diurnal cycle",,,,rice;yrd,
