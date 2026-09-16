@@ -9036,3 +9036,125 @@ fraction of any sparse field — not only the subject.** The cost is one command
 per dataset at entry time. The cost of not doing it has been a wastewater sweep,
 a seasonal-emissions question, and a TCCON queue item priced as twice the work
 it needs.
+
+## Closing the landfill search, and the urban layer, 16 September 2026
+
+### All three blocked routes were reachable, and one of my own records was wrong
+
+The CDM registry is behind bot protection and **UNEP Copenhagen Climate Centre
+republishes the entire pipeline as a spreadsheet**, anonymous, 17.2 MB. The
+registry did not need defeating; it needed an aggregator. EDGAR's path had
+moved rather than disappeared. And UNEP's methane observatory **does resolve** —
+`methanedata.unep.org` returns 403 — so the earlier record that its host did not
+resolve was my error in the hostname, and blocked is a different position from
+absent.
+
+Three routes recorded as blocked without remedy, and the remedy in each case was
+a different address. **A blocked route should be recorded with the exact address
+tried**, because two of these three were failures of the address rather than of
+access.
+
+### Gas collection is recorded after all, for 36 facilities
+
+The CDM pipeline's `Sub-type` column is the attribute nothing else supplied:
+Landfill power, Landfill flaring, Combustion of MSW, Landfill composting,
+Gasification, Biogas. Inside the four provinces, 18 Landfill-power projects
+claim 3,140 ktCO₂e a⁻¹ — **112 Gg CH₄ a⁻¹ of methane capture** at GWP100 28 —
+and 18 more are incineration, which is not capture. Named facilities corroborate
+Climate TRACE's: Hefei Longquanshan, Chaohu, and Shanghai's Laogang at 664
+ktCO₂e a⁻¹.
+
+So the answer to the question the two sweeps left open is that gas collection is
+**recorded per project for the facilities that have it**, and unrecorded for
+every facility that does not. That is enough to separate a subset with known
+capture from a remainder with unknown capture, which is more than a uniform
+placeholder and less than an attribute per facility.
+
+### The disagreement is four times worse than the two-source comparison showed
+
+| Source | Waste/landfill CH₄ over this domain |
+|---|---|
+| **EDGAR 2024, waste sector** | **3,272 Gg a⁻¹** |
+| CHN-CH4, landfill + wastewater | 1,552 Gg a⁻¹ (landfill alone 771) |
+| CDM landfill-gas capture, four provinces | 112 Gg a⁻¹ *captured* |
+| Climate TRACE, solid waste disposal | 57 Gg a⁻¹ |
+
+**The span is 57 to 3,272, a factor of 57, where the two-source comparison gave
+13.5.** Adding sources widened the disagreement rather than narrowing it, which
+is the opposite of what the second sweep hoped a third source would do.
+
+**But the low end is now refuted, and that is progress.** 112 Gg a⁻¹ was claimed
+as *captured* methane in the four provinces under CDM. A system cannot have 112
+Gg captured and 57 Gg emitted in total, so Climate TRACE's 57 is not a domain
+total for this sector — most likely it is a partial facility list, consistent
+with 17 of its 96 assets being OpenStreetMap-derived. The plausible range is the
+upper two, 1,552 to 3,272 Gg, and the categories differ, so even that is not a
+disagreement between like quantities.
+
+**The honest statement for the paper is that this sector's magnitude over this
+domain is unknown to within a factor of two at best**, and that the difference
+between the two credible inventories is larger than the entire land-cover signal
+the detection-limit work computed.
+
+### What a landfill layer could support, and the reasoning holds with one correction
+
+The records' separability finding is that landfill is attributable in an
+inversion *because* it sits at facility coordinates rather than on a smooth
+surface — posterior error correlations below 0.35 against 0.45 to 0.87 for the
+population-allocated sectors. So a prior whose spatial pattern is right and whose
+magnitude is uncertain is exactly what an inversion can correct, and **that
+reasoning holds**: an inversion scales a prior, so an error in the prior's total
+is what it is there to fix.
+
+**Where it does not hold is at this resolution and with this record.** The
+capability work established that no cell in this domain reaches an
+averaging-kernel sensitivity above 0.5 and that DOFS accumulates across 926
+weakly constrained cells. An inversion that cannot resolve a cell cannot correct
+a facility's magnitude either; it can correct a regional total. So the
+separability argument licenses a facility-located prior for a *regional*
+correction and not for per-facility attribution, and the two should not be
+conflated. That is the same distinction the paper already draws for land cover,
+arriving from the other direction.
+
+**The union of the two position sources.** 242 OSM landfill polygons and 96
+Climate TRACE assets, of which 17 are named "Openstreetmap Landfill" and are
+therefore not independent. So the union holds at most 338 features and at least
+263 distinct ones, with 17 known duplicates and an unknown overlap among the
+remaining 79 Climate TRACE assets, which carry real names and could be matched
+to OSM polygons by position. That matching was not done.
+
+**Licence position for anything committed.** OSM is ODbL and share-alike, so an
+OSM-derived artefact could not be distributed under this repository's MIT.
+Climate TRACE's licence is still unverified. **The CDM pipeline is the cleanest of
+the three for this purpose** — it is a spreadsheet published by a UN-affiliated
+centre — but its own licence was not established either, and nothing here should
+be committed until it is.
+
+### The urban layer's state after three passes
+
+**Locatable.** Impervious surface, from two committed products spanning the
+analysis years. Building height, from a 30 m annual product covering 2000, 2010
+and 2018. Population, from WorldPop. Coal mines, 116 in domain with monthly
+emissions. Wastewater, 545 plants in the box with capacity and treatment process
+on essentially all of them. Landfill positions, 242 OSM polygons and 96 Climate
+TRACE assets. Roads, from OSM.
+
+**Given a magnitude.** Coal, which arrives as an emission estimate rather than an
+input to one. Wastewater, which has capacity and process and needs only a method.
+
+**Not given a magnitude.** Landfill, uncertain by a factor of two between the two
+credible sources and 57 across all four. Gas distribution, where pipeline length
+is held for 347 cities and the leakage rate per kilometre is the unknown.
+Aquaculture, where no inventory carries it and no factor per pond area exists.
+
+**Unreached as distinct from absent.** UNEP's methane observatory returns 403 and
+has not been read. The Chinese-language regulatory routes — ministry and
+provincial disclosures, environmental impact assessments, discharge permits,
+urban construction yearbooks, open data portals — **were planned by the second
+sweep and by this one and have still not been run**; this pass spent itself on
+the blocked routes because the CDM aggregator appeared early and paid.
+Satellite-derived waste-site mapping was named in the first sweep, named again
+here, and remains unsearched. Building function beyond CMAB is unsearched.
+
+Those five are the honest remainder, and a reader of this record should not take
+any of them for searched-and-absent.

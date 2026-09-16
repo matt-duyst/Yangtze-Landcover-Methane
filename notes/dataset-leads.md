@@ -933,3 +933,51 @@ retrieval and per level: **`ak_xch4`** (the XCH₄ column averaging kernel),
 `prior_gravity`, `prior_h2o`, `prior_tropopause_altitude`, and the altitude and
 pressure grids. **This is the TCCON half of the prior-profile alignment, and
 `notes/decisions.md` records the project as not holding it.**
+
+## The three blocked routes, reached 16 September 2026
+
+| Route | Earlier position | Now |
+|---|---|---|
+| **UNFCCC CDM registry** | 212-byte challenge page, bot protection | **Reached through an aggregator.** UNEP Copenhagen Climate Centre republishes the whole pipeline as `unepccc.org/wp-content/uploads/2024/01/cdm-pipeline.xlsx`, 17.2 MB, HTTP 200 anonymous. The registry itself was not touched |
+| **UNEP IMEO / MARS** | "host did not resolve" | **My hostname was wrong.** `methanedata.unep.org` resolves and returns **403**; so does `unep.org/imeo`. Blocked, not absent — a different position from the one recorded |
+| **EDGAR sectoral grids** | path 404 | **Path had moved.** `EDGAR_2024_GHG` replaces the `v81_FT2022_GHG` tried, and the waste sector is separable as `bkl_WASTE` |
+
+### The CDM pipeline, and what it gives
+
+13,153 projects, 5,045 in China, **156 Chinese landfill-gas projects**. Columns
+include `Host country`, **`Province / State`**, `Type`, **`Sub-type`**,
+`Reductions (ktCO2e/yr)`, `Status`, `Date of registration`, `Total issuance
+(kCERs)` and 80 more.
+
+**`Sub-type` is the gas-collection attribute nothing else supplied.** Nationally:
+Landfill power 97, Combustion of MSW 51, Landfill flaring 3, Landfill composting
+3, Gasification of MSW 1, Biogas from MSW 1.
+
+Inside the four provinces, 36 projects in two sub-types:
+
+| Sub-type | Projects | Claimed reductions |
+|---|---|---|
+| **Landfill power** (methane capture) | 18 | **3,140 ktCO₂e a⁻¹ = 112 Gg CH₄ a⁻¹ at GWP100 28** |
+| Combustion of MSW (not capture) | 18 | 2,060 ktCO₂e a⁻¹ |
+
+Named facilities match sources already held — "Hefei Longquanshan Landfill Gas
+Power Generation Project" against Climate TRACE's "Hefei Longquanshan Landfil",
+"Chaohu Landfill gas recovery" against its "Chaohu City Domestic Waste", and
+Shanghai's Laogang at 664 ktCO₂e a⁻¹ is the largest single project.
+
+**Caveats, because the column is a claim and not a measurement.** `Reductions
+(ktCO2e/yr)` is the project's expected annual reduction, not verified issuance;
+a separate `Total issuance (kCERs)` column carries what was actually credited.
+Registration dates run to about 2013, so continued operation in 2018 is not
+established by this table. And the GWP100 of 28 is this project's conversion.
+
+### EDGAR 2024, the waste sector over this domain
+
+`monthly/CH4/bkl_WASTE/bkl_WASTE_emi_nc.zip`, 340 MB, twelve monthly grids per
+year at 0.1° for 2000–2024, variable `emissions` in tonnes. Validated by
+totalling: global waste CH₄ 59.81 Tg for 2018, and the lattice box is 20.5
+percent of the China bounding box, which matches the box's population share.
+
+**In the lattice box, 2018: 3,271.7 Gg CH₄ a⁻¹.** The sector is broader than
+CHN-CH4's landfill plus wastewater, covering solid waste disposal, wastewater and
+incineration together.
