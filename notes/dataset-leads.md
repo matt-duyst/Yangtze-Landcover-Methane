@@ -1430,3 +1430,307 @@ Yangtze Delta is not.
 been used for methane monitoring, and "the data are in general not accessible to
 the broad scientific community". And Chinese point-source work has concentrated
 on the **Shanxi** coal region, not this domain.
+
+## The methane sweep finished, 17 September 2026
+
+The previous entry recorded Parts 1, 3 and 5 done, Part 2 partial and Parts 4
+and 6 unreached. **Parts 1 to 4 are now all completed.** What follows is what
+the unreached parts held.
+
+### The validation network, which is reachable except where it matters
+
+**Lin'an is not in WDCGG, and the earlier route diagnosis was wrong about why.**
+This file recorded the WDCGG station listing as "JavaScript-driven" with three
+API paths returning 404. **The listing is server-rendered** — 1.96 MB of inline
+HTML — and the archive is searched by a plain form POST to `/search` taking
+`na_name` for country and `st_name` for a numeric station id. Queried properly,
+WDCGG's own 247-entry station dropdown and a `na_name=CN` search agree: China is
+represented by **Mt. Waliguan (WLG2015)**, **Shangdianzi (SDZ2011)** and
+**Zhong Shan (ZOS7023, Antarctica)**. Lin'an is absent, as are Longfengshan,
+Shangri-La, Jinsha and Akedala.
+
+A premise correction sits inside a premise correction here. An earlier pass
+assumed Lin'an might be absent from WDCGG because the CMA bulletin named only
+Waliguan and Shangdianzi, then corrected itself on finding the bulletin does
+name Lin'an. **The correction was right about the inference and wrong to
+abandon the conclusion**: Lin'an really is absent, which is now established from
+WDCGG's own station list rather than inferred from a bulletin's table of
+contents. The lesson is the narrow one — a bad reason for a true conclusion is
+still a bad reason, and the fix is to check the register, not to flip the answer.
+
+**The CMA bulletin, read directly.** *China Greenhouse Gas Bulletin* no. 13,
+November 2024, for the year 2023 (`cma.gov.cn`, 878 kB, text extractable):
+
+| Station | 2023 CH4 annual mean |
+|---|---|
+| Global mean | 1,934 ± 2 ppb |
+| Waliguan (global station) | 1,986 ± 0.6 ppb |
+| **Lin'an, Zhejiang** | **2,102 ± 1.6 ppb** |
+| Jinsha, Hubei | 2,118 ± 2.0 ppb |
+| Longfengshan, Heilongjiang | 2,077 ± 1.7 ppb |
+| Shangdianzi, Beijing | 2,073 ± 0.9 ppb |
+| Akedala, Xinjiang | 2,032 ± 3.0 ppb |
+| Shangri-La, Yunnan | 1,987 ± 0.9 ppb |
+
+CMA operates **seven** baseline stations, one global and six regional. **Four
+are in the WMO/GAW series** — Waliguan, Shangdianzi, Lin'an and Longfengshan —
+and the bulletin says of the archive only that "瓦里关站的观测资料已进入 WMO
+世界温室气体数据中心（WDCGG）", Waliguan's alone. The figures are annual means
+computed from daily means; monthly series for 2006–2023 exist in the bulletin
+**as a plotted figure, not as data**.
+
+**The Lin'an enhancement is 116 ppb, not 81.** The 81 ppb this repository
+carries is the 2011 difference from the January 2013 bulletin. On the 2023
+bulletin it is 2,102 − 1,986.
+
+**The data itself is not public, and a published source says so.** *Optimized
+methane monitoring networks for China*, Zhong et al., **AMT 19, 4759–4778,
+2026**, `10.5194/amt-19-4759-2026`, CC BY 4.0, uses the CMA network and states:
+"For the CMA stations, we note that recent data are not publicly available.
+Therefore, we apply the observation error standard deviations derived from the
+documented period of 2010–2017 (Zhang et al., 2022) to our 2022 analysis." The
+route published work uses is therefore **error statistics quoted out of earlier
+papers** (Fang et al., 2013; Wang et al., 2020; Zhang et al., 2022), not a
+series. Figures in that paper carry the line "Surface station data © China
+Meteorological Administration (CMA)".
+
+**That paper's Table 1 is the most valuable single table found in any sweep**,
+because it prices every station in the units this project's own DOFS work uses.
+
+| Site | Position | Type | Hours in 2022 | Obs error sd | **DOFS over China** |
+|---|---|---|---|---|---|
+| **LAN (Lin'an)** | **30.30 N, 119.73 E**, 138.6 m | hourly in situ | 1,090 | 82 ppb | **8.86** |
+| SDZ (Shangdianzi) | 40.65 N, 117.12 E | hourly in situ | 787 | 80 ppb | 5.31 |
+| LFS (Longfengshan) | 44.73 N, 127.60 E | hourly in situ | 1,075 | 78 ppb | 3.02 |
+| XGL (Shangri-La) | 28.02 N, 99.73 E | hourly in situ | 2,347 | 26 ppb | 2.77 |
+| JSA (Jinsha) | 29.63 N, 114.22 E | weekly flask | 8 | 70 ppb | 0.15 |
+| AKD (Akedala) | 47.10 N, 87.93 E | weekly flask | 33 | 31 ppb | 0.02 |
+| **HF (Hefei TCCON)** | **31.90 N, 117.17 E** | hourly FTIR | 423 | 14 ppb | **6.01** |
+| XH (Xianghe TCCON) | 39.80 N, 116.96 E | hourly FTIR | 1,031 | 15 ppb | 6.78 |
+| YON (ObsPack) | 24.47 N, 123.03 E | hourly in situ | 8,229 | 20 ppb | 11.65 |
+| WLG (ObsPack flask) | 36.29 N, 100.90 E | weekly flask | 48 | 24 ppb | 1.23 |
+| **TROPOMI** | across China | column | — | **15 ppb** | **113** |
+
+Network totals: **six CMA sites 20, seven ObsPack sites 16, the two Chinese
+TCCON sites 13, all ground-based combined 49, TROPOMI alone 113.** Two of this
+project's own IMI constants appear here independently: the **15 ppb** TROPOMI
+observation error, which is `ObsError` in `config.yml`, and the residual-error
+method of Heald et al. (2004) that the grounding record already quotes.
+
+That paper's prior totals are also worth carrying: China **68 Tg a⁻¹** total,
+64 anthropogenic — coal 21.0, rice paddies 13.7, wastewater 9.5, livestock 8.2,
+**landfills 5.2**, wetlands 2.0, lakes and aquaculture 1.3, oil and gas 1.2.
+The landfill figure sits inside this project's measured 57-to-3,272 Gg
+in-domain span.
+
+**All four in-domain surface stations fall inside this project's own lattice**,
+and every one of their cells carries soundings. Measured from
+`data/interim/extent_2018_extended.npz`:
+
+| Station | Lattice cell | Soundings | Days | Cell mean | Within-cell sd | SEM |
+|---|---|---|---|---|---|---|
+| **Lin'an** 30.30 N 119.73 E | **(19, 19)** | 48 | 18 | 1,894.73 ppb | 19.15 | 2.76 |
+| Hefei TCCON 31.90 N 117.17 E | (13, 9) | 162 | 32 | 1,900.48 ppb | 22.03 | 1.73 |
+| Wujiang, Suzhou | (16, 23) | 24 | 11 | 1,906.75 ppb | 20.82 | 4.25 |
+| Xiangcheng, Suzhou | (15, 23) | 24 | 9 | 1,898.83 ppb | 14.74 | 3.01 |
+| Zhangjiagang, Suzhou | (13, 23) | 97 | 22 | 1,892.81 ppb | 18.80 | 1.91 |
+| Xianghe TCCON | row −18 | — | — | outside the lattice, 505 km north | | |
+
+The three Suzhou positions are district centroids and are approximate to about
+a cell; the ranking below does not depend on which of two adjacent cells
+Wujiang and Xiangcheng fall in.
+
+**The Suzhou network's data is not open and a second attempt did not change
+that.** Guo et al. (2023), `10.1016/j.apr.2023.101830`, carries no Creative
+Commons licence at Crossref and no deposit is named.
+
+### The three unopened inventories, opened, and one that was not on the list
+
+**WetCHARTs v1.3.1.** A NASA Earthdata Login is obtainable by anyone free of
+charge — name, email, country and an affiliation category, with no
+institutional restriction — so the barrier is an account, not eligibility.
+Creating one is Matt's decision and this pass did not. The ORNL DAAC guide
+gives the product as **19 netCDF files, one per year 2001–2019, 18 ensemble
+members per file, monthly, 0.5°, global**, variable `wetland_CH4_emissions` in
+mg m⁻² d⁻¹ with `model` as a four-digit configuration code. **Its extent
+parameterisations are "SWAMPS & GLWD, SWAMPS & GLOBCOVER, PREC & GLWD, or PREC
+& GLOBCOVER"** — so half the ensemble determines wetland extent from
+**GLOBCOVER, a land-cover classification**. Notably the guide page states no
+login requirement, while a data-file request returned 401 on 13 September; the
+requirement is real at the file and undocumented on the page.
+
+**EDGAR is two releases past the path this repository found.** The urban pass
+corrected `v81_FT2022_GHG` to `EDGAR_2024_GHG`; the server now carries
+`EDGAR_2025_GHG`, **`EDGAR_2026_GHG`** and `EDGAR_2025_1km`. Under
+`EDGAR_2026_GHG/CH4/` there are 25 sector directories.
+
+**Waste is separable three ways and rice is not separable at all.**
+`SWD_LDF` is landfill, `SWD_INC` incineration and `WWT` wastewater — the
+split this project wanted. Agriculture is `AGS` (agricultural soils), `AWB`
+(agricultural waste burning), `ENF` (enteric fermentation) and `MNM` (manure
+management). **There is no rice sector**; rice cultivation falls inside `AGS`
+with the other agricultural soil sources and cannot be separated from them in
+the gridded product. And `EDGAR_2025_1km` holds CO2, GWP-weighted GHG, NOx and
+PM2.5 — **no CH4**, so the 1 km grid does not reach this gas.
+
+**MMCP** was opened by an earlier pass and this one adds nothing: the file is
+not on disk, the record's column reading stands, and its single
+`Rice cultivation` sector with no season split is already recorded.
+
+**The 339-city inventory now has a deposit, and it is not the one the record
+was looking for.** This file held the city-scale inventory as "documented only",
+with its content in a Supporting Information PDF. That remains true of
+*City-Scale, Source-Resolved Methane Inventories* (EST, `10.1021/acs.est.5c18654`,
+open on PMC as PMC13492280), which resolves energy, agriculture and waste for
+339 cities over 2018–2024 and deposits nothing. But a **different** paper covers
+the same 339 cities with a real deposit.
+
+| | |
+|---|---|
+| **CMED — Chinese Methane Emissions Database** | **Not in any record.** *Monthly methane emissions in China from 2018–2024 based on source-level data*, Wu, Wang et al., **Sci Data**, `10.1038/s41597-026-07871-3`, 13 July 2026 |
+| Route | figshare `10.6084/m9.figshare.30937736.v3`, four files, **8,131,227 B**, on the route `src/fetch/figshare.py` already handles. **Fetched and every MD5 verified** |
+| Licence | **CC BY 4.0 on figshare**, while Crossref registers the *article* as CC BY-NC-ND 4.0. A licence split of the kind this project tracks; the deposit's own licence object governs the data |
+| Structure | Three xlsx, one sheet per year 2018–2024. Columns are **`Subsector`, `Province`, `City`, then twelve monthly columns** as date serials. **339 prefecture cities × 8 subsectors × 12 months**, every year |
+| Subsectors | Agriculture: **Rice cropping**, Enteric fermentation, Manure management. Energy: Coal, Gas, Oil. Waste: **Landfill**, Sewage Treatment |
+| Stated uncertainty | ±3.57 % |
+| What it serves | **The monthly magnitude layer the urban and rice layers were missing, in the analysis year, at a spatial unit that is administrative rather than allocated.** It is the only inventory found anywhere in these sweeps that is monthly, sub-provincial and covers 2018 |
+
+**CHN-CH4's own structure, from the files.** Five sector rasters for 2018 on
+disk, 658×451 at 10,003 m in Krasovsky 1940 Albers, float32, **no nodata and no
+units declared in any tag**. National sums: coal 154,179.6, rice 53,193.9,
+oil and gas 51,906.0, landfills 47,484.3, wastewater 26,508.4. Nonzero cells:
+coal 580, oil and gas 22,836, rice 31,097, **landfills and wastewater 82,482
+each**.
+
+### The allocation test, applied to everything
+
+The test this pass was given is not "does the product use land cover as a
+predictor" but **"does it inherit an allocation correlated with land cover"**.
+Applied, in ascending order of how badly each fails:
+
+| Product | Allocation surface | Correlated with land cover? |
+|---|---|---|
+| **CMED** | **prefecture city polygons** | **No allocation below the city.** An administrative boundary is not derived from land cover. The least circular source found |
+| MMCP | province | Same in kind, coarser |
+| CHN-CH4 coal | mine locations | No — Spearman +0.137 against impervious fraction |
+| CHN-CH4 rice | not this project's rice map | **Weak: Spearman +0.155 against this project's rice fraction.** Usable, and the disagreement is itself the finding |
+| EDGAR `AGS` | gridded proxies, rice not separable | Untestable as rice, because rice is not a sector |
+| CHN-CH4 oil and gas | infrastructure | Spearman +0.681 against impervious — infrastructure follows cities |
+| **WetCHARTs** | **GLOBCOVER or GLWD** | **Half the ensemble sets wetland extent from a land-cover classification.** This is the mechanism behind its authors' own warning that co-located Chinese rice cannot be separated from natural wetland |
+| **CHN-CH4 landfill** | shared urban surface | **Spearman +0.865 against impervious fraction** |
+| **CHN-CH4 wastewater** | **the same surface, exactly** | **Spearman +0.910 against impervious fraction** |
+| **339-city EST inventory, rice sector** | **"30 m resolution land cover classification"** | **Directly. The rice field is a land-cover map times a factor** |
+
+Two of those rows were measured here rather than read. **CHN-CH4's landfill and
+wastewater grids have byte-identical nonzero masks** — the same 82,482 cells —
+and correlate with each other at Pearson 0.715 without being a scalar multiple
+(ratio coefficient of variation 1.09), which is the signature of one allocation
+surface carrying two per-capita factors. Regridded onto this project's own
+0.25° lattice by 25-point subsampling per cell, they rank-correlate with this
+repository's committed impervious fraction at **+0.910 and +0.865 over all 926
+analysis cells**.
+
+**The consequence is the sharpest thing in this sweep.** A land-cover predictor
+tested against CHN-CH4's urban sectors is tested against a near-monotone
+function of itself. The project's urban predictor therefore has **no
+non-circular inventory to be tested against** over this domain, while its rice
+predictor does — CHN-CH4's rice grid is nearly uncorrelated with this project's
+rice map, so a comparison there measures something. The asymmetry runs the
+opposite way to the one the three-layer synthesis describes, and it is a
+different asymmetry rather than a contradiction: the synthesis is about where
+quantity and location live, and this is about which comparisons are admissible.
+
+### The retrievals, finished
+
+**MUSICA is reachable, and the record's "terms-gated" describes one route
+rather than the product.** This file held it as a JavaScript download with a
+401 backend and a deposit shipping samples. The ESSD paper (**ESSD 18,
+2153, 2026**) says the set is "also freely-accessible on our servers at KIT",
+and it is:
+
+`https://thredds.atmohub.kit.edu/thredds/catalog/iasitropomi/IASIMUSICA_TROPOMIRemoTeC_CH4_v0401/catalog.xml`
+
+**1,241 daily netCDF files, 1 January 2018 to 30 June 2021, about 105 GB, CC BY
+4.0, anonymous**, with HTTPServer, **OPeNDAP**, DAP4, WCS, WMS and NetcdfSubset
+all enabled. Verified by reading one file's structure over OPeNDAP without
+downloading it. The RADAR deposits remain sample-only: v4.1 holds two example
+days and v2.0 (`10.35097/690`, 12.0 GB) two example months of **2020**.
+
+**Its 43 variables include things this project has been pricing separately.**
+Per observation: `xch4`, `troxch4`, `utsxch4`, each with `_error` and
+**`_dofs`**; `tropomi_xch4` and `iasi_utsxch4` with their own errors and DOFS;
+and per 12 layers **`avk_total_column_amount`, `avk_tropospheric_column_amount`,
+`avk_uts_column_amount`, `ch4_apriori`, `dry_pressure_weight`** plus 13-level
+`pressure_levels` and `altitude_levels`. So **the satellite side of a Rodgers
+correction is in this product, with the kernels and the prior in the same file
+as the column.**
+
+**The DOFS, measured on this domain rather than quoted.** For 1 January 2018,
+241 in-domain soundings: **`troxch4_dofs` mean 1.012** (0.904–1.081) and
+**`xch4_dofs` mean 2.666** (2.562–2.842). The paper's global figures are 2–3 for
+the total column, 1.2–2.0 for utsXCH4 and "weakly above 1.0 for almost all
+locations" for troXCH4. **This reconciles the earlier correction**: the recalled
+2.4 was close to the *total column* value and wrong only about which column it
+described, and the correction to "weakly above 1.0" was right about the
+tropospheric one.
+
+**And it covers the four months this project's composite is empty for.** The
+composite has no soundings before day 120 because the public RPRO stream begins
+30 April 2018. MUSICA's 1 January 2018 file has 241 in-domain soundings with
+**valid `tropomi_xch4`**, because its TROPOMI input is an internal SRON RemoTeC
+build (version 19_446) rather than the public product. The missing January to
+April is therefore a property of the chosen stream, not of the instrument — and
+the route to it runs through a third party's reprocessing.
+
+**WFMD v2.0.** `https://www.iup.uni-bremen.de/carbon_ghg/products/tropomi_wfmd/`,
+monthly zips under `data/v20/`, **May 2018 to June 2026**. One month measured by
+HEAD: `L2-CH4_CO-TROPOMI-WFMD-201805.zip` is **2,132,262,481 B**, so 2018's eight
+months are about **17 GB**. Its conditions include "**Notify Us Before
+Publication**" and "Discuss Co-Authorship ... at an early stage", which makes it
+a **second dated obligation** alongside TCCON's four-to-six weeks, if it is ever
+used.
+
+**The fourth product is paywalled.** *Developing unbiased estimation of
+atmospheric methane via machine learning and multiobjective programming based
+on TROPOMI and GOSAT data*, **RSE 304, 114039, April 2024**,
+`10.1016/j.rse.2024.114039`. Crossref registers only Elsevier's TDM and policy
+licences — **no Creative Commons** — so its data availability statement and its
+training target cannot be read from this network. **Whether it inherits an
+allocation correlated with land cover is therefore unestablished, and is
+recorded as unestablished rather than guessed.** The same obstacle class as the
+MSW landfill database and the irrigation-regime map.
+
+**The blended product does not fail the allocation test, and it fails a
+neighbouring one that the drafts already carry a number for.** Balasus et al.
+(2023) Table 2's **30 predictors are all retrieval-derived** — no land cover, no
+population, no inventory — and the target is Δ(TROPOMI − GOSAT), two
+observations, over 170,576 coincidence pairs. So there is no inventory
+circularity. **But surface albedo in both SWIR and NIR is among the 30.** The
+blended correction is by construction a function of albedo, and
+`notes/draft-results.md` already reports that the blended field's albedo slope
+is the steepest of the four fields at 232.8 ppb per unit with Pearson rising to
+0.762. **That number now has a mechanism, and the consequence is that the
+blended field cannot serve as an independent check on an albedo-confounded
+association.** No record held the predictor list.
+
+### What a three-product comparison over this domain would cost
+
+| Product | Route | 2018 volume for this domain | Pipeline |
+|---|---|---|---|
+| SRON operational v02.04.00 | `meeo-s5p`, in use | already built | is the pipeline |
+| BLENDED v1.0 | CaltechData / OSN, HTTP range | already committed | `src/methane/blended.py` |
+| **MUSICA v4.1 troXCH4** | **THREDDS OPeNDAP, anonymous** | **measured: coordinates 1.26 MB per variable per day, in-domain share 0.08 % on 1 Jan and 1.19 % on 5 Oct, contiguous index span 31 % of a file. About 1.7 to 2.8 GB for all 365 days** | needs a third reader |
+| WFMD v2.0 | Bremen HTTP, monthly zips | **about 17 GB**, plus a notification obligation | needs a third reader |
+| RSE 2024 ML/MOP | none found | unknown | unknown |
+
+**The pipeline has the seam already.** `src/methane/grid.py` defines
+`Soundings` as its ingestion type and `src/methane/blended.py` supplies a second
+producer of it, so a MUSICA reader is a third instance of an existing pattern
+rather than new architecture. **The cheapest useful comparison is operational
+against blended against MUSICA, two of which are already ingested and the third
+of which costs about 2 GB and adds a tropospheric column.** WFMD is the
+expensive leg and the only one carrying a dated obligation.
+
+The 35-percentage-point spread that motivated the question is someone else's
+result over Europe and remains untested here; what is now established is that
+testing it is affordable.

@@ -42,7 +42,7 @@ han2022apra,10.1016/j.agsy.2022.103437,peer-reviewed paper,Reference data publis
 chen2025grpi,10.1029/2024EF005479,peer-reviewed paper,Reference data published since the thesis,,,,methods;rice,ERRATA.md;notes/decisions.md;notes/dataset-leads.md
 liang2024ricehub,10.1021/acs.est.4c09822,peer-reviewed paper,Reference data published since the thesis,,,,methods;rice,ERRATA.md
 duan2023agmethane,10.1021/acs.est.3c04209,peer-reviewed paper,The regional budget,,,,yrd,
-zhang2026cityscale,10.1021/acs.est.5c18654,(unlabelled),What could not be verified,,,,methane;rice;urban;yrd,ERRATA.md;notes/decisions.md
+zhang2026cityscale,10.1021/acs.est.5c18654,(unlabelled),What could not be verified,,,,methane;rice;urban;yrd,ERRATA.md;notes/decisions.md;notes/dataset-leads.md
 li2024ricecalendar,10.5194/essd-16-1689-2024,peer-reviewed paper,The rice calendar,,,,rice;yrd,
 liu2023ricecalendardata,10.7910/DVN/EUP8EY,dataset record,The rice calendar,,,,yrd,notes/decisions.md;notes/dataset-leads.md
 wu2018watergwp,10.1038/s41598-017-19110-2,peer-reviewed paper,"Water management, which is the mechanism the study has no layer for",,,,rice;yrd,
@@ -83,7 +83,7 @@ hawinkel2022fieldtrials,10.3389/fpls.2022.858711,peer-reviewed paper,"Spatial cr
 clifford1989correlation,10.2307/2532039,peer-reviewed paper,Effective degrees of freedom,methods:420,,methods,methods,notes/decisions.md;src/model/spatial_dof.py
 dutilleul1993modifiedt,10.2307/2532625,peer-reviewed paper,Effective degrees of freedom,methods:421,,methods,methods,notes/decisions.md;src/model/spatial_dof.py
 afyouni2019edf,10.1016/j.neuroimage.2019.05.011,peer-reviewed paper,Effective degrees of freedom,,,,methods,notes/decisions.md;src/model/spatial_dof.py
-balasus2023blended,10.5194/amt-16-3787-2023,peer-reviewed paper,The column field's own uncertainty,methods:99,,methods,methods,notes/decisions.md;data/processed/README.md;data/manifest.json
+balasus2023blended,10.5194/amt-16-3787-2023,peer-reviewed paper,The column field's own uncertainty,methods:99,,methods,methods,notes/decisions.md;notes/dataset-leads.md;data/processed/README.md;data/manifest.json
 schutgens2017representativeness,10.5194/acp-17-9761-2017,peer-reviewed paper,The column field's own uncertainty,results:117,,results,methods,notes/decisions.md
 rijsdijk2025superobservations,10.5194/gmd-18-483-2025,peer-reviewed paper,The column field's own uncertainty,,,,methods,
 glissenaar2025no2l3,10.5194/essd-17-4627-2025,peer-reviewed paper,The column field's own uncertainty,,,,methods,notes/decisions.md
@@ -122,7 +122,7 @@ gao2026mswmitigation,10.1016/j.jenvman.2025.128450,peer-reviewed paper,The urban
 ma2024mswdecrease,10.1021/acs.est.4c00408,peer-reviewed paper,The urban layer,,,,rice;urban,
 zhang2026landfillsites,10.1016/j.jenvman.2026.128672,peer-reviewed paper,The urban layer,,,,methane;rice;urban;yrd,ERRATA.md;notes/decisions.md;notes/dataset-leads.md
 dogniaux2025ghgsat,10.1038/s41586-025-09683-8,peer-reviewed paper,The urban layer,,,,,
-wang2022nechina,10.1038/s41598-022-19462-4,peer-reviewed paper,The urban layer,,,,urban,data/manifest.json
+wang2022nechina,10.1038/s41598-022-19462-4,peer-reviewed paper,The urban layer,,,,urban,notes/dataset-leads.md;data/manifest.json
 lu2025canine,10.1038/s44284-024-00183-w,peer-reviewed paper,The urban layer,,,,methods;urban,notes/decisions.md;data/processed/README.md;data/manifest.json;config/sources.yml
 zhou2024wwtp,10.1038/s41597-024-03815-x,dataset paper,The urban layer,,,,,
 zhu2021pppm,10.1080/15481603.2021.1943214,peer-reviewed paper,Datasets used,,,,rice,notes/decisions.md
@@ -161,7 +161,7 @@ long2026urbanpreprint,10.5194/egusphere-2026-2570,(unlabelled),The urban layer's
 nasem2018methane,10.17226/24987,consensus study report,The urban layer's synthesis anchor,,,,urban,
 zhao2026subnational,10.1016/j.scib.2026.06.019,peer-reviewed paper,The region's synthesis anchor,methods:40,,methods,rice;yrd,ERRATA.md;notes/dataset-leads.md
 khanna2024mitigation,10.1038/s41467-024-54038-y,peer-reviewed paper,The region's synthesis anchor,,,,yrd,
-zhang2022irrigated,10.1038/s41597-022-01522-z,peer-reviewed paper,One dataset for the inventory,,,,rice,
+zhang2022irrigated,10.1038/s41597-022-01522-z,peer-reviewed paper,One dataset for the inventory,,,,rice,notes/dataset-leads.md
 zhang2024aquaculture,10.1038/s43247-024-01699-8,peer-reviewed paper,"Aquaculture, the unrepresented source",,,,rice,
 dong2023ponds,10.1021/acs.est.2c05218,peer-reviewed paper,"Aquaculture, the unrepresented source",,,,rice,
 zhao2025pondlake,10.1016/j.jhydrol.2025.132765,peer-reviewed paper,"Aquaculture, the unrepresented source",,,,rice;urban,

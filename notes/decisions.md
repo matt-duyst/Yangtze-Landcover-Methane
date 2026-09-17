@@ -9663,3 +9663,285 @@ and that these are properties of the observing system and the data, established
 four ways, rather than properties of this analysis. **What it cannot claim** is a
 sectoral magnitude for any urban sector, a water-regime-resolved rice factor, or
 a facility-scale check on any of them for 2018.
+
+## Finishing the methane sweep, 17 September 2026
+
+The previous pass stopped with Parts 4 and 6 unreached and said so. This one
+completed Parts 1 to 4 and then followed two threads. `notes/dataset-leads.md`
+carries the inventory; what follows is what the two measurements settled and
+what the pass got wrong.
+
+### The per-cell seasonal fit is not identifiable, and the draft's framing is
+### right for most cells and wrong as stated
+
+The previous pass found the full harmonic normal-equations matrix per cell and
+observed that the drafts present domain-shared coefficients as what the data
+forced. **Measured, that framing holds for 71 percent of cells and not for the
+rest, which means it should be qualified rather than kept or dropped.**
+
+The shared model puts one offset per cell and four harmonic coefficients across
+the whole domain. A per-cell fit needs five parameters in each cell, and its
+identifiability is governed not by soundings but by **distinct observation
+days**, because every sounding a cell receives on one day shares a design row.
+Measured from the checkpoint's granule bitmap and acquisition times: distinct
+days per covered cell run **1 to 65 with a median of 23**, which is the figure
+the brief carried and it is exactly right.
+
+Applying the same absolute rank floor the committed solver uses — smallest
+singular value against one part in a million of the sounding count —
+
+* **168 of 926 cells cannot be fitted at all**, and 131 of those have fewer
+  than five distinct days;
+* of the 758 that solve, the estimates in the thinly sampled cells are not
+  merely imprecise but **physically impossible**. In the 5-to-10-day bucket the
+  median fitted first-harmonic amplitude is **844.5 ppb**, against a shared-fit
+  amplitude of 5.75 ppb and an atmospheric range of a few hundred ppb across the
+  whole planet. The fit is describing synoptic noise;
+* the median standard error on the per-cell first-harmonic amplitude is
+  **7.86 ppb, which is larger than the 5.75 ppb amplitude the shared fit
+  measures.** A parameter whose standard error exceeds the quantity is not
+  estimated.
+
+A ratio test alone is worthless here and it is worth recording why. Sixty-three
+percent of cells in the 5-to-10-day bucket have an amplitude more than twice
+its standard error, and every one of them is nonsense, because a ratio of two
+huge numbers can be large. **The criterion has to be absolute, which is the same
+lesson the committed solver's own comment already records about matrix rank.**
+
+Under a joint criterion — amplitude within three times the shared amplitude and
+standard error below it — **266 of 926 cells (28.7 percent) support a per-cell
+fit**, and those cells have a median of 44 distinct days, nearly double the
+domain median.
+
+**And the gain would be small.** The median per-cell residual standard deviation
+is 15.29 ppb against the shared fit's 16.60. A per-cell fit buys about 8 percent
+of residual spread in the 29 percent of cells that support one, at the cost of
+no fit at all in the other 71 percent. Combined with the already-recorded
+finding that the northern and southern halves of the grid agree about the
+cycle, **the decision the drafts took was correct** and the wording is what
+needs work: the coefficients are shared because most cells cannot support their
+own, not because no cell can.
+
+### What the monthly sums make possible, and the one thing they do not
+
+The record holds a growing-season composite as needing a re-grid from 28.9 GB.
+**It does not.** `msum::` carries monthly partial sums for both methane fields
+beside `month_counts`, and the two agree exactly with the annual `sum::` and
+`counts`, so any composite over any set of whole months is a division away.
+
+| Window | Cells | Cells with 20+ soundings | Soundings | Between-cell sd |
+|---|---|---|---|---|
+| annual | 926 | 712 | 110,920 | 14.86 ppb |
+| May–Oct | 913 | 671 | 75,612 | 16.54 ppb |
+| **Jun–Sep growing season** | **870** | 455 | 30,684 | **23.22 ppb** |
+| May–Aug flooded | 833 | 445 | 26,836 | 17.01 ppb |
+| Nov–Dec off-season | 742 | 507 | 35,035 | 7.84 ppb |
+
+**The limit is precision, and it is absolute.** There is no `msumsq::`. The
+sums of squares exist annually and not monthly, so **a monthly composite has a
+mean and no standard error** — no within-cell variance, no per-cell standard
+error of the mean, no per-cell significance. Everything below is therefore a
+correlation without an error bar on the target, and that is a property of the
+checkpoint rather than a choice.
+
+### Following it: seasonal compositing recovers the predicted sign and the
+### design still cannot resolve it
+
+The record's own closing judgement on the deseasonalisation work was that a
+sound answer needs seasonal compositing rather than seasonal correction. That
+was left as a costed option. It is now free, so it was done.
+
+On a **common set of cells with at least 15 soundings in every window** — 366
+cells, 262 of them carrying a rice fraction, so no comparison below is between
+different cells:
+
+| Window | rice, Pearson | impervious, Pearson |
+|---|---|---|
+| annual | −0.056 | +0.064 |
+| May–Aug flooded | **+0.093** | −0.067 |
+| Jun–Sep growing | **+0.138** | −0.022 |
+| October | −0.194 | +0.097 |
+| Nov–Dec off-season | **−0.273** | +0.072 |
+
+**The rice association changes sign with the season, in the direction the
+physics predicts**, and the annual composite averages the two halves to
+approximately nothing. So **the annual null is a cancellation rather than an
+absence**, which is a better description of it than the drafts currently give.
+October alone carries 30.75 percent of the year's soundings and is negative,
+which is why the cancellation lands where it does.
+
+The cleanest form is a within-cell contrast, because it differences away every
+time-invariant cell property — position, elevation, albedo, and the sampling
+composition that this project's central confound is built on, to the extent it
+is fixed. The per-cell flooded-minus-off-season difference against rice fraction
+is **Pearson +0.225, slope +15.9 ppb per unit rice fraction, on 262 cells**. The
+same difference against impervious fraction is **−0.087**, so the contrast is
+specific to rice and absent for the urban predictor.
+
+**And then the project's own standard kills it.** Under Dutilleul's effective
+sample size, as implemented in `src/model/spatial_dof.py` and already applied
+to every correlation this repository reports:
+
+| Quantity | r | effective n | p nominal | p corrected |
+|---|---|---|---|---|
+| rice, flooded minus off-season | +0.225 | 46.0 | 0.00024 | **0.132** |
+| rice, growing minus off-season | +0.246 | 32.1 | 0.000055 | **0.173** |
+| rice, off-season level | −0.273 | 42.4 | 0.0000074 | **0.079** |
+| rice, growing-season level | +0.138 | 27.5 | 0.026 | **0.49** |
+| rice, annual level | −0.056 | 28.4 | 0.369 | 0.777 |
+| impervious, flooded minus off | −0.095 | 45.5 | 0.070 | 0.533 |
+| impervious, annual level | +0.064 | 73.3 | 0.220 | 0.589 |
+
+**Not one survives.** Every nominal significance here is an artefact of counting
+262 spatially dependent cells as 262 independent ones, which is the exact error
+this project spent a tier correcting.
+
+**This is the strongest result of the pass and it is a negative one.** The last
+alternative the record left open for rescuing the rice hypothesis has now been
+tried at zero cost, and it produces a pattern of the right sign and the wrong
+size. It is a fifth independent route to the conclusion the other four reached:
+the data availability sweeps, the mass-balance detection calculation, the power
+calculation and the averaging-kernel assessment all said this design cannot
+resolve a per-cell land-cover signal, and seasonal compositing — the one
+arrangement not yet tested — says so too.
+
+It should be written up that way, because "the annual null is a cancellation of
+two seasonal signals of opposite sign, neither resolvable" is a more honest and
+more interesting sentence than "no association was found", and it costs the
+paper nothing it was claiming.
+
+### Corrections, where this pass contradicted the record
+
+**The nine coincident days cost 1,185 MB, not 480.** Priced from the mirror's
+own listings rather than estimated: the 21 granules on those days total
+**1,185,376,777 B**, a mean of 56.4 MB each. The 480 MB figure appears four
+times in this file, once in `notes/paper-target.md`, and — the one that matters,
+because it is committed code — in the docstring of
+`scripts/measure_tccon_coincidence.py`. **That docstring is still wrong and this
+pass was read-only outside the record, so it is named here rather than fixed.**
+The error is in the unfavourable direction: the recovery is 2.47 times the
+recorded price, though still small.
+
+**The satellite side of the Rodgers correction is half-built, which makes a
+fifth instance.** This file recorded the TCCON side as on disk and the satellite
+side as a pending fetch. `src/methane/apriori.py` already reads
+`methane_profile_apriori` and `dry_air_subcolumns` from the granules' own
+`PRODUCT/SUPPORT_DATA/INPUT_DATA` group, over 12 layers, with the layer
+ordering measured on a real granule and the fill handling documented. **Only the
+averaging kernel is unread**, and it sits in the same group of the same files.
+So the queue item is not "needs one cheap fetch" but "needs one variable added
+to a module that already parses its neighbours". This is the fifth time this
+project has searched for something it held, and the fourth found by enumerating
+rather than searching.
+
+**And MUSICA supplies the same thing a second way**, with per-observation
+kernels for all three columns, the prior, the dry-air weights and a measured
+DOFS in the same file as the column. Whichever route is taken, the alignment no
+longer has a missing half.
+
+**WDCGG's listing is not JavaScript-driven.** It is server-rendered and
+searchable by form POST, and queried properly it says Lin'an is absent. The
+earlier "three plausible API paths return 404" was a true observation about
+guessed paths and a false conclusion about the site. A guessed endpoint
+returning 404 is not evidence about a service, in the same family as the
+unmatched glob and the wrong Chinese character — **three instances now of a
+negative produced by the method rather than by the world.**
+
+### Premises in the brief that did not survive
+
+* **"an annual mean methane 81 parts per billion above ... Waliguan"** — true for
+  2011. The current bulletin gives 2023 as 2,102 against 1,986, so the
+  enhancement is **116 ppb** and growing.
+* **"the records said the alignment needed two things this project does not
+  hold"** — the records were corrected on that a pass ago, and the satellite
+  half turns out to be partly coded as well.
+* **"MUSICA ... with a terms-gated download"** — describes the RADAR deposit, not
+  the product. The full series is anonymous on a THREDDS server.
+* **"WetCHARTs, which needs a NASA Earthdata login"** — true at the file, and the
+  DAAC's own guide page states no such requirement, so the record and the
+  documentation disagree.
+* **"34 percent of the blended product has no content checksum"** — carried
+  forward from an earlier pass and **not re-verified here**, so it is repeated
+  rather than confirmed.
+* The brief's framing of the reconstruction's weakness as "mine" is accepted and
+  the test was applied to everything. It changed three verdicts and produced the
+  landfill-and-wastewater finding, which no amount of reading a licence would
+  have reached.
+
+### What this pass did not reach
+
+The in-domain extraction of CMED's monthly city values, which is the obvious
+next move and was found rather than briefed, so it is recorded and not pursued.
+The MUSICA reader. The three-retrieval comparison, now priced. Whether CMED and
+the 339-city EST inventory are the same underlying accounts by two author
+groups. WetCHARTs itself, which needs an account only Matt can create.
+
+### The methane layer's state, in the urban record's four categories
+
+**Located.** The target itself, per cell, for 926 of 1,023 cells, with a
+within-cell standard error. Four in-domain ground stations, all inside the
+lattice, all in cells carrying soundings: Lin'an at (19, 19), Hefei TCCON at
+(13, 9), and the three Suzhou sites at (16, 23), (15, 23) and (13, 23). Four
+independent satellite retrievals of the same quantity, three of them reachable.
+A tropospheric partial column for the full analysis year, anonymously, with
+per-observation averaging kernels and degrees of freedom.
+
+**Given a magnitude.** More than either predictor layer, and from one source
+found this pass. CMED supplies monthly, prefecture-city, eight-subsector
+emissions for 2018, CC BY 4.0, 8 MB. CHN-CH4 supplies five sectors gridded at
+10 km. MMCP supplies monthly provincial across eight sectors. EDGAR 2026
+supplies landfill, incineration and wastewater separately. Against the predictor
+layers this is abundance: the methane layer's magnitudes exist at every
+administrative scale and in several griddings.
+
+**Searched and absent.** Lin'an's series, and every CMA station's, established
+absent from the public record by WDCGG's own station list and stated absent by a
+2026 paper that used them. The Suzhou network's series. Any point-source imager
+covering 2018 other than Sentinel-2 and Landsat-8, neither usable over this
+surface. A rice sector in EDGAR's gridded product. Methane in EDGAR's 1 km grid.
+A per-cell monthly standard error anywhere in the checkpoint.
+
+**Unreached.** CMED's in-domain extraction. The MUSICA reader and the
+three-retrieval comparison, both now priced. WetCHARTs, which needs an account.
+The RSE 2024 retrieval, paywalled. Whether CMED and the 339-city EST inventory
+are one set of accounts or two.
+
+### Whether the three-layer synthesis survives
+
+The previous pass wrote that the target is measured and cannot be attributed
+while the predictors can be located and cannot be quantified, and that four
+independent routes agree. **Both halves survive, and both need amending.**
+
+**The first half is now sharper and partly reversed in its second clause.** The
+target is measured, as stated. But the predictors' problem is not only that
+they cannot be quantified — it is that for the urban predictor **there is no
+non-circular inventory to quantify it against.** CHN-CH4's landfill and
+wastewater grids rank-correlate with this project's own impervious fraction at
+0.865 and 0.910, on identical nonzero masks, and the 339-city inventory
+allocates its rice sector on a 30 m land-cover classification outright. The
+predictors are not merely unquantified; the available quantities are, for the
+urban sectors, the predictor wearing different units. **CMED is the exception
+and that is why it matters: a city polygon is not derived from land cover, so
+it is the first magnitude source these sweeps have found that a land-cover
+hypothesis could legitimately be tested against.**
+
+**The second half gains a fifth route and it is the one that mattered most,
+because it tested the escape.** The four routes were data availability, the
+mass-balance detection calculation, the power calculation and the averaging
+kernels. All four were arguments about what the design could do. The fifth is an
+argument about what it did do: seasonal compositing, the single alternative the
+record had left open, run on data already on disk, recovers a rice association
+of the physically correct sign in both directions and **not one of its tests
+survives this project's own correction for spatial dependence.** An argument
+that a design cannot work is weaker than the same design, arranged the better
+way, not working. The synthesis is now five routes and one of them is empirical.
+
+**What changes in the writing.** The discussion's new second section says the
+result was the predicted one. It should add that the annual null is a
+cancellation of two seasonal signals of opposite sign rather than a flat
+absence, that the cancellation was recovered at no cost from sums already in
+the checkpoint, and that the recovered signals are individually unresolvable at
+this design's effective sample size. And the availability discussion should say
+that for the urban sectors the obstacle is not a missing inventory but a
+circular one, which is a different and harder problem than the one the drafts
+currently describe.
