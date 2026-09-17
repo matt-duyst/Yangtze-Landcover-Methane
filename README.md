@@ -250,6 +250,7 @@ In outline:
 | attenuation bound on the land-cover coefficient | `bound_attenuation.py --write` | about ten seconds | continuously |
 | fitted seasonal cycle parameters | `fit_seasonal_cycle.py --write` | seconds from the checkpoint | on local |
 | every numeric claim in the drafts and captions, with its evidence | `inventory_claims.py --write` | about half a minute; it evaluates every resolver once | continuously |
+| the land-cover association on seasonal composites | `measure_seasonal_windows.py --write` | reads the gitignored composite checkpoint, seconds | on local |
 | Expected effect and power for the change-over-time design | `measure_change_design_power.py --write` | reads the committed urban rasters and the CHN-CH4 sector grids, seconds | on local |
 | the domain's sectoral composition on the analysis lattice | `measure_sector_composition.py --write` | about a minute over five national rasters | on local |
 | where each register entry is cited | `audit_reference_use.py --write` | seconds; it reads prose and refits nothing | continuously |

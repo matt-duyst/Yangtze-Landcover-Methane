@@ -1438,6 +1438,117 @@ need another pass over the 28.9 GB archive.
 window alike and at every grid resolution tried. The 0.10 ppb difference is a
 transposition, and because that file is deliberately excluded from the claim
 checker nothing would have caught it.
+## seasonal_windows_2018.csv
+
+**The land-cover association measured on seasonal composites instead of on the
+year.** Written by `scripts/measure_seasonal_windows.py`, registered as a
+local-tier recipe because its input is the gitignored composite checkpoint.
+
+**The annual composite destroys the seasonal dimension, and paddy methane is
+seasonal.** A flooded paddy emits and a drained one does not, so an annual null
+is consistent with two seasonal signals of opposite sign cancelling, and no
+annual number can separate the two cases. This artefact separates them.
+
+**It cost nothing, and that is the finding about the pipeline.**
+`data/interim/extent_2018_extended.npz` carries `msum::` — monthly partial sums
+for both methane fields at (12, 33, 31) — beside the `month_counts` an earlier
+pass read for the sounding distribution. Any composite over whole months is
+therefore a division. `notes/paper-target.md` priced a growing-season composite
+as needing the 28.9 GB re-grid; it needs no granules.
+
+| window | months | cells | soundings | between-cell sd |
+|---|---|---|---|---|
+| annual | 1–12 | 926 | 110,920 | 14.86 ppb |
+| flooded | 5–8 | 833 | 26,836 | 17.02 ppb |
+| growing | 6–9 | 870<!--#seasonal.growing_cells--> | 30,684<!--#seasonal.growing_soundings--> | 23.23<!--#seasonal.growing_sd--> ppb |
+| october | 10 | 745 | 34,182<!--#seasonal.october_soundings--> | 9.56 ppb |
+| off | 11–12 | 742<!--#seasonal.off_cells--> | 35,035 | 7.84<!--#seasonal.off_sd--> ppb |
+
+**What the sums do not carry is precision, and the limit is absolute.** There is
+no `msumsq::`: the sums of squares exist annually and not monthly. So a seasonal
+composite has a mean and **no per-cell standard error** — no within-cell
+variance, no per-cell significance, and no inverse-variance weighting. That is
+why this artefact reports corrected correlations rather than held-out R squared
+against the baseline suite, whose weighted schemes need per-cell precision. It
+is a property of the checkpoint, not a choice.
+
+### Columns
+
+`quantity`, `field` (`bias_corrected` or `raw`), `window` (a window name or a
+contrast), `predictor`, `cell_set`, `value`, `n_cells`, `pearson`, `spearman`,
+`slope_ppb_per_unit`, `effective_n`, `p_nominal`, `p_corrected`, `note`.
+
+Every correlation carries the Dutilleul correction of
+`src/model/spatial_dof.py` beside the nominal test, because nominal degrees of
+freedom treat spatially dependent cells as independent and this repository has
+already measured what that costs.
+
+### The two cell sets, and why there are two
+
+A cell observed in October and not in June contributes to one window and not
+another, so a between-window difference computed on all available cells is
+partly a difference between samples. The strict set requires at least 15
+soundings **in every window**; the paired sets require them only in the two
+windows a contrast uses, which is weaker and larger. Both are in the artefact
+so that the result's dependence on the choice is visible rather than assumed
+away.
+
+### What it found
+
+On the strict set — 262<!--#seasonal.rice_cells--> cells carrying a rice
+fraction, 366<!--#seasonal.impervious_cells--> carrying an impervious one — the
+rice association changes sign with the season:
+
+| window | rice, Pearson | impervious, Pearson |
+|---|---|---|
+| annual | -0.056<!--#seasonal.rice_annual--> | +0.064<!--#seasonal.impervious_annual--> |
+| flooded | +0.093<!--#seasonal.rice_flooded--> | -0.067 |
+| growing | +0.138<!--#seasonal.rice_growing--> | -0.022 |
+| october | -0.194<!--#seasonal.rice_october--> | +0.097 |
+| off | -0.273<!--#seasonal.rice_off--> | +0.072 |
+
+The within-cell flooded-minus-off contrast, which differences away every
+time-invariant cell property, is
++0.225<!--#seasonal.rice_contrast--> against rice fraction at a slope of
+15.90<!--#seasonal.rice_contrast_slope--> ppb per unit, and
+-0.095<!--#seasonal.impervious_contrast--> against impervious fraction.
+
+**And nothing survives correction.** The contrast's nominal *p* is
+0.00024<!--#seasonal.rice_contrast_p_nominal--> and its corrected *p* is
+0.132<!--#seasonal.rice_contrast_p_corrected--> at an effective sample size of
+46.0<!--#seasonal.rice_contrast_effective_n--> cells of 262. Of
+90<!--#seasonal.tests--> correlation tests in the artefact,
+39<!--#seasonal.nominal_significant--> reach 5 percent nominally and
+1<!--#seasonal.corrected_significant--> after correction, against
+4.5<!--#seasonal.chance_expected--> expected by chance at that level. **Fewer
+survive than chance alone would produce**, and the one that does is on the raw
+retrieval rather than on any reported field.
+
+### Two properties that limit how far it can be read
+
+**The contrast decays as the sample grows.** Relaxing the window definition from
+the strict set to pairs of at least 10 soundings takes it from
++0.225 on 262 cells to
++0.122<!--#seasonal.contrast_pair10--> on
+315<!--#seasonal.contrast_pair10_cells-->, and to
++0.070<!--#seasonal.contrast_pair5--> on
+359<!--#seasonal.contrast_pair5_cells--> at pairs of five. A result that holds
+on more cells is stronger; this one does not. Two readings are available — the
+contrast is partly noise, or the added cells' window means are too noisy to
+carry it — and **the artefact cannot separate them, for the same reason it has
+no error bars: there is no monthly sum of squares.**
+
+**It is much weaker on the raw retrieval.** The same contrast on the raw field
+is +0.081<!--#seasonal.raw_contrast--> at *p* =
+0.56<!--#seasonal.raw_contrast_p_corrected-->, against +0.225 on the
+operationally corrected field. So the contrast may be a property of the
+operational bias correction, whose terms vary seasonally, rather than of the
+atmosphere. That possibility is not excluded here.
+
+Both rice definitions agree — `rice_fraction_single` gives
++0.204<!--#seasonal.rice_single_contrast--> for the same contrast — so the
+result does not turn on the season definition in the rice layer.
+
 ## grid_resolution_2018.csv
 
 Coverage, sounding density, per-cell precision and effective sample size across

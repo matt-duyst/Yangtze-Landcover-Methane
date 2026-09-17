@@ -176,7 +176,7 @@ and the statement should name only those that do once the figure set is final.
 
 All analysis code is in this repository. It is organised so that every
 committed artefact names the command that produces it:
-`config/recipes.yml` registers **75 <!--#pipeline.recipes--> recipes**, and `scripts/verify_recipes.py`
+`config/recipes.yml` registers **76 <!--#pipeline.recipes--> recipes**, and `scripts/verify_recipes.py`
 regenerates an artefact and compares it against the committed bytes.
 
 What a reader can actually reproduce, by tier:
@@ -184,11 +184,11 @@ What a reader can actually reproduce, by tier:
 | Tier | Recipes | What it needs |
 |---|---|---|
 | committed inputs, verified continuously | 41 <!--#pipeline.recipes_committed--> | a clone and the test suite |
-| local inputs, verified on local data | 23 <!--#pipeline.recipes_local--> | the raw datasets above, about 6 GB |
+| local inputs, verified on local data | 24 <!--#pipeline.recipes_local--> | the raw datasets above, about 6 GB |
 | network inputs, verified on demand | 10 <!--#pipeline.recipes_network--> | a live route to the source |
 | unregenerable | 1 | nothing reproduces it |
 
-The **41 <!--#pipeline.recipes_committed-->** are verified on every run of the default suite. The **23 <!--#pipeline.recipes_local-->** need the
+The **41 <!--#pipeline.recipes_committed-->** are verified on every run of the default suite. The **24 <!--#pipeline.recipes_local-->** need the
 raw data; of those, the ones resting on the NESDC rasters carry the substitution
 described above. The **10 <!--#pipeline.recipes_network-->** depend on a third-party route staying up, and three
 of those routes were found to apply request-signature filters that changed

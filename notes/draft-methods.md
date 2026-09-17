@@ -765,10 +765,10 @@ bounded. None of the capability statements of §6 depends on either.
 
 Every derived artefact is registered in a machine-readable recipe register giving
 the command that produces it and the verification tier it belongs to.
-75<!--#pipeline.recipes--> artefacts are registered across four tiers:
+76<!--#pipeline.recipes--> artefacts are registered across four tiers:
 41<!--#pipeline.recipes_committed--> regenerate from a fresh clone with no
 network and no local data and are verified on every test run;
-23<!--#pipeline.recipes_local--> require local raw data and are verified where it
+24<!--#pipeline.recipes_local--> require local raw data and are verified where it
 exists; 10<!--#pipeline.recipes_network--> require a network fetch and are verified
 on demand; and the remainder are recorded as unregenerable, with the reason
 stated per artefact.

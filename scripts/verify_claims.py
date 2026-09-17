@@ -560,6 +560,59 @@ def _change(quantity: str) -> float:
     return float(_cache["change"][quantity]["value"])
 
 
+def _seasonal(window: str, predictor: str, column: str = "pearson", *,
+              field: str = "bias_corrected",
+              cell_set: str = "every window >= 15") -> float:
+    """One cell of the seasonal-window table.
+
+    Keyed by four things because the table is four-dimensional and a number
+    quoted without all four is ambiguous: the field, the window or contrast,
+    the predictor, and the cell set. The defaults are the combination the
+    drafts report -- the bias-corrected field on the strict common set -- so a
+    marker only names what departs from it.
+    """
+    if "seasonal" not in _cache:
+        rows = _read_csv(PROCESSED / "seasonal_windows_2018.csv")
+        _cache["seasonal"] = {
+            (r["field"], r["window"], r["predictor"], r["cell_set"]): r
+            for r in rows if r["predictor"]}
+        _cache["seasonal_all"] = rows
+    row = _cache["seasonal"][(field, window, predictor, cell_set)]
+    return float(row[column])
+
+
+def _seasonal_tally(what: str) -> float:
+    """How many of the table's tests survive, which is the table's own summary.
+
+    Counted here rather than written into the artefact because it is a property
+    of the whole table and the artefact is one row per test. Ninety tests at a
+    five percent level expect about four and a half false positives, so the
+    count that survives correction has to be read against that.
+    """
+    _seasonal("annual", "impervious_fraction")
+    rows = [r for r in _cache["seasonal_all"] if r["p_corrected"]]
+    if what == "tests":
+        return float(len(rows))
+    if what == "nominal":
+        return float(sum(1 for r in rows if float(r["p_nominal"]) < 0.05))
+    if what == "corrected":
+        return float(sum(1 for r in rows if float(r["p_corrected"]) < 0.05))
+    if what == "chance":
+        return 0.05 * len(rows)
+    raise KeyError(what)
+
+
+def _seasonal_window(window: str, column: str) -> float:
+    """One of the composites themselves, rather than an association."""
+    _seasonal("annual", "impervious_fraction")
+    label = {"cells": "composite cells", "soundings": "composite soundings",
+             "sd": "composite between-cell sd"}[column]
+    for r in _cache["seasonal_all"]:
+        if r["quantity"] == f"{window} {label}":
+            return float(r["value"])
+    raise KeyError(f"{window} {label}")
+
+
 def _tccon(quantity: str) -> float:
     """One row of the Hefei TCCON coincidence table.
 
@@ -1061,6 +1114,78 @@ QUANTITIES = {
     "pipeline.paths_named": lambda: _pipeline()["paths_named"],
     "pipeline.gates": lambda: _pipeline()["gates"],
     "pipeline.fetch_routes": lambda: _pipeline()["fetch_routes"],
+    "seasonal.growing_cells": lambda: _seasonal_window("growing", "cells"),
+    "seasonal.growing_soundings":
+        lambda: _seasonal_window("growing", "soundings"),
+    "seasonal.growing_sd": lambda: _seasonal_window("growing", "sd"),
+    "seasonal.off_cells": lambda: _seasonal_window("off", "cells"),
+    "seasonal.off_sd": lambda: _seasonal_window("off", "sd"),
+    "seasonal.october_soundings":
+        lambda: _seasonal_window("october", "soundings"),
+    "seasonal.rice_cells":
+        lambda: _seasonal("annual", "rice_fraction_combined", "n_cells"),
+    "seasonal.impervious_cells":
+        lambda: _seasonal("annual", "impervious_fraction", "n_cells"),
+    "seasonal.rice_annual": lambda: _seasonal("annual", "rice_fraction_combined"),
+    "seasonal.rice_flooded":
+        lambda: _seasonal("flooded", "rice_fraction_combined"),
+    "seasonal.rice_growing":
+        lambda: _seasonal("growing", "rice_fraction_combined"),
+    "seasonal.rice_october":
+        lambda: _seasonal("october", "rice_fraction_combined"),
+    "seasonal.rice_off": lambda: _seasonal("off", "rice_fraction_combined"),
+    "seasonal.rice_off_p_corrected":
+        lambda: _seasonal("off", "rice_fraction_combined", "p_corrected"),
+    "seasonal.rice_contrast":
+        lambda: _seasonal("flooded_minus_off", "rice_fraction_combined"),
+    "seasonal.rice_contrast_slope":
+        lambda: _seasonal("flooded_minus_off", "rice_fraction_combined",
+                          "slope_ppb_per_unit"),
+    "seasonal.rice_contrast_effective_n":
+        lambda: _seasonal("flooded_minus_off", "rice_fraction_combined",
+                          "effective_n"),
+    "seasonal.rice_contrast_p_nominal":
+        lambda: _seasonal("flooded_minus_off", "rice_fraction_combined",
+                          "p_nominal"),
+    "seasonal.rice_contrast_p_corrected":
+        lambda: _seasonal("flooded_minus_off", "rice_fraction_combined",
+                          "p_corrected"),
+    "seasonal.rice_growing_contrast":
+        lambda: _seasonal("growing_minus_off", "rice_fraction_combined"),
+    "seasonal.rice_growing_contrast_p_corrected":
+        lambda: _seasonal("growing_minus_off", "rice_fraction_combined",
+                          "p_corrected"),
+    "seasonal.rice_single_contrast":
+        lambda: _seasonal("flooded_minus_off", "rice_fraction_single"),
+    "seasonal.impervious_annual":
+        lambda: _seasonal("annual", "impervious_fraction"),
+    "seasonal.impervious_contrast":
+        lambda: _seasonal("flooded_minus_off", "impervious_fraction"),
+    "seasonal.impervious_contrast_p_corrected":
+        lambda: _seasonal("flooded_minus_off", "impervious_fraction",
+                          "p_corrected"),
+    "seasonal.raw_contrast":
+        lambda: _seasonal("flooded_minus_off", "rice_fraction_combined",
+                          field="raw"),
+    "seasonal.raw_contrast_p_corrected":
+        lambda: _seasonal("flooded_minus_off", "rice_fraction_combined",
+                          "p_corrected", field="raw"),
+    "seasonal.contrast_pair5":
+        lambda: _seasonal("flooded_minus_off", "rice_fraction_combined",
+                          cell_set="flooded_minus_off pair >= 5"),
+    "seasonal.contrast_pair5_cells":
+        lambda: _seasonal("flooded_minus_off", "rice_fraction_combined",
+                          "n_cells", cell_set="flooded_minus_off pair >= 5"),
+    "seasonal.contrast_pair10":
+        lambda: _seasonal("flooded_minus_off", "rice_fraction_combined",
+                          cell_set="flooded_minus_off pair >= 10"),
+    "seasonal.contrast_pair10_cells":
+        lambda: _seasonal("flooded_minus_off", "rice_fraction_combined",
+                          "n_cells", cell_set="flooded_minus_off pair >= 10"),
+    "seasonal.tests": lambda: _seasonal_tally("tests"),
+    "seasonal.nominal_significant": lambda: _seasonal_tally("nominal"),
+    "seasonal.corrected_significant": lambda: _seasonal_tally("corrected"),
+    "seasonal.chance_expected": lambda: _seasonal_tally("chance"),
     "pipeline.recipes": lambda: _pipeline()["recipes"],
     "pipeline.recipes_committed": lambda: _pipeline()["recipes_committed"],
     "pipeline.recipes_local": lambda: _pipeline()["recipes_local"],

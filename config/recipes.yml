@@ -88,6 +88,24 @@ recipes:
     committed artefact and carry no marker, which is the cheapest state to fix
     and the easiest to mistake for either neighbour. Every row names the rule
     that classified it so a category can be argued with.
+- artefact: data/processed/seasonal_windows_2018.csv
+  command: python scripts/measure_seasonal_windows.py --write
+  label: the land-cover association on seasonal composites
+  cost: reads the gitignored composite checkpoint, seconds
+  seconds: 20
+  inputs: local
+  compare: bytes
+  verified: on_local
+  note: >-
+    Local tier for one reason: the monthly partial sums live in
+    data/interim/extent_2018_extended.npz, which is gitignored. Nothing here
+    needs a granule. The checkpoint's msum:: arrays hold monthly sums for both
+    methane fields beside the month counts, so any composite over whole months
+    is a division and the growing-season composite that notes/paper-target.md
+    priced as a 28.9 GB re-grid costs nothing. What the sums do not hold is
+    msumsq::, so a seasonal composite has a mean and no per-cell standard
+    error; that is why this artefact reports corrected correlations rather than
+    held-out R squared, whose weighting needs per-cell precision.
 - artefact: data/processed/change_design_power_2018.csv
   command: python scripts/measure_change_design_power.py --write
   label: Expected effect and power for the change-over-time design
