@@ -1,6 +1,6 @@
 key,doi,kind,section,draft_verified,draft_named_no_year,draft_candidate,grounding,elsewhere
 xie2025glorice,10.1038/s41597-025-04483-1,peer-reviewed paper,Datasets used,methods:287,,methods,,notes/decisions.md;data/processed/README.md;data/manifest.json;config/sources.yml
-gong2020gaia,10.1016/j.rse.2019.111510,peer-reviewed paper,Datasets used,methods:245,,methods,,notes/decisions.md;notes/repository-architecture.md;data/manifest.json;config/sources.yml
+gong2020gaia,10.1016/j.rse.2019.111510,peer-reviewed paper,Datasets used,methods:245,,methods,,notes/decisions.md;notes/dataset-leads.md;notes/repository-architecture.md;data/manifest.json;config/sources.yml
 huang2021gisa,10.1007/s11430-020-9797-9,peer-reviewed paper,Datasets used,methods:247,,methods,yrd,ERRATA.md;notes/decisions.md;notes/dataset-leads.md;data/processed/README.md;config/sources.yml
 shen2023rice,10.5194/essd-15-3203-2023,peer-reviewed paper,Datasets used,,,,methods;yrd,notes/decisions.md;config/sources.yml
 lorente2021tropomi,10.5194/amt-14-665-2021,peer-reviewed paper,Findings relied on: the retrieval,,,,,README.md;notes/decisions.md;data/processed/README.md

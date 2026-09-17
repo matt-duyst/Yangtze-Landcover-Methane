@@ -9158,3 +9158,106 @@ here, and remains unsearched. Building function beyond CMAB is unsearched.
 
 Those five are the honest remainder, and a reader of this record should not take
 any of them for searched-and-absent.
+
+## The deferred searches, run, and the urban layer closed, 17 September 2026
+
+### The practice this pass exists to establish
+
+**A planned search completes before a discovered thread is followed.**
+
+Three passes deferred the same five searches and the deferral was invisible each
+time, because a pass that finds something reads as a successful pass. The cost
+was measurable: three passes concluded landfill attributes were unobtainable,
+and the fourth found the CDM pipeline republished as one anonymous spreadsheet
+in its first minutes. Two of the three routes recorded as blocked had failed on
+a wrong address.
+
+This pass ran all four parts before pursuing anything, and the ordering mattered
+twice. **The best finding came from the last search run** — EULUC-China's base
+year is 2018 — and under the old habit the pass would have ended at the discharge
+permit platform in Part 1c, which is the more exciting lead and the less useful
+one. And Part 2 returned the first genuine searched-and-absent result in its
+class, which only counts as a result because the search was actually run.
+
+### What the searches established, in one line each
+
+* **Discharge permits** are on a national public portal, `permit.mee.gov.cn`,
+  carrying operator and capacity — and it is a browsing interface with no bulk
+  download, no API and no export. Public and not scriptable.
+* **Environmental impact assessments** exist per facility, naming location,
+  capacity and design, scattered as PDFs across hundreds of local portals with
+  no national index. The documents exist; the set does not.
+* **The MOHURD yearbook** carries plant counts and capacities by province and
+  city — 644 sanitary landfills nationally in 2020, Jiangsu 83,051 t/day,
+  Zhejiang 76,603, Shanghai 40,046. Aggregate, and a defensible allocation
+  denominator.
+* **A national incineration monitoring platform** publishes daily per-plant data
+  at `ljgk.envsc.cn`, which is finer than anything else found anywhere in four
+  passes.
+* **Open data portals** are large — Shanghai alone has 2,101 datasets and 646
+  interfaces — and no waste-facility dataset surfaced. This is the weakest null
+  of the five, because the portals' own catalogues were not searched.
+* **Satellite waste-site mapping does not cover this domain.** AerialWaste is
+  Lombardy, the one Chinese product is construction waste in two Beijing
+  districts, and none carries an attribute beyond position.
+* **UNEP's observatory is reachable** through a download page, an API and a
+  Hugging Face mirror, under CC BY-NC-SA 4.0, and it added waste-sector alerts
+  in 2026. China coverage is still unestablished.
+* **EULUC-China carries the composition split for 2018**, per parcel at 10 m,
+  in five Level I classes including residential and industrial.
+
+### The one that changes something
+
+**The residential-versus-industrial split is available for the analysis year.**
+`notes/grounding-urban.md` names it as one of seven mechanisms and the records
+have carried it as unrepresentable: two cells with identical impervious fraction
+can differ in emission according to a split no layer holds. EULUC-China holds it,
+at 10 m, per parcel, for 2018.
+
+Its access route is not established and that is the next step rather than a
+conclusion. But the position has changed from "no layer carries this" to "a layer
+carries this for exactly the right year and has to be located", and those are
+different sentences.
+
+**Two caveats before anyone gets ahead of it.** The 2018 product is the
+"preliminary results" paper and 2.0 supersedes it for 2022, so the 2018 version's
+accuracy is the older one. And a composition split improves a *prior*, which the
+detection-limit work showed cannot be recovered from this column record at this
+resolution — so this is an input to an emissions estimate, not a route back to
+the column analysis.
+
+### The urban layer's final state after four passes
+
+**Searched and absent.** A satellite-derived waste-site product over this
+domain: four candidate datasets found, none covering it, none carrying
+attributes. Gas collection efficiency per facility for facilities without a CDM
+project: recorded nowhere, and the collection-efficiency literature disagrees
+with itself. An emission factor per unit pond area: nothing exists. A landfill
+position dataset with waste type: OSM has no waste-type tag and Climate TRACE's
+type field is unusable.
+
+**Located and attributed.** Coal, 116 mines in domain with monthly emissions and
+a determination method per factor. Wastewater, 545 plants in the box with
+capacity and process on essentially all. Landfill gas capture, 18 projects in the
+four provinces with sub-type and claimed reductions. Impervious surface, two
+products spanning the analysis years. Building height for 2000, 2010 and 2018.
+Population annually. Roads.
+
+**Reachable and not yet fetched.** EULUC-China 2.0 for 2022, CC BY 4.0, 756 MB.
+UNEP MARS through three routes under CC BY-NC-SA. EDGAR's waste sector, fetched
+once and deleted. The MOHURD yearbook series.
+
+**Exists, public, and not scriptable.** The discharge permit platform. The EIA
+disclosures. Both would give attributes and both need per-facility work rather
+than a fetch.
+
+**Unreached, and this is now a short list.** EULUC-China 2018's download route.
+The provincial 环境监管重点单位 registries implied by the 2022 管理办法. The open
+data portals' own catalogues. MARS's China coverage. The building-level maps of
+109 Chinese cities. Five items, none of them a blocker, all of them a fetch or a
+form away.
+
+**And the sector magnitudes remain the layer's real limit**, not its geometry:
+landfill is uncertain across 57 to 3,272 Gg a⁻¹ depending on source, gas
+distribution has no leakage rate, and aquaculture has no factor. Four passes
+improved what can be located and barely moved what can be quantified.

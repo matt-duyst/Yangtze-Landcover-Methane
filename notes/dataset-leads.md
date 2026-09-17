@@ -981,3 +981,121 @@ percent of the China bounding box, which matches the box's population share.
 **In the lattice box, 2018: 3,271.7 Gg CH₄ a⁻¹.** The sector is broader than
 CHN-CH4's landfill plus wastewater, covering solid waste disposal, wastewater and
 incineration together.
+
+## The five deferred searches, run 17 September 2026
+
+Planned across three passes and run here, all four parts completed before any
+thread was followed. Search terms are given with each finding, because a null
+result is only as good as its query.
+
+### 1a Ministry and provincial environmental disclosures
+
+Terms: `生态环境部 生活垃圾填埋场 名录 公开 数据`.
+
+No national landfill registry surfaced. Two things did. Landfills processing
+**500 t/day or more are designated 环境监管重点单位**, key units for
+environmental supervision, under a 2022 管理办法 — which implies a published
+registry per province and is the thread to pull. And
+**`ljgk.envsc.cn`** is a national **生活垃圾焚烧发电厂自动监测数据公开平台**
+publishing **daily automatic monitoring data per incineration plant** — facility
+level, daily, for the sector CHN-CH4 does not separate.
+
+### 1b Environmental impact assessments
+
+Terms: `环境影响评价 报告书 全本公示 生活垃圾填埋场 建设项目 省级平台`.
+
+EIA reports for landfills **exist and are public**, naming location, capacity
+and design, as individual PDFs — examples found on county and municipal portals
+in Hainan, Hunan and Heilongjiang. **There is no national repository**: the MEE
+page covers the approval process, and disclosure is per project on the
+approving authority's own site. So the documents exist and the set does not:
+obtaining them means per-facility discovery across hundreds of portals.
+
+### 1c Pollutant discharge permits — the best national registry found
+
+Terms: `全国排污许可证管理信息平台 公开端 查询 生活垃圾填埋场 污水处理厂`.
+
+**`permit.mee.gov.cn`**, the 全国排污许可证管理信息平台 public portal, is MEE's
+centralised national disclosure system for permitted facilities, which includes
+landfills and wastewater plants, and permits carry operator and capacity.
+
+**Access position, verified by fetching it:** a publicly accessible browsing
+portal with categorised disclosure sections — 审批决定, 许可信息公开,
+排污登记公开 — with **no bulk download, no API and no export**, and no login or
+captcha apparent. So: exists, public, and not scriptable in bulk. A mirror at
+`app.gjzwfw.gov.cn/jmopen/webapp/html5/sthjbpwxkapp/` was noted and not tested.
+
+### 1d Urban construction statistical yearbooks — aggregate and usable
+
+Terms: `中国城乡建设统计年鉴 生活垃圾 无害化处理厂 数量 处理能力 分城市 下载`.
+
+MOHURD's yearbook carries **plant counts and treatment capacity by province and
+city**. For 2020: 1,287 MSW treatment plants nationally, of which **644 sanitary
+landfill and 463 incineration**; national capacity 963,460 t/day. By province:
+Guangdong 136,593 t/day, **Jiangsu 83,051, Zhejiang 76,603**, Shandong 67,636,
+**Shanghai 40,046**. Aggregate rather than facility-level, and a defensible
+allocation denominator.
+
+**A cross-check falls out of it.** 644 sanitary landfills nationally against
+OpenStreetMap's 242 `landuse=landfill` polygons in these four provinces alone
+confirms that most OSM landfill polygons here are **not** sanitary landfills,
+which is what the absent waste-type tag had left open.
+
+### 1e Open data portals
+
+Terms: `上海市 江苏省 浙江省 公共数据开放平台 生活垃圾 处理设施 数据集 API`.
+
+Shanghai `data.sh.gov.cn` — 2,101 datasets and 646 data interfaces across 45
+departments. Zhejiang `data.zjzwfw.gov.cn`. Hangzhou `data.hangzhou.gov.cn`. **No
+waste-facility dataset surfaced and no Jiangsu portal surfaced.** This is a
+weaker null than the others: the portals' own catalogues were not searched, only
+the web about them.
+
+### Part 2 Satellite waste-site mapping — searched and absent for this domain
+
+Terms: `landfill detection deep learning satellite imagery dataset global waste
+disposal sites mapped open access 2024 2025`.
+
+| Product | Coverage | Form |
+|---|---|---|
+| AerialWaste (*Scientific Data* 2023) | **Lombardy, Italy** | 10,434 images, 3,478 positive / 6,956 negative |
+| Construction waste landfill dataset (*Scientific Data* 2024) | **two districts of Beijing** | 3,653 segmentation samples |
+| Sub-Saharan Africa open-dump model | Africa, UAV imagery | model |
+| Global dumpsite detection study | global | outputs not established |
+
+**Nothing covers this domain, and none carries an attribute beyond position or
+extent.** This is the first genuine searched-and-absent result in the class.
+
+### Part 3 UNEP's methane observatory — reachable by three routes
+
+Terms: `UNEP IMEO Methane Alert Response System MARS data access API bulk
+download notifications China coverage`.
+
+The bare host returns 403; the data does not live there. **`methanedata.unep.org/download-dataset`**
+offers Excel, GeoJSON and an API, with documentation at `/api-documentation`,
+and **Hugging Face republishes it as `UNEP-IMEO/MARS-S2L`**. Licence
+**CC BY-NC-SA 4.0** — non-commercial and share-alike, so not committable here.
+
+**MARS expanded from oil and gas to include coal and waste sector alerts in
+2026**, using more than 30 satellite instruments, with detections published 30
+days after detection. **China coverage was not established either way** and
+remains open.
+
+### Part 4 Building function — and the year is right
+
+Terms: `China urban functional zones building function dataset open 2018
+EULUC-China land use classification 10m`.
+
+| Product | Year | Form | Resolution | Licence | Route |
+|---|---|---|---|---|---|
+| **EULUC-China** (Gong et al. 2020, *Science Bulletin* 65, 182–187, `10.1016/j.scib.2019.12.007`) | **2018** | **per parcel**, 440,798 parcels, five Level I and twelve Level II classes | 10 m | not established | **not established** |
+| EULUC-China 2.0 (Zenodo `10.5281/zenodo.16794007`) | 2022 | per parcel, 11 primary categories | 10 m | **CC BY 4.0** | geodatabase 756.5 MB or shapefile 3.1 GB |
+| Building-level functional maps of 109 Chinese cities | not established | **per building** | building | not established | figshare |
+| GBA-UBF | — | per building | — | — | Greater Bay Area, not this domain |
+
+**EULUC-China's base year is 2018**, which is this study's analysis year and
+inside the 2018–2019 window the first sweep identified. Its parcels are
+residential, commercial, industrial, transportation and public — the composition
+split the impervious layer cannot represent. Per-parcel at 10 m aggregates
+cleanly to a 0.25° cell as area fractions; the 109-cities product is per
+building and would need a different treatment.
