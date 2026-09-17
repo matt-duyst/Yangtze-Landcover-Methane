@@ -1099,3 +1099,124 @@ residential, commercial, industrial, transportation and public — the compositi
 split the impervious layer cannot represent. Per-parcel at 10 m aggregates
 cleanly to a 0.25° cell as area fractions; the 109-cities product is per
 building and would need a different treatment.
+
+## The rice layer swept, 17 September 2026
+
+Parts 1 to 5 completed before any thread was followed, as the urban work taught.
+Structure of what is held comes first, because the urban enumeration found three
+attributes already on disk that a previous pass had searched for elsewhere.
+
+### What is held, with its encoding
+
+**NESDC rice, 36 files** — 4 provinces × **9 years, 2017 to 2025**. 48,724 ×
+43,982 uint8 at 8.98315e-05° (~10 m), EPSG:4326, no declared nodata. Filenames
+`classified-<Province>-<year>-rice-WGS84-v{1,1.1}.tif`. **Pixel values 0, 1 and
+2**: measured on Anhui 2018 at 1/8 decimation, 87.53 % background, 11.44 %
+single-season, **1.03 % double-season**; Zhejiang 2018 gives 97.60 / 2.02 /
+0.38 %. **So this layer carries a cropping-system attribute, not only extent.**
+
+**SciDB rice, 36 files** — same provinces and years, same grid, filenames
+`…-middle_rice-…`. **Values 0 and 1 only**, and the value-1 count is
+**identical to NESDC's** at 3,829,649 for Anhui 2018, which is the structural
+form of the records' finding that the two are one classification by two routes
+with the double-season class folded into background.
+
+**GloRice, 7 files** — `exten_phsc_{2000,2010,2017,2018,2019,2020,2021}.nc`, all
+**exactly 37,383,812 bytes**. Three variables only: `lon`, `lat`, **`area` in
+hectares**, on a 4,320 × 2,160 grid (5 arcmin). **Every year has an identical
+non-zero footprint of 618,123 cells**, with totals rising 110.1 → 123.8 Mha.
+That is the fixed year-2000 pattern rescaled by statistics, visible in the files
+rather than inferred from the method paper.
+
+**Aquaculture ponds** — 2015 and 2020 only, bracketing the study year.
+1,466,117 and 1,952,351 polygons, EPSG:3857, areas stored in Web Mercator and
+inflated by 1/cos²(latitude).
+
+**What is held and carries a management attribute:** cropping system, from
+NESDC's double-season class. **What is not:** water regime, planting method,
+variety, straw handling.
+
+### Rice extent products
+
+| Product | Resolution | Years | Covers 2000 / 2010 / 2018 | Notes |
+|---|---|---|---|---|
+| NESDC (held) | 10 m | **2017–2025** | – / – / **yes** | single and double season |
+| SciDB (held) | 10 m | 2017–2025 | – / – / yes | single season only |
+| GloRice (held) | 5 arcmin | 2000, 2010, 2017–2021 | yes / yes / yes | fixed footprint; totals only |
+| **CCD-Rice** | 30 m | **1990–2016** | yes / yes / **no** | 394,753 validation samples, provincial overall accuracy averaging **89.61 %** |
+| APRA500 | 500 m | **2000–2021** | yes / yes / yes | MODIS, phenology-based, Asian monsoon region |
+| NESEA-Rice10 | 10 m | 2017–2019 | – / – / yes | MODIS + Sentinel-1, NE and SE Asia |
+| EFSP | 30 m | 2014–2019 | – / – / yes | from the records, not re-verified here |
+| Asia 30 m long-term (*Sci Data* 2025, `s41597-025-05374-1`) | 30 m | long-term | unestablished | **not in the records** |
+| NE China 30 m annual (*Sci Data* 2025, `s41597-025-05715-0`) | 30 m | 2000–2023 | n/a | **not in the records**; northeastern China, outside this domain |
+
+**The temporal shape is the same as urban and the gap falls worse.** The fine
+long-run product, CCD-Rice at 30 m, ends in **2016** — before the methane record
+begins on 30 April 2018. The fine current products, NESDC and NESEA-Rice10, begin
+in **2017**. So for 2000 and 2010 the only options are GloRice, whose footprint
+does not change, and APRA500 at 500 m; and no 30 m product spans both the
+historical years and the analysis year.
+
+**Dependency:** the records establish that CCD-Rice's training samples were
+extracted from the NESDC map, so the two are not independent and their
+disagreement is not an error estimate. Note also that CCD-Rice ends in 2016 and
+NESDC begins in 2017, so that training relationship is a temporal extrapolation.
+
+**Comparability:** CCD-Rice's 89.61 % is a **provincial average of overall
+accuracy** over 394,753 samples. It is not a single-class rice F-score and should
+not be set against one.
+
+### Water regime and management — the layer's binding gap
+
+| Product | What it gives | Resolution | Access |
+|---|---|---|---|
+| **Mapping irrigation regimes in Chinese paddy lands** (Wang, Tao, Chen, Yin 2024, *Agricultural Water Management*, `10.1016/j.agwat.2024.109083`) | **water-saving versus flooding irrigation**, 123 MODIS and Sentinel-1 features, random forest per province. R² > 0.92 against city and provincial census; **overall pixel accuracy ≈ 0.73** | **500 m** | **Elsevier licence only, no CC licence, no deposit found.** Route not established |
+| **CIrrMap250** (ESSD 16, 5207, 2024) | annual **irrigated cropland**, not water regime | **250 m** | ESSD, **not in the records**, finer and longer than the 500 m product the records name |
+| **ChinaRiceCalendar** (ESSD 16, 1689–1701, 2024) | transplanting, heading and maturity for early-, middle- and late-season rice. RMSE against agro-meteorological stations 8.34, 7.84 and 7.77 days | **250 m, 1 km and 10 km**, **annual 2003–2022** | **CC BY 4.0** |
+| Monsoon Asia Rice Calendar (ESSD 16, 3893, 2024) | gridded rice calendar, Sentinel-1 and Sentinel-2 | — | **not in the records** |
+
+**The records describe ChinaRiceCalendar as 1 km with no annual rasters. Both
+halves are wrong**: it is published at 250 m, 1 km and 10 km, and it is annual
+from 2003 to 2022.
+
+**Straw, organic amendment and nitrogen are not mapped.** What exists is
+regional statistics and experiment syntheses — 5,556 on-farm experiments for
+2000–2015 by region, national fertiliser-threshold studies, and a Jiangsu GAM
+study of rice management prescriptions (`10.3390/agronomy16080806`). Searched and
+absent as a spatial product.
+
+**Chinese-language statistical route.** Terms: `江苏省 安徽省 农业统计年鉴 水稻
+灌溉 节水灌溉面积 秸稈还田 面积 统计数据`. Provincial yearbook series exist —
+Anhui 1980–2026, Jiangsu — carrying 有效灌溉面积, distributed through aggregator
+sites rather than an API, aggregate by province and city. **The straw half of
+that query was malformed**: 秸稈 was typed for 秸秆, so straw return was not
+properly searched and its null is not usable.
+
+### Emission factors
+
+Nikolaisen et al. (2023) reports **regional as well as global mean emission
+factors, with uncertainties**, which is a weaker version of the records' framing
+that factors are applied uniformly within a country — the uniformity is GRPI's
+application, not the source's resolution. The literature notes a limitation
+worth carrying: its factors "capture in-paddy sources but might overlook
+surrounding drainage and channels".
+
+Not in the records and China-specific: **Yan et al. (2003)**, JGR, methane
+emission from rice fields in mainland China with seasonal and spatial
+distribution; and a 2024 *Environment International* study of Chinese rice
+methane 2000–2060 with drivers. **Whether the 416-sample regional synthesis or
+the Zhuanghang flux tower is deposited as data was not established.**
+
+### Aquaculture
+
+**Per-area emission factors exist**, which the urban record had as absent.
+Earthen ponds **1,220.4 µg CH₄ m⁻² h⁻¹ against plastic-lined at 45.3** — a
+**27-fold** ratio per unit area, which is a different quantity from the 197-fold
+the records carry, that being per unit fish production. Earthen crab ponds in
+southeast China range 0.03 to 64.7 mg m⁻² h⁻¹, mean 9.02 to 14.3. **80.3 % of
+total CH₄ comes from shallow earthen systems.** A nationwide metadata analysis
+carries a database of **55 field observations** (ES&T 2022), and a national
+inventory exists (*Comms Earth & Environment* 2024). A Jiangsu-specific study
+covers species and management variation — in domain.
+
+**No product maps pond type or management spatially.** Searched and absent.

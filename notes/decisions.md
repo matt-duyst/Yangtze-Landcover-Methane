@@ -9261,3 +9261,123 @@ form away.
 landfill is uncertain across 57 to 3,272 Gg a⁻¹ depending on source, gas
 distribution has no leakage rate, and aquaculture has no factor. Four passes
 improved what can be located and barely moved what can be quantified.
+
+## The rice sweep, 17 September 2026
+
+Parts 1 to 5 completed before any thread was followed. The constraint paid the
+same way it did on urban: **the two findings that change something came from
+Part 3 and Part 5, and the most exciting lead — a national water-regime map —
+turned out to be the one that cannot be obtained.**
+
+### What was already held, which is where the urban lesson applied
+
+**NESDC carries a management attribute and the records knew it without framing
+it that way.** Its pixel values are 0, 1 and 2, and value 2 is double-season
+rice: 1.03 percent of Anhui and 0.38 percent of Zhejiang at 1/8 decimation. The
+records carry this as `rice_fraction_combined`, a column, rather than as the one
+management attribute this project holds. Cropping system is not water regime,
+but a double-cropped field is flooded twice, so it is the closest thing on disk
+to the term that moves emissions most.
+
+**And GloRice's construction is visible in the files.** All seven yearly files
+are exactly 37,383,812 bytes and every one has an identical non-zero footprint
+of 618,123 cells while totals rise from 110.1 to 123.8 Mha. The primary-source
+re-read established that GloRice rescales a fixed year-2000 pattern; the files
+prove it more strongly than the method paper does, because the support is
+literally unchanged. **A product whose footprint never moves cannot enter a
+change design at all**, which is firmer than "its totals match statistics by
+construction".
+
+### The temporal shape repeats, and falls worse than urban's
+
+| | Fine and long-run | Fine and current | Gap |
+|---|---|---|---|
+| Urban | GISA 30 m to 2019 | CISC, SinoLC-1, 2020+ | overlap 2018–2019 |
+| **Rice** | **CCD-Rice 30 m, 1990–2016** | **NESDC 10 m, 2017–2025** | **no overlap at all** |
+
+CCD-Rice ends two years before the methane record begins on 30 April 2018, and
+NESDC begins the year before it. **So no 30 m or finer rice product spans both
+the historical years this study uses and its analysis year**, and for 2000 and
+2010 the only options are GloRice, whose footprint is frozen, and APRA500 at
+500 m. Urban had a two-year window; rice has none.
+
+### The water regime is mapped and the map cannot be had
+
+This is the rice layer's landfill: the attribute that determines the emission
+and that no extent layer carries. It exists. Wang, Tao, Chen and Yin (2024) map
+**water-saving against flooding irrigation across Chinese paddy at 500 m**, from
+123 MODIS and Sentinel-1 features with a per-province random forest, reporting
+R² above 0.92 against census and **an overall pixel accuracy near 0.73**.
+
+**Published in *Agricultural Water Management* under an Elsevier licence with no
+Creative Commons licence and no deposit found.** So the position is exactly the
+one the urban layer ended in for EULUC-China 2018: the product exists, it is the
+right product, and its route is not established. That is neither
+searched-and-absent nor reachable, and the record says so.
+
+The 0.73 is worth keeping in view even if it is obtained. A water-regime layer
+that is right about three pixels in four, used to modulate an emission factor
+that moves by a factor of 13.7 across regimes, propagates a large error — and
+the R² above 0.92 against aggregated census is the same
+aggregate-agrees-pixel-disagrees pattern the land-cover accuracy work found. The
+two numbers should never be quoted together without saying which is which.
+
+### Two records corrected by the sweep
+
+**ChinaRiceCalendar.** The records describe it as 1 km with no annual rasters.
+It is published at **250 m, 1 km and 10 km** and is **annual from 2003 to 2022**,
+under **CC BY 4.0** in ESSD, giving transplanting, heading and maturity dates for
+early-, middle- and late-season rice with RMSEs against agro-meteorological
+stations of 8.34, 7.84 and 7.77 days. Both halves of the description were wrong,
+and the product is better than recorded on both.
+
+**The aquaculture management ratio.** The records carry 197-fold between earthen
+ponds and engineered systems, which is **per unit fish production**. The
+per-unit-area ratio is **27-fold** — 1,220.4 against 45.3 µg CH₄ m⁻² h⁻¹ for
+earthen against plastic-lined. For a layer that would multiply a factor by pond
+*area*, 27 is the relevant number and 197 is not. And per-area factors exist at
+all, which the urban record had as absent.
+
+### What was pursued, and what the pursuit found
+
+Two threads, chosen after all five parts were complete. The water-regime map, on
+the reasoning that it addresses the layer's binding gap — and it is
+unobtainable, which is the answer that only came from trying. And
+ChinaRiceCalendar, on the reasoning that a corrected record is worth as much as
+a new find — and it is CC BY 4.0, so it is the one reachable management-adjacent
+product this sweep turned up.
+
+**Had the constraint not been in force, this pass would have stopped at the
+water-regime map in Part 3a** and reported the layer's biggest gap as closed. It
+is not closed; it is identified and blocked.
+
+### The rice layer's state, in the urban record's four categories
+
+**Located.** Rice extent at 10 m for 2017 to 2025, with single and double season
+separated, on disk for the four provinces. Rice extent at 5 arcmin for 2000,
+2010 and 2017 to 2021, on disk, with a frozen footprint. Pond polygons for 2015
+and 2020, individually, on disk. Cropping calendar at 250 m annually for 2003 to
+2022, CC BY 4.0, not fetched.
+
+**Given a magnitude.** Nothing, at the resolution this project works at. Rice
+emission factors exist regionally with uncertainties, and per-area pond factors
+exist by pond type, but neither has a spatial expression over this domain: the
+factor varies by water regime, the water regime is not obtainable, and the pond
+type is not mapped.
+
+**Searched and absent.** A spatial layer of straw handling, organic amendment or
+nitrogen application. A spatial layer of pond type or pond management. A 30 m or
+finer rice product spanning both 2000–2010 and 2018.
+
+**Unreached.** The irrigation-regime map's data route. Whether the 416-sample
+regional synthesis or the Zhuanghang flux tower is deposited. CIrrMap250, the
+Monsoon Asia Rice Calendar, the Asian 30 m long-term product, Yan et al. (2003)
+and the 2024 Chinese long-run rice study — all found and none opened. The straw
+return statistics, whose query was malformed. The provincial yearbooks'
+water-saving irrigation area.
+
+**Comparing the two layers.** Urban could locate most things and quantify two
+sectors. Rice can locate extent well and quantify nothing, because its emission
+turns on a single attribute that is mapped once, at 500 m, at 0.73 accuracy, in a
+paywalled paper with no deposit. The urban layer's limit was magnitudes across
+sources; the rice layer's limit is one missing variable.

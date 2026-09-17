@@ -49,7 +49,7 @@ wu2018watergwp,10.1038/s41598-017-19110-2,peer-reviewed paper,"Water management,
 minamikawa2025metasynthesis,10.1007/s10333-025-01045-4,peer-reviewed paper,"Water management, which is the mechanism the study has no layer for",,,,yrd,
 jiang2019watermeta,10.1016/j.fcr.2019.02.010,peer-reviewed paper,"Water management, which is the mechanism the study has no layer for",,,,rice;yrd,
 vo2018mekongef,10.1080/00380768.2017.1413926,peer-reviewed paper,"Water management, which is the mechanism the study has no layer for",,,,yrd,
-wang2024irrigation,10.1016/j.agwat.2024.109083,peer-reviewed paper,"Water management, which is the mechanism the study has no layer for",,,,methods;rice;urban;yrd,notes/dataset-leads.md
+wang2024irrigation,10.1016/j.agwat.2024.109083,peer-reviewed paper,"Water management, which is the mechanism the study has no layer for",,,,methods;rice;urban;yrd,notes/decisions.md;notes/dataset-leads.md
 huang1998ch4mod,10.1046/j.1365-2486.1998.00129.x,peer-reviewed paper,"Water management, which is the mechanism the study has no layer for",,,,yrd,
 jiang2023cropping,10.3390/land12020270,peer-reviewed paper,The two transitions the thesis does not frame,,,,yrd,
 yuan2016vegetables,10.1371/journal.pone.0155926,peer-reviewed paper,The two transitions the thesis does not frame,,,,yrd,
@@ -115,7 +115,7 @@ vanderweele2019differential,10.1093/aje/kwz133,peer-reviewed paper,The alternati
 cinelli2020sensitivity,10.1111/rssb.12348,peer-reviewed paper,The alternatives to prediction-powered inference,,,,methods,
 simonsohn2020speccurve,10.1038/s41562-020-0912-z,peer-reviewed paper,The alternatives to prediction-powered inference,,,,methods,
 wang2026usurban,10.1126/sciadv.adz9308,peer-reviewed paper,The urban layer,methods:554,,methods,methane;methods;rice;urban;yrd,notes/decisions.md;notes/dataset-leads.md
-wang2024landfills,10.1038/s41893-024-01307-9,peer-reviewed paper,The urban layer,,,,methods;rice;urban;yrd,notes/dataset-leads.md
+wang2024landfills,10.1038/s41893-024-01307-9,peer-reviewed paper,The urban layer,,,,methods;rice;urban;yrd,notes/decisions.md;notes/dataset-leads.md
 luo2025oilgas,10.1038/s41467-025-58237-z,peer-reviewed paper,The urban layer,,,,rice;urban,
 chen2026seasia,10.1038/s41597-026-07320-1,peer-reviewed paper,The urban layer,,,,rice;urban;yrd,
 gao2026mswmitigation,10.1016/j.jenvman.2025.128450,peer-reviewed paper,The urban layer,,,,urban,
