@@ -498,7 +498,7 @@ those terms travel with it. What governs each part:
 | [`writeup/`](writeup/), `Duyst_Thesis_Final.ipynb`, [`legacy/`](legacy/) | the author's own work, not offered under MIT |
 | the thirteen committed figure pairs in [`figures/`](figures/), 26 files | the author's own renderings; the data they draw is under its source's terms |
 | [`data/reference/`](data/reference/) | Natural Earth, public domain, apart from the two Copernicus-derived rasters named above |
-| the 48 artefacts in [`data/processed/`](data/processed/) | their sources' terms, below |
+| the 50<!--#repo.processed_artefacts--> artefacts in [`data/processed/`](data/processed/) | their sources' terms, below |
 
 Most of the committed artefacts derive from products under CC BY 4.0 — GAIA,
 the Science Data Bank rice product, GloRice and CHN-CH4 — which permits

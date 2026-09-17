@@ -40,6 +40,7 @@ import argparse
 import csv
 import json
 import re
+import subprocess
 import sys
 from pathlib import Path
 
@@ -635,6 +636,28 @@ def _seasonal_window(window: str, column: str) -> float:
         if r["quantity"] == f"{window} {label}":
             return float(r["value"])
     raise KeyError(f"{window} {label}")
+
+
+def _processed_artefacts() -> float:
+    """How many artefacts `data/processed/` holds, from the tracked tree.
+
+    Counted rather than written because the README's licence scope table names
+    the number, and the table is where a stale count does the most damage: an
+    artefact outside the stated count is an artefact outside the stated terms.
+    It went stale once, at 48 against 50, because it carried no marker while
+    every other count in this repository does.
+
+    `README.md` is excluded, being documentation rather than an artefact.
+    """
+    if "processed_artefacts" not in _cache:
+        listing = subprocess.run(
+            ["git", "ls-tree", "--name-only", "HEAD", "data/processed/"],
+            capture_output=True, text=True, cwd=REPO)
+        names = [line.rsplit("/", 1)[-1] for line in listing.stdout.splitlines()
+                 if line.strip()]
+        _cache["processed_artefacts"] = float(
+            len([n for n in names if n != "README.md"]))
+    return _cache["processed_artefacts"]
 
 
 def _tccon(quantity: str) -> float:
@@ -1242,6 +1265,7 @@ QUANTITIES = {
     "seasonal.nominal_significant": lambda: _seasonal_tally("nominal"),
     "seasonal.corrected_significant": lambda: _seasonal_tally("corrected"),
     "seasonal.chance_expected": lambda: _seasonal_tally("chance"),
+    "repo.processed_artefacts": lambda: _processed_artefacts(),
     "pipeline.recipes": lambda: _pipeline()["recipes"],
     "pipeline.recipes_committed": lambda: _pipeline()["recipes_committed"],
     "pipeline.recipes_local": lambda: _pipeline()["recipes_local"],
