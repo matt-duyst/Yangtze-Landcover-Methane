@@ -83,6 +83,17 @@ is fitted across an annual mean in which albedo is confounded with geography,
 land cover and sampling season — so neither contradicts the other. §4.1 carries
 the comparison and the caveat.
 
+**That increase has a mechanism and it is in the product's own description.**
+Shortwave-infrared and near-infrared surface albedo are two of the 30 retrieval
+parameters the blended correction is a function of (methods §2.4). A correction
+that is a function of albedo cannot leave a field's albedo structure untouched:
+it adds an albedo-dependent term, and whether that term cancels or reinforces
+the between-cell relationship depends on whether the sounding-level relation it
+learned matches the annual between-cell one. On this composite it reinforces.
+**So the direction is not an anomaly requiring explanation**, and the reader who
+needs it is the one deciding what the blended field can be used to check —
+which §4.1 now states.
+
 **One further consideration bears on how much this choice matters, and it cuts
 toward "less than it appears."** This work's contribution is the
 observing-system characterisation of §6, and that characterisation is largely
@@ -573,9 +584,21 @@ which is unphysical.
 Every result in §3 is therefore a result from a field with a known, unremoved
 albedo dependence, and the partial correlations of §3.2 are the measurement of
 how much of the association that dependence accounts for. Methods §2.5 records
-that no albedo floor and no retrieval-precision filter were applied; the blended
-field is the only one of the four that addresses albedo by construction, and the
-association is weaker on it than on the operational field.
+that no albedo floor and no retrieval-precision filter were applied.
+
+**The blended field is the only one of the four that addresses albedo by
+construction, and for that reason it is not an independent check on an
+albedo-confounded association.** Its correction is a function of 30 retrieval
+parameters of which two are the shortwave-infrared and near-infrared albedos
+(methods §2.4), so applying it adds an albedo-dependent term to the field rather
+than removing one. The land-cover association being weaker on it is therefore
+not evidence that the association survives the removal of albedo; it is evidence
+about what a correction learned against GOSAT does to a between-cell annual
+mean. **The albedo control this section relies on is §3.2's partial correlation,
+which conditions on the measured albedo directly, and that control is
+unaffected.** The two lines of evidence are not independent of each other in the
+way an earlier reading of this section implied, and only one of them is a
+control.
 
 ### 4.2 Sampling composition
 

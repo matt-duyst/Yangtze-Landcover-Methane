@@ -124,11 +124,30 @@ had to be checked rather than assumed: its correlation with impervious fraction
 is +0.0366<!--#change.coal_vs_impervious-->, and only 2 of its 22 cells fall in
 the top decile of impervious fraction.
 
-**The bound's own limits.** This is a bottom-up expectation. It says what the
-inventory's allocation implies, and the urban sectors are allocated on
-population, which tracks impervious area — so the proportionality it rests on is
-partly induced by the allocation rather than observed. It therefore cannot rule
-out an emission the inventory does not carry. Aquaculture is the one such source
+**The bound's own limits, now measured rather than asserted.** This is a
+bottom-up expectation. It says what the inventory's allocation implies, and the
+urban sectors are allocated on a surface that tracks impervious area — so the
+proportionality it rests on is partly induced by the allocation rather than
+observed. **On this lattice that induction can be quantified.** The inventory's
+landfill and wastewater grids rank-correlate with this work's own impervious
+fraction at +0.84<!--#sector.landfill_vs_impervious--> and
++0.90<!--#sector.wastewater_vs_impervious--> over all 926 analysis cells, and
+they share an allocation mask outright — identical nonzero cells, which is what
+one surface carrying two per-unit factors looks like. Oil and gas follows at
++0.65<!--#sector.oilgas_vs_impervious-->, and coal, which is allocated on mine
+locations, does not, at +0.19<!--#sector.coal_vs_impervious-->.
+
+**So the bound in this section is a bound and not a test, and for the urban
+sectors it could not be made into one with this inventory.** Testing impervious
+fraction against a sector allocated on a near-monotone function of impervious
+fraction measures the allocation, not the atmosphere. **The rice sector is the
+exception and that is what makes this a finding rather than a complaint**: the
+inventory's rice grid correlates with this work's rice fraction at only
++0.13<!--#sector.rice_vs_rice-->, lower than its coal grid does at
++0.38<!--#sector.coal_vs_rice-->, so a rice comparison measures something —
+though the same figure says the two disagree substantially about where rice is,
+which is a second finding and not a reassurance. It therefore cannot rule out an
+emission the inventory does not carry. Aquaculture is the one such source
 interleaved with a predictor here, and at the magnitude the literature supports
 it stays below the noise too, but that is an estimate rather than a measurement
 and it is recorded as one.
@@ -305,6 +324,19 @@ operational a posteriori correction removes only
 test was repeated on the machine-learning-corrected blended product, built
 specifically to suppress this dependence. **The land-cover result did not
 improve on it**, which is the outcome a real association would not produce.
+
+**That second test is weaker than it reads, and the reason is in the blended
+product's own description.** Two of the 30 retrieval parameters its correction
+is a function of are the shortwave-infrared and near-infrared surface albedos,
+so the corrected field is by construction a function of albedo rather than a
+field with albedo removed — which is also why its fitted albedo slope is the
+steepest of the four rather than the shallowest. **The blended field is
+therefore not an independent check on an albedo-confounded association**, and
+the albedo control this test rests on is the partial correlation, which
+conditions on measured albedo directly and is unaffected. The blended result
+remains informative about whether the finding depends on the retrieval, which is
+why it is still reported; it is not a second, independent removal of the
+confound, and an earlier version of this paragraph treated it as one.
 
 **Sampling composition.** Cell means rest on whichever days each cell was
 observed, and mean day of year correlates with the operational field at

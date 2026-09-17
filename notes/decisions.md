@@ -6800,6 +6800,14 @@ only the nine days with TCCON coincidence are needed. At the mirror's mean
 granule size that is roughly 480 MB and about a minute of transfer, plus the
 57.49 MB TCCON re-fetch — not another 28.9 GB. It is queued, not run.
 
+*Measured on 17 September 2026: 1,185,376,777 B, not 480 MB, and the cause of
+the error is in this paragraph. The estimate multiplied the mean granule size by
+the number of coincident **days**; there are nine days and **21 granules**,
+because on several of them more than one orbit crosses the domain. The mean
+granule size used here was right, at 56.4 MB. The conclusion "far below a pass"
+survives at 1,185 MB against 28.9 GB, and the arithmetic that reached it does
+not.*
+
 **CORRECTED 14 September 2026: the licence does bind.** Clause 5 of the TCCON
 Data License requires contacting the individuals on the DOI landing page at a
 minimum of four to six weeks before a manuscript is submitted, for any work that
@@ -7478,6 +7486,10 @@ spread and the fact that the framing depends on them.
 
 **This is cheap to fix and that is the point.** `paper-target.md` already
 prices the recovery: only the nine coincident days are needed, roughly 480 MB.
+*The 480 MB was an estimate and it is 2.47 times too low: measured from the
+mirror's listings on 17 September 2026, the 21 granules on those nine days total
+1,185,376,777 B. Nothing in this entry's reasoning turns on which figure is
+right, because the granules were never fetched.*
 Against a project that has run 29 GB passes, the number that reaches a
 submission unsupported is one of the cheapest in the whole inventory to
 support. The alternative is to cut the sentences, which costs an argument.
@@ -7574,6 +7586,8 @@ Recorded separately because none of them is work that can simply be run:
    that I read as my own output. What was genuinely missing was the licence's
    **scope**, now in `README.md`.
 3. **Keep or cut the TCCON sentences**, at roughly 480 MB to keep them.
+   *Measured later at 1,185 MB, and neither figure was paid: the counts came
+   from the checkpoint for 57.5 MB.*
 4. **Keep the NESDC grid and document the grant, or rebuild on Science Data
    Bank** and lose `rice_fraction_combined`.
 5. **Decide what to do about the two unstated licences.**
@@ -7681,7 +7695,9 @@ the first check they had ever received: they were computed once, written into
 prose, and the data deleted.
 
 **No granules were downloaded.** This file priced the recovery at roughly 480 MB
-of granules plus the 57.49 MB station file. The 480 MB was never needed: the
+of granules plus the 57.49 MB station file. *That price was measured on
+17 September 2026 and is 1,185 MB, not 480.* The granule transfer was never
+needed either way: the
 checkpoint holds one packed cell bitmap per granule in `granule_cells`,
 index-aligned with a `contributions` array carrying every granule's filename and
 acquisition timestamp, so the TROPOMI side of a coincident-day count is a lookup
@@ -8960,7 +8976,9 @@ the XCH₄ column averaging kernel; `prior_ch4` in ppb; `prior_pressure`,
 dry-air subcolumns follow. **So the TCCON side of the Rodgers correction is
 entirely on disk.** What remains missing is the satellite side — the granules'
 own kernels and subcolumns — which the power record already priced at roughly
-480 MB and about a minute of transfer.
+480 MB and about a minute of transfer. *Measured later at 1,185 MB for the nine
+coincident days; the alignment's own cost is a separate question, since it needs
+the kernels for every coincident granule rather than a sample.*
 
 That changes the queue item's cost rather than its status. It was "needs two
 things"; it is now "needs one, and the one it needs is a cheap fetch". The
@@ -9814,11 +9832,16 @@ paper nothing it was claiming.
 
 **The nine coincident days cost 1,185 MB, not 480.** Priced from the mirror's
 own listings rather than estimated: the 21 granules on those days total
-**1,185,376,777 B**, a mean of 56.4 MB each. The 480 MB figure appears four
-times in this file, once in `notes/paper-target.md`, and — the one that matters,
-because it is committed code — in the docstring of
-`scripts/measure_tccon_coincidence.py`. **That docstring is still wrong and this
-pass was read-only outside the record, so it is named here rather than fixed.**
+**1,185,376,777 B**, a mean of 56.4 MB each. *This paragraph said the figure
+appears four times here, once in `notes/paper-target.md`, and in one docstring.
+It appears ten times across five files: this one, `notes/paper-target.md` twice,
+`config/recipes.yml`, `data/manifest.json` and
+`scripts/measure_tccon_coincidence.py`. The two missed were the recipe note and
+the manifest entry, both committed metadata rather than prose, which is where a
+stale figure is least likely to be read and most likely to be believed. All five
+files were corrected on 17 September 2026, and the cause of the original error
+is recorded above: the estimate multiplied the mean granule size by the nine
+coincident days when the nine days carry 21 granules.*
 The error is in the unfavourable direction: the recovery is 2.47 times the
 recorded price, though still small.
 
@@ -9945,3 +9968,177 @@ this design's effective sample size. And the availability discussion should say
 that for the urban sectors the obstacle is not a missing inventory but a
 circular one, which is a different and harder problem than the one the drafts
 currently describe.
+
+## Integrating the seasonal finding, 17 September 2026
+
+### The allocation test, and the number that makes it a finding
+
+`notes/dataset-leads.md` recorded this from the methane sweep. It is here because
+it decides which comparisons this project may make, which is a decision rather
+than an inventory entry, and because the figures moved when they were computed
+properly.
+
+**The measurement now runs through `scripts/measure_sector_composition.py`**,
+which aggregates the CHN-CH4 sector grids to this lattice mass-correctly — each
+pixel multiplied by its own area, since the inventory's unit is per square
+kilometre. The sweep's figures came from a 25-point subsample per cell, which was
+adequate for a rank correlation and is not what the artefact should carry.
+
+| CHN-CH4 sector | vs impervious fraction | vs rice fraction |
+|---|---|---|
+| wastewater | **+0.899** | +0.072 |
+| landfills | **+0.845** | +0.053 |
+| oil and gas | +0.652 | +0.116 |
+| coal | +0.191 | +0.380 |
+| rice | +0.249 | **+0.133** |
+
+Spearman, over 926 cells for impervious and 531 for rice. **The sweep reported
++0.910 and +0.865 for the two urban sectors and the mass-correct figures are
++0.899 and +0.845.** The conclusion does not move and the numbers did, which is
+the reason to compute an aggregation rather than sample one.
+
+**Landfills and wastewater share an allocation mask outright** — identical
+nonzero cells, checked on the lattice — which is what one surface carrying two
+per-unit factors looks like rather than two independently allocated sectors.
+
+**So the urban half of this project has no non-circular inventory over this
+domain.** Testing impervious fraction against a sector allocated on a
+near-monotone function of impervious fraction measures the allocation. The rice
+half does have one, and the same figure carries a second finding that is not a
+reassurance: at +0.133 the inventory's rice grid agrees with this project's rice
+map **less than its coal grid agrees at +0.380**, so the two disagree
+substantially about where rice is. A non-circular comparison is available and it
+would be a comparison of two disagreeing maps.
+
+### The general test, which is the transferable part
+
+**The question is not whether a product uses land cover as a predictor. It is
+whether it inherits an allocation correlated with land cover.**
+
+That distinction was reached by getting it wrong. The pre-2018 reconstruction was
+checked by asking whether it takes land cover as an input; it does not, and the
+check was recorded as passed. But its third input is a reanalysis driven by an
+emissions inventory whose urban sectors are allocated on population, so the field
+inherits an allocation correlated with land cover indirectly and by an
+unestablished amount. The first question is answerable from a methods section;
+the second needs the allocation surface traced to its origin.
+
+Applied across a sweep the test changed three verdicts, and its results are in
+`notes/dataset-leads.md`. It should be applied to anything new before the thing
+is used, and the cheapest form of it is the one used here: aggregate the
+candidate onto this lattice and rank-correlate it against the predictor. A
+product whose allocation is administrative — a province, a prefecture city —
+passes trivially, because an administrative boundary is not derived from land
+cover. That is why CMED matters more than its resolution suggests.
+
+### What it means for validation, which is narrower than it sounds
+
+**No item in `notes/paper-target.md`'s queue is invalidated, because the queue
+contains no item that tests this project's layers against an inventory.** Saying
+otherwise would be manufacturing an affected item. What is affected is:
+
+* **Discussion §2's magnitude bound**, which is not a queue item but is in the
+  draft. It already said the urban sectors are allocated on population "which
+  tracks impervious area"; it now carries the measurement and states explicitly
+  that it is a bound and could not be made into a test with this inventory.
+* **Item 8, MMCP.** Not circular in this way — provincial totals have no
+  sub-provincial allocation — so the comparison it proposes stands. Two other
+  things about that item are stale and are corrected in the queue: its licence
+  is CC BY 4.0, not the CC-BY-NC-ND the item calls "the most restrictive in the
+  inventory", and the deposit has one `Rice cultivation` sector with no
+  single/double-season split, which is the thing the item wanted it for.
+* **Any emissions route**, including the inventory reimplementation the target
+  record sketches. A posterior whose urban prior was allocated on a population
+  surface attributes to urban land partly because the prior put it there, which
+  is the identifiability limit the paper already argues from the literature and
+  can now argue from its own domain.
+
+### The blended field's predictors, and a number that had no mechanism
+
+**Two of the 30 retrieval parameters the blended correction is a function of are
+the shortwave-infrared and near-infrared surface albedos.** No record held the
+predictor list, and three places in the drafts rested on not knowing it.
+
+The drafts already carried the consequence as an anomaly: the blended field's
+albedo slope is the steepest of the four at 232.8 ppb per unit with Pearson
+rising to 0.762, and `data/processed/README.md` headed that finding "which is not
+what was expected". **It is what a correction taking albedo as an input should
+produce.** A function of albedo added to a field cannot leave the field's albedo
+structure untouched; whether it cancels or reinforces the between-cell relation
+depends on whether the sounding-level relation it learned matches the annual one,
+and here it reinforces.
+
+**The consequence is the part that changes an argument.** The blended field
+cannot serve as an independent check on an albedo-confounded association, because
+albedo is among the inputs that produced it. Corrected in three places:
+
+* `notes/draft-discussion.md` §6 called it "built specifically to suppress this
+  dependence" and read the land-cover result's failure to improve on it as "the
+  outcome a real association would not produce". That inference is weaker than it
+  read and the paragraph now says so. **The albedo control the argument actually
+  rests on is §3.2's partial correlation, which conditions on measured albedo and
+  is untouched.**
+* `notes/draft-results.md` §4.1 called the blended field "the only one of the
+  four that addresses albedo by construction" and offered the weaker association
+  on it as reassurance. It is the only one that addresses albedo by construction,
+  and that is precisely why it is not a control.
+* `notes/draft-methods.md` §2.5 said every result on the blended field is a test
+  of whether the omissions matter. It is, but not a test of the field with albedo
+  removed; what it tests is whether a correction learned at the sounding level
+  against a sparse reference transfers to a between-cell annual mean.
+
+**What does not change is the primary-field decision.** Its stated grounds were
+that the operational field is the product's own recommended variable and that the
+land-cover result is insensitive to the choice. Neither is touched. The blended
+field remains reported everywhere the operational one is, because it remains
+informative about whether the finding depends on the retrieval — which is a real
+question, and the one the Sicsik-Paré comparison makes urgent. What changes is
+what a reader should conclude from it.
+
+### Item 15 was not gated either, and item 14 made the same mistake first
+
+Queue item 15, a growing-season composite, says: "**the accumulator holds annual
+sums, and a mean over a subset of days cannot be recovered from one, so this
+needs the re-grid rather than being a cheap recomputation.**"
+
+The clause about days is true and the conclusion is false, because the window the
+item wants is a range of whole months and the accumulator holds monthly sums.
+**The item is now done, for nothing, and it never needed the 28.9 GB pass.**
+
+**This is the second time on the same file.** Tier 4 already records that "item
+14 was not a gate. The within-cell spread this item needs was already in the
+seasonal accumulator's `hs::sum_yy`." Two queue items, both costed against the
+same checkpoint, both wrong about what it holds, both corrected by opening it
+rather than by fetching anything. The pattern is not that the checkpoint is
+poorly documented — it is that **an item's cost was estimated from the record's
+description of the file and never from the file**, and the cheapest possible
+check for any remaining item is `numpy.load(...).files`.
+
+What the sums genuinely do not hold is `msumsq::`, so the limit is precision and
+not coverage: a seasonal composite has a mean and no per-cell standard error. That
+is a real gate on a real thing — per-cell significance, and inverse-variance
+weighting on a seasonal field — and closing it does need a second granule pass.
+
+### Two apparatus properties this pass exposed
+
+**A resolver whose value collides with an unrelated number makes the claim
+inventory report a false coupling.** Adding `seasonal.*` resolvers caused
+`scripts/inventory_claims.py` to flag a −0.093 in results §3.3 and a 0.17 in a
+figure caption as "equals a resolver's value, written unmarked". Both are
+coincidences. The flag is advisory and the category is already populated, so
+nothing is broken, but the inventory's "should this be marked" signal gets noisier
+as the resolver set grows, and that is a cost of the apparatus rather than a bug
+in it.
+
+**The claim regex reads ASCII hyphen-minus and not the Unicode minus sign.** Six
+negative figures written as "−0.056" with U+2212 verified as positive 0.056 and
+the checker caught every one. Prose tables elsewhere use the typographic minus
+deliberately, so the rule is narrow: **a number carrying a marker takes an ASCII
+minus; an unmarked number in a table may take either.**
+
+**And a renumbering regex with a negative lookahead silently skips a reference at
+the end of a sentence.** Remapping the discussion's sections, `§9(?![0-9.])`
+matched every "§9)" and "§9's" and refused "§9." — so one reference stayed behind
+pointing at the wrong section. It was caught by counting references per section
+before and after, which is the check worth keeping: a uniform remapping must
+preserve the multiset of counts.

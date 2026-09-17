@@ -1137,7 +1137,7 @@ are corrected downward. The field's own spread is slightly **wider** than the
 operational one, 15.91 ppb against 14.86, over a range of 111.47 against
 106.09.
 
-### What it did to the albedo dependence, which is not what was expected
+### What it did to the albedo dependence, and the mechanism for it
 
 The correction targets SWIR albedo, and on this composite the albedo
 dependence **rose**:
@@ -1153,6 +1153,19 @@ That is +17 percent unweighted and +24 percent weighted against the
 operational bias-corrected field, and the correlation rises with it, Pearson
 +0.700 to +0.762. Surface albedo NIR behaves the same way, 130.22 to 150.94
 unweighted.
+
+**The mechanism is in the product's own Table 2: surface albedo in both the
+shortwave and the near infrared is among the 30 retrieval parameters the
+correction is a function of.** A correction that takes albedo as an input adds
+an albedo-dependent term to the field; whether it cancels or reinforces the
+between-cell relationship depends on whether the sounding-level relation it
+learned matches the annual between-cell one, and here it reinforces. So the rise
+is not an anomaly. **The consequence that matters is that this field cannot
+serve as an independent check on an albedo-confounded association**, because
+albedo is among the inputs that produced it. None of the 30 is a land-cover,
+population or inventory variable, and the training target is the difference
+between two observations, so the field inherits no inventory allocation — the
+issue is albedo specifically.
 
 This is a statement about a cell-scale annual mean and not about the product.
 The paper's own figure is a reduction in spatially variable bias against GOSAT

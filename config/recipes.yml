@@ -273,7 +273,10 @@ recipes:
     source. Network tier because the input must be fetched rather than held.
     No granules are downloaded: the days a granule covered the station's cell
     come from the committed checkpoint's packed per-granule cell sets, which
-    makes the 480 MB this recovery was priced at unnecessary. A failure here
+    makes the granule transfer unnecessary. That transfer was priced at 480 MB
+    by an earlier record and measured at 1,185 MB on 17 September 2026 -- 21
+    granules over the nine coincident days at a 56.4 MB mean, from the mirror's
+    own listings -- so the saving is 2.47 times what was recorded. A failure here
     is a route change rather than a broken pipeline -- three other routes in
     this project changed their request-signature filters between September
     passes, and this one used a plain urllib request with no signature games.

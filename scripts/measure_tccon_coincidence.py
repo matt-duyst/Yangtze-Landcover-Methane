@@ -25,8 +25,11 @@ expectation is conditioned on the data being essential. See notes/decisions.md.
 TROPOMI granule covered the station's cell, and the committed checkpoint already
 holds that: one packed cell bitmap per granule in `granule_cells`, index-aligned
 with a `contributions` array carrying each granule's filename and acquisition
-time. An earlier record priced this recovery at roughly 480 MB of granules; the
-checkpoint makes that unnecessary and the only transfer is the station file.
+time. An earlier record priced this recovery at roughly 480 MB of granules and
+that figure was 2.47 times too low: the 21 granules on the nine coincident days
+total 1,185,376,777 B, a mean of 56.4 MB each, measured from the mirror's own
+bucket listings on 17 September 2026 rather than estimated. The checkpoint makes
+all of it unnecessary and the only transfer is the station file.
 
 **What this is not.** It is not the prior-profile alignment a TCCON-satellite
 comparison needs, and it does not make the comparison valid. It makes the

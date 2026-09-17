@@ -53,6 +53,7 @@ from rasterio.warp import transform as warp_transform
 
 REPO = Path(__file__).resolve().parents[1]
 OUT = REPO / "data" / "processed" / "sector_composition_2018.csv"
+PROCESSED = REPO / "data" / "processed"
 
 #: The analysis lattice, from `data/interim/extent_2018.npz`'s spec.
 WEST, SOUTH, EAST, NORTH, RES = 114.8, 26.95, 122.55, 35.2, 0.25
@@ -168,6 +169,55 @@ def rows_for() -> list[dict]:
             both = int((present[i] & present[j]).sum())
             add(f"cells carrying both {a} and {b} above 5 percent",
                 f"{both}", "cells", "inventory", "")
+
+    # What each sector's allocation is correlated with on this lattice. This is
+    # not a property of the region; it is a property of the inventory's
+    # downscaling, and it decides which sectors this project's own predictors
+    # can legitimately be tested against. A sector whose allocation surface is
+    # a near-monotone function of impervious fraction cannot be used to test an
+    # impervious-fraction hypothesis, however accurate its national total.
+    grid_rows = list(csv.DictReader(
+        (PROCESSED / "analysis_grid_2018.csv").open(newline="")))
+    lat = np.array([float(r["centre_lat"]) for r in grid_rows])
+    lon = np.array([float(r["centre_lon"]) for r in grid_rows])
+    row = np.round((NORTH - lat) / RES - 0.5).astype(int)
+    col = np.round((lon - WEST) / RES - 0.5).astype(int)
+    predictors = {}
+    for column in ("impervious_fraction", "rice_fraction_combined"):
+        predictors[column] = np.array(
+            [float(r[column]) if r[column].strip() else np.nan
+             for r in grid_rows])
+
+    def ranks(values):
+        return np.argsort(np.argsort(values)).astype("float64")
+
+    for name in names:
+        sector = grids[name][row, col]
+        for column, values in predictors.items():
+            keep = np.isfinite(values) & np.isfinite(sector)
+            if keep.sum() < 30:
+                continue
+            spearman = float(np.corrcoef(ranks(values[keep]),
+                                         ranks(sector[keep]))[0, 1])
+            pearson = float(np.corrcoef(values[keep], sector[keep])[0, 1])
+            add(f"{name} allocation vs {column}, Spearman",
+                f"{spearman:+.4f}", "rank correlation", "inventory",
+                f"over {int(keep.sum())} analysis cells; Pearson "
+                f"{pearson:+.4f}. A high value means this sector's allocation "
+                f"surface and this predictor are close to the same variable, "
+                f"so the sector cannot test the predictor")
+
+    # And whether two sectors share an allocation surface outright, which is a
+    # stronger statement than a correlation and is checked on the national grid
+    # rather than on the lattice so that the lattice cannot create it.
+    masks = {name: grids[name] > 0 for name in names}
+    for i, a in enumerate(names):
+        for b in names[i + 1:]:
+            if np.array_equal(masks[a], masks[b]):
+                add(f"{a} and {b} share an allocation mask", "1", "boolean",
+                    "inventory",
+                    "identical nonzero cells on the lattice, which is what one "
+                    "allocation surface carrying two per-unit factors looks like")
     return out
 
 

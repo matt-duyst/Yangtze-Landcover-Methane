@@ -1138,6 +1138,20 @@ QUANTITIES = {
     "pipeline.paths_named": lambda: _pipeline()["paths_named"],
     "pipeline.gates": lambda: _pipeline()["gates"],
     "pipeline.fetch_routes": lambda: _pipeline()["fetch_routes"],
+    "sector.landfill_vs_impervious":
+        lambda: _sector("landfills allocation vs impervious_fraction, Spearman"),
+    "sector.wastewater_vs_impervious":
+        lambda: _sector("wastewater allocation vs impervious_fraction, Spearman"),
+    "sector.oilgas_vs_impervious":
+        lambda: _sector("oil_and_gas allocation vs impervious_fraction, Spearman"),
+    "sector.coal_vs_impervious":
+        lambda: _sector("coal allocation vs impervious_fraction, Spearman"),
+    "sector.rice_vs_rice":
+        lambda: _sector("rice allocation vs rice_fraction_combined, Spearman"),
+    "sector.coal_vs_rice":
+        lambda: _sector("coal allocation vs rice_fraction_combined, Spearman"),
+    "sector.landfill_vs_rice":
+        lambda: _sector("landfills allocation vs rice_fraction_combined, Spearman"),
     "seasonal.growing_cells": lambda: _seasonal_window("growing", "cells"),
     "seasonal.growing_soundings":
         lambda: _seasonal_window("growing", "soundings"),

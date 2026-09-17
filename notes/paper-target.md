@@ -954,11 +954,27 @@ mechanism with a factor of 13.7 in emission at constant rice area. No deposit is
 named, so the route is the thing to establish. *Established by* the region
 record and the inventory.
 
-**8. MMCP.** Monthly provincial methane by sector with rice split into single
-and double season, 2013 to 2022. Its licence is CC-BY-NC-ND, the most
-restrictive in the inventory, so **the constraint has to be established before
-work depends on it.** *Established by* the inventory. *Would check* the region
-record's seasonality argument against an independent sectoral series.
+**8. MMCP, with two corrections to what this item said.** Monthly provincial
+methane by sector, 2013 to 2022. **Its licence is CC BY 4.0**, read from the
+deposit — this item called it CC-BY-NC-ND and "the most restrictive in the
+inventory", which was wrong in the worst direction, and no constraint has to be
+established. **And the deposit has one `Rice cultivation` sector with no
+single/double-season split**, which was the thing this item wanted it for, so
+what it can check is narrower than stated. *Established by* the inventory.
+*Would check* the region record's seasonality argument against an independent
+sectoral series, at provincial resolution.
+
+**The allocation circularity does not bite here**, because a provincial total has
+no sub-provincial allocation surface to inherit. It does bite on any per-cell
+inventory comparison for the urban sectors: CHN-CH4's landfill and wastewater
+grids rank-correlate with this work's impervious fraction at
++0.84<!--#sector.landfill_vs_impervious--> and
++0.90<!--#sector.wastewater_vs_impervious--> and share one allocation mask, so
+testing impervious fraction against them measures the allocation.
+`notes/decisions.md` records the test and what it affects. **The newer lead the
+methane sweep found, CMED, is the non-circular option** — monthly, prefecture
+city, eight subsectors, 2018 to 2024, CC BY 4.0, 8 MB — because a city polygon is
+not derived from land cover.
 
 ### Tier 2 — gated by Tier 1
 
@@ -1448,13 +1464,31 @@ below zero. *Established by* the methods record.
 only, so the spread a representativeness estimate needs is not recoverable from
 it. *Established by* the methods record. *Gates* item 16.
 
-**15. A growing-season composite.** The region record establishes that 82.4
-percent of the composite's soundings fall outside the middle-rice window while
-the field's own fitted cycle peaks inside it. **The region record also
-establishes that this is not free**: the accumulator holds annual sums, and a
-mean over a subset of days cannot be recovered from one, so this needs the
-re-grid rather than being a cheap recomputation. *Established by* the region
-record.
+**15. DONE, 17 September 2026, and it was never gated.** The region record
+establishes that 82.4 percent of the composite's soundings fall outside the
+middle-rice window while the field's own fitted cycle peaks inside it. This item
+said: "the accumulator holds annual sums, and a mean over a subset of days cannot
+be recovered from one, so this needs the re-grid rather than being a cheap
+recomputation."
+
+**The clause about days is true and the conclusion was false.** The window this
+item wants is a range of whole *months*, and the accumulator holds monthly
+partial sums for both fields beside the month counts. The composite was therefore
+a division, it cost no transfer, and it is
+`data/processed/seasonal_windows_2018.csv` with results §3.4 and discussion §3
+built on it.
+
+**This is the second item on this list costed wrongly against the same
+checkpoint**, after item 14; Tier 4 records that one. Both were corrected by
+opening the file rather than by fetching anything, and the cheap check for any
+item still costed against it is to list its arrays.
+
+What the checkpoint genuinely lacks is monthly *sums of squares*, so a seasonal
+composite has a cell mean and no per-cell standard error — no per-cell
+significance and no inverse-variance weighting on a seasonal field. **That is a
+real gate and it does need a second granule pass**, and it is the only part of
+this item that survives. *Established by* the region record and, for the
+correction, by the checkpoint.
 
 **16. Destriping.** Official destriping is applied only from 7 September 2024 in
 v2.07 and older orbits have not been reprocessed, so this project's 2018 data
@@ -1513,9 +1547,12 @@ feasibility counts are recovered and reproduce exactly:
 2,767<!--#tccon.retrievals--> retrievals on 44<!--#tccon.days--> days and
 9<!--#tccon.coincident_days--> coincident days, now in
 `data/processed/tccon_hefei_2018.csv` behind a network-tier recipe. **It cost
-57.5 MB, not the 480 MB this item priced**, because the checkpoint already holds
-a packed cell bitmap per granule beside each granule's filename and acquisition
-time, so no granules had to be fetched at all.
+57.5 MB against a granule transfer this item priced at 480 MB and which has
+since been measured at 1,185 MB**, because the checkpoint already holds a packed
+cell bitmap per granule beside each granule's filename and acquisition time, so
+no granules had to be fetched at all. The 480 MB was an estimate; the 21
+granules on the nine coincident days total 1,185,376,777 B on the mirror, a mean
+of 56.4 MB each, so the saving is 2.47 times what this item claimed.
 
 What remains queued is the **alignment**, which is the part that would make the
 comparison a validation rather than a feasibility measurement. That still needs
@@ -2046,7 +2083,7 @@ rather than in either of those.
 **The reference list will be short, and that is a property of the work.** If
 every claim needing a citation got one, the list would run to about 31 entries
 against the 12 <!--#register.draft_cited--> the drafts cite today. Only
-125 <!--#claims.cited--> of the inventoried numbers are quoted from anyone; the
+130 <!--#claims.cited--> of the inventoried numbers are quoted from anyone; the
 rest are measured here. This is below what an ACP article typically carries, so
 it is worth stating in the cover letter rather than leaving a reviewer to read
 it as thin scholarship. The drawn set is also more method-heavy than the
@@ -2063,9 +2100,12 @@ submission:
    missing was the scope, now stated in `README.md`. What is still missing is a
    DOI: ACP requires code to be cited by one and `CITATION.cff` names a GitHub
    URL.
-3. The Hefei TCCON counts appear in four documents, have no artefact, and
+3. ~~The Hefei TCCON counts appear in four documents, have no artefact, and
    support the "not a validated result" framing. Roughly 480 MB regenerates
-   them; the alternative is to cut the sentences and lose the argument.
+   them.~~ **Resolved, and the price was wrong twice over.** The counts are now
+   in `data/processed/tccon_hefei_2018.csv`, they cost 57.5 MB rather than any
+   granule transfer, and the granule transfer itself is 1,185 MB rather than the
+   480 MB stated here.
 4. The committed analysis grid's rice input came under a personal-use grant
    with no DOI. Keep it and document the 190-row substitution, or rebuild on
    the Science Data Bank product and lose `rice_fraction_combined`.

@@ -110,7 +110,13 @@ Four column fields were carried through the analysis rather than one:
    would use. Their validation is against TCCON sites that all lie where the
    shortwave-infrared albedo is below 0.4, which is where TROPOMI biases are
    relatively low, so the improvement is demonstrated in the easier part of the
-   albedo range.
+   albedo range. **Its correction is a function of 30 retrieval parameters,
+   and two of them are the shortwave-infrared and near-infrared surface
+   albedos.** None is a land-cover, population or inventory variable, and the
+   target is the difference between two observations, so the field inherits no
+   inventory allocation -- but it is by construction a function of albedo,
+   which matters for how §4.1 of the results should be read and is stated here
+   because this is where the field is defined.
 4. **A deseasonalised field**, in which a region-wide seasonal cycle is removed
    *at the sounding level* rather than from the cell means. The cycle is fitted
    to every sounding individually as a fixed-effects model with one offset per
@@ -168,7 +174,12 @@ The blended product in §2.4 addresses albedo dependence, aerosol scattering and
 across-track variability together, by construction rather than by filtering, and
 it is the reason the first three omissions are partly mitigated rather than
 simply absent. Every result reported on the blended field is therefore also a
-test of whether the omissions matter.
+test of whether the omissions matter — **but not a test of the field with albedo
+removed**, because albedo is among the 30 parameters the correction is a function
+of (§2.4). What the blended field tests is whether a correction learned at the
+sounding level against a sparse reference transfers to a between-cell annual
+mean. Results §4.1 reports that it does not, and reports it as that rather than
+as a measurement of residual albedo sensitivity.
 
 **All four omissions have now been tested directly**, on quantities retained
 during a re-run of the granule pass, and each is reported as a sensitivity

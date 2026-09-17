@@ -283,6 +283,6 @@
         "sha256": "e735a3f1efd6cc1cd5383b5c22b8ad9ee20867cbf0c7e3d478795758c94dd684"
       }
     ],
-    "notes": "Fetched to support three counts that reached four documents with no artefact behind them. The counts reproduce exactly: 2,767 retrievals on 44 days in 2018, and 9 days carrying both a retrieval and a TROPOMI overpass of the station's cell. NO GRANULES WERE DOWNLOADED: the days a granule covered the station cell come from the committed checkpoint's packed per-granule cell sets, so the 480 MB this recovery was priced at was not needed. The files listed here are NOT in version control and must not be committed; their digests are recorded so a re-fetch can be checked."
+    "notes": "Fetched to support three counts that reached four documents with no artefact behind them. The counts reproduce exactly: 2,767 retrievals on 44 days in 2018, and 9 days carrying both a retrieval and a TROPOMI overpass of the station's cell. NO GRANULES WERE DOWNLOADED: the days a granule covered the station cell come from the committed checkpoint's packed per-granule cell sets, so the granule transfer was not needed; it was priced at 480 MB by an earlier record and measured at 1,185,376,777 B on 17 September 2026, 21 granules at a 56.4 MB mean from the mirror's listings. The files listed here are NOT in version control and must not be committed; their digests are recorded so a re-fetch can be checked."
   }
 }
