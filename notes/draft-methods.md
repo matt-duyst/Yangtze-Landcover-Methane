@@ -236,6 +236,19 @@ edge of the domain. Coverage is also weak along the coast, where the median
 sounding count is 6<!--#composite.coast_median_soundings--> against
 133<!--#composite.land_median_soundings--> for cells that are wholly land.
 
+**The pass retained monthly partial sums as well as annual ones**, for both the
+bias-corrected and the raw field, so a composite over any set of whole months is
+recoverable without revisiting the granules. Results §3.4 uses them, and the
+growing-season composite it reports cost no additional transfer.
+
+**It did not retain monthly sums of squares.** The sums of squares are annual
+only, so a seasonal composite has a cell mean and no within-cell variance, and
+therefore no per-cell standard error, no per-cell significance and no
+inverse-variance weighting. This asymmetry is stated here because it determines
+what §3.4 of the results can and cannot report: corrected correlations, and not
+the held-out R² of §5.1's suite, whose weighted schemes require per-cell
+precision. Closing it would require a second granule pass and was not done.
+
 **The composite is an annual mean per cell, and this is not the same object as an
 inversion's observation vector.** An analytical inversion of TROPOMI methane uses
 *super-observations*: the average of all individual soundings within one model
@@ -740,7 +753,7 @@ that into an upper bound on the predictor's error variance, under the assumption
 that the two products' errors are independent of each other.** The difference
 variance is 13.2<!--#atten.var_share_pct--> % of the predictor's own variance,
 so the reliability ratio is at least 0.868<!--#atten.lambda_min--> and the
-de-attenuation factor is at most 1.15<!--#atten.factor_max-->. Results §3.4
+de-attenuation factor is at most 1.15<!--#atten.factor_max-->. Results §3.5
 reports what that does to the reported coefficients.
 
 **Three assumptions are stated because two of them are violated.** Independence

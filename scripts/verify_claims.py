@@ -573,12 +573,36 @@ def _seasonal(window: str, predictor: str, column: str = "pearson", *,
     """
     if "seasonal" not in _cache:
         rows = _read_csv(PROCESSED / "seasonal_windows_2018.csv")
-        _cache["seasonal"] = {
-            (r["field"], r["window"], r["predictor"], r["cell_set"]): r
-            for r in rows if r["predictor"]}
+        # Keyed on the quantity string as well as the cell set. The four
+        # descriptive columns do not identify a row: a contrast, its held-out
+        # scores and its two equivalence verdicts share all four, and an
+        # earlier version of this reader silently returned whichever came last.
+        _cache["seasonal"] = {(r["quantity"], r["cell_set"]): r for r in rows}
         _cache["seasonal_all"] = rows
-    row = _cache["seasonal"][(field, window, predictor, cell_set)]
-    return float(row[column])
+    # Windows are written as "<field> <window> level vs <predictor>" and
+    # contrasts as "<field> <contrast> vs <predictor>", so both spellings are
+    # tried rather than the caller having to know which kind it asked for.
+    for spelling in (f"{field} {window} level vs {predictor}",
+                     f"{field} {window} vs {predictor}"):
+        row = _cache["seasonal"].get((spelling, cell_set))
+        if row is not None:
+            return float(row[column])
+    raise KeyError((field, window, predictor, cell_set))
+
+
+def _seasonal_equiv(contrast: str, predictor: str, which: str,
+                    field: str = "value") -> float:
+    """One equivalence or held-out row of the seasonal table.
+
+    The committed comparative bound was set against the spatial null's
+    performance on the *annual* field. A within-cell seasonal contrast is a
+    different estimand on a different sample, so the artefact recomputes the
+    bound the same way on the contrast itself and carries both verdicts. They
+    agree in eleven of twelve cases and the twelfth is reported, not hidden.
+    """
+    _seasonal("annual", "impervious_fraction")
+    key = (f"{contrast} {predictor} {which}", f"every window >= {15}")
+    return float(_cache["seasonal"][key][field])
 
 
 def _seasonal_tally(what: str) -> float:
@@ -1182,6 +1206,24 @@ QUANTITIES = {
     "seasonal.contrast_pair10_cells":
         lambda: _seasonal("flooded_minus_off", "rice_fraction_combined",
                           "n_cells", cell_set="flooded_minus_off pair >= 10"),
+    "seasonal.equiv_bound_annual":
+        lambda: _seasonal_equiv("flooded_minus_off", "rice_fraction_combined",
+                                "equivalence, annual bound"),
+    "seasonal.equiv_bound_seasonal":
+        lambda: _seasonal_equiv("flooded_minus_off", "rice_fraction_combined",
+                                "equivalence, seasonal bound"),
+    "seasonal.null_r2_contrast":
+        lambda: _seasonal_equiv("flooded_minus_off", "rice_fraction_combined",
+                                "held-out R2, spatial null"),
+    "seasonal.predictor_r2_contrast":
+        lambda: _seasonal_equiv("flooded_minus_off", "rice_fraction_combined",
+                                "held-out R2, predictor"),
+    "seasonal.null_r2_contrast_impervious":
+        lambda: _seasonal_equiv("flooded_minus_off", "impervious_fraction",
+                                "held-out R2, spatial null"),
+    "seasonal.predictor_r2_contrast_impervious":
+        lambda: _seasonal_equiv("flooded_minus_off", "impervious_fraction",
+                                "held-out R2, predictor"),
     "seasonal.tests": lambda: _seasonal_tally("tests"),
     "seasonal.nominal_significant": lambda: _seasonal_tally("nominal"),
     "seasonal.corrected_significant": lambda: _seasonal_tally("corrected"),

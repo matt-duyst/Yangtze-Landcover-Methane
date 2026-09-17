@@ -56,6 +56,8 @@ import numpy as np
 REPO = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(REPO))
 
+from src.model.baselines import (Table, NeighbourMean, LinearModel,  # noqa: E402
+                                 GlobalMean, evaluate)
 from src.model.spatial_dof import modified_t_test  # noqa: E402
 
 OUT = REPO / "data" / "processed" / "seasonal_windows_2018.csv"
@@ -94,6 +96,17 @@ PREDICTORS = ("impervious_fraction", "rice_fraction_single",
 
 #: Minimum soundings a cell needs in a window to enter a set.
 STRICT_MIN = 15
+
+#: Two one-sided tests at 5 percent need a 90 percent interval. The same
+#: constant the committed equivalence test uses, for the same reason.
+Z_90 = 1.6448536269514722
+
+#: The committed comparative bound's basis: the spatial null's held-out R
+#: squared on the *annual* field under spatial blocks, unweighted. Quoted from
+#: `scripts/test_equivalence_bounds.py` so the two cannot drift apart.
+ANNUAL_NULL_R2 = 0.3324
+
+PROVINCES = ("anhui", "jiangsu", "shanghai", "zhejiang")
 
 
 def checkpoint():
@@ -239,6 +252,68 @@ def rows_for() -> list[dict]:
                         window=contrast, predictor=pred, cell_set=key,
                         value=f"{stats['pearson']:+.4f}",
                         note="Pearson of the within-cell difference", **stats)
+
+    # Whether the committed equivalence statement covers the contrast. It was
+    # set against the spatial null's performance on the *annual* field, and the
+    # contrast is a different estimand on a different sample, so the bound is
+    # recomputed the same way on the contrast itself and both verdicts are
+    # reported. They disagree, which is why both are here.
+    province = np.array(["outside"] * len(grid), dtype=object)
+    for name in PROVINCES:
+        share = np.array([float(r[f"share_{name}"]) if r[f"share_{name}"].strip()
+                          else 0.0 for r in grid])
+        province[share > 0.5] = name
+    annual_bound = float(np.sqrt(ANNUAL_NULL_R2))
+    for contrast, (a, b) in CONTRASTS.items():
+        difference = fields[("bias_corrected", a)] - fields[("bias_corrected", b)]
+        for pred in PREDICTORS:
+            mask = sets[strict_key] & np.isfinite(predictors[pred]) \
+                & np.isfinite(difference)
+            if mask.sum() < 30:
+                continue
+            index = np.flatnonzero(mask)
+            table = Table(y=difference[index], weight=np.ones(index.size),
+                          row=row[index], col=col[index],
+                          province=province[index],
+                          columns={pred: predictors[pred][index]})
+            scores = {}
+            for label, model in (("spatial null", NeighbourMean()),
+                                 ("global mean", GlobalMean()),
+                                 ("predictor", LinearModel(names=(pred,)))):
+                result = evaluate(table, model, scheme="spatial blocks",
+                                  weighted=False)
+                scores[label] = float(result.held_out.r2)
+                add(quantity=f"{contrast} {pred} held-out R2, {label}",
+                    field="bias_corrected", window=contrast, predictor=pred,
+                    cell_set=strict_key, value=f"{result.held_out.r2:+.6f}",
+                    n_cells=int(index.size), pearson="", spearman="",
+                    slope_ppb_per_unit="", effective_n="", p_nominal="",
+                    p_corrected="",
+                    note=f"spatial blocks, unweighted, {label} on the contrast")
+            test = modified_t_test(predictors[pred][index], difference[index],
+                                   lat[index], lon[index])
+            error = 1.0 / np.sqrt(max(test.effective_n - 3.0, 1.0))
+            centre = np.arctanh(test.r)
+            low = float(np.tanh(centre - Z_90 * error))
+            high = float(np.tanh(centre + Z_90 * error))
+            seasonal_bound = float(np.sqrt(max(scores["spatial null"], 0.0)))
+            for label, bound in (("annual", annual_bound),
+                                 ("seasonal", seasonal_bound)):
+                if -bound < low and high < bound:
+                    verdict = "within the bounds: evidence of no meaningful effect"
+                elif low >= bound or high <= -bound:
+                    verdict = "outside the bounds: a positive result"
+                else:
+                    verdict = ("spans a bound: cannot distinguish a meaningful "
+                               "effect from none")
+                add(quantity=f"{contrast} {pred} equivalence, {label} bound",
+                    field="bias_corrected", window=contrast, predictor=pred,
+                    cell_set=strict_key, value=f"{bound:.4f}",
+                    n_cells=int(index.size), pearson=f"{test.r:+.6f}",
+                    spearman="", slope_ppb_per_unit="",
+                    effective_n=f"{test.effective_n:.6f}", p_nominal="",
+                    p_corrected="",
+                    note=f"CI90 [{low:+.4f}, {high:+.4f}]; {verdict}")
     return out
 
 
@@ -262,7 +337,8 @@ def report(rows: list[dict]) -> None:
               f"{float(pick[f'{name} composite between-cell sd']['value']):>8.2f}")
     for pred in PREDICTORS:
         shown = [r for r in rows if r["predictor"] == pred
-                 and r["cell_set"] == strict and r["field"] == "bias_corrected"]
+                 and r["cell_set"] == strict and r["field"] == "bias_corrected"
+                 and isinstance(r["pearson"], float)]
         if not shown:
             continue
         print(f"\n  {pred}, bias-corrected field, {strict}")
@@ -273,11 +349,17 @@ def report(rows: list[dict]) -> None:
             print(f"    {label:22s} {r['n_cells']:>4d} {r['pearson']:+8.4f} "
                   f"{r['effective_n']:7.1f} {r['p_nominal']:9.3g} "
                   f"{r['p_corrected']:8.3g}")
+    print("\n  whether the committed equivalence statement covers the contrast")
+    for r in rows:
+        if "equivalence" in r["quantity"]:
+            print(f"    {r['quantity']:58s} |r| <= {r['value']}")
+            print(f"      {r['note']}")
     print(f"\n  the contrast on weaker window definitions, bias-corrected")
     print(f"    {'cell set':34s} {'predictor':24s} {'n':>4s} {'r':>8s} "
           f"{'p corr':>8s}")
     for r in rows:
         if (r["window"] == "flooded_minus_off" and r["field"] == "bias_corrected"
+                and isinstance(r["pearson"], float)
                 and r["predictor"] in ("impervious_fraction",
                                        "rice_fraction_combined")):
             print(f"    {r['cell_set']:34s} {r['predictor']:24s} "

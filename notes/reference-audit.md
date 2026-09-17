@@ -274,7 +274,7 @@ needs a citation got one, how large would the reference list be, and what would
 it be made of?**
 
 **How the drawn set was derived, and why it is a floor.** Two inputs, both
-committed: the 124 <!--#claims.cited--> numeric claims in
+committed: the 125 <!--#claims.cited--> numeric claims in
 `data/processed/claim_inventory_2026.csv` that resolve to a literature figure
 rather than to an artefact, and the prose claims this audit's own §2 listed as
 needing support. Together they name **46** register entries. That is a floor
@@ -296,7 +296,7 @@ So the **reference list would be about 31 entries**, against the
 199 <!--#register.entries--> in the register. That is below what an ACP article
 typically carries, and the reason is a property of the work rather than a
 defect: this is a capability assessment resting on its own measurements, so most
-of its numbers are measured and only 124 <!--#claims.cited--> of them are
+of its numbers are measured and only 125 <!--#claims.cited--> of them are
 quoted from anyone.
 
 ### What the list is made of

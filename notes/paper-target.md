@@ -2046,7 +2046,7 @@ rather than in either of those.
 **The reference list will be short, and that is a property of the work.** If
 every claim needing a citation got one, the list would run to about 31 entries
 against the 12 <!--#register.draft_cited--> the drafts cite today. Only
-124 <!--#claims.cited--> of the inventoried numbers are quoted from anyone; the
+125 <!--#claims.cited--> of the inventoried numbers are quoted from anyone; the
 rest are measured here. This is below what an ACP article typically carries, so
 it is worth stating in the cover letter rather than leaving a reviewer to read
 it as thin scholarship. The drawn set is also more method-heavy than the

@@ -5,22 +5,34 @@ committed record or a committed artefact, and every quoted number carries an
 inline resolver naming the artefact quantity it reads from, on the convention
 `scripts/verify_claims.py` enforces.
 
-**The ordering, and why it changed.** This section has five jobs in a fixed
+**The ordering, and why it changed.** This section has six jobs in a fixed
 order: say what the result is and is not (§1), show that the result was the
-predicted one (§2), explain why extent would have failed even had the signal
-been visible (§3 and §4), show that the explanation is not an artefact (§5), and
-then generalise it — which is where the contribution sits (§6). Only then does it
-locate the work against prior results (§7), say what would answer the original
-question (§8), and close with limitations (§9).
+predicted one (§2), show that a signal of the predicted sign is nonetheless
+present and below what the design resolves (§3), explain why extent would have
+failed even had the signal been visible (§4 and §5), show that the explanation
+is not an artefact (§6), and then generalise it — which is where the contribution
+sits (§7). Only then does it locate the work against prior results (§8), say
+what would answer the original question (§9), and close with limitations (§10).
 
-**§2 is new and it comes first on purpose.** An earlier draft opened the
-explanation with the mechanisms, on the reasoning that the mechanism explains
-this particular result and the capability limits explain why no refinement would
-change it. That ordering buried the simplest statement available: the signal
-sought is far below the per-cell noise, which is one number rather than six
-literature passes, and it is prior to every mechanism. The mechanisms are not
-displaced by it — they answer a different question, and §3 says which — but they
-no longer carry the explanation alone.
+**§2 comes first on purpose.** An earlier draft opened the explanation with the
+mechanisms, on the reasoning that the mechanism explains this particular result
+and the capability limits explain why no refinement would change it. That
+ordering buried the simplest statement available: the signal sought is far below
+the per-cell noise, which is one number rather than six literature passes, and
+it is prior to every mechanism. The mechanisms are not displaced by it — they
+answer a different question, and §4 says which — but they no longer carry the
+explanation alone.
+
+**§3 is new and it sits where it does because it is §2's empirical half.** §2 is
+an arithmetic prediction: a land-cover contrast of the observed size should move
+the column by a fraction of a part per billion. §3 is what the record shows when
+it is asked in the season the prediction is about, and the answer is a trace of
+the predicted sign that the design cannot resolve. It belongs after the
+prediction and before the mechanisms, because a reader who has just been told
+the signal should be invisible is owed the measurement that looked for it
+anyway. **It displaces nothing.** The mechanisms, the artefact tests and the
+capability limits are unchanged by it, and §6's sampling-composition test is
+extended rather than replaced.
 
 ## 1. What the reproduction establishes, and what it does not
 
@@ -44,7 +56,7 @@ impervious cover**, and the asymmetry is a property of the evidence rather than
 of the argument.
 
 **What can also now be said is that measurement error in the impervious
-predictor does not account for the result** — §5 gives the bound.
+predictor does not account for the result** — §6 gives the bound.
 
 The reproduction's null is also not a finding that rice does not matter in this
 domain. A tower inversion of this region in this study's own year found
@@ -61,7 +73,7 @@ Before any mechanism, there is an arithmetic question that the reproduction can
 answer and that had not been asked: **how large a column signal should a
 land-cover contrast of the observed size produce?**
 
-The conversion is the same closed form §6 uses for information content, taken
+The conversion is the same closed form §7 uses for information content, taken
 from the operational inversion literature rather than constructed here: a column
 enhancement is `k` times a surface flux, with
 `k = α M_air L g / (M_CH4 U p)`, evaluated at this domain's own wind. Applying
@@ -91,7 +103,7 @@ looking for something below the noise. That is prior to both.
 **And the association that was measured cannot be the emission signal.** An
 observed 0.085 against a permitted 0.00007 is not a weak version of the right
 thing; it is a different thing. This is independent of the albedo and wind
-results in §5 and agrees with them: it converts *the association does not
+results in §6 and agrees with them: it converts *the association does not
 survive controls* into *the association could not have been the signal in the
 first place*.
 
@@ -104,7 +116,7 @@ inventory puts at 2035.1<!--#change.coal_total--> Gg a⁻¹ across
 2.9<!--#change.coal_multiple--> times the median per-cell standard error. **A
 source of that size is visible; the differences land-cover extent proxies are
 twenty to fifty times smaller.** The limit is a property of the signal, not of
-the instrument, and it is why §8's routes are about better priors and targeted
+the instrument, and it is why §9's routes are about better priors and targeted
 observation rather than about more of the same observations.
 
 Coal is also not an alternative explanation for the measured association, which
@@ -121,7 +133,88 @@ interleaved with a predictor here, and at the magnitude the literature supports
 it stays below the noise too, but that is an estimate rather than a measurement
 and it is recorded as one.
 
-## 3. Extent is a proxy for presence, not for management
+## 3. A seasonal signal of the predicted sign, below resolution
+
+§2 says the signal should be invisible. This section reports what happens when
+the record is asked in the season the question is about, which is the one
+arrangement of these data that had not been tried.
+
+**The annual composite is the wrong object for a seasonal source.** A flooded
+paddy emits methane and a drained one does not, so an annual mean over a cell
+averages the emitting and the non-emitting halves of the year together. An
+annual null is therefore consistent with two seasonal associations of opposite
+sign cancelling, and no annual number separates that case from an absence. The
+distinction matters because the two support different conclusions: a
+cancellation means the predictor is related to the field and the design cannot
+see it seasonally; an absence means the predictor is unrelated.
+
+**It is a cancellation.** Results §3.4 composites the record over whole months —
+free, because the compositing pass retained monthly partial sums — and the rice
+association changes sign with the season. It is
++0.138<!--#seasonal.rice_growing--> in the June-to-September growing window and
+-0.273<!--#seasonal.rice_off--> in November and December, against
+-0.056<!--#seasonal.rice_annual--> for the year. The within-cell
+flooded-minus-off-season contrast, which differences out every time-invariant
+cell property, correlates with rice fraction at
++0.225<!--#seasonal.rice_contrast--> at a slope of
+15.90<!--#seasonal.rice_contrast_slope--> ppb per unit fraction. The same
+contrast against impervious fraction is
+-0.095<!--#seasonal.impervious_contrast-->, so the seasonality is specific to
+the predictor whose source is seasonal.
+
+**The sign is the one the mechanism predicts**, and that is what makes it worth
+reporting rather than filing as noise. §4 records that rice emission is set by
+water regime, with three regimes on one soil spanning a factor of 13.7 in net
+global warming potential. A predictor that is flooded in summer and dry in
+winter should raise the column in summer and not in winter, and over these cells
+it does.
+
+**And the design cannot resolve it.** The contrast's nominal *p* is
+0.00024<!--#seasonal.rice_contrast_p_nominal--> and its corrected *p* is
+0.132<!--#seasonal.rice_contrast_p_corrected-->, at an effective sample size of
+46.0<!--#seasonal.rice_contrast_effective_n--> cells of
+262<!--#seasonal.rice_cells-->. Out of sample the contrast is worse than
+useless: a held-out R² of
+-0.052<!--#seasonal.predictor_r2_contrast--> against a constant, on the same
+spatial-block design the annual analysis uses. Of
+90<!--#seasonal.tests--> correlation tests across the seasonal table,
+39<!--#seasonal.nominal_significant--> reach five percent nominally and
+1<!--#seasonal.corrected_significant--> after correction, against
+4.5<!--#seasonal.chance_expected--> expected by chance — **fewer than chance
+alone would produce.**
+
+**Two properties of the measurement point the same way as the tests.** The
+contrast weakens as the sample grows, from +0.225 on 262 cells to
++0.070<!--#seasonal.contrast_pair5--> on
+359<!--#seasonal.contrast_pair5_cells--> under a looser window definition; and
+it is much weaker on the raw retrieval,
++0.081<!--#seasonal.raw_contrast-->, so it may be a property of the operational
+bias correction, whose terms vary seasonally, rather than of the atmosphere.
+Neither possibility can be excluded, because the retained sums carry monthly
+means and no monthly variances, so a seasonal composite has no per-cell standard
+error at all.
+
+**What this section claims, stated narrowly.** The annual null is a cancellation
+of two seasonal associations of opposite sign, neither resolvable at this
+design's effective sample size. **That is not a positive result and it is not
+nothing.** It does not license a claim that rice extent predicts column methane
+seasonally — the corrected tests, the held-out score and the decay all refuse
+that — and it does refine the negative result from "no association" to "no
+resolvable association, in a record whose seasonal structure is consistent with
+the mechanism". The refinement costs the paper nothing it was claiming, because
+what it was claiming was a failed detection, and this is a more precise
+description of the same failure.
+
+**It also sharpens §7's limits rather than softening them.** §2 puts the column
+signal a land-cover contrast should produce at an implied R² of
+0.00007<!--#change.xsec_r2-->. A design that cannot resolve an association at
+that magnitude is exactly a design in which a real seasonal relationship shows
+up as an unresolvable trace, so finding one is weak confirmation that the
+limits are the binding constraint rather than an artefact of the predictors.
+The one arrangement of these data not previously tried has now been tried, and
+it agrees with what preceded it.
+
+## 4. Extent is a proxy for presence, not for management
 
 The first part is a property of the predictor rather than of its quality. Across
 seven sectors present in this domain, the recorded determinant of emission is a
@@ -162,13 +255,13 @@ field, because the two are measuring different things.
 practice. A factor of 197 between two ways of farming the same water is not an
 error better mapping could reduce. **This is the load-bearing form of the
 argument, because it means the failure is structural rather than a matter of map
-quality** — and it is why §8's routes are about priors, targeted observation and
+quality** — and it is why §9's routes are about priors, targeted observation and
 isotopes rather than about better land-cover products.
 
-## 4. What the predictors never contained
+## 5. What the predictors never contained
 
 The second part is a different claim and should not be merged with the first.
-§3 says a perfectly measured extent predictor would still fail. This section
+§4 says a perfectly measured extent predictor would still fail. This section
 says part of the field was never being predicted at all.
 
 **Coal mine methane in northern Anhui.** The Huainan–Huaibei coalfield lies
@@ -195,7 +288,7 @@ wetland, and that the distinction "has yet to be consistently addressed". So the
 two largest microbial sources in this domain are not separated in the prior that
 would be used to attribute them.
 
-## 5. Why the result is not an artefact
+## 6. Why the result is not an artefact
 
 Five candidate explanations for a null that is not a real absence were each
 tested rather than argued away. This is the structure a reviewer checks, so it is
@@ -220,6 +313,19 @@ predictor achieves. A deseasonalised field was therefore built by removing the
 fitted seasonal cycle at the sounding level. The impervious association moved by
 0.009<!--#deseason.impervious_change--> in Pearson correlation. **The calendar
 does not explain the association's absence.**
+
+**That test was a correction and §3 is the stronger version of it, a
+composition.** Removing a fitted cycle from the soundings asks whether the
+association survives once the calendar's smooth part is taken out; compositing
+by season asks what the association is *within* a season, which does not depend
+on the cycle being smooth or on its being the same in every cell. The two agree
+for impervious cover, which is null in every window. **They disagree for rice,
+and the composition is the more informative of the two**: the deseasonalised
+annual field still shows nothing, while the seasonal composites show a sign
+reversal that the annual field cannot express. Neither survives correction for
+spatial dependence, so the artefact question is answered the same way — the
+calendar is not what produced the null — but the second test establishes the
+more specific thing, that for rice the annual null is a cancellation.
 
 **Transport error.** A model transport error standard deviation of 12 ppb for
 individual TROPOMI observations is comparable to this field's entire between-cell
@@ -280,7 +386,7 @@ its training samples from the same map this work uses. So measurement error is
 excluded for the impervious predictor and not for the rice predictor, and the
 paper should not imply symmetry.
 
-## 6. What the observing system can and cannot constrain
+## 7. What the observing system can and cannot constrain
 
 This is the contribution, and it is two limits measured on one domain.
 
@@ -333,7 +439,7 @@ the question is not answerable as asked. Together they say why no refinement of
 the same design would fix it**, which is a stronger and more transferable claim
 than a null result in one region.
 
-## 7. Relation to prior results
+## 8. Relation to prior results
 
 **The mechanism this work measured has been reached independently by a different
 method, and that strengthens rather than weakens it.** Decomposing the seasonal
@@ -370,7 +476,7 @@ expansion and paddy rice explain the methane field over these four provinces,
 and the errata document accompanying this reproduction records what that study
 did and did not establish. This section does not relitigate it.
 
-## 8. What would be required to answer the original question
+## 9. What would be required to answer the original question
 
 Three routes, each specific, each with a measured or published precedent. None
 of them is a better land-cover product.
@@ -394,7 +500,7 @@ it.**
 The published route uses TROPOMI to locate a hotspot and a facility-scale
 instrument to quantify it; applied to landfills in four cities it found sites
 emitting 3 to 29 t h⁻¹ and city emissions 1.4 to 2.6 times inventory. **This
-project has the tip and not the cue**, and §6's prior-free threshold is the
+project has the tip and not the cue**, and §7's prior-free threshold is the
 quantitative statement of why the tip alone is insufficient: no single facility
 in this domain emits enough for the column to constrain it half independently of
 the prior.
@@ -417,7 +523,7 @@ or for rice — the two sectors this project's question compares. That is a
 concrete and fundable next study, and this domain is where it would be worth
 doing.
 
-## 9. Limitations
+## 10. Limitations
 
 **One year of one instrument.** 2018 is the first full year of the TROPOMI
 record and the 2023 thesis's own analysis year, and the record here is an
@@ -453,7 +559,7 @@ September 2024 to orbits this analysis year will never include. Each is recorded
 with its cost, and each would require a second pass over the granule archive.
 
 **The rice half of the attenuation question is unbounded**, for want of a second
-rice product whose errors are independent of the layer in use, as §5 states.
+rice product whose errors are independent of the layer in use, as §6 states.
 
 **And the capability figures are a reimplementation rather than an inversion**,
 bounded to this domain, this instrument and this period. The single free preview
@@ -468,7 +574,7 @@ run of the published tool would settle what this work estimates.
 24 of this section's numbers carry resolvers; 81 do not. The unmarked ones fall
 into four classes and only the last is a defect.
 
-* **Section and year references** — §1 to §9, 2018, 2023, 0.25 degrees.
+* **Section and year references** — §1 to §10, 2018, 2023, 0.25 degrees.
 * **Every figure attributed to the literature**, which comes from a paper rather
   than from an artefact and is resolved by its citation instead: the 13.7 water
   regime ratio, the 197 aquaculture ratio, the five-fold straw increase, the
@@ -479,7 +585,7 @@ into four classes and only the last is a defect.
   signatures −61 ± 4, −56.1 ± 2.4, −53.8 ± 0.8 and −311 ± 6, the 40 percent bias
   reduction and the 0.43/0.85 Tg Heilongjiang pair, the 3–29 t h⁻¹ landfill
   rates and the 1.4–2.6 inventory multiples, and the 73.61 percent and 0.954
-  accuracy figures in §9.
+  accuracy figures in §10.
 * **Figures derivable from marked ones or already exempted in the methods
   draft**, which lists them: the Anhui raster bound 33.3462° N, and the 20.7 and
   19.9 percent product differences. The Hefei counts were on this list and are
@@ -488,14 +594,14 @@ into four classes and only the last is a defect.
   quietly dropped: **the fitted seasonal peak of the column field at day of year
   245.8**. It appears in `notes/decisions.md` and `notes/grounding-rice.md` as
   prose and in no committed artefact, so it cannot be marked. It is load-bearing
-  in §8 — it is what makes EDGAR's uniform June peak "roughly ten weeks early
+  in §9 — it is what makes EDGAR's uniform June peak "roughly ten weeks early
   here" — and it should have a row in `deseasonalisation_2018.csv`, which
   currently holds only the correlation table. Queued.
 
 ### Resolvers added for this draft
 
 **Five**, all for `attenuation_bound_2018.csv`, because the two figures that
-carry §5's conclusion had no way to be quoted. The artefact held the reliability
+carry §6's conclusion had no way to be quoted. The artefact held the reliability
 bound and the R² bounds but expressed "what it would take to overturn this" only
 in a free-text `note` column, which no resolver reads. Added:
 `atten.need_share_bu` and its percent form, and
@@ -511,9 +617,9 @@ passed while verifying nothing in it.
 ### Figures this section cites
 
 The discussion cites **two** figures directly and neither is new:
-`figures/capability.png` for §6's two limits, and
-`figures/albedo_collinearity.png` for §5's first test. It also leans on
-`figures/buffered_decay.png` for §3's structural claim, though the citation sits
+`figures/capability.png` for §7's two limits, and
+`figures/albedo_collinearity.png` for §6's first test. It also leans on
+`figures/buffered_decay.png` for §4's structural claim, though the citation sits
 more naturally in results.
 
 **That leaves the two framework diagrams and the three land-cover provenance
@@ -528,7 +634,7 @@ five-figure count stands.**
 ### A figure this section wants and does not have
 
 **The attenuation sweep**, recorded as a candidate in the previous pass, belongs
-here rather than in results. §5's conclusion is a margin — the de-attenuated
+here rather than in results. §6's conclusion is a margin — the de-attenuated
 coefficient against assumed error variance, with the observed product
 disagreement marked, the spatial null as a horizontal reference, and the crossing
 at 5.6 times visible as a distance. A reader who sees the distance does not need

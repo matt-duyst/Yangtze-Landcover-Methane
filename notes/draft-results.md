@@ -282,12 +282,129 @@ The same pattern holds on the other two fields (§0): impervious fraction reache
 0.095<!--#suite.impervious_deseasonalised--> on the deseasonalised field under
 blocks and no weighting, in both cases well below that field's spatial null.
 
-### 3.4 The form of the negative result
+### 3.4 The association on seasonal composites
+
+The three subsections above measure an annual composite. **An annual mean is the
+wrong object for a seasonal source**, and paddy methane is seasonal: a flooded
+paddy emits and a drained one does not. An annual null is therefore consistent
+with two seasonal signals of opposite sign cancelling, and no annual number
+distinguishes that case from an absence. This subsection distinguishes them.
+
+Composites were formed over whole months from the monthly partial sums the
+compositing pass retained (methods §3), so no re-gridding was required. Five
+windows were taken: the year, a flooded window of May to August, a growing
+window of June to September, October alone — which carries
+34,182<!--#seasonal.october_soundings--> of the year's soundings — and an
+off-season window of November and December. The growing-season composite covers
+870<!--#seasonal.growing_cells--> cells on
+30,684<!--#seasonal.growing_soundings--> soundings with a between-cell standard
+deviation of 23.23<!--#seasonal.growing_sd--> ppb, against
+7.84<!--#seasonal.off_sd--> ppb in the off-season window.
+
+**The comparison is made on cells common to every window**, because a cell
+observed in October and not in June would otherwise contribute to one window
+and not another, making a between-window difference partly a difference between
+samples. Requiring at least fifteen soundings in every window leaves
+366<!--#seasonal.impervious_cells--> cells, of which
+262<!--#seasonal.rice_cells--> carry a rice fraction.
+
+**The rice association changes sign with the season and the impervious
+association does not.**
+
+| window | rice fraction | impervious fraction |
+|---|---|---|
+| year | -0.056<!--#seasonal.rice_annual--> | +0.064<!--#seasonal.impervious_annual--> |
+| May–August, flooded | +0.093<!--#seasonal.rice_flooded--> | −0.067 |
+| June–September, growing | +0.138<!--#seasonal.rice_growing--> | −0.022 |
+| October | -0.194<!--#seasonal.rice_october--> | +0.097 |
+| November–December, off-season | -0.273<!--#seasonal.rice_off--> | +0.072 |
+
+The within-cell contrast is the cleaner statistic, because differencing two
+windows in the same cell removes every time-invariant cell property —
+position, elevation, mean albedo, province, and the sampling composition of
+§4.2 insofar as it is fixed. **The flooded-minus-off-season contrast correlates
+with rice fraction at +0.225<!--#seasonal.rice_contrast--> at a slope of
+15.90<!--#seasonal.rice_contrast_slope--> ppb per unit fraction, and with
+impervious fraction at -0.095<!--#seasonal.impervious_contrast-->.** The
+contrast is therefore specific to the rice predictor and absent for the urban
+one. Both rice definitions give it: `rice_fraction_single` yields
++0.204<!--#seasonal.rice_single_contrast-->.
+
+**No window and no contrast survives correction for spatial dependence.** The
+contrast's nominal *p* is
+0.00024<!--#seasonal.rice_contrast_p_nominal--> and its corrected *p* is
+0.132<!--#seasonal.rice_contrast_p_corrected-->, at an effective sample size of
+46.0<!--#seasonal.rice_contrast_effective_n--> cells of 262. The
+growing-minus-off contrast gives
+0.17<!--#seasonal.rice_growing_contrast_p_corrected--> and the off-season level
+0.079<!--#seasonal.rice_off_p_corrected-->, the closest any test comes. Every
+impervious test is null in every window, the contrast at *p* =
+0.53<!--#seasonal.impervious_contrast_p_corrected-->.
+
+**Stated as the table's own summary, which is the form that prevents
+over-reading it: of 90<!--#seasonal.tests--> correlation tests,
+39<!--#seasonal.nominal_significant--> reach the 5 percent level on nominal
+degrees of freedom and 1<!--#seasonal.corrected_significant--> does after
+correction, against 4.5<!--#seasonal.chance_expected--> expected by chance at
+that level.** Fewer survive than chance alone would produce, and the one that
+does is a flooded-window impervious association on the raw retrieval, which is
+not a reported field.
+
+**Nor does the contrast predict out of sample.** Evaluated as a target under the
+same design §3.3 uses — spatial blocks, unweighted — the rice model on the
+contrast reaches a held-out R² of
+-0.052<!--#seasonal.predictor_r2_contrast-->, below a constant, against the
+spatial null's +0.188<!--#seasonal.null_r2_contrast--> on the same cells. For
+impervious fraction the figures are
+-0.032<!--#seasonal.predictor_r2_contrast_impervious--> against
++0.306<!--#seasonal.null_r2_contrast_impervious-->. So the ordering of §3.3 is
+reproduced on the seasonal estimand: the predictor is beaten by smoothness, and
+by a constant.
+
+**Two properties bound how far the sign reversal can be read, and both go
+against it.**
+
+*It decays as the sample grows.* Relaxing the requirement from every window to
+the two windows the contrast uses takes it from +0.225 on 262 cells to
++0.122<!--#seasonal.contrast_pair10--> on
+315<!--#seasonal.contrast_pair10_cells--> cells at ten soundings a window, and
+to +0.070<!--#seasonal.contrast_pair5--> on
+359<!--#seasonal.contrast_pair5_cells--> at five. A result that strengthens on
+more cells would be more credible; this one weakens.
+
+*It is much weaker on the raw retrieval.* The same contrast on the raw field is
++0.081<!--#seasonal.raw_contrast--> at *p* =
+0.56<!--#seasonal.raw_contrast_p_corrected-->, against +0.225 on the
+operationally corrected field. The operational correction's terms vary
+seasonally, so the contrast may be a property of the correction rather than of
+the atmosphere. **That possibility is not excluded.**
+
+**And the precision that would settle both is not available.** The retained
+sums include monthly sums of the field and not monthly sums of squares, so a
+seasonal composite carries a mean and **no per-cell standard error**. There is
+no within-cell variance by month, so no per-cell significance, and no
+inverse-variance weighting — which is why this subsection reports corrected
+correlations rather than the held-out R² of §3.3, whose weighted schemes
+require per-cell precision. The decay in the paragraph above has two readings —
+the contrast is partly noise, or the cells added by a weaker window definition
+have window means too noisy to carry it — and **the same missing quantity is
+what prevents distinguishing them.**
+
+### 3.5 The form of the negative result
 
 **No association between land cover and the methane field was detected that
 survives correction for spatial dependence, control for albedo, or evaluation
 under more than one held-out design.** That is a statement about a failed
 detection and it is the strongest form the evidence supports.
+
+**§3.4 adds 90 tests to that statement and does not change it.** The seasonal
+composites yield a rice association of the predicted sign in the predicted
+window, and no window and no contrast survives the correction for spatial
+dependence, and the contrast is beaten by a constant out of sample. The one
+addition the seasonal work makes to the *form* of the result is that **the
+annual null is a cancellation rather than a flat absence** — two seasonal
+associations of opposite sign, each unresolvable — which is a more specific
+description of the same non-detection and not a weaker one.
 
 **Equivalence bounds were set, and they license more for rice than for
 impervious cover.** A claim in favour of a null requires equivalence testing
@@ -315,6 +432,33 @@ to detect one. **For impervious cover only
 the other 5<!--#equiv.impervious_spans--> span the bound, so for impervious the
 data cannot distinguish an effect the size of the benchmark's from none, and the
 weaker non-detection claim is what stands.
+
+**The bounds were computed on the annual estimand, and the seasonal estimand of
+§3.4 is a second one.** Whether the equivalence statement extends to it is a
+real question, because a within-cell seasonal contrast is a different quantity
+on a smaller sample and was not among the 36 combinations. It was therefore
+tested the same way, with the bound reconstructed on the contrast itself as
+well as taken from the annual field.
+
+**It extends, with one exception at the margin.** Of twelve verdicts — two
+contrasts × three predictors × two bounds — eleven fall within the bounds.
+Against the annual bound of |r| =
+0.58<!--#seasonal.equiv_bound_annual--> every contrast is equivalent. Against
+the bound reconstructed on the contrast field, |r| =
+0.43<!--#seasonal.equiv_bound_seasonal--> for the flooded-minus-off contrast,
+the combined rice fraction's 90 percent interval reaches +0.446 and **spans**,
+so for that one combination the data cannot distinguish an effect the size of
+the seasonal benchmark's from none. The single-season rice definition on the
+same contrast falls within at +0.428, and both rice definitions on the
+growing-minus-off contrast fall within.
+
+**So the rice half of the equivalence claim is annual, and the paper should say
+so.** For the annual field the stronger statement stands, in all 24
+combinations. For the seasonal contrast it stands in five of six and the sixth
+is a non-detection rather than evidence of absence. That is a narrower change
+than it might appear — no verdict moves outside the bounds, so no specification
+in either estimand yields a positive result — but the scope of the word
+"equivalent" now has to name which estimand it is about.
 
 **What the bound does not license.** An effect smaller than the spatial
 benchmark's but still physically substantial would pass as equivalent. The
