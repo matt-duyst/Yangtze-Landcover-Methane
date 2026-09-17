@@ -110,9 +110,17 @@ the sown area of double-cropping rice in southern China decreased by
 cropping index fell from 148.3 to 129.3 percent, and "the most dramatic changes
 occurred in the Middle-Lower Yangtze Plain" `[record]`. **These are sown areas,
 which the rice record distinguishes from planted area** `[record]` — a
-distinction the recalled draft dropped. Meanwhile a synthesis of 416 field
-samples in this region reported 252.17 kg per hectare across 2010–2018 against
-146.02 across 2000–2009, a ratio of 1.52 at p < 0.01 `[record]`. Area fell and
+distinction the recalled draft dropped. **`[CORRECTED]`** An earlier version of this file
+reported a synthesis of 416 field samples giving 252.17 against 146.02 kg per
+hectare, tagged `[record]`. That was verified against `notes/grounding-yrd.md`,
+which carries the figures, while `notes/references.md` records the same source
+as "a source that could not be verified for the thing it was cited for" — the
+article is closed, no abstract is indexed, and the entry states its figures
+**are not written anywhere in this repository**. Confirmed closed again on 17
+September 2026. **The figures are removed rather than retagged**, and what
+survives is only the direction: per-hectare emissions are reported to have risen
+between the 2000s and the 2010s, from a source this project cannot verify
+`[unverified]`. Area fell and
 intensity rose, and the literature reporting the second does not explain it
 `[record]`.
 

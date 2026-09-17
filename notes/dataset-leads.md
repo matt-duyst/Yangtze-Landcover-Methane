@@ -1220,3 +1220,109 @@ inventory exists (*Comms Earth & Environment* 2024). A Jiangsu-specific study
 covers species and management variation — in domain.
 
 **No product maps pond type or management spatially.** Searched and absent.
+
+## The deferred rice searches, run 17 September 2026
+
+Parts 1 to 4 completed before any thread was followed.
+
+### The water regime's data route
+
+**1a. No deposit found, on a second search aimed at deposits specifically.**
+Searched for a deposit under the four authors' names, mirrors, and Chinese
+repositories. What came back was other irrigation products, not this one:
+the 500-m irrigated cropland maps for China 2000–2019 (figshare 19352501),
+**IrriMap_CN** annual irrigation maps 2000–2019 (figshare 20363115), CIrrMap250,
+and a Yellow River Basin crop-water dataset. **None distinguishes water regime.**
+
+**1b. No alternative product, one new candidate, and the method is proven.**
+Nothing published distinguishes water-saving from continuously flooded paddy
+over this domain. Two things bear on it. **"High-resolution mapping of China's
+flooded croplands"** (*Science Bulletin* 2025, `S2095927325001331`) is **not in
+the records** and maps flooding rather than irrigation presence, which is closer
+to regime than anything else found. And the detection is demonstrably feasible:
+PALSAR-2 L-band dual-polarisation backscatter is sensitive to paddy water-level
+variation, and AWD fields show consistently greater backscatter variability than
+non-AWD, from wet–dry cycling.
+
+**1c. The regime can be inferred statistically, with a caveat that may void it.**
+Terms: `节水灌溉面积 统计 江苏 安徽 浙江 上海 水稻 控制灌溉 间歇灌溉 推广面积
+水资源公报`. The **National Bureau of Statistics publishes 节水灌溉面积 by region
+and by river basin, per year** — tables found for 2008, 2010 and 2014 under
+`stats.gov.cn/zt_18555/ztsj/hjtjzl/` — and the **Ministry of Water Resources
+publishes bulletin data** at `szy.mwr.gov.cn/gbsj/`. The 国家农业节水纲要
+(2012–2020) names the Huang-Huai-Hai region "including northern Jiangsu and
+northern Anhui" for promotion of **水稻控制灌溉技术**, controlled rice irrigation
+— in this domain.
+
+**The caveat: 节水灌溉面积 counts engineering water-saving** — drip, sprinkler,
+canal lining — **and for rice the relevant practice is 控制灌溉 or 间歇灌溉,
+which is a different category.** So the published statistic may not map onto rice
+water regime at all, and using it as one would be an assumption dressed as a
+measurement.
+
+**1d. Licences.** The regime map carries Elsevier's text-and-data-mining licence
+only, with no Creative Commons licence, so even if a copy were obtained
+redistribution of a derived layer would not be clearly permitted. **CIrrMap250
+and ChinaRiceCalendar are CC BY 4.0 and are committable with attribution.**
+IrriMap_CN and the 500-m maps are on figshare with licences unchecked.
+
+### The local emission measurements
+
+**2a. The 416-sample synthesis is not deposited, and its figures are recorded
+here as unverifiable.** Zhu and Li (2025), `10.1007/s13762-024-06050-4`, is
+**closed** on Unpaywall. `notes/references.md` already records it as "a source
+that could not be verified for the thing it was cited for": the 146.02 and
+252.17 kg ha⁻¹ figures over 416 samples could not be confirmed, no abstract is
+indexed, and the entry states its figures **are not written anywhere in this
+repository**. So it cannot ground a region-specific factor.
+
+**2b. Sun et al. (2016) at Zhuanghang is gold open access** —
+`10.1038/srep28255`, at nature.com and PMC4913302. Whether its measurements are
+deposited as data beyond the paper's own tables was not established.
+
+**2c. FLUXNET-CH4 v1.0 holds 7 rice paddy sites of 79**, alongside 42 freshwater
+wetlands and 15 upland sites. **Whether any paddy site is in China was not
+established.** Two in-region eddy-covariance studies were found and not opened:
+a double-cropping paddy pair at Nanchang, Jiangxi (`10.3390/w13162171`, four
+seasons), which lies inside the lattice box though outside the four provinces;
+and a rice–wheat rotation agroecosystem in eastern China (PubMed 31302561),
+which is this domain's cropping system.
+
+### The unopened products
+
+**3a. CIrrMap250, opened.** Annual maps of China's irrigated cropland, **2000 to
+2020**, **250 m**, each pixel the **percentage of the pixel that is irrigated
+cropland**. Overall accuracy **0.79 to 0.88** across 2000, 2010 and 2020, F1
+**0.71 to 0.78**, explaining 50–60 % of the variance in irrigation water
+withdrawal. **CC BY 4.0**, figshare `10.6084/m9.figshare.24814293.v2`, **21
+GeoTIFF files totalling 2,623 MB**, WGS84, about 120 MB per year.
+
+**It distinguishes only irrigated against rainfed** — no irrigation type, no
+water source, no paddy-specific class — though it uses paddy maps as a
+high-confidence irrigated category during processing. **It covers all three of
+this study's years annually, which no rice extent product does.**
+
+**3b, 3c and 3d were not opened.** The Monsoon Asia Rice Calendar, the Asian
+30 m long-term product and its extent, Yan et al. (2003) and the 2024 Chinese
+long-run study remain unread. Stated as unreached rather than reported.
+
+### Straw, rerun with the correct characters
+
+Terms: `秸秆还田 面积 统计 江苏 安徽 水稻 秸秆综合利用率 分省 数据 空间分布`.
+The earlier query used 秸稈 for 秸秆 and returned nothing; **the corrected query
+returns data, so that null was an artefact of one wrong character.**
+
+| Level | Figure |
+|---|---|
+| National 2021, straw returned to field | **400 Mt**, of which **rice straw 113 Mt = 66.5 % of collectable rice straw** |
+| National comprehensive utilisation rate 2021 | 88.1 %, of which fertiliser use 57.6 % |
+| **Jiangsu** | ~40 Mt a⁻¹ total straw, rice and wheat dominant; demonstration townships at 80 % return; summer mechanised full and stubble return **over 10 million mu** (≈667,000 ha) |
+| **Anhui** | 2017 straw resource 47.0 Mt, **more in the north and centre, least in the south** |
+
+A national **rice-specific** return rate of 66.5 % and provincial volumes exist.
+Also found and not opened: a spatiotemporal analysis of China's straw resources
+(*Environmental Science* 2023) and an Anhui straw-nutrient study.
+
+**Nitrogen and organic amendment remain unmapped spatially.** What exists is
+5,556 on-farm experiments for 2000–2015 by region, national fertiliser-threshold
+studies, and a Jiangsu GAM of management prescriptions.

@@ -60,7 +60,7 @@ shan2022linan,10.3390/atmos13081206,peer-reviewed paper,"Wetlands, urban gas and
 guo2023suzhou,10.1016/j.apr.2023.101830,peer-reviewed paper,"Wetlands, urban gas and transport",,,,yrd,notes/dataset-leads.md
 wang2026lulcmeteorology,10.1016/j.jes.2025.07.021,peer-reviewed paper,"Wetlands, urban gas and transport",,,methods,methane;rice;urban;yrd,notes/decisions.md;notes/dataset-leads.md
 sun2026wastewater,10.1126/sciadv.aec0536,peer-reviewed paper,"Wetlands, urban gas and transport",,,,,ERRATA.md
-zhu2025yrdsynthesis,10.1007/s13762-024-06050-4,peer-reviewed paper,One work cited and not relied on,,,,rice;yrd,
+zhu2025yrdsynthesis,10.1007/s13762-024-06050-4,peer-reviewed paper,One work cited and not relied on,,,,rice;yrd,notes/decisions.md;notes/dataset-leads.md
 olofsson2014goodpractice,10.1016/j.rse.2014.02.015,peer-reviewed paper,"Accuracy assessment and the fractional-cover frame, added 10 September 2026",,,,methods,ERRATA.md;notes/dataset-leads.md
 wickham2020nlcdimpervious,10.1016/j.jag.2019.101955,peer-reviewed paper,"Accuracy assessment and the fractional-cover frame, added 10 September 2026",,,,methods,ERRATA.md;notes/paper-target.md
 huang2022gisa2,10.1016/j.jag.2022.102787,peer-reviewed paper,"Accuracy assessment and the fractional-cover frame, added 10 September 2026",,,,rice,README.md;notes/decisions.md;data/processed/README.md
@@ -147,7 +147,7 @@ fang2024ricereview,10.1016/j.srs.2024.100172,peer-reviewed review,The rice produ
 hou2025nericedata,10.6084/m9.figshare.28407710,"the deposit, not fetched",The rice products,,,,rice,notes/dataset-leads.md
 zhao2026searice30m,10.5194/essd-18-5583-2026,peer-reviewed paper,The rice products,,,methods,rice;yrd,ERRATA.md;notes/dataset-leads.md
 runkle2019awd,10.1021/acs.est.8b05535,peer-reviewed paper,"Water regime, temperature and the diurnal cycle",,,,rice,notes/decisions.md
-sun2016warmdry,10.1038/srep28255,peer-reviewed paper,"Water regime, temperature and the diurnal cycle",,,,rice,notes/decisions.md
+sun2016warmdry,10.1038/srep28255,peer-reviewed paper,"Water regime, temperature and the diurnal cycle",,,,rice,notes/decisions.md;notes/dataset-leads.md
 qian2022parabolic,10.1021/acs.est.2c00738,peer-reviewed paper,"Water regime, temperature and the diurnal cycle",,,,rice,
 wassmann2018nighttime,10.1371/journal.pone.0191352,peer-reviewed paper,"Water regime, temperature and the diurnal cycle",,,,rice,
 li2024nocturnal,10.1016/j.agrformet.2024.110238,peer-reviewed paper,"Water regime, temperature and the diurnal cycle",,,,rice;yrd,

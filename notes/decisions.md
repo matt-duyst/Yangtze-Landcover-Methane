@@ -9381,3 +9381,149 @@ sectors. Rice can locate extent well and quantify nothing, because its emission
 turns on a single attribute that is mapped once, at 500 m, at 0.73 accuracy, in a
 paywalled paper with no deposit. The urban layer's limit was magnitudes across
 sources; the rice layer's limit is one missing variable.
+
+## Closing the rice layer, 17 September 2026
+
+Parts 1 to 4 completed before any thread was followed. The constraint paid a
+third time, and differently: this pass's most important finding was not a
+dataset but an error of mine that a required rerun exposed.
+
+### An error of mine that this pass found
+
+`notes/references.md` records Zhu and Li (2025) as **"a source that could not be
+verified for the thing it was cited for"** — the 146.02 and 252.17 kg ha⁻¹
+figures over 416 samples, paywalled, unindexed, with the entry stating its
+figures **are not written anywhere in this repository**.
+
+**Two passes ago I wrote those figures into
+`notes/draft-case-study-background.md` and tagged them `[record]`.** I verified
+them against `notes/grounding-yrd.md`, which carries them, and did not check
+`notes/references.md`, which forbids them. So a verification pass confirmed a
+figure against one record while another record said it must not be carried.
+
+They are removed rather than retagged, and only the direction survives, marked
+unverified. **The lesson is narrow and it is the mirror of the one that pass
+itself drew:** that pass named "a hedge dropped" as one of four recall failures,
+and then dropped a hedge of its own, because the grounding record repeated the
+figures without the register's caveat attached. **A figure that one record
+forbids should not be verifiable against another**, which is an argument for the
+register being the authority on any external number, and for the grounding
+records to carry the caveat rather than only the value.
+
+### A character changed a null into data
+
+The first rice pass searched for straw return with 秸稈 where the correct
+characters are 秸秆, and reported the null while flagging it unusable. Rerun
+correctly, the search returns a **national rice-specific straw-return rate of
+66.5 percent**, a national returned volume of 400 Mt of which rice is 113 Mt,
+Jiangsu at over 10 million mu of mechanised return, and Anhui's resource
+concentrated in the north and centre.
+
+**So the searched-and-absent list was wrong by one item because of one
+character.** This is the second character-level false null in this project and
+the first caught by the pass that made it. It argues for the practice the urban
+work established in a stronger form: **record the query, and when a query in a
+language you are not composing natively returns nothing, re-derive the term
+before recording the null.**
+
+### The water regime, after a second search aimed at it
+
+**No deposit exists that this project can find**, on a search directed at
+deposits rather than at the paper. No alternative product distinguishes
+water-saving from continuously flooded paddy over this domain: CIrrMap250,
+IrriMap_CN and the 500-m maps all give irrigated against rainfed.
+
+Three things change the position from the first pass's flat blockage.
+
+**A new candidate.** "High-resolution mapping of China's flooded croplands"
+(*Science Bulletin* 2025) maps flooding rather than irrigation presence, which is
+nearer to regime than anything previously found, and is not in the records.
+
+**The method is proven.** PALSAR-2 L-band backscatter is sensitive to paddy
+water level, and AWD fields show consistently greater backscatter variability
+from wet–dry cycling. So the layer is derivable in principle from open SAR, which
+makes it a build rather than a dead end — and a build this project has no reason
+to attempt, since it would be a remote-sensing methods paper of its own.
+
+**A statistical route exists and may be void.** The National Bureau of Statistics
+publishes 节水灌溉面积 by region and basin annually, the Ministry of Water
+Resources publishes bulletins, and the national water-saving programme names
+northern Jiangsu and northern Anhui for controlled rice irrigation. **But
+节水灌溉面积 counts engineering water-saving — drip, sprinkler, canal lining —
+and rice regime is 控制灌溉 or 间歇灌溉, a different category.** Using the
+published statistic as a rice regime proxy would be an assumption dressed as a
+measurement, and it is recorded as such rather than adopted.
+
+### What a region-specific emission factor would need, and whether it exists
+
+It would need measurements spanning the **water-regime range within this
+region**, because regime is the term that moves the factor by 13.7 and a factor
+fitted without it inherits the borrowed one's assumption.
+
+What exists: **one in-domain flux site**, Zhuanghang, two years, gold open
+access. **Two near-domain eddy-covariance studies**, a double-cropping pair at
+Nanchang in Jiangxi — inside the lattice box, outside the four provinces — and a
+rice–wheat rotation in eastern China, which is this domain's cropping system.
+**Seven paddy sites in FLUXNET-CH4 globally**, China coverage unestablished. And
+the 416-sample synthesis, which is unusable.
+
+**So the honest answer is no.** One site over two years, plus two unopened
+near-domain studies, is enough to *check* a borrowed factor against local
+measurement and not enough to *fit* a regime-dependent one. The genuinely novel
+item the code search identified is therefore not feasible on what is reachable,
+and that is a firmer answer than "never established".
+
+### The rice layer's final state
+
+**Located.** Rice extent at 10 m for 2017–2025 with single and double season
+separated, on disk. Rice extent at 5 arcmin for 2000, 2010 and 2017–2021, on
+disk, footprint frozen at year 2000. Pond polygons for 2015 and 2020,
+individually, on disk. Cropping calendar at 250 m annually 2003–2022, CC BY 4.0,
+not fetched. **Irrigated-cropland fraction at 250 m annually 2000–2020, CC BY
+4.0, figshare, 2,623 MB, not fetched** — the only product covering all three
+study years annually.
+
+**Given a magnitude.** Now more than nothing, and less than a map. A national
+rice-specific straw-return rate of 66.5 percent. Water-saving irrigation area by
+province and year, with the category caveat above. Cropping system per pixel from
+NESDC. Regional rice emission factors with uncertainties from a global model. Per
+unit area pond factors by pond type, earthen against lined at 27-fold. **So the
+management terms are quantifiable at provincial resolution and the extent at cell
+resolution, and nothing bridges them.**
+
+**Searched and absent.** A spatial layer of water regime over this domain. A
+spatial layer of pond type or pond management. A spatial layer of nitrogen or
+organic amendment. A 30 m or finer rice product spanning both 2000–2010 and 2018.
+A deposit of the 416-sample synthesis.
+
+**Unreached.** The Monsoon Asia Rice Calendar. The Asian 30 m long-term product
+and whether its extent includes eastern China. Yan et al. (2003) and the 2024
+Chinese long-run study. Whether Zhuanghang's measurements are deposited. Whether
+any FLUXNET-CH4 paddy site is in China. The Nanchang and eastern-China
+eddy-covariance studies. "China's flooded croplands". The 2023 straw
+spatiotemporal analysis.
+
+### The comparison, and whether a bottom-up estimate is buildable
+
+The first pass put it as urban locating most things and quantifying two sectors,
+while rice located extent well and quantified nothing. **That no longer holds and
+the correction is in rice's favour.** Rice can now be quantified at provincial
+resolution for its management terms, which is worse than a map and much better
+than a uniform factor.
+
+**So both layers converge on the same shape, and it is not the shape a
+bottom-up inventory wants.** Urban: positions good, magnitudes uncertain by
+factors of two to fifty across sources. Rice: extent excellent, magnitudes
+modulated by province-level statistics with no within-province structure. **In
+both layers the spatial pattern comes from a fine extent layer and the magnitude
+from a coarse modifier**, which means the estimate's spatial detail is real and
+its magnitude is not resolved at that detail.
+
+**Is a bottom-up estimate buildable? Yes, as a prior, and no, as an answer.**
+That is exactly what the detection-limit work concluded from the other
+direction: an inversion scales a prior, so a prior whose pattern is right and
+whose magnitude is coarse is what it can use — and this observing system can
+correct a regional total and not a cell. The two sweeps and the power calculation
+agree, having started from data availability, from physics and from statistics
+respectively. That agreement is the strongest thing the four urban and two rice
+passes produced.
