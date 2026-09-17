@@ -1326,3 +1326,107 @@ Also found and not opened: a spatiotemporal analysis of China's straw resources
 **Nitrogen and organic amendment remain unmapped spatially.** What exists is
 5,556 on-farm experiments for 2000–2015 by region, national fertiliser-threshold
 studies, and a Jiangsu GAM of management prescriptions.
+
+## The methane layer swept, 17 September 2026
+
+**Parts 1, 3 and 5 completed; Part 2 partly, on retrievals but not on the cost of
+a comparison or MUSICA; Parts 4 and 6 not reached.** Stated first so the record
+is not read as a finished sweep.
+
+### The composite checkpoint, enumerated — 61 arrays
+
+`data/interim/extent_2018_extended.npz`. The records describe it by purpose; this
+is its contents. `spec = [114.8, 26.95, 122.55, 35.2, 0.25]`, `qa_threshold =
+0.75`, `harmonics = 2`, `variables = [methane_mixing_ratio_bias_corrected,
+methane_mixing_ratio]`.
+
+| Group | Arrays | Shape | What it is |
+|---|---|---|---|
+| cell means | `counts`, `sum::`×2, `sumsq::`×2 | (33,31) | the composite and a recoverable within-cell variance |
+| **monthly** | `month_counts`, **`msum::`×2** | **(12,33,31)** | **monthly partial sums for both fields, so a monthly per-cell composite is recoverable** |
+| seasonal fit | `hs::n`, `sum_y`, `sum_yy`, `sum_d`, `sum_dd`, `sum_x` (4,·), `sum_yx` (4,·), **`sum_xx` (4,4,33,31)** | per cell | **the full normal-equations matrix per cell, so a per-cell harmonic fit is recoverable, not only the domain-shared one the drafts describe** |
+| across-track | `across_track_counts` (215), `atsum::`×2 (215), **`across_track_cell_counts` (215,33,31)** | detector column | **per-cell per-column counts, finer than the domain-wide offsets the destriping test used** |
+| filter bins | `precision_counts`/`edges`, `albedo_counts`/`edges` (8 bins from 6 edges), `psum::`×2, `asum::`×2 | (8,33,31) | the precision and albedo sensitivity tests |
+| joint bins | `joint_counts` (5,33,31), `jsum::`×2 | | joint precision-albedo bins |
+| covariates | `cvsum::`×10, `cvcount::`×10 | (33,31) | the ten gridded covariates |
+| provenance | `granule_cells` (578,128), `contributions` (JSON, 578 rows), `saturation` (578,2) | per granule | filename, acquisition time, per-granule cell bitmap, coverage saturation curve |
+| denominators | `prefilter_counts`, `retrieved_counts` | (33,31) | in-box and retrieved counts per cell |
+
+**`prefilter_counts` looked wrong and is not.** It runs 1,975 to 2,149 across
+1,023 cells — near-uniform where qa-passing counts run 0 to 410 — which looks
+like a broadcast bug. The reader scatters it properly with `np.add.at` on
+per-sounding cell indices. **The near-uniformity is physical: TROPOMI's swath is
+about 2,600 km against a 739 km domain, so any granule that crosses the domain
+covers every cell in it.** The useful consequence is that
+`counts / prefilter_counts` is a per-cell retention rate against a common
+denominator.
+
+### Committed methane artefacts
+
+| Artefact | Bands or columns |
+|---|---|
+| `methane_composite_2018.tif` | 3: bias-corrected mean ppb, raw mean ppb, sounding count |
+| `methane_blended_2018.tif` | 2: blended mean ppb, sounding count |
+| `methane_covariates_2018.tif` | **20**: mean and count for each of ten covariates |
+| `methane_deseasonalised_2018.tif` | 5: deseasonalised mean, count, mean day of year, day-of-year sd, **poorly identified flag** |
+| `methane_coverage_2018.csv` | 5 columns | 
+| `methane_covariates_2018.csv` | 23 columns |
+| `methane_deseasonalised_2018.csv` | 7 columns |
+
+**The blended product is not on disk.** It is read by HTTP range request, so its
+own variable set has never been enumerated and Part 1b is unanswered.
+
+### Retrievals — four, not three
+
+| Product | Algorithm | Version | Note |
+|---|---|---|---|
+| SRON operational | RemoTeC full-physics | **v2.4** | this project uses v02.04.00 |
+| BLENDED TROPOMI+GOSAT | ML correction of SRON against GOSAT | v1.0 | committed as a field |
+| **WFMD** | WFM-DOAS, XGBoost quality filtering | **v2.0** (AMT 19, 2407, 2026) | **the records hold v1.8; v2.0 is newer** |
+| **ML/multiobjective TROPOMI+GOSAT** (RSE 2024, `S0034425724000506`) | ML plus multiobjective programming | — | **not in the records** |
+
+Also noted: ESA's Methane+ project, and a 2026 systematic review of
+TROPOMI-based methane source detection.
+
+### The record before 2018
+
+**The fusion product's circularity check verified, and the recorded check is too
+narrow.** ESSD 15, 3597, 2023, deposited at Zenodo `10.5281/zenodo.7388893`:
+daily global seamless XCO₂ and XCH₄ at **0.25°, 2010 to 2020**, from **three
+inputs only — GOSAT, OCO-2 and CAMS-EGG4 reanalysis** — fused by a
+spatiotemporal discrete cosine transform. **No land cover and no inventory is a
+predictor, so testing land cover against it is not circular in the recorded
+sense.**
+
+**But CAMS-EGG4 is a reanalysis driven by an emissions inventory**, and the
+inventories it uses allocate urban sectors on population surfaces. So a land-cover
+predictor tested against this product is tested partly against a field that
+inherits inventory allocation. That is a weaker circularity than the one the
+records checked for and it should be stated, not ignored.
+
+Also found and not in the records: **"Spatiotemporal variations of atmospheric
+XCH4 in China based on multiple spatially continuous satellite-derived products"**
+(*Journal of Environmental Management* 2025, `S0301479725022856`) — a
+China-specific comparison of continuous XCH₄ products.
+
+### Point sources, and the dates that close them
+
+| Instrument | First light | Covers 2018? |
+|---|---|---|
+| Sentinel-2 | 2015 | **yes** |
+| Landsat-8 | 2013 | **yes** |
+| GHGSat-C1 | Sept 2020 | no |
+| PRISMA | March 2019 | no |
+| EnMAP | April 2022 | no |
+| EMIT | July 2022 | no |
+| Carbon Mapper Tanager-1 | Aug 2024 | no |
+
+Detection thresholds across the point-source imagers run **100 to 10,000 kg h⁻¹**.
+**Only Sentinel-2 and Landsat-8 reach 2018, and both work only "over bright and
+spatially homogeneous areas"** — which the humid, vegetated, heterogeneous
+Yangtze Delta is not.
+
+**Two China-specific notes.** The Chinese Gaofen-5 and ZY1 AHSI instruments have
+been used for methane monitoring, and "the data are in general not accessible to
+the broad scientific community". And Chinese point-source work has concentrated
+on the **Shanxi** coal region, not this domain.

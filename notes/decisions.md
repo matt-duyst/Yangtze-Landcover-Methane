@@ -9527,3 +9527,139 @@ correct a regional total and not a cell. The two sweeps and the power calculatio
 agree, having started from data availability, from physics and from statistics
 respectively. That agreement is the strongest thing the four urban and two rice
 passes produced.
+
+## Closing the methane layer, and the three sweeps together, 17 September 2026
+
+**Parts 1, 3 and 5 completed; Part 2 partly; Parts 4 and 6 not reached.** The
+enumeration in Part 1 took longer than budgeted because it kept paying, which is
+the right reason to overrun and is recorded rather than hidden.
+
+### What the checkpoint carries that no pass had used
+
+Three capabilities are in the file and in no record.
+
+**A monthly per-cell composite is recoverable.** `msum::` holds monthly partial
+sums for both methane fields at (12, 33, 31), beside the `month_counts` a
+previous pass used for the sounding distribution. So monthly cell means exist
+without any further granule read. **A previous pass measured the monthly
+sounding distribution from this file and did not notice the sums sitting beside
+the counts** — the fourth instance in this project of an attribute being held
+while something adjacent was searched for.
+
+**A per-cell seasonal fit is recoverable.** `hs::sum_xx` is (4, 4, 33, 31): the
+full harmonic normal-equations matrix per cell. The methods draft describes the
+seasonal cycle as fitted "with one offset per cell and harmonic coefficients
+shared across the domain", which is what was done — but the checkpoint supports
+a per-cell fit, which is a different and stronger object. Whether a per-cell fit
+is *identifiable* on a median 23 observation days is a separate question and
+probably answers no for most cells; the point is that the data is there and the
+records say the sharing was a necessity.
+
+**Per-cell, per-detector-column counts exist.** `across_track_cell_counts` is
+(215, 33, 31). The destriping sensitivity test used domain-wide per-column
+offsets; a per-cell stripe correction is supported by what is held.
+
+### A suspicion of mine that the code refuted
+
+`prefilter_counts` runs 1,975 to 2,149 across 1,023 cells, near-uniform where
+coverage runs 0 to 410, and I recorded it as looking like a broadcast bug. The
+reader scatters it correctly with `np.add.at`. **The near-uniformity is physical:
+a 2,600 km swath over a 739 km domain covers every cell whenever it crosses.**
+Worth recording because the instinct was right to check and wrong in its
+conclusion, and because the consequence is useful — the retention rate
+`counts / prefilter_counts` has a common denominator across cells.
+
+### Two records that the sweep corrects
+
+**WFMD is at v2.0, not v1.8.** AMT 19, 2407, 2026 introduces XGBoost-based
+quality filtering. The register holds v1.8.
+
+**The circularity check on the fusion product is too narrow.** It verifies: the
+product takes GOSAT, OCO-2 and CAMS-EGG4 only, fused by spatiotemporal discrete
+cosine transform, with no land cover and no inventory as a predictor. But
+**CAMS-EGG4 is a reanalysis driven by an emissions inventory whose urban sectors
+are allocated on population surfaces.** So a land-cover predictor tested against
+that field is tested partly against inventory allocation. The recorded check
+asked "does it use land cover" and the right question is "does it inherit an
+allocation correlated with land cover". It does, indirectly, and the strength of
+that inheritance is unestablished.
+
+### Point sources cannot bound this domain in 2018
+
+The detection calculation made facility-scale observation the interesting route,
+because a 92.5 Gg a⁻¹ coal cell converts to 5.80 ppb against a 1.98 ppb per-cell
+error. **The dates close it.** Every purpose-built methane point-source imager
+postdates the analysis year: GHGSat-C1 September 2020, PRISMA March 2019, EnMAP
+April 2022, EMIT July 2022, Tanager-1 August 2024. Only Sentinel-2 and Landsat-8
+reach 2018, and both are documented as working over **bright and spatially
+homogeneous** surfaces, which this domain is not.
+
+**So the landfill magnitude spanning 57 to 3,272 Gg a⁻¹ cannot be bounded by
+point-source observation for 2018.** It could be bounded for 2022 or later, which
+is a different study with a different year — and the same shape as the land-cover
+temporal finding: the instruments that could answer the question arrived after
+the period the question is about.
+
+### The methane layer's state
+
+**Located.** The column field for 2018, three retrievals of it, with per-cell
+counts, monthly sums, seasonal sufficient statistics, ten covariates, per-granule
+provenance and per-detector-column counts — all on disk or committed. A daily
+0.25° global reconstruction for 2010 to 2020, CC BY, not fetched. Four retrieval
+algorithms identified.
+
+**Given a magnitude.** The field itself, in ppb, with a per-cell standard error
+and a within-cell variance — this is the one layer of the three whose target
+quantity is directly measured rather than inferred. That is the asymmetry that
+matters below.
+
+**Searched and absent.** A methane point-source observation of this domain for
+2018 at facility scale. A purpose-built plume imager operating in 2018.
+Accessible Chinese hyperspectral methane data, which exists and is not released.
+
+**Unreached.** The blended product's own variable set, never enumerated because
+it is read by range request. The cost of a three-retrieval comparison over this
+domain. MUSICA's full set. The surface network's data availability — Lin'an, the
+Suzhou three, Hefei's terms. The Chinese observation networks. WetCHARTs, MMCP,
+the city-scale inventory, EDGAR's moved path. The China-specific XCH₄ product
+comparison. **Parts 4 and 6 in their entirety.**
+
+### What the three sweeps establish together
+
+**The methane layer is a different kind of thing from the other two, and the
+difference is the whole of the project's position.**
+
+Urban and rice converge on one shape: a fine extent layer supplies the spatial
+pattern and a coarse modifier supplies the magnitude, so the spatial detail is
+real and the magnitude is not resolved at that detail. **Methane inverts that.**
+Its quantity is measured directly, per cell, in the units the question is asked
+in, with a standard error attached — and what it lacks is not magnitude but
+attribution: it cannot say which surface produced it.
+
+So the three sweeps together say: **the target is measured and cannot be
+attributed; the predictors can be located and cannot be quantified.** Those are
+complementary failures, not the same failure twice, and together they are the
+data-availability form of the two limits the paper already argues from physics
+and from statistics. The information-content limit says the observations cannot
+constrain a cell; the identifiability limit says attribution comes from the
+prior's spatial distinctness. **The sweeps say the observations are good and the
+priors are coarse, which is exactly the configuration in which those two limits
+bind.**
+
+Four independent routes now agree — data availability across three layers, the
+mass-balance detection calculation, the power calculation, and the capability
+assessment's averaging kernels. **They started from what could be downloaded,
+from what a cell's emission does to a column, from what a regression could
+detect, and from what an inversion could resolve, and they arrive at the same
+place.** That agreement is the strongest result these passes produced, and it is
+what the paper should rest on: not that land cover failed to predict methane
+here, but that no arrangement of the available data could have let it succeed.
+
+**What the project can claim.** That the column record over this domain is
+well measured and weakly attributable; that the land-cover predictors available
+are well located and weakly quantified; that the expected signal from the
+land-cover contrast is two orders of magnitude below the field's own variation;
+and that these are properties of the observing system and the data, established
+four ways, rather than properties of this analysis. **What it cannot claim** is a
+sectoral magnitude for any urban sector, a water-regime-resolved rice factor, or
+a facility-scale check on any of them for 2018.
